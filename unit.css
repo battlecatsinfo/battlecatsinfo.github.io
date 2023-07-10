@@ -1,0 +1,20 @@
+html, body {
+	margin: 0px;
+	padding: 0px;
+}
+* {
+	font-size: 20px;
+}
+p {
+	text-align: center;
+}
+table {
+	margin-bottom: 100px;
+}
+.w3-table td,.w3-table th,.w3-table-all td,.w3-table-all th {
+    vertical-align: middle;
+}
+.bold-large {
+	font-weight: 600;
+	font-size: 23px;
+}
