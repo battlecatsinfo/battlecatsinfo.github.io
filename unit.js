@@ -1,5 +1,16 @@
 const my_params = new URLSearchParams(location.search);
 const my_id = parseInt(my_params.get('id'));
+if (isNaN(my_id)) {
+	alert('Missing cat id in URL query!');
+	window.stop()
+	throw '';
+}
+if (my_id < 0 || my_id >= curveMap.length) {
+	alert('沒有這個喵咪!');
+	window.stop()
+	throw '';
+}
+let my_curve = [20].concat([curveData0, curveData1, curveData2, curveData3, curveData4, curveData5][curveMap[my_id]]);
 const
   TB_RED = 1,
   TB_FLOAT = 2,
@@ -59,16 +70,6 @@ const
    AB_WARP = 31,
    AB_IMUATK = 32;
    AB_LAST = AB_IMUATK;
-if (isNaN(my_id)) {
-	alert('Missing cat id in URL query!');
-	window.stop()
-	throw '';
-}
-if (my_id < 0 || my_id >= unit_names.length) {
-	alert('沒有這個喵咪!');
-	window.stop()
-	throw '';
-}
 const cat_icons = document.getElementById('cat-icons');
 const unit_content = document.getElementById('unit-content');
 var level_count = 0;
@@ -77,14 +78,28 @@ const environment = {
 	'ATK': 300,
 	'DEF': 300
 };
+const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_METAL;
+const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
+let trait_short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無' , '使徒',  '魔女', '惡'];
+function get_trait_short_names(trait) {
+	var s = '';
+	let i = 0;
+	let idxs = [];
+	for (let x = 1;x <= TB_LAST;x <<= 1) {
+		if (trait & x) {
+			s += trait_short_names[i];
+		}
+		i++;
+	}
+	return s;
+}
 function getTraitNames(trait) {
 	if ((trait&255) == 255)
 		return '所有敵人';
 	if ((trait&127) == 127)
 		return '有色敵人';
-	let x3 = new Set(['古代種', '無屬性敵人', '使徒', '魔女', '惡魔']);
-	let names = ['紅色敵人', '漂浮敵人', '黑色敵人', '鋼鐵敵人', '天使敵人', '異星戰士', '不死生物', '鋼鐵敵人', '無屬性敵人', '使徒', '魔女', '惡魔'];
-	let short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無' , '使徒',  '魔女', '惡'];
+	
+	let names = ['紅色敵人', '漂浮敵人', '黑色敵人', '鋼鐵敵人', '天使敵人', '異星戰士', '不死生物', '鋼鐵敵人', '無屬性敵人', '使徒', '魔女', '惡魔'];	
 	let i = 0;
 	let idxs = [];
 	for (let x = 1;x <= TB_LAST;x <<= 1) {
@@ -95,10 +110,7 @@ function getTraitNames(trait) {
 	}
 	if (idxs.length == 1)
 		return names[idxs[0]];
-	var s = '';
-	for (let i of idxs)
-		s += short_names[i];
-	return s + '屬性敵人';
+	return get_trait_short_names(trait) + '屬性敵人';
 }
 function createAbIcons(ab, parent) {
 	let icon_names = [
@@ -136,7 +148,7 @@ function createAbIcons(ab, parent) {
 	  'imu-atk'
 	]
   let descs = [
-	'血量{1}%以下{2}%攻擊力2倍', 
+	'血量{1}%以下攻擊力增加{2}%',
 	'{1}%機率以1血存活一次', 
 	'善於攻城({1}%傷害)',
 	'會心一擊	',
@@ -144,7 +156,7 @@ function createAbIcons(ab, parent) {
 	'靈魂攻擊',
 	'{1}%機率打破惡魔盾',
 	'{1}%機率打破宇宙盾',
-	'{1}%機率使出{2}%渾身一擊',
+	'{1}%機率使出{2}%以上渾身一擊',
 	'擊倒敵人獲得兩倍金錢',
 	'鋼鐵特性(爆擊之外攻擊只會受1傷害)',
 	'{1}%機率放出Lv{2}小波動',
@@ -232,6 +244,24 @@ function createTraitIcons(trait, parent) {
 	}
 	parent.appendChild(document.createElement('br'));
 }
+function numStr(num) {
+	return parseFloat(num.toFixed(2)).toString();
+}
+function numStrT(num) {
+	return parseFloat(num / 30).toFixed(2).toString() + 's';
+}
+function getLevelMulti(level) {
+	var multi = 1;
+	let n = 0;
+	--level;
+	for (let c of my_curve) {
+		if (level <= n) break;
+		multi += Math.min(level - n, 10) * (c / 100);
+		n += 10;
+	}
+	return multi;
+}
+
 function updateValues(data, tbl) {
 	let chs = tbl.childNodes;
 	let HPs = chs[1].childNodes;
@@ -244,7 +274,6 @@ function updateValues(data, tbl) {
 	let kb = data[1];
 	let price = data[6];
 	let range = data[5];
-	let tba = data[4];
 	var trait = 0;
 	var imu = 0;
 	var ab = {};
@@ -269,13 +298,13 @@ function updateValues(data, tbl) {
 			let slow_time = data[28];
 			ab[AB_SLOW] = [data[27], trait_names[0], (slow_time / 30).toFixed(1), ((slow_time*1.2) / 30).toFixed(1)];
 		}
-		(data[29]) && (ab[AB_RESIST] = trait_names);
-		(data[30]) && (ab[AB_MASSIVE] = trait_names);
 		(data[32]) && (ab[AB_ONLY] = trait_names);
 		if (data[37]) {
 			let weak_time = data[38];
 			ab[AB_WEAK] = [data[37], trait_names[0], data[39], (weak_time / 30).toFixed(1), ((weak_time*1.2) / 30).toFixed(1)];
 		}
+		(data[29]) && (ab[AB_RESIST] = trait_names);
+		(data[30]) && (ab[AB_MASSIVE] = trait_names);
 		(data[80]) && (ab[AB_RESISTS] = trait_names);
 		(data[81]) && (ab[AB_MASSIVES] = trait_names);
 	}
@@ -309,8 +338,8 @@ function updateValues(data, tbl) {
 		(data[70]) && (ab[AB_BREAK] = [data[70]]);
 		let imu_atk_prob = data[84];
 		let imu_atk_time = data[85];
-		(data[82]) && (data[AB_S] = [data[82], data[83]]);
-		(data[84]) && (ab[AB_IMUATK] = [data[84], (data[85] / 30).toFixed(1)]);
+		(data[82]) && (ab[AB_S] = [data[82], data[83]]);
+		(data[84]) && (ab[AB_IMUATK] = [data[84], numStrT(data[85])]);
 		if (data[86]) {
 			let des1 = data[87] / 4;
 			let des2 = des1 + data[88] / 4;
@@ -329,29 +358,95 @@ function updateValues(data, tbl) {
 	PRs[4].innerText = price * 1.5;
 	PRs[6].innerText = price + price;
 	let baseHP = data[0] * (1 + environment.DEF * 0.005);
-	let HP_inc = baseHP / 5;
-	for (let i = 1;i <= 5;++i) {
-		let hp = baseHP + HP_inc * (i * 10 - 1);
-		HPs[i].innerText = hp.toFixed(0);
-		HPPKBs[i].innerText = (hp / kb).toFixed(0);
+	if (trait && data[29]) {
+		let x4 = get_trait_short_names(trait & trait_treasure);
+		let x3 = get_trait_short_names(trait & trait_no_treasure);
+		for (let i = 1;i <= 5;++i) {
+			let hp = baseHP * getLevelMulti(i * 10);
+			let x4s = x4.length ? ('<br>' + x4 + (hp*4).toFixed(0)) : '';
+			let x3s = x3.length ? ('<br>' + x3 + (hp*3).toFixed(0)) : '';
+			HPs[i].innerHTML = hp.toFixed(0) + x3s + x4s;
+			HPPKBs[i].innerHTML = (hp / kb).toFixed(0);
+		}
+		let val = baseHP * 0.2;
+		let x4s = x4.length ? ('<br>' + x4 + '+' + numStr(val*4)) : '';
+		let x3s = x3.length ? ('<br>' + x3 + '+' + numStr(val*3)) : '';
+		HPs[6].innerHTML = '+' + numStr(val) + x3s + x4s;
+	} else if (trait && data[80]) {
+		let x4 = get_trait_short_names(trait & trait_no_treasure);
+		let x5 = get_trait_short_names(trait & trait_treasure);
+		for (let i = 1;i <= 5;++i) {
+			let hp = baseHP * getLevelMulti(i * 10);
+			let x4s = x4.length ? ('<br>' + x4 + (hp*4).toFixed(0)) : '';
+			let x5s = x5.length ? ('<br>' + x5 + (hp*5).toFixed(0)) : '';
+			HPs[i].innerHTML = hp.toFixed(0) + x4s + x5s;
+			HPPKBs[i].innerHTML = (hp / kb).toFixed(0);
+		}
+		let val = baseHP * 0.2;
+		let x4s = x4.length ? ('<br>' + x4 + '+' + numStr(val*4)) : '';
+		let x5s = x5.length ? ('<br>' + x5 + '+' + numStr(val*5)) : '';
+		HPs[6].innerHTML = '+' + numStr(val) + x4s + x5s;
+	} else {
+		for (let i = 1;i <= 5;++i) {
+			let hp = baseHP * getLevelMulti(i * 10);
+			HPs[i].innerText = hp.toFixed(0);
+			HPPKBs[i].innerText = (hp / kb).toFixed(0);
+		}
+		HPs[6].innerText = '+' + numStr(baseHP * 0.2);
 	}
-	HPs[6].innerText = '+' + HP_inc.toFixed(0);
-	HPPKBs[6].innerText	= '+' + (HP_inc / kb).toFixed(0);
-	let cd = data[7] * 2 - 264; // max tech & treasure lead to -264f CD
+	HPPKBs[6].innerText	= '+' + numStr((baseHP * 0.2)  / kb);
+	let cd = Math.max(data[7] * 2 - 264, 60); // max tech & treasure lead to -264f CD
 	let atk = data[3];
 	let atk1 = data[59] | 0;
 	let atk2 = data[60] | 0;
+	let pre = data[13];
+	let pre1 = data[61];
+	let pre2 = data[62];
+	let tba = data[4] * 2;
+	let longPre = pre2 ? pre2 : (pre1 ? pre1 : pre);
+	let attackF = longPre + tba - 1;
 	let totalAtk = atk + atk1 + atk2;
 	let baseATK = totalAtk * (1 + environment.ATK * 0.005);
-	let atk_inc = baseATK / 5;
-	let attackS = 2;
-	for (let i = 1;i <= 5;++i) {
-		let _atk = baseATK + atk_inc * (i * 10 - 1);
-		ATKs[i].innerText = _atk.toFixed(0);
-		DPSs[i].innerText = (_atk / attackS).toFixed(0);
+	let attackS = attackF / 30;
+/*
+		(data[30]) && (ab[AB_MASSIVE] = trait_names);
+		(data[81]) && (ab[AB_MASSIVES] = trait_names);
+*/
+	if (trait && data[30]) {
+		let x3 = get_trait_short_names(trait & trait_no_treasure);
+		let x4 = get_trait_short_names(trait & trait_treasure);
+		for (let i = 1;i <= 5;++i) {
+			let _atk = baseATK * getLevelMulti(i * 10);
+			let x4s = x4.length ? ('<br>' + x4 + (_atk*4).toFixed(0)) : '';
+			let x3s = x3.length ? ('<br>' + x3 + (_atk*3).toFixed(0)) : '';
+			let x4dps = x4.length ? ('<br>' + x4 + ((_atk*4)/attackS).toFixed(0)) : '';
+			let x3dps = x3.length ? ('<br>' + x3 + ((_atk*3)/attackS).toFixed(0)) : '';
+			ATKs[i].innerHTML = _atk.toFixed(0) + x3s + x4s;
+			DPSs[i].innerHTML = (_atk / attackS).toFixed(0) + x3dps + x4dps;
+		}
+		let _atk = baseATK * 0.2;
+		let x4s = x4.length ? ('<br>' + x4 + '+' + numStr(_atk*4)) : '';
+		let x3s = x3.length ? ('<br>' + x3 + '+' + numStr(_atk*3)) : '';
+		let x4dps = x4.length ? ('<br>' + x4 + '+' + numStr((_atk*4)/attackS)) : '';
+		let x3dps = x3.length ? ('<br>' + x3 + '+' + numStr((_atk*3)/attackS)) : '';
+		ATKs[6].innerHTML = '+' + numStr(_atk) + x3s + x4s;
+		DPSs[6].innerHTML = '+' + numStr(_atk / attackS) + x3dps + x4dps;
+	} else if (trait && data[81]) {
+		
+	} else {
+		for (let i = 1;i <= 5;++i) {
+			let _atk = baseATK * getLevelMulti(i * 10);
+			ATKs[i].innerText = _atk.toFixed(0);
+			DPSs[i].innerText = (_atk / attackS).toFixed(0);
+		}
+		ATKs[6].innerText = '+' + numStr(baseATK * 0.2);
+		DPSs[6].innerText = '+' + numStr((baseATK * 0.2) / attackS);
 	}
-	chs[5].childNodes[1].innerText = attackS.toFixed(2) + '秒/下';
-	chs[5].childNodes[3].innerText = (data[13] / 30).toFixed(2) + 's';
+
+	chs[6].childNodes[1].innerText = data[4].toString() + 'f';
+	chs[6].childNodes[3].innerText = numStrT(tba);
+	chs[5].childNodes[1].innerText = Math.round(attackS).toPrecision(2) + '秒/下';
+	chs[5].childNodes[3].innerText = numStrT(data[13]);
 
 	let atkCount = atk1 == 0 ? 1 : atk2 == 0 ? 2 : 3;
 	let lds = new Array(atkCount);
@@ -387,7 +482,7 @@ function updateValues(data, tbl) {
   	e.innerText = `${lds.length}回連續攻擊(傷害${atksP})`;
   	specials.appendChild(e);
   	specials.appendChild(document.createElement('br'));
-  	let nums = '①②③④⑤';
+  	let nums = '①②③';
   	var s = '';
   	for (let i = 0;i < lds.length;++i) {
   		s += `${nums[i]}${lds[i]}~${lds[i]+ldr[i]}<br>`;
@@ -399,12 +494,8 @@ function updateValues(data, tbl) {
 	createTraitIcons(trait, specials);
 	createImuIcons(imu, specials);
 	createAbIcons(ab, specials);
-	chs[6].childNodes[1].innerText = data[4].toString() + 'f';
-	chs[6].childNodes[3].innerText = '?';
-	ATKs[6].innerText = '+' + atk_inc.toFixed(0);
-	DPSs[6].innerText = '+' + (atk_inc / attackS).toFixed(0);
 	KB.innerText = kb;
-	CD.innerText = `${cd}f (${(cd / 30).toFixed(1)}s)`;
+	CD.innerText = numStrT(cd);
 }
 function t3str(x) {
 	let s = x.toString();
@@ -481,7 +572,7 @@ function createTable(data) {
 
 	makeTd(tbodytr6, '間隔');
 	makeTd(tbodytr6, `${2.07} 秒`);
-	makeTd(tbodytr6, '收招時間');
+	makeTd(tbodytr6, 'TBA');
 	makeTd(tbodytr6, `${5.9} 秒`);
 
 	makeTd(tbodytr7, 'KB');
@@ -524,6 +615,82 @@ function createTable(data) {
 	unit_content.appendChild(tbl);
 	return tbl;
 }
+function loadAdditional() {
+	fetch('./data/data/unitbuy.csv')
+	.then(res => res.text())
+	.then(text => {
+		const rarities = ["基本", "EX", "稀有", "激稀有",
+                   "超激稀有", "傳說稀有"];
+		var unit_stats = '';
+		var i = 0;
+		var start = 0;
+		var end;
+		while (i < my_id) {
+			var j = start;
+			for (;text[j] != '\n';++j) {}
+			start = j + 1;
+			++i;
+		}
+		for (end = start;text[end] != '\n';++end) {}
+		let data = text.slice(start, end).split(',').map(x => parseInt(x));
+		unit_stats += '貓咪類別： ' + rarities[data[13]];
+		unit_stats += '\n最大基本等級： ' + data[50].toString();
+		unit_stats += '\n最大+等級： ' + data[51].toString();
+		unit_stats += '\n';
+		var version = data[data.length - 6];
+		if (version >= 100000) {
+			version = version.toString();
+			unit_stats += `Ver ${parseInt(version.slice(0, 2))}.${parseInt(version.slice(2, 4))}.${parseInt(version.slice(4))} 新增\n`;
+		}
+		const catfruits = {
+			30: '紫色貓薄荷種子',
+			31: '紅色貓薄荷種子',
+			32: '籃色貓薄荷種子',
+			33: '綠色貓薄荷種子',
+			34: '黃色貓薄荷種子',
+			35: '紫色貓薄荷果實',
+			36: '紅色貓薄荷果實',
+			37: '籃色貓薄荷果實',
+			38: '綠色貓薄荷果實',
+			39: '黃色貓薄荷種子',
+			40: '彩虹貓薄荷果實',
+			41: '古代貓薄荷種子',
+			42: '古代貓薄荷果實',
+			43: '彩虹貓薄荷種子',
+			44: '黃金貓薄荷果實',
+			160: '惡貓薄荷種子',
+			161: '惡貓薄荷果實',
+			164: '黃金貓薄荷種子',
+			167: "紫獸石",
+			168: "紅獸石",
+			169: "蒼獸石",
+			170: "翠獸石",
+			171: "黃獸石",
+			179: "紫獸石結晶",
+			180: "紅獸石結晶",
+			181: "蒼獸石結晶",
+			182: "翠獸石結晶",
+			183: "黃獸石結晶",
+			184: "虹獸石"
+		};
+		
+		if (data[27]) {
+			var s = '角色等級達到Lv30後，以';
+			var reqs = ['XP ' + data[27].toString()];
+			for (let i = 28;i <= 38;i+=2) {
+				let amount = data[i + 1];
+				if (amount) {
+				    reqs.push(catfruits[data[i]] + 'x' + amount.toString());
+				}
+			}
+			unit_stats += s + reqs.join('、');
+			unit_stats += '進化\n';
+		}
+		const pre = document.createElement('pre');
+		pre.innerText = unit_stats;
+		unit_content.appendChild(pre);
+	});
+}
 function loadContents() {
 	const my_name = unit_names[my_id].filter(x => x);
 	const my_name_jp = unit_names_jp[my_id].filter(x => x);
@@ -540,6 +707,7 @@ function loadContents() {
 	fetch(`./data/unit/${my_id_str}/unit${my_id_str}.csv`)
 	.then(res => res.text())
 	.then(text => {
+		loadAdditional();
 		let datas = text.replace('\r', '').split('\n').filter(x => x.trim()).map(line => line.split(',').map(x => parseInt(x)));
 		for (let i = 0;i < Math.min(datas.length, unit_levels);++i) {
 			tables.push(createTable(datas[i]));
@@ -548,3 +716,5 @@ function loadContents() {
 }
 
 loadContents();
+document.getElementById('show-level-graph').href = './levelgraph.html?id=' + my_id.toString();
+document.getElementById('show-xp-graph').href = './xpgraph.html?id=' + my_id.toString();

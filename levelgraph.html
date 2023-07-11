@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="./unitlevels.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<title>貓咪升級曲線</title>
+</head>
+<body>
+	<div>
+  		<canvas id="myChart"></canvas>
+	</div>
+<style>
+.text {
+	font-size: 30px;
+	display: block;
+	text-decoration: none;
+	color: #327535;
+	text-align: center;
+	width: 100%;
+	padding-top: 20px;
+}		
+</style>
+	<a class="text" href="https://thanksfeanor.pythonanywhere.com/guides/documents/levelling-and-stat-mechanics.html">查看說明</a>
+<script>
+const my_params = new URLSearchParams(location.search);
+const my_id = parseInt(my_params.get('id'));
+if (isNaN(my_id)) {
+	alert('Missing cat id in URL query!');
+	window.stop()
+	throw '';
+}
+if (my_id < 0 || my_id >= curveMap.length) {
+	alert('沒有這個喵咪!');
+	window.stop()
+	throw '';
+}
+const ctx = document.getElementById('myChart');
+let my_curve = [curveData0, curveData1, curveData2, curveData3, curveData4, curveData5][curveMap[my_id]];
+new Chart(ctx, {
+   	type: 'line',
+    data: {
+      labels: ['Lv0', 'Lv10', 'Lv20', 'Lv30', 'Lv40', 'Lv50', 'Lv60', 'Lv70', 'Lv80', 'Lv90', 'Lv100', 'Lv110', 'Lv120', 'Lv130', 'Lv140', 'Lv150', 'Lv160', 'Lv170', 'Lv180', 'Lv190'],
+      datasets: [{
+        label: '每提升一級 成長Lv1的百分比',
+        data: my_curve,
+        borderWidth: 1,
+        pointStyle: 'rect',
+        pointRadius: 8,
+        pointHoverRadius: 10,
+        stepped: 'before'
+      }]
+    },
+    options: {
+      	scales: {
+        	y: {
+          	beginAtZero: true
+        	}
+      	}
+    }
+  });
+</script>
+</body>
+</html>
