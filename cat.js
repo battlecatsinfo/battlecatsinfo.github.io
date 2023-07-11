@@ -2,6 +2,7 @@ var unit_buy = null;
 var skill_file = null;
 var SkillLevel = null;
 var skill_level_file = null;
+var uints_zip = null;
 const loader_text = document.getElementById('loader-text');
 const environment = {
 	'ATK': 300,
@@ -274,23 +275,27 @@ class Cat {
 			this.forms[i] = new Form(id, i, datas[i]);
 	}
 }
+async function getZip() {
+	return await JSZip.loadAsync(
+		await (
+			(await fetch("./all_units.zip")).blob())
+	);
+}
 async function createCat(id) {
-	if (!unit_buy)
-		unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
-	if (!skill_file)
-		skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
-	if (!skill_level_file)
-		skill_level_file = await ((await fetch('./data/data/SkillLevel.csv')).text());
-	const id_str = t3str(id);
-	const unit_file = await ((await fetch(`./data/unit/${id_str}/unit${id_str}.csv`)).text());
+	const unit_file = await uints_zip.file(`all/${id}`).async('string');
 	return new Cat(id, unit_file, unit_buy, skill_file, skill_level_file);
 }
 async function getAllCats() {
+	unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
+	skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
+	skill_level_file = await ((await fetch('./data/data/SkillLevel.csv')).text());
+	uints_zip = await getZip();
 	var cats = new Array(unit_names.length);
 	for (let i = 0;i < cats.length;++i) {
 		cats[i] = await createCat(i);
 		loader_text.innerText = `Loading (${i+1}/${cats.length+1})`;
 	}
+	uints_zip = null;
 	return cats;
 }
 async function loadAllCats() {
