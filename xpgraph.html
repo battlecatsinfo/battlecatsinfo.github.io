@@ -3,52 +3,120 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="./unitlevels.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<title>貓咪升級曲線</title>
+	<title>XP 花費表格</title>
+	<link rel="stylesheet" type="text/css" href="w3.css">
 </head>
 <body>
-	<div>
-  		<canvas id="myChart"></canvas>
-	</div>
-	<a style="font-size: 30px;display: block;text-decoration: none;color: #327535;padding-top: 20px;text-align: center;width: 100%;" href="https://thanksfeanor.pythonanywhere.com/guides/documents/levelling-and-stat-mechanics.html">查看說明</a>
+<div class="w3-container">
+	<style>
+	* {
+		text-align: center;
+	}
+	table, th, td {
+  		border: 1px solid #d1d5d5;
+	}
+	</style>
+	<h1 style="margin: 50px;">XP 花費表格</h1>
+	<table class="w3-table w3-striped w3-centered" style="vertical-align: middle;width: 900px;margin: 0px auto;">
+		<tr>
+			<td>Level</td>
+			<td>XP</td>
+			<td>Level</td>
+			<td>XP</td>
+			<td>Level</td>
+			<td>XP</td>
+			<td>Level</td>
+			<td>XP</td>
+			<td>Level</td>
+			<td>XP</td>
+		</tr>
+	</table>
+	<a style="font-size: 30px;text-decoration: underline;color: black;display: block;margin-top: 20px;" href="https://thanksfeanor.pythonanywhere.com/xpcurves">Help</a>
+</div>
+</table>
 <script>
 const my_params = new URLSearchParams(location.search);
-const my_id = parseInt(my_params.get('id'));
-if (isNaN(my_id)) {
-	alert('Missing cat id in URL query!');
-	window.stop()
+const my_q = my_params.get('data');
+if (!my_q) {
+	alert('Missing data in URL query!');
+	window.stop();
 	throw '';
 }
-if (my_id < 0 || my_id >= curveMap.length) {
-	alert('沒有這個喵咪!');
-	window.stop()
-	throw '';
+const my_datas = atob(my_q).split(',').map(x => parseInt(x));
+
+const table = document.querySelector('table');
+function calc_cost(costs, i) {
+	const defaults = [1, 2, 3, 3.5, 4, 4.5];
+	let f = Math.floor(i / 10);
+	return defaults[f] * costs[i % 10];
 }
-const ctx = document.getElementById('myChart');
-let my_curve = [curveData0, curveData1, curveData2, curveData3, curveData4, curveData5][curveMap[my_id]];
-new Chart(ctx, {
-   	type: 'line',
-    data: {
-      labels: ['Lv10', 'Lv20', 'Lv30', 'Lv40', 'Lv50', 'Lv60', 'Lv70', 'Lv80', 'Lv90', 'Lv100', 'Lv110', 'Lv120', 'Lv130', 'Lv140', 'Lv150', 'Lv160', 'Lv170', 'Lv180', 'Lv190', 'Lv200'],
-      datasets: [{
-        label: '每提升一級 成長Lv1的百分比',
-        data: my_curve,
-        borderWidth: 1,
-        pointStyle: 'rect',
-        pointRadius: 8,
-        pointHoverRadius: 10,
-        stepped: 'middle'
-      }]
-    },
-    options: {
-      	scales: {
-        	y: {
-          	beginAtZero: true
-        	}
-      	}
-    }
-  });
+function getCosts(datas) {
+	let costs = new Array(50).fill(0);
+	for (let i = 0;i < datas.length;++i)
+		costs[i] = datas[i];
+	var freeInit = false;
+	if (!costs[0] && costs[10]) {
+		costs[0] = costs[10] / 2;
+		freeInit = true;
+	}
+	for (let i = 0;i < 50;++i)
+		costs[i] = calc_cost(costs, i);
+	if (freeInit) costs[0] = 0;
+	return costs;	
+}
+function drawTable(costs) {
+	for (let i = 1;i <= 10;++i) {
+		let tr = document.createElement('tr');
+		var sum = 0;
+		for (let j = 0;j < 10;j += 2) {
+			let td1 = document.createElement('td');
+			let td2 = document.createElement('td');
+			let idx = i + (j * 5);
+			td1.innerText = idx;
+			td2.innerText = costs[idx - 1].toString();
+			sum += costs[idx - 1];
+			tr.appendChild(td1);
+			tr.appendChild(td2);
+			if (i & 1)
+				tr.style.backgroundColor = 'rgb(241, 241, 241)';
+		}
+		table.appendChild(tr);
+	}
+	let sums = [];
+	var totalSum = 0;
+	var tr = document.createElement('tr');
+	for (let j = 0;j < 10;j += 2) {
+		var sum = 0;
+		let i = j / 2;
+		let td1 = document.createElement('td');
+		let td2 = document.createElement('td');
+		td1.innerText = `Lv${i*10}-Lv${(i+1)*10}`;
+		i *= 10;
+		let end = i + 10;
+		for (;i < end;++i)
+			sum += costs[i];
+		td2.innerText = sum.toString();
+		totalSum += sum;
+		sums.push(totalSum);
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+	}
+	table.appendChild(tr);
+	tr = document.createElement('tr');
+	for (let j = 0;j < 10;j += 2) {
+		var sum = 0;
+		let i = j / 2;
+		let td1 = document.createElement('td');
+		let td2 = document.createElement('td');
+		td1.innerText = `Total`;
+		td2.innerText = sums[i].toString();
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+	}
+	table.appendChild(tr);
+}
+let costs = getCosts(my_datas);
+drawTable(costs);
 </script>
 </body>
 </html>

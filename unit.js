@@ -686,6 +686,10 @@ function loadAdditional() {
 			unit_stats += s + reqs.join('、');
 			unit_stats += '進化\n';
 		}
+		let crazed = (data[3] > 50000) && (data[13] == 3);
+		let xp_last = crazed ? data[3] * 1.5 : data[2] * 2;
+		let xp_data = [0].concat(data.slice(3, 12), xp_last).join(',');
+		document.getElementById('show-xp-graph').href = './xpgraph.html?data=' + btoa(xp_data);
 		const pre = document.createElement('pre');
 		pre.innerText = unit_stats;
 		unit_content.appendChild(pre);
@@ -717,4 +721,3 @@ function loadContents() {
 
 loadContents();
 document.getElementById('show-level-graph').href = './levelgraph.html?id=' + my_id.toString();
-document.getElementById('show-xp-graph').href = './xpgraph.html?id=' + my_id.toString();
