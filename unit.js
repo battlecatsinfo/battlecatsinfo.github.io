@@ -695,6 +695,36 @@ function loadAdditional() {
 		unit_content.appendChild(pre);
 	});
 }
+function loadTalents(skillCost) {
+	fetch('./data/data/SkillAcquisition.csv')
+	.then(res => res.text())
+	.then(text => {
+		const match = '\n' + my_id.toString();
+		var idx = text.indexOf(match);
+		if (idx != -1) {
+			++idx;
+			var end;
+			for (end = idx;text[end] != '\n' && text[end];++end) {}
+			let data = text.slice(idx, end).split(',').map(x => parseInt(x));
+			let talents = [];
+			for (let i = 0;i < 8;++i) {
+				let o = i * 14;
+				let maxLv = data[o+3];
+				let lvId = data[o+13];
+				let costIdx = skillCost.indexOf('\n' + lvId.toString());
+				if (costIdx != -1) {
+					++costIdx;
+					var end;
+					for (end = costIdx;skillCost[end] != '\n' && skillCost[end];++end) {}
+					let costData = skillCost.slice(costIdx, end).split(',').slice(1).map(x => parseInt(x));
+  				talents.push([data.slice(o+2, o+16), costData, maxLv]);
+  			}
+			}
+			console.log(talents)
+		}
+		loadAdditional();
+	});
+}
 function loadContents() {
 	const my_name = unit_names[my_id].filter(x => x);
 	const my_name_jp = unit_names_jp[my_id].filter(x => x);
@@ -711,7 +741,9 @@ function loadContents() {
 	fetch(`./data/unit/${my_id_str}/unit${my_id_str}.csv`)
 	.then(res => res.text())
 	.then(text => {
-		loadAdditional();
+		fetch('./data/data/SkillLevel.csv')
+		.then(res => res.text())
+		.then(loadTalents);
 		let datas = text.replace('\r', '').split('\n').filter(x => x.trim()).map(line => line.split(',').map(x => parseInt(x)));
 		for (let i = 0;i < Math.min(datas.length, unit_levels);++i) {
 			tables.push(createTable(datas[i]));
