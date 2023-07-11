@@ -11,107 +11,12 @@ if (my_id < 0 || my_id >= curveMap.length) {
 	throw '';
 }
 let my_curve = [20].concat([curveData0, curveData1, curveData2, curveData3, curveData4, curveData5][curveMap[my_id]]);
-const
-  TB_RED = 1,
-  TB_FLOAT = 2,
-  TB_BLACK = 4,
-  TB_METAL = 8,
-  TB_ANGEL = 16,
-  TB_ALIEN = 32,
-  TB_ZOMBIE = 64,
-  TB_RELIC = 128,
-  TB_WHITE = 256,
-  TB_EVA = 512,
-  TB_WITCH = 1024,
-  TB_DEMON = 2048,
-  TB_LAST = TB_DEMON;
-const
-  IMU_WAVE = 1,
-  IMU_STOP = 2,
-  IMU_SLOW = 4,
-  IMU_KB = 8,
-  IMU_VOLC = 16,
-  IMU_WEAK = 32,
-  IMU_WARP = 64,
-  IMU_CURSE = 128,
-  IMU_POIATK = 256,
-  IMU_LAST = IMU_POIATK;
-const
-   AB_STRONG = 1,
-   AB_LETHAL = 2,
-   AB_ATKBASE = 3,
-   AB_CRIT = 4,
-   AB_ZKILL = 5,
-   AB_CKILL = 6,
-   AB_BREAK = 7,
-   AB_SHIELDBREAK = 8,
-   AB_S = 9,
-   AB_BOUNTY = 10,
-   AB_METALIC = 11,
-   AB_MINIWAVE = 12,
-   AB_WAVE = 13,
-   AB_MINIVOLC = 14,
-   AB_VOLC = 15,
-   AB_WAVES = 16,
-   AB_BAIL = 17,
-   AB_BSTHUNT = 18,
-   AB_WKILL = 19,
-   AB_EKILL = 20,
-   AB_WEAK = 21,
-   AB_STOP = 22,
-   AB_SLOW = 23, 
-   AB_ONLY = 24,
-   AB_GOOD = 25, 
-   AB_RESIST = 26,
-   AB_RESISTS = 27,
-   AB_MASSIVE = 28,
-   AB_MASSIVES = 29, 
-   AB_KB = 30,
-   AB_WARP = 31,
-   AB_IMUATK = 32;
-   AB_LAST = AB_IMUATK;
+
 const cat_icons = document.getElementById('cat-icons');
 const unit_content = document.getElementById('unit-content');
 var level_count = 0;
 let tables = [];
-const environment = {
-	'ATK': 300,
-	'DEF': 300
-};
-const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_METAL;
-const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
-let trait_short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無' , '使徒',  '魔女', '惡'];
-function get_trait_short_names(trait) {
-	var s = '';
-	let i = 0;
-	let idxs = [];
-	for (let x = 1;x <= TB_LAST;x <<= 1) {
-		if (trait & x) {
-			s += trait_short_names[i];
-		}
-		i++;
-	}
-	return s;
-}
-function getTraitNames(trait) {
-	if ((trait&255) == 255)
-		return '所有敵人';
-	if ((trait&127) == 127)
-		return '有色敵人';
-	
-	let names = ['紅色敵人', '漂浮敵人', '黑色敵人', '鋼鐵敵人', '天使敵人', '異星戰士', '不死生物', '鋼鐵敵人', '無屬性敵人', '使徒', '魔女', '惡魔'];	
-	let i = 0;
-	let idxs = [];
-	for (let x = 1;x <= TB_LAST;x <<= 1) {
-		if (trait & x) {
-			idxs.push(i);
-		}
-		i++;
-	}
-	if (idxs.length == 1)
-		return names[idxs[0]];
-	return get_trait_short_names(trait) + '屬性敵人';
-}
+
 function createAbIcons(ab, parent) {
 	let icon_names = [
 		'strong', 
@@ -244,24 +149,6 @@ function createTraitIcons(trait, parent) {
 	}
 	parent.appendChild(document.createElement('br'));
 }
-function numStr(num) {
-	return parseFloat(num.toFixed(2)).toString();
-}
-function numStrT(num) {
-	return parseFloat(num / 30).toFixed(2).toString() + 's';
-}
-function getLevelMulti(level) {
-	var multi = 1;
-	let n = 0;
-	--level;
-	for (let c of my_curve) {
-		if (level <= n) break;
-		multi += Math.min(level - n, 10) * (c / 100);
-		n += 10;
-	}
-	return multi;
-}
-
 function updateValues(data, tbl) {
 	let chs = tbl.childNodes;
 	let HPs = chs[1].childNodes;
@@ -497,14 +384,7 @@ function updateValues(data, tbl) {
 	KB.innerText = kb;
 	CD.innerText = numStrT(cd);
 }
-function t3str(x) {
-	let s = x.toString();
-	switch (s.length) {
-	case 3: return s;
-	case 2: return '0' + s;
-	case 1: return '00' + s;
-	}
-}
+
 const my_id_str = t3str(my_id);
 function createTable(data) {
 	function makeTd(parent, text) {
@@ -750,6 +630,11 @@ function loadContents() {
 		}
 	});
 }
-
-loadContents();
+loadAllCats()
+.then(cats => {
+	document.getElementById('loader').style.display = 'none';
+	loader_text.style.display = 'none';
+	document.getElementById('main').style.display = 'block';
+	console.log('Hello world');
+});
 document.getElementById('show-level-graph').href = './levelgraph.html?id=' + my_id.toString();
