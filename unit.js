@@ -149,8 +149,6 @@ function updateValues(form, tbl) {
 	KB.innerText = form.kb.toString();
 	CD.innerText = numStrT(form.cd);
 }
-
-/*
 function loadAdditional() {
 	fetch('./data/data/unitbuy.csv')
 	.then(res => res.text())
@@ -259,7 +257,7 @@ function loadTalents(skillCost) {
 		}
 		loadAdditional();
 	});
-}*/
+}
 function renderForm(form) {
 	function makeTd(parent, text) {
 		const c = document.createElement('td');
@@ -369,6 +367,21 @@ function renderForm(form) {
 	unit_content.appendChild(tbl);
 	return tbl;
 }
+function renderExtras(my_cat) {
+	const pre = document.createElement('pre');
+	var unit_stats = '類別: ' + my_cat.info.getRarityString();
+	unit_stats += '\n最大基本等級： ' + my_cat.info.maxBase.toString();
+	unit_stats += '\n最大+等級: ' + my_cat.info.maxPlus.toString();
+	unit_stats += '\n';
+	if (my_cat.info.version) {
+		let version = my_cat.info.version.toString();
+		unit_stats += `Ver ${parseInt(version.slice(0, 2))}.${parseInt(version.slice(2, 4))}.${parseInt(version.slice(4))} 新增\n`;
+	}
+	unit_stats += my_cat.info.getCatFruitString();
+	pre.innerText = unit_stats;
+	document.getElementById('show-xp-graph').href = './xpgraph.html?data=' + btoa(my_cat.info.xp_data);
+	unit_content.appendChild(pre);
+}
 function renderUintPage(my_cat) {
 	const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
 	const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
@@ -382,6 +395,7 @@ function renderUintPage(my_cat) {
 		cat_icons.appendChild(img);
 	}
 	my_cat.forms.forEach(renderForm);
+	renderExtras(my_cat);
 }
 loadAllCats()
 .then(cats => {

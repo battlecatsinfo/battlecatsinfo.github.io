@@ -1,7 +1,3 @@
-html, body {
-	margin: 0px;
-	padding: 0px;
-}
 * {
 	font-size: 20px;
 }
@@ -10,6 +6,11 @@ p {
 }
 table {
 	margin-bottom: 100px;
+}
+pre {
+  white-space: normal;
+  text-wrap: wrap;
+  font-family: system-ui;
 }
 .w3-table td,.w3-table th,.w3-table-all td,.w3-table-all th {
     vertical-align: middle;

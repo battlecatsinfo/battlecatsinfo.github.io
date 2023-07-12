@@ -265,14 +265,122 @@ class Form {
 		}
 	}
 }
+class CatInfo {
+	constructor(id) {
+		if (id instanceof Object) {
+			Object.assign(this, id);
+			return;
+		}
+		this.loadAttitional(id);
+		this.loadTalents(id);
+	}
+	getRarityString(cat_id) {
+		const rarities = ["基本", "EX", "稀有", "激稀有", "超激稀有", "傳說稀有"];
+		return rarities[this.rarity];
+	}
+	getCatFruitString() {
+		const catfruits = {
+			30: '紫色貓薄荷種子',
+			31: '紅色貓薄荷種子',
+			32: '籃色貓薄荷種子',
+			33: '綠色貓薄荷種子',
+			34: '黃色貓薄荷種子',
+			35: '紫色貓薄荷果實',
+			36: '紅色貓薄荷果實',
+			37: '籃色貓薄荷果實',
+			38: '綠色貓薄荷果實',
+			39: '黃色貓薄荷種子',
+			40: '彩虹貓薄荷果實',
+			41: '古代貓薄荷種子',
+			42: '古代貓薄荷果實',
+			43: '彩虹貓薄荷種子',
+			44: '黃金貓薄荷果實',
+			160: '惡貓薄荷種子',
+			161: '惡貓薄荷果實',
+			164: '黃金貓薄荷種子',
+			167: "紫獸石",
+			168: "紅獸石",
+			169: "蒼獸石",
+			170: "翠獸石",
+			171: "黃獸石",
+			179: "紫獸石結晶",
+			180: "紅獸石結晶",
+			181: "蒼獸石結晶",
+			182: "翠獸石結晶",
+			183: "黃獸石結晶",
+			184: "虹獸石"
+		};
+		return '角色等級達到Lv30後，以XP' + this.upReqs[0].toString() + '+' + this.upReqs.slice(1).map(i => catfruits[i]).join('、') + '進化';
+	}
+	loadAttitional(my_id) {
+		const text = unit_buy;
+		var i = 0;
+		var start = 0;
+		var end;
+		while (i < my_id) {
+			var j = start;
+			for (;text[j] != '\n';++j) {}
+			start = j + 1;
+			++i;
+		}
+		for (end = start;text[end] != '\n';++end) {}
+		const data = text.slice(start, end).split(',').map(x => parseInt(x));
+		this.rarity = data[13];
+		this.maxBase = data[50];
+		this.maxPlus = data[51];
+		var version = data[data.length - 6];
+		if (version >= 100000)
+			this.version = version;
+		if (data[27]) {
+			this.upReqs = [data[27]];
+			for (let i = 28;i <= 38;i+=2) {
+				let amount = data[i + 1];
+				if (amount) {
+					this.upReqs.push(data[i]);
+				}
+			}
+		}
+		this.crazed = (data[3] > 50000) && (data[13] == 3);
+		let xp_last = this.crazed ? data[3] * 1.5 : data[2] * 2;
+		this.xp_data = [0].concat(data.slice(3, 12), xp_last).join(',');
+	}
+	loadTalents(my_id) {
+		const text = skill_file;
+		const skillCost = skill_level_file;
+		const match = '\n' + my_id.toString();
+		var idx = text.indexOf(match);
+		if (idx != -1) {
+			++idx;
+			var end;
+			for (end = idx;text[end] != '\n' && text[end];++end) {}
+			let data = text.slice(idx, end).split(',').map(x => parseInt(x));
+			let talents = [];
+			for (let i = 0;i < 8;++i) {
+				let o = i * 14;
+				let maxLv = data[o+3];
+				let lvId = data[o+13];
+				let costIdx = skillCost.indexOf('\n' + lvId.toString());
+				if (costIdx != -1) {
+					++costIdx;
+					var end;
+					for (end = costIdx;skillCost[end] != '\n' && skillCost[end];++end) {}
+					let costData = skillCost.slice(costIdx, end).split(',').slice(1).map(x => parseInt(x));
+					talents.push([data.slice(o+2, o+16), costData, maxLv]);
+				}
+			}
+		}
+	}
+}
 class Cat {
-	constructor(id, unit_file, unit_buy, skill_file, skill_level_file) {
+	constructor(id, unit_file) {
 		if (id instanceof Object) {
 			this.forms = new Array(id.forms.length);
 			for (let i = 0;i < id.forms.length;++i)
 				this.forms[i] = new Form(id.forms[i]);
+			this.info = new CatInfo(id.info);
 			return;
 		}
+		this.info = new CatInfo(id);
 		const my_name = unit_names[id];
 		const my_name_jp = unit_names_jp[id];
 		const unit_levels = Math.max(my_name.filter(x => x).length, my_name_jp.filter(x => x).length);
@@ -291,7 +399,7 @@ async function getZip() {
 }
 async function createCat(id) {
 	const unit_file = await uints_zip.file(`all/${id}`).async('string');
-	return new Cat(id, unit_file, unit_buy, skill_file, skill_level_file);
+	return new Cat(id, unit_file);
 }
 async function getAllCats() {
 	console.log('[Loading cats]');
@@ -475,3 +583,10 @@ function createTraitIcons(trait, parent) {
 	}
 	parent.appendChild(document.createElement('br'));
 }
+(async () => {
+	unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
+	skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
+	skill_level_file = await ((await fetch('./data/data/SkillLevel.csv')).text());
+	uints_zip = await getZip();
+	window.C = await createCat(194);
+})();
