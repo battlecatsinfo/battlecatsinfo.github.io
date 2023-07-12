@@ -121,7 +121,7 @@ function getTraitNames(trait) {
 		return names[idxs[0]];
 	return get_trait_short_names(trait) + '屬性敵人';
 }
-function getLevelMulti(level) {
+function getLevelMulti(level, my_curve) {
 	var multi = 1;
 	let n = 0;
 	--level;
@@ -133,12 +133,17 @@ function getLevelMulti(level) {
 	return multi;
 }
 class Form {
-	constructor(cat_id, level_count, data) {
+	constructor(name, jp_name, cat_id, level_count, data) {
+		if (!data) {
+			Object.assign(this, name);
+			return;
+		}
+		this.name = name;
+		this.jp_name = jp_name;
 		this.descs = unit_descs[cat_id][level_count];
 		this.trait = 0;
-		this.ab = [];
+		this.ab = {};
 		this.imu = 0;
-		this.tba = 0;
 		this.price = data[6];
 		this.range = data[5];
 		this.hp = data[0];
@@ -235,20 +240,20 @@ class Form {
 		}
 		this.atkType = data[12] ? ATK_RANGE : ATK_SINGLE;
 		let atkCount = this.atk1 == 0 ? 1 : this.atk2 == 0 ? 2 : 3;
-		let lds = new Array(atkCount);
-		lds[0] = data[44];
-		let ldr = new Array(atkCount);
-		ldr[0] = data[45];
+		this.lds = new Array(atkCount);
+		this.lds[0] = data[44];
+		this.ldr = new Array(atkCount);
+		this.ldr[0] = data[45];
 		for (let i = 1;i < atkCount;++i) {
 			if (data[99 + (i - 1) * 3] == 1) {
-				lds[i] = data[99 + (i - 1) * 3 + 1];
-				ldr[i] = data[99 + (i - 1) * 3 + 2];
+				this.lds[i] = data[99 + (i - 1) * 3 + 1];
+				this.ldr[i] = data[99 + (i - 1) * 3 + 2];
 			} else {
-				lds[i] = lds[0];
-				ldr[i] = ldr[0];
+				this.lds[i] = this.lds[0];
+				this.ldr[i] = this.ldr[0];
 			}
 		}
-		for (let x of ldr) {
+		for (let x of this.ldr) {
 			if (x < 0) {
 				this.atkType |= ATK_OMNI;
 				break;
@@ -263,16 +268,19 @@ class Form {
 class Cat {
 	constructor(id, unit_file, unit_buy, skill_file, skill_level_file) {
 		if (id instanceof Object) {
-			Object.assign(this, id);
+			this.forms = new Array(id.forms.length);
+			for (let i = 0;i < id.forms.length;++i)
+				this.forms[i] = new Form(id.forms[i]);
 			return;
 		}
-		const my_name = unit_names[id].filter(x => x);
-		const my_name_jp = unit_names_jp[id].filter(x => x);
-		const unit_levels = Math.max(my_name.length, my_name_jp.length);
+		const my_name = unit_names[id];
+		const my_name_jp = unit_names_jp[id];
+		const unit_levels = Math.max(my_name.filter(x => x).length, my_name_jp.filter(x => x).length);
 		this.forms = new Array(unit_levels);
 		const datas = unit_file.replace('\r', '').split('\n').filter(x => x.trim()).map(line => line.split(',').map(x => parseInt(x)));
-		for (let i = 0;i < unit_levels;++i)
-			this.forms[i] = new Form(id, i, datas[i]);
+		for (let i = 0;i < unit_levels;++i) {
+			this.forms[i] = new Form(my_name[i], my_name_jp[i], id, i, datas[i]);
+		}
 	}
 }
 async function getZip() {
@@ -286,6 +294,7 @@ async function createCat(id) {
 	return new Cat(id, unit_file, unit_buy, skill_file, skill_level_file);
 }
 async function getAllCats() {
+	console.log('[Loading cats]');
 	unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
 	skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
 	skill_level_file = await ((await fetch('./data/data/SkillLevel.csv')).text());
@@ -303,6 +312,7 @@ async function loadAllCats() {
 		var req = indexedDB.open("db", 1);
 		req.onupgradeneeded = function(event) {
 	  	  const db = event.target.result;
+	  	  try { db.deleteObjectStore('cats'); } catch (e) { }
 		    const store = db.createObjectStore('cats', {"keyPath": "id"});
 		    store.createIndex("data", '', {"unique": false});
 		};
@@ -332,4 +342,136 @@ async function loadAllCats() {
 			}
 		}
 	});
+}
+function createAbIcons(ab, parent) {
+	let icon_names = [
+		'strong', 
+		'lethal', 
+		'atkbase', 
+		'crit', 
+	    'z-kill', 
+	    'c-killl', 
+	    'break', 
+	    'shield-break', 
+	    's', 
+	    'bounty', 
+	    'metalic',
+	  'mini-wave', 
+	  'wave', 
+	  'mini-volc', 
+	  'volc', 
+	  'waves',
+	  'bail', 
+	  'bsthunt',
+	  'wkill', 
+	  'ekill',
+	  'weak', 
+	  'stop', 
+	  'slow', 
+	  'only', 
+	  'good', 
+	  'resist', 
+	  'resists', 
+	  'massive', 
+	  'massives', 
+	  'kb', 
+	  'warp', 
+	  'imu-atk'
+	]
+  let descs = [
+	'血量{1}%以下攻擊力增加{2}%',
+	'{1}%機率以1血存活一次', 
+	'善於攻城({1}%傷害)',
+	'會心一擊	',
+	'終結不死	',
+	'靈魂攻擊',
+	'{1}%機率打破惡魔盾',
+	'{1}%機率打破宇宙盾',
+	'{1}%機率使出{2}%以上渾身一擊',
+	'擊倒敵人獲得兩倍金錢',
+	'鋼鐵特性(爆擊之外攻擊只會受1傷害)',
+	'{1}%機率放出Lv{2}小波動',
+	'{1}%機率放出Lv{2}波動',
+	'{1}%機率放出Lv{5}小烈波(出現位置{2}~{3}，持續{4}f)',
+	'{1}%機率放出Lv{5}烈波(出現位置{2}~{3}，持續{4}f)',
+	'波動滅止	',
+	'超生命體特效(傷害1.6倍、受傷害減少30%)',
+	'超獸特效(對超獸敵人傷害2.5倍、減傷40%、{1}%攻擊無效{2}f)',
+	'終結魔女	',
+	'終結使徒',
+	'{1}%機率降低{2}攻擊力{3}{4}秒({5}秒)',
+	'{1}%機率暫停{2}{3}秒({4}秒)',
+	'{1}%機率緩速{2}{3}秒({4}秒)',
+	'只能攻擊{1}',
+	'對{1}傷害傷害1.5倍(1.8倍)受到紅屬性的敵人傷害減少50%(60%)',
+	'受到{1}攻擊的傷害減至1/4(1/5)',
+	'受到{1}攻擊的傷害減至1/5(1/6)',
+	'對{1}造成3倍(4倍)傷害',
+	'對{1}造成5倍(6倍)傷害',
+	'{1}%機率擊退{2}',
+	'{1}%機率傳送{2}',
+	'{1}%發動攻擊無效{2}秒'
+	]
+	for (let i = 1;i <= AB_LAST;++i) {
+		if (ab.hasOwnProperty(i)) {
+			const e = document.createElement('span');
+			e.classList.add('bc-icon', `bc-icon-${icon_names[i - 1]}`);
+			parent.appendChild(e);
+			const e2 = document.createElement('span');
+			{
+				var s = descs[i - 1];
+				let o = ab[i];
+				for (let j = 1;j <= o.length;++j) {
+					s = s.replace('{' + j.toString() + '}', o[j - 1]);
+				}
+				e2.innerText = s;
+			}
+			parent.appendChild(e2);
+			parent.appendChild(document.createElement('br'));
+		}
+	}
+}
+function createImuIcons(imu, parent) {
+	if (!imu) return;
+	let names = [
+		'波動無效', 
+		'暫停無效', 
+		'緩速無效', 
+		'擊退無效',
+		'烈波無效',
+		'降攻無效',
+		'傳送無效',
+		'詛咒無效',
+		'毒擊無效'
+	];
+	let icon_names = ['wave', 'stop', 'slow', 'kb', 'volc', 'weak', 'wrap', 'curse', 'poiatk'];
+	let i = 0;
+	for (let x = 1;x <= IMU_LAST;x <<= 1) {
+		if (imu & x) {
+			const e = document.createElement('span');
+			e.classList.add('bc-icon', `bc-icon-imu-${icon_names[i]}`);
+			parent.appendChild(e);
+			const e2 = document.createElement('span');
+			e2.innerText = names[i];
+			parent.appendChild(e2);
+			parent.appendChild(document.createElement('br'));
+		}
+		i++;
+	}
+}
+function createTraitIcons(trait, parent) {
+	if (!trait) return;
+	const names = [
+		'red', 'float', 'black', 'metal', 'angel', 'alien', 'zombie', 'relic', 'white', 'eva', 'witch', 'demon'
+	];
+	let i = 0;
+	for (let x = 1;x <= TB_LAST;x <<= 1) {
+		if (trait & x) {
+			const e = document.createElement('span');
+			e.classList.add('bc-icon', `bc-icon-trait-${names[i]}`);
+			parent.appendChild(e);
+		}
+		++i;
+	}
+	parent.appendChild(document.createElement('br'));
 }

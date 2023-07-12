@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>我的最愛</title>
+	<link rel="stylesheet" type="text/css" href="w3.css">
+</head>
+<body>
+	<style>
+	a {
+		color: #975c05;
+	}
+	.w3-table td {
+		vertical-align: middle;
+	}
+	</style>
+	<h1 style="text-align: center;margin: 20px;font-size: 50px;">我的最愛</h1>	
+	<div class="w3-container" style="text-align: center;">
+		<table id="my-stars" class="w3-table w3-striped w3-centered" style="font-size: 45px;">
+			<tr>
+				<td>ID</td>
+				<td>圖示</td>
+				<td>名稱</td>
+				<td>動作</td>
+			</tr>
+		</table>
+	</div>
+	<script>
+const my_stars = document.getElementById('my-stars');
+var my_stars_list = localStorage.getItem('star-cats');
+if (my_stars_list == null || my_stars_list == '[]') {
+	my_stars.parentNode.innerHTML = '你還沒有收藏的貓咪，在貓咪檢視畫面按下「&bigstar;加入我的最愛」即可收藏貓咪';
+} else {
+	my_stars_list = JSON.parse(my_stars_list);
+	let i = 0;
+	for (let cat of my_stars_list) {
+		const tr = document.createElement('tr');
+		const td1 = document.createElement('td');
+		const a = document.createElement('a');
+		a.href= './unit.html?id=' + cat.id;
+		a.innerText = cat.id.toString();
+		td1.appendChild(a);
+		const td2 = document.createElement('td');
+		const a2 = document.createElement('a');
+		a2.href = a.href;
+		const img = new Image();
+		img.src = cat.icon;
+		a2.appendChild(img);
+		td2.appendChild(a2);
+		const td3 = document.createElement('td');
+		td3.innerText = cat.name;
+		const td4 = document.createElement('td');
+		const a3 = document.createElement('a');
+		a3.innerText = '刪除';
+		a3.href = '#';
+		a3.style.color = 'red';
+		a3.onclick = function (event) {
+			const tr = event.target.parentNode.parentNode;
+			const id = parseInt(tr.childNodes[0].childNodes[0].innerText);
+			my_stars_list = my_stars_list.filter(x => x.id != id);
+			localStorage.setItem('star-cats', JSON.stringify(my_stars_list));
+			tr.parentNode.removeChild(tr);
+		}
+		td4.appendChild(a3);
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		tr.appendChild(td3);
+		tr.appendChild(td4);
+		if (++i & 1)
+			tr.style.backgroundColor = 'rgb(241, 241, 241)';
+		my_stars.appendChild(tr);
+	}
+}
+	</script>
+</body>
+</html>
