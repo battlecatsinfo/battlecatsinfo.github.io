@@ -3,6 +3,7 @@ var skill_file = null;
 var SkillLevel = null;
 var skill_level_file = null;
 var uints_zip = null;
+var _eggs = null;
 const loader_text = document.getElementById('loader-text');
 const environment = {
 	'ATK': 300,
@@ -156,11 +157,18 @@ class Form {
 		this.pre1 = data[61];
 		this.pre2 = data[62];
 		this.tba = data[4] * 2;
+		this.speed = data[2];
 		let longPre = this.pre2 ? this.pre2 : (this.pre1 ? this.pre1 : this.pre);
 		this.attackF = longPre + this.tba - 1;
 		const form_str = 'fcs'[level_count];
 		const my_id_str = t3str(cat_id);
-		this.icon = `./data/unit/${my_id_str}/${form_str}/uni${my_id_str}_${form_str}00.png`;
+		const may_egg = _eggs[level_count];
+		if (may_egg >= 0) {
+			const str = t3str(_eggs[level_count]);
+			this.icon = `./data/img/m/${str}/${str}_m.png`;
+		} else {
+			this.icon = `./data/unit/${my_id_str}/${form_str}/uni${my_id_str}_${form_str}00.png`;
+		}
 		(data[10]) && (this.trait |= TB_RED);
 		(data[16]) && (this.trait |= TB_FLOAT);
 		(data[17]) && (this.trait |= TB_BLACK);
@@ -307,8 +315,8 @@ class CatInfo {
 			Object.assign(this, id);
 			return;
 		}
-		this.loadAttitional(id);
 		this.loadTalents(id);
+		this.loadAttitional(id);
 	}
 	getRarityString(cat_id) {
 		const rarities = ["基本", "EX", "稀有", "激稀有", "超激稀有", "傳說稀有"];
@@ -379,6 +387,7 @@ class CatInfo {
 		this.crazed = (data[3] > 50000) && (data[13] == 3);
 		let xp_last = this.crazed ? data[3] * 1.5 : data[2] * 2;
 		this.xp_data = [0].concat(data.slice(3, 12), xp_last).join(',');
+		_eggs = data.slice(data.length - 2);
 	}
 	loadTalents(my_id) {
 		const text = skill_file;
@@ -446,7 +455,7 @@ async function getAllCats() {
 	var cats = new Array(unit_names.length);
 	for (let i = 0;i < cats.length;++i) {
 		cats[i] = await createCat(i);
-		loader_text.innerText = `Loading (${i+1}/${cats.length+1})`;
+		loader_text.innerText = `Loading (${i+1}/${cats.length})`;
 	}
 	uints_zip = null;
 	return cats;

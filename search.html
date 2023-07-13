@@ -66,10 +66,12 @@
     textarea {
     	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     }
-    span.span-button {
+    .fake-button {
+    	margin: 0px auto;
+    	margin-top: 20px;
     	border-radius: 5px;
+    	width: 100px;
     	user-select: none;
-    	display: inline-block;
     	padding: 3px 10px;
     	cursor: pointer;
 	    background-color: #ccc;
@@ -190,10 +192,12 @@
 					</tbody>
 				</table>
 				<div class="no-print may-hide">
-					<label for="filter-expr">篩選表達式<span class="span-button" id="filter-go">GO!</span></label>
+					<label for="filter-expr">篩選表達式</label>
 					<textarea rows="3" cols="60" name="filter-expr" id="filter-expr" spellcheck="false"></textarea>
-					<label for="sort-expr">排序表達式<span class="span-button" id="sort-go">GO!</span></label>
+					<label for="sort-expr">排序表達式</label>
 					<textarea rows="3" cols="60" name="sort-expr" id="sort-expr" spellcheck="false"></textarea>
+					<br>
+					<div><p class="fake-button" id="filter-go">GO!</p></div>
 				</div>
 			 </div>
 		</div>

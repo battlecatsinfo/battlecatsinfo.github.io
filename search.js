@@ -68,26 +68,23 @@ const constants = {
     "AB_IMUATK ": AB_IMUATK
   };
 var last_forms;
-var last_ids;
 function rerender(event) {
 	event.preventDefault();
-	renderTable(last_forms, last_ids, event.currentTarget.id);	
+	renderTable(last_forms, event.currentTarget.id);	
 }
-function renderTable(forms, ids, page = 1) {
+function renderTable(forms, page = 1) {
 	let display_forms = forms.slice((page-1) * 10, page * 10);
-	let display_ids = ids.slice((page-1) * 10, page * 10);
 	tbody.textContent = '';
 	pages_a.textContent = '';
 	search_result.innerText = `共有${forms.length}個結果`;
 	last_forms = forms;
-	last_ids = ids; 
 	if (forms.length == 0) {
 		tbody.innerHTML = 
 '<tr><td colSpan="11">沒有符合調件的貓咪!</td></tr>';
 		return;
 	}
 	let c = 1;
-	for (let i = 0;i < ids.length;i += 10) {
+	for (let i = 0;i < forms.length;i += 10) {
 		const td = document.createElement('td');
 		td.innerText = c.toString();
 		td.onclick = rerender;
@@ -98,15 +95,15 @@ function renderTable(forms, ids, page = 1) {
 	for (let i = 0;i < display_forms.length;++i) {
 		const tr = document.createElement('tr');
 		const theForm = display_forms[i];
-		const texts = [display_ids[i], '', theForm.name, theForm.hp, theForm.atk + theForm.atk1 + theForm.atk2, 
-			'DPS', theForm.kb, theForm.range, numStrT(theForm.attackF), '?', theForm.price * 1.5];
+		const texts = [theForm.id, '', theForm.name, theForm.hp, theForm.atk + theForm.atk1 + theForm.atk2, 
+			'DPS', theForm.kb, theForm.range, numStrT(theForm.attackF), theForm.speed, theForm.price * 1.5];
 		for (let j = 0;j < 11;++j) {
 			const e = document.createElement('td');
 			e.innerText = texts[j].toString();
 			tr.appendChild(e);
 		}
 		const span = document.createElement('a');
-		span.href = './unit.html?id=' + display_ids[i].toString();
+		span.href = './unit.html?id=' + theForm.id.toString();
 		span.style.width = '110px';
 		span.style.height = '85px';
 		span.style.backgroundImage = `url(${theForm.icon})`;
@@ -115,6 +112,9 @@ function renderTable(forms, ids, page = 1) {
 		tr.childNodes[1].appendChild(span);
 		tbody.appendChild(tr);
 	}
+}
+function simplify(code) {
+	return code.replaceAll('\n', '').replaceAll(' ', '').replaceAll('\r', '').replaceAll('\t', '');
 }
 function calculate(code = null) {
 	used_variables = new Set();
@@ -129,7 +129,6 @@ function calculate(code = null) {
 	url.searchParams.set("filter", code);
 	history.pushState({}, "", url);
 	var results = [];
-	var result_ids = [];
 	var pcode;
 	try {
 		pcode = pegjs.parse(code);
@@ -141,11 +140,20 @@ function calculate(code = null) {
 		for (let form of cats[id].forms) {
 			if (f(form)) {
 				results.push(form);
-				result_ids.push(id);
 			}
 		}
 	}
-	renderTable(results, result_ids);
+	const sortCode = simplify(sort_expr.value);
+	if (sortCode.length) {
+		try {
+			pcode = pegjs.parse(sortCode);
+		} catch (e) {
+			alert(e.toString());
+		}
+		let f = eval(`form => (${pcode})`);
+		results.sort((form1, form2) => f(form1) - f(form2));
+	}
+	renderTable(results);
 }
 loadAllCats()
 .then(_cats => {
@@ -171,7 +179,7 @@ document.querySelectorAll('button').forEach(elem => {
   });
 });
 document.getElementById('filter-go').onclick = function() {
-	calculate(filter_expr.value.replaceAll('\n', '').replaceAll(' ', '').replaceAll('\r', '').replaceAll('\t', ''));
+	calculate(simplify(filter_expr.value));
 }
 toggle_s.onclick = function() {
 	if (hide_seach) {

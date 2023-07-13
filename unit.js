@@ -23,6 +23,7 @@ function updateValues(form, tbl) {
 	let PRs = chs[8].childNodes;
 	let CD = chs[7].childNodes[5];
 	let KB = chs[7].childNodes[1];
+	chs[7].childNodes[3].innerText = form.speed.toString();
 	PRs[2].innerText = form.price;
 	PRs[4].innerText = form.price * 1.5;
 	PRs[6].innerText = form.price + form.price;
