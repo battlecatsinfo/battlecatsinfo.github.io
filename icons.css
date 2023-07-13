@@ -2,6 +2,16 @@
   display: inline-block;
   background-image: url(data/page/img015.png);
 }
+.bc-icon-trait-eva {
+  width: 41px;
+  height: 41px;
+  background-image: url(data/page/icons/Eva.png);
+}
+.bc-icon-trait-witch {
+  width: 41px;
+  height: 41px;
+  background-image: url(data/page/icons/Witch.png);
+}
 .bc-icon-trait-red {
   width: 43px;
   height: 43px;
@@ -227,7 +237,7 @@
   height: 42px;
   background-position: -313px -145px;
 }
-.bc-icon-imu-wrap {
+.bc-icon-imu-warp {
   width: 42px;
   height: 42px;
   background-position: -355px -145px;
@@ -257,7 +267,7 @@
   height: 42px;
   background-position: -892px -407px;
 }
-.bc-icon-baill {
+.bc-icon-bail {
   width: 42px;
   height: 42px;
   background-position: -527px -980px;
@@ -281,4 +291,9 @@
   width: 42px;
   height: 42px;
   background-position: -808px -407px;
+}
+.bc-icon-omni-atk {
+  width: 42px;
+  height: 42px;
+  background-position: -876px -694px;
 }

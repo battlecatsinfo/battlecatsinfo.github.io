@@ -2,16 +2,203 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>貓咪收尋</title>
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css" href="icons.css">
 	<link rel="stylesheet" type="text/css" href="w3.css">
+	<link rel="stylesheet" type="text/css" href="unit.css">
+	<script src="jszip.min.js"></script>
+	<script src="data/lang/zh/UnitName.js"></script>
+	<script src="data/lang/jp/UnitName.js"></script>
+	<script src="unitlevels.js"></script>
+	<title>貓咪收尋</title>
 </head>
 <body>
-	<h1 style="text-align: center;">貓咪收尋</h1>
-	<div class="w3-main">
-		<table id="main-table">
-		
-		</table>
+	<style>
+	* {
+		vertical-align: middle;
+		font-size: 16px;
+	}
+	table, th, td {
+  		border: 1px solid #d1d5d5;
+	}
+	.w3-ul li {
+		padding: 0px;
+		cursor: default;
+		border-radius: 1px;
+	}
+	li.o-selected {
+		box-shadow: 0 0 2px black;
+		background-color: #7fdbff;
+	}
+	.w3-ul {
+		border-radius: 3px;
+		border: 1.5px solid #818181;
+		margin: 10px;
+	}
+	button {
+		display: block;
+		text-align: left;
+		width: 100%;
+		cursor: default;
+	    transition: opacity 0s;
+	    border: 0px;
+	    background-color: inherit;
+	    padding: 5px;
+	}
+    ul::-webkit-scrollbar {
+      width: 10px;
+    }
+    ul::-webkit-scrollbar-button {
+      background: #ebebeb;
+      border-radius: 4px;
+    }
+    ul::-webkit-scrollbar-track-piece {
+      background: #ebebeb;
+    }
+    ul::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: gray;
+      border: 1px solid darkgray;
+    }
+    tbody > tr:hover {
+    	background-color: lightcyan;
+    }
+    textarea {
+    	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    }
+    span.span-button {
+    	border-radius: 5px;
+    	user-select: none;
+    	display: inline-block;
+    	padding: 3px 10px;
+    	cursor: pointer;
+	    background-color: #ccc;
+	}
+    #pages-a > td {
+    	font-size: 1.2em;
+    	width: 50px;
+    	text-align: center;
+    	border: none;
+    	cursor: pointer;
+    }
+    #pages-a > td:hover {
+    	background-color: #ccc;
+    }
+    .w3-table td {
+    	padding: 0px;
+    }
+    :root {
+    	--mhide: block;
+    }
+    .may-hide {
+    	display: var(--mhide);
+    }
+	</style>
+	<div id="loader-text">Loading...</div>
+	<div id="loader"></div>
+	<script src="cat.js"></script>
+	<div id="main" style="display: none;height: 100%;">
+		<div class="w3-container" style="height: 100%;">
+			  <ul class="w3-ul may-hide" style="width: 150px;">
+			  	<li data-expr="trait&RED" ><button><span class="bc-icon bc-icon-trait-red"></span>紅色敵人</button></li>
+    			<li data-expr="trait&FLOAT"><button><span class="bc-icon bc-icon-trait-float"></span>漂浮敵人</button></li>
+    			<li data-expr="trait&BLACK"><button><span class="bc-icon bc-icon-trait-black"></span>黑色敵人</button></li>
+    			<li data-expr="trait&METAL"><button><span class="bc-icon bc-icon-trait-metal"></span>鋼鐵敵人</button></li>
+    			<li data-expr="trait&ANGEL"><button><span class="bc-icon bc-icon-trait-angel"></span>天使</button></li>
+    			<li data-expr="trait&ALIEN"><button><span class="bc-icon bc-icon-trait-alien"></span>異星戰士</button></li>
+    			<li data-expr="trait&ZOMBIE"><button><span class="bc-icon bc-icon-trait-zombie"></span>不死生物</button></li>
+    			<li data-expr="trait&WHITE"><button><span class="bc-icon bc-icon-trait-white"></span>無屬性敵人</button></li>
+    			<li data-expr="trait&RELIC"><button><span class="bc-icon bc-icon-trait-relic"></span>古代種</button></li>
+    			<li data-expr="trait&DEMON"><button><span class="bc-icon bc-icon-trait-demon"></span>惡魔</button></li>
+    			<li data-expr="trait&EVA"><button><span class="bc-icon bc-icon-trait-eva"></span>使徒</button></li>
+    			<li data-expr="trait&WITCH"><button><span class="bc-icon bc-icon-trait-witch"></span>魔女</button></li>
+			  </ul>
+			  <ul class="w3-ul may-hide" style="width: 150px;">
+   				<li data-expr="atktype&SINGLE"><button><span class="bc-icon bc-icon-single-atk"></span>單體</button></li>
+   				<li data-expr="atktype&RANGE"><button><span class="bc-icon bc-icon-area-atk"></span>範圍</button></li>
+    			<li data-expr="atktype&LD"><button><span class="bc-icon bc-icon-ld-atk"></span>遠距</button></li>
+    			<li data-expr="atktype&OMNI"><button><span class="bc-icon bc-icon-omni-atk"></span>全方位</button></li>
+			  </ul>
+			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 97vh;overflow: scroll;width: 190px;">
+<li style="text-align: center;">能力</li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-weak"></span>攻擊力下降</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-slow"></span>使動作停止</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-only"></span>只能攻擊</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-strong"></span>善於攻擊</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-resist"></span>很耐打</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-resists"></span>超級耐打</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-massive"></span>超大傷害</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-massives"></span>極度傷害</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-kb"></span>打飛</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-warp"></span>傳送</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-curse"></span>詛咒</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-imu-atk"></span>攻擊無效</button></li>
+<li style="text-align: center;">效果</li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-strong"></span>攻擊力上升</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-lethal"></span>死前存活	</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-atkbase"></span>善於攻城</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-crit"></span>會心一擊</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-z-kill"></span>終結不死	</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-ckill"></span>靈魂攻擊	</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-break"></span>破壞護盾</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-shield-break"></span>破壞惡魔盾</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-s"></span>渾身一擊</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-bounty"></span>得到很多金錢</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-metalic"></span>鋼鐵</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-mini-wave"></span>小波動</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-wave"></span>波動</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-mini-volc"></span>小烈波</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-volc"></span>烈波</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-waves"></span>波動滅止</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-bail"></span>超生命體特效</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-bsthunt"></span>超獸特效</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-wkill"></span>終結魔女</button></li>
+<li data-expr="1"><button><span class="bc-icon bc-icon-ekill"></span>終結使徒</button></li>
+<li data-expr="imu&IMU_WEAK"><button><span class="bc-icon bc-icon-imu-weak"></span>攻擊力下降無效</button></li>
+<li data-expr="imu&IMU_STOP"><button><span class="bc-icon bc-icon-imu-stop"></span>動作停止無效</button></li>
+<li data-expr="imu&IMU_SLOW"><button><span class="bc-icon bc-icon-imu-slow"></span>動作變慢無效</button></li>
+<li data-expr="imu&IMU_KB"><button><span class="bc-icon bc-icon-imu-kb"></span>打飛無效</button></li>
+<li data-expr="imu&IMU_WAVE"><button><span class="bc-icon bc-icon-imu-wave"></span>波動傷害無效</button></li>
+<li data-expr="imu&IMU_VOLC"><button><span class="bc-icon bc-icon-imu-volc"></span>烈波傷害無效</button></li>
+<li data-expr="imu&IMU_WARP"><button><span class="bc-icon bc-icon-imu-warp"></span>傳送無效</button></li>
+<li data-expr="imu&IMU_CURSE"><button><span class="bc-icon bc-icon-imu-curse"></span>古代的詛咒無效</button></li>
+<li data-expr="imu&IMU_POIATK"><button><span class="bc-icon bc-icon-imu-poiatk"></span>毒擊傷害無效</button></li>
+			 </ul>
+			 <div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
+			 	<p><span id="search-result"></span><a href="#" id="toggle-s" style="padding-left: 1em;">隱藏收尋器</a></p>
+				<table class="w3-table w3-centered" style="min-height: 886px;width: 100%;margin-bottom: 0px;">
+					<thead>
+						<tr>
+							<td>ID</td>
+							<td style="width: 110px;">圖示</td>
+							<td>名稱</td>
+							<td>HP</td>
+							<td>攻擊力</td>
+							<td>DPS</td>
+							<td>KB</td>
+							<td>射程</td>
+							<td>攻擊頻率</td>
+							<td>跑速</td>
+							<td>生產成本</td>
+						</tr>
+					</thead>
+					<tbody id="tbody"></tbody>
+				</table>
+				<table style="margin: 1em auto;">
+					<tbody>
+						<tr id="pages-a"></tr>
+					</tbody>
+				</table>
+				<div class="no-print may-hide">
+					<label for="filter-expr">篩選表達式<span class="span-button" id="filter-go">GO!</span></label>
+					<textarea rows="3" cols="60" name="filter-expr" id="filter-expr" spellcheck="false"></textarea>
+					<label for="sort-expr">排序表達式<span class="span-button" id="sort-go">GO!</span></label>
+					<textarea rows="3" cols="60" name="sort-expr" id="sort-expr" spellcheck="false"></textarea>
+				</div>
+			 </div>
+		</div>
+		<script src="search.js"></script>
+		<script src="./parser.js"></script>
 	</div>
 </body>
 </html>

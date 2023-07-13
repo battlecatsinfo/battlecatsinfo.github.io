@@ -328,9 +328,9 @@ function renderForm(form) {
 	makeTd(tbodytr6, '?');
 
 	makeTd(tbodytr7, 'KB');
-	makeTd(tbodytr7, '2');
+	makeTd(tbodytr7, '');
 	makeTd(tbodytr7, '跑速');
-	makeTd(tbodytr7, '32');
+	makeTd(tbodytr7, '');
 	makeTd(tbodytr7, '再生產');
 	makeTd(tbodytr7, '');
 
@@ -377,7 +377,7 @@ function renderExtras(my_cat) {
 		let version = my_cat.info.version.toString();
 		unit_stats += `Ver ${parseInt(version.slice(0, 2))}.${parseInt(version.slice(2, 4))}.${parseInt(version.slice(4))} 新增\n`;
 	}
-	unit_stats += my_cat.info.getCatFruitString();
+	if (my_cat.info.upReqs) unit_stats += my_cat.info.getCatFruitString();
 	pre.innerText = unit_stats;
 	document.getElementById('show-xp-graph').href = './xpgraph.html?data=' + btoa(my_cat.info.xp_data);
 	unit_content.appendChild(pre);

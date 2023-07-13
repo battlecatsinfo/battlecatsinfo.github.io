@@ -107,7 +107,6 @@ function getTraitNames(trait) {
 		return '所有敵人';
 	if ((trait&127) == 127)
 		return '有色敵人';
-	
 	let names = ['紅色敵人', '漂浮敵人', '黑色敵人', '鋼鐵敵人', '天使敵人', '異星戰士', '不死生物', '鋼鐵敵人', '無屬性敵人', '使徒', '魔女', '惡魔'];	
 	let i = 0;
 	let idxs = [];
@@ -138,9 +137,10 @@ class Form {
 			Object.assign(this, name);
 			return;
 		}
+		this.id = cat_id;
+		this.lvc = level_count;
 		this.name = name;
 		this.jp_name = jp_name;
-		this.descs = unit_descs[cat_id][level_count];
 		this.trait = 0;
 		this.ab = {};
 		this.imu = 0;
@@ -263,6 +263,42 @@ class Form {
 				break;
 			}
 		}
+	}
+	getid() {
+		return this.id;
+	}
+	getlevelcount() {
+		this.lvc;
+	}
+	getkb() {
+		return this.kb;
+	}
+	gettrait() {
+		return this.trait;
+	}
+	getrange() {
+		return this.range;
+	}
+	getattackf() {
+		return this.attackF;
+	}
+	gethp() {
+		return this.hp * 2.5;
+	}
+	getatk() {
+		return 2.5 * (this.atk + this.atk1 + this.atk2);
+	}
+	getdps() {
+		return (this.getatk() * 30) / this.attackF;
+	}
+	getcd() {
+		return this.cd;
+	}
+	getimu() {
+		return this.imu;
+	}
+	getatktype() {
+		return this.atkType;
 	}
 }
 class CatInfo {
@@ -458,7 +494,7 @@ function createAbIcons(ab, parent) {
 		'atkbase', 
 		'crit', 
 	    'z-kill', 
-	    'c-killl', 
+	    'ckill', 
 	    'break', 
 	    'shield-break', 
 	    's', 
@@ -588,5 +624,4 @@ function createTraitIcons(trait, parent) {
 	skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
 	skill_level_file = await ((await fetch('./data/data/SkillLevel.csv')).text());
 	uints_zip = await getZip();
-	window.C = await createCat(194);
 })();
