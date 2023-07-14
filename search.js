@@ -8,6 +8,8 @@ const pages_a = document.getElementById('pages-a');
 var hide_seach = false;
 const tables = document.getElementById('tables');
 const toggle_s = document.getElementById('toggle-s');
+const def_lv_e = document.getElementById('def-lv');
+const plus_lv_e = document.getElementById('plus-lv');
 const constants = {
     "RED": TB_RED,
     "FLOAT": TB_FLOAT,
@@ -63,24 +65,24 @@ const constants = {
     "AB_RESISTS": AB_RESISTS,
     "AB_MASSIVE": AB_MASSIVE,
     "AB_MASSIVES": AB_MASSIVES,
-    "AB_KB ": AB_KB,
-    "AB_WARP ": AB_WARP,
-    "AB_IMUATK ": AB_IMUATK
+    "AB_KB": AB_KB,
+    "AB_IMUATK": AB_IMUATK
   };
 var last_forms;
 function rerender(event) {
 	event.preventDefault();
-	renderTable(last_forms, event.currentTarget.id);	
+	renderTable(last_forms, event.currentTarget.id);
 }
 function renderTable(forms, page = 1) {
-	let display_forms = forms.slice((page-1) * 10, page * 10);
+	let H = page * 10;
+	let display_forms = forms.slice(H - 10, H);
 	tbody.textContent = '';
 	pages_a.textContent = '';
-	search_result.innerText = `共有${forms.length}個結果`;
+	search_result.innerText = `顯示${H - 9}第到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
 	last_forms = forms;
 	if (forms.length == 0) {
 		tbody.innerHTML = 
-'<tr><td colSpan="11">沒有符合調件的貓咪!</td></tr>';
+'<tr><td colSpan="12">沒有符合調件的貓咪!</td></tr>';
 		return;
 	}
 	let c = 1;
@@ -89,15 +91,23 @@ function renderTable(forms, page = 1) {
 		td.innerText = c.toString();
 		td.onclick = rerender;
 		td.id = c;
+		if (page == c) {
+			td.style.backgroundColor = '#ccc';
+			td.onclick = null;
+		}
 		pages_a.appendChild(td);
 		if (c++ >= 10) break;
 	}
 	for (let i = 0;i < display_forms.length;++i) {
 		const tr = document.createElement('tr');
 		const theForm = display_forms[i];
-		const texts = [theForm.id, '', theForm.name, theForm.hp, theForm.atk + theForm.atk1 + theForm.atk2, 
-			'DPS', theForm.kb, theForm.range, numStrT(theForm.attackF), theForm.speed, theForm.price * 1.5];
-		for (let j = 0;j < 11;++j) {
+		useCurve(theForm.id);
+		_info = cats[theForm.id].info;
+		const base = Math.min(def_lv, _info.maxBase);
+		const plus = Math.min(plus_lv, _info.maxPlus);
+		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', theForm.name + '/' + theForm.jp_name, theForm.gethp().toFixed(0), theForm.getatk().toFixed(0), 
+			theForm.getdps().toFixed(0), theForm.kb.toString(), theForm.range.toString(), parseFloat(theForm.attackF / 30).toFixed(2).toString() + '秒/下', theForm.speed, (theForm.price * 1.5).toFixed(0)];
+		for (let j = 0;j < 12;++j) {
 			const e = document.createElement('td');
 			e.innerText = texts[j].toString();
 			tr.appendChild(e);
@@ -109,7 +119,7 @@ function renderTable(forms, page = 1) {
 		span.style.backgroundImage = `url(${theForm.icon})`;
 		span.style.backgroundPosition = '-10px -20px';
 		span.style.display = 'inline-block';
-		tr.childNodes[1].appendChild(span);
+		tr.childNodes[2].appendChild(span);
 		tbody.appendChild(tr);
 	}
 }
@@ -125,8 +135,18 @@ function calculate(code = null) {
 			code = '1';
 	} else if (!code.length)
 		return renderTable([], []);
+	const sortCode = simplify(sort_expr.value);
 	const url = new URL(location);
-	url.searchParams.set("filter", code);
+	def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60);
+	plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90);
+	def_lv_e.value = def_lv;
+	plus_lv_e.value = plus_lv.toString();
+	url.searchParams.set('deflv', def_lv.toString());
+	url.searchParams.set('pluslv', plus_lv.toString());
+	if (code != '1')
+		url.searchParams.set("filter", code);
+	if (sortCode.length)
+		url.searchParams.set('sort', sortCode);
 	history.pushState({}, "", url);
 	var results = [];
 	var pcode;
@@ -137,13 +157,15 @@ function calculate(code = null) {
 	}
 	let f = eval(`form => (${pcode})`);
 	for (let id = 0;id < cats.length;++id) {
-		for (let form of cats[id].forms) {
+		let c = cats[id];
+		_info = c.info;
+		for (let form of c.forms) {
+			useCurve(form.id);
 			if (f(form)) {
 				results.push(form);
 			}
 		}
 	}
-	const sortCode = simplify(sort_expr.value);
 	if (sortCode.length) {
 		try {
 			pcode = pegjs.parse(sortCode);
@@ -151,7 +173,15 @@ function calculate(code = null) {
 			alert(e.toString());
 		}
 		let f = eval(`form => (${pcode})`);
-		results.sort((form1, form2) => f(form1) - f(form2));
+		results.sort((form1, form2) => {
+			useCurve(form2.id);
+			_info = cats[form2.id].info;
+			const a = f(form2, );
+			useCurve(form1.id);
+			_info = cats[form1.id].info;
+			const b = f(form1);
+			return a - b;
+		});
 	}
 	renderTable(results);
 }
@@ -161,7 +191,17 @@ loadAllCats()
 	document.getElementById('loader').style.display = 'none';
 	loader_text.style.display = 'none';
 	document.getElementById('main').style.display = 'block';
-	const filter = new URLSearchParams(location.search).get('filter');
+	const params = new URLSearchParams(location.search);
+	const filter = params.get('filter');
+	const sort = params.get('sort');
+	if (sort)
+		sort_expr.value = sort;
+	const def_lv = params.get('deflv');
+	const plus_lv = params.get('pluslv');
+	if (def_lv)
+		def_lv_e.value = def_lv.toString();
+	if (plus_lv)
+		plus_lv_e.value = plus_lv;
 	calculate(filter ? filter : '1');
 });
 document.querySelectorAll('button').forEach(elem => {

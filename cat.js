@@ -3,8 +3,13 @@ var skill_file = null;
 var SkillLevel = null;
 var skill_level_file = null;
 var uints_zip = null;
+var anim2 = null;
 var _eggs = null;
 const loader_text = document.getElementById('loader-text');
+var def_lv;
+var plus_lv;
+var my_curve;
+var _info;
 const environment = {
 	'ATK': 300,
 	'DEF': 300
@@ -89,7 +94,7 @@ function numStr(num) {
 	return parseFloat(num.toFixed(2)).toString();
 }
 function numStrT(num) {
-	return parseFloat(num / 30).toFixed(2).toString() + 's';
+	return parseFloat(num.toFixed(2)).toString() + '秒';
 }
 function get_trait_short_names(trait) {
 	var s = '';
@@ -121,10 +126,13 @@ function getTraitNames(trait) {
 		return names[idxs[0]];
 	return get_trait_short_names(trait) + '屬性敵人';
 }
-function getLevelMulti(level, my_curve) {
-	var multi = 1;
+const _curves = [curveData0, curveData1, curveData2, curveData3, curveData4, curveData5];
+function useCurve(my_id) {
+	my_curve = _curves[curveMap[my_id]];
+}
+function getLevelMulti(level) {
+	var multi = 0.8;
 	let n = 0;
-	--level;
 	for (let c of my_curve) {
 		if (level <= n) break;
 		multi += Math.min(level - n, 10) * (c / 100);
@@ -158,8 +166,9 @@ class Form {
 		this.pre2 = data[62];
 		this.tba = data[4] * 2;
 		this.speed = data[2];
-		let longPre = this.pre2 ? this.pre2 : (this.pre1 ? this.pre1 : this.pre);
-		this.attackF = longPre + this.tba - 1;
+		const atkAnim = anim2[cat_id][level_count];
+		this.backswing = atkAnim[0];
+		this.attackF = atkAnim[1];
 		const form_str = 'fcs'[level_count];
 		const my_id_str = t3str(cat_id);
 		const may_egg = _eggs[level_count];
@@ -177,6 +186,7 @@ class Form {
 		(data[20]) && (this.trait |= TB_ANGEL);
 		(data[21]) && (this.trait |= TB_ALIEN);
 		(data[22]) && (this.trait |= TB_ZOMBIE);
+		(data[78]) && (this.trait |= TB_RELIC);
 		(data[96]) && (this.trait |= TB_DEMON);
 		if (this.trait) {
 			let trait_names = [getTraitNames(this.trait)];
@@ -244,6 +254,8 @@ class Form {
 				}
 			}
 			(data[95]) && (this.ab[AB_SHIELDBREAK] = [data[95]]);
+			(data[97]) && (this.ab[AB_BAIL] = []);
+			(data[98]) && (this.ab[AB_CKILL] = []);
 			(data[105] && (this.ab[AB_BSTHUNT] = [data[106], data[107]]));
 		}
 		this.atkType = data[12] ? ATK_RANGE : ATK_SINGLE;
@@ -272,14 +284,23 @@ class Form {
 			}
 		}
 	}
+	hasab(ab) {
+		return this.ab.hasOwnProperty(ab);
+	}
 	getid() {
 		return this.id;
+	}
+	getTotalLv() {
+		return Math.min(def_lv, _info.maxBase) + Math.min(plus_lv, _info.maxPlus);
 	}
 	getlevelcount() {
 		this.lvc;
 	}
 	getkb() {
 		return this.kb;
+	}
+	getrarity() {
+		return _info.rarity;
 	}
 	gettrait() {
 		return this.trait;
@@ -290,14 +311,78 @@ class Form {
 	getattackf() {
 		return this.attackF;
 	}
+	getbackswing() {
+		return this.backswing;
+	}
 	gethp() {
-		return this.hp * 2.5;
+		return this.hp * 2.5 * getLevelMulti(this.getTotalLv());
 	}
 	getatk() {
-		return 2.5 * (this.atk + this.atk1 + this.atk2);
+		return 2.5 * (this.atk + this.atk1 + this.atk2) * getLevelMulti(this.getTotalLv());
 	}
 	getdps() {
 		return (this.getatk() * 30) / this.attackF;
+	}
+	getthp() {
+		let hp = this.gethp();
+		if (this.ab.hasOwnProperty(AB_RESIST)) {
+			hp *= (this.trait & trait_treasure) ? 5 : 4;
+		} else if (this.ab.hasOwnProperty(AB_RESISTS)) {
+			hp *= (this.trait & trait_treasure) ? 7 : 6;
+		}
+		if (this.ab.hasOwnProperty(AB_GOOD)) {
+			hp *= 2.5;
+		}
+		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
+			hp /= 0.6;
+		}
+		if (this.ab.hasOwnProperty(AB_BAIL)) {
+			hp /= 0.7;
+		}
+		if (this.ab.hasOwnProperty(AB_EKILL)) {
+			hp *= 5;
+		}
+		if (this.ab.hasOwnProperty(AB_WKILL)) {
+			hp *= 10;
+		}
+		return hp;
+	}
+	gettdps() {
+		let dps = this.getdps();
+		if (this.ab.hasOwnProperty(AB_ATKBASE))
+			return dps * 4;
+		if (this.ab.hasOwnProperty(AB_S)) {
+			const s = this.ab[AB_S];
+			dps += (s[1] * s[0] * 30) / (100 * this.attackF);
+		}
+		if (this.ab.hasOwnProperty(AB_CRIT)) {
+			dps += (this.ab[AB_CRIT][0] * 2 * 30) / (100 * this.attackF);
+		}
+		if (this.ab.hasOwnProperty(AB_STRONG)) {
+			const o = this.ab[AB_STRONG];
+			dps *= (o[0] * (1 + (o[1]/100)));
+		}
+		if (this.ab.hasOwnProperty(AB_MASSIVE)) {
+			dps *= (this.trait & trait_treasure) ? 6 : 5;
+		} else if (this.ab.hasOwnProperty(AB_MASSIVES)) {
+			dps *= (this.trait & trait_treasure) ? 4 : 3;
+		}
+		if (this.ab.hasOwnProperty(AB_GOOD)) {
+			dps *= (this.trait & trait_treasure) ? 1.8 : 1.5;
+		}
+		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
+			dps *= 2.5;
+		}
+		if (this.ab.hasOwnProperty(AB_BAIL)) {
+			dps *= 1.6;
+		}
+		if (this.ab.hasOwnProperty(AB_EKILL)) {
+			dps *= 5;
+		}
+		if (this.ab.hasOwnProperty(AB_WKILL)) {
+			dps *= 5;
+		}
+		return dps;
 	}
 	getcd() {
 		return this.cd;
@@ -535,7 +620,7 @@ function createAbIcons(ab, parent) {
 	'血量{1}%以下攻擊力增加{2}%',
 	'{1}%機率以1血存活一次', 
 	'善於攻城({1}%傷害)',
-	'會心一擊	',
+	'{1}機率會心一擊',
 	'終結不死	',
 	'靈魂攻擊',
 	'{1}%機率打破惡魔盾',
@@ -552,13 +637,13 @@ function createAbIcons(ab, parent) {
 	'超獸特效(對超獸敵人傷害2.5倍、減傷40%、{1}%攻擊無效{2}f)',
 	'終結魔女	',
 	'終結使徒',
-	'{1}%機率降低{2}攻擊力{3}{4}秒({5}秒)',
+	'{1}%機率降低{2}攻擊力至{3}%{4}秒({5}秒)',
 	'{1}%機率暫停{2}{3}秒({4}秒)',
 	'{1}%機率緩速{2}{3}秒({4}秒)',
 	'只能攻擊{1}',
 	'對{1}傷害傷害1.5倍(1.8倍)受到紅屬性的敵人傷害減少50%(60%)',
 	'受到{1}攻擊的傷害減至1/4(1/5)',
-	'受到{1}攻擊的傷害減至1/5(1/6)',
+	'受到{1}攻擊的傷害減至1/6(1/7)',
 	'對{1}造成3倍(4倍)傷害',
 	'對{1}造成5倍(6倍)傷害',
 	'{1}%機率擊退{2}',
@@ -597,7 +682,7 @@ function createImuIcons(imu, parent) {
 		'詛咒無效',
 		'毒擊無效'
 	];
-	let icon_names = ['wave', 'stop', 'slow', 'kb', 'volc', 'weak', 'wrap', 'curse', 'poiatk'];
+	let icon_names = ['wave', 'stop', 'slow', 'kb', 'volc', 'weak', 'warp', 'curse', 'poiatk'];
 	let i = 0;
 	for (let x = 1;x <= IMU_LAST;x <<= 1) {
 		if (imu & x) {
@@ -632,5 +717,6 @@ function createTraitIcons(trait, parent) {
 	unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
 	skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
 	skill_level_file = await ((await fetch('./data/data/SkillLevel.csv')).text());
+	anim2 = await ((await fetch('./anim2')).json());
 	uints_zip = await getZip();
 })();

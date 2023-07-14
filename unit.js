@@ -10,7 +10,6 @@ if (my_id < 0 || my_id >= curveMap.length) {
 	window.stop()
 	throw '';
 }
-let my_curve = [20].concat([curveData0, curveData1, curveData2, curveData3, curveData4, curveData5][curveMap[my_id]]);
 const cat_icons = document.getElementById('cat-icons');
 const unit_content = document.getElementById('unit-content');
 var level_count = 0;
@@ -24,29 +23,15 @@ function updateValues(form, tbl) {
 	let CD = chs[7].childNodes[5];
 	let KB = chs[7].childNodes[1];
 	chs[7].childNodes[3].innerText = form.speed.toString();
-	PRs[2].innerText = form.price;
-	PRs[4].innerText = form.price * 1.5;
-	PRs[6].innerText = form.price + form.price;
+	PRs[2].innerText = (form.price).toFixed(0);
+	PRs[4].innerText = (form.price * 1.5).toFixed(0);
+	PRs[6].innerText = (form.price + form.price).toFixed(0);
 	let baseHP = form.hp * (1 + environment.DEF * 0.005);
 	if (form.trait && form.ab.hasOwnProperty(AB_RESIST)) {
-		let x4 = get_trait_short_names(form.trait & trait_treasure);
-		let x3 = get_trait_short_names(form.trait & trait_no_treasure);
-		for (let i = 1;i <= 5;++i) {
-			let hp = baseHP * getLevelMulti(i * 10, my_curve);
-			let x4s = x4.length ? ('<br>' + x4 + (hp*4).toFixed(0)) : '';
-			let x3s = x3.length ? ('<br>' + x3 + (hp*3).toFixed(0)) : '';
-			HPs[i].innerHTML = hp.toFixed(0) + x3s + x4s;
-			HPPKBs[i].innerHTML = (hp / form.kb).toFixed(0);
-		}
-		let val = baseHP * 0.2;
-		let x4s = x4.length ? ('<br>' + x4 + '+' + numStr(val*4)) : '';
-		let x3s = x3.length ? ('<br>' + x3 + '+' + numStr(val*3)) : '';
-		HPs[6].innerHTML = '+' + numStr(val) + x3s + x4s;
-	} else if (form.trait && form.ab.hasOwnProperty(AB_RESISTS)) {
 		let x4 = get_trait_short_names(form.trait & trait_no_treasure);
 		let x5 = get_trait_short_names(form.trait & trait_treasure);
 		for (let i = 1;i <= 5;++i) {
-			let hp = baseHP * getLevelMulti(i * 10, my_curve);
+			let hp = baseHP * getLevelMulti(i * 10);
 			let x4s = x4.length ? ('<br>' + x4 + (hp*4).toFixed(0)) : '';
 			let x5s = x5.length ? ('<br>' + x5 + (hp*5).toFixed(0)) : '';
 			HPs[i].innerHTML = hp.toFixed(0) + x4s + x5s;
@@ -56,9 +41,23 @@ function updateValues(form, tbl) {
 		let x4s = x4.length ? ('<br>' + x4 + '+' + numStr(val*4)) : '';
 		let x5s = x5.length ? ('<br>' + x5 + '+' + numStr(val*5)) : '';
 		HPs[6].innerHTML = '+' + numStr(val) + x4s + x5s;
+	} else if (form.trait && form.ab.hasOwnProperty(AB_RESISTS)) {
+		let x6 = get_trait_short_names(form.trait & trait_no_treasure);
+		let x7 = get_trait_short_names(form.trait & trait_treasure);
+		for (let i = 1;i <= 5;++i) {
+			let hp = baseHP * getLevelMulti(i * 10);
+			let x7s = x7.length ? ('<br>' + x7 + (hp*7).toFixed(0)) : '';
+			let x6s = x6.length ? ('<br>' + x6 + (hp*6).toFixed(0)) : '';
+			HPs[i].innerHTML = hp.toFixed(0) + x6s + x7s;
+			HPPKBs[i].innerHTML = (hp / form.kb).toFixed(0);
+		}
+		let val = baseHP * 0.2;
+		let x6s = x6.length ? ('<br>' + x6 + '+' + numStr(val*6)) : '';
+		let x7s = x7.length ? ('<br>' + x7 + '+' + numStr(val*7)) : '';
+		HPs[6].innerHTML = '+' + numStr(val) + x6s + x7s;
 	} else {
 		for (let i = 1;i <= 5;++i) {
-			let hp = baseHP * getLevelMulti(i * 10, my_curve);
+			let hp = baseHP * getLevelMulti(i * 10);
 			HPs[i].innerText = hp.toFixed(0);
 			HPPKBs[i].innerText = (hp / form.kb).toFixed(0);
 		}
@@ -72,7 +71,7 @@ function updateValues(form, tbl) {
 		let x3 = get_trait_short_names(form.trait & trait_no_treasure);
 		let x4 = get_trait_short_names(form.trait & trait_treasure);
 		for (let i = 1;i <= 5;++i) {
-			let _atk = baseATK * getLevelMulti(i * 10, my_curve);
+			let _atk = baseATK * getLevelMulti(i * 10);
 			let x4s = x4.length ? ('<br>' + x4 + (_atk*4).toFixed(0)) : '';
 			let x3s = x3.length ? ('<br>' + x3 + (_atk*3).toFixed(0)) : '';
 			let x4dps = x4.length ? ('<br>' + x4 + ((_atk*4)/attackS).toFixed(0)) : '';
@@ -91,7 +90,7 @@ function updateValues(form, tbl) {
 		let x5 = get_trait_short_names(form.trait & trait_no_treasure);
 		let x6 = get_trait_short_names(form.trait & trait_treasure);
 		for (let i = 1;i <= 5;++i) {
-			let _atk = baseATK * getLevelMulti(i * 10, my_curve);
+			let _atk = baseATK * getLevelMulti(i * 10);
 			let x5s = x5.length ? ('<br>' + x5 + (_atk*5).toFixed(0)) : '';
 			let x6s = x6.length ? ('<br>' + x6 + (_atk*6).toFixed(0)) : '';
 			let x5dps = x5.length ? ('<br>' + x5 + ((_atk*5)/attackS).toFixed(0)) : '';
@@ -100,15 +99,15 @@ function updateValues(form, tbl) {
 			DPSs[i].innerHTML = (_atk / attackS).toFixed(0) + x5dps + x6dps;
 		}
 		let _atk = baseATK * 0.2;
-		let x4s = x5.length ? ('<br>' + x5 + '+' + numStr(_atk*5)) : '';
-		let x3s = x6.length ? ('<br>' + x6 + '+' + numStr(_atk*6)) : '';
-		let x4dps = x5.length ? ('<br>' + x5 + '+' + numStr((_atk*5)/attackS)) : '';
-		let x3dps = x6.length ? ('<br>' + x6 + '+' + numStr((_atk*6)/attackS)) : '';
+		let x5s = x5.length ? ('<br>' + x5 + '+' + numStr(_atk*5)) : '';
+		let x6s = x6.length ? ('<br>' + x6 + '+' + numStr(_atk*6)) : '';
+		let x5dps = x5.length ? ('<br>' + x5 + '+' + numStr((_atk*5)/attackS)) : '';
+		let x6dps = x6.length ? ('<br>' + x6 + '+' + numStr((_atk*6)/attackS)) : '';
 		ATKs[6].innerHTML = '+' + numStr(_atk) + x5s + x6s;
 		DPSs[6].innerHTML = '+' + numStr(_atk / attackS) + x5dps + x6dps;
 	} else {
 		for (let i = 1;i <= 5;++i) {
-			let _atk = baseATK * getLevelMulti(i * 10, my_curve);
+			let _atk = baseATK * getLevelMulti(i * 10);
 			ATKs[i].innerText = _atk.toFixed(0);
 			DPSs[i].innerText = (_atk / attackS).toFixed(0);
 		}
@@ -116,7 +115,8 @@ function updateValues(form, tbl) {
 		DPSs[6].innerText = '+' + numStr((baseATK * 0.2) / attackS);
 	}
 	chs[6].childNodes[1].innerText = numStrT(form.tba);
-	chs[5].childNodes[1].innerText = Math.round(attackS).toPrecision(2) + '秒/下';
+	chs[6].childNodes[3].innerText = numStrT(form.backswing);
+	chs[5].childNodes[1].innerText = attackS.toPrecision(2) + '秒/下';
 	chs[5].childNodes[3].innerText = numStrT(form.pre);
 	var atkType = '';
 	if (form.atkType & ATK_OMNI)
@@ -129,18 +129,22 @@ function updateValues(form, tbl) {
 	specials.style.textAlign = 'left';
 	const lds = form.lds;
 	const ldr = form.ldr;
-	if (lds.length != 1) {
+	if (form.atk1 || form.atk2) {
 		const e = document.createElement('p');
 		let atksPre = [form.atk, form.atk1, form.atk2].slice(0, lds.length).map(x => ((x / totalAtk)*100).toFixed(0)+'%');
 		e.innerText = `${lds.length}回連續攻擊(傷害${atksPre.join('-')})`;
 		specials.appendChild(e);
 		specials.appendChild(document.createElement('br'));
-		const nums = '①②③';
-		var s = '';
-		for (let i = 0;i < lds.length;++i) {
-			s += `${nums[i]}${lds[i]}~${lds[i]+ldr[i]}<br>`;
+		if (lds.length != 1 && (lds.some(x => x) || ldr.some(x => x))) {
+			const nums = '①②③';
+			var s = '';
+			for (let i = 0;i < lds.length;++i) {
+				s += `${nums[i]}${lds[i]}~${lds[i]+ldr[i]}<br>`;
+			}
+			chs[5].childNodes[5].innerHTML = `接觸點${form.range}<br>範圍<br>${s.slice(0,s.length-4)}`;
+		} else {
+			chs[5].childNodes[5].innerText = form.range;
 		}
-		chs[5].childNodes[5].innerHTML = `接觸點${form.range}<br>範圍<br>${s.slice(0,s.length-4)}`;
 	} else {
 		chs[5].childNodes[5].innerText = form.range;
 	}
@@ -149,115 +153,6 @@ function updateValues(form, tbl) {
 	createAbIcons(form.ab, specials);
 	KB.innerText = form.kb.toString();
 	CD.innerText = numStrT(form.cd);
-}
-function loadAdditional() {
-	fetch('./data/data/unitbuy.csv')
-	.then(res => res.text())
-	.then(text => {
-		const rarities = ["基本", "EX", "稀有", "激稀有", "超激稀有", "傳說稀有"];
-		var unit_stats = '';
-		var i = 0;
-		var start = 0;
-		var end;
-		while (i < my_id) {
-			var j = start;
-			for (;text[j] != '\n';++j) {}
-			start = j + 1;
-			++i;
-		}
-		for (end = start;text[end] != '\n';++end) {}
-		let data = text.slice(start, end).split(',').map(x => parseInt(x));
-		unit_stats += '貓咪類別： ' + rarities[data[13]];
-		unit_stats += '\n最大基本等級： ' + data[50].toString();
-		unit_stats += '\n最大+等級： ' + data[51].toString();
-		unit_stats += '\n';
-		var version = data[data.length - 6];
-		if (version >= 100000) {
-			version = version.toString();
-			unit_stats += `Ver ${parseInt(version.slice(0, 2))}.${parseInt(version.slice(2, 4))}.${parseInt(version.slice(4))} 新增\n`;
-		}
-		const catfruits = {
-			30: '紫色貓薄荷種子',
-			31: '紅色貓薄荷種子',
-			32: '籃色貓薄荷種子',
-			33: '綠色貓薄荷種子',
-			34: '黃色貓薄荷種子',
-			35: '紫色貓薄荷果實',
-			36: '紅色貓薄荷果實',
-			37: '籃色貓薄荷果實',
-			38: '綠色貓薄荷果實',
-			39: '黃色貓薄荷種子',
-			40: '彩虹貓薄荷果實',
-			41: '古代貓薄荷種子',
-			42: '古代貓薄荷果實',
-			43: '彩虹貓薄荷種子',
-			44: '黃金貓薄荷果實',
-			160: '惡貓薄荷種子',
-			161: '惡貓薄荷果實',
-			164: '黃金貓薄荷種子',
-			167: "紫獸石",
-			168: "紅獸石",
-			169: "蒼獸石",
-			170: "翠獸石",
-			171: "黃獸石",
-			179: "紫獸石結晶",
-			180: "紅獸石結晶",
-			181: "蒼獸石結晶",
-			182: "翠獸石結晶",
-			183: "黃獸石結晶",
-			184: "虹獸石"
-		};
-		
-		if (data[27]) {
-			var s = '角色等級達到Lv30後，以';
-			var reqs = ['XP ' + data[27].toString()];
-			for (let i = 28;i <= 38;i+=2) {
-				let amount = data[i + 1];
-				if (amount) {
-					reqs.push(catfruits[data[i]] + 'x' + amount.toString());
-				}
-			}
-			unit_stats += s + reqs.join('、');
-			unit_stats += '進化\n';
-		}
-		let crazed = (data[3] > 50000) && (data[13] == 3);
-		let xp_last = crazed ? data[3] * 1.5 : data[2] * 2;
-		let xp_data = [0].concat(data.slice(3, 12), xp_last).join(',');
-		document.getElementById('show-xp-graph').href = './xpgraph.html?data=' + btoa(xp_data);
-		const pre = document.createElement('pre');
-		pre.innerText = unit_stats;
-		unit_content.appendChild(pre);
-	});
-}
-function loadTalents(skillCost) {
-	fetch('./data/data/SkillAcquisition.csv')
-	.then(res => res.text())
-	.then(text => {
-		const match = '\n' + my_id.toString();
-		var idx = text.indexOf(match);
-		if (idx != -1) {
-			++idx;
-			var end;
-			for (end = idx;text[end] != '\n' && text[end];++end) {}
-			let data = text.slice(idx, end).split(',').map(x => parseInt(x));
-			let talents = [];
-			for (let i = 0;i < 8;++i) {
-				let o = i * 14;
-				let maxLv = data[o+3];
-				let lvId = data[o+13];
-				let costIdx = skillCost.indexOf('\n' + lvId.toString());
-				if (costIdx != -1) {
-					++costIdx;
-					var end;
-					for (end = costIdx;skillCost[end] != '\n' && skillCost[end];++end) {}
-					let costData = skillCost.slice(costIdx, end).split(',').slice(1).map(x => parseInt(x));
-					talents.push([data.slice(o+2, o+16), costData, maxLv]);
-				}
-			}
-			console.log(talents)
-		}
-		loadAdditional();
-	});
 }
 function renderForm(form) {
 	function makeTd(parent, text) {
@@ -323,10 +218,10 @@ function renderForm(form) {
 	makeTd(tbodytr5, '').rowSpan = 2;
 	makeTd(tbodytr5, '').rowSpan = 3;
 
-	makeTd(tbodytr6, '間隔');
+	makeTd(tbodytr6, '攻擊間隔');
 	makeTd(tbodytr6, '');
 	makeTd(tbodytr6, '收招時間');
-	makeTd(tbodytr6, '?');
+	makeTd(tbodytr6, '');
 
 	makeTd(tbodytr7, 'KB');
 	makeTd(tbodytr7, '');
@@ -386,7 +281,7 @@ function renderExtras(my_cat) {
 function renderUintPage(my_cat) {
 	const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
 	const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
-	document.getElementById('open-db').href = 'https://www.google.com/search?q=' + cat_names_jp.replaceAll(' → ', '+' + '+site%3Abattlecats-db.com');
+	document.getElementById('open-db').href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';
 	document.getElementById('ch_name').innerText = cat_names;
 	document.getElementById('jp_name').innerText = cat_names_jp;
 	document.title = cat_names.replaceAll(' → ', ' ') + ' - 貓咪資訊';
@@ -401,6 +296,8 @@ function renderUintPage(my_cat) {
 loadAllCats()
 .then(cats => {
 	const my_cat = cats[my_id];
+	console.log(my_cat)
+	useCurve(my_id);
 	renderUintPage(my_cat);	
 	document.getElementById('loader').style.display = 'none';
 	loader_text.style.display = 'none';
@@ -414,5 +311,8 @@ loadAllCats()
 		oldList.push({'id': my_id, 'icon': my_cat.forms[0].icon, 'name': my_cat.forms[0].name});
 		localStorage.setItem('star-cats', JSON.stringify(oldList));
 	};
-	document.getElementById('show-level-graph').href = './levelgraph.html?id=' + my_id.toString();
+	document.getElementById('show-level-graph1').href = './levelgraph1.html?id=' + my_id.toString();
+	document.getElementById('show-level-graph2').href = './levelgraph2.html?id=' + my_id.toString();
+	document.getElementById('show-level-graph3').href = './levelgraph3.html?id=' + my_id.toString();
+	document.getElementById('show-level-graph4').href = './levelgraph4.html?id=' + my_id.toString();
 });

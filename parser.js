@@ -187,11 +187,13 @@ const pegjs = /*
         peg$c39 = "!",
         peg$c40 = peg$literalExpectation("!", false),
         peg$c41 = function(prim) { return '(!' + prim + ')'; },
-        peg$c42 = function() { 
+        peg$c42 = function(id) { 
             var s = text(); 
             const i = s.indexOf('(');
             if (i != -1) {
               let f = s.slice(0, i);
+              if (f == 'hasab')
+               return 'form.' + s;
               if (!Math[f])
                 throw Error("未知的函數: " + f);
               return 'Math.' + s;
@@ -967,30 +969,42 @@ const pegjs = /*
     }
 
     function peg$parseFactor() {
-      var s0, s1, s2, s3;
+      var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      if (input.charCodeAt(peg$currPos) === 40) {
-        s1 = peg$c33;
-        peg$currPos++;
-      } else {
-        s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c34); }
-      }
+      s1 = peg$parse_();
       if (s1 !== peg$FAILED) {
-        s2 = peg$parseExpression();
+        if (input.charCodeAt(peg$currPos) === 40) {
+          s2 = peg$c33;
+          peg$currPos++;
+        } else {
+          s2 = peg$FAILED;
+          if (peg$silentFails === 0) { peg$fail(peg$c34); }
+        }
         if (s2 !== peg$FAILED) {
-          if (input.charCodeAt(peg$currPos) === 41) {
-            s3 = peg$c35;
-            peg$currPos++;
-          } else {
-            s3 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c36); }
-          }
+          s3 = peg$parseExpression();
           if (s3 !== peg$FAILED) {
-            peg$savedPos = s0;
-            s1 = peg$c37(s2);
-            s0 = s1;
+            s4 = peg$parse_();
+            if (s4 !== peg$FAILED) {
+              if (input.charCodeAt(peg$currPos) === 41) {
+                s5 = peg$c35;
+                peg$currPos++;
+              } else {
+                s5 = peg$FAILED;
+                if (peg$silentFails === 0) { peg$fail(peg$c36); }
+              }
+              if (s5 !== peg$FAILED) {
+                peg$savedPos = s0;
+                s1 = peg$c37(s3);
+                s0 = s1;
+              } else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+              }
+            } else {
+              peg$currPos = s0;
+              s0 = peg$FAILED;
+            }
           } else {
             peg$currPos = s0;
             s0 = peg$FAILED;
@@ -1080,9 +1094,6 @@ const pegjs = /*
               }
               if (s4 !== peg$FAILED) {
                 s5 = peg$parseArgList();
-                if (s5 === peg$FAILED) {
-                  s5 = null;
-                }
                 if (s5 !== peg$FAILED) {
                   if (input.charCodeAt(peg$currPos) === 41) {
                     s6 = peg$c35;
@@ -1111,7 +1122,7 @@ const pegjs = /*
               }
               if (s3 !== peg$FAILED) {
                 peg$savedPos = s0;
-                s1 = peg$c42();
+                s1 = peg$c42(s1);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -1342,133 +1353,7 @@ const pegjs = /*
     }
 
 
-    // Extra variables used for testing
-    // === remove when building parser(begin) ==
-    const
-      ATK_SINGLE = 1,
-      ATK_RANGE = 2,
-      ATK_LD = 4,
-      ATK_OMNI = 8,
-      ATK_KB_REVENGE = 16;
-    const
-      TB_RED = 1,
-      TB_FLOAT = 2,
-      TB_BLACK = 4,
-      TB_METAL = 8,
-      TB_ANGEL = 16,
-      TB_ALIEN = 32,
-      TB_ZOMBIE = 64,
-      TB_RELIC = 128,
-      TB_WHITE = 256,
-      TB_EVA = 512,
-      TB_WITCH = 1024,
-      TB_DEMON = 2048,
-      TB_LAST = TB_DEMON;
-    const
-      IMU_WAVE = 1,
-      IMU_STOP = 2,
-      IMU_SLOW = 4,
-      IMU_KB = 8,
-      IMU_VOLC = 16,
-      IMU_WEAK = 32,
-      IMU_WARP = 64,
-      IMU_CURSE = 128,
-      IMU_POIATK = 256,
-      IMU_LAST = IMU_POIATK;
-    const
-       AB_STRONG = 1,
-       AB_LETHAL = 2,
-       AB_ATKBASE = 3,
-       AB_CRIT = 4,
-       AB_ZKILL = 5,
-       AB_CKILL = 6,
-       AB_BREAK = 7,
-       AB_SHIELDBREAK = 8,
-       AB_S = 9,
-       AB_BOUNTY = 10,
-       AB_METALIC = 11,
-       AB_MINIWAVE = 12,
-       AB_WAVE = 13,
-       AB_MINIVOLC = 14,
-       AB_VOLC = 15,
-       AB_WAVES = 16,
-       AB_BAIL = 17,
-       AB_BSTHUNT = 18,
-       AB_WKILL = 19,
-       AB_EKILL = 20,
-       AB_WEAK = 21,
-       AB_STOP = 22,
-       AB_SLOW = 23, 
-       AB_ONLY = 24,
-       AB_GOOD = 25, 
-       AB_RESIST = 26,
-       AB_RESISTS = 27,
-       AB_MASSIVE = 28,
-       AB_MASSIVES = 29, 
-       AB_KB = 30,
-       AB_WARP = 31,
-       AB_IMUATK = 32;
-      const constants = {
-        "RED": TB_RED,
-        "FLOAT": TB_FLOAT,
-        "BLACK": TB_BLACK,
-        "METAL": TB_METAL,
-        "ANGEL": TB_ANGEL,
-        "ALIEN": TB_ALIEN,
-        "ZOMBIE": TB_ZOMBIE,
-        "WHITE": TB_WHITE,
-        "RELIC": TB_RELIC,
-        "DEMON": TB_DEMON,
-        "EVA": TB_EVA,
-        "WITCH": TB_WITCH,
-        "SINGLE": ATK_SINGLE,
-        "RANGE": ATK_RANGE,
-        "LD": ATK_LD,
-        "OMNI": ATK_OMNI,
-        "IMU_WAVE": IMU_WAVE,
-        "IMU_STOP": IMU_STOP,
-        "IMU_SLOW": IMU_SLOW,
-        "IMU_KB": IMU_KB,
-        "IMU_VOLC": IMU_VOLC,
-        "IMU_WEAK": IMU_WEAK,
-        "IMU_WARP": IMU_WARP,
-        "IMU_CURSE": IMU_CURSE,
-        "IMU_POIATK": IMU_POIATK,
-        "AB_STRONG": AB_STRONG,
-        "AB_LETHAL": AB_LETHAL,
-        "AB_ATKBASE": AB_ATKBASE,
-        "AB_CRIT": AB_CRIT,
-        "AB_ZKILL": AB_ZKILL,
-        "AB_CKILL": AB_CKILL,
-        "AB_BREAK": AB_BREAK,
-        "AB_SHIELDBREAK": AB_SHIELDBREAK,
-        "AB_S": AB_S,
-        "AB_BOUNTY": AB_BOUNTY,
-        "AB_METALIC": AB_METALIC,
-        "AB_MINIWAVE": AB_MINIWAVE,
-        "AB_WAVE": AB_WAVE,
-        "AB_MINIVOLC": AB_MINIVOLC,
-        "AB_VOLC": AB_VOLC,
-        "AB_WAVES": AB_WAVES,
-        "AB_BAIL": AB_BAIL,
-        "AB_BSTHUNT": AB_BSTHUNT,
-        "AB_WKILL": AB_WKILL,
-        "AB_EKILL": AB_EKILL,
-        "AB_WEAK": AB_WEAK,
-        "AB_STOP": AB_STOP,
-        "AB_SLOW": AB_SLOW,
-        "AB_ONLY": AB_ONLY,
-        "AB_GOOD": AB_GOOD,
-        "AB_RESIST": AB_RESIST,
-        "AB_RESISTS": AB_RESISTS,
-        "AB_MASSIVE": AB_MASSIVE,
-        "AB_MASSIVES": AB_MASSIVES,
-        "AB_KB ": AB_KB,
-        "AB_WARP ": AB_WARP,
-        "AB_IMUATK ": AB_IMUATK
-      };
-      // === remove when building(end) ===
-      const known_identifiers = ["id", "trait", "imu", "hp", "atk", "range", "dps", "kb", "attackf", "cd", "atktype"];
+      const known_identifiers = ["id", "trait", "imu", "hp", "atk", "range", "dps", "kb", "attackf", "cd", "atktype", "rarity", "tdps", "thp"];
 
 
     peg$result = peg$startRuleFunction();
