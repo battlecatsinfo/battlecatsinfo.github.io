@@ -1,5 +1,6 @@
 .bc-icon {
   display: inline-block;
+  vertical-align: middle;
   background-image: url(data/page/img015.png);
 }
 .bc-icon-trait-eva {

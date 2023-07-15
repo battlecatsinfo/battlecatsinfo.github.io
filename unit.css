@@ -13,9 +13,6 @@ pre {
   text-wrap: wrap;
   font-family: system-ui;
 }
-.w3-table td,.w3-table th,.w3-table-all td,.w3-table-all th {
-    vertical-align: middle;
-}
 .bold-large {
 	font-weight: 600;
 	font-size: 23px;
@@ -71,4 +68,24 @@ pre {
   .no-print {
     display: none;
   }
+}
+.r-ribbon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  color: white;
+  background: #4CAF50;
+  box-shadow: 0 0 0 999px #4CAF50;
+  clip-path: inset(0 -100%);
+  transform-origin: 0 0;
+  transform: translate(29.3%) rotate(45deg);
+}
+.fruit {
+  background-color: white;
+  border-radius: 5px;
+}
+table.fruit-table {
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  border: 10px solid #f1f1f1;
 }

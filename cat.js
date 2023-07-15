@@ -14,6 +14,37 @@ const environment = {
 	'ATK': 300,
 	'DEF': 300
 };
+const catfruits = {
+	30: '紫色貓薄荷種子',
+	31: '紅色貓薄荷種子',
+	32: '藍色貓薄荷種子',
+	33: '綠色貓薄荷種子',
+	34: '黃色貓薄荷種子',
+	35: '紫色貓薄荷果實',
+	36: '紅色貓薄荷果實',
+	37: '藍色貓薄荷果實',
+	38: '綠色貓薄荷果實',
+	39: '黃色貓薄荷種子',
+	40: '彩虹貓薄荷果實',
+	41: '古代貓薄荷種子',
+	42: '古代貓薄荷果實',
+	43: '彩虹貓薄荷種子',
+	44: '黃金貓薄荷果實',
+	160: '惡貓薄荷種子',
+	161: '惡貓薄荷果實',
+	164: '黃金貓薄荷種子',
+	167: "紫獸石",
+	168: "紅獸石",
+	169: "蒼獸石",
+	170: "翠獸石",
+	171: "黃獸石",
+	179: "紫獸石結晶",
+	180: "紅獸石結晶",
+	181: "蒼獸石結晶",
+	182: "翠獸石結晶",
+	183: "黃獸石結晶",
+	184: "虹獸石"
+};
 const
   ATK_SINGLE = 1,
   ATK_RANGE = 2,
@@ -94,7 +125,7 @@ function numStr(num) {
 	return parseFloat(num.toFixed(2)).toString();
 }
 function numStrT(num) {
-	return parseFloat(num.toFixed(2)).toString() + '秒';
+	return parseFloat((num / 30).toFixed(2)).toString() + '秒';
 }
 function get_trait_short_names(trait) {
 	var s = '';
@@ -359,13 +390,12 @@ class Form {
 			dps += (this.ab[AB_CRIT][0] * 2 * 30) / (100 * this.attackF);
 		}
 		if (this.ab.hasOwnProperty(AB_STRONG)) {
-			const o = this.ab[AB_STRONG];
-			dps *= (o[0] * (1 + (o[1]/100)));
+			dps *= 1 + (this.ab[AB_STRONG][1] / 100);
 		}
 		if (this.ab.hasOwnProperty(AB_MASSIVE)) {
-			dps *= (this.trait & trait_treasure) ? 6 : 5;
-		} else if (this.ab.hasOwnProperty(AB_MASSIVES)) {
 			dps *= (this.trait & trait_treasure) ? 4 : 3;
+		} else if (this.ab.hasOwnProperty(AB_MASSIVES)) {
+			dps *= (this.trait & trait_treasure) ? 6 : 5;
 		}
 		if (this.ab.hasOwnProperty(AB_GOOD)) {
 			dps *= (this.trait & trait_treasure) ? 1.8 : 1.5;
@@ -407,40 +437,6 @@ class CatInfo {
 		const rarities = ["基本", "EX", "稀有", "激稀有", "超激稀有", "傳說稀有"];
 		return rarities[this.rarity];
 	}
-	getCatFruitString() {
-		const catfruits = {
-			30: '紫色貓薄荷種子',
-			31: '紅色貓薄荷種子',
-			32: '籃色貓薄荷種子',
-			33: '綠色貓薄荷種子',
-			34: '黃色貓薄荷種子',
-			35: '紫色貓薄荷果實',
-			36: '紅色貓薄荷果實',
-			37: '籃色貓薄荷果實',
-			38: '綠色貓薄荷果實',
-			39: '黃色貓薄荷種子',
-			40: '彩虹貓薄荷果實',
-			41: '古代貓薄荷種子',
-			42: '古代貓薄荷果實',
-			43: '彩虹貓薄荷種子',
-			44: '黃金貓薄荷果實',
-			160: '惡貓薄荷種子',
-			161: '惡貓薄荷果實',
-			164: '黃金貓薄荷種子',
-			167: "紫獸石",
-			168: "紅獸石",
-			169: "蒼獸石",
-			170: "翠獸石",
-			171: "黃獸石",
-			179: "紫獸石結晶",
-			180: "紅獸石結晶",
-			181: "蒼獸石結晶",
-			182: "翠獸石結晶",
-			183: "黃獸石結晶",
-			184: "虹獸石"
-		};
-		return '角色等級達到Lv30後，以XP' + this.upReqs[0].toString() + '+' + this.upReqs.slice(1).map(i => catfruits[i]).join('、') + '進化';
-	}
 	loadAttitional(my_id) {
 		const text = unit_buy;
 		var i = 0;
@@ -461,11 +457,11 @@ class CatInfo {
 		if (version >= 100000)
 			this.version = version;
 		if (data[27]) {
-			this.upReqs = [data[27]];
+			this.upReqs = [[data[27], 0]];
 			for (let i = 28;i <= 38;i+=2) {
 				let amount = data[i + 1];
 				if (amount) {
-					this.upReqs.push(data[i]);
+					this.upReqs.push([amount, data[i]]);
 				}
 			}
 		}
@@ -581,19 +577,18 @@ async function loadAllCats() {
 		}
 	});
 }
-function createAbIcons(ab, parent) {
-	let icon_names = [
+let icon_names = [
 		'strong', 
 		'lethal', 
 		'atkbase', 
 		'crit', 
-	    'z-kill', 
-	    'ckill', 
-	    'break', 
-	    'shield-break', 
-	    's', 
-	    'bounty', 
-	    'metalic',
+	  'z-kill', 
+	  'ckill', 
+	  'break', 
+	  'shield-break', 
+	  's', 
+	  'bounty', 
+	  'metalic',
 	  'mini-wave', 
 	  'wave', 
 	  'mini-volc', 
@@ -615,8 +610,8 @@ function createAbIcons(ab, parent) {
 	  'kb', 
 	  'warp', 
 	  'imu-atk'
-	]
-  let descs = [
+]
+let icon_descs = [
 	'血量{1}%以下攻擊力增加{2}%',
 	'{1}%機率以1血存活一次', 
 	'善於攻城({1}%傷害)',
@@ -649,15 +644,36 @@ function createAbIcons(ab, parent) {
 	'{1}%機率擊退{2}',
 	'{1}%機率傳送{2}',
 	'{1}%發動攻擊無效{2}秒'
-	]
+]
+function createAbIcons1(ab, parent) {
 	for (let i = 1;i <= AB_LAST;++i) {
-		if (ab.hasOwnProperty(i)) {
+		if (i < 20 && ab.hasOwnProperty(i)) {
 			const e = document.createElement('span');
 			e.classList.add('bc-icon', `bc-icon-${icon_names[i - 1]}`);
 			parent.appendChild(e);
 			const e2 = document.createElement('span');
 			{
-				var s = descs[i - 1];
+				var s = icon_descs[i - 1];
+				let o = ab[i];
+				for (let j = 1;j <= o.length;++j) {
+					s = s.replace('{' + j.toString() + '}', o[j - 1]);
+				}
+				e2.innerText = s;
+			}
+			parent.appendChild(e2);
+			parent.appendChild(document.createElement('br'));
+		}
+	}
+}
+function createAbIcons2(ab, parent) {
+	for (let i = 1;i <= AB_LAST;++i) {
+		if (i >= 20 && ab.hasOwnProperty(i)) {
+			const e = document.createElement('span');
+			e.classList.add('bc-icon', `bc-icon-${icon_names[i - 1]}`);
+			parent.appendChild(e);
+			const e2 = document.createElement('span');
+			{
+				var s = icon_descs[i - 1];
 				let o = ab[i];
 				for (let j = 1;j <= o.length;++j) {
 					s = s.replace('{' + j.toString() + '}', o[j - 1]);
@@ -698,6 +714,8 @@ function createImuIcons(imu, parent) {
 	}
 }
 function createTraitIcons(trait, parent) {
+	if (parent.childNodes.length)
+		parent.appendChild(document.createElement('br'));
 	if (!trait) return;
 	const names = [
 		'red', 'float', 'black', 'metal', 'angel', 'alien', 'zombie', 'relic', 'white', 'eva', 'witch', 'demon'

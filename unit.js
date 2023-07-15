@@ -1,5 +1,6 @@
 const my_params = new URLSearchParams(location.search);
 const my_id = parseInt(my_params.get('id'));
+var my_cat;
 if (isNaN(my_id)) {
 	alert('Missing cat id in URL query!');
 	window.stop()
@@ -12,7 +13,6 @@ if (my_id < 0 || my_id >= curveMap.length) {
 }
 const cat_icons = document.getElementById('cat-icons');
 const unit_content = document.getElementById('unit-content');
-var level_count = 0;
 function updateValues(form, tbl) {
 	let chs = tbl.childNodes;
 	let HPs = chs[1].childNodes;
@@ -126,20 +126,21 @@ function updateValues(form, tbl) {
 	atkType += (form.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
 	chs[5].childNodes[6].innerText = atkType;
 	const specials = chs[9].childNodes[1];
-	specials.style.textAlign = 'left';
 	const lds = form.lds;
 	const ldr = form.ldr;
 	if (form.atk1 || form.atk2) {
-		const e = document.createElement('p');
 		let atksPre = [form.atk, form.atk1, form.atk2].slice(0, lds.length).map(x => ((x / totalAtk)*100).toFixed(0)+'%');
-		e.innerText = `${lds.length}回連續攻擊(傷害${atksPre.join('-')})`;
-		specials.appendChild(e);
-		specials.appendChild(document.createElement('br'));
+		specials.appendChild(document.createTextNode(`${lds.length}回連續攻擊(傷害${atksPre.join('-')})`));
 		if (lds.length != 1 && (lds.some(x => x) || ldr.some(x => x))) {
 			const nums = '①②③';
 			var s = '';
 			for (let i = 0;i < lds.length;++i) {
-				s += `${nums[i]}${lds[i]}~${lds[i]+ldr[i]}<br>`;
+				const x = lds[i];
+				const y = x + ldr[i];
+				if (x <= y)
+					s += `${nums[i]}${x}~${y}<br>`;
+				else
+					s += `${nums[i]}${y}~${x}<br>`;
 			}
 			chs[5].childNodes[5].innerHTML = `接觸點${form.range}<br>範圍<br>${s.slice(0,s.length-4)}`;
 		} else {
@@ -149,23 +150,52 @@ function updateValues(form, tbl) {
 		chs[5].childNodes[5].innerText = form.range;
 	}
 	createTraitIcons(form.trait, specials);
-	createImuIcons(form.imu, specials);
-	createAbIcons(form.ab, specials);
+	createImuIcons(form.imu, chs[10].childNodes[1]);
+	createAbIcons1(form.ab, chs[11].childNodes[1]);
+	createAbIcons2(form.ab, chs[12].childNodes[1]);
 	KB.innerText = form.kb.toString();
 	CD.innerText = numStrT(form.cd);
 }
+function makeTd(parent, text = '') {
+	const c = document.createElement('td');
+	c.innerText = text;
+	parent.appendChild(c);
+	return c;
+}
 function renderForm(form) {
-	function makeTd(parent, text) {
-		const c = document.createElement('td');
-		c.innerText = text;
-		parent.appendChild(c);
-		return c;
-	}
-	function makeTh(parent, text) {
-		const c = document.createElement('th');
-		c.innerText = text;
-		parent.appendChild(c);
-		return c;
+	const level_count = form.lvc;
+	const info = my_cat.info;
+	if (level_count == 2 && info.upReqs != undefined) {
+		const container = document.createElement('table');
+		container.classList.add('.w3-table', 'w3-centered', 'fruit-table');
+		container.style.margin = '0px auto';
+		const tr0 = document.createElement('tr');
+		const tr1 = document.createElement('tr');
+		const td = document.createElement('td');
+		td.innerText = '進化素材';
+		td.colSpan = info.upReqs.length;
+		tr0.appendChild(td);
+		for (const r of info.upReqs) {
+			const img = new Image(128, 128);
+			img.classList.add('fruit');
+			const div = document.createElement('td');
+			div.style.width = '128px';
+			var p = document.createElement('p');
+			p.classList.add('fruit');
+			if (r[1]) {
+				img.src = './page/catfruit/gatyaitemD_' + r[1].toString() + '_f.png';
+				p.innerText = 'X' + r[0].toString();
+			} else {
+				img.src = './page/catfruit/xp.png';
+				p.innerText = r[0].toString();
+			}
+			div.appendChild(img);
+			div.appendChild(p);
+			tr1.appendChild(div);
+		}
+		container.appendChild(tr0);
+		container.appendChild(tr1);
+		unit_content.appendChild(container);
 	}
 	const level_text = document.createElement('p');
 	const tbl = document.createElement('table');
@@ -179,68 +209,73 @@ function renderForm(form) {
 	const tbodytr7 = document.createElement('tr');
 	const tbodytr8 = document.createElement('tr');
 	const tbodytr9 = document.createElement('tr');
+	const tbodytr10 = document.createElement('tr');
+	const tbodytr11 = document.createElement('tr');
+	const tbodytr12 = document.createElement('tr');
 	level_text.innerHTML = ['一階：<br>', '二階：<br>', '三階：<br>', '本能完全升滿的數值表格', '超本能完全升滿的數值表格'][level_count] + ((level_count <= 2) ? unit_descs[my_id][level_count] : '');
-	++level_count;
 	level_text.classList.add('bold-large');
-	makeTh(theadtr, '');
-	makeTh(theadtr, 'Lv10');
-	makeTh(theadtr, 'Lv20');
-	makeTh(theadtr, 'Lv30');
-	makeTh(theadtr, 'Lv40');
-	makeTh(theadtr, 'Lv50');
-	makeTh(theadtr, '每提升一級');
-
+	makeTd(theadtr);
+	makeTd(theadtr, 'Lv10');
+	makeTd(theadtr, 'Lv20');
+	makeTd(theadtr, 'Lv30');
+	makeTd(theadtr, 'Lv40');
+	makeTd(theadtr, 'Lv50');
+	makeTd(theadtr, '每提升一級');
 	makeTd(tbodytr1, 'HP');
 	for (let i = 0;i < 5;++i)
-		makeTd(tbodytr1, '');
-	makeTd(tbodytr1, '');
-	
+		makeTd(tbodytr1);
+	makeTd(tbodytr1);
 	makeTd(tbodytr2, '硬度');
 	for (let i = 0;i < 5;++i)
-		makeTd(tbodytr2, '');
-	makeTd(tbodytr2, '');
-
+		makeTd(tbodytr2);
+	makeTd(tbodytr2);
 	makeTd(tbodytr3, '攻擊力');
 	for (let i = 0;i < 5;++i)
-		makeTd(tbodytr3, '');
-	makeTd(tbodytr3, '');
-
+		makeTd(tbodytr3);
+	makeTd(tbodytr3);
 	makeTd(tbodytr4, 'DPS');
 	for (let i = 0;i < 5;++i)
-		makeTd(tbodytr4, '');
-	makeTd(tbodytr4, '');
-
+		makeTd(tbodytr4);
+	makeTd(tbodytr4);
 	makeTd(tbodytr5, '攻擊頻率');
-	makeTd(tbodytr5, '');
+	makeTd(tbodytr5);
 	makeTd(tbodytr5, '出招時間');
-	makeTd(tbodytr5, '');
+	makeTd(tbodytr5);
 	makeTd(tbodytr5, '射程').rowSpan = 2;
-	makeTd(tbodytr5, '').rowSpan = 2;
-	makeTd(tbodytr5, '').rowSpan = 3;
-
+	makeTd(tbodytr5).rowSpan = 2;
+	makeTd(tbodytr5).rowSpan = 3;
+	tbodytr5.childNodes[4].style.verticalAlign = 'middle';
+	tbodytr5.childNodes[5].style.verticalAlign = 'middle';
+	tbodytr5.childNodes[6].style.verticalAlign = 'middle';
 	makeTd(tbodytr6, '攻擊間隔');
-	makeTd(tbodytr6, '');
+	makeTd(tbodytr6);
 	makeTd(tbodytr6, '收招時間');
-	makeTd(tbodytr6, '');
-
+	makeTd(tbodytr6);
 	makeTd(tbodytr7, 'KB');
-	makeTd(tbodytr7, '');
+	makeTd(tbodytr7);
 	makeTd(tbodytr7, '跑速');
-	makeTd(tbodytr7, '');
+	makeTd(tbodytr7);
 	makeTd(tbodytr7, '再生產');
-	makeTd(tbodytr7, '');
-
+	makeTd(tbodytr7);
 	makeTd(tbodytr8, '召喚金額');
 	makeTd(tbodytr8, '一章');
-	makeTd(tbodytr8, '');
+	makeTd(tbodytr8);
 	makeTd(tbodytr8, '二章(傳說)');
-	makeTd(tbodytr8, '');
+	makeTd(tbodytr8);
 	makeTd(tbodytr8, '三章');
-	makeTd(tbodytr8, '');
-
-	makeTd(tbodytr9, '特殊能力');
-	makeTd(tbodytr9, '').colSpan = 6;
-
+	makeTd(tbodytr8);
+	makeTd(tbodytr9, '屬性');
+	makeTd(tbodytr9).colSpan = 6;
+	makeTd(tbodytr10, '抗性');
+	makeTd(tbodytr10).colSpan = 6;
+	makeTd(tbodytr11, '能力');
+	makeTd(tbodytr11).colSpan = 6;
+	makeTd(tbodytr12, '效果');
+	makeTd(tbodytr12).colSpan = 6;
+	tbodytr9.childNodes[1].style.textAlign = 'left';
+	tbodytr10.childNodes[1].style.textAlign = 'left';
+	tbodytr11.childNodes[1].style.textAlign = 'left';
+	tbodytr12.childNodes[1].style.textAlign = 'left';
 	tbl.appendChild(theadtr);
 	tbl.appendChild(tbodytr1);
 	tbl.appendChild(tbodytr2);
@@ -251,34 +286,63 @@ function renderForm(form) {
 	tbl.appendChild(tbodytr7);
 	tbl.appendChild(tbodytr8);
 	tbl.appendChild(tbodytr9);
+	tbl.appendChild(tbodytr10);
+	tbl.appendChild(tbodytr11);
+	tbl.appendChild(tbodytr12);
 	updateValues(form, tbl);
-	tbl.classList.add('w3-table', 'w3-striped', 'w3-centered');
-	let even = false;
+	(!tbodytr9.childNodes[1].childNodes.length) && (tbl.removeChild(tbodytr9));
+	(!tbodytr10.childNodes[1].childNodes.length) && (tbl.removeChild(tbodytr10));
+	(!tbodytr11.childNodes[1].childNodes.length) && (tbl.removeChild(tbodytr11));
+	(!tbodytr12.childNodes[1].childNodes.length) && (tbl.removeChild(tbodytr12));
+	tbl.classList.add('w3-table', 'w3-centered');
+	let odd = true;
 	for (let e of tbl.childNodes) {
-		if (even)
+		if (odd)
 			e.style.backgroundColor = '#f1f1f1';
-		even = !even;
+		odd = !odd;
 	}
 	unit_content.appendChild(level_text);
 	unit_content.appendChild(tbl);
 	return tbl;
 }
-function renderExtras(my_cat) {
-	const pre = document.createElement('pre');
-	var unit_stats = '類別: ' + my_cat.info.getRarityString();
-	unit_stats += '\n最大基本等級： ' + my_cat.info.maxBase.toString();
-	unit_stats += '\n最大+等級: ' + my_cat.info.maxPlus.toString();
-	unit_stats += '\n';
+function renderExtras() {
+	const table = document.createElement('table');
+	const th = document.createElement('tr');
+	const td0 = document.createElement('td');
+	td0.colSpan = 2;
+	td0.innerText = '其他資訊';
+	th.appendChild(td0);
+	const tr1 = document.createElement('tr');
+	makeTd(tr1, '稀有度');
+	makeTd(tr1, my_cat.info.getRarityString());
+	const tr2 = document.createElement('tr');
+	makeTd(tr2, '最大基本等級');
+	makeTd(tr2, my_cat.info.maxBase.toString());
+	const tr3 = document.createElement('tr');
+	makeTd(tr3, '最大加值等級');
+	makeTd(tr3, '+' + my_cat.info.maxPlus.toString());
 	if (my_cat.info.version) {
 		let version = my_cat.info.version.toString();
-		unit_stats += `Ver ${parseInt(version.slice(0, 2))}.${parseInt(version.slice(2, 4))}.${parseInt(version.slice(4))} 新增\n`;
+		const div = document.createElement('div');
+		div.innerText = `Ver ${parseInt(version.slice(0, 2))}.${parseInt(version.slice(2, 4))}.${parseInt(version.slice(4))} 新增`;
+		div.classList.add('r-ribbon');
+		document.body.appendChild(div);
 	}
-	if (my_cat.info.upReqs) unit_stats += my_cat.info.getCatFruitString();
-	pre.innerText = unit_stats;
+	table.appendChild(th);
+	table.appendChild(tr1);
+	table.appendChild(tr2);
+	table.appendChild(tr3);
+	table.classList.add('w3-table', 'w3-centered');
+	let odd = true;
+	for (let e of table.childNodes) {
+		if (odd)
+			e.style.backgroundColor = '#f1f1f1';
+		odd = !odd;
+	}
+	unit_content.appendChild(table);
 	document.getElementById('show-xp-graph').href = './xpgraph.html?data=' + btoa(my_cat.info.xp_data);
-	unit_content.appendChild(pre);
 }
-function renderUintPage(my_cat) {
+function renderUintPage() {
 	const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
 	const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
 	document.getElementById('open-db').href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';
@@ -291,14 +355,14 @@ function renderUintPage(my_cat) {
 		cat_icons.appendChild(img);
 	}
 	my_cat.forms.forEach(renderForm);
-	renderExtras(my_cat);
+	renderExtras();
 }
 loadAllCats()
 .then(cats => {
-	const my_cat = cats[my_id];
+	my_cat = cats[my_id];
 	console.log(my_cat)
 	useCurve(my_id);
-	renderUintPage(my_cat);	
+	renderUintPage();	
 	document.getElementById('loader').style.display = 'none';
 	loader_text.style.display = 'none';
 	document.getElementById('main').style.display = 'block';
