@@ -10,6 +10,10 @@ const tables = document.getElementById('tables');
 const toggle_s = document.getElementById('toggle-s');
 const def_lv_e = document.getElementById('def-lv');
 const plus_lv_e = document.getElementById('plus-lv');
+const cattype_e = document.getElementById('cattype');
+const trait_s = document.getElementById('trait-s');
+const atk_s = document.getElementById('atk-s');
+const ab_s = document.getElementById('ab-s');
 const constants = {
     "RED": TB_RED,
     "FLOAT": TB_FLOAT,
@@ -71,13 +75,30 @@ const constants = {
 var last_forms;
 function rerender(event) {
 	event.preventDefault();
-	renderTable(last_forms, event.currentTarget.id);
+	const id = event.currentTarget.id;
+	pages_a.textContent = '';
+	if (id >= 9) {
+		let i = 0;
+		let maxPage = Math.min(Math.ceil(last_forms.length / 10), id + 7);
+		for (let c = id - 2;c < maxPage;++c) {
+			const td = document.createElement('td');
+			td.innerText = c.toString();
+			td.onclick = rerender;
+			td.id = c;
+			if (c == id) {
+				td.style.backgroundColor = '#ccc';
+				td.onclick = null;
+			}
+			pages_a.appendChild(td);
+			if (++i >= 10) break;
+		}
+	}
+	renderTable(last_forms, id);
 }
 function renderTable(forms, page = 1) {
 	let H = page * 10;
 	let display_forms = forms.slice(H - 10, H);
 	tbody.textContent = '';
-	pages_a.textContent = '';
 	search_result.innerText = `顯示${H - 9}第到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
 	last_forms = forms;
 	if (forms.length == 0) {
@@ -85,18 +106,20 @@ function renderTable(forms, page = 1) {
 '<tr><td colSpan="12">沒有符合調件的貓咪!</td></tr>';
 		return;
 	}
-	let c = 1;
-	for (let i = 0;i < forms.length;i += 10) {
-		const td = document.createElement('td');
-		td.innerText = c.toString();
-		td.onclick = rerender;
-		td.id = c;
-		if (page == c) {
-			td.style.backgroundColor = '#ccc';
-			td.onclick = null;
+	if (!pages_a.childNodes.length) {
+		let c = 1;
+		for (let i = 0;i < forms.length;i += 10) {
+			const td = document.createElement('td');
+			td.innerText = c.toString();
+			td.onclick = rerender;
+			td.id = c;
+			if (page == c) {
+				td.style.backgroundColor = '#ccc';
+				td.onclick = null;
+			}
+			pages_a.appendChild(td);
+			if (c++ >= 10) break;
 		}
-		pages_a.appendChild(td);
-		if (c++ >= 10) break;
 	}
 	for (let i = 0;i < display_forms.length;++i) {
 		const tr = document.createElement('tr');
@@ -126,12 +149,41 @@ function renderTable(forms, page = 1) {
 function simplify(code) {
 	return code.replaceAll('\n', '').replaceAll(' ', '').replaceAll('\r', '').replaceAll('\t', '');
 }
-function calculate(code = null) {
+function calculate(code = '') {
+	pages_a.textContent = '';
 	used_variables = new Set();
-	if (!code) {
-		code = Array.from(document.querySelectorAll('.o-selected')).map(x => '(' + x.getAttribute('data-expr') + ')' ).join('&&');
-		filter_expr.value = code;
-		if (!code.length)
+	if (!code.length) {
+		const codes = [];
+		const cattypes = cattype_e.querySelectorAll('.o-selected');
+		if (cattypes.length)
+			codes.push(Array.prototype.map.call(cattypes, x => x.getAttribute('data-expr')).join('||'));
+		const traits = trait_s.querySelectorAll('.o-selected');
+		if (traits.length) {
+			if (trait_s.firstElementChild.firstElementChild.value == 'OR') {
+				codes.push(Array.prototype.map.call(traits, x => x.getAttribute('data-expr')).join('||'));
+			} else {
+				codes.push(Array.prototype.map.call(traits, x => x.getAttribute('data-expr')).join('&&'));
+			}
+		}
+		const atks = atk_s.querySelectorAll('.o-selected');
+		if (atks.length) {
+			if (atk_s.firstElementChild.firstElementChild.value == 'OR') {
+				codes.push(Array.prototype.map.call(atks, x => x.getAttribute('data-expr')).join('||'));
+			} else {
+				codes.push(Array.prototype.map.call(atks, x => x.getAttribute('data-expr')).join('&&'));
+			}
+		}
+		const abs = ab_s.querySelectorAll('.o-selected');
+		if (abs.length) {
+			if (ab_s.firstElementChild.nextElementSibling.firstElementChild.value == 'OR') {
+				codes.push(Array.prototype.map.call(abs, x => x.getAttribute('data-expr')).join('||'));
+			} else {
+				codes.push(Array.prototype.map.call(abs, x => x.getAttribute('data-expr')).join('&&'));
+			}
+		}
+		if (codes.length) {
+			code = (filter_expr.value = codes.map(x => `(${x})`).join('&&'));
+		} else
 			code = '1';
 	} else if (!code.length)
 		return renderTable([], []);
@@ -217,6 +269,16 @@ document.querySelectorAll('button').forEach(elem => {
     }
     calculate();
   });
+});
+document.querySelectorAll('.or-and').forEach(e => {
+	e.onclick = function(event) {
+		const t = event.currentTarget;
+		if (t.value == 'OR')
+			t.value = 'AND';
+		else
+			t.value = 'OR';
+		calculate();
+	};
 });
 document.getElementById('filter-go').onclick = function() {
 	calculate(simplify(filter_expr.value));

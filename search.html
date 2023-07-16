@@ -116,13 +116,18 @@
     	margin: 0px 20px;
     	font-size: 18px;
     }
+    input.or-and {
+    	margin-top: 0px;
+    	width: 100%;
+    }
 	</style>
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
 	<script src="cat.js"></script>
 	<div id="main" style="display: none;height: 100%;">
 		<div class="w3-container" style="height: 100%;">
-			  <ul class="w3-ul may-hide" style="width: 150px;">
+			  <ul class="w3-ul may-hide" style="width: 150px;" id="trait-s">
+			  	<li><input type="button" value="OR" class="or-and"></li>
 			  	<li data-expr="trait&RED" ><button><span class="bc-icon bc-icon-trait-red"></span>紅色敵人</button></li>
     			<li data-expr="trait&FLOAT"><button><span class="bc-icon bc-icon-trait-float"></span>漂浮敵人</button></li>
     			<li data-expr="trait&BLACK"><button><span class="bc-icon bc-icon-trait-black"></span>黑色敵人</button></li>
@@ -134,7 +139,8 @@
     			<li data-expr="trait&RELIC"><button><span class="bc-icon bc-icon-trait-relic"></span>古代種</button></li>
     			<li data-expr="trait&DEMON"><button><span class="bc-icon bc-icon-trait-demon"></span>惡魔</button></li>
 			  </ul>
-			  <ul class="w3-ul may-hide" style="width: 150px;">
+			  <ul class="w3-ul may-hide" style="width: 150px;" id="atk-s">
+			  	<li><input type="button" value="AND" class="or-and"></li>
    				<li data-expr="atktype&SINGLE"><button><span class="bc-icon bc-icon-single-atk"></span>單體</button></li>
    				<li data-expr="atktype&RANGE"><button><span class="bc-icon bc-icon-area-atk"></span>範圍</button></li>
     			<li data-expr="atktype&LD"><button><span class="bc-icon bc-icon-ld-atk"></span>遠距</button></li>
@@ -156,8 +162,9 @@
 				<label for="sort-expr">排序表達式</label>
 				<textarea rows="3" cols="60" name="sort-expr" id="sort-expr" spellcheck="false"></textarea>
 			</div>
-			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 97vh;overflow: scroll;width: 190px;">
+			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 97vh;overflow: scroll;width: 190px;" id="ab-s">
 <li style="text-align: center;">能力</li>
+<li><input type="button" value="OR" class="or-and"></li>
 <li data-expr="hasab(AB_WEAK)"><button><span class="bc-icon bc-icon-weak"></span>攻擊力下降</button></li>
 <li data-expr="hasab(AB_STOP)"><button><span class="bc-icon bc-icon-slow"></span>使動作停止</button></li>
 <li data-expr="hasab(AB_ONLY)"><button><span class="bc-icon bc-icon-only"></span>只能攻擊</button></li>
@@ -175,7 +182,7 @@
 <li data-expr="hasab(AB_CRIT)"><button><span class="bc-icon bc-icon-crit"></span>會心一擊</button></li>
 <li data-expr="hasab(AB_ZKILL)"><button><span class="bc-icon bc-icon-z-kill"></span>終結不死	</button></li>
 <li data-expr="hasab(AB_CKILL)"><button><span class="bc-icon bc-icon-ckill"></span>靈魂攻擊	</button></li>
-<li data-expr="hasab(AB_BREAK)"><button><span class="bc-icon bc-icon-break"></span>破壞護盾</button></li>
+<li data-expr="hasab(AB_BREAK)"><button><span class="bc-icon bc-icon-break"></span>破壞宇宙盾</button></li>
 <li data-expr="hasab(AB_SHIELDBREAK)"><button><span class="bc-icon bc-icon-shield-break"></span>破壞惡魔盾</button></li>
 <li data-expr="hasab(AB_S)"><button><span class="bc-icon bc-icon-s"></span>渾身一擊</button></li>
 <li data-expr="hasab(AB_BOUNTY)"><button><span class="bc-icon bc-icon-bounty"></span>得到很多金錢</button></li>
@@ -190,15 +197,15 @@
 <li data-expr="hasab(AB_WKILL)"><button><span class="bc-icon bc-icon-wkill"></span>終結魔女</button></li>
 <li data-expr="hasab(AB_EKILL)"><button><span class="bc-icon bc-icon-ekill"></span>終結使徒</button></li>
 <li style="text-align: center;">抗性</li>
-<li data-expr="imu&IMU_WEAK"><button><span class="bc-icon bc-icon-imu-weak"></span>攻擊力下降無效</button></li>
-<li data-expr="imu&IMU_STOP"><button><span class="bc-icon bc-icon-imu-stop"></span>動作停止無效</button></li>
-<li data-expr="imu&IMU_SLOW"><button><span class="bc-icon bc-icon-imu-slow"></span>動作變慢無效</button></li>
+<li data-expr="imu&IMU_WEAK"><button><span class="bc-icon bc-icon-imu-weak"></span>降功無效</button></li>
+<li data-expr="imu&IMU_STOP"><button><span class="bc-icon bc-icon-imu-stop"></span>停止無效</button></li>
+<li data-expr="imu&IMU_SLOW"><button><span class="bc-icon bc-icon-imu-slow"></span>緩速無效</button></li>
 <li data-expr="imu&IMU_KB"><button><span class="bc-icon bc-icon-imu-kb"></span>打飛無效</button></li>
-<li data-expr="imu&IMU_WAVE"><button><span class="bc-icon bc-icon-imu-wave"></span>波動傷害無效</button></li>
-<li data-expr="imu&IMU_VOLC"><button><span class="bc-icon bc-icon-imu-volc"></span>烈波傷害無效</button></li>
+<li data-expr="imu&IMU_WAVE"><button><span class="bc-icon bc-icon-imu-wave"></span>波動無效</button></li>
+<li data-expr="imu&IMU_VOLC"><button><span class="bc-icon bc-icon-imu-volc"></span>烈波無效</button></li>
 <li data-expr="imu&IMU_WARP"><button><span class="bc-icon bc-icon-imu-warp"></span>傳送無效</button></li>
-<li data-expr="imu&IMU_CURSE"><button><span class="bc-icon bc-icon-imu-curse"></span>古代的詛咒無效</button></li>
-<li data-expr="imu&IMU_POIATK"><button><span class="bc-icon bc-icon-imu-poiatk"></span>毒擊傷害無效</button></li>
+<li data-expr="imu&IMU_CURSE"><button><span class="bc-icon bc-icon-imu-curse"></span>詛咒無效</button></li>
+<li data-expr="imu&IMU_POIATK"><button><span class="bc-icon bc-icon-imu-poiatk"></span>毒擊無效</button></li>
 			 </ul>
 			 <div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
 			 	<div id="cattype" class="may-hide">
