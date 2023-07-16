@@ -182,7 +182,7 @@ const pegjs = /*
         peg$c34 = peg$literalExpectation("(", false),
         peg$c35 = ")",
         peg$c36 = peg$literalExpectation(")", false),
-        peg$c37 = function(expr) { return expr; },
+        peg$c37 = function(expr) { return '(' + expr + ')'; },
         peg$c38 = function(prim) { return prim; },
         peg$c39 = "!",
         peg$c40 = peg$literalExpectation("!", false),
@@ -193,7 +193,7 @@ const pegjs = /*
             if (i != -1) {
               let f = s.slice(0, i);
               if (f == 'hasab')
-               return 'form.' + s;
+                return 'form.' + s;
               if (!Math[f])
                 throw Error("未知的函數: " + f);
               return 'Math.' + s;

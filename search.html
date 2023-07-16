@@ -120,6 +120,19 @@
     	margin-top: 0px;
     	width: 100%;
     }
+    #name-search {
+			width: 100%;
+			padding: 6px 20px;
+			border: 3px solid #ddd;
+			border-radius: 7px;
+			outline: none;
+			transition: 0.2s;
+			margin: 0 auto;
+			margin-bottom: 10px;
+    }
+    #name-search:focus {
+    	border-color: #bbb;
+    }
 	</style>
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
@@ -208,6 +221,9 @@
 <li data-expr="imu&IMU_POIATK"><button><span class="bc-icon bc-icon-imu-poiatk"></span>毒擊無效</button></li>
 			 </ul>
 			 <div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
+			 	<div class="may-hide">
+			 		<input type="search" placeholder="搜尋名稱或Cat id" id="name-search">
+			 	</div>
 			 	<div id="cattype" class="may-hide">
 					<span data-expr="rarity==0"><button class="type-btn">基本</button></span>
 					<span data-expr="rarity==1"><button class="type-btn">EX</button></span>

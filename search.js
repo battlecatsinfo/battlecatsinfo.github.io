@@ -14,6 +14,10 @@ const cattype_e = document.getElementById('cattype');
 const trait_s = document.getElementById('trait-s');
 const atk_s = document.getElementById('atk-s');
 const ab_s = document.getElementById('ab-s');
+const atkBtn = atk_s.firstElementChild.firstElementChild;
+const traitBtn = trait_s.firstElementChild.firstElementChild;
+const abBtn = ab_s.firstElementChild.nextElementSibling.firstElementChild;
+const name_search = document.getElementById('name-search');
 const constants = {
     "RED": TB_RED,
     "FLOAT": TB_FLOAT,
@@ -151,55 +155,59 @@ function simplify(code) {
 }
 function calculate(code = '') {
 	pages_a.textContent = '';
-	used_variables = new Set();
+	const sortCode = simplify(sort_expr.value);
+	def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60);
+	plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90);
+	def_lv_e.value = def_lv;
+	plus_lv_e.value = plus_lv;
+	const url = new URL(location.pathname, location.href);
 	if (!code.length) {
 		const codes = [];
-		const cattypes = cattype_e.querySelectorAll('.o-selected');
-		if (cattypes.length)
-			codes.push(Array.prototype.map.call(cattypes, x => x.getAttribute('data-expr')).join('||'));
-		const traits = trait_s.querySelectorAll('.o-selected');
+		const cattypes = Array.from(cattype_e.querySelectorAll('.o-selected'));
+		if (cattypes.length) {
+			let M = cattypes.map(x => x.getAttribute('data-expr'));
+			url.searchParams.set('cattypes', M.join(' '));
+			codes.push(M.join('||'));
+		}
+		const traits = Array.from(trait_s.querySelectorAll('.o-selected'));
 		if (traits.length) {
-			if (trait_s.firstElementChild.firstElementChild.value == 'OR') {
-				codes.push(Array.prototype.map.call(traits, x => x.getAttribute('data-expr')).join('||'));
+			let M = traits.map(x => x.getAttribute('data-expr'));
+			url.searchParams.set('traits', M.join(' '));
+			if (traitBtn.value == 'OR') {
+				codes.push(M.join('||'));
 			} else {
-				codes.push(Array.prototype.map.call(traits, x => x.getAttribute('data-expr')).join('&&'));
+				codes.push(M.join('&&'));
 			}
 		}
-		const atks = atk_s.querySelectorAll('.o-selected');
+		const atks = Array.from(atk_s.querySelectorAll('.o-selected'));
 		if (atks.length) {
-			if (atk_s.firstElementChild.firstElementChild.value == 'OR') {
-				codes.push(Array.prototype.map.call(atks, x => x.getAttribute('data-expr')).join('||'));
+			let M = atks.map(x => x.getAttribute('data-expr'));
+			url.searchParams.set('atks', M.join(' '));
+			if (atkBtn.value == 'OR') {
+				codes.push(M.join('||'));
 			} else {
-				codes.push(Array.prototype.map.call(atks, x => x.getAttribute('data-expr')).join('&&'));
+				codes.push(M.join('&&'));
 			}
 		}
-		const abs = ab_s.querySelectorAll('.o-selected');
+		const abs = Array.from(ab_s.querySelectorAll('.o-selected'));
 		if (abs.length) {
-			if (ab_s.firstElementChild.nextElementSibling.firstElementChild.value == 'OR') {
-				codes.push(Array.prototype.map.call(abs, x => x.getAttribute('data-expr')).join('||'));
+			let M = abs.map(x => x.getAttribute('data-expr'));
+			url.searchParams.set('abs', M.join(' '));
+			if (abBtn.value == 'OR') {
+				codes.push(M.join('||'));
 			} else {
-				codes.push(Array.prototype.map.call(abs, x => x.getAttribute('data-expr')).join('&&'));
+				codes.push(M.join('&&'));
 			}
 		}
 		if (codes.length) {
 			code = (filter_expr.value = codes.map(x => `(${x})`).join('&&'));
 		} else
 			code = '1';
-	} else if (!code.length)
-		return renderTable([], []);
-	const sortCode = simplify(sort_expr.value);
-	const url = new URL(location);
-	def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60);
-	plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90);
-	def_lv_e.value = def_lv;
-	plus_lv_e.value = plus_lv.toString();
-	url.searchParams.set('deflv', def_lv.toString());
-	url.searchParams.set('pluslv', plus_lv.toString());
-	if (code != '1')
-		url.searchParams.set("filter", code);
-	if (sortCode.length)
-		url.searchParams.set('sort', sortCode);
-	history.pushState({}, "", url);
+	} else {
+		if (!code.length)
+			return renderTable([], []);
+		url.searchParams.set('filter', code);
+	}
 	var results = [];
 	var pcode;
 	try {
@@ -236,6 +244,24 @@ function calculate(code = '') {
 		});
 	}
 	renderTable(results);
+	url.searchParams.set('deflv', def_lv);
+	url.searchParams.set('pluslv', plus_lv);
+	if (sortCode.length)
+		url.searchParams.set('sort', sortCode);
+	const a = atkBtn.value == 'OR' ? '1' : '0';
+	const b = traitBtn.value == 'OR' ? '1' : '0';
+	const c = abBtn.value == 'OR' ? '1' : '0';
+	url.searchParams.set('ao', a+b+c);
+	history.pushState({}, "", url);
+}
+function addBtns(parent, s) {
+	if (!s) return;
+	const n = s.split(' ');
+	for (let c of parent.querySelectorAll('button')) {
+		if (s.includes(c.parentNode.getAttribute('data-expr'))) {
+			c.parentNode.classList.add('o-selected');
+		}
+	}
 }
 loadAllCats()
 .then(_cats => {
@@ -246,6 +272,8 @@ loadAllCats()
 	const params = new URLSearchParams(location.search);
 	const filter = params.get('filter');
 	const sort = params.get('sort');
+	if (filter)
+		filter_expr.value = filter;
 	if (sort)
 		sort_expr.value = sort;
 	const def_lv = params.get('deflv');
@@ -254,7 +282,17 @@ loadAllCats()
 		def_lv_e.value = def_lv.toString();
 	if (plus_lv)
 		plus_lv_e.value = plus_lv;
-	calculate(filter ? filter : '1');
+	const ao = params.get('ao');
+	if (ao) {
+		atkBtn.value = ao[0] == '1' ? 'OR' : 'AND';
+		traitBtn.value = ao[1] == '1' ? 'OR' : 'AND';
+		abBtn.value = ao[2] == '1' ? 'OR' : 'AND';
+	}
+	addBtns(cattype_e, params.get('cattypes'));
+	addBtns(atk_s, params.get('atks'));
+	addBtns(ab_s, params.get('abs'));
+	addBtns(trait_s, params.get('traits'));
+	calculate(filter ? filter : '');
 });
 document.querySelectorAll('button').forEach(elem => {
 	elem.state = '0';
@@ -296,4 +334,32 @@ toggle_s.onclick = function() {
 		toggle_s.innerText = '顯示收尋器';
 	}
 	hide_seach = !hide_seach;
+}
+name_search.oninput = function() {
+	let search = name_search.value;
+	let digit = search.length >= 1;
+	for (let c of search) {
+		const x = c.codePointAt(0);
+		if (x < 48 || x > 57)
+			digit = false;
+	}
+	var s = cats;
+	const results = [];
+	if (digit) {
+		let x = parseInt(search);
+		if (x < cats.length) {
+			s = [...cats];
+			for (let f of cats[x].forms)
+				results.push(f);
+			s.splice(x, 1);
+		}
+	}
+	for (let C of s) {
+		for (let f of C.forms) {
+			if (f.name.includes(search) || f.jp_name.includes(search)) {
+				results.push(f);
+			}
+		}
+	}
+	renderTable(results);
 }
