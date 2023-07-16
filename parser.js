@@ -1353,7 +1353,7 @@ const pegjs = /*
     }
 
 
-      const known_identifiers = ["id", "trait", "imu", "hp", "atk", "range", "dps", "kb", "attackf", "cd", "atktype", "rarity", "tdps", "thp"];
+      const known_identifiers = ["id", "trait", "imu", "hp", "atk", "attack", "range", "dps", "kb", "attackf", "cd", "atktype", "rarity", "tdps", "thp", "speed", "price", "cost"];
 
 
     peg$result = peg$startRuleFunction();

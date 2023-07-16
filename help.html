@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>使用說明</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">使用說明</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#使用說明">使用說明</a>
+<ul>
+<li><a href="#篩選表達式排序表達式">篩選表達式、排序表達式</a>
+<ul>
+<li><a href="#運算子">運算子</a></li>
+<li><a href="#數學含式">數學含式</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<style>
+html, body { font-size: 16px; }
+* { font-family: system-ui; }
+</style>
+<h1 id="使用說明">使用說明</h1>
+<h2 id="篩選表達式排序表達式">篩選表達式、排序表達式</h2>
+<p>如<code>1+1</code>、<code>2*3</code>等，是用來篩選和排序貓咪的運算式，類似數學的表達式，在程式語言裡通常稱做expression。</p>
+<ul>
+<li><p>用在篩選上 篩選表達式將會算出一個結果，如果結果成立(true)，則會將該結果移除；如果是不成立(false)，則結果將會保留</p>
+<p>例如 <code>range &gt;= 400</code> 篩選距離大於 400 的貓咪 例如 <code>(dps &gt; 40000) &amp;&amp; (price &lt;= 5000)</code> 篩選DPS大於40000且價格小於5000的貓咪</p></li>
+<li><p>用在排序上 排序表達式將會算出一個數值，會以這個數值將篩選過的結果做由大到小的排序</p>
+<p>如果你沒有指定排序表達式，將會以貓咪的ID大小作為預設排序</p>
+<p>例如，輸入 <code>dps</code> 將會將dps由大到小排序</p>
+<p>例如，<code>dps/cd</code> 就是每秒的DPS產量(ADPS)</p>
+<p>例如，<code>dps*range</code> 就是DPS和距離的乘積</p>
+<p>如果看數值最小的排序，可以加上負號，如 <code>-dps</code> 就是從DPS最小排到最大</p></li>
+</ul>
+<h3 id="運算子">運算子</h3>
+<table>
+<thead>
+<tr class="header">
+<th>運算子</th>
+<th>解釋</th>
+<th>最先結合順序(最高1)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>*</code></td>
+<td>乘法</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><code>/</code></td>
+<td>除法</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><code>%</code></td>
+<td>取餘數</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><code>+</code></td>
+<td>加法</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><code>-</code></td>
+<td>減法</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><code>&gt;</code></td>
+<td>大於</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td><code>&gt;=</code></td>
+<td>大於等於</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td><code>&lt;</code></td>
+<td>小於</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;=</code></td>
+<td>小於等於</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td><code>==</code></td>
+<td>等於</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td><code>!=</code></td>
+<td>不等於</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td><code>&amp;</code></td>
+<td>位元AND</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td><code>|</code></td>
+<td>位元OR</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td><code>^</code></td>
+<td>位元XOR</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td><code>&amp;&amp;</code></td>
+<td>邏輯AND</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td><code>||</code></td>
+<td>邏輯OR</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>位元AND、位元OR、位元XOR平常較少用到，如果要用AND功能，請用<code>&amp;&amp;</code>，如果要用OR功能，請用<code>||</code></p>
+<p>另外 <code>-</code> 是負號的意思，<code>(</code> 和 <code>)</code> 可以指定優先運算</p>
+<p>如 <code>-(1+2)*3</code> 是 <code>-9</code></p>
+<h3 id="數學含式">數學含式</h3>
+<ul>
+<li><code>max</code>: 最大值，如<code>max(1, 2, 3)</code>是3</li>
+<li><code>min</code>: 最小值，如<code>min(1, 2, 3)</code>是1</li>
+<li><code>sqrt</code>: 均方根值，如<code>sqrt(81)</code>是9</li>
+<li><code>pow</code>: <code>pow(x, y)</code>是x的次方</li>
+<li><code>round</code>: 四捨五入，如<code>round(0.5)</code>是1</li>
+<li><code>random</code>: 生成0-1之間的亂數(包含0，不包含1)</li>
+<li><code>floor</code>: 無條件捨去法，如<code>floor(0.9)</code>是0</li>
+<li><code>ceil</code>: 無條件進位法，如<code>ceil(0.1)</code>是1</li>
+<li><code>sign</code>: 如果輸入大於0，傳回1，如果輸入小於0，傳回-1，否則傳回0或-0</li>
+</ul>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Math">數學含式參考</a></p>
+</body>
+</html>

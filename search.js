@@ -133,7 +133,7 @@ function renderTable(forms, page = 1) {
 		const base = Math.min(def_lv, _info.maxBase);
 		const plus = Math.min(plus_lv, _info.maxPlus);
 		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', theForm.name + '/' + theForm.jp_name, theForm.gethp().toFixed(0), theForm.getatk().toFixed(0), 
-			theForm.getdps().toFixed(0), theForm.kb.toString(), theForm.range.toString(), parseFloat(theForm.attackF / 30).toFixed(2).toString() + '秒/下', theForm.speed, (theForm.price * 1.5).toFixed(0)];
+			theForm.getdps().toFixed(0), theForm.kb.toString(), theForm.range.toString(), numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, (theForm.price * 1.5).toFixed(0)];
 		for (let j = 0;j < 12;++j) {
 			const e = document.createElement('td');
 			e.innerText = texts[j].toString();

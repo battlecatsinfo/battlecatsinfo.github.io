@@ -225,16 +225,19 @@ class Form {
 			(data[24]) && (this.ab[AB_KB] = [data[24], trait_names[0]]);
 			if (data[25]) {
 				let stop_time = data[26];
-				this.ab[AB_STOP] = [data[25], trait_names[0], (stop_time / 30).toFixed(1), ((stop_time*1.2) / 30).toFixed(1)];
+				let cover = Math.min((data[25] * stop_time * 1.2) / (this.attackF * 100), 1);
+				this.ab[AB_STOP] = [data[25], trait_names[0], (stop_time / 30).toFixed(1), ((stop_time*1.2) / 30).toFixed(1), (cover*100).toFixed(0) + '%'];
 			}
 			if (data[27]) {
 				let slow_time = data[28];
-				this.ab[AB_SLOW] = [data[27], trait_names[0], (slow_time / 30).toFixed(1), ((slow_time*1.2) / 30).toFixed(1)];
+				let cover = Math.min((data[27] * slow_time * 1.2) / (this.attackF * 100), 1);
+				this.ab[AB_SLOW] = [data[27], trait_names[0], (slow_time / 30).toFixed(1), ((slow_time*1.2) / 30).toFixed(1), (cover*100).toFixed(0) + '%'];
 			}
 			(data[32]) && (this.ab[AB_ONLY] = trait_names);
 			if (data[37]) {
 				let weak_time = data[38];
-				this.ab[AB_WEAK] = [data[37], trait_names[0], data[39], (weak_time / 30).toFixed(1), ((weak_time*1.2) / 30).toFixed(1)];
+				let cover = Math.min((data[37] * weak_time * 1.2) / (this.attackF * 100), 1);
+				this.ab[AB_WEAK] = [data[37], trait_names[0], data[39], (weak_time / 30).toFixed(1), ((weak_time*1.2) / 30).toFixed(1), (cover*100).toFixed(0) + '%'];
 			}
 			(data[29]) && (this.ab[AB_RESIST] = trait_names);
 			(data[30]) && (this.ab[AB_MASSIVE] = trait_names);
@@ -414,8 +417,17 @@ class Form {
 		}
 		return dps;
 	}
+	getspeed() {
+		return this.speed;
+	}
+	getprice() {
+		return this.price * 1.5;
+	}
+	getcost() {
+		return this.price * 1.5;
+	}
 	getcd() {
-		return this.cd;
+		return this.cd / 30;
 	}
 	getimu() {
 		return this.imu;
@@ -632,9 +644,9 @@ let icon_descs = [
 	'超獸特效(對超獸敵人傷害2.5倍、減傷40%、{1}%攻擊無效{2}f)',
 	'終結魔女	',
 	'終結使徒',
-	'{1}%機率降低{2}攻擊力至{3}%{4}秒({5}秒)',
-	'{1}%機率暫停{2}{3}秒({4}秒)',
-	'{1}%機率緩速{2}{3}秒({4}秒)',
+	'{1}%機率降低{2}攻擊力至{3}%{4}秒({5}秒，控場覆蓋率{6})',
+	'{1}%機率暫停{2}{3}秒({4}秒，控場覆蓋率{5})',
+	'{1}%機率緩速{2}{3}秒({4}秒，控場覆蓋率{5})',
 	'只能攻擊{1}',
 	'對{1}傷害傷害1.5倍(1.8倍)受到紅屬性的敵人傷害減少50%(60%)',
 	'受到{1}攻擊的傷害減至1/4(1/5)',

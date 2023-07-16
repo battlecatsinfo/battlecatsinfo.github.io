@@ -116,7 +116,7 @@ function updateValues(form, tbl) {
 	}
 	chs[6].childNodes[1].innerText = numStrT(form.tba);
 	chs[6].childNodes[3].innerText = numStrT(form.backswing);
-	chs[5].childNodes[1].innerText = attackS.toPrecision(2) + '秒/下';
+	chs[5].childNodes[1].innerText = numStrT(form.attackF).replace('秒', '秒/下');
 	chs[5].childNodes[3].innerText = numStrT(form.pre);
 	var atkType = '';
 	if (form.atkType & ATK_OMNI)
@@ -244,9 +244,6 @@ function renderForm(form) {
 	makeTd(tbodytr5, '射程').rowSpan = 2;
 	makeTd(tbodytr5).rowSpan = 2;
 	makeTd(tbodytr5).rowSpan = 3;
-	tbodytr5.childNodes[4].style.verticalAlign = 'middle';
-	tbodytr5.childNodes[5].style.verticalAlign = 'middle';
-	tbodytr5.childNodes[6].style.verticalAlign = 'middle';
 	makeTd(tbodytr6, '攻擊間隔');
 	makeTd(tbodytr6);
 	makeTd(tbodytr6, '收招時間');
