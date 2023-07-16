@@ -18,23 +18,10 @@
 <header id="title-block-header">
 <h1 class="title">使用說明</h1>
 </header>
-<nav id="TOC" role="doc-toc">
-<ul>
-<li><a href="#使用說明">使用說明</a>
-<ul>
-<li><a href="#篩選表達式排序表達式">篩選表達式、排序表達式</a>
-<ul>
-<li><a href="#運算子">運算子</a></li>
-<li><a href="#數學含式">數學含式</a></li>
-</ul></li>
-</ul></li>
-</ul>
-</nav>
 <style>
 html, body { font-size: 16px; }
 * { font-family: system-ui; }
 </style>
-<h1 id="使用說明">使用說明</h1>
 <h2 id="篩選表達式排序表達式">篩選表達式、排序表達式</h2>
 <p>如<code>1+1</code>、<code>2*3</code>等，是用來篩選和排序貓咪的運算式，類似數學的表達式，在程式語言裡通常稱做expression。</p>
 <ul>
@@ -47,6 +34,101 @@ html, body { font-size: 16px; }
 <p>例如，<code>dps*range</code> 就是DPS和距離的乘積</p>
 <p>如果看數值最小的排序，可以加上負號，如 <code>-dps</code> 就是從DPS最小排到最大</p></li>
 </ul>
+<h3 id="變數">變數</h3>
+<p>在上面的例子中，<code>dps</code>、<code>cd</code>、<code>range</code> 等都稱作變數，代表貓咪的某個資訊</p>
+<p>以下是可以使用的變數清單(變數不分大小寫)</p>
+<table>
+<thead>
+<tr class="header">
+<th>變數</th>
+<th>解釋</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>Cat ID</td>
+</tr>
+<tr class="even">
+<td>trait</td>
+<td>針對屬性</td>
+</tr>
+<tr class="odd">
+<td>imu</td>
+<td>抗性</td>
+</tr>
+<tr class="even">
+<td>hp</td>
+<td>血量</td>
+</tr>
+<tr class="odd">
+<td>atk</td>
+<td>攻擊力總和</td>
+</tr>
+<tr class="even">
+<td>attack</td>
+<td>同 atk</td>
+</tr>
+<tr class="odd">
+<td>range</td>
+<td>攻擊距離或接觸點</td>
+</tr>
+<tr class="even">
+<td>attacks</td>
+<td>攻擊頻率(秒)</td>
+</tr>
+<tr class="odd">
+<td>attackf</td>
+<td>攻擊頻率(f)</td>
+</tr>
+<tr class="even">
+<td>dps</td>
+<td>DPS(<code>attack / attacks</code>)</td>
+</tr>
+<tr class="odd">
+<td>kb</td>
+<td>KB</td>
+</tr>
+<tr class="even">
+<td>cd</td>
+<td>再生產</td>
+</tr>
+<tr class="odd">
+<td>atktype</td>
+<td>攻擊類型</td>
+</tr>
+<tr class="even">
+<td>rarity</td>
+<td>稀有度</td>
+</tr>
+<tr class="odd">
+<td>speed</td>
+<td>移動速度</td>
+</tr>
+<tr class="even">
+<td>price</td>
+<td>價格(二章、傳說)</td>
+</tr>
+<tr class="odd">
+<td>cost</td>
+<td>同price</td>
+</tr>
+<tr class="even">
+<td>thp</td>
+<td>加上能力和效果的血量</td>
+</tr>
+<tr class="odd">
+<td>tatk</td>
+<td>加上能力和效果的攻擊力</td>
+</tr>
+<tr class="even">
+<td>tdps</td>
+<td>加上能力和效果的DPS</td>
+</tr>
+</tbody>
+</table>
+<p>注意<em>終結使徒</em>和<em>終結魔女</em>的加成很大，而且有些效果會疊加，如EVA零號機因<em>終結使徒</em>+<em>很耐打</em>使得 HP 乘 <code>5 * 5 = 25</code> 倍，加上原本HP就很高，造成破百萬的血量</p>
+<p>以上數值都是以滿金寶、滿科技計算</p>
 <h3 id="運算子">運算子</h3>
 <table>
 <thead>

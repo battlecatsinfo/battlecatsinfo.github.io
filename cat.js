@@ -345,6 +345,9 @@ class Form {
 	getattackf() {
 		return this.attackF;
 	}
+	getattacks() {
+		return this.attackF / 30;
+	}
 	getbackswing() {
 		return this.backswing;
 	}
@@ -381,8 +384,7 @@ class Form {
 		}
 		return hp;
 	}
-	gettdps() {
-		let dps = this.getdps();
+	withab(dps) {
 		if (this.ab.hasOwnProperty(AB_ATKBASE))
 			return dps * 4;
 		if (this.ab.hasOwnProperty(AB_S)) {
@@ -416,6 +418,12 @@ class Form {
 			dps *= 5;
 		}
 		return dps;
+	}
+	gettdps() {
+		return withab(this.getdps());
+	}
+	gettatk() {
+		return withab(this.getatk());
 	}
 	getspeed() {
 		return this.speed;
