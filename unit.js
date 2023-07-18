@@ -1,5 +1,7 @@
 const my_params = new URLSearchParams(location.search);
 const my_id = parseInt(my_params.get('id'));
+const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT]);
+const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL]);
 var my_cat;
 if (isNaN(my_id)) {
 	alert('Missing cat id in URL query!');
@@ -13,6 +15,189 @@ if (my_id < 0 || my_id >= curveMap.length) {
 }
 const cat_icons = document.getElementById('cat-icons');
 const unit_content = document.getElementById('unit-content');
+function getCombinations(arr)
+{
+	const combi = [];
+	let temp = [];
+	const slent = Math.pow(2, arr.length);
+
+	for (var i = 0; i < slent; i++)
+	{
+    	temp = [];
+    	for (var j = 0; j < arr.length; j++)
+    	{
+        	if ((i & Math.pow(2, j)))
+        	{
+            	temp.push(arr[j]);
+        	}
+    	}
+    	if (temp.length > 0)
+    	{
+        	combi.push(temp);
+    	}
+	}
+	return combi;
+}
+function getAtk(line, theATK, parent, first, trait, plus, dps) {
+	const lines = [];
+	var spec = false;
+	var treasure;
+	for (const ab of line) {
+		switch (parseInt(ab[0])) {
+		case AB_GOOD:
+			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
+			treasure = spec ? first : (trait & trait_treasure);
+			theATK *= (treasure ? 1.8 : 1.5);
+			lines.push('善攻');
+			break;
+		case AB_CRIT:
+			theATK *= 2;
+			if (dps)
+				theATK *= (ab[1] / 50);
+			else
+				theATK *= 2;
+			lines.push('爆');
+			break;
+		case AB_STRONG:
+			theATK *= (1 + (ab[2] / 100));
+			lines.push('增攻');
+			break;
+		case AB_S:
+			if (dps)
+				theATK += theATK * ((ab[1] * ab[2]) / 10000);
+			else
+				theATK *= 1 + (ab[2] / 100);
+			lines.push('渾身');
+			break;
+		case AB_MASSIVE:
+			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
+			treasure = spec ? first : (trait & trait_treasure);
+			theATK *= (treasure ? 4 : 3);
+			lines.push('大傷');
+			break;
+		case AB_MASSIVES:
+			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
+			treasure = spec ? first : (trait & trait_treasure);
+			theATK *= (treasure ? 6 : 5)
+			lines.push('極傷');
+			break;
+		case AB_EKILL:
+			lines.push('使徒');
+			theATK *= 5;
+			break;
+		case AB_WKILL:
+			theATK *= 5;
+			lines.push('魔女');
+			break;
+		case AB_BSTHUNT:
+			theATK *= 2.5;
+			lines.push('超獸');
+			break;
+		case AB_BAIL:
+			theATK *= 1.6;
+			lines.push('超生命體');
+			break;
+		}
+	}
+	let s = lines.join(' • ');
+	s += ':';
+	const atks = plus ? ('+' + theATK.toFixed(0)) : (theATK.toFixed(0));
+	s += atks;
+	if (spec) {
+		if (!first) {
+			parent.appendChild(document.createTextNode('/' + atks + '(' + get_trait_short_names(trait & trait_no_treasure) + ')'));
+			parent.appendChild(document.createElement('br'));
+			return;
+		}
+		s += '(' + get_trait_short_names(trait & trait_treasure) + ')';
+		parent.appendChild(document.createTextNode(s));
+		return true;
+	}
+	parent.appendChild(document.createTextNode(s));
+	parent.appendChild(document.createElement('br'));
+	return false;
+}
+function getAtkString(atk, abs, trait, level, parent, plus, dps=false) {
+	atk *= 2.5;
+	atk *= getLevelMulti(level);
+	const Cs = getCombinations(Object.entries(abs).filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
+	parent.appendChild(document.createTextNode(plus ? ('+' + atk.toFixed(0)) : atk.toFixed(0)));
+	parent.appendChild(document.createElement('br'));
+	for (let line of Cs)
+		getAtk(line, atk, parent, true, trait, plus, dps) && getHp(line, atk, parent, false, trait, plus, dps);
+	if (abs.hasOwnProperty(AB_ATKBASE)) {
+		parent.appendChild(document.createTextNode(`城堡:` + (atk * 4).toFixed(0)));
+	}
+}
+function getHp(line, theHP, parent, first, trait, plus) {
+	const lines = [];
+	var spec = false;
+	var treasure;
+	for (const ab of line) {
+		switch (parseInt(ab[0])) {
+		case AB_GOOD:
+			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
+			treasure = spec ? first : (trait & trait_treasure);
+			theHP *= (treasure ? 2.5 : 2);
+			lines.push('善攻');
+			break;
+		case AB_RESIST:
+			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
+			treasure = spec ? first : (trait & trait_treasure);
+			theHP *= (treasure ? 5 : 4);
+			lines.push('很耐打');
+			break;
+		case AB_RESISTS:
+			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
+			treasure = spec ? first : (trait & trait_treasure);
+			theHP *= (treasure ? 7 : 6);
+			lines.push('超級耐打');
+			break;
+		case AB_EKILL:
+			lines.push('使徒');
+			theHP *= 5;
+			break;
+		case AB_WKILL:
+			theHP *= 10;
+			lines.push('魔女');
+			break;
+		case AB_BSTHUNT:
+			theHP /= 0.6;
+			lines.push('超獸');
+			break;
+		case AB_BAIL:
+			theHP /= 0.7;
+			lines.push('超生命體');
+			break;
+		}
+	}
+	let s = lines.join(' • ');
+	s += ':';
+	const hps = plus ? ('+' + theHP.toFixed(0)) : (theHP.toFixed(0));
+	s += hps;
+	if (spec) {
+		if (!first) {
+			parent.appendChild(document.createTextNode('/' + hps + '(' + get_trait_short_names(trait & trait_no_treasure) + ')'));
+			parent.appendChild(document.createElement('br'));
+			return;
+		}
+		s += '(' + get_trait_short_names(trait & trait_treasure) + ')';
+		parent.appendChild(document.createTextNode(s));
+		return true;
+	}
+	parent.appendChild(document.createTextNode(s));
+	parent.appendChild(document.createElement('br'));
+	return false;
+}
+function getHpString(hp, abs, trait, level, parent, plus = false) {
+	hp *= 2.5;
+	hp *= getLevelMulti(level);
+	const Cs = getCombinations(Object.entries(abs).filter(x => hp_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
+	parent.appendChild(document.createTextNode(plus ? ('+' + hp.toFixed(0)) : hp.toFixed(0)));
+	parent.appendChild(document.createElement('br'));
+	for (let line of Cs)
+		getHp(line, hp, parent, true, trait, plus) && getHp(line, hp, parent, false, trait, plus);
+}
 function updateValues(form, tbl) {
 	let chs = tbl.childNodes;
 	let HPs = chs[1].childNodes;
@@ -26,94 +211,21 @@ function updateValues(form, tbl) {
 	PRs[2].innerText = (form.price).toFixed(0);
 	PRs[4].innerText = (form.price * 1.5).toFixed(0);
 	PRs[6].innerText = (form.price + form.price).toFixed(0);
-	let baseHP = form.hp * (1 + environment.DEF * 0.005);
-	if (form.trait && form.ab.hasOwnProperty(AB_RESIST)) {
-		let x4 = get_trait_short_names(form.trait & trait_no_treasure);
-		let x5 = get_trait_short_names(form.trait & trait_treasure);
-		for (let i = 1;i <= 5;++i) {
-			let hp = baseHP * getLevelMulti(i * 10);
-			let x4s = x4.length ? ('<br>' + x4 + (hp*4).toFixed(0)) : '';
-			let x5s = x5.length ? ('<br>' + x5 + (hp*5).toFixed(0)) : '';
-			HPs[i].innerHTML = hp.toFixed(0) + x4s + x5s;
-			HPPKBs[i].innerHTML = (hp / form.kb).toFixed(0);
-		}
-		let val = baseHP * 0.2;
-		let x4s = x4.length ? ('<br>' + x4 + '+' + numStr(val*4)) : '';
-		let x5s = x5.length ? ('<br>' + x5 + '+' + numStr(val*5)) : '';
-		HPs[6].innerHTML = '+' + numStr(val) + x4s + x5s;
-	} else if (form.trait && form.ab.hasOwnProperty(AB_RESISTS)) {
-		let x6 = get_trait_short_names(form.trait & trait_no_treasure);
-		let x7 = get_trait_short_names(form.trait & trait_treasure);
-		for (let i = 1;i <= 5;++i) {
-			let hp = baseHP * getLevelMulti(i * 10);
-			let x7s = x7.length ? ('<br>' + x7 + (hp*7).toFixed(0)) : '';
-			let x6s = x6.length ? ('<br>' + x6 + (hp*6).toFixed(0)) : '';
-			HPs[i].innerHTML = hp.toFixed(0) + x6s + x7s;
-			HPPKBs[i].innerHTML = (hp / form.kb).toFixed(0);
-		}
-		let val = baseHP * 0.2;
-		let x6s = x6.length ? ('<br>' + x6 + '+' + numStr(val*6)) : '';
-		let x7s = x7.length ? ('<br>' + x7 + '+' + numStr(val*7)) : '';
-		HPs[6].innerHTML = '+' + numStr(val) + x6s + x7s;
-	} else {
-		for (let i = 1;i <= 5;++i) {
-			let hp = baseHP * getLevelMulti(i * 10);
-			HPs[i].innerText = hp.toFixed(0);
-			HPPKBs[i].innerText = (hp / form.kb).toFixed(0);
-		}
-		HPs[6].innerText = '+' + numStr(baseHP * 0.2);
-	}
-	HPPKBs[6].innerText	= '+' + numStr((baseHP * 0.2) / form.kb);
+	for (let i = 1;i <= 5;++i)
+		getHpString(form.hp, form.ab, form.trait, i * 10, HPs[i]);
+	getHpString(form.hp * 0.2, form.ab, form.trait, 1, HPs[6], true);
+	let hppkb = form.hp / form.kb;
+	for (let i = 1;i <= 5;++i)
+		getHpString(hppkb, form.ab, form.trait, i * 10, HPPKBs[i]);
+	getHpString(hppkb * 0.2, form.ab, form.trait, 1, HPPKBs[6], true);
 	const totalAtk = form.atk + form.atk1 + form.atk2;
-	let baseATK = totalAtk * (1 + environment.ATK * 0.005);
-	let attackS = form.attackF / 30;
-	if (form.trait && form.ab.hasOwnProperty(AB_MASSIVE)) {
-		let x3 = get_trait_short_names(form.trait & trait_no_treasure);
-		let x4 = get_trait_short_names(form.trait & trait_treasure);
-		for (let i = 1;i <= 5;++i) {
-			let _atk = baseATK * getLevelMulti(i * 10);
-			let x4s = x4.length ? ('<br>' + x4 + (_atk*4).toFixed(0)) : '';
-			let x3s = x3.length ? ('<br>' + x3 + (_atk*3).toFixed(0)) : '';
-			let x4dps = x4.length ? ('<br>' + x4 + ((_atk*4)/attackS).toFixed(0)) : '';
-			let x3dps = x3.length ? ('<br>' + x3 + ((_atk*3)/attackS).toFixed(0)) : '';
-			ATKs[i].innerHTML = _atk.toFixed(0) + x3s + x4s;
-			DPSs[i].innerHTML = (_atk / attackS).toFixed(0) + x3dps + x4dps;
-		}
-		let _atk = baseATK * 0.2;
-		let x4s = x4.length ? ('<br>' + x4 + '+' + numStr(_atk*4)) : '';
-		let x3s = x3.length ? ('<br>' + x3 + '+' + numStr(_atk*3)) : '';
-		let x4dps = x4.length ? ('<br>' + x4 + '+' + numStr((_atk*4)/attackS)) : '';
-		let x3dps = x3.length ? ('<br>' + x3 + '+' + numStr((_atk*3)/attackS)) : '';
-		ATKs[6].innerHTML = '+' + numStr(_atk) + x3s + x4s;
-		DPSs[6].innerHTML = '+' + numStr(_atk / attackS) + x3dps + x4dps;
-	} else if (form.trait && form.ab.hasOwnProperty(AB_MASSIVES)) {
-		let x5 = get_trait_short_names(form.trait & trait_no_treasure);
-		let x6 = get_trait_short_names(form.trait & trait_treasure);
-		for (let i = 1;i <= 5;++i) {
-			let _atk = baseATK * getLevelMulti(i * 10);
-			let x5s = x5.length ? ('<br>' + x5 + (_atk*5).toFixed(0)) : '';
-			let x6s = x6.length ? ('<br>' + x6 + (_atk*6).toFixed(0)) : '';
-			let x5dps = x5.length ? ('<br>' + x5 + ((_atk*5)/attackS).toFixed(0)) : '';
-			let x6dps = x6.length ? ('<br>' + x6 + ((_atk*6)/attackS).toFixed(0)) : '';
-			ATKs[i].innerHTML = _atk.toFixed(0) + x5s + x6s;
-			DPSs[i].innerHTML = (_atk / attackS).toFixed(0) + x5dps + x6dps;
-		}
-		let _atk = baseATK * 0.2;
-		let x5s = x5.length ? ('<br>' + x5 + '+' + numStr(_atk*5)) : '';
-		let x6s = x6.length ? ('<br>' + x6 + '+' + numStr(_atk*6)) : '';
-		let x5dps = x5.length ? ('<br>' + x5 + '+' + numStr((_atk*5)/attackS)) : '';
-		let x6dps = x6.length ? ('<br>' + x6 + '+' + numStr((_atk*6)/attackS)) : '';
-		ATKs[6].innerHTML = '+' + numStr(_atk) + x5s + x6s;
-		DPSs[6].innerHTML = '+' + numStr(_atk / attackS) + x5dps + x6dps;
-	} else {
-		for (let i = 1;i <= 5;++i) {
-			let _atk = baseATK * getLevelMulti(i * 10);
-			ATKs[i].innerText = _atk.toFixed(0);
-			DPSs[i].innerText = (_atk / attackS).toFixed(0);
-		}
-		ATKs[6].innerText = '+' + numStr(baseATK * 0.2);
-		DPSs[6].innerText = '+' + numStr((baseATK * 0.2) / attackS);
-	}
+	for (let i = 1;i <= 5;++i)
+		getAtkString(totalAtk, form.ab, form.trait, i * 10, ATKs[i], false);
+	getAtkString(totalAtk * 0.2, form.ab, form.trait, 1, ATKs[6], true);
+	const attackS = form.attackF / 30;
+	for (let i = 1;i <= 5;++i)
+		getAtkString(totalAtk/attackS, form.ab, form.trait, i * 10, DPSs[i], false, true);
+	getAtkString((totalAtk * 0.2)/attackS, form.ab, form.trait, 1, DPSs[6], true, true);
 	chs[6].childNodes[1].innerText = numStrT(form.tba);
 	chs[6].childNodes[3].innerText = numStrT(form.backswing);
 	chs[5].childNodes[1].innerText = numStrT(form.attackF).replace('秒', '秒/下');
@@ -323,7 +435,7 @@ function renderExtras() {
 		const div = document.createElement('div');
 		div.innerText = `Ver ${parseInt(version.slice(0, 2))}.${parseInt(version.slice(2, 4))}.${parseInt(version.slice(4))} 新增`;
 		div.classList.add('r-ribbon');
-		document.body.appendChild(div);
+		document.getElementById('main').appendChild(div);
 	}
 	table.appendChild(th);
 	table.appendChild(tr1);
@@ -359,7 +471,7 @@ loadAllCats()
 	my_cat = cats[my_id];
 	console.log(my_cat)
 	useCurve(my_id);
-	renderUintPage();	
+	renderUintPage();
 	document.getElementById('loader').style.display = 'none';
 	loader_text.style.display = 'none';
 	document.getElementById('main').style.display = 'block';

@@ -109,7 +109,7 @@ const
    AB_KB = 30,
    AB_WARP = 31,
    AB_IMUATK = 32;
-   AB_LAST = AB_IMUATK;
+   AB_LAST = AB_IMUATK
 const trait_short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無' , '使徒',  '魔女', '惡'];
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_METAL;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
@@ -368,7 +368,7 @@ class Form {
 			hp *= (this.trait & trait_treasure) ? 7 : 6;
 		}
 		if (this.ab.hasOwnProperty(AB_GOOD)) {
-			hp *= 2.5;
+			hp *= (this.trait & trait_treasure) ? 2.5 : 2;
 		}
 		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
 			hp /= 0.6;
@@ -384,46 +384,59 @@ class Form {
 		}
 		return hp;
 	}
-	withab(dps) {
+	gettdps() {
+		let dps = this.getdps();
 		if (this.ab.hasOwnProperty(AB_ATKBASE))
 			return dps * 4;
 		if (this.ab.hasOwnProperty(AB_S)) {
 			const s = this.ab[AB_S];
-			dps += (s[1] * s[0] * 30) / (100 * this.attackF);
+			dps += dps * ((s[0] * s[1]) / 10000);
 		}
-		if (this.ab.hasOwnProperty(AB_CRIT)) {
-			dps += (this.ab[AB_CRIT][0] * 2 * 30) / (100 * this.attackF);
-		}
-		if (this.ab.hasOwnProperty(AB_STRONG)) {
+		if (this.ab.hasOwnProperty(AB_CRIT))
+			dps += dps * (this.ab[AB_CRIT][0] / 100);
+		if (this.ab.hasOwnProperty(AB_STRONG))
 			dps *= 1 + (this.ab[AB_STRONG][1] / 100);
-		}
-		if (this.ab.hasOwnProperty(AB_MASSIVE)) {
+		if (this.ab.hasOwnProperty(AB_MASSIVE))
 			dps *= (this.trait & trait_treasure) ? 4 : 3;
-		} else if (this.ab.hasOwnProperty(AB_MASSIVES)) {
+		else if (this.ab.hasOwnProperty(AB_MASSIVES))
 			dps *= (this.trait & trait_treasure) ? 6 : 5;
-		}
-		if (this.ab.hasOwnProperty(AB_GOOD)) {
+		if (this.ab.hasOwnProperty(AB_GOOD))
 			dps *= (this.trait & trait_treasure) ? 1.8 : 1.5;
-		}
-		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
+		if (this.ab.hasOwnProperty(AB_BSTHUNT))
 			dps *= 2.5;
-		}
-		if (this.ab.hasOwnProperty(AB_BAIL)) {
+		if (this.ab.hasOwnProperty(AB_BAIL))
 			dps *= 1.6;
-		}
-		if (this.ab.hasOwnProperty(AB_EKILL)) {
+		if (this.ab.hasOwnProperty(AB_EKILL))
 			dps *= 5;
-		}
-		if (this.ab.hasOwnProperty(AB_WKILL)) {
+		if (this.ab.hasOwnProperty(AB_WKILL))
 			dps *= 5;
-		}
 		return dps;
 	}
-	gettdps() {
-		return withab(this.getdps());
-	}
 	gettatk() {
-		return withab(this.getatk());
+		let atk = this.getatk();
+		if (this.ab.hasOwnProperty(AB_ATKBASE))
+			return atk * 4;
+		if (this.ab.hasOwnProperty(AB_S))
+			atk *= (this.ab[AB_S][1] / 100);
+		if (this.ab.hasOwnProperty(AB_CRIT))
+			atk += atk;
+		if (this.ab.hasOwnProperty(AB_STRONG))
+			atk *= 1 + (this.ab[AB_STRONG][1] / 100);
+		if (this.ab.hasOwnProperty(AB_MASSIVE))
+			atk *= (this.trait & trait_treasure) ? 4 : 3;
+		else if (this.ab.hasOwnProperty(AB_MASSIVES))
+			atk *= (this.trait & trait_treasure) ? 6 : 5;
+		if (this.ab.hasOwnProperty(AB_GOOD))
+			atk *= (this.trait & trait_treasure) ? 1.8 : 1.5;
+		if (this.ab.hasOwnProperty(AB_BSTHUNT))
+			atk *= 2.5;
+		if (this.ab.hasOwnProperty(AB_BAIL))
+			atk *= 1.6;
+		if (this.ab.hasOwnProperty(AB_EKILL))
+			atk *= 5;
+		if (this.ab.hasOwnProperty(AB_WKILL))
+			atk *= 5;
+		return atk;
 	}
 	getspeed() {
 		return this.speed;
@@ -632,15 +645,15 @@ let icon_names = [
 	  'imu-atk'
 ]
 let icon_descs = [
-	'血量{1}%以下攻擊力增加{2}%',
+	'血量{1}%以下攻擊力增加{2}%倍',
 	'{1}%機率以1血存活一次', 
-	'善於攻城({1}%傷害)',
-	'{1}機率會心一擊',
+	'善於攻城({1}%倍s傷害)',
+	'{1}%機率會心一擊',
 	'終結不死	',
 	'靈魂攻擊',
-	'{1}%機率打破惡魔盾',
 	'{1}%機率打破宇宙盾',
-	'{1}%機率使出{2}%以上渾身一擊',
+	'{1}%機率打破惡魔盾',
+	'{1}%機率渾身一擊(攻擊力增加{2}%倍)',
 	'擊倒敵人獲得兩倍金錢',
 	'鋼鐵特性(爆擊之外攻擊只會受1傷害)',
 	'{1}%機率放出Lv{2}小波動',

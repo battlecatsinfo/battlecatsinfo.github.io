@@ -1,7 +1,4 @@
 html, body { height: 100%; width: 100%; margin: 0; }
-* {
-	font-size: 20px;
-}
 p {
 	text-align: center;
 }
@@ -12,10 +9,6 @@ pre {
   white-space: normal;
   text-wrap: wrap;
   font-family: system-ui;
-}
-.bold-large {
-	font-weight: 600;
-	font-size: 23px;
 }
 #loader {
   position: absolute;
