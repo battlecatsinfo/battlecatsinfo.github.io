@@ -2,6 +2,7 @@ const my_params = new URLSearchParams(location.search);
 const my_id = parseInt(my_params.get('id'));
 const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL]);
+var level_count = 0;
 var my_cat;
 if (isNaN(my_id)) {
 	alert('Missing cat id in URL query!');
@@ -124,7 +125,7 @@ function getAtkString(atk, abs, trait, level, parent, plus, dps=false) {
 	parent.appendChild(document.createTextNode(plus ? ('+' + (~~atk).toString()) : (~~atk).toString()));
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)
-		getAtk(line, atk, parent, true, trait, plus, dps) && getHp(line, atk, parent, false, trait, plus, dps);
+		getAtk(line, atk, parent, true, trait, plus, dps) && getAtk(line, atk, parent, false, trait, plus, dps);
 	if (abs.hasOwnProperty(AB_ATKBASE)) {
 		parent.appendChild(document.createTextNode(`城堡:` + (~~(atk * 4)).toString()));
 	}
@@ -275,7 +276,6 @@ function makeTd(parent, text = '') {
 	return c;
 }
 function renderForm(form) {
-	const level_count = form.lvc;
 	const info = my_cat.info;
 	if (level_count == 2 && info.upReqs != undefined) {
 		const container = document.createElement('table');
@@ -412,7 +412,7 @@ function renderForm(form) {
 	}
 	unit_content.appendChild(level_text);
 	unit_content.appendChild(tbl);
-	return tbl;
+	++level_count;
 }
 function renderExtras() {
 	const table = document.createElement('table');
@@ -505,6 +505,8 @@ function getTalentInfo(talent, data) {
 		if (data[31])
 			return range('爆擊', '%', 2, 3);
 		return `爆擊(${talent[2]}%機率發動)`;
+	case 14:
+		return '殭屍殺手';
 	case 15:
 		if (data[70])
 			return range('破盾', '%', 2, 3);
@@ -622,12 +624,14 @@ function rednerTalentInfos(talents, data) {
 	tr2.appendChild(td4);
 	tr2.appendChild(td5);
 	table.appendChild(tr2);
+	let infos = [];
 	for (let i = 0;i < 112;i += 14) {
 		const tr = document.createElement('tr');
 		if (!talents[i]) break;
 		if (talents[i + 13] == -1) break;
 		const info = getTalentInfo(talents.subarray(i, i + 14), data);
 		if (info instanceof Array) {
+			infos.push(info[0]);
 			let td = null;
 			for (let s of info) {
 				td = document.createElement('td');
@@ -636,6 +640,7 @@ function rednerTalentInfos(talents, data) {
 			}
 			td.innerText = '+' + td.innerText;
 		} else {
+			infos.push(info);
 			const t1 = document.createElement('td');
 			const t2 = document.createElement('td');
 			t1.innerText = '能力新增';
@@ -654,61 +659,9 @@ function rednerTalentInfos(talents, data) {
 	}
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	unit_content.appendChild(table);
+	return infos;
 }
-function renderTalentCosts(talents, data) {
-	const talent_names = {
-		1: '降攻',
-		2: "暫停",
-		3: "緩速",
-		5 :"善於攻擊",
-		6: "耐打",
-		7: "超大傷害",
-		8: "擊退",
-		10: "升攻",
-		11: "死前存活",
-		13: "爆擊",
-		15: "破盾",
-		17: "波動",
-		18: "降攻耐性",
-		19: "暫停耐性",
-		20: "緩速耐性",
-		21: "擊退耐性",
-		22: "波動耐性",
-		25: "成本減少	",
-		26: "生產速度",
-		27: "移動速度",
-		29: "詛咒無效",
-		30: "詛咒耐性",
-		31: "攻擊力",
-		32: "血量",
-		35: "對黑色敵人",
-		36: "對鋼鐵敵人",
-		38: "對異星敵人",
-		39: "對不死敵人",
-		40: "對古代種",
-		44: "降攻無效",
-		45: "暫停無效",
-		46: "緩速無效",
-		47: "擊退無效",
-		48: "波動無效",
-		49: "傳送無效",
-		50: "渾身一擊",
-		51: "攻撃無効",
-		52: "毒擊耐性",
-		53: "毒擊無效",
-		54: "烈波耐性",
-		55: "烈波無效",
-		56: "烈波強化",
-		57: "對惡魔",
-		58: "破惡魔盾",
-		59: "靈魂攻擊",
-		60: "詛咒強化",
-		61: "攻頻縮短",
-		62: "小波動",
-		63: "超生命體特效",
-		64: "超獸特效",
-		65: "小烈波"
- 	};
+function renderTalentCosts(talent_names, talents, data) {
 	const skill_costs = [
 		[25,5,5,5,5,10,10,10,10,10],
 		[5,5,5,5,5,10,10,10,10,10],
@@ -734,12 +687,13 @@ function renderTalentCosts(talents, data) {
 	
 	let names = [];
 	let costs = [];
+	let c = 0;
 	for (let i = 0;i < 112;i += 14) {
-		// ID	typeID [abilityID_A	MAXLv_A	min_A1	max_A1	min_A2	max_A2	min_A3	max_A3	min_A4	max_A4	textID_A	LvID_A	nameID_A	limit_A] * 8
 		if (!talents[i]) break;
 		if (talents[i + 13] == -1) break;
-		names.push(talent_names[talents[i]]);
+		names.push(talent_names[c]);
 		costs.push(talents[i + 11] - 1);
+		++c;
 	}
 	const tr1 = document.createElement('tr');
 	td0.colSpan = names.length + 1;
@@ -805,8 +759,11 @@ function renderUintPage() {
 	}
 	my_cat.forms.forEach(renderForm);
 	if (my_cat.info.talents) {
-		rednerTalentInfos(my_cat.info.talents, my_cat.forms[2].data);
-		renderTalentCosts(my_cat.info.talents, my_cat.forms[2].data);
+		const TF = my_cat.forms[2];
+		const names = rednerTalentInfos(my_cat.info.talents, TF.data);
+		renderTalentCosts(names, my_cat.info.talents, TF.data);
+		TF.applyTalents(my_cat.info.talents);
+		renderForm(TF);
 	}
 	renderExtras();
 	document.getElementById('open-db').href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';

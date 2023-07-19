@@ -1,6 +1,7 @@
 .bc-icon {
     display: inline-block;
     background-image: url(/data/page/img015.png);    
+    vertical-align: bottom;
 }
 .bc-icon-trait-red {
   width: 43px;

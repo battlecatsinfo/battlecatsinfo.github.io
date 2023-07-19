@@ -110,9 +110,9 @@ const
    AB_IMUATK = 32,
    AB_CURSE = 33,
    AB_LAST = AB_CURSE;
-const trait_short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無' , '使徒',  '魔女', '惡'];
-const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_METAL;
-const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
+const trait_short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無', '使徒', '魔女', '惡'];
+const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
+const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 function t3str(x) {
 	let s = x.toString();
 	switch (s.length) {
@@ -143,8 +143,8 @@ function getTraitNames(trait) {
 	if ((trait&255) == 255)
 		return '所有敵人';
 	if ((trait&127) == 127)
-		return '有色敵人';
-	let names = ['紅色敵人', '漂浮敵人', '黑色敵人', '鋼鐵敵人', '天使敵人', '異星戰士', '不死生物', '鋼鐵敵人', '無屬性敵人', '使徒', '魔女', '惡魔'];	
+		return '有色敵人'; 
+	let names = ['紅色敵人', '漂浮敵人', '黑色敵人', '鋼鐵敵人', '天使敵人', '異星戰士', '不死生物', '古代種', '無屬性敵人', '使徒', '魔女', '惡魔'];	
 	let i = 0;
 	let idxs = [];
 	for (let x = 1;x <= TB_LAST;x <<= 1) {
@@ -222,7 +222,7 @@ class Form {
 		(data[78]) && (this.trait |= TB_RELIC);
 		(data[96]) && (this.trait |= TB_DEMON);
 		if (this.trait) {
-			let trait_names = [getTraitNames(this.trait)];
+			const trait_names = [getTraitNames(this.trait)];
 			(data[23]) && (this.ab[AB_GOOD] = trait_names);
 			(data[24]) && (this.ab[AB_KB] = [data[24], trait_names[0]]);
 			if (data[25]) {
@@ -323,6 +323,173 @@ class Form {
 				this.atkType |= ATK_LD;
 				break;
 			}
+		}
+	}
+	updateTraitNames() {
+		const new_names = getTraitNames(this.trait);
+		if (this.ab.hasOwnProperty(AB_GOOD))
+			this.ab[AB_GOOD][0] = new_names;
+		if (this.ab.hasOwnProperty(AB_KB))
+			this.ab[AB_KB][1] = new_names;
+		if (this.ab.hasOwnProperty(AB_STOP))
+			this.ab[AB_STOP][1] = new_names;
+		if (this.ab.hasOwnProperty(AB_WEAK))
+			this.ab[AB_WEAK][1] = new_names;
+		if (this.ab.hasOwnProperty(AB_SLOW))
+			this.ab[AB_SLOW][1] = new_names;
+		if (this.ab.hasOwnProperty(AB_ONLY))
+			this.ab[AB_ONLY][0] = new_names;
+		if (this.ab.hasOwnProperty(AB_RESIST))
+			this.ab[AB_RESIST][0] = new_names;
+		if (this.ab.hasOwnProperty(AB_RESISTS))
+			this.ab[AB_RESISTS][0] = new_names;
+		if (this.ab.hasOwnProperty(AB_MASSIVE))
+			this.ab[AB_MASSIVE][0] = new_names;
+		if (this.ab.hasOwnProperty(AB_MASSIVES))
+			this.ab[AB_MASSIVES][0] = new_names;
+		if (this.ab.hasOwnProperty(AB_CURSE))
+			this.ab[AB_CURSE][1] = new_names;
+	}
+	applyTalent(talent) {
+		switch (talent[0]) {
+case 1: '降攻'
+	break;
+case 2: "暫停"
+	break;
+case 3: "緩速"
+	break;
+case 5:
+	this.ab[AB_GOOD] = [getTraitNames(this.trait)];
+	break;
+case 6: 
+	this.ab[AB_RESIST] = [getTraitNames(this.trait)];
+	break;
+case 7:
+	this.ab[AB_MASSIVE] = [getTraitNames(this.trait)];
+	break;
+case 8: "擊退"
+	break;
+case 10: "升攻"
+	break;
+case 11: "死前存活"
+	break;
+case 13: "爆擊"
+	break;
+case 14:
+	this.ab[AB_ZKILL] = [];
+	break;
+case 15: "破盾"
+	break;
+case 17: "波動"
+	break;
+case 18: "降攻耐性"
+	break;
+case 19: "暫停耐性"
+	break;
+case 20: "緩速耐性"
+	break;
+case 21: "擊退耐性"
+	break;
+case 22: "波動耐性"
+	break;
+case 25: "成本減少"
+	break;
+case 26: "生產速度"
+	break;
+case 27: "移動速度"
+	break;
+case 29: "詛咒無效"
+	break;
+case 30: "詛咒耐性"
+	break;
+case 31: "攻擊力"
+	break;
+case 32: "血量"
+	break;
+case 35:
+	this.trait |= TB_BLACK;
+	this.updateTraitNames();
+	break;
+case 36:
+	this.trait |= TB_METAL;
+	this.updateTraitNames();
+	break;
+case 38:
+	this.trait |= TB_ALIEN;
+	this.updateTraitNames();
+	break;
+case 39:
+	this.trait |= TB_ZOMBIE;
+	this.updateTraitNames();
+	break;
+case 40:
+	this.trait |= TB_RELIC;
+	this.updateTraitNames();
+	break;
+case 44:
+	this.imu |= IMU_WEAK;
+	break;
+case 45:
+	this.imu |= IMU_STOP;
+	break;
+case 46:
+	this.imu |= IMU_SLOW;
+	break;
+case 47:
+	this.imu |= IMU_KB;
+	break;
+case 48:
+	this.imu |= IMU_WAVE;
+	break;
+case 49:
+	this.imu |= IMU_WARP;
+	break;
+case 50: "渾身一擊"
+	break;
+case 51: "攻撃無効"
+	break;
+case 52: "毒擊耐性"
+	break;
+case 53: "毒擊無效"
+	this.imu |= IMU_CURSE;
+	break;
+case 54: "烈波耐性"
+	break;
+case 55: "烈波無效"
+	this.imu |= IMU_VOLC;
+	break;
+case 56: "烈波強化"
+	break;
+case 57:
+	this.trait |= TB_DEMON;
+	this.updateTraitNames();
+	break;
+case 58: "破惡魔盾"
+	break;
+case 59: "靈魂攻擊"
+	this.ab[AB_CKILL] = [];
+	break;
+case 60: "詛咒強化"
+	break;
+case 61: "攻頻縮短"
+	break;
+case 62: "小波動"
+	break;
+case 63:
+	this.ab[AB_BAIL] = [];
+	break;
+case 64:
+	this.ab[AB_BSTHUNT] = [5, 30];
+	break;
+case 65: '小烈波'
+	break;
+		}
+	}
+	applyTalents(talents, _super = false) {
+		for (let i = 0;i < 112;i += 14) {
+			if (!talents[i]) break;
+			if (talents[i + 13] == -1) break;
+			this.applyTalent(talents.subarray(i, i + 14));
 		}
 	}
 	hasab(ab) {
