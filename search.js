@@ -74,7 +74,8 @@ const constants = {
     "AB_MASSIVE": AB_MASSIVE,
     "AB_MASSIVES": AB_MASSIVES,
     "AB_KB": AB_KB,
-    "AB_IMUATK": AB_IMUATK
+    "AB_IMUATK": AB_IMUATK,
+    "AB_CURSE": AB_CURSE
   };
 var last_forms;
 function rerender(event) {
@@ -132,8 +133,8 @@ function renderTable(forms, page = 1) {
 		_info = cats[theForm.id].info;
 		const base = Math.min(def_lv, _info.maxBase);
 		const plus = Math.min(plus_lv, _info.maxPlus);
-		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', theForm.name + '/' + theForm.jp_name, theForm.gethp().toFixed(0), theForm.getatk().toFixed(0), 
-			theForm.getdps().toFixed(0), theForm.kb.toString(), theForm.range.toString(), numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, (theForm.price * 1.5).toFixed(0)];
+		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', theForm.name + '/' + theForm.jp_name, ~~theForm.gethp(), ~~theForm.getatk(), 
+			numStr(theForm.getdps()), theForm.kb, theForm.range, numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, ~~(theForm.price * 1.5)];
 		for (let j = 0;j < 12;++j) {
 			const e = document.createElement('td');
 			e.innerText = texts[j].toString();

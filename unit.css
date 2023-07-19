@@ -3,7 +3,7 @@ p {
 	text-align: center;
 }
 table {
-	margin-bottom: 100px;
+	margin-bottom: 60px;
 }
 pre {
   white-space: normal;
@@ -81,4 +81,13 @@ table.fruit-table {
   background-color: #f1f1f1;
   border-radius: 5px;
   border: 10px solid #f1f1f1;
+}
+table.tcost td {
+  padding: 7px 30px;
+  border: #cfcfcf 1px solid;
+}
+table.tcost {
+  width: initial;
+  margin: 0 auto;
+  margin-bottom: 50px;
 }

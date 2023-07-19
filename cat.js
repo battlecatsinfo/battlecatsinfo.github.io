@@ -1,7 +1,6 @@
 var unit_buy = null;
 var skill_file = null;
 var SkillLevel = null;
-var skill_level_file = null;
 var uints_zip = null;
 var anim2 = null;
 var _eggs = null;
@@ -108,8 +107,9 @@ const
    AB_MASSIVES = 29, 
    AB_KB = 30,
    AB_WARP = 31,
-   AB_IMUATK = 32;
-   AB_LAST = AB_IMUATK
+   AB_IMUATK = 32,
+   AB_CURSE = 33,
+   AB_LAST = AB_CURSE;
 const trait_short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無' , '使徒',  '魔女', '惡'];
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_METAL;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
@@ -177,6 +177,8 @@ class Form {
 			Object.assign(this, name);
 			return;
 		}
+		if (level_count == 2)
+			this.data = Int16Array.from(data); // We need unit data when calculate talents
 		this.id = cat_id;
 		this.lvc = level_count;
 		this.name = name;
@@ -226,23 +228,28 @@ class Form {
 			if (data[25]) {
 				let stop_time = data[26];
 				let cover = Math.min((data[25] * stop_time * 1.2) / (this.attackF * 100), 1);
-				this.ab[AB_STOP] = [data[25], trait_names[0], (stop_time / 30).toFixed(1), ((stop_time*1.2) / 30).toFixed(1), (cover*100).toFixed(0) + '%'];
+				this.ab[AB_STOP] = [data[25], trait_names[0], numStrT(stop_time), numStrT(stop_time * 1.2), (cover*100).toFixed(0) + '%'];
 			}
 			if (data[27]) {
 				let slow_time = data[28];
 				let cover = Math.min((data[27] * slow_time * 1.2) / (this.attackF * 100), 1);
-				this.ab[AB_SLOW] = [data[27], trait_names[0], (slow_time / 30).toFixed(1), ((slow_time*1.2) / 30).toFixed(1), (cover*100).toFixed(0) + '%'];
+				this.ab[AB_SLOW] = [data[27], trait_names[0], numStrT(slow_time), numStrT(slow_time * 1.2), (cover*100).toFixed(0) + '%'];
 			}
 			(data[32]) && (this.ab[AB_ONLY] = trait_names);
 			if (data[37]) {
 				let weak_time = data[38];
 				let cover = Math.min((data[37] * weak_time * 1.2) / (this.attackF * 100), 1);
-				this.ab[AB_WEAK] = [data[37], trait_names[0], data[39], (weak_time / 30).toFixed(1), ((weak_time*1.2) / 30).toFixed(1), (cover*100).toFixed(0) + '%'];
+				this.ab[AB_WEAK] = [data[37], trait_names[0], data[39], numStrT(weak_time), numStrT(weak_time * 1.2), (cover*100).toFixed(0) + '%'];
 			}
 			(data[29]) && (this.ab[AB_RESIST] = trait_names);
 			(data[30]) && (this.ab[AB_MASSIVE] = trait_names);
 			(data[80]) && (this.ab[AB_RESISTS] = trait_names);
 			(data[81]) && (this.ab[AB_MASSIVES] = trait_names);
+			if (data[92]) {
+				let curse_time = data[93];
+				let cover = Math.min((data[92] * curse_time * 1.2) / (this.attackF * 100), 1);
+				this.ab[AB_CURSE] = [data[92], trait_names[0], numStrT(curse_time),  numStrT(curse_time * 1.2), (cover*100).toFixed(0) + '%'];
+			}
 		}
 		(data[31]) && (this.ab[AB_CRIT] = [data[31]]);
 		(data[33]) && (this.ab[AB_BOUNTY] = []);
@@ -505,28 +512,16 @@ class CatInfo {
 	}
 	loadTalents(my_id) {
 		const text = skill_file;
-		const skillCost = skill_level_file;
 		const match = '\n' + my_id.toString();
 		var idx = text.indexOf(match);
 		if (idx != -1) {
 			++idx;
 			var end;
 			for (end = idx;text[end] != '\n' && text[end];++end) {}
-			let data = text.slice(idx, end).split(',').map(x => parseInt(x));
-			let talents = [];
-			for (let i = 0;i < 8;++i) {
-				let o = i * 14;
-				let maxLv = data[o+3];
-				let lvId = data[o+13];
-				let costIdx = skillCost.indexOf('\n' + lvId.toString());
-				if (costIdx != -1) {
-					++costIdx;
-					var end;
-					for (end = costIdx;skillCost[end] != '\n' && skillCost[end];++end) {}
-					let costData = skillCost.slice(costIdx, end).split(',').slice(1).map(x => parseInt(x));
-					talents.push([data.slice(o+2, o+16), costData, maxLv]);
-				}
-			}
+			let data = text.slice(idx, end).split(',');
+			this.talents = new Int16Array(112);
+			for (let i = 0;i < 112;++i)
+				this.talents[i] = data[2 + i];
 		}
 	}
 }
@@ -549,30 +544,57 @@ class Cat {
 			this.forms[i] = new Form(my_name[i], my_name_jp[i], id, i, datas[i]);
 		}
 	}
-}
-async function getZip() {
-	return await JSZip.loadAsync(
-		await (
-			(await fetch("./all_units.zip")).blob())
-	);
-}
-async function createCat(id) {
-	const unit_file = await uints_zip.file(`all/${id}`).async('string');
-	return new Cat(id, unit_file);
+	getObj() {
+		return { 'info': this.info, 'forms': this.forms };
+	}
 }
 async function getAllCats() {
-	console.log('[Loading cats]');
+	anim2 = await ((await fetch('./anim2')).json());
 	unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
 	skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
-	skill_level_file = await ((await fetch('./data/data/SkillLevel.csv')).text());
-	uints_zip = await getZip();
+	uints_zip = await (await JSZip.loadAsync(
+		await (
+			(await fetch("./all_units.zip")).blob())
+	));
 	var cats = new Array(unit_names.length);
-	for (let i = 0;i < cats.length;++i) {
-		cats[i] = await createCat(i);
-		loader_text.innerText = `Loading (${i+1}/${cats.length})`;
+	for (let id = 0;id < cats.length;++id) {
+		const unit_file = await uints_zip.file(`all/${id}`).async('string');
+		cats[id] = await new Cat(id, unit_file);
+		loader_text.innerText = `Loading (${id+1}/${cats.length})`;
 	}
 	uints_zip = null;
+	skill_file = null;
+	uint_buy = null;
 	return cats;
+}
+async function loadCat(id) {
+	return new Promise(resolve => {
+		var req = indexedDB.open("db", 1);
+		req.onupgradeneeded = function(event) {
+	  	  const db = event.target.result;
+	  	  try { db.deleteObjectStore('cats'); } catch (e) { }
+		    const store = db.createObjectStore('cats', {"keyPath": "id"});
+		    store.createIndex("data", '', {"unique": false});
+		};
+		req.onsuccess = function(event) {
+			const db = event.target.result;
+			db.transaction(["cats"], "readwrite").objectStore("cats").get(id).onsuccess = function(event) {
+				const res = event.target.result;
+				if (res) return resolve(new Cat(res.data));
+				getAllCats()
+				.then(cats => {
+					const tx = db.transaction(["cats"], "readwrite");
+					const store = tx.objectStore("cats");
+					for (let i = 0;i < cats.length;++i)
+						store.put({'id': i, 'data': cats[i].getObj()});
+					tx.oncomplete = function() {
+						resolve(cats[id]);
+						db.close();
+					}
+				});
+			}
+		}
+	});
 }
 async function loadAllCats() {
 	return new Promise(resolve => {
@@ -593,17 +615,23 @@ async function loadAllCats() {
 						const tx = db.transaction(["cats"], "readwrite");
 						const store = tx.objectStore("cats");
 						for (let i = 0;i < cats.length;++i)
-							store.put({'id': i, 'data': JSON.stringify(cats[i])});
+							store.put({'id': i, 'data': cats[i].getObj()});
 						tx.oncomplete = function() {
 							resolve(cats);
 							db.close();
 						}
 					});
 				} else {
-					db.transaction(["cats"], "readwrite").objectStore("cats").getAll().onsuccess = function(event) {
-						const arr = event.target.result;
-						arr.sort((a, b) => a.id - b.id);
-						resolve(arr.map(x => new Cat(JSON.parse(x.data))));
+					let cats = new Array(unit_names.length);
+					db.transaction(["cats"], "readwrite").objectStore("cats").openCursor().onsuccess = function(event) {
+						const cursor = event.target.result;
+						if (cursor) {
+							cats[cursor.value.id] = new Cat(cursor.value.data);
+							cursor.continue();
+						} else {
+							resolve(cats);
+							db.close();
+						}
 					}
 				}
 			}
@@ -642,7 +670,8 @@ let icon_names = [
 	  'massives', 
 	  'kb', 
 	  'warp', 
-	  'imu-atk'
+	  'imu-atk',
+	  'curse'
 ]
 let icon_descs = [
 	'血量{1}%以下攻擊力增加{2}%倍',
@@ -676,7 +705,8 @@ let icon_descs = [
 	'對{1}造成5倍(6倍)傷害',
 	'{1}%機率擊退{2}',
 	'{1}%機率傳送{2}',
-	'{1}%發動攻擊無效{2}秒'
+	'{1}%發動攻擊無效{2}秒',
+	'{1}%機率詛咒{2}{3}秒({4}秒，控場覆蓋率{5})',
 ]
 function createAbIcons1(ab, parent) {
 	for (let i = 1;i <= AB_LAST;++i) {
@@ -764,10 +794,4 @@ function createTraitIcons(trait, parent) {
 	}
 	parent.appendChild(document.createElement('br'));
 }
-(async () => {
-	unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
-	skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
-	skill_level_file = await ((await fetch('./data/data/SkillLevel.csv')).text());
-	anim2 = await ((await fetch('./anim2')).json());
-	uints_zip = await getZip();
-})();
+

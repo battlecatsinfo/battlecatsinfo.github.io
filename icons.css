@@ -1,17 +1,6 @@
 .bc-icon {
-  display: inline-block;
-  vertical-align: middle;
-  background-image: url(data/page/img015.png);
-}
-.bc-icon-trait-eva {
-  width: 41px;
-  height: 41px;
-  background-image: url(data/page/icons/Eva.png);
-}
-.bc-icon-trait-witch {
-  width: 41px;
-  height: 41px;
-  background-image: url(data/page/icons/Witch.png);
+    display: inline-block;
+    background-image: url(/data/page/img015.png);    
 }
 .bc-icon-trait-red {
   width: 43px;
@@ -137,6 +126,11 @@
   width: 42px;
   height: 42px;
   background-position: -977px -297px;
+}
+.bc-icon-omni-atk {
+  width: 42px;
+  height: 42px;
+  background-position: -876px -694px;
 }
 .bc-icon-imu-atk {
   width: 42px;
@@ -293,8 +287,93 @@
   height: 42px;
   background-position: -808px -407px;
 }
-.bc-icon-omni-atk {
+.bc-icon-res-weak {
+  width: 53px;
+  height: 53px;
+  background-position: -640px -449px;
+}
+.bc-icon-res-freeze {
+  width: 53px;
+  height: 53px;
+  background-position: -693px -449px;
+}
+.bc-icon-res-slow {
+  width: 53px;
+  height: 53px;
+  background-position: -746px -449px;
+}
+.bc-icon-res-kb {
+  width: 53px;
+  height: 53px;
+  background-position: -799px -449px;
+}
+.bc-icon-res-wave {
+  width: 53px;
+  height: 53px;
+  background-position: -852px -449px;
+}
+.bc-icon-res-warp {
+  width: 53px;
+  height: 53px;
+  background-position: -905px -449px;
+}
+.bc-icon-res-curse {
+  width: 53px;
+  height: 53px;
+  background-position: -812px -795px;
+}
+.bc-icon-res-toxic {
+  width: 53px;
+  height: 53px;
+  background-position: -918px -694px;
+}
+.bc-icon-res-surge {
+  width: 53px;
+  height: 53px;
+  background-position: -706px -588px;
+}
+.bc-icon-res-weak2 {
   width: 42px;
   height: 42px;
-  background-position: -876px -694px;
+  background-position: -640px -365px;
+}
+.bc-icon-res-freeze2 {
+  width: 42px;
+  height: 42px;
+  background-position: -682px -365px;
+}
+.bc-icon-res-slow2 {
+  width: 42px;
+  height: 42px;
+  background-position: -724px -365px;
+}
+.bc-icon-res-kb2 {
+  width: 42px;
+  height: 42px;
+  background-position: -766px -365px;
+}
+.bc-icon-res-wave2 {
+  width: 42px;
+  height: 42px;
+  background-position: -808px -365px;
+}
+.bc-icon-res-warp2 {
+  width: 42px;
+  height: 42px;
+  background-position: -850px -365px;
+}
+.bc-icon-res-curse2 {
+  width: 42px;
+  height: 42px;
+  background-position: -682px -407px;
+}
+.bc-icon-res-toxic2 {
+  width: 42px;
+  height: 42px;
+  background-position: -611px -854px;
+}
+.bc-icon-res-surge2 {
+  width: 42px;
+  height: 42px;
+  background-position: -569px -938px;
 }

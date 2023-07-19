@@ -101,7 +101,7 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	}
 	let s = lines.join(' • ');
 	s += ':';
-	const atks = plus ? ('+' + theATK.toFixed(0)) : (theATK.toFixed(0));
+	const atks = plus ? ('+' + (~~theATK).toString()) : ((~~theATK).toString());
 	s += atks;
 	if (spec) {
 		if (!first) {
@@ -121,12 +121,12 @@ function getAtkString(atk, abs, trait, level, parent, plus, dps=false) {
 	atk *= 2.5;
 	atk *= getLevelMulti(level);
 	const Cs = getCombinations(Object.entries(abs).filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
-	parent.appendChild(document.createTextNode(plus ? ('+' + atk.toFixed(0)) : atk.toFixed(0)));
+	parent.appendChild(document.createTextNode(plus ? ('+' + (~~atk).toString()) : (~~atk).toString()));
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)
 		getAtk(line, atk, parent, true, trait, plus, dps) && getHp(line, atk, parent, false, trait, plus, dps);
 	if (abs.hasOwnProperty(AB_ATKBASE)) {
-		parent.appendChild(document.createTextNode(`城堡:` + (atk * 4).toFixed(0)));
+		parent.appendChild(document.createTextNode(`城堡:` + (~~(atk * 4)).toString()));
 	}
 }
 function getHp(line, theHP, parent, first, trait, plus) {
@@ -173,7 +173,7 @@ function getHp(line, theHP, parent, first, trait, plus) {
 	}
 	let s = lines.join(' • ');
 	s += ':';
-	const hps = plus ? ('+' + theHP.toFixed(0)) : (theHP.toFixed(0));
+	const hps = plus ? ('+' + (~~theHP).toString()) : ((~~theHP).toString());
 	s += hps;
 	if (spec) {
 		if (!first) {
@@ -193,7 +193,7 @@ function getHpString(hp, abs, trait, level, parent, plus = false) {
 	hp *= 2.5;
 	hp *= getLevelMulti(level);
 	const Cs = getCombinations(Object.entries(abs).filter(x => hp_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
-	parent.appendChild(document.createTextNode(plus ? ('+' + hp.toFixed(0)) : hp.toFixed(0)));
+	parent.appendChild(document.createTextNode(plus ? ('+' + (~~hp).toString()) : (~~hp).toString()));
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)
 		getHp(line, hp, parent, true, trait, plus) && getHp(line, hp, parent, false, trait, plus);
@@ -208,9 +208,9 @@ function updateValues(form, tbl) {
 	let CD = chs[7].childNodes[5];
 	let KB = chs[7].childNodes[1];
 	chs[7].childNodes[3].innerText = form.speed.toString();
-	PRs[2].innerText = (form.price).toFixed(0);
-	PRs[4].innerText = (form.price * 1.5).toFixed(0);
-	PRs[6].innerText = (form.price + form.price).toFixed(0);
+	PRs[2].innerText = form.price;
+	PRs[4].innerText = ~~(form.price * 1.5);
+	PRs[6].innerText = form.price * 2;
 	for (let i = 1;i <= 5;++i)
 		getHpString(form.hp, form.ab, form.trait, i * 10, HPs[i]);
 	getHpString(form.hp * 0.2, form.ab, form.trait, 1, HPs[6], true);
@@ -441,7 +441,7 @@ function renderExtras() {
 	table.appendChild(tr1);
 	table.appendChild(tr2);
 	table.appendChild(tr3);
-	table.classList.add('w3-table', 'w3-centered');
+	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	let odd = true;
 	for (let e of table.childNodes) {
 		if (odd)
@@ -449,27 +449,373 @@ function renderExtras() {
 		odd = !odd;
 	}
 	unit_content.appendChild(table);
-	document.getElementById('show-xp-graph').href = './xpgraph.html?data=' + btoa(my_cat.info.xp_data);
+}
+function getTalentInfo(talent, data) {
+	function range(name, f='%', start = 2, end = 3) {
+		return [name, talent[start].toString() + f, talent[end].toString() + f, talent[1], numStr((talent[end] - talent[start]) / (talent[1] - 1)) + f];
+	}
+	function range2(name, f='%', start, end, init) {
+		return [name, (talent[start] + init).toString() + f, (talent[end] + init).toString() + f, talent[1], numStr((talent[end] - talent[start]) / (talent[1] - 1)) + f];
+	}
+	switch (talent[0]) {
+	case 1:
+		if (data[37]) {
+			if (talent[4] && talent[4] != talent[5]) {
+				return range('降攻時間', 'f', 4, 5);
+			}
+			return range('降攻機率', '%', 2, 3);
+		}
+		if (talent[4] && talent[4] != talent[5])
+				return range('降攻機率', 'f', 4, 5);
+		return range('降攻機率', '%', 2, 3);
+	case 2:
+		if (data[25]) {
+			if (talent[4] && talent[4] != talent[5])
+				return range('暫停時間', '%', 2, 3);
+			return range('暫停機率', '%', 2, 3);
+		}
+		if (talent[4] && talent[4] != talent[5])
+				return range('暫停機率', 'f', 4, 5);
+		return range('暫停機率', '%', 2, 3);
+	case 3:
+		if (data[27]) {
+			if (talent[4] && talent[4] != talent[5])
+				return range('緩速時間', '%', 2, 3);
+			return range('緩速機率', '%', 2, 3);
+		}
+		if (talent[4] && talent[4] != talent[5])
+				return range('緩速機率', 'f', 4, 5);
+		return range('暫停機率', '%', 2, 3);
+	case 5:  return "善於攻擊";
+	case 6:  return "耐打";
+	case 7:  return "超大傷害";
+	case 8:
+		if (data[24])
+			return range("擊退", '%', 2, 3);
+		return range2("擊退", '%', 2, 3, talent[2]);
+	case 10:
+		if (data[40])
+			return range("升攻", '%', 4, 5);
+		return range2("升攻", '%', 4, 5, talent[4]);
+	case 11:
+		if (data[42])
+			return range('死前存活', '%', 2, 3);
+		return range2("死前存活", '%', 2, 3, talent[2]);
+	case 13:
+		if (data[31])
+			return range('爆擊', '%', 2, 3);
+		return `爆擊(${talent[2]}%機率發動)`;
+	case 15:
+		if (data[70])
+			return range('破盾', '%', 2, 3);
+		return range2("破盾", '%', 2, 3, talent[2]);
+	case 17:
+		if (data[35])
+			return range('波動', '%', 2, 3);
+		return range2(`Lv${talent[4]}波動`, '%', 2, 3, talent[2]);
+	case 18: return range("降攻耐性");
+	case 19: return range("暫停耐性");
+	case 20: return range("緩速耐性");
+	case 21: return range("擊退耐性");
+	case 22: return range("波動耐性");
+	case 25: 
+		return ['成本減少', ~~(talent[2] * 1.5), ~~(talent[3] * 1.5), talent[1], numStr(talent[2] * 1.5)];
+	case 26:
+		return ['生產速度', `${talent[2]}f`, `${talent[3]}f`, talent[1], talent[2], numStr((talent[end] - talent[start]) / (talent[1] - 1)) + 'f'];
+	case 27:
+		return ["移動速度", talent[2], talent[3], talent[1], talent[2]];
+	case 29: return "詛咒無效";
+	case 30: return range("詛咒耐性");
+	case 31: return range("攻擊力");
+	case 32: return range("血量");
+	case 35: return "對黑色敵人";
+	case 36: return "對對鋼鐵敵人";
+	case 38: return "對對異星敵人";
+	case 39: return "對不死敵人";
+	case 40: return "對古代種";
+	case 44: return "降攻無效";
+	case 45: return "暫停無效";
+	case 46: return "緩速無效";
+	case 47: return "擊退無效";
+	case 48: return "波動無效";
+	case 49: return "傳送無效";
+	case 50:
+		if (data[82])
+			return range('渾身一擊', '%', 2, 3);
+		return range2('渾身一擊', '%', 2, 3, talent[2]);
+	case 51:
+		if (data[84]) {
+			if (talent[4] && talent[4] != talent[5])
+				return range('攻撃無効', 'f', 4, 5);
+			return range('攻撃無効', '%', 2, 3);
+		}
+		if (talent[4] && talent[4] != talent[5])
+			return range2('攻撃無効', '%', 4, 5, talent[2]);
+		return range2('攻撃無効', '%', 2, 3, talent[2]);
+	case 52: return range("毒擊耐性");
+	case 53: return "毒擊無效";
+	case 54: return range("烈波耐性");
+	case 55: return "烈波無效";
+	case 56:
+		if (data[86])
+			return range('烈波機率', '%', 2, 3);
+		return range(`Lv${talent[4]}烈波機率`, '%', 2, 3, talent[2]);
+	case 57: return "對惡魔";
+	case 58:
+		if (data[58])
+			return range("破惡魔盾", '%', 2, 3); 
+	 	return range2("破惡魔盾", '%', 2, 3, talent[2]);
+	case 59: return "靈魂攻擊";
+	case 60:
+		if (data[92]) {
+			if (talent[4] && talent[4] != talent[5])
+				return range('詛咒時間', 'f', 4, 5);
+			return range('詛咒機率', '%', 2, 3);
+		}
+		if (talent[4] && talent[4] != talent[5])
+			return range2("詛咒機率", 'f', 4, 5, talent[2]);
+		return range2('詛咒機率', 'f', 2, 3, talent[4]);
+	case 61:
+		{
+			const tba = data[4] * 2;
+			const first = `${(tba * talent[2])/100}f`;
+			return ["TBA縮短", first,`${(tba * talent[3])/100}f`, talent[1], first];
+		}
+	case 62:
+		if (data[94])
+			return range('小波動', '%', 2, 3);
+		return range2(`Lv${talent[4]}小波動`, '%', 2, 3, talent[2]);
+	case 63: return "超生命體特效";
+	case 64: return "超獸特效";
+	case 65:
+		if (data[108])
+			return range('小烈波', '%', 2, 3);
+		return range2(`Lv${talent[2]}小烈波`, '%', 2, 3, talent[2]);
+	default: console.assert(false);
+	}
+	return '???';
+}
+function rednerTalentInfos(talents, data) { 
+	const table = document.createElement('table');
+	const tr1 = document.createElement('tr');
+	const td0 = document.createElement('td');
+	td0.innerText = '本能解放(使用NP)';
+	td0.colSpan = 5;
+	tr1.appendChild(td0);
+	table.appendChild(tr1);		
+	const tr2 = document.createElement('tr');
+	const td1 = document.createElement('td');
+	const td2 = document.createElement('td');
+	const td3 = document.createElement('td');
+	const td4 = document.createElement('td');
+	const td5 = document.createElement('td');
+	td1.innerText = my_cat.forms[2].name || my_cat.forms[2].jp_name;
+	td2.innerText = 'Lv1';
+	td3.innerText = 'Lv10';
+	td4.innerText = '最高等級';
+	td5.innerText = '每提升一級';
+	tr2.appendChild(td1);
+	tr2.appendChild(td2);
+	tr2.appendChild(td3);
+	tr2.appendChild(td4);
+	tr2.appendChild(td5);
+	table.appendChild(tr2);
+	for (let i = 0;i < 112;i += 14) {
+		const tr = document.createElement('tr');
+		if (!talents[i]) break;
+		if (talents[i + 13] == -1) break;
+		const info = getTalentInfo(talents.subarray(i, i + 14), data);
+		if (info instanceof Array) {
+			let td = null;
+			for (let s of info) {
+				td = document.createElement('td');
+				td.innerText = s;
+				tr.appendChild(td);
+			}
+			td.innerText = '+' + td.innerText;
+		} else {
+			const t1 = document.createElement('td');
+			const t2 = document.createElement('td');
+			t1.innerText = '能力新增';
+			t2.innerText = info;
+			t2.colSpan = 4;
+			tr.appendChild(t1);
+			tr.appendChild(t2);
+		}
+		table.appendChild(tr);
+	}
+	let odd = true;
+	for (let e of table.childNodes) {
+		if (odd)
+			e.style.backgroundColor = '#f1f1f1';
+		odd = !odd;
+	}
+	table.classList.add('w3-table', 'w3-centered', 'tcost');
+	unit_content.appendChild(table);
+}
+function renderTalentCosts(talents, data) {
+	const talent_names = {
+		1: '降攻',
+		2: "暫停",
+		3: "緩速",
+		5 :"善於攻擊",
+		6: "耐打",
+		7: "超大傷害",
+		8: "擊退",
+		10: "升攻",
+		11: "死前存活",
+		13: "爆擊",
+		15: "破盾",
+		17: "波動",
+		18: "降攻耐性",
+		19: "暫停耐性",
+		20: "緩速耐性",
+		21: "擊退耐性",
+		22: "波動耐性",
+		25: "成本減少	",
+		26: "生產速度",
+		27: "移動速度",
+		29: "詛咒無效",
+		30: "詛咒耐性",
+		31: "攻擊力",
+		32: "血量",
+		35: "對黑色敵人",
+		36: "對對鋼鐵敵人",
+		38: "對對異星敵人",
+		39: "對不死敵人",
+		40: "對古代種",
+		44: "降攻無效",
+		45: "暫停無效",
+		46: "緩速無效",
+		47: "擊退無效",
+		48: "波動無效",
+		49: "傳送無效",
+		50: "渾身一擊",
+		51: "攻撃無効",
+		52: "毒擊耐性",
+		53: "毒擊無效",
+		54: "烈波耐性",
+		55: "烈波無效",
+		56: "烈波強化",
+		57: "對惡魔",
+		58: "破惡魔盾",
+		59: "靈魂攻擊",
+		60: "詛咒強化",
+		61: "攻頻縮短",
+		62: "小波動",
+		63: "超生命體特效",
+		64: "超獸特效",
+		65: "小烈波"
+ 	};
+	const skill_costs = [
+		[25,5,5,5,5,10,10,10,10,10],
+		[5,5,5,5,5,10,10,10,10,10],
+		[50],
+		[50,10,10,10,10,15,15,15,15,15],
+		[10,10,10,10,10,15,15,15,15,15],
+		[75],
+		[75,15,15,15,15,20,20,20,20,20],
+		[15,15,15,15,15,20,20,20,20,20],
+		[100],
+		[150],
+		[250],
+		[100,15,15,15,15,25,25,25,25,25],
+		[75,10,10,10,10,20,20,20,20,20],
+		[120,20,20,20,20,25,25,25,25,25],
+	];
+	const table = document.createElement('table');
+	const th = document.createElement('tr');
+	const td0 = document.createElement('td');
+	
+	td0.innerText = '消耗NP一覽';
+	th.appendChild(td0);
+	
+	let names = [];
+	let costs = [];
+	for (let i = 0;i < 112;i += 14) {
+		// ID	typeID [abilityID_A	MAXLv_A	min_A1	max_A1	min_A2	max_A2	min_A3	max_A3	min_A4	max_A4	textID_A	LvID_A	nameID_A	limit_A] * 8
+		if (!talents[i]) break;
+		if (talents[i + 13] == -1) break;
+		names.push(talent_names[talents[i]]);
+		costs.push(talents[i + 11] - 1);
+	}
+	const tr1 = document.createElement('tr');
+	td0.colSpan = names.length + 1;
+	const td1 = document.createElement('td');
+	td1.innerText = '等級';
+	tr1.appendChild(td1);
+	for (let i = 0;i < names.length;++i) {
+		const td = document.createElement('td');
+		td.innerText = names[i];
+		tr1.appendChild(td);
+	}
+	table.appendChild(th);
+	table.appendChild(tr1);
+	for (let i = 1;i <= 10;++i) {
+		const tr = document.createElement('tr');
+		const td0 = document.createElement('td');
+		td0.innerText = 'Lv' + i.toString();
+		tr.appendChild(td0);
+		for (let j = 0;j < names.length;++j) {
+			const td = document.createElement('td');
+			const tbl = skill_costs[costs[j]];
+			td.innerText = tbl.length > 1 ? tbl[i-1] : 'X';
+			tr.appendChild(td);
+		}
+		table.appendChild(tr);
+	}
+	const trend = document.createElement('tr');
+	const tdend = document.createElement('td');
+	tdend.innerText = '總計';
+	tdend.rowSpan = 2;
+	let total = 0;
+	trend.appendChild(tdend);
+	for (let c of costs) {
+		const td = document.createElement('td');
+		let s = skill_costs[c].reduce((a, b) => a + b, 0);
+		td.innerText = s.toString();
+		total += s;
+		trend.appendChild(td);
+	}
+	table.appendChild(trend);
+	const trend2 = document.createElement('tr');
+	const tdend2 = document.createElement('td');
+	tdend2.colSpan = names.length;
+	tdend2.innerText = '共' + total.toString();
+	trend2.appendChild(tdend2);
+	table.appendChild(trend2);
+	let odd = true;
+	for (let e of table.childNodes) {
+		if (odd)
+			e.style.backgroundColor = '#f1f1f1';
+		odd = !odd;
+	}
+	table.classList.add('w3-table', 'w3-centered', 'tcost');
+	unit_content.appendChild(table);
 }
 function renderUintPage() {
 	const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
 	const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
-	document.getElementById('open-db').href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';
-	document.getElementById('ch_name').innerText = cat_names;
-	document.getElementById('jp_name').innerText = cat_names_jp;
-	document.title = cat_names.replaceAll(' → ', ' ') + ' - 貓咪資訊';
 	for (let form of my_cat.forms) {
 		const img = new Image();
 		img.src = form.icon;
 		cat_icons.appendChild(img);
 	}
 	my_cat.forms.forEach(renderForm);
+	if (my_cat.info.talents) {
+		rednerTalentInfos(my_cat.info.talents, my_cat.forms[2].data);
+		renderTalentCosts(my_cat.info.talents, my_cat.forms[2].data);
+	}
 	renderExtras();
+	document.getElementById('open-db').href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';
+	document.getElementById('ch_name').innerText = cat_names;
+	document.getElementById('jp_name').innerText = cat_names_jp;
+	document.getElementById('show-xp-graph').href = './xpgraph.html?data=' + btoa(my_cat.info.xp_data);
+	document.title = cat_names.replaceAll(' → ', ' ') + ' - 貓咪資訊';
 }
-loadAllCats()
-.then(cats => {
-	my_cat = cats[my_id];
-	console.log(my_cat)
+loadCat(my_id)
+.then(res => {
+	my_cat = res;
 	useCurve(my_id);
 	renderUintPage();
 	document.getElementById('loader').style.display = 'none';
