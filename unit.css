@@ -79,7 +79,7 @@ table.fruit-table {
   border-radius: 5px;
   border: 10px solid #f1f1f1;
 }
-table.tcost td {
+.w3-table td {
   padding: 7px 30px;
   border: #cfcfcf 1px solid;
 }
@@ -88,3 +88,4 @@ table.tcost {
   margin: 40px auto;
   margin-bottom: 50px;
 }
+.w3-table td:first-child { padding-left: initial; }
