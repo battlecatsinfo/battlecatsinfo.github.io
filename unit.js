@@ -455,7 +455,7 @@ function getTalentInfo(talent, data) {
 		return [name, talent[start].toString() + f, talent[end].toString() + f, talent[1], numStr((talent[end] - talent[start]) / (talent[1] - 1)) + f];
 	}
 	function range2(name, f='%', start, end, init) {
-		return [name, (talent[start] + init).toString() + f, (talent[end] + init).toString() + f, talent[1], numStr((talent[end] - talent[start]) / (talent[1] - 1)) + f];
+		return [name, init.toString() + f, talent[end].toString() + f, talent[1], numStr((talent[end] - talent[start]) / (talent[1] - 1)) + f];
 	}
 	switch (talent[0]) {
 	case 1:
@@ -472,7 +472,7 @@ function getTalentInfo(talent, data) {
 		if (data[25]) {
 			if (talent[4] && talent[4] != talent[5])
 				return range('暫停時間', '%', 2, 3);
-			return range('暫停機率', '%', 2, 3);
+			return range('暫停機率', '%', 4, 5);
 		}
 		if (talent[4] && talent[4] != talent[5])
 				return range('暫停機率', 'f', 4, 5);
@@ -480,7 +480,7 @@ function getTalentInfo(talent, data) {
 	case 3:
 		if (data[27]) {
 			if (talent[4] && talent[4] != talent[5])
-				return range('緩速時間', '%', 2, 3);
+				return range('緩速時間', '%', 4, 5);
 			return range('緩速機率', '%', 2, 3);
 		}
 		if (talent[4] && talent[4] != talent[5])
@@ -509,6 +509,8 @@ function getTalentInfo(talent, data) {
 		if (data[70])
 			return range('破盾', '%', 2, 3);
 		return range2("破盾", '%', 2, 3, talent[2]);
+	case 16:
+		return '雙倍金錢';
 	case 17:
 		if (data[35])
 			return range('波動', '%', 2, 3);
@@ -529,8 +531,8 @@ function getTalentInfo(talent, data) {
 	case 31: return range("攻擊力");
 	case 32: return range("血量");
 	case 35: return "對黑色敵人";
-	case 36: return "對對鋼鐵敵人";
-	case 38: return "對對異星敵人";
+	case 36: return "對鋼鐵敵人";
+	case 38: return "對異星敵人";
 	case 39: return "對不死敵人";
 	case 40: return "對古代種";
 	case 44: return "降攻無效";
@@ -591,7 +593,7 @@ function getTalentInfo(talent, data) {
 		if (data[108])
 			return range('小烈波', '%', 2, 3);
 		return range2(`Lv${talent[2]}小烈波`, '%', 2, 3, talent[2]);
-	default: console.assert(false);
+	default: console.assert(false, `${talent[0]} not handled`);
 	}
 	return '???';
 }
@@ -680,8 +682,8 @@ function renderTalentCosts(talents, data) {
 		31: "攻擊力",
 		32: "血量",
 		35: "對黑色敵人",
-		36: "對對鋼鐵敵人",
-		38: "對對異星敵人",
+		36: "對鋼鐵敵人",
+		38: "對異星敵人",
 		39: "對不死敵人",
 		40: "對古代種",
 		44: "降攻無效",
