@@ -511,14 +511,12 @@ class CatInfo {
 		_eggs = data.slice(data.length - 2);
 	}
 	loadTalents(my_id) {
-		const text = skill_file;
-		const match = '\n' + my_id.toString();
-		var idx = text.indexOf(match);
+		let idx = skill_file.indexOf(`\n${my_id},`);
 		if (idx != -1) {
 			++idx;
-			var end;
-			for (end = idx;text[end] != '\n' && text[end];++end) {}
-			let data = text.slice(idx, end).split(',');
+			let end;
+			for (end = idx;skill_file[end] != '\n' && skill_file[end];++end) {}
+			let data = skill_file.slice(idx, end).split(',');
 			this.talents = new Int16Array(112);
 			for (let i = 0;i < 112;++i)
 				this.talents[i] = data[2 + i];

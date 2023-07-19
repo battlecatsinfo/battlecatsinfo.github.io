@@ -2,9 +2,6 @@ html, body { height: 100%; width: 100%; margin: 0; }
 p {
 	text-align: center;
 }
-table {
-	margin-bottom: 60px;
-}
 pre {
   white-space: normal;
   text-wrap: wrap;
@@ -88,6 +85,6 @@ table.tcost td {
 }
 table.tcost {
   width: initial;
-  margin: 0 auto;
+  margin: 40px auto;
   margin-bottom: 50px;
 }

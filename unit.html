@@ -14,14 +14,11 @@
 </head>
 <body style="overflow: scroll;">
 	<style>
-	html { font-size: 16px; }
+	body { font-size: 18px; }
 	.bold-large { font-size: 18px; }
-	.w3-table td { vertical-align: middle; }
-	.w3-container { min-width: 660px; padding: 15px 7px; }	
-	@media screen and (min-width: 720px) { .w3-container { padding: 10px 15px; } }
-	@media screen and (min-width: 1200px) { .w3-container { padding: 15px 15px; } }
-	@media screen and (min-width: 1350px) { .w3-container { padding: 15px 5%; } }
-	@media screen and (min-width: 1500px) { .w3-container { padding: 15px 8%; } }
+	.w3-table { width: initial;margin: 0 auto;margin-bottom: 60px; }
+	.w3-table td { vertical-align: middle;padding: 9px 20px; }
+	.w3-container { min-width: 660px; }
 	</style>
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
@@ -39,10 +36,10 @@
 	  		<a href="./stars.html" class="w3-bar-item" id="star-cat">我的最愛</a>
 		</div>
 		<div class="w3-container" style="margin-left: 170px;">
-		<div id="unit-content" style="margin: 0 auto;width: 99%;">
+		<div id="unit-content" style="margin: 0 auto;width: 100%;margin-top: 70px;">
 			<p id="ch_name" class="bold-large"></p>
 			<p id="jp_name" class="bold-large"></p>
-			<div align="center" id="cat-icons"></div>
+			<div align="center" id="cat-icons" style="margin-top: 35px;margin-bottom: 50px;"></div>
 		</div>
 		</div>
 		<script src="unit.js"></script>
