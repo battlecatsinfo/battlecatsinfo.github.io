@@ -185,6 +185,7 @@ class Form {
 		this.jp_name = jp_name;
 		this.trait = 0;
 		this.ab = {};
+		this.res = {};
 		this.imu = 0;
 		this.price = data[6];
 		this.range = data[5];
@@ -206,7 +207,7 @@ class Form {
 		const my_id_str = t3str(cat_id);
 		const may_egg = _eggs[level_count];
 		if (may_egg >= 0) {
-			const str = t3str(_eggs[level_count]);
+			const str = t3str(may_egg);
 			this.icon = `./data/img/m/${str}/${str}_m.png`;
 		} else {
 			this.icon = `./data/unit/${my_id_str}/${form_str}/uni${my_id_str}_${form_str}00.png`;
@@ -803,7 +804,7 @@ async function loadAllCats() {
 		}
 	});
 }
-let icon_names = [
+const icon_names = [
 		'strong', 
 		'lethal', 
 		'atkbase', 
@@ -838,7 +839,7 @@ let icon_names = [
 	  'imu-atk',
 	  'curse'
 ]
-let icon_descs = [
+const icon_descs = [
 	'血量{1}%以下攻擊力增加{2}%倍',
 	'{1}%機率以1血存活一次', 
 	'善於攻城({1}%倍s傷害)',

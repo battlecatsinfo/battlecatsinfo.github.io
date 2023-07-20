@@ -275,7 +275,7 @@ function makeTd(parent, text = '') {
 	parent.appendChild(c);
 	return c;
 }
-function renderForm(form) {
+function renderForm(form, res_descs) {
 	const info = my_cat.info;
 	if (level_count == 2 && info.upReqs != undefined) {
 		const container = document.createElement('table');
@@ -376,7 +376,11 @@ function renderForm(form) {
 	makeTd(tbodytr9, '屬性');
 	makeTd(tbodytr9).colSpan = 6;
 	makeTd(tbodytr10, '抗性');
-	makeTd(tbodytr10).colSpan = 6;
+	if (res_descs) {
+		res_descs.colSpan = 6;
+		tbodytr10.appendChild(res_descs);
+	} else
+		makeTd(tbodytr10).colSpan = 6;
 	makeTd(tbodytr11, '能力');
 	makeTd(tbodytr11).colSpan = 6;
 	makeTd(tbodytr12, '效果');
@@ -450,7 +454,7 @@ function renderExtras() {
 	}
 	unit_content.appendChild(table);
 }
-function getTalentInfo(talent, data) {
+function getTalentInfo(talent, data, descs) {
 	function range(name, f='%', start = 2, end = 3) {
 		return [name, talent[start].toString() + f, talent[end].toString() + f, talent[1], numStr((talent[end] - talent[start]) / (talent[1] - 1)) + f];
 	}
@@ -517,11 +521,21 @@ function getTalentInfo(talent, data) {
 		if (data[35])
 			return range('波動', '%', 2, 3);
 		return range2(`Lv${talent[4]}波動`, '%', 2, 3, talent[2]);
-	case 18: return range("降攻耐性");
-	case 19: return range("暫停耐性");
-	case 20: return range("緩速耐性");
-	case 21: return range("擊退耐性");
-	case 22: return range("波動耐性");
+	case 18: 
+		descs('weak', `降攻耐性(受到降攻時間減少${talent[3]}%)`);
+		return range("降攻耐性");
+	case 19:
+		descs('freeze', `暫停耐性(受到暫停時間減少${talent[3]}%)`);
+		return range("暫停耐性");
+	case 20:
+		descs('slow', `緩速耐性(受到緩速時間減少${talent[3]}%)`);
+		return range("緩速耐性");
+	case 21:
+		descs('kb', `擊退耐性(受到擊退距離減少${talent[3]}%)`);
+		return range("擊退耐性");
+	case 22:
+		descs('wave', `波動耐性(受到波動傷害減少${talent[3]}%)`);
+		return range("波動耐性");
 	case 25: 
 		return ['成本減少', ~~(talent[2] * 1.5), ~~(talent[3] * 1.5), talent[1], numStr(talent[2] * 1.5)];
 	case 26:
@@ -529,7 +543,9 @@ function getTalentInfo(talent, data) {
 	case 27:
 		return ["移動速度", talent[2], talent[3], talent[1], talent[2]];
 	case 29: return "詛咒無效";
-	case 30: return range("詛咒耐性");
+	case 30:
+		descs('wave', `詛咒耐性(受到詛咒時間減少${talent[3]}%)`);
+		return range("詛咒耐性");
 	case 31: return range("攻擊力");
 	case 32: return range("血量");
 	case 35: return "對黑色敵人";
@@ -556,9 +572,13 @@ function getTalentInfo(talent, data) {
 		if (talent[4] && talent[4] != talent[5])
 			return range2('攻撃無効', '%', 4, 5, talent[2]);
 		return range2('攻撃無効', '%', 2, 3, talent[2]);
-	case 52: return range("毒擊耐性");
+	case 52:
+		descs('toxic', `毒擊耐性(受到毒擊傷害減少${talent[3]}%)`);
+		return range("毒擊耐性");
 	case 53: return "毒擊無效";
-	case 54: return range("烈波耐性");
+	case 54:
+		descs('surge', `烈波耐性(受到烈波傷害減少${talent[3]}%)`);
+		return range("烈波耐性");
 	case 55: return "烈波無效";
 	case 56:
 		if (data[86])
@@ -625,11 +645,21 @@ function rednerTalentInfos(talents, data) {
 	tr2.appendChild(td5);
 	table.appendChild(tr2);
 	let infos = [];
+	let res_descs = document.createElement('td');
+	let descs = function(icon, s) {
+		const e = document.createElement('span');
+		e.classList.add('bc-icon', `bc-icon-res-${icon}2`);
+		const e2 = document.createElement('span');
+		e2.innerText = s;
+		res_descs.appendChild(e);
+		res_descs.appendChild(e2);
+		res_descs.appendChild(document.createElement('br'));
+	}
 	for (let i = 0;i < 112;i += 14) {
 		const tr = document.createElement('tr');
 		if (!talents[i]) break;
 		if (talents[i + 13] == -1) break;
-		const info = getTalentInfo(talents.subarray(i, i + 14), data);
+		const info = getTalentInfo(talents.subarray(i, i + 14), data, descs);
 		if (info instanceof Array) {
 			infos.push(info[0]);
 			let td = null;
@@ -659,7 +689,7 @@ function rednerTalentInfos(talents, data) {
 	}
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	unit_content.appendChild(table);
-	return infos;
+	return [infos, res_descs];
 }
 function renderTalentCosts(talent_names, talents, data) {
 	const skill_costs = [
@@ -757,13 +787,13 @@ function renderUintPage() {
 		img.src = form.icon;
 		cat_icons.appendChild(img);
 	}
-	my_cat.forms.forEach(renderForm);
+	for (let form of my_cat.forms) renderForm(form);
 	if (my_cat.info.talents) {
 		const TF = my_cat.forms[2];
-		const names = rednerTalentInfos(my_cat.info.talents, TF.data);
+		const [names, res_descs] = rednerTalentInfos(my_cat.info.talents, TF.data);
 		renderTalentCosts(names, my_cat.info.talents, TF.data);
 		TF.applyTalents(my_cat.info.talents);
-		renderForm(TF);
+		renderForm(TF, res_descs);
 	}
 	renderExtras();
 	document.getElementById('open-db').href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';
