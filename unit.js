@@ -119,6 +119,7 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	return false;
 }
 function getAtkString(atk, abs, trait, level, parent, plus, dps=false) {
+	parent.innerText = '';
 	atk *= 2.5;
 	atk *= getLevelMulti(level);
 	const Cs = getCombinations(Object.entries(abs).filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
@@ -191,6 +192,7 @@ function getHp(line, theHP, parent, first, trait, plus) {
 	return false;
 }
 function getHpString(hp, abs, trait, level, parent, plus = false) {
+	parent.innerText = '';
 	hp *= 2.5;
 	hp *= getLevelMulti(level);
 	const Cs = getCombinations(Object.entries(abs).filter(x => hp_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
@@ -212,20 +214,26 @@ function updateValues(form, tbl) {
 	PRs[2].innerText = form.price;
 	PRs[4].innerText = ~~(form.price * 1.5);
 	PRs[6].innerText = form.price * 2;
-	for (let i = 1;i <= 5;++i)
-		getHpString(form.hp, form.ab, form.trait, i * 10, HPs[i]);
+	let levels = new Array(5);
+	let lvE = chs[0].childNodes[1];
+	for (let i = 0;i < 5;++i) {
+		levels[i] = parseInt(lvE.innerText.slice(2));
+		lvE = lvE.nextElementSibling;
+	}
+	for (let i = 0;i < 5;++i)
+		getHpString(form.hp, form.ab, form.trait, levels[i], HPs[i + 1]);
 	getHpString(form.hp * 0.2, form.ab, form.trait, 1, HPs[6], true);
 	let hppkb = form.hp / form.kb;
-	for (let i = 1;i <= 5;++i)
-		getHpString(hppkb, form.ab, form.trait, i * 10, HPPKBs[i]);
+	for (let i = 0;i < 5;++i)
+		getHpString(hppkb, form.ab, form.trait, levels[i], HPPKBs[i + 1]);
 	getHpString(hppkb * 0.2, form.ab, form.trait, 1, HPPKBs[6], true);
 	const totalAtk = form.atk + form.atk1 + form.atk2;
-	for (let i = 1;i <= 5;++i)
-		getAtkString(totalAtk, form.ab, form.trait, i * 10, ATKs[i], false);
+	for (let i = 0;i < 5;++i)
+		getAtkString(totalAtk, form.ab, form.trait, levels[i], ATKs[i + 1], false);
 	getAtkString(totalAtk * 0.2, form.ab, form.trait, 1, ATKs[6], true);
 	const attackS = form.attackF / 30;
-	for (let i = 1;i <= 5;++i)
-		getAtkString(totalAtk/attackS, form.ab, form.trait, i * 10, DPSs[i], false, true);
+	for (let i = 0;i < 5;++i)
+		getAtkString(totalAtk/attackS, form.ab, form.trait, levels[i], DPSs[i + 1], false, true);
 	getAtkString((totalAtk * 0.2)/attackS, form.ab, form.trait, 1, DPSs[6], true, true);
 	chs[6].childNodes[1].innerText = numStrT(form.tba);
 	chs[6].childNodes[3].innerText = numStrT(form.backswing);
@@ -262,10 +270,6 @@ function updateValues(form, tbl) {
 	} else {
 		chs[5].childNodes[5].innerText = form.range;
 	}
-	createTraitIcons(form.trait, specials);
-	createImuIcons(form.imu, chs[10].childNodes[1]);
-	createAbIcons1(form.ab, chs[11].childNodes[1]);
-	createAbIcons2(form.ab, chs[12].childNodes[1]);
 	KB.innerText = form.kb.toString();
 	CD.innerText = numStrT(form.cd);
 }
@@ -327,11 +331,26 @@ function renderForm(form, res_descs) {
 	level_text.innerHTML = ['一階：<br>', '二階：<br>', '三階：<br>', '本能完全升滿的數值表格', '超本能完全升滿的數值表格'][level_count] + ((level_count <= 2) ? unit_descs[my_id][level_count] : '');
 	level_text.classList.add('bold-large');
 	makeTd(theadtr);
-	makeTd(theadtr, 'Lv10');
-	makeTd(theadtr, 'Lv20');
-	makeTd(theadtr, 'Lv30');
-	makeTd(theadtr, 'Lv40');
-	makeTd(theadtr, 'Lv50');
+	for (let i = 1;i <= 5;++i) {
+		const e = makeTd(theadtr, `Lv${i * 10}`);
+		e.contentEditable = true;
+		e._form = form;
+		e._val = i * 10;
+		e.addEventListener('blur',  function(event) {
+			const t = event.currentTarget;
+			const tbl = t.parentNode.parentNode;
+			const lvMax = my_cat.info.maxBase + my_cat.info.maxPlus;
+			let num = t.innerText.match(/\d+/);
+			if (num) {
+				num = Math.max(1, Math.min(parseInt(num[0]), lvMax));
+				t._val = num;
+				t.innerText = `Lv${num}`;
+				updateValues(t._form, tbl);
+			} else {
+				t.innerText = t._val;
+			}
+		});
+	}
 	makeTd(theadtr, '每提升一級');
 	makeTd(tbodytr1, 'HP');
 	for (let i = 0;i < 5;++i)
@@ -402,11 +421,17 @@ function renderForm(form, res_descs) {
 	tbl.appendChild(tbodytr10);
 	tbl.appendChild(tbodytr11);
 	tbl.appendChild(tbodytr12);
+	const chs = tbl.childNodes;
 	updateValues(form, tbl);
-	(!tbodytr9.childNodes[1].childNodes.length) && (tbl.removeChild(tbodytr9));
-	(!tbodytr10.childNodes[1].childNodes.length) && (tbl.removeChild(tbodytr10));
-	(!tbodytr11.childNodes[1].childNodes.length) && (tbl.removeChild(tbodytr11));
-	(!tbodytr12.childNodes[1].childNodes.length) && (tbl.removeChild(tbodytr12));
+	const specials = chs[9].childNodes[1];
+	createTraitIcons(form.trait, specials);
+	createImuIcons(form.imu, chs[10].childNodes[1]);
+	createAbIcons1(form.ab, chs[11].childNodes[1]);
+	createAbIcons2(form.ab, chs[12].childNodes[1]);
+	(!tbodytr9.childNodes[1].childNodes.length) && (tbodytr9.style.display = 'none');
+	(!tbodytr10.childNodes[1].childNodes.length) && (tbodytr10.style.display = 'none');
+	(!tbodytr11.childNodes[1].childNodes.length) && (tbodytr11.style.display = 'none');
+	(!tbodytr12.childNodes[1].childNodes.length) && (tbodytr12.style.display = 'none');
 	tbl.classList.add('w3-table', 'w3-centered');
 	let odd = true;
 	for (let e of tbl.childNodes) {
