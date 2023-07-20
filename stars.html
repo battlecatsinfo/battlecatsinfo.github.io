@@ -59,7 +59,7 @@ if (my_stars_list == null || my_stars_list == '[]') {
 		a3.style.color = 'red';
 		a3.onclick = function (event) {
 			const tr = event.target.parentNode.parentNode;
-			const id = parseInt(tr.childNodes[0].childNodes[0].innerText);
+			const id = parseInt(tr.children[0].children[0].innerText);
 			my_stars_list = my_stars_list.filter(x => x.id != id);
 			localStorage.setItem('star-cats', JSON.stringify(my_stars_list));
 			tr.parentNode.removeChild(tr);

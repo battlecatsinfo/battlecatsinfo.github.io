@@ -943,7 +943,7 @@ function createImuIcons(imu, parent) {
 	}
 }
 function createTraitIcons(trait, parent) {
-	if (parent.childNodes.length)
+	if (parent.children.length)
 		parent.appendChild(document.createElement('br'));
 	if (!trait) return;
 	const names = [

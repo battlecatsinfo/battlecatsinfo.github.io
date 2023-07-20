@@ -4,6 +4,7 @@ const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_W
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL]);
 var level_count = 0;
 var my_cat;
+var custom_talents = [10, 10, 10, 10, 10, 10, 10, 10];
 if (isNaN(my_id)) {
 	alert('Missing cat id in URL query!');
 	window.stop()
@@ -202,20 +203,20 @@ function getHpString(hp, abs, trait, level, parent, plus = false) {
 		getHp(line, hp, parent, true, trait, plus) && getHp(line, hp, parent, false, trait, plus);
 }
 function updateValues(form, tbl) {
-	let chs = tbl.childNodes;
-	let HPs = chs[1].childNodes;
-	let HPPKBs = chs[2].childNodes;
-	let ATKs = chs[3].childNodes;
-	let DPSs = chs[4].childNodes;
-	let PRs = chs[8].childNodes;
-	let CD = chs[7].childNodes[5];
-	let KB = chs[7].childNodes[1];
-	chs[7].childNodes[3].innerText = form.speed.toString();
+	let chs = tbl.children;
+	let HPs = chs[1].children;
+	let HPPKBs = chs[2].children;
+	let ATKs = chs[3].children;
+	let DPSs = chs[4].children;
+	let PRs = chs[8].children;
+	let CD = chs[7].children[5];
+	let KB = chs[7].children[1];
+	chs[7].children[3].innerText = form.speed.toString();
 	PRs[2].innerText = form.price;
 	PRs[4].innerText = ~~(form.price * 1.5);
 	PRs[6].innerText = form.price * 2;
 	let levels = new Array(5);
-	let lvE = chs[0].childNodes[1];
+	let lvE = chs[0].children[1];
 	for (let i = 0;i < 5;++i) {
 		levels[i] = parseInt(lvE.innerText.slice(2));
 		lvE = lvE.nextElementSibling;
@@ -235,18 +236,18 @@ function updateValues(form, tbl) {
 	for (let i = 0;i < 5;++i)
 		getAtkString(totalAtk/attackS, form.ab, form.trait, levels[i], DPSs[i + 1], false, true);
 	getAtkString((totalAtk * 0.2)/attackS, form.ab, form.trait, 1, DPSs[6], true, true);
-	chs[6].childNodes[1].innerText = numStrT(form.tba);
-	chs[6].childNodes[3].innerText = numStrT(form.backswing);
-	chs[5].childNodes[1].innerText = numStrT(form.attackF).replace('秒', '秒/下');
-	chs[5].childNodes[3].innerText = numStrT(form.pre);
+	chs[6].children[1].innerText = numStrT(form.tba);
+	chs[6].children[3].innerText = numStrT(form.backswing);
+	chs[5].children[1].innerText = numStrT(form.attackF).replace('秒', '秒/下');
+	chs[5].children[3].innerText = numStrT(form.pre);
 	var atkType = '';
 	if (form.atkType & ATK_OMNI)
 		atkType += '全方位';
 	else if (form.atkType & ATK_LD)
 		atkType += '遠方';
 	atkType += (form.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
-	chs[5].childNodes[6].innerText = atkType;
-	const specials = chs[9].childNodes[1];
+	chs[5].children[6].innerText = atkType;
+	const specials = chs[9].children[1];
 	const lds = form.lds;
 	const ldr = form.ldr;
 	if (form.atk1 || form.atk2) {
@@ -263,12 +264,12 @@ function updateValues(form, tbl) {
 				else
 					s += `${nums[i]}${y}~${x}<br>`;
 			}
-			chs[5].childNodes[5].innerHTML = `接觸點${form.range}<br>範圍<br>${s.slice(0,s.length-4)}`;
+			chs[5].children[5].innerHTML = `接觸點${form.range}<br>範圍<br>${s.slice(0,s.length-4)}`;
 		} else {
-			chs[5].childNodes[5].innerText = form.range;
+			chs[5].children[5].innerText = form.range;
 		}
 	} else {
-		chs[5].childNodes[5].innerText = form.range;
+		chs[5].children[5].innerText = form.range;
 	}
 	KB.innerText = form.kb.toString();
 	CD.innerText = numStrT(form.cd);
@@ -404,10 +405,10 @@ function renderForm(form, res_descs) {
 	makeTd(tbodytr11).colSpan = 6;
 	makeTd(tbodytr12, '效果');
 	makeTd(tbodytr12).colSpan = 6;
-	tbodytr9.childNodes[1].style.textAlign = 'left';
-	tbodytr10.childNodes[1].style.textAlign = 'left';
-	tbodytr11.childNodes[1].style.textAlign = 'left';
-	tbodytr12.childNodes[1].style.textAlign = 'left';
+	tbodytr9.children[1].style.textAlign = 'left';
+	tbodytr10.children[1].style.textAlign = 'left';
+	tbodytr11.children[1].style.textAlign = 'left';
+	tbodytr12.children[1].style.textAlign = 'left';
 	tbl.appendChild(theadtr);
 	tbl.appendChild(tbodytr1);
 	tbl.appendChild(tbodytr2);
@@ -421,20 +422,20 @@ function renderForm(form, res_descs) {
 	tbl.appendChild(tbodytr10);
 	tbl.appendChild(tbodytr11);
 	tbl.appendChild(tbodytr12);
-	const chs = tbl.childNodes;
+	const chs = tbl.children;
 	updateValues(form, tbl);
-	const specials = chs[9].childNodes[1];
+	const specials = chs[9].children[1];
 	createTraitIcons(form.trait, specials);
-	createImuIcons(form.imu, chs[10].childNodes[1]);
-	createAbIcons1(form.ab, chs[11].childNodes[1]);
-	createAbIcons2(form.ab, chs[12].childNodes[1]);
-	(!tbodytr9.childNodes[1].childNodes.length) && (tbodytr9.style.display = 'none');
-	(!tbodytr10.childNodes[1].childNodes.length) && (tbodytr10.style.display = 'none');
-	(!tbodytr11.childNodes[1].childNodes.length) && (tbodytr11.style.display = 'none');
-	(!tbodytr12.childNodes[1].childNodes.length) && (tbodytr12.style.display = 'none');
+	createImuIcons(form.imu, chs[10].children[1]);
+	createAbIcons1(form.ab, chs[11].children[1]);
+	createAbIcons2(form.ab, chs[12].children[1]);
+	(!tbodytr9.children[1].children.length) && (tbodytr9.style.display = 'none');
+	(!tbodytr10.children[1].children.length) && (tbodytr10.style.display = 'none');
+	(!tbodytr11.children[1].children.length) && (tbodytr11.style.display = 'none');
+	(!tbodytr12.children[1].children.length) && (tbodytr12.style.display = 'none');
 	tbl.classList.add('w3-table', 'w3-centered');
 	let odd = true;
-	for (let e of tbl.childNodes) {
+	for (let e of tbl.children) {
 		if (odd)
 			e.style.backgroundColor = '#f1f1f1';
 		odd = !odd;
@@ -472,7 +473,7 @@ function renderExtras() {
 	table.appendChild(tr3);
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	let odd = true;
-	for (let e of table.childNodes) {
+	for (let e of table.children) {
 		if (odd)
 			e.style.backgroundColor = '#f1f1f1';
 		odd = !odd;
@@ -707,7 +708,7 @@ function rednerTalentInfos(talents, data) {
 		table.appendChild(tr);
 	}
 	let odd = true;
-	for (let e of table.childNodes) {
+	for (let e of table.children) {
 		if (odd)
 			e.style.backgroundColor = '#f1f1f1';
 		odd = !odd;
@@ -715,6 +716,49 @@ function rednerTalentInfos(talents, data) {
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	unit_content.appendChild(table);
 	return [infos, res_descs];
+}
+function calcCost(event) {
+	const t = event.currentTarget;
+	const idx = Array.prototype.indexOf.call(t.parentNode.children, t);
+	const table = t.parentNode.parentNode;
+	if (t._state) {
+		t.classList.remove('o-selected');
+		custom_talents[idx - 1] = 10;
+	} else {
+		let i = 0;
+		for (const e of table.children) {
+			let x = e.children[idx];
+			if (!x) continue;
+			if (x.classList.contains('o-selected'))
+				x.classList.remove('o-selected');
+			else if (x == t) {
+				custom_talents[idx - 1] = i - 1;
+			}
+			++i;
+		}
+		t.classList.add('o-selected');
+	}
+	t._state = !t._state;
+	let e = table.children[2];
+	let costs = new Uint16Array(e.children.length - 1);
+	let selectMap = new Uint8Array(costs.length);
+	let i = 0;
+	for (;;) {
+		let chs = e.children;;
+		if (chs[0].innerText.indexOf('Lv') == -1) break;
+		for (let j = 1;j <= costs.length;++j) {
+			if (selectMap[j - 1] || chs[j].classList.contains('o-selected')) {
+				selectMap[j - 1] = 1;
+			} else {
+				costs[j - 1] += parseInt(chs[j].innerText.replace('X', '0'));
+			}
+		}
+		e = e.nextElementSibling;
+	}
+	let chs = e.children;
+	for (let j = 1;j <= costs.length;++j)
+		chs[j].innerText = costs[j - 1];
+	e.nextElementSibling.firstElementChild.innerText = costs.reduce((a, b) => a + b, 0);;
 }
 function renderTalentCosts(talent_names, talents, data) {
 	const skill_costs = [
@@ -736,7 +780,7 @@ function renderTalentCosts(talent_names, talents, data) {
 	const table = document.createElement('table');
 	const th = document.createElement('tr');
 	const td0 = document.createElement('td');
-	
+	table.style.userSelect = 'none';
 	td0.innerText = '消耗NP一覽';
 	th.appendChild(td0);
 	
@@ -760,8 +804,16 @@ function renderTalentCosts(talent_names, talents, data) {
 		td.innerText = names[i];
 		tr1.appendChild(td);
 	}
+	const tr2 = document.createElement('tr');
+	for (let i = 0;i <= names.length;++i) {
+		const td = document.createElement('td');
+		td.innerText = i == 0 ? 'Lv0' : '0';
+		td.onclick = calcCost;
+		tr2.appendChild(td);
+	}
 	table.appendChild(th);
 	table.appendChild(tr1);
+	table.appendChild(tr2);
 	for (let i = 1;i <= 10;++i) {
 		const tr = document.createElement('tr');
 		const td0 = document.createElement('td');
@@ -770,8 +822,10 @@ function renderTalentCosts(talent_names, talents, data) {
 		for (let j = 0;j < names.length;++j) {
 			const td = document.createElement('td');
 			const tbl = skill_costs[costs[j]];
-			td.innerText = tbl.length > 1 ? tbl[i-1] : 'X';
+			td.innerText = tbl.length > 1 ? tbl[i-1] : (i == 1 ? tbl[0] : 'X');
 			tr.appendChild(td);
+			td._state = false;
+			td.onclick = calcCost;
 		}
 		table.appendChild(tr);
 	}
@@ -796,7 +850,7 @@ function renderTalentCosts(talent_names, talents, data) {
 	trend2.appendChild(tdend2);
 	table.appendChild(trend2);
 	let odd = true;
-	for (let e of table.childNodes) {
+	for (let e of table.children) {
 		if (odd)
 			e.style.backgroundColor = '#f1f1f1';
 		odd = !odd;

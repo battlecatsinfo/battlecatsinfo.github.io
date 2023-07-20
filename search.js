@@ -111,7 +111,7 @@ function renderTable(forms, page = 1) {
 '<tr><td colSpan="12">沒有符合調件的貓咪!</td></tr>';
 		return;
 	}
-	if (!pages_a.childNodes.length) {
+	if (!pages_a.children.length) {
 		let c = 1;
 		for (let i = 0;i < forms.length;i += 10) {
 			const td = document.createElement('td');
@@ -147,7 +147,7 @@ function renderTable(forms, page = 1) {
 		span.style.backgroundImage = `url(${theForm.icon})`;
 		span.style.backgroundPosition = '-10px -20px';
 		span.style.display = 'inline-block';
-		tr.childNodes[2].appendChild(span);
+		tr.children[2].appendChild(span);
 		tbody.appendChild(tr);
 	}
 }
