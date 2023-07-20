@@ -351,7 +351,7 @@ class Form {
 		if (this.ab.hasOwnProperty(AB_CURSE))
 			this.ab[AB_CURSE][1] = new_names;
 	}
-	applyTalent(talent) {
+	applyTalent(talent, level) {
 		switch (talent[0]) {
 case 1: '降攻'
 	break;
@@ -370,7 +370,12 @@ case 7:
 	break;
 case 8: "擊退"
 	break;
-case 10: "升攻"
+case 10:
+	if (this.data[40]) {
+		this.ab[AB_STRONG][1] += talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+	} else {
+		this.ab[AB_STRONG] = [talent[2], talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1)];
+	}
 	break;
 case 11: "死前存活"
 	break;
@@ -383,16 +388,6 @@ case 15: "破盾"
 	break;
 case 17: "波動"
 	break;
-case 18: "降攻耐性"
-	break;
-case 19: "暫停耐性"
-	break;
-case 20: "緩速耐性"
-	break;
-case 21: "擊退耐性"
-	break;
-case 22: "波動耐性"
-	break;
 case 25: "成本減少"
 	break;
 case 26: "生產速度"
@@ -400,12 +395,13 @@ case 26: "生產速度"
 case 27: "移動速度"
 	break;
 case 29: "詛咒無效"
+	this.imu |= IMU_CURSE;
 	break;
-case 30: "詛咒耐性"
+case 31:
+	this.atk *= 1 + (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) * 0.01;
 	break;
-case 31: "攻擊力"
-	break;
-case 32: "血量"
+case 32:
+	this.hp *= 1 + (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) * 0.01;
 	break;
 case 35:
 	this.trait |= TB_BLACK;
@@ -449,12 +445,8 @@ case 50: "渾身一擊"
 	break;
 case 51: "攻撃無効"
 	break;
-case 52: "毒擊耐性"
-	break;
 case 53: "毒擊無效"
 	this.imu |= IMU_CURSE;
-	break;
-case 54: "烈波耐性"
 	break;
 case 55: "烈波無效"
 	this.imu |= IMU_VOLC;
@@ -486,11 +478,13 @@ case 65: '小烈波'
 	break;
 		}
 	}
-	applyTalents(talents, _super = false) {
+	applyTalents(talents, levels, _super = false) {
+		let j = 0;
 		for (let i = 0;i < 112;i += 14) {
 			if (!talents[i]) break;
 			if (talents[i + 13] == -1) break;
-			this.applyTalent(talents.subarray(i, i + 14));
+			this.applyTalent(talents.subarray(i, i + 14), levels[j]);
+			++j;
 		}
 	}
 	hasab(ab) {

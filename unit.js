@@ -4,6 +4,8 @@ const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_W
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL]);
 var level_count = 0;
 var my_cat;
+var res_descs;
+var tf_tbl;
 var custom_talents = [10, 10, 10, 10, 10, 10, 10, 10];
 if (isNaN(my_id)) {
 	alert('Missing cat id in URL query!');
@@ -280,7 +282,7 @@ function makeTd(parent, text = '') {
 	parent.appendChild(c);
 	return c;
 }
-function renderForm(form, res_descs) {
+function renderForm(form) {
 	const info = my_cat.info;
 	if (level_count == 2 && info.upReqs != undefined) {
 		const container = document.createElement('table');
@@ -443,6 +445,7 @@ function renderForm(form, res_descs) {
 	unit_content.appendChild(level_text);
 	unit_content.appendChild(tbl);
 	++level_count;
+	return tbl;
 }
 function renderExtras() {
 	const table = document.createElement('table');
@@ -671,7 +674,7 @@ function rednerTalentInfos(talents, data) {
 	tr2.appendChild(td5);
 	table.appendChild(tr2);
 	let infos = [];
-	let res_descs = document.createElement('td');
+	res_descs = document.createElement('td');
 	let descs = function(icon, s) {
 		const e = document.createElement('span');
 		e.classList.add('bc-icon', `bc-icon-res-${icon}2`);
@@ -715,50 +718,45 @@ function rednerTalentInfos(talents, data) {
 	}
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	unit_content.appendChild(table);
-	return [infos, res_descs];
+	return infos;
 }
 function calcCost(event) {
 	const t = event.currentTarget;
 	const idx = Array.prototype.indexOf.call(t.parentNode.children, t);
 	const table = t.parentNode.parentNode;
-	if (t._state) {
-		t.classList.remove('o-selected');
-		custom_talents[idx - 1] = 10;
-	} else {
-		let i = 0;
-		for (const e of table.children) {
-			let x = e.children[idx];
-			if (!x) continue;
-			if (x.classList.contains('o-selected'))
-				x.classList.remove('o-selected');
-			else if (x == t) {
-				custom_talents[idx - 1] = i - 1;
-			}
-			++i;
+	let i = 0;
+	t.classList.add('o-selected');
+	for (const e of table.children) {
+		let x = e.children[idx];
+		if (!x) continue;
+		if (x == t) {
+			custom_talents[idx - 1] = i - 1;
 		}
-		t.classList.add('o-selected');
+		else if (x.classList.contains('o-selected'))
+			x.classList.remove('o-selected');
+		++i;
 	}
-	t._state = !t._state;
 	let e = table.children[2];
 	let costs = new Uint16Array(e.children.length - 1);
 	let selectMap = new Uint8Array(costs.length);
-	let i = 0;
 	for (;;) {
 		let chs = e.children;;
 		if (chs[0].innerText.indexOf('Lv') == -1) break;
 		for (let j = 1;j <= costs.length;++j) {
-			if (selectMap[j - 1] || chs[j].classList.contains('o-selected')) {
-				selectMap[j - 1] = 1;
-			} else {
+			if (!selectMap[j - 1])
 				costs[j - 1] += parseInt(chs[j].innerText.replace('X', '0'));
-			}
+			if (chs[j].classList.contains('o-selected'))
+				selectMap[j - 1] = 1;
 		}
 		e = e.nextElementSibling;
 	}
 	let chs = e.children;
 	for (let j = 1;j <= costs.length;++j)
 		chs[j].innerText = costs[j - 1];
-	e.nextElementSibling.firstElementChild.innerText = costs.reduce((a, b) => a + b, 0);;
+	e.nextElementSibling.firstElementChild.innerText = costs.reduce((a, b) => a + b, 0);
+	const TF = new Form(structuredClone(my_cat.forms[2]));
+	TF.applyTalents(my_cat.info.talents, custom_talents);
+	updateValues(TF, tf_tbl);
 }
 function renderTalentCosts(talent_names, talents, data) {
 	const skill_costs = [
@@ -808,7 +806,7 @@ function renderTalentCosts(talent_names, talents, data) {
 	for (let i = 0;i <= names.length;++i) {
 		const td = document.createElement('td');
 		td.innerText = i == 0 ? 'Lv0' : '0';
-		td.onclick = calcCost;
+		td.addEventListener('click', calcCost);
 		tr2.appendChild(td);
 	}
 	table.appendChild(th);
@@ -825,7 +823,7 @@ function renderTalentCosts(talent_names, talents, data) {
 			td.innerText = tbl.length > 1 ? tbl[i-1] : (i == 1 ? tbl[0] : 'X');
 			tr.appendChild(td);
 			td._state = false;
-			td.onclick = calcCost;
+			td.addEventListener('click', calcCost);
 		}
 		table.appendChild(tr);
 	}
@@ -868,11 +866,11 @@ function renderUintPage() {
 	}
 	for (let form of my_cat.forms) renderForm(form);
 	if (my_cat.info.talents) {
-		const TF = my_cat.forms[2];
-		const [names, res_descs] = rednerTalentInfos(my_cat.info.talents, TF.data);
+		const TF = new Form(structuredClone(my_cat.forms[2]));
+		const names = rednerTalentInfos(my_cat.info.talents, TF.data);
 		renderTalentCosts(names, my_cat.info.talents, TF.data);
-		TF.applyTalents(my_cat.info.talents);
-		renderForm(TF, res_descs);
+		TF.applyTalents(my_cat.info.talents, custom_talents);
+		tf_tbl = renderForm(TF);
 	}
 	renderExtras();
 	document.getElementById('open-db').href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';
