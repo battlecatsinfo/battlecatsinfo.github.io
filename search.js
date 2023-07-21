@@ -75,7 +75,15 @@ const constants = {
     "AB_MASSIVES": AB_MASSIVES,
     "AB_KB": AB_KB,
     "AB_IMUATK": AB_IMUATK,
-    "AB_CURSE": AB_CURSE
+    "AB_CURSE": AB_CURSE,
+	  "RES_WEAK": RES_WEAK,
+	  "RES_STOP": RES_STOP,
+	  "RES_SLOW": RES_SLOW,
+	  "RES_KB": RES_KB,
+	  "RES_WAVE": RES_WAVE,
+	  "RES_SURGE": RES_SURGE,
+	  "RES_CURSE": RES_CURSE,
+	  "RES_TOXIC": RES_TOXIC
   };
 var last_forms;
 function rerender(event) {

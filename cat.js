@@ -117,9 +117,8 @@ const
   RES_KB = 3,
   RES_WAVE = 4,
   RES_SURGE = 5,
-  RES_WARP = 6,
-  RES_CURSE = 7,
-  RES_TOXIC = 8,
+  RES_CURSE = 6,
+  RES_TOXIC = 7,
   RES_LAST = RES_TOXIC;
 const trait_short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無', '使徒', '魔女', '惡'];
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
@@ -342,7 +341,7 @@ class Form {
 		if (this.ab.hasOwnProperty(AB_GOOD))
 			this.ab[AB_GOOD][0] = new_names;
 		if (this.ab.hasOwnProperty(AB_KB))
-			this.ab[AB_KB][0] = new_names;
+			this.ab[AB_KB][1] = new_names;
 		if (this.ab.hasOwnProperty(AB_STOP))
 			this.ab[AB_STOP][1] = new_names;
 		if (this.ab.hasOwnProperty(AB_WEAK))
@@ -431,7 +430,7 @@ case 2:
 		}
 	break;
 }
-case 3: break;
+case 3:
 {
 		if (this.data[27]) {
 			const o = this.ab[AB_SLOW];
@@ -477,7 +476,7 @@ case 8:
 	if (this.data[24]) {
 		this.ab[AB_KB][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	} else {
-		this.ab[AB_KB] = [getTraitNames(this.trait), talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)];
+		this.ab[AB_KB] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1), getTraitNames(this.trait)];
 	}
 	break;
 case 10:
@@ -508,7 +507,7 @@ case 15:
 	if (this.data[70]) {
 		this.ab[AB_BREAK] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	} else {
-		this.ab[AB_BREAK] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+		this.ab[AB_BREAK] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)];
 	}
 	break;
 case 16:
@@ -623,6 +622,8 @@ case 52:
 case 53:
 	this.imu |= IMU_CURSE;
 	break;
+case 54:
+	this.res[RES_SURGE] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 case 55:
 	this.imu |= IMU_VOLC;
 	break;
@@ -644,7 +645,7 @@ case 58:
 	if (this.data[95]) {
 		this.ab[AB_SHIELDBREAK][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	} else {
-		this.ab[AB_SHIELDBREAK] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+		this.ab[AB_SHIELDBREAK] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)];
 	}
 	break;
 case 59:
@@ -721,6 +722,9 @@ case 65:
 			this.applyTalent(talents.subarray(i, i + 14), levels[j]);
 			++j;
 		}
+	}
+	hasres(r) {
+		return this.res && this.res.hasOwnProperty(r);
 	}
 	hasab(ab) {
 		return this.ab.hasOwnProperty(ab);

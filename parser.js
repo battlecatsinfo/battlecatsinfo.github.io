@@ -192,7 +192,7 @@ const pegjs = /*
             const i = s.indexOf('(');
             if (i != -1) {
               let f = s.slice(0, i);
-              if (f == 'hasab')
+              if (f == 'hasab' || f == 'hasres')
                 return 'form.' + s;
               if (!Math[f])
                 throw Error("未知的函數: " + f);
@@ -1353,7 +1353,7 @@ const pegjs = /*
     }
 
 
-      const known_identifiers = ["id", "trait", "imu", "hp", "atk", "attack", "range", "dps", "kb", "attackf", "cd", "atktype", "rarity", "tdps", "thp", "speed", "price", "cost"];
+      const known_identifiers = ["id", "trait", "imu", "hp", "atk", "attack", "range", "dps", "kb", "attackf", "attackf", "cd", "atktype", "rarity", "tdps", "thp", "tatk", "speed", "price", "cost"];
 
 
     peg$result = peg$startRuleFunction();
