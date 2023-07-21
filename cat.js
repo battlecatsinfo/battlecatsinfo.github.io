@@ -110,6 +110,17 @@ const
    AB_IMUATK = 32,
    AB_CURSE = 33,
    AB_LAST = AB_CURSE;
+const
+  RES_WEAK = 0,
+  RES_STOP = 1,
+  RES_SLOW = 2,
+  RES_KB = 3,
+  RES_WAVE = 4,
+  RES_SURGE = 5,
+  RES_WARP = 6,
+  RES_CURSE = 7,
+  RES_TOXIC = 8,
+  RES_LAST = RES_TOXIC;
 const trait_short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無', '使徒', '魔女', '惡'];
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
@@ -191,7 +202,7 @@ class Form {
 		this.range = data[5];
 		this.hp = data[0];
 		this.kb = data[1];
-		this.cd = Math.max(data[7] * 2 - 264, 60); // max tech & treasure lead to -264f CD
+		this.cd = Math.max(data[7] * 2 - 264, 60);
 		this.atk = data[3];
 		this.atk1 = data[59] | 0;
 		this.atk2 = data[60] | 0;
@@ -229,18 +240,18 @@ class Form {
 			if (data[25]) {
 				let stop_time = data[26];
 				let cover = Math.min((data[25] * stop_time * 1.2) / (this.attackF * 100), 1);
-				this.ab[AB_STOP] = [data[25], trait_names[0], numStrT(stop_time), numStrT(stop_time * 1.2), (cover*100).toFixed(0) + '%'];
+				this.ab[AB_STOP] = [data[25], trait_names[0], numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
 			}
 			if (data[27]) {
 				let slow_time = data[28];
 				let cover = Math.min((data[27] * slow_time * 1.2) / (this.attackF * 100), 1);
-				this.ab[AB_SLOW] = [data[27], trait_names[0], numStrT(slow_time), numStrT(slow_time * 1.2), (cover*100).toFixed(0) + '%'];
+				this.ab[AB_SLOW] = [data[27], trait_names[0], numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
 			}
 			(data[32]) && (this.ab[AB_ONLY] = trait_names);
 			if (data[37]) {
 				let weak_time = data[38];
 				let cover = Math.min((data[37] * weak_time * 1.2) / (this.attackF * 100), 1);
-				this.ab[AB_WEAK] = [data[37], trait_names[0], data[39], numStrT(weak_time), numStrT(weak_time * 1.2), (cover*100).toFixed(0) + '%'];
+				this.ab[AB_WEAK] = [data[37], trait_names[0], data[39], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
 			}
 			(data[29]) && (this.ab[AB_RESIST] = trait_names);
 			(data[30]) && (this.ab[AB_MASSIVE] = trait_names);
@@ -249,7 +260,7 @@ class Form {
 			if (data[92]) {
 				let curse_time = data[93];
 				let cover = Math.min((data[92] * curse_time * 1.2) / (this.attackF * 100), 1);
-				this.ab[AB_CURSE] = [data[92], trait_names[0], numStrT(curse_time),  numStrT(curse_time * 1.2), (cover*100).toFixed(0) + '%'];
+				this.ab[AB_CURSE] = [data[92], trait_names[0], numStrT(curse_time),  numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
 			}
 		}
 		(data[31]) && (this.ab[AB_CRIT] = [data[31]]);
@@ -285,10 +296,10 @@ class Form {
 			(data[82]) && (this.ab[AB_S] = [data[82], data[83]]);
 			(data[84]) && (this.ab[AB_IMUATK] = [data[84], numStrT(data[85])]);
 			if (data[86]) {
-				let des1 = data[87] / 4;
-				let des2 = des1 + data[88] / 4;
-				let lv = data[89];
-				let time = lv * 20;
+				const des1 = data[87] >> 2;
+				const des2 = (data[87] + data[88]) >> 2;
+				const lv = data[89];
+				const time = lv * 20;
 				if (data.length >= 109 && data[108] == 1) {
 					this.ab[AB_MINIVOLC] = [data[86], des1, des2, time, lv];
 				} else {
@@ -331,7 +342,7 @@ class Form {
 		if (this.ab.hasOwnProperty(AB_GOOD))
 			this.ab[AB_GOOD][0] = new_names;
 		if (this.ab.hasOwnProperty(AB_KB))
-			this.ab[AB_KB][1] = new_names;
+			this.ab[AB_KB][0] = new_names;
 		if (this.ab.hasOwnProperty(AB_STOP))
 			this.ab[AB_STOP][1] = new_names;
 		if (this.ab.hasOwnProperty(AB_WEAK))
@@ -352,13 +363,107 @@ class Form {
 			this.ab[AB_CURSE][1] = new_names;
 	}
 	applyTalent(talent, level) {
+		if (!level) return;
 		switch (talent[0]) {
-case 1: '降攻'
+case 1:
+{
+		if (this.data[37]) {
+			const o = this.ab[AB_WEAK];
+			if (talent[4] && talent[4] != talent[5]) {
+				const weak_time = this.data[38] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+				const cover = Math.min((this.data[37] * weak_time * 1.2) / (this.attackF * 100), 1);
+				o[1] = getTraitNames(this.trait);
+				o[3] = numStrT(weak_time);
+				o[4] = numStrT(weak_time * 1.2);
+				o[5] = numStr(cover*100) + '%';
+			} else {
+				const weak_time = this.data[38];
+				const pos = this.data[37] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+				const cover = Math.min((pos * weak_time * 1.2) / (this.attackF * 100), 1);
+				o[0] = pos;
+				o[5] = numStr(cover*100) + '%';
+			}
+		} else {
+			if (talent[4] && talent[4] != talent[5]) {
+				const weak_time = this.data[38];
+				const pos = this.data[37] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+				const cover = Math.min((pos * weak_time * 1.2) / (this.attackF * 100), 1);
+				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
+			} else {
+				const weak_time = this.data[38];
+				const pos = this.data[37] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+				const cover = Math.min((pos * weak_time * 1.2) / (this.attackF * 100), 1);
+				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
+			}
+	}
 	break;
-case 2: "暫停"
+}
+case 2:
+{
+		if (this.data[25]) {
+			const o = this.ab[AB_STOP];
+			if (talent[4] && talent[4] != talent[5]) {
+				const stop_time = this.data[26] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+				const cover = Math.min((this.data[25] * stop_time * 1.2) / (this.attackF * 100), 1);
+				o[1] = getTraitNames(this.trait);
+				o[2] = numStrT(stop_time);
+				o[3] = numStrT(stop_time * 1.2);
+				o[4] = numStr(cover*100) + '%';
+			} else {
+				const stop_time = this.data[26];
+				const pos = this.data[25] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+				const cover = Math.min((pos * stop_time * 1.2) / (this.attackF * 100), 1);
+				o[0] = pos;
+				o[4] = numStr(cover*100) + '%';
+			}
+		} else {
+			if (talent[4] && talent[4] != talent[5]) {
+					const stop_time = this.data[26];
+					const pos = this.data[25] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+					const cover = Math.min((pos * stop_time * 1.2) / (this.attackF * 100), 1);
+					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
+			} else {
+					const stop_time = this.data[26];
+					const pos = this.data[25] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+					const cover = Math.min((pos * stop_time * 1.2) / (this.attackF * 100), 1);
+					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
+			}
+		}
 	break;
-case 3: "緩速"
+}
+case 3: break;
+{
+		if (this.data[27]) {
+			const o = this.ab[AB_SLOW];
+			if (talent[4] && talent[4] != talent[5]) {
+				const slow_time = this.data[28] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+				const cover = Math.min((this.data[27] * slow_time * 1.2) / (this.attackF * 100), 1);
+				o[1] = getTraitNames(this.trait);
+				o[2] = numStrT(slow_time);
+				o[3] = numStrT(slow_time * 1.2);
+				o[4] = numStr(cover*100) + '%';
+			} else {
+				const slow_time = this.data[28];
+				const pos = this.data[27] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+				const cover = Math.min((pos * slow_time * 1.2) / (this.attackF * 100), 1);
+				o[0] = pos;
+				o[4] = numStr(cover*100) + '%';
+			}
+		} else {
+			if (talent[4] && talent[4] != talent[5]) {
+					const slow_time = this.data[28];
+					const pos = this.data[27] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+					const cover = Math.min((pos * slow_time * 1.2) / (this.attackF * 100), 1);
+					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
+			} else {
+					const slow_time = this.data[28];
+					const pos = this.data[27] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+					const cover = Math.min((pos * slow_time * 1.2) / (this.attackF * 100), 1);
+					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
+			}
+	}
 	break;
+}
 case 5:
 	this.ab[AB_GOOD] = [getTraitNames(this.trait)];
 	break;
@@ -368,7 +473,12 @@ case 6:
 case 7:
 	this.ab[AB_MASSIVE] = [getTraitNames(this.trait)];
 	break;
-case 8: "擊退"
+case 8:
+	if (this.data[24]) {
+		this.ab[AB_KB][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		this.ab[AB_KB] = [getTraitNames(this.trait), talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)];
+	}
 	break;
 case 10:
 	if (this.data[40]) {
@@ -377,25 +487,69 @@ case 10:
 		this.ab[AB_STRONG] = [talent[2], talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1)];
 	}
 	break;
-case 11: "死前存活"
+case 11:
+	if (this.data[42]) {
+		this.ab[AB_LETHAL][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		this.ab[AB_LETHAL] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)];
+	}
 	break;
-case 13: "爆擊"
+case 13:
+	if (this.data[31]) {
+		this.ab[AB_CRIT][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		this.ab[AB_CRIT] = talent[2];
+	}
 	break;
 case 14:
 	this.ab[AB_ZKILL] = [];
 	break;
-case 15: "破盾"
+case 15:
+	if (this.data[70]) {
+		this.ab[AB_BREAK] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		this.ab[AB_BREAK] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	}
 	break;
-case 17: "波動"
+case 16:
+	this.ab[AB_BOUNTY] = [];
 	break;
-case 25: "成本減少"
+case 17:
+	if (this.data[35]) {
+		this.ab[AB_WAVE][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		this.ab[AB_WAVE] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1), talent[4]];
+	}
 	break;
-case 26: "生產速度"
+case 18:
+	this.res[RES_WEAK] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	break;
-case 27: "移動速度"
+case 19:
+	this.res[RES_STOP] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	break;
-case 29: "詛咒無效"
+case 20:
+	this.res[RES_SLOW] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	break;
+case 21:
+	this.res[RES_KB] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	break;
+case 22:
+	this.res[RES_WAVE] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	break;
+case 25:
+	this.price = this.price - talent[2] * level;
+	break;
+case 26:
+	this.cd = Math.max(this.data[7] * 2 - 264 - level * talent[2], 60);
+	break;
+case 27:
+	this.speed += level * talent[2];
+	break;
+case 29:
 	this.imu |= IMU_CURSE;
+	break;
+case 30:
+	this.res[RES_CURSE] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	break;
 case 31:
 	this.atk *= 1 + (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) * 0.01;
@@ -441,32 +595,104 @@ case 48:
 case 49:
 	this.imu |= IMU_WARP;
 	break;
-case 50: "渾身一擊"
+case 50:
+	if (this.data[82]) {
+		this.ab[AB_S][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		this.ab[AB_S] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1), talent[4]];
+	}
 	break;
-case 51: "攻撃無効"
+case 51:
+	if (this.data[84]) {
+		if (talent[4] && talent[4] != talent[5]) {
+			this.ab[AB_IMUATK][1] = numStrT(data[85] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1));
+		} else {
+			this.ab[AB_IMUATK][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+		}
+	} else {
+		if (talent[4] && talent[4] != talent[5]) {
+			this.ab[AB_IMUATK] = [talent[2], numStrT(talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1))];
+		} else {
+			this.ab[AB_IMUATK] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1), numStrT(talent[4])];
+		}
+	}
 	break;
-case 53: "毒擊無效"
+case 52:
+	this.res[RES_TOXIC] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	break;
+case 53:
 	this.imu |= IMU_CURSE;
 	break;
-case 55: "烈波無效"
+case 55:
 	this.imu |= IMU_VOLC;
 	break;
-case 56: "烈波強化"
+case 56:
+	if (this.data[86]) {
+		this.ab[AB_VOLC][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		const des1 = talent[6] >> 2;
+		const des2 = (talent[6] + talent[8]) >> 2;
+		const lv = talent[4];
+		this.ab[AB_VOLC] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1), des1, des2, lv * 20, lv];
+	}
 	break;
 case 57:
 	this.trait |= TB_DEMON;
 	this.updateTraitNames();
 	break;
-case 58: "破惡魔盾"
+case 58:
+	if (this.data[95]) {
+		this.ab[AB_SHIELDBREAK][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		this.ab[AB_SHIELDBREAK] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	}
 	break;
-case 59: "靈魂攻擊"
+case 59:
 	this.ab[AB_CKILL] = [];
 	break;
-case 60: "詛咒強化"
+case 60:
+{
+		if (this.data[92]) {
+			const o = this.ab[AB_CURSE];
+			if (talent[4] && talent[4] != talent[5]) {
+				const curse_time = this.data[93] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+				const cover = Math.min((this.data[92] * curse_time * 1.2) / (this.attackF * 100), 1);
+				o[1] = getTraitNames(this.trait);
+				o[2] = numStrT(curse_time);
+				o[3] = numStrT(curse_time * 1.2);
+				o[4] = numStr(cover*100) + '%';
+			} else {
+				const curse_time = this.data[93];
+				const pos = this.data[92] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+				const cover = Math.min((pos * curse_time * 1.2) / (this.attackF * 100), 1);
+				o[0] = pos;
+				o[4] = numStr(cover*100) + '%';
+			}
+		} else {
+			if (talent[4] && talent[4] != talent[5]) {
+					const curse_time = this.data[93];
+					const pos = this.data[92] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+					const cover = Math.min((pos * curse_time * 1.2) / (this.attackF * 100), 1);
+					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
+			} else {
+					const curse_time = this.data[93];
+					const pos = this.data[92] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+					const cover = Math.min((pos * curse_time * 1.2) / (this.attackF * 100), 1);
+					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
+			}
+		}
 	break;
-case 61: "攻頻縮短"
+}
+case 61:
+	this.tba -= this.tba * ( talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1) );
+	this.attackF = (this.pre2 ? this.pre2 : (this.pre1 ? this.pre1 : this.pre)) + Math.max(this.backswing, this.tba - 1);
 	break;
-case 62: "小波動"
+case 62:
+	if (this.data[94]) {
+		this.ab[AB_MINIWAVE][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		this.ab[AB_MINIWAVE] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1), talent[4]];
+	}
 	break;
 case 63:
 	this.ab[AB_BAIL] = [];
@@ -474,11 +700,20 @@ case 63:
 case 64:
 	this.ab[AB_BSTHUNT] = [5, 30];
 	break;
-case 65: '小烈波'
+case 65:
+	if (this.data[108]) {
+		this.ab[AB_MINIVOLC][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	} else {
+		const des1 = talent[6] >> 2;
+		const des2 = (talent[6] + talent[8]) >> 2;
+		const lv = talent[4];
+		this.ab[AB_MINIVOLC] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1), des1, des2, lv * 20, lv];
+	}
 	break;
 		}
 	}
 	applyTalents(talents, levels, _super = false) {
+		this.res = {};
 		let j = 0;
 		for (let i = 0;i < 112;i += 14) {
 			if (!talents[i]) break;
@@ -798,6 +1033,39 @@ async function loadAllCats() {
 		}
 	});
 }
+const res_icon_names = [
+	"weak",
+	"freeze",
+	"slow",
+	"kb",
+	"wave",
+	"surge",
+	"curse",
+	"toxic"
+];
+const res_descs = [
+	'降攻耐性(受到降攻時間減少$%)',
+	'暫停耐性(受到暫停時間減少$%)',
+	'緩速耐性(受到緩速時間減少$%)',
+	'擊退耐性(受到擊退距離減少$%)',
+	'波動耐性(受到波動傷害減少$%)',
+	'烈波耐性(受到烈波傷害減少$%)',
+	'詛咒耐性(受到詛咒時間減少$%)',
+	'毒擊耐性(受到毒擊傷害減少$%)',
+];
+function createResIcons(res, parent) {
+	for (let i = 1;i <= RES_LAST;++i) {
+		if (res.hasOwnProperty(i)) {
+			const e = document.createElement('span');
+			e.classList.add('bc-icon', `bc-icon-${icon_names[i - 1]}`);
+			parent.appendChild(e);
+			const e2 = document.createElement('span');
+			e2.innerText = res_descs[i].replace('$', res[i]);
+			parent.appendChild(e2);
+			parent.appendChild(document.createElement('br'));
+		}
+	}
+}
 const icon_names = [
 		'strong', 
 		'lethal', 
@@ -854,9 +1122,9 @@ const icon_descs = [
 	'超獸特效(對超獸敵人傷害2.5倍、減傷40%、{1}%攻擊無效{2}f)',
 	'終結魔女	',
 	'終結使徒',
-	'{1}%機率降低{2}攻擊力至{3}%{4}秒({5}秒，控場覆蓋率{6})',
-	'{1}%機率暫停{2}{3}秒({4}秒，控場覆蓋率{5})',
-	'{1}%機率緩速{2}{3}秒({4}秒，控場覆蓋率{5})',
+	'{1}%機率降低{2}攻擊力至{3}%持續{4}({5}，控場覆蓋率{6})',
+	'{1}%機率暫停{2}持續{3}({4}，控場覆蓋率{5})',
+	'{1}%機率緩速{2}持續{3}({4}，控場覆蓋率{5})',
 	'只能攻擊{1}',
 	'對{1}傷害傷害1.5倍(1.8倍)受到紅屬性的敵人傷害減少50%(60%)',
 	'受到{1}攻擊的傷害減至1/4(1/5)',
@@ -866,7 +1134,7 @@ const icon_descs = [
 	'{1}%機率擊退{2}',
 	'{1}%機率傳送{2}',
 	'{1}%發動攻擊無效{2}秒',
-	'{1}%機率詛咒{2}{3}秒({4}秒，控場覆蓋率{5})',
+	'{1}%機率詛咒{2}持續{3}({4}，控場覆蓋率{5})',
 ]
 function createAbIcons1(ab, parent) {
 	for (let i = 1;i <= AB_LAST;++i) {

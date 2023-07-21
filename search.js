@@ -134,7 +134,7 @@ function renderTable(forms, page = 1) {
 		const base = Math.min(def_lv, _info.maxBase);
 		const plus = Math.min(plus_lv, _info.maxPlus);
 		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', theForm.name + '/' + theForm.jp_name, ~~theForm.gethp(), ~~theForm.getatk(), 
-			numStr(theForm.getdps()), theForm.kb, theForm.range, numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, ~~(theForm.price * 1.5)];
+			~~theForm.getdps(), theForm.kb, theForm.range, numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, ~~(theForm.price * 1.5)];
 		for (let j = 0;j < 12;++j) {
 			const e = document.createElement('td');
 			e.innerText = texts[j].toString();
@@ -218,10 +218,10 @@ function calculate(code = '') {
 	}
 	let f = eval(`form => (${pcode})`);
 	for (let id = 0;id < cats.length;++id) {
+		useCurve(id);
 		let c = cats[id];
 		_info = c.info;
 		for (let form of c.forms) {
-			useCurve(form.id);
 			if (f(form)) {
 				results.push(form);
 			}
@@ -293,6 +293,16 @@ loadAllCats()
 	addBtns(atk_s, params.get('atks'));
 	addBtns(ab_s, params.get('abs'));
 	addBtns(trait_s, params.get('traits'));
+	tcats = new Array(cats.length);
+	const full = [10, 10, 10, 10, 10, 10, 10, 10];
+	for (let i = 0;i < cats.length;++i) {
+		const TF = cats[i].forms[2];
+		if (TF) {
+			const talents = cats[i].info.talents;
+			if (talents)
+				TF.applyTalents(talents, full);
+		}
+	}
 	calculate(filter ? filter : '');
 });
 document.querySelectorAll('button').forEach(elem => {

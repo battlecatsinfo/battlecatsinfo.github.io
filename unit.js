@@ -4,7 +4,6 @@ const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_W
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL]);
 var level_count = 0;
 var my_cat;
-var res_descs;
 var tf_tbl;
 var custom_talents = [10, 10, 10, 10, 10, 10, 10, 10];
 if (isNaN(my_id)) {
@@ -150,7 +149,7 @@ function getHp(line, theHP, parent, first, trait, plus) {
 			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 			treasure = spec ? first : (trait & trait_treasure);
 			theHP *= (treasure ? 5 : 4);
-			lines.push('很耐打');
+			lines.push('耐打');
 			break;
 		case AB_RESISTS:
 			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
@@ -398,11 +397,7 @@ function renderForm(form) {
 	makeTd(tbodytr9, '屬性');
 	makeTd(tbodytr9).colSpan = 6;
 	makeTd(tbodytr10, '抗性');
-	if (res_descs) {
-		res_descs.colSpan = 6;
-		tbodytr10.appendChild(res_descs);
-	} else
-		makeTd(tbodytr10).colSpan = 6;
+	makeTd(tbodytr10).colSpan = 6;
 	makeTd(tbodytr11, '能力');
 	makeTd(tbodytr11).colSpan = 6;
 	makeTd(tbodytr12, '效果');
@@ -426,9 +421,10 @@ function renderForm(form) {
 	tbl.appendChild(tbodytr12);
 	const chs = tbl.children;
 	updateValues(form, tbl);
-	const specials = chs[9].children[1];
-	createTraitIcons(form.trait, specials);
+	createTraitIcons(form.trait, chs[9].children[1]);
 	createImuIcons(form.imu, chs[10].children[1]);
+	if (form.res)
+		createResIcons(form.res, chs[10].children[1]);
 	createAbIcons1(form.ab, chs[11].children[1]);
 	createAbIcons2(form.ab, chs[12].children[1]);
 	(!tbodytr9.children[1].children.length) && (tbodytr9.style.display = 'none');
@@ -483,7 +479,7 @@ function renderExtras() {
 	}
 	unit_content.appendChild(table);
 }
-function getTalentInfo(talent, data, descs) {
+function getTalentInfo(talent, data) {
 	function range(name, f='%', start = 2, end = 3) {
 		return [name, talent[start].toString() + f, talent[end].toString() + f, talent[1], numStr((talent[end] - talent[start]) / (talent[1] - 1)) + f];
 	}
@@ -499,16 +495,16 @@ function getTalentInfo(talent, data, descs) {
 			return range('降攻機率', '%', 2, 3);
 		}
 		if (talent[4] && talent[4] != talent[5])
-				return range('降攻機率', 'f', 4, 5);
+				return range('降攻機率', '%', 4, 5);
 		return range('降攻機率', '%', 2, 3);
 	case 2:
 		if (data[25]) {
 			if (talent[4] && talent[4] != talent[5])
-				return range('暫停時間', '%', 2, 3);
-			return range('暫停機率', '%', 4, 5);
+				return range('暫停時間', '%', 4, 5);
+			return range('暫停機率', '%', 2, 3);
 		}
 		if (talent[4] && talent[4] != talent[5])
-				return range('暫停機率', 'f', 4, 5);
+				return range('暫停機率', '%', 4, 5);
 		return range('暫停機率', '%', 2, 3);
 	case 3:
 		if (data[27]) {
@@ -517,7 +513,7 @@ function getTalentInfo(talent, data, descs) {
 			return range('緩速機率', '%', 2, 3);
 		}
 		if (talent[4] && talent[4] != talent[5])
-				return range('緩速機率', 'f', 4, 5);
+				return range('緩速機率', '%', 4, 5);
 		return range('暫停機率', '%', 2, 3);
 	case 5:  return "善於攻擊";
 	case 6:  return "耐打";
@@ -551,19 +547,14 @@ function getTalentInfo(talent, data, descs) {
 			return range('波動', '%', 2, 3);
 		return range2(`Lv${talent[4]}波動`, '%', 2, 3, talent[2]);
 	case 18: 
-		descs('weak', `降攻耐性(受到降攻時間減少${talent[3]}%)`);
 		return range("降攻耐性");
 	case 19:
-		descs('freeze', `暫停耐性(受到暫停時間減少${talent[3]}%)`);
 		return range("暫停耐性");
 	case 20:
-		descs('slow', `緩速耐性(受到緩速時間減少${talent[3]}%)`);
 		return range("緩速耐性");
 	case 21:
-		descs('kb', `擊退耐性(受到擊退距離減少${talent[3]}%)`);
 		return range("擊退耐性");
 	case 22:
-		descs('wave', `波動耐性(受到波動傷害減少${talent[3]}%)`);
 		return range("波動耐性");
 	case 25: 
 		return ['成本減少', ~~(talent[2] * 1.5), ~~(talent[3] * 1.5), talent[1], numStr(talent[2] * 1.5)];
@@ -573,7 +564,6 @@ function getTalentInfo(talent, data, descs) {
 		return ["移動速度", talent[2], talent[3], talent[1], talent[2]];
 	case 29: return "詛咒無效";
 	case 30:
-		descs('wave', `詛咒耐性(受到詛咒時間減少${talent[3]}%)`);
 		return range("詛咒耐性");
 	case 31: return range("攻擊力");
 	case 32: return range("血量");
@@ -599,14 +589,12 @@ function getTalentInfo(talent, data, descs) {
 			return range('攻撃無効', '%', 2, 3);
 		}
 		if (talent[4] && talent[4] != talent[5])
-			return range2('攻撃無効', '%', 4, 5, talent[2]);
+			return range2('攻撃無効', 'f', 4, 5, talent[2]);
 		return range2('攻撃無効', '%', 2, 3, talent[2]);
 	case 52:
-		descs('toxic', `毒擊耐性(受到毒擊傷害減少${talent[3]}%)`);
 		return range("毒擊耐性");
 	case 53: return "毒擊無效";
 	case 54:
-		descs('surge', `烈波耐性(受到烈波傷害減少${talent[3]}%)`);
 		return range("烈波耐性");
 	case 55: return "烈波無效";
 	case 56:
@@ -674,21 +662,11 @@ function rednerTalentInfos(talents, data) {
 	tr2.appendChild(td5);
 	table.appendChild(tr2);
 	let infos = [];
-	res_descs = document.createElement('td');
-	let descs = function(icon, s) {
-		const e = document.createElement('span');
-		e.classList.add('bc-icon', `bc-icon-res-${icon}2`);
-		const e2 = document.createElement('span');
-		e2.innerText = s;
-		res_descs.appendChild(e);
-		res_descs.appendChild(e2);
-		res_descs.appendChild(document.createElement('br'));
-	}
 	for (let i = 0;i < 112;i += 14) {
 		const tr = document.createElement('tr');
 		if (!talents[i]) break;
 		if (talents[i + 13] == -1) break;
-		const info = getTalentInfo(talents.subarray(i, i + 14), data, descs);
+		const info = getTalentInfo(talents.subarray(i, i + 14), data);
 		if (info instanceof Array) {
 			infos.push(info[0]);
 			let td = null;
@@ -750,13 +728,23 @@ function calcCost(event) {
 		}
 		e = e.nextElementSibling;
 	}
-	let chs = e.children;
+	let cis = e.children;
 	for (let j = 1;j <= costs.length;++j)
-		chs[j].innerText = costs[j - 1];
+		cis[j].innerText = costs[j - 1];
 	e.nextElementSibling.firstElementChild.innerText = costs.reduce((a, b) => a + b, 0);
 	const TF = new Form(structuredClone(my_cat.forms[2]));
 	TF.applyTalents(my_cat.info.talents, custom_talents);
 	updateValues(TF, tf_tbl);
+	const chs = tf_tbl.children;
+	chs[9].children[1].textContent = '';
+	chs[10].children[1].textContent = '';
+	chs[11].children[1].textContent = '';
+	chs[12].children[1].textContent = '';
+	createTraitIcons(TF.trait, chs[9].children[1]);
+	createImuIcons(TF.imu, chs[10].children[1]);
+	createResIcons(TF.res, chs[10].children[1]);
+	createAbIcons1(TF.ab, chs[11].children[1]);
+	createAbIcons2(TF.ab, chs[12].children[1]);
 }
 function renderTalentCosts(talent_names, talents, data) {
 	const skill_costs = [
