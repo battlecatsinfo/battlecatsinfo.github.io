@@ -89,3 +89,15 @@ table.tcost {
   margin-bottom: 50px;
 }
 .w3-table td:first-child { padding-left: initial; }
+table.combo td {
+  padding: 0px;
+  border: none;
+}
+table.combo tr, table.combo td:first-child {
+  border: #cfcfcf 1px solid;
+}
+table.combo p {
+  padding: 5px;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}

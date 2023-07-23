@@ -1,6 +1,6 @@
 const my_params = new URLSearchParams(location.search);
 const my_id = parseInt(my_params.get('id'));
-const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT]);
+const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINIVOLC, AB_VOLC]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL]);
 var level_count = 0;
 var my_cat;
@@ -47,6 +47,34 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	var treasure;
 	for (const ab of line) {
 		switch (parseInt(ab[0])) {
+		case AB_WAVE:
+			lines.push('波動');
+			if (dps)
+				theATK *= 1 + ab[1] / 100;
+			else
+				theATK += theATK;
+			break;
+		case AB_MINIWAVE:
+			if (dps)
+				theATK *= 1 + ab[1] / 500;
+			else
+				theATK *= 1.2;
+			lines.push('小波動');
+			break;
+		case AB_VOLC:
+			if (dps)
+				theATK *= 1 + (ab[5] * ab[1] / 100);
+			else
+				theATK *= 1 + ab[5];
+			lines.push('烈波');
+			break;
+		case AB_MINIVOLC:
+			if (dps)
+				theATK *= 1 + (ab[5] * ab[1] / 500);
+			else
+				theATK *= 1 + ab[5] * 0.2;
+			lines.push('小烈波');
+			break;
 		case AB_GOOD:
 			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 			treasure = spec ? first : (trait & trait_treasure);
@@ -844,6 +872,50 @@ function renderTalentCosts(talent_names, talents, data) {
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	unit_content.appendChild(table);
 }
+function renderCombos() {
+	const table = document.createElement('table');
+	for (let C of combos) {
+		const units = C[3];
+		for (let i = 0;i < units.length;i += 2) {
+			if (my_id == units[i]) {
+				const tr = document.createElement('tr');
+				const name = C[0];
+				const type = C[1];
+				const lv = C[2];
+				const types = ['小', '中', '大', '究極'];
+				const td = document.createElement('td');
+				const p = document.createElement('p');
+				const p2 = document.createElement('p');
+				td.appendChild(p);
+				td.appendChild(p2);
+				p.innerText = name;
+				p2.innerText = combo_f[type].replace('$', combo_params[type][lv]) + '【' + types[lv] + '】';
+				tr.appendChild(td);
+				for (let c = 0;c < units.length;c += 2) {
+					const td = document.createElement('td');
+					const img = new Image();
+					const my_id_str = t3str(units[c]);
+					const form_str = 'fcs'[units[c + 1]];
+					const a = document.createElement('a');
+					a.href = './unit.html?id=' + units[c].toString();
+					img.src = `./data/unit/${my_id_str}/${form_str}/uni${my_id_str}_${form_str}00.png`;
+					a.appendChild(img);
+					td.appendChild(a);
+					tr.appendChild(td);
+				}
+				table.appendChild(tr);
+				break;
+			}
+		}
+	}
+	if (table.children.length) {
+		table.classList.add('w3-table', 'w3-centered', 'combo');
+		const p = document.createElement('p');
+		p.innerText = '聯組資訊';
+		unit_content.appendChild(p);
+		unit_content.appendChild(table);
+	}
+}
 function renderUintPage() {
 	const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
 	const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
@@ -866,6 +938,7 @@ function renderUintPage() {
 	document.getElementById('jp_name').innerText = cat_names_jp;
 	document.getElementById('show-xp-graph').href = './xpgraph.html?data=' + btoa(my_cat.info.xp_data);
 	document.title = cat_names.replaceAll(' → ', ' ') + ' - 貓咪資訊';
+	renderCombos();
 }
 loadCat(my_id)
 .then(res => {
