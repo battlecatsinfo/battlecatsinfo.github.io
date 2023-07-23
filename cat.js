@@ -416,6 +416,8 @@ class Form {
 				break;
 			}
 		}
+		if ((this.tba + this.pre) < (this.attackF / 2))
+			this.atkType |= ATK_KB_REVENGE;
 	}
 	updateTraitNames() {
 		const new_names = getTraitNames(this.trait);
@@ -813,6 +815,18 @@ case 65:
 	getid() {
 		return this.id;
 	}
+	gettba() {
+		return this.tba;
+	}
+	getpre() {
+		return this.pre;
+	}
+	getpre1() {
+		return this.pre1;
+	}
+	getpre2() {
+		return this.pre2;
+	}
 	getTotalLv() {
 		return Math.min(def_lv, _info.maxBase) + Math.min(plus_lv, _info.maxPlus);
 	}
@@ -836,6 +850,9 @@ case 65:
 	}
 	getattacks() {
 		return this.attackF / 30;
+	}
+	getrevenge() {
+		return this.revenge;
 	}
 	getbackswing() {
 		return this.backswing;
@@ -1290,8 +1307,6 @@ function createImuIcons(imu, parent) {
 	}
 }
 function createTraitIcons(trait, parent) {
-	if (parent.children.length)
-		parent.appendChild(document.createElement('br'));
 	if (!trait) return;
 	const names = [
 		'red', 'float', 'black', 'metal', 'angel', 'alien', 'zombie', 'relic', 'white', 'eva', 'witch', 'demon'
@@ -1307,4 +1322,3 @@ function createTraitIcons(trait, parent) {
 	}
 	parent.appendChild(document.createElement('br'));
 }
-

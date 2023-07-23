@@ -268,7 +268,12 @@ function updateValues(form, tbl) {
 	chs[6].children[1].innerText = numStrT(form.tba);
 	chs[6].children[3].innerText = numStrT(form.backswing);
 	chs[5].children[1].innerText = numStrT(form.attackF).replace('秒', '秒/下');
-	chs[5].children[3].innerText = numStrT(form.pre);
+	var preStr = numStrT(form.pre);
+	if (form.pre1)
+		preStr += '/' + numStrT(form.pre1);
+	if (form.pre2)
+		preStr += '/' + numStrT(form.pre2);
+	chs[5].children[3].innerText = preStr;
 	var atkType = '';
 	if (form.atkType & ATK_OMNI)
 		atkType += '全方位';
@@ -279,9 +284,17 @@ function updateValues(form, tbl) {
 	const specials = chs[9].children[1];
 	const lds = form.lds;
 	const ldr = form.ldr;
+	if (form.atkType & ATK_KB_REVENGE) {
+		const p = document.createElement('p');
+		p.innerText = '擊退反擊';
+		specials.appendChild(p);
+	}
 	if (form.atk1 || form.atk2) {
-		let atksPre = [form.atk, form.atk1, form.atk2].slice(0, lds.length).map(x => ((x / totalAtk)*100).toFixed(0)+'%');
-		specials.appendChild(document.createTextNode(`${lds.length}回連續攻擊(傷害${atksPre.join('-')})`));
+		const atkNum = form.atk2 ? 3 : 2;
+		const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => ((x / totalAtk)*100).toFixed(0)+'%');
+		const p = document.createElement('p');
+		p.innerText = `${atkNum}回連續攻擊(傷害${atksPre.join('-')})`;
+		specials.appendChild(p);
 		if (lds.length != 1 && (lds.some(x => x) || ldr.some(x => x))) {
 			const nums = '①②③';
 			var s = '';
@@ -430,10 +443,10 @@ function renderForm(form) {
 	makeTd(tbodytr11).colSpan = 6;
 	makeTd(tbodytr12, '效果');
 	makeTd(tbodytr12).colSpan = 6;
-	tbodytr9.children[1].style.textAlign = 'left';
-	tbodytr10.children[1].style.textAlign = 'left';
-	tbodytr11.children[1].style.textAlign = 'left';
-	tbodytr12.children[1].style.textAlign = 'left';
+	tbodytr9.classList.add('spec');
+	tbodytr10.classList.add('spec');
+	tbodytr11.classList.add('spec');
+	tbodytr12.classList.add('spec');
 	tbl.appendChild(theadtr);
 	tbl.appendChild(tbodytr1);
 	tbl.appendChild(tbodytr2);
@@ -447,14 +460,13 @@ function renderForm(form) {
 	tbl.appendChild(tbodytr10);
 	tbl.appendChild(tbodytr11);
 	tbl.appendChild(tbodytr12);
-	const chs = tbl.children;
 	updateValues(form, tbl);
-	createTraitIcons(form.trait, chs[9].children[1]);
-	createImuIcons(form.imu, chs[10].children[1]);
+	createTraitIcons(form.trait, tbodytr9.children[1]);
+	createImuIcons(form.imu, tbodytr10.children[1]);
 	if (form.res)
-		createResIcons(form.res, chs[10].children[1]);
-	createAbIcons1(form.ab, chs[11].children[1]);
-	createAbIcons2(form.ab, chs[12].children[1]);
+		createResIcons(form.res, tbodytr10.children[1]);
+	createAbIcons1(form.ab, tbodytr11.children[1]);
+	createAbIcons2(form.ab, tbodytr12.children[1]);
 	(!tbodytr9.children[1].children.length) && (tbodytr9.style.display = 'none');
 	(!tbodytr10.children[1].children.length) && (tbodytr10.style.display = 'none');
 	(!tbodytr11.children[1].children.length) && (tbodytr11.style.display = 'none');

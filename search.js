@@ -35,6 +35,7 @@ const constants = {
     "RANGE": ATK_RANGE,
     "LD": ATK_LD,
     "OMNI": ATK_OMNI,
+    "ATK_KB_REVENGE": ATK_KB_REVENGE,
     "IMU_WAVE": IMU_WAVE,
     "IMU_SLOW": IMU_SLOW,
     "IMU_STOP": IMU_STOP,
