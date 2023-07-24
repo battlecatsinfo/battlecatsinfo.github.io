@@ -21,6 +21,7 @@
 	table, th, td {
   		border: 1px solid #d1d5d5;
 	}
+	.w3-centered td { vertical-align: middle;  }
 	.w3-ul li {
 		padding: 0px;
 		cursor: default;
@@ -140,7 +141,7 @@
 	<div id="main" style="display: none;height: 100%;">
 		<div class="w3-container" style="height: 100%;">
 			  <ul class="w3-ul may-hide" style="width: 150px;" id="trait-s">
-			  	<li><input type="button" value="OR" class="or-and"></li>
+			  	<li><input type="button" value="AND" class="or-and"></li>
 			  	<li data-expr="trait&RED" ><button><span class="bc-icon bc-icon-trait-red"></span>紅色敵人</button></li>
     			<li data-expr="trait&FLOAT"><button><span class="bc-icon bc-icon-trait-float"></span>漂浮敵人</button></li>
     			<li data-expr="trait&BLACK"><button><span class="bc-icon bc-icon-trait-black"></span>黑色敵人</button></li>
@@ -169,6 +170,7 @@
 				<input type="number" min="0" max="90" name="plus-lv" id="plus-lv" value="0" required>
 				<br>
 				<input type="button" value="GO!" id="filter-go"></p>
+				<input type="button" value="清除" id="filter-clear"></p>
 			</form>
 			<div class="no-print may-hide" style="margin-top: 120px;">
 				<label for="filter-expr">篩選表達式</label>
@@ -181,20 +183,6 @@
 			</div>
 			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 97vh;overflow: scroll;width: 190px;" id="ab-s">
 <li style="text-align: center;">能力</li>
-<li><input type="button" value="OR" class="or-and"></li>
-<li data-expr="hasab(AB_WEAK)"><button><span class="bc-icon bc-icon-weak"></span>攻擊力下降</button></li>
-<li data-expr="hasab(AB_STOP)"><button><span class="bc-icon bc-icon-stop"></span>使動作停止</button></li>
-<li data-expr="hasab(AB_SLOW)"><button><span class="bc-icon bc-icon-slow"></span>使動作變慢</button></li>
-<li data-expr="hasab(AB_CURSE)"><button><span class="bc-icon bc-icon-slow"></span>詛咒</button></li>
-<li data-expr="hasab(AB_ONLY)"><button><span class="bc-icon bc-icon-only"></span>只能攻擊</button></li>
-<li data-expr="hasab(AB_GOOD)"><button><span class="bc-icon bc-icon-strong"></span>善於攻擊</button></li>
-<li data-expr="hasab(AB_RESIST)"><button><span class="bc-icon bc-icon-resist"></span>很耐打</button></li>
-<li data-expr="hasab(AB_RESISTS)"><button><span class="bc-icon bc-icon-resists"></span>超級耐打</button></li>
-<li data-expr="hasab(AB_MASSIVE)"><button><span class="bc-icon bc-icon-massive"></span>超大傷害</button></li>
-<li data-expr="hasab(AB_MASSIVES)"><button><span class="bc-icon bc-icon-massives"></span>極度傷害</button></li>
-<li data-expr="hasab(AB_KB)"><button><span class="bc-icon bc-icon-kb"></span>打飛</button></li>
-<li data-expr="hasab(AB_IMUATK)"><button><span class="bc-icon bc-icon-imu-atk"></span>攻擊無效</button></li>
-<li style="text-align: center;">效果</li>
 <li data-expr="hasab(AB_STRONG)"><button><span class="bc-icon bc-icon-strong"></span>攻擊力上升</button></li>
 <li data-expr="hasab(AB_LETHAL)"><button><span class="bc-icon bc-icon-lethal"></span>死前存活	</button></li>
 <li data-expr="hasab(AB_ATKBASE)"><button><span class="bc-icon bc-icon-atkbase"></span>善於攻城</button></li>
@@ -215,6 +203,20 @@
 <li data-expr="hasab(AB_BSTHUNT)"><button><span class="bc-icon bc-icon-bsthunt"></span>超獸特效</button></li>
 <li data-expr="hasab(AB_WKILL)"><button><span class="bc-icon bc-icon-wkill"></span>終結魔女</button></li>
 <li data-expr="hasab(AB_EKILL)"><button><span class="bc-icon bc-icon-ekill"></span>終結使徒</button></li>
+<li style="text-align: center;">效果</li>
+<li><input type="button" value="AND" class="or-and"></li>
+<li data-expr="hasab(AB_WEAK)"><button><span class="bc-icon bc-icon-weak"></span>攻擊力下降</button></li>
+<li data-expr="hasab(AB_STOP)"><button><span class="bc-icon bc-icon-stop"></span>使動作停止</button></li>
+<li data-expr="hasab(AB_SLOW)"><button><span class="bc-icon bc-icon-slow"></span>使動作變慢</button></li>
+<li data-expr="hasab(AB_CURSE)"><button><span class="bc-icon bc-icon-slow"></span>詛咒</button></li>
+<li data-expr="hasab(AB_ONLY)"><button><span class="bc-icon bc-icon-only"></span>只能攻擊</button></li>
+<li data-expr="hasab(AB_GOOD)"><button><span class="bc-icon bc-icon-strong"></span>善於攻擊</button></li>
+<li data-expr="hasab(AB_RESIST)"><button><span class="bc-icon bc-icon-resist"></span>很耐打</button></li>
+<li data-expr="hasab(AB_RESISTS)"><button><span class="bc-icon bc-icon-resists"></span>超級耐打</button></li>
+<li data-expr="hasab(AB_MASSIVE)"><button><span class="bc-icon bc-icon-massive"></span>超大傷害</button></li>
+<li data-expr="hasab(AB_MASSIVES)"><button><span class="bc-icon bc-icon-massives"></span>極度傷害</button></li>
+<li data-expr="hasab(AB_KB)"><button><span class="bc-icon bc-icon-kb"></span>打飛</button></li>
+<li data-expr="hasab(AB_IMUATK)"><button><span class="bc-icon bc-icon-imu-atk"></span>攻擊無效</button></li>
 <li style="text-align: center;">抗性</li>
 <li data-expr="imu&IMU_WEAK"><button><span class="bc-icon bc-icon-imu-weak"></span>降功無效</button></li>
 <li data-expr="imu&IMU_STOP"><button><span class="bc-icon bc-icon-imu-stop"></span>暫停無效</button></li>
@@ -263,6 +265,7 @@
 							<td>攻擊頻率</td>
 							<td>跑速</td>
 							<td>生產成本</td>
+							<td>排序值</td>
 						</tr>
 					</thead>
 					<tbody id="tbody"></tbody>

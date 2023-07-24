@@ -19,8 +19,12 @@
 <h1 class="title">使用說明</h1>
 </header>
 <style>
-html, body { font-size: 16px; }
-* { font-family: system-ui; }
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
 </style>
 <h2 id="篩選表達式排序表達式">篩選表達式、排序表達式</h2>
 <p>如<code>1+1</code>、<code>2*3</code>等，是用來篩選和排序貓咪的運算式，類似數學的表達式，在程式語言裡通常稱做expression。</p>
@@ -34,6 +38,11 @@ html, body { font-size: 16px; }
 <p>例如，<code>dps*range</code> 就是DPS和距離的乘積</p>
 <p>如果看數值最小的排序，可以加上負號，如 <code>-dps</code> 就是從DPS最小排到最大</p></li>
 </ul>
+<h2 id="常數">常數</h2>
+<p>有些預先定義的符號，稱為常數</p>
+<p>如 <code>RED</code> 代表紅色敵人</p>
+<p>如 <code>AB_WAVE</code> 代表波動能力</p>
+<p>這些符號不用特別去記憶，點擊篩選按鈕就可以看到</p>
 <h3 id="變數">變數</h3>
 <p>在上面的例子中，<code>dps</code>、<code>cd</code>、<code>range</code> 等都稱作變數，代表貓咪的某個資訊</p>
 <p>以下是可以使用的變數清單(變數不分大小寫)</p>
@@ -127,7 +136,7 @@ html, body { font-size: 16px; }
 </tr>
 </tbody>
 </table>
-<p>注意<em>終結使徒</em>和<em>終結魔女</em>的加成很大，而且有些效果會疊加，如EVA零號機因<em>終結使徒</em>+<em>很耐打</em>使得 HP 乘 <code>5 * 5 = 25</code> 倍，加上原本HP就很高，造成破百萬的血量</p>
+<p>在使用 ‘tdps’ 和 ‘thp’ 時要注意<em>終結使徒</em>和<em>終結魔女</em>的加成很大，而且有些效果會疊加，如EVA零號機因<em>終結使徒</em>+<em>很耐打</em>使得 HP 乘 <code>5 * 5 = 25</code> 倍，造成破百萬的血量</p>
 <p>以上數值都是以滿金寶、滿科技計算</p>
 <h3 id="運算子">運算子</h3>
 <table>
@@ -222,9 +231,10 @@ html, body { font-size: 16px; }
 </tbody>
 </table>
 <p>位元AND、位元OR、位元XOR平常較少用到，如果要用AND功能，請用<code>&amp;&amp;</code>，如果要用OR功能，請用<code>||</code></p>
-<p>另外 <code>-</code> 是負號的意思，<code>(</code> 和 <code>)</code> 可以指定優先運算</p>
-<p>如 <code>-(1+2)*3</code> 是 <code>-9</code></p>
-<h3 id="數學含式">數學含式</h3>
+<p>另外 <code>-</code> 是負號的意思，<code>(</code> 和 <code>)</code> 可以指定優先運算，如 <code>-(1+2)*3</code> 是 <code>-9</code></p>
+<h3 id="含式">含式</h3>
+<p><code>hasab</code>: 有某種能力或效果，如 <code>hasab(AB_WAVE)</code> 是有波動能力的貓咪 <code>hasres</code> 是有某種耐性，如 <code>hasres(RES_WEAK)</code> 是有降攻耐性的貓咪 <code>dpsagainst</code>: 是對XXX屬性敵人的dps，其中除了常見的屬性，<code>4096</code> 是超獸，<code>8192</code>是超生命體，<code>16384</code> 是使徒，<code>32768</code> 是魔女。而<code>dpsagainst(AB_METAL)</code> 比較特殊，它是計算對<em>鋼鐵敵人</em>造成的每秒傷害，所以沒有爆擊的機率會以1來計算，爆擊機率(含大傷、超傷、善攻)以雙倍計算，dps為兩者之和。</p>
+<p><code>dpsagainst</code> 的緣起是因為看到有人作對某某屬性的dps排行，才做出的功能</p>
 <ul>
 <li><code>max</code>: 最大值，如<code>max(1, 2, 3)</code>是3</li>
 <li><code>min</code>: 最小值，如<code>min(1, 2, 3)</code>是1</li>

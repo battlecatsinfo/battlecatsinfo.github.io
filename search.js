@@ -19,73 +19,73 @@ const traitBtn = trait_s.firstElementChild.firstElementChild;
 const abBtn = ab_s.firstElementChild.nextElementSibling.firstElementChild;
 const name_search = document.getElementById('name-search');
 const constants = {
-    "RED": TB_RED,
-    "FLOAT": TB_FLOAT,
-    "BLACK": TB_BLACK,
-    "METAL": TB_METAL,
-    "ANGEL": TB_ANGEL,
-    "ALIEN": TB_ALIEN,
-    "ZOMBIE": TB_ZOMBIE,
-    "WHITE": TB_WHITE,
-    "RELIC": TB_RELIC,
-    "DEMON": TB_DEMON,
-    "EVA": TB_EVA,
-    "WITCH": TB_WITCH,
-    "SINGLE": ATK_SINGLE,
-    "RANGE": ATK_RANGE,
-    "LD": ATK_LD,
-    "OMNI": ATK_OMNI,
-    "ATK_KB_REVENGE": ATK_KB_REVENGE,
-    "IMU_WAVE": IMU_WAVE,
-    "IMU_SLOW": IMU_SLOW,
-    "IMU_STOP": IMU_STOP,
-    "IMU_KB": IMU_KB,
-    "IMU_VOLC": IMU_VOLC,
-    "IMU_WEAK": IMU_WEAK,
-    "IMU_WARP": IMU_WARP,
-    "IMU_CURSE": IMU_CURSE,
-    "IMU_POIATK": IMU_POIATK,
-    "AB_STRONG": AB_STRONG,
-    "AB_LETHAL": AB_LETHAL,
-    "AB_ATKBASE": AB_ATKBASE,
-    "AB_CRIT": AB_CRIT,
-    "AB_ZKILL": AB_ZKILL,
-    "AB_CKILL": AB_CKILL,
-    "AB_BREAK": AB_BREAK,
-    "AB_SHIELDBREAK": AB_SHIELDBREAK,
-    "AB_S": AB_S,
-    "AB_BOUNTY": AB_BOUNTY,
-    "AB_METALIC": AB_METALIC,
-    "AB_MINIWAVE": AB_MINIWAVE,
-    "AB_WAVE": AB_WAVE,
-    "AB_MINIVOLC": AB_MINIVOLC,
-    "AB_VOLC": AB_VOLC,
-    "AB_WAVES": AB_WAVES,
-    "AB_BAIL": AB_BAIL,
-    "AB_BSTHUNT": AB_BSTHUNT,
-    "AB_WKILL": AB_WKILL,
-    "AB_EKILL": AB_EKILL,
-    "AB_WEAK": AB_WEAK,
-    "AB_STOP": AB_STOP,
-    "AB_SLOW": AB_SLOW,
-    "AB_ONLY": AB_ONLY,
-    "AB_GOOD": AB_GOOD,
-    "AB_RESIST": AB_RESIST,
-    "AB_RESISTS": AB_RESISTS,
-    "AB_MASSIVE": AB_MASSIVE,
-    "AB_MASSIVES": AB_MASSIVES,
-    "AB_KB": AB_KB,
-    "AB_IMUATK": AB_IMUATK,
-    "AB_CURSE": AB_CURSE,
-	  "RES_WEAK": RES_WEAK,
-	  "RES_STOP": RES_STOP,
-	  "RES_SLOW": RES_SLOW,
-	  "RES_KB": RES_KB,
-	  "RES_WAVE": RES_WAVE,
-	  "RES_SURGE": RES_SURGE,
-	  "RES_CURSE": RES_CURSE,
-	  "RES_TOXIC": RES_TOXIC
-  };
+	"red": TB_RED,
+	"float": TB_FLOAT,
+	"black": TB_BLACK,
+	"metal": TB_METAL,
+	"angel": TB_ANGEL,
+	"alien": TB_ALIEN,
+	"zombie": TB_ZOMBIE,
+	"white": TB_WHITE,
+	"relic": TB_RELIC,
+	"demon": TB_DEMON,
+	"eva": TB_EVA,
+	"witch": TB_WITCH,
+	"single": ATK_SINGLE,
+	"range": ATK_RANGE,
+	"ld": ATK_LD,
+	"omni": ATK_OMNI,
+	"atk_kb_revenge": ATK_KB_REVENGE,
+	"imu_wave": IMU_WAVE,
+	"imu_slow": IMU_SLOW,
+	"imu_stop": IMU_STOP,
+	"imu_kb": IMU_KB,
+	"imu_volc": IMU_VOLC,
+	"imu_weak": IMU_WEAK,
+	"imu_warp": IMU_WARP,
+	"imu_curse": IMU_CURSE,
+	"imu_poiatk": IMU_POIATK,
+	"ab_strong": AB_STRONG,
+	"AB_lethal": AB_LETHAL,
+	"ab_atkbase": AB_ATKBASE,
+	"ab_crit": AB_CRIT,
+	"ab_zkill": AB_ZKILL,
+	"ab_ckill": AB_CKILL,
+	"ab_break": AB_BREAK,
+	"ab_shieldbrak": AB_SHIELDBREAK,
+	"ab_s": AB_S,
+	"ab_bounty": AB_BOUNTY,
+	"ab_metalic": AB_METALIC,
+	"ab_miniwwave": AB_MINIWAVE,
+	"ab_wave": AB_WAVE,
+	"ab_minivolc": AB_MINIVOLC,
+	"ab_volc": AB_VOLC,
+	"ab_waves": AB_WAVES,
+	"ab_bail": AB_BAIL,
+	"ab_bsthunt": AB_BSTHUNT,
+	"ab_wkill": AB_WKILL,
+	"ab_ekill": AB_EKILL,
+	"ab_weak": AB_WEAK,
+	"ab_stop": AB_STOP,
+	"ab_slow": AB_SLOW,
+	"ab_only": AB_ONLY,
+	"ab_good": AB_GOOD,
+	"ab_resist": AB_RESIST,
+	"ab_resists": AB_RESISTS,
+	"ab_massive": AB_MASSIVE,
+	"ab_massives": AB_MASSIVES,
+	"ab_kb": AB_KB,
+	"ab_imuatk": AB_IMUATK,
+	"ab_curse": AB_CURSE,
+	"res_weak": RES_WEAK,
+	"res_stop": RES_STOP,
+	"res_slow": RES_SLOW,
+	"res_kb": RES_KB,
+	"res_wave": RES_WAVE,
+	"res_surge": RES_SURGE,
+	"res_curse": RES_CURSE,
+	"res_toxic": RES_TOXIC
+};
 var last_forms;
 function rerender(event) {
 	event.preventDefault();
@@ -117,7 +117,7 @@ function renderTable(forms, page = 1) {
 	last_forms = forms;
 	if (forms.length == 0) {
 		tbody.innerHTML = 
-'<tr><td colSpan="12">沒有符合調件的貓咪!</td></tr>';
+'<tr><td colSpan="13">沒有符合調件的貓咪!</td></tr>';
 		return;
 	}
 	if (!pages_a.children.length) {
@@ -137,14 +137,14 @@ function renderTable(forms, page = 1) {
 	}
 	for (let i = 0;i < display_forms.length;++i) {
 		const tr = document.createElement('tr');
-		const theForm = display_forms[i];
+		const theForm = display_forms[i][1];
 		useCurve(theForm.id);
 		_info = cats[theForm.id].info;
 		const base = Math.min(def_lv, _info.maxBase);
 		const plus = Math.min(plus_lv, _info.maxPlus);
 		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', theForm.name + '/' + theForm.jp_name, ~~theForm.gethp(), ~~theForm.getatk(), 
-			~~theForm.getdps(), theForm.kb, theForm.range, numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, ~~(theForm.price * 1.5)];
-		for (let j = 0;j < 12;++j) {
+			~~theForm.getdps(), theForm.kb, theForm.range, numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, ~~(theForm.price * 1.5), numStr(display_forms[i][0])];
+		for (let j = 0;j < 13;++j) {
 			const e = document.createElement('td');
 			e.innerText = texts[j].toString();
 			tr.appendChild(e);
@@ -215,7 +215,7 @@ function calculate(code = '') {
 			code = '1';
 	} else {
 		if (!code.length)
-			return renderTable([], []);
+			return renderTable([]);
 		url.searchParams.set('filter', code);
 	}
 	var results = [];
@@ -236,23 +236,18 @@ function calculate(code = '') {
 			}
 		}
 	}
-	if (sortCode.length) {
-		try {
-			pcode = pegjs.parse(sortCode);
-		} catch (e) {
-			alert(e.toString());
-		}
-		let f = eval(`form => (${pcode})`);
-		results.sort((form1, form2) => {
-			useCurve(form2.id);
-			_info = cats[form2.id].info;
-			const a = f(form2, );
-			useCurve(form1.id);
-			_info = cats[form1.id].info;
-			const b = f(form1);
-			return a - b;
-		});
+	try {
+		pcode = pegjs.parse(sortCode || '1');
+	} catch (e) {
+		alert(e.toString());
 	}
+	let fn = eval(`form => (${pcode})`);
+	results = results.map((form, i) => {
+		useCurve(form.id);
+		_info = cats[form.id].info;
+		const x = fn(form);
+		return [isFinite(x) ? x : 0, form];
+	}).sort((a, b) => b[0] - a[0]);
 	renderTable(results);
 	url.searchParams.set('deflv', def_lv);
 	url.searchParams.set('pluslv', plus_lv);
@@ -309,7 +304,7 @@ loadAllCats()
 		if (TF) {
 			const talents = cats[i].info.talents;
 			if (talents)
-				TF.applyTalents(talents, full);
+				TF.applyTalents(talents, full) && TF.applySuperTalents(talents, full);
 		}
 	}
 	calculate(filter ? filter : '');
@@ -340,6 +335,16 @@ document.querySelectorAll('.or-and').forEach(e => {
 });
 document.getElementById('filter-go').onclick = function() {
 	calculate(simplify(filter_expr.value));
+}
+document.getElementById('filter-clear').onclick = function() {
+	function fn(x) { x.classList.remove('o-selected'); };
+	cattype_e.querySelectorAll('.o-selected').forEach(fn);
+	trait_s.querySelectorAll('.o-selected').forEach(fn);
+	atk_s.querySelectorAll('.o-selected').forEach(fn);
+	ab_s.querySelectorAll('.o-selected').forEach(fn);
+	filter_expr.value = '';
+	sort_expr.value = '';
+	calculate();
 }
 toggle_s.onclick = function() {
 	if (hide_seach) {

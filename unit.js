@@ -5,7 +5,9 @@ const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS,
 var level_count = 0;
 var my_cat;
 var tf_tbl;
+var tf_tbl_s;
 var custom_talents = [10, 10, 10, 10, 10, 10, 10, 10];
+var custom_super_talents = [10, 10, 10, 10, 10, 10, 10, 10];
 if (isNaN(my_id)) {
 	alert('Missing cat id in URL query!');
 	window.stop()
@@ -82,7 +84,6 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 			lines.push('善攻');
 			break;
 		case AB_CRIT:
-			theATK *= 2;
 			if (dps)
 				theATK *= (ab[1] / 50);
 			else
@@ -322,6 +323,19 @@ function makeTd(parent, text = '') {
 	parent.appendChild(c);
 	return c;
 }
+function updateTable(TF, tbl) {
+	updateValues(TF, tbl);
+	const chs = tbl.children;
+	chs[9].children[1].textContent = '';
+	chs[10].children[1].textContent = '';
+	chs[11].children[1].textContent = '';
+	chs[12].children[1].textContent = '';
+	createTraitIcons(TF.trait, chs[9].children[1]);
+	createImuIcons(TF.imu, chs[10].children[1]);
+	createResIcons(TF.res, chs[10].children[1]);
+	createAbIcons1(TF.ab, chs[11].children[1]);
+	createAbIcons2(TF.ab, chs[12].children[1]);
+}
 function renderForm(form) {
 	const info = my_cat.info;
 	if (level_count == 2 && info.upReqs != undefined) {
@@ -528,33 +542,17 @@ function getTalentInfo(talent, data) {
 	}
 	switch (talent[0]) {
 	case 1:
-		if (data[37]) {
-			if (talent[4] && talent[4] != talent[5]) {
-				return range('降攻時間', 'f', 4, 5);
-			}
-			return range('降攻機率', '%', 2, 3);
-		}
 		if (talent[4] && talent[4] != talent[5])
-				return range('降攻機率', '%', 4, 5);
+			return range('降攻時間', 'f', 4, 5);
 		return range('降攻機率', '%', 2, 3);
 	case 2:
-		if (data[25]) {
-			if (talent[4] && talent[4] != talent[5])
-				return range('暫停時間', '%', 4, 5);
-			return range('暫停機率', '%', 2, 3);
-		}
 		if (talent[4] && talent[4] != talent[5])
-				return range('暫停機率', '%', 4, 5);
+			return range('暫停時間', 'f', 4, 5);
 		return range('暫停機率', '%', 2, 3);
 	case 3:
-		if (data[27]) {
-			if (talent[4] && talent[4] != talent[5])
-				return range('緩速時間', '%', 4, 5);
-			return range('緩速機率', '%', 2, 3);
-		}
 		if (talent[4] && talent[4] != talent[5])
-				return range('緩速機率', '%', 4, 5);
-		return range('暫停機率', '%', 2, 3);
+			return range('緩速時間', 'f', 4, 5);
+		return range('緩速機率', '%', 2, 3);
 	case 5:  return "善於攻擊";
 	case 6:  return "耐打";
 	case 7:  return "超大傷害";
@@ -599,7 +597,7 @@ function getTalentInfo(talent, data) {
 	case 25: 
 		return ['成本減少', ~~(talent[2] * 1.5), ~~(talent[3] * 1.5), talent[1], numStr(talent[2] * 1.5)];
 	case 26:
-		return ['生產速度', `${talent[2]}f`, `${talent[3]}f`, talent[1], talent[2], numStr((talent[end] - talent[start]) / (talent[1] - 1)) + 'f'];
+		return ['生產速度', `${talent[2]}f`, `${talent[3]}f`, talent[1], talent[2], numStr((talent[3] - talent[2]) / (talent[1] - 1)) + 'f'];
 	case 27:
 		return ["移動速度", talent[2], talent[3], talent[1], talent[2]];
 	case 29: return "詛咒無效";
@@ -609,6 +607,7 @@ function getTalentInfo(talent, data) {
 	case 32: return range("血量");
 	case 35: return "對黑色敵人";
 	case 36: return "對鋼鐵敵人";
+	case 37: return '對天使敵人';
 	case 38: return "對異星敵人";
 	case 39: return "對不死敵人";
 	case 40: return "對古代種";
@@ -623,14 +622,9 @@ function getTalentInfo(talent, data) {
 			return range('渾身一擊', '%', 2, 3);
 		return range2('渾身一擊', '%', 2, 3, talent[2]);
 	case 51:
-		if (data[84]) {
-			if (talent[4] && talent[4] != talent[5])
-				return range('攻撃無効', 'f', 4, 5);
-			return range('攻撃無効', '%', 2, 3);
-		}
 		if (talent[4] && talent[4] != talent[5])
-			return range2('攻撃無効', 'f', 4, 5, talent[2]);
-		return range2('攻撃無効', '%', 2, 3, talent[2]);
+			return range('攻撃無効', 'f', 4, 5);
+		return range('攻撃無効', '%', 2, 3);
 	case 52:
 		return range("毒擊耐性");
 	case 53: return "毒擊無效";
@@ -640,7 +634,7 @@ function getTalentInfo(talent, data) {
 	case 56:
 		if (data[86])
 			return range('烈波機率', '%', 2, 3);
-		return range(`Lv${talent[4]}烈波機率`, '%', 2, 3, talent[2]);
+		return range2(`Lv${talent[4]}烈波機率`, '%', 2, 3, talent[2]);
 	case 57: return "對惡魔";
 	case 58:
 		if (data[58])
@@ -648,19 +642,14 @@ function getTalentInfo(talent, data) {
 	 	return range2("破惡魔盾", '%', 2, 3, talent[2]);
 	case 59: return "靈魂攻擊";
 	case 60:
-		if (data[92]) {
-			if (talent[4] && talent[4] != talent[5])
-				return range('詛咒時間', 'f', 4, 5);
-			return range('詛咒機率', '%', 2, 3);
-		}
 		if (talent[4] && talent[4] != talent[5])
-			return range2("詛咒機率", 'f', 4, 5, talent[2]);
-		return range2('詛咒機率', 'f', 2, 3, talent[4]);
+				return range('詛咒時間', 'f', 4, 5);
+		return range('詛咒機率', '%', 2, 3);
 	case 61:
 		{
 			const tba = data[4] * 2;
-			const first = `${(tba * talent[2])/100}f`;
-			return ["TBA縮短", first,`${(tba * talent[3])/100}f`, talent[1], first];
+			const first = `${talent[2]}f`;
+			return ["TBA縮短", first, `${talent[3]}f`, talent[1], first];
 		}
 	case 62:
 		if (data[94])
@@ -676,11 +665,11 @@ function getTalentInfo(talent, data) {
 	}
 	return '???';
 }
-function rednerTalentInfos(talents, data) { 
+function rednerTalentInfos(talents, data, _super = false) { 
 	const table = document.createElement('table');
 	const tr1 = document.createElement('tr');
 	const td0 = document.createElement('td');
-	td0.innerText = '本能解放(使用NP)';
+	td0.innerText = (_super ? '超' : '') + '本能解放(使用NP)';
 	td0.colSpan = 5;
 	tr1.appendChild(td0);
 	table.appendChild(tr1);		
@@ -705,7 +694,7 @@ function rednerTalentInfos(talents, data) {
 	for (let i = 0;i < 112;i += 14) {
 		const tr = document.createElement('tr');
 		if (!talents[i]) break;
-		if (talents[i + 13] == -1) break;
+		if (_super != (talents[i + 13] == 1)) continue;
 		const info = getTalentInfo(talents.subarray(i, i + 14), data);
 		if (info instanceof Array) {
 			infos.push(info[0]);
@@ -748,7 +737,10 @@ function calcCost(event) {
 		let x = e.children[idx];
 		if (!x) continue;
 		if (x == t) {
-			custom_talents[idx - 1] = i - 1;
+			if (t._super)
+				custom_super_talents[idx - 1] = i - 1;
+			else
+				custom_talents[idx - 1] = i - 1;
 		}
 		else if (x.classList.contains('o-selected'))
 			x.classList.remove('o-selected');
@@ -774,19 +766,12 @@ function calcCost(event) {
 	e.nextElementSibling.firstElementChild.innerText = costs.reduce((a, b) => a + b, 0);
 	const TF = new Form(structuredClone(my_cat.forms[2]));
 	TF.applyTalents(my_cat.info.talents, custom_talents);
-	updateValues(TF, tf_tbl);
-	const chs = tf_tbl.children;
-	chs[9].children[1].textContent = '';
-	chs[10].children[1].textContent = '';
-	chs[11].children[1].textContent = '';
-	chs[12].children[1].textContent = '';
-	createTraitIcons(TF.trait, chs[9].children[1]);
-	createImuIcons(TF.imu, chs[10].children[1]);
-	createResIcons(TF.res, chs[10].children[1]);
-	createAbIcons1(TF.ab, chs[11].children[1]);
-	createAbIcons2(TF.ab, chs[12].children[1]);
+	tf_tbl && updateTable(TF, tf_tbl);
+	if (t._super)
+		TF.applySuperTalents(my_cat.info.talents, custom_super_talents);
+	tf_tbl_s && updateTable(TF, tf_tbl_s);
 }
-function renderTalentCosts(talent_names, talents, data) {
+function renderTalentCosts(talent_names, talents, data, _super = false) {
 	const skill_costs = [
 		[25,5,5,5,5,10,10,10,10,10],
 		[5,5,5,5,5,10,10,10,10,10],
@@ -815,7 +800,7 @@ function renderTalentCosts(talent_names, talents, data) {
 	let c = 0;
 	for (let i = 0;i < 112;i += 14) {
 		if (!talents[i]) break;
-		if (talents[i + 13] == -1) break;
+		if (_super != (talents[i + 13] == 1)) continue;
 		names.push(talent_names[c]);
 		costs.push(talents[i + 11] - 1);
 		++c;
@@ -835,6 +820,7 @@ function renderTalentCosts(talent_names, talents, data) {
 		const td = document.createElement('td');
 		td.innerText = i == 0 ? 'Lv0' : '0';
 		td.addEventListener('click', calcCost);
+		td._super = _super;
 		tr2.appendChild(td);
 	}
 	table.appendChild(th);
@@ -850,8 +836,8 @@ function renderTalentCosts(talent_names, talents, data) {
 			const tbl = skill_costs[costs[j]];
 			td.innerText = tbl.length > 1 ? tbl[i-1] : (i == 1 ? tbl[0] : 'X');
 			tr.appendChild(td);
-			td._state = false;
 			td.addEventListener('click', calcCost);
+			td._super = _super;
 		}
 		table.appendChild(tr);
 	}
@@ -938,11 +924,19 @@ function renderUintPage() {
 	}
 	for (let form of my_cat.forms) renderForm(form);
 	if (my_cat.info.talents) {
+		unit_content.appendChild(document.createElement('hr'));
 		const TF = new Form(structuredClone(my_cat.forms[2]));
 		const names = rednerTalentInfos(my_cat.info.talents, TF.data);
 		renderTalentCosts(names, my_cat.info.talents, TF.data);
-		TF.applyTalents(my_cat.info.talents, custom_talents);
+		const _super = TF.applyTalents(my_cat.info.talents, custom_talents);
 		tf_tbl = renderForm(TF);
+		if (_super) {
+			unit_content.appendChild(document.createElement('hr'));
+			const names = rednerTalentInfos(my_cat.info.talents, TF.data, true)
+			renderTalentCosts(names, my_cat.info.talents, TF.data, true);
+			TF.applySuperTalents(my_cat.info.talents, custom_super_talents);
+			tf_tbl_s = renderForm(TF);
+		}
 	}
 	renderExtras();
 	document.getElementById('open-db').href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';

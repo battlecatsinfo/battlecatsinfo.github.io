@@ -451,10 +451,10 @@ case 1:
 {
 		if (this.data[37]) {
 			const o = this.ab[AB_WEAK];
+			o[1] = getTraitNames(this.trait);
 			if (talent[4] && talent[4] != talent[5]) {
 				const weak_time = this.data[38] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 				const cover = Math.min((this.data[37] * weak_time * 1.2) / (this.attackF * 100), 1);
-				o[1] = getTraitNames(this.trait);
 				o[3] = numStrT(weak_time);
 				o[4] = numStrT(weak_time * 1.2);
 				o[5] = numStr(cover*100) + '%';
@@ -467,13 +467,13 @@ case 1:
 			}
 		} else {
 			if (talent[4] && talent[4] != talent[5]) {
-				const weak_time = this.data[38];
-				const pos = this.data[37] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+				const weak_time = this.data[38] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+				const pos = talent[2];
 				const cover = Math.min((pos * weak_time * 1.2) / (this.attackF * 100), 1);
 				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
 			} else {
 				const weak_time = this.data[38];
-				const pos = this.data[37] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+				const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 				const cover = Math.min((pos * weak_time * 1.2) / (this.attackF * 100), 1);
 				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
 			}
@@ -484,10 +484,10 @@ case 2:
 {
 		if (this.data[25]) {
 			const o = this.ab[AB_STOP];
+			o[1] = getTraitNames(this.trait);
 			if (talent[4] && talent[4] != talent[5]) {
 				const stop_time = this.data[26] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 				const cover = Math.min((this.data[25] * stop_time * 1.2) / (this.attackF * 100), 1);
-				o[1] = getTraitNames(this.trait);
 				o[2] = numStrT(stop_time);
 				o[3] = numStrT(stop_time * 1.2);
 				o[4] = numStr(cover*100) + '%';
@@ -500,13 +500,13 @@ case 2:
 			}
 		} else {
 			if (talent[4] && talent[4] != talent[5]) {
-					const stop_time = this.data[26];
-					const pos = this.data[25] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+					const stop_time = this.data[26] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+					const pos = talent[2];
 					const cover = Math.min((pos * stop_time * 1.2) / (this.attackF * 100), 1);
 					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
 			} else {
 					const stop_time = this.data[26];
-					const pos = this.data[25] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+					const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 					const cover = Math.min((pos * stop_time * 1.2) / (this.attackF * 100), 1);
 					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
 			}
@@ -517,10 +517,10 @@ case 3:
 {
 		if (this.data[27]) {
 			const o = this.ab[AB_SLOW];
+			o[1] = getTraitNames(this.trait);
 			if (talent[4] && talent[4] != talent[5]) {
 				const slow_time = this.data[28] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 				const cover = Math.min((this.data[27] * slow_time * 1.2) / (this.attackF * 100), 1);
-				o[1] = getTraitNames(this.trait);
 				o[2] = numStrT(slow_time);
 				o[3] = numStrT(slow_time * 1.2);
 				o[4] = numStr(cover*100) + '%';
@@ -533,13 +533,13 @@ case 3:
 			}
 		} else {
 			if (talent[4] && talent[4] != talent[5]) {
-					const slow_time = this.data[28];
-					const pos = this.data[27] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+					const slow_time = this.data[28] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+					const pos = talent[2];
 					const cover = Math.min((pos * slow_time * 1.2) / (this.attackF * 100), 1);
 					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
 			} else {
 					const slow_time = this.data[28];
-					const pos = this.data[27] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+					const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 					const cover = Math.min((pos * slow_time * 1.2) / (this.attackF * 100), 1);
 					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
 			}
@@ -647,6 +647,9 @@ case 36:
 	this.trait |= TB_METAL;
 	this.updateTraitNames();
 	break;
+case 37:
+	this.trait |= TB_ANGEL;
+	this.updateTraitNames();
 case 38:
 	this.trait |= TB_ALIEN;
 	this.updateTraitNames();
@@ -739,9 +742,9 @@ case 60:
 		if (this.data[92]) {
 			const o = this.ab[AB_CURSE];
 			if (talent[4] && talent[4] != talent[5]) {
+				o[1] = getTraitNames(this.trait);
 				const curse_time = this.data[93] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 				const cover = Math.min((this.data[92] * curse_time * 1.2) / (this.attackF * 100), 1);
-				o[1] = getTraitNames(this.trait);
 				o[2] = numStrT(curse_time);
 				o[3] = numStrT(curse_time * 1.2);
 				o[4] = numStr(cover*100) + '%';
@@ -754,13 +757,13 @@ case 60:
 			}
 		} else {
 			if (talent[4] && talent[4] != talent[5]) {
-					const curse_time = this.data[93];
-					const pos = this.data[92] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+					const curse_time = this.data[93] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
+					const pos = this.data[92];
 					const cover = Math.min((pos * curse_time * 1.2) / (this.attackF * 100), 1);
 					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
 			} else {
 					const curse_time = this.data[93];
-					const pos = this.data[92] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+					const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 					const cover = Math.min((pos * curse_time * 1.2) / (this.attackF * 100), 1);
 					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
 			}
@@ -768,7 +771,7 @@ case 60:
 	break;
 }
 case 61:
-	this.tba -= this.tba * ( talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1) );
+	this.tba -= talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	this.attackF = (this.pre2 ? this.pre2 : (this.pre1 ? this.pre1 : this.pre)) + Math.max(this.backswing, this.tba - 1);
 	break;
 case 62:
@@ -794,17 +797,31 @@ case 65:
 		this.ab[AB_MINIVOLC] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1), des1, des2, lv * 20, lv];
 	}
 	break;
+default: console.assert(false, talent[0]);
 		}
 	}
-	applyTalents(talents, levels, _super = false) {
-		this.res = {};
+	applySuperTalents(talents, levels) {
 		let j = 0;
 		for (let i = 0;i < 112;i += 14) {
 			if (!talents[i]) break;
-			if (talents[i + 13] == -1) break;
-			this.applyTalent(talents.subarray(i, i + 14), levels[j]);
+			if (talents[i + 13] != 1) continue;
+			this.applyTalent(talents.subarray(i, i + 14), levels[j++]);
 			++j;
 		}
+	}
+	applyTalents(talents, levels) {
+		this.res = {};
+		let _super = false;
+		let j = 0;
+		for (let i = 0;i < 112;i += 14) {
+			if (!talents[i]) break;
+			if (talents[i + 13] == 1) {
+				_super = true;
+				continue;
+			}
+			this.applyTalent(talents.subarray(i, i + 14), levels[j++]);
+		}
+		return _super;
 	}
 	hasres(r) {
 		return this.res && this.res.hasOwnProperty(r);
@@ -889,6 +906,54 @@ case 65:
 			hp *= 10;
 		}
 		return hp;
+	}
+	dpsagainst(traits) {
+		if (traits & TB_METAL) {
+			if (this.ab.hasOwnProperty(AB_CRIT)) {
+				const rate = this.ab[AB_CRIT][0] * 0.01;
+				let atk = this.getatk();
+				if (this.ab.hasOwnProperty(AB_S))
+					atk *= (this.ab[AB_S][1] / 100);
+				if (this.ab.hasOwnProperty(AB_STRONG))
+					atk *= 1 + (this.ab[AB_STRONG][1] / 100);
+				if (this.ab.hasOwnProperty(AB_MASSIVE))
+					atk *= 4;
+				else if (this.ab.hasOwnProperty(AB_MASSIVES))
+					atk *= 6;
+				if (this.ab.hasOwnProperty(AB_GOOD))
+					atk *= 1.8;
+				atk += atk;
+				return 30 * ((1 - rate) + atk * rate) / this.attackF;
+			}
+			return 30 / this.attackF;
+		}
+		let dps = this.getdps();
+		if (this.ab.hasOwnProperty(AB_S)) {
+			const s = this.ab[AB_S];
+			dps += dps * ((s[0] * s[1]) / 10000);
+		}
+		if (this.ab.hasOwnProperty(AB_CRIT))
+			dps += dps * (this.ab[AB_CRIT][0] / 100);
+		if (this.ab.hasOwnProperty(AB_STRONG))
+			dps *= 1 + (this.ab[AB_STRONG][1] / 100);
+		const t = this.trait & traits;
+		if (t) {
+			if (this.ab.hasOwnProperty(AB_MASSIVE))
+				dps *= (t & trait_treasure) ? 4 : 3;
+			else if (this.ab.hasOwnProperty(AB_MASSIVES))
+				dps *= (t & trait_treasure) ? 6 : 5;
+			if (this.ab.hasOwnProperty(AB_GOOD))
+				dps *= (t & trait_treasure) ? 1.8 : 1.5;
+		}
+		if ((traits & 4096) && this.ab.hasOwnProperty(AB_BSTHUNT))
+			dps *= 2.5;
+		if ((traits & 8192) && this.ab.hasOwnProperty(AB_BAIL))
+			dps *= 1.6;
+		if ((traits & 16384) && this.ab.hasOwnProperty(AB_EKILL))
+			dps *= 5;
+		if ((traits & 32768) && this.ab.hasOwnProperty(AB_WKILL))
+			dps *= 5;
+		return dps;
 	}
 	gettdps() {
 		let dps = this.getdps();
