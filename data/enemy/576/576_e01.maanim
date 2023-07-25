@@ -1,0 +1,12 @@
+[modelanim:animation2]
+2
+3
+5,12,-1,0,0,002_ball_base.png<color=0>
+1
+0,0,0,0
+7,12,-1,0,0,009_ball_top.png
+1
+0,0,0,0
+9,12,-1,0,0,012_ef_hit.png<color=7>
+1
+0,0,0,0

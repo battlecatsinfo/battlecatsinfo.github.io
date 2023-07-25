@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="icons.css">
+	<link rel="stylesheet" type="text/css" href="w3.css">
+	<link rel="stylesheet" type="text/css" href="unit.css">
+	<script src="jszip.min.js"></script>
+	<title>敵人資訊</title>
+</head>
+<body style="overflow: scroll;">
+	<style>
+	body { font-size: 18px; }
+	.bold-large { font-size: 18px; }
+	.w3-table { width: initial;margin: 0 auto;margin-bottom: 60px; }
+	.w3-table td { vertical-align: middle;padding: 9px 25px;min-width: 120px; }
+	.left > * { text-align: left; }
+	.left > p { margin-block-start: 7px;margin-block-end: 7px; }
+	.left { text-align: left !important;padding: 4px 12px !important; }	
+	.w3-table td:first-child { padding-left: 15px; }
+	</style>
+	<div id="loader-text">Loading...</div>
+	<div id="loader"></div>
+	<script>var curveData0, curveData1, curveData2, curveData3, curveData4, curveData5;</script>
+	<script src="cat.js"></script>
+	<div id="main" style="display: none;" class="w3-container">
+			<table class="w3-table w3-centered" style="margin-top: 100px;">
+				<tbody id="stats">
+					<tr>
+						<td rowspan="3"><p></p><img></td>
+						<td>HP</td><td></td>
+						<td>攻擊力</td><td></td>
+						<td>速度</td><td></td>
+						<td>屬性</td><td colspan="2"></td>
+					</tr>
+					<tr>
+						<td>KB</td><td></td>
+						<td>DPS</td><td></td>
+						<td>射程</td><td></td>
+						<td>獎金</td><td></td>
+					</tr>
+					<tr>
+						<td>出招時間</td><td></td>
+						<td>收招時間</td><td></td>
+						<td>攻擊間隔</td><td></td>
+						<td>攻擊頻率</td><td></td>
+					</tr>
+					<tr>
+						<td>其他</td>
+						<td colspan="8" class="left"><p></p></td>
+					</tr>
+					<tr><td>描述</td><td class="left" colspan="8"></td></tr>
+				</tbody>
+			</table>
+			<a id="open-db" style="display: block;width: 100%;text-align: center;">開啟超絕</a>
+	</div>
+	<script src="enemy.js"></script>
+</body>
+</html>

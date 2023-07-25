@@ -1,0 +1,15 @@
+[imgcut]
+0
+578_e.png
+11
+1,250,1,1,000.png
+149,245,79,5,001_shadow.png
+1,1,128,128,002_ball_base.png
+255,1,125,124,003_ball_pattern.png
+255,127,125,124,004_ball_shadow.png
+128,131,125,71,005_ball_reflect.png
+131,1,68,63,006_ball_high.png
+131,66,56,53,007_ef_smoke_1.png
+149,204,42,39,008_ef_smoke_2.png
+128,204,19,45,009_ef_hit.png
+1,131,125,117,010_ball_top.png

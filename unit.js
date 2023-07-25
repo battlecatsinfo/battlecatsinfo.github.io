@@ -296,21 +296,19 @@ function updateValues(form, tbl) {
 		const p = document.createElement('p');
 		p.innerText = `${atkNum}回連續攻擊(傷害${atksPre.join('-')})`;
 		specials.appendChild(p);
-		if (lds.length != 1 && (lds.some(x => x) || ldr.some(x => x))) {
-			const nums = '①②③';
-			var s = '';
-			for (let i = 0;i < lds.length;++i) {
-				const x = lds[i];
-				const y = x + ldr[i];
-				if (x <= y)
-					s += `${nums[i]}${x}~${y}<br>`;
-				else
-					s += `${nums[i]}${y}~${x}<br>`;
-			}
-			chs[5].children[5].innerHTML = `接觸點${form.range}<br>範圍<br>${s.slice(0,s.length-4)}`;
-		} else {
-			chs[5].children[5].innerText = form.range;
+	}
+	if (lds[0] || ldr[0]) {
+		const nums = '①②③';
+		var s = '';
+		for (let i = 0;i < lds.length;++i) {
+			const x = lds[i];
+			const y = x + ldr[i];
+			if (x <= y)
+				s += `${nums[i]}${x}~${y}<br>`;
+			else
+				s += `${nums[i]}${y}~${x}<br>`;
 		}
+		chs[5].children[5].innerHTML = `接觸點${form.range}<br>範圍<br>${s.slice(0,s.length-4)}`;
 	} else {
 		chs[5].children[5].innerText = form.range;
 	}

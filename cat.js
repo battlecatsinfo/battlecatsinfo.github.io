@@ -2,8 +2,11 @@ var unit_buy = null;
 var skill_file = null;
 var SkillLevel = null;
 var uints_zip = null;
+var t_unit = null;
+var anim1 = null;
 var anim2 = null;
 var _eggs = null;
+var enemy_descs = null;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -144,7 +147,9 @@ const
   TB_EVA = 512,
   TB_WITCH = 1024,
   TB_DEMON = 2048,
-  TB_LAST = TB_DEMON;
+  TB_INFN = 4096,
+  TB_BEAST = 8192,
+  TB_BARON = 16384;
 const
   IMU_WAVE = 1,
   IMU_STOP = 2,
@@ -190,7 +195,10 @@ const
    AB_WARP = 31,
    AB_IMUATK = 32,
    AB_CURSE = 33,
-   AB_LAST = AB_CURSE;
+   AB_LAST = AB_CURSE,
+   AB_BURROW = 34,
+   AB_REVIVE = 35,
+   AB_POIATK = 36;
 const
   RES_WEAK = 0,
   RES_STOP = 1,
@@ -222,7 +230,7 @@ function get_trait_short_names(trait) {
 	var s = '';
 	let i = 0;
 	let idxs = [];
-	for (let x = 1;x <= TB_LAST;x <<= 1) {
+	for (let x = 1;x <= TB_DEMON;x <<= 1) {
 		if (trait & x) {
 			s += trait_short_names[i];
 		}
@@ -238,7 +246,7 @@ function getTraitNames(trait) {
 	let names = ['紅色敵人', '漂浮敵人', '黑色敵人', '鋼鐵敵人', '天使敵人', '異星戰士', '不死生物', '古代種', '無屬性敵人', '使徒', '魔女', '惡魔'];	
 	let i = 0;
 	let idxs = [];
-	for (let x = 1;x <= TB_LAST;x <<= 1) {
+	for (let x = 1;x <= TB_DEMON;x <<= 1) {
 		if (trait & x) {
 			idxs.push(i);
 		}
@@ -945,13 +953,13 @@ default: console.assert(false, talent[0]);
 			if (this.ab.hasOwnProperty(AB_GOOD))
 				dps *= (t & trait_treasure) ? 1.8 : 1.5;
 		}
-		if ((traits & 4096) && this.ab.hasOwnProperty(AB_BSTHUNT))
+		if ((traits & TB_BEAST) && this.ab.hasOwnProperty(AB_BSTHUNT))
 			dps *= 2.5;
-		if ((traits & 8192) && this.ab.hasOwnProperty(AB_BAIL))
+		if ((traits & TB_BARON) && this.ab.hasOwnProperty(AB_BAIL))
 			dps *= 1.6;
-		if ((traits & 16384) && this.ab.hasOwnProperty(AB_EKILL))
+		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL))
 			dps *= 5;
-		if ((traits & 32768) && this.ab.hasOwnProperty(AB_WKILL))
+		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL))
 			dps *= 5;
 		return dps;
 	}
@@ -1087,6 +1095,116 @@ class CatInfo {
 		}
 	}
 }
+class Enemy {
+	constructor(id, name, jp_name, data) {
+		if (id instanceof Object) {
+			Object.assign(this, id);
+			return;
+		}
+		this.id = id;
+		id -= 2;
+		this.name = name;
+		this.jp_name = jp_name;
+		this.desc = enemy_descs[id];
+		this.backswing = anim1[id][0];
+		this.attackF = anim1[id][1];
+		this.hp = data[0];
+		this.kb = data[1];
+		this.speed = data[2];
+		this.atk = data[3];
+		this.tba = data[4] * 2;
+		this.atkType = data[5] ? ATK_RANGE : ATK_SINGLE;
+		this.earn = data[6];
+		this.range = data[5];
+		this.trait = 0;
+		this.isrange = data[11] != 0;
+		this.pre = data[12];
+		this.death = data[54];
+		this.atk1 = data[55];
+		this.atk2 = data[56];
+		this.pre1 = data[57];
+		this.pre2 = data[58];
+		(data[64]) && (this.shield = data[64]);
+		(data[87]) && (this.demonshield = [data[87], data[88]]);
+		(data[89]) && (this.deathsurge = [data[89], data[90] / 4, data[91] / 4 + data[90], data[92] * 20]);
+		(data[69]) && (this.star = true);
+		this.ab = {};
+		this.imu = 0;
+		(data[10]) && (this.trait |= TB_RED);
+		(data[13]) && (this.trait |= TB_FLOAT);
+		(data[14]) && (this.trait |= TB_BLACK);
+		(data[15]) && (this.trait |= TB_METAL);
+		(data[16]) && (this.trait |= TB_WHITE);
+		(data[17]) && (this.trait |= TB_ANGEL);
+		(data[18]) && (this.trait |= TB_ALIEN);
+		(data[19]) && (this.trait |= TB_ZOMBIE);
+		(data[48]) && (this.trait |= TB_WITCH);
+		(data[49]) && (this.trait |= TB_INFN);
+		(data[71]) && (this.trait |= TB_EVA);
+		(data[72]) && (this.trait |= TB_RELIC);
+		(data[93]) && (this.trait |= TB_DEMON);
+		(data[94]) && (this.trait |= TB_BARON);
+		(data[101]) && (this.trait |= TB_BEAST);
+		
+		(data[20]) && (this.ab[AB_KB] = [data[20]]);
+		(data[21]) && (this.ab[AB_STOP] = [data[21], data[22]]);
+		(data[23]) && (this.ab[AB_SLOW] = [data[23], data[24]]);
+		(data[25]) && (this.ab[AB_CRIT] = [data[25]]);
+		(data[26]) && (this.ab[AB_ATKBASE] = []);
+		(data[27]) && (this.ab[AB_WAVE] = [data[27], data[28]]);
+		(data[29]) && (this.ab[AB_WEAK] = [data[29], data[30], data[31]]);
+		(data[32]) && (this.ab[AB_STRONG] = [data[32], data[33]]);
+		(data[34]) && (this.ab[AB_LETHAL] = [data[34]]);
+		(data[38]) && (this.ab[AB_WAVES] = []);
+		(data[43]) && (this.ab[AB_BURROW] = [data[43], data[44] / 4]);
+		(data[45]) && (this.ab[AB_REVIVE] = [data[45], data[46], data[47]]);
+		(data[65]) && (this.ab[AB_WARP] = [data[65], data[66], data[67] / 4]);
+		(data[73]) && (this.ab[AB_CURSE] = [data[73], data[74]]);
+		(data[75]) && (this.ab[AB_S] = [data[75], data[76]]);
+		(data[77]) && (this.ab[AB_IMUATK] = [data[77], data[78]]);
+		(data[79]) && (this.ab[AB_POIATK] = [data[79], data[80]]);
+		if (data[81]) {
+			if (data[102] == 1) {
+				this.ab[AB_MINIVOLC] = [data[81], data[82] / 4, data[83] / 4 + data[82], data[84] * 20]
+			} else {
+				this.ab[AB_VOLC] = [data[81], data[82] / 4, data[83] / 4 + data[82], data[84] * 20]
+			}
+		}
+		(data[37]) && (this.imu |= IMU_WAVE);
+		(data[39]) && (this.imu |= IMU_KB);
+		(data[40]) && (this.imu |= IMU_STOP);
+		(data[41]) && (this.imu |= IMU_SLOW);
+		(data[42]) && (this.imu |= IMU_WEAK);
+		if (data[52] == 2)
+			this.glass = true;
+		const atkCount = this.atk1 == 0 ? 1 : this.atk2 == 0 ? 2 : 3;
+		this.lds = new Array(atkCount);
+		this.lds[0] = data[35];
+		this.ldr = new Array(atkCount);
+		this.ldr[0] = data[36];
+		for (let i = 1;i < atkCount;++i) {
+			if (data[99 + (i - 1) * 3] == 1) {
+				this.lds[i] = data[95 + (i - 1) * 3 + 1];
+				this.ldr[i] = data[95 + (i - 1) * 3 + 2];
+			} else {
+				this.lds[i] = this.lds[0];
+				this.ldr[i] = this.ldr[0];
+			}
+		}
+		for (let x of this.ldr) {
+			if (x < 0) {
+				this.atkType |= ATK_OMNI;
+				break;
+			}
+			if (x > 0) {
+				this.atkType |= ATK_LD;
+				break;
+			}
+		}
+		if ((this.tba + this.pre) < (this.attackF / 2))
+			this.atkType |= ATK_KB_REVENGE;
+	}
+}
 class Cat {
 	constructor(id, unit_file) {
 		if (id instanceof Object) {
@@ -1110,6 +1228,24 @@ class Cat {
 		return { 'info': this.info, 'forms': this.forms };
 	}
 }
+async function getAllEnemies() {
+	enemy_descs = await ((await fetch('./enemyDescs.json')).json());
+	t_unit = (await ((await fetch('./data/data/t_unit.csv')).text())).replace('\r', '').split('\n').filter(x => x.trim()).map(line => line.split(',').map(x => parseInt(x)));;
+	anim1 = await ((await fetch('./anim1')).json());
+	const enemies_names = await ((await fetch('enemyName.json')).json());
+	const jp_names = await ((await fetch('enemyNameJP.json')).json());
+	var enemies = new Array(enemies_names.length);
+	for (let id = 2;id < enemies.length;++id) {
+		const unit_file = t_unit[id];
+		const y = id - 2;
+		enemies[id] = new Enemy(id, enemies_names[y], jp_names[y], unit_file);
+		loader_text.innerText = `Loading Enemies (${id+1}/${enemies.length})`;
+	} 
+	enemy_descs = null;
+	t_unit = null;
+	anim1 = null;	
+	return enemies;
+}
 async function getAllCats() {
 	anim2 = await ((await fetch('./anim2')).json());
 	unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
@@ -1121,23 +1257,27 @@ async function getAllCats() {
 	var cats = new Array(unit_names.length);
 	for (let id = 0;id < cats.length;++id) {
 		const unit_file = await uints_zip.file(`all/${id}`).async('string');
-		cats[id] = await new Cat(id, unit_file);
-		loader_text.innerText = `Loading (${id+1}/${cats.length})`;
+		cats[id] = new Cat(id, unit_file);
+		loader_text.innerText = `Loading Units (${id+1}/${cats.length})`;
 	}
 	uints_zip = null;
 	skill_file = null;
 	uint_buy = null;
 	return cats;
 }
+function onupgradeneeded(event) {
+	const db = event.target.result;
+	try { db.deleteObjectStore('cats'); } catch (e) { }
+	try { db.deleteObjectStore('enemy'); } catch (e) { }
+	let store = db.createObjectStore('cats', {"keyPath": "id"});
+	store.createIndex("data", '', {"unique": false});
+	store = db.createObjectStore('enemy', {"keyPath": "id"});
+	store.createIndex("data", '', {"unique": false});
+}
 async function loadCat(id) {
 	return new Promise(resolve => {
 		var req = indexedDB.open("db", 1);
-		req.onupgradeneeded = function(event) {
-	  	  const db = event.target.result;
-	  	  try { db.deleteObjectStore('cats'); } catch (e) { }
-		    const store = db.createObjectStore('cats', {"keyPath": "id"});
-		    store.createIndex("data", '', {"unique": false});
-		};
+		req.onupgradeneeded = onupgradeneeded;
 		req.onsuccess = function(event) {
 			const db = event.target.result;
 			db.transaction(["cats"], "readwrite").objectStore("cats").get(id).onsuccess = function(event) {
@@ -1158,15 +1298,74 @@ async function loadCat(id) {
 		}
 	});
 }
+async function loadEnemy(id) {
+	return new Promise((resolve, reject) => {
+		var req = indexedDB.open("db", 1);
+		req.onupgradeneeded = onupgradeneeded;
+		req.onsuccess = function(event) {
+			const db = event.target.result;
+			db.transaction(["enemy"], "readwrite").objectStore("enemy").get(id).onsuccess = function(event) {
+				const res = event.target.result;
+				if (res) {
+					if (!res.data) return reject();
+					return resolve(new Enemy(res.data));
+				}
+				getAllEnemies()
+				.then(es => {
+					const tx = db.transaction(["enemy"], "readwrite");
+					const store = tx.objectStore("enemy");
+					for (let i = 0;i < es.length;++i)
+						store.put({'id': i, 'data': es[i]});
+					tx.oncomplete = function() {
+						resolve(es[id]);
+						db.close();
+					}
+				});
+			}
+		}
+	});
+}
+async function loadAllEnemies() {
+	return new Promise(resolve => {
+		var req = indexedDB.open("db", 1);
+		req.onupgradeneeded = onupgradeneeded;
+		req.onsuccess = function(event) {
+			const db = event.target.result;
+			db.transaction(["enemy"], "readwrite").objectStore("enemy").get(unit_names.length-1).onsuccess = function(event) {
+				const res = event.target.result;
+				if (!res) {
+					getAllEnemies()
+					.then(es => {
+						const tx = db.transaction(["enemy"], "readwrite");
+						const store = tx.objectStore("enemy");
+						for (let i = 0;i < es.length;++i)
+							store.put({'id': i, 'data': es[i]});
+						tx.oncomplete = function() {
+							resolve(es);
+							db.close();
+						}
+					});
+				} else {
+					let es = new Array(unit_names.length);
+					db.transaction(["enemy"], "readwrite").objectStore("enemy").openCursor().onsuccess = function(event) {
+						const cursor = event.target.result;
+						if (cursor) {
+							es[cursor.value.id] = new Cat(cursor.value.data);
+							cursor.continue();
+						} else {
+							resolve(es);
+							db.close();
+						}
+					}
+				}
+			}
+		}
+	});
+}
 async function loadAllCats() {
 	return new Promise(resolve => {
 		var req = indexedDB.open("db", 1);
-		req.onupgradeneeded = function(event) {
-	  	  const db = event.target.result;
-	  	  try { db.deleteObjectStore('cats'); } catch (e) { }
-		    const store = db.createObjectStore('cats', {"keyPath": "id"});
-		    store.createIndex("data", '', {"unique": false});
-		};
+		req.onupgradeneeded = onupgradeneeded;
 		req.onsuccess = function(event) {
 			const db = event.target.result;
 			db.transaction(["cats"], "readwrite").objectStore("cats").get(unit_names.length-1).onsuccess = function(event) {
@@ -1300,7 +1499,7 @@ const icon_descs = [
 	'對{1}造成5倍(6倍)傷害',
 	'{1}%機率擊退{2}',
 	'{1}%機率傳送{2}',
-	'{1}%發動攻擊無效{2}秒',
+	'{1}%攻擊無效{2}秒',
 	'{1}%機率詛咒{2}持續{3}({4}，控場覆蓋率{5})',
 ]
 function createAbIcons1(ab, parent) {
@@ -1377,7 +1576,7 @@ function createTraitIcons(trait, parent) {
 		'red', 'float', 'black', 'metal', 'angel', 'alien', 'zombie', 'relic', 'white', 'eva', 'witch', 'demon'
 	];
 	let i = 0;
-	for (let x = 1;x <= TB_LAST;x <<= 1) {
+	for (let x = 1;x <= TB_DEMON;x <<= 1) {
 		if (trait & x) {
 			const e = document.createElement('span');
 			e.classList.add('bc-icon', `bc-icon-trait-${names[i]}`);
