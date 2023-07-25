@@ -307,14 +307,14 @@ name_search.oninput = function() {
 		if (x < cats.length) {
 			s = [...cats];
 			for (let f of cats[x].forms)
-				results.push(f);
+				results.push([1, f]);
 			s.splice(x, 1);
 		}
 	}
 	for (let C of s) {
 		for (let f of C.forms) {
 			if (f.name.includes(search) || f.jp_name.includes(search)) {
-				results.push(f);
+				results.push([1, f]);
 			}
 		}
 	}
