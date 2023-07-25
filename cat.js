@@ -195,10 +195,14 @@ const
    AB_WARP = 31,
    AB_IMUATK = 32,
    AB_CURSE = 33,
-   AB_LAST = AB_CURSE,
    AB_BURROW = 34,
    AB_REVIVE = 35,
-   AB_POIATK = 36;
+   AB_POIATK = 36,
+   AB_GLASS = 37,
+   AB_SHIELD = 38,
+   AB_DSHIELD = 39,
+   AB_COUNTER = 40,
+   AB_AFTERMATH = 41;
 const
   RES_WEAK = 0,
   RES_STOP = 1,
@@ -877,7 +881,7 @@ default: console.assert(false, talent[0]);
 		return this.attackF / 30;
 	}
 	getrevenge() {
-		return this.revenge;
+		return (this.atkType & ATK_KB_REVENGE) != 0;
 	}
 	getbackswing() {
 		return this.backswing;
@@ -1124,9 +1128,6 @@ class Enemy {
 		this.atk2 = data[56];
 		this.pre1 = data[57];
 		this.pre2 = data[58];
-		(data[64]) && (this.shield = data[64]);
-		(data[87]) && (this.demonshield = [data[87], data[88]]);
-		(data[89]) && (this.deathsurge = [data[89], data[90] / 4, data[91] / 4 + data[90], data[92] * 20]);
 		(data[69]) && (this.star = true);
 		this.ab = {};
 		this.imu = 0;
@@ -1151,23 +1152,34 @@ class Enemy {
 		(data[23]) && (this.ab[AB_SLOW] = [data[23], data[24]]);
 		(data[25]) && (this.ab[AB_CRIT] = [data[25]]);
 		(data[26]) && (this.ab[AB_ATKBASE] = []);
-		(data[27]) && (this.ab[AB_WAVE] = [data[27], data[28]]);
 		(data[29]) && (this.ab[AB_WEAK] = [data[29], data[30], data[31]]);
 		(data[32]) && (this.ab[AB_STRONG] = [data[32], data[33]]);
 		(data[34]) && (this.ab[AB_LETHAL] = [data[34]]);
 		(data[38]) && (this.ab[AB_WAVES] = []);
 		(data[43]) && (this.ab[AB_BURROW] = [data[43], data[44] / 4]);
 		(data[45]) && (this.ab[AB_REVIVE] = [data[45], data[46], data[47]]);
+		(data[52]) && (this.ab[AB_GLASS] = []);
+		(data[64]) && (this.ab[AB_SHIELD] = [data[64]]);
 		(data[65]) && (this.ab[AB_WARP] = [data[65], data[66], data[67] / 4]);
 		(data[73]) && (this.ab[AB_CURSE] = [data[73], data[74]]);
 		(data[75]) && (this.ab[AB_S] = [data[75], data[76]]);
 		(data[77]) && (this.ab[AB_IMUATK] = [data[77], data[78]]);
 		(data[79]) && (this.ab[AB_POIATK] = [data[79], data[80]]);
-		if (data[81]) {
-			if (data[102] == 1) {
-				this.ab[AB_MINIVOLC] = [data[81], data[82] / 4, data[83] / 4 + data[82], data[84] * 20]
+		(data[87]) && (this.ab[AB_DSHIELD] = [data[87]]);
+		(data[89]) && (this.ab[AB_AFTERMATH] = [data[89], data[90] / 4, data[91] / 4 + data[90], data[92] * 20]);
+		(data[103]) && (this.ab[AB_COUNTER] = []);
+		if (data[27]) {
+			if (data[86]) {
+				this.ab[AB_MINIWAVE] = [data[27], data[28]];
 			} else {
-				this.ab[AB_VOLC] = [data[81], data[82] / 4, data[83] / 4 + data[82], data[84] * 20]
+				this.ab[AB_WAVE] = [data[27], data[28]];
+			}
+		}
+		if (data[81]) {
+			if (data[102]) {
+				this.ab[AB_MINIVOLC] = [data[81], data[82] >> 2, (data[83] + data[82]) >> 2, data[84]];
+			} else {
+				this.ab[AB_VOLC] = [data[81], data[82] >> 2, (data[83] + data[82]) >> 2, data[84]];
 			}
 		}
 		(data[37]) && (this.imu |= IMU_WAVE);
@@ -1204,6 +1216,35 @@ class Enemy {
 		if ((this.tba + this.pre) < (this.attackF / 2))
 			this.atkType |= ATK_KB_REVENGE;
 	}
+	gethp() {	return this.hp; }
+	getthp() { return this.hp; }
+	getatk() { return this.atk + this.atk1 + this.atk2; }
+	gettatk() { return this.getatk(); }
+	getdps() { return (this.getatk() * 30) / this.attackF; }
+	gettdps() { return this.getdps(); }
+	getimu() { return this.imu; }
+	hasab(i) { return this.ab.hasOwnProperty(i); }
+	dpsagainst() { return 0; }
+	getid() { return this.id; }
+	hasres() { return 0; }
+	gettba() { return this.tba; }
+	getpre() { return this.pre; }
+	getpre1() { return this.pre1; }
+	getpre2() { return this.pre2; }
+	getTotalLv() { return 0; }
+	getkb() { return this.kb; }
+	getrarity() { return 0; }
+	gettrait() { return this.trait; }
+	getrange() { return this.range; }
+	getattackf() { return this.attackF; }
+	getattacks() { return this.attackF / 30; }
+	getrevenge() { return (this.atkType & ATK_KB_REVENGE) != 0; }
+	getbackswing() { return this.backswing; }
+	getcost() { return this.earn; }
+	getprice() { return this.earn; }
+	getspeed() { return this.speed; }
+	getatktype() { return this.atkType; }
+	getcd() { return 0; }
 }
 class Cat {
 	constructor(id, unit_file) {
@@ -1331,7 +1372,7 @@ async function loadAllEnemies() {
 		req.onupgradeneeded = onupgradeneeded;
 		req.onsuccess = function(event) {
 			const db = event.target.result;
-			db.transaction(["enemy"], "readwrite").objectStore("enemy").get(unit_names.length-1).onsuccess = function(event) {
+			db.transaction(["enemy"], "readwrite").objectStore("enemy").get(651).onsuccess = function(event) {
 				const res = event.target.result;
 				if (!res) {
 					getAllEnemies()
@@ -1346,11 +1387,11 @@ async function loadAllEnemies() {
 						}
 					});
 				} else {
-					let es = new Array(unit_names.length);
+					let es = new Array(652);
 					db.transaction(["enemy"], "readwrite").objectStore("enemy").openCursor().onsuccess = function(event) {
 						const cursor = event.target.result;
 						if (cursor) {
-							es[cursor.value.id] = new Cat(cursor.value.data);
+							cursor.value.data && (es[cursor.value.id] = new Enemy(cursor.value.data));
 							cursor.continue();
 						} else {
 							resolve(es);
@@ -1503,7 +1544,7 @@ const icon_descs = [
 	'{1}%機率詛咒{2}持續{3}({4}，控場覆蓋率{5})',
 ]
 function createAbIcons1(ab, parent) {
-	for (let i = 1;i <= AB_LAST;++i) {
+	for (let i = 1;i <= AB_CURSE;++i) {
 		if (i < 20 && ab.hasOwnProperty(i)) {
 			const e = document.createElement('span');
 			e.classList.add('bc-icon', `bc-icon-${icon_names[i - 1]}`);
@@ -1523,7 +1564,7 @@ function createAbIcons1(ab, parent) {
 	}
 }
 function createAbIcons2(ab, parent) {
-	for (let i = 1;i <= AB_LAST;++i) {
+	for (let i = 1;i <= AB_CURSE;++i) {
 		if (i >= 20 && ab.hasOwnProperty(i)) {
 			const e = document.createElement('span');
 			e.classList.add('bc-icon', `bc-icon-${icon_names[i - 1]}`);

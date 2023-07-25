@@ -6,11 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="icons.css">
 	<link rel="stylesheet" type="text/css" href="w3.css">
 	<link rel="stylesheet" type="text/css" href="unit.css">
-	<script src="jszip.min.js"></script>
-	<script src="data/lang/zh/UnitName.js"></script>
-	<script src="data/lang/jp/UnitName.js"></script>
-	<script src="unitlevels.js"></script>
-	<title>貓咪收尋</title>
+	<title>敵人收尋</title>
 </head>
 <body>
 	<style>
@@ -137,10 +133,11 @@
 	</style>
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
+	<script>var curveData0, curveData1, curveData2, curveData3, curveData4, curveData5;</script>
 	<script src="cat.js"></script>
 	<div id="main" style="display: none;height: 100%;">
 		<div class="w3-container" style="height: 100%;">
-			  <ul class="w3-ul may-hide" style="width: 150px;" id="trait-s">
+			  <ul class="w3-ul may-hide" style="width: 150px;height: 55%;overflow: scroll;" id="trait-s">
 			  	<li><input type="button" value="AND" class="or-and"></li>
 			  	<li data-expr="trait&RED" ><button><span class="bc-icon bc-icon-trait-red"></span>紅色敵人</button></li>
     			<li data-expr="trait&FLOAT"><button><span class="bc-icon bc-icon-trait-float"></span>漂浮敵人</button></li>
@@ -152,6 +149,11 @@
     			<li data-expr="trait&WHITE"><button><span class="bc-icon bc-icon-trait-white"></span>無屬性敵人</button></li>
     			<li data-expr="trait&RELIC"><button><span class="bc-icon bc-icon-trait-relic"></span>古代種</button></li>
     			<li data-expr="trait&DEMON"><button><span class="bc-icon bc-icon-trait-demon"></span>惡魔</button></li>
+    			<li data-expr="trait&INFN"><button><img src="data/page/icons/Base.png">道場塔</button></li>
+    			<li data-expr="trait&BARON"><button><img src="data/page/icons/Baron.png">超生命體</button></li>
+    			<li data-expr="trait&BEAST"><button><img src="data/page/icons/Beast.png">超獸</button></li>
+    			<li data-expr="trait&EVA"><button><img src="data/page/icons/Eva.png">使徒</button></li>
+    			<li data-expr="trait&WITCH"><button><img src="data/page/icons/Witch.png">魔女</button></li>
 			  </ul>
 			  <ul class="w3-ul may-hide" style="width: 150px;" id="atk-s">
 			  	<li><input type="button" value="AND" class="or-and"></li>
@@ -163,12 +165,6 @@
     			<li data-expr="pre1"><button>連續攻擊</button></li>
 			</ul>
 			<form action="javascript:void(0);" onsubmit="return false;" class="may-hide" style="width: 150px;">
-				<label for="def-lv">預設基本等級</label>
-				<input type="number" min="1" max="60" name="def-lv" id="def-lv" value="50" required>
-				<br>
-				<label for="plus-lv">預設加值等級</label>
-				<input type="number" min="0" max="90" name="plus-lv" id="plus-lv" value="0" required>
-				<br>
 				<input type="button" value="GO!" id="filter-go"></p>
 				<input type="button" value="清除" id="filter-clear"></p>
 			</form>
@@ -181,40 +177,30 @@
 				<br>
 				<a href="./help.html">使用說明</a>
 			</div>
-			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 97vh;overflow: scroll;width: 190px;" id="ab-s">
+			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 110vh;overflow: scroll;width: 190px;" id="ab-s">
 <li style="text-align: center;">能力</li>
 <li data-expr="hasab(AB_STRONG)"><button><span class="bc-icon bc-icon-strong"></span>攻擊力上升</button></li>
 <li data-expr="hasab(AB_LETHAL)"><button><span class="bc-icon bc-icon-lethal"></span>死前存活	</button></li>
 <li data-expr="hasab(AB_ATKBASE)"><button><span class="bc-icon bc-icon-atkbase"></span>善於攻城</button></li>
 <li data-expr="hasab(AB_CRIT)"><button><span class="bc-icon bc-icon-crit"></span>會心一擊</button></li>
-<li data-expr="hasab(AB_ZKILL)"><button><span class="bc-icon bc-icon-z-kill"></span>終結不死	</button></li>
-<li data-expr="hasab(AB_CKILL)"><button><span class="bc-icon bc-icon-ckill"></span>靈魂攻擊	</button></li>
-<li data-expr="hasab(AB_BREAK)"><button><span class="bc-icon bc-icon-break"></span>破壞宇宙盾</button></li>
-<li data-expr="hasab(AB_SHIELDBREAK)"><button><span class="bc-icon bc-icon-shield-break"></span>破壞惡魔盾</button></li>
 <li data-expr="hasab(AB_S)"><button><span class="bc-icon bc-icon-s"></span>渾身一擊</button></li>
-<li data-expr="hasab(AB_BOUNTY)"><button><span class="bc-icon bc-icon-bounty"></span>得到很多金錢</button></li>
-<li data-expr="hasab(AB_METALIC)"><button><span class="bc-icon bc-icon-metalic"></span>鋼鐵</button></li>
 <li data-expr="hasab(AB_MINIWAVE)"><button><span class="bc-icon bc-icon-mini-wave"></span>小波動</button></li>
 <li data-expr="hasab(AB_WAVE)"><button><span class="bc-icon bc-icon-wave"></span>波動</button></li>
 <li data-expr="hasab(AB_MINIVOLC)"><button><span class="bc-icon bc-icon-mini-volc"></span>小烈波</button></li>
 <li data-expr="hasab(AB_VOLC)"><button><span class="bc-icon bc-icon-volc"></span>烈波</button></li>
-<li data-expr="hasab(AB_WAVES)"><button><span class="bc-icon bc-icon-waves"></span>波動滅止</button></li>
-<li data-expr="hasab(AB_BAIL)"><button><span class="bc-icon bc-icon-bail"></span>超生命體特效</button></li>
-<li data-expr="hasab(AB_BSTHUNT)"><button><span class="bc-icon bc-icon-bsthunt"></span>超獸特效</button></li>
-<li data-expr="hasab(AB_WKILL)"><button><span class="bc-icon bc-icon-wkill"></span>終結魔女</button></li>
-<li data-expr="hasab(AB_EKILL)"><button><span class="bc-icon bc-icon-ekill"></span>終結使徒</button></li>
+<li data-expr="hasab(AB_BURROW)"><button><span class="bc-icon bc-icon-volc"></span>鑽地</button></li>
+<li data-expr="hasab(AB_REVIVE)"><button><img src="data/page/icons/Burrow.png">復活</button></li>
+<li data-expr="hasab(AB_SHIELD)"><button><img src="data/page/icons/Revive.png">護盾</button></li>
+<li data-expr="hasab(AB_DSHIELD)"><button><img src="data/page/icons/DemonShield.png">惡魔盾</button></li>
+<li data-expr="hasab(AB_AFTERMATH)"><button><img src="data/page/icons/DeathSurge.png">死後烈波</button></li>
+<li data-expr="hasab(AB_COUNTER)"><button><img src="data/page/icons/CounterSurge.png">烈波反擊</button></li>
+<li data-expr="hasab(AB_GLASS)"><button><img src="data/page/icons/Suicide.png">一次攻擊</button></li>
 <li style="text-align: center;">效果</li>
 <li><input type="button" value="AND" class="or-and"></li>
 <li data-expr="hasab(AB_WEAK)"><button><span class="bc-icon bc-icon-weak"></span>攻擊力下降</button></li>
 <li data-expr="hasab(AB_STOP)"><button><span class="bc-icon bc-icon-stop"></span>使動作停止</button></li>
 <li data-expr="hasab(AB_SLOW)"><button><span class="bc-icon bc-icon-slow"></span>使動作變慢</button></li>
 <li data-expr="hasab(AB_CURSE)"><button><span class="bc-icon bc-icon-slow"></span>詛咒</button></li>
-<li data-expr="hasab(AB_ONLY)"><button><span class="bc-icon bc-icon-only"></span>只能攻擊</button></li>
-<li data-expr="hasab(AB_GOOD)"><button><span class="bc-icon bc-icon-strong"></span>善於攻擊</button></li>
-<li data-expr="hasab(AB_RESIST)"><button><span class="bc-icon bc-icon-resist"></span>很耐打</button></li>
-<li data-expr="hasab(AB_RESISTS)"><button><span class="bc-icon bc-icon-resists"></span>超級耐打</button></li>
-<li data-expr="hasab(AB_MASSIVE)"><button><span class="bc-icon bc-icon-massive"></span>超大傷害</button></li>
-<li data-expr="hasab(AB_MASSIVES)"><button><span class="bc-icon bc-icon-massives"></span>極度傷害</button></li>
 <li data-expr="hasab(AB_KB)"><button><span class="bc-icon bc-icon-kb"></span>打飛</button></li>
 <li data-expr="hasab(AB_IMUATK)"><button><span class="bc-icon bc-icon-imu-atk"></span>攻擊無效</button></li>
 <li style="text-align: center;">抗性</li>
@@ -224,37 +210,18 @@
 <li data-expr="imu&IMU_KB"><button><span class="bc-icon bc-icon-imu-kb"></span>打飛無效</button></li>
 <li data-expr="imu&IMU_WAVE"><button><span class="bc-icon bc-icon-imu-wave"></span>波動無效</button></li>
 <li data-expr="imu&IMU_VOLC"><button><span class="bc-icon bc-icon-imu-volc"></span>烈波無效</button></li>
-<li data-expr="imu&IMU_WARP"><button><span class="bc-icon bc-icon-imu-warp"></span>傳送無效</button></li>
 <li data-expr="imu&IMU_CURSE"><button><span class="bc-icon bc-icon-imu-curse"></span>詛咒無效</button></li>
 <li data-expr="imu&IMU_POIATK"><button><span class="bc-icon bc-icon-imu-poiatk"></span>毒擊無效</button></li>
-<li style="text-align: center;">耐性</li>
-<li data-expr="hasres(RES_WEAK)"><button><span class="bc-icon bc-icon-res-weak2"></span>降攻耐性</button></li>
-<li data-expr="hasres(RES_STOP)"><button><span class="bc-icon bc-icon-res-freeze2"></span>暫停耐性</button></li>
-<li data-expr="hasres(RES_SLOW)"><button><span class="bc-icon bc-icon-res-slow2"></span>緩速耐性</button></li>
-<li data-expr="hasres(RES_KB)"><button><span class="bc-icon bc-icon-res-kb2"></span>打飛耐性</button></li>
-<li data-expr="hasres(RES_WAVE)"><button><span class="bc-icon bc-icon-res-wave2"></span>波動耐性</button></li>
-<li data-expr="hasres(RES_SURGE)"><button><span class="bc-icon bc-icon-res-surge2"></span>烈波耐性</button></li>
-<li data-expr="hasres(RES_CURSE)"><button><span class="bc-icon bc-icon-res-curse2"></span>詛咒耐性</button></li>
-<li data-expr="hasres(RES_TOXIC)"><button><span class="bc-icon bc-icon-res-toxic2"></span>毒擊耐性</button></li>
 			 </ul>
 			 <div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
 			 	<div class="may-hide">
-			 		<input type="search" placeholder="搜尋名稱或Cat id" id="name-search">
-			 	</div>
-			 	<div id="cattype" class="may-hide">
-					<span data-expr="rarity==0"><button class="type-btn">基本</button></span>
-					<span data-expr="rarity==1"><button class="type-btn">EX</button></span>
-					<span data-expr="rarity==2"><button class="type-btn">稀有</button></span>
-					<span data-expr="rarity==3"><button class="type-btn">激稀有</button></span>
-					<span data-expr="rarity==4"><button class="type-btn">超激稀有</button></span>
-					<span data-expr="rarity==5"><button class="type-btn">傳說稀有</button></span>
+			 		<input type="search" placeholder="搜尋名稱或敵人id" id="name-search">
 			 	</div>
 			 	<p><span id="search-result"></span><a href="#" id="toggle-s" style="padding-left: 1em;">隱藏收尋器</a></p>
 				<table class="w3-table w3-centered" style="min-height: 886px;width: 100%;margin-bottom: 0px;">
 					<thead>
 						<tr>
 							<td>ID</td>
-							<td>Lv</td>
 							<td style="width: 110px;">圖示</td>
 							<td>名稱</td>
 							<td>HP</td>
@@ -264,7 +231,7 @@
 							<td>射程</td>
 							<td>攻擊頻率</td>
 							<td>跑速</td>
-							<td>生產成本</td>
+							<td>獎金</td>
 							<td>排序值</td>
 						</tr>
 					</thead>
@@ -278,7 +245,7 @@
 			 </div>
 		</div>
 		<script src="constants.js"></script>
-		<script src="search.js"></script>
+		<script src="esearch.js"></script>
 		<script src="parser.js"></script>
 	</div>
 </body>

@@ -8,9 +8,6 @@ const pages_a = document.getElementById('pages-a');
 var hide_seach = false;
 const tables = document.getElementById('tables');
 const toggle_s = document.getElementById('toggle-s');
-const def_lv_e = document.getElementById('def-lv');
-const plus_lv_e = document.getElementById('plus-lv');
-const cattype_e = document.getElementById('cattype');
 const trait_s = document.getElementById('trait-s');
 const atk_s = document.getElementById('atk-s');
 const ab_s = document.getElementById('ab-s');
@@ -69,26 +66,24 @@ function renderTable(forms, page = 1) {
 	}
 	for (let i = 0;i < display_forms.length;++i) {
 		const tr = document.createElement('tr');
-		const theForm = display_forms[i][1];
-		useCurve(theForm.id);
-		_info = cats[theForm.id].info;
-		const base = Math.min(def_lv, _info.maxBase);
-		const plus = Math.min(plus_lv, _info.maxPlus);
-		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', theForm.name + '/' + theForm.jp_name, ~~theForm.gethp(), ~~theForm.getatk(), 
-			~~theForm.getdps(), theForm.kb, theForm.range, numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, ~~(theForm.price * 1.5), numStr(display_forms[i][0])];
-		for (let j = 0;j < 13;++j) {
+		const theForm = display_forms[i][1]
+		const texts = [theForm.id - 2, '', theForm.name + '/' + theForm.jp_name, ~~theForm.gethp(), ~~theForm.getatk(), 
+			~~theForm.getdps(), theForm.kb, theForm.range, numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, theForm.earn, numStr(display_forms[i][0])];
+		for (let j = 0;j < texts.length;++j) {
 			const e = document.createElement('td');
 			e.innerText = texts[j].toString();
 			tr.appendChild(e);
 		}
-		const span = document.createElement('a');
-		span.href = './unit.html?id=' + theForm.id.toString();
-		span.style.width = '110px';
-		span.style.height = '85px';
-		span.style.backgroundImage = `url(${theForm.icon})`;
-		span.style.backgroundPosition = '-10px -20px';
-		span.style.display = 'inline-block';
-		tr.children[2].appendChild(span);
+		const a = document.createElement('a');
+		const img = new Image();
+		const ss = t3str(theForm.id - 2);
+		img.src = 'data/enemy/' + ss + '/enemy_icon_' + ss + '.png';
+		img.onerror = function(event) {
+			event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
+		}
+		a.href = './enemy.html?id=' + (theForm.id - 2).toString();
+		a.appendChild(img);
+		tr.children[1].appendChild(a);
 		tbody.appendChild(tr);
 	}
 }
@@ -98,19 +93,9 @@ function simplify(code) {
 function calculate(code = '') {
 	pages_a.textContent = '';
 	const sortCode = simplify(sort_expr.value);
-	def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60);
-	plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90);
-	def_lv_e.value = def_lv;
-	plus_lv_e.value = plus_lv;
 	const url = new URL(location.pathname, location.href);
 	if (!code.length) {
 		const codes = [];
-		const cattypes = Array.from(cattype_e.querySelectorAll('.o-selected'));
-		if (cattypes.length) {
-			let M = cattypes.map(x => x.getAttribute('data-expr'));
-			url.searchParams.set('cattypes', M.join(' '));
-			codes.push(M.join('||'));
-		}
 		const traits = Array.from(trait_s.querySelectorAll('.o-selected'));
 		if (traits.length) {
 			let M = traits.map(x => x.getAttribute('data-expr'));
@@ -150,7 +135,6 @@ function calculate(code = '') {
 			return renderTable([]);
 		url.searchParams.set('filter', code);
 	}
-	var results = [];
 	var pcode;
 	try {
 		pcode = pegjs.parse(code);
@@ -158,16 +142,7 @@ function calculate(code = '') {
 		alert(e.toString());
 	}
 	let f = eval(`form => (${pcode})`);
-	for (let id = 0;id < cats.length;++id) {
-		useCurve(id);
-		let c = cats[id];
-		_info = c.info;
-		for (let form of c.forms) {
-			if (f(form)) {
-				results.push(form);
-			}
-		}
-	}
+	results = cats.filter(f);
 	try {
 		pcode = pegjs.parse(sortCode || '1');
 	} catch (e) {
@@ -175,14 +150,10 @@ function calculate(code = '') {
 	}
 	let fn = eval(`form => (${pcode})`);
 	results = results.map((form, i) => {
-		useCurve(form.id);
-		_info = cats[form.id].info;
 		const x = fn(form);
 		return [isFinite(x) ? x : 0, form];
 	}).sort((a, b) => b[0] - a[0]);
 	renderTable(results);
-	url.searchParams.set('deflv', def_lv);
-	url.searchParams.set('pluslv', plus_lv);
 	if (sortCode.length)
 		url.searchParams.set('sort', sortCode);
 	const a = atkBtn.value == 'OR' ? '1' : '0';
@@ -200,7 +171,7 @@ function addBtns(parent, s) {
 		}
 	}
 }
-loadAllCats()
+loadAllEnemies()
 .then(_cats => {
 	cats = _cats;
 	document.getElementById('loader').style.display = 'none';
@@ -213,32 +184,16 @@ loadAllCats()
 		filter_expr.value = filter;
 	if (sort)
 		sort_expr.value = sort;
-	const def_lv = params.get('deflv');
-	const plus_lv = params.get('pluslv');
-	if (def_lv)
-		def_lv_e.value = def_lv.toString();
-	if (plus_lv)
-		plus_lv_e.value = plus_lv;
 	const ao = params.get('ao');
 	if (ao) {
 		atkBtn.value = ao[0] == '1' ? 'OR' : 'AND';
 		traitBtn.value = ao[1] == '1' ? 'OR' : 'AND';
 		abBtn.value = ao[2] == '1' ? 'OR' : 'AND';
 	}
-	addBtns(cattype_e, params.get('cattypes'));
 	addBtns(atk_s, params.get('atks'));
 	addBtns(ab_s, params.get('abs'));
 	addBtns(trait_s, params.get('traits'));
 	tcats = new Array(cats.length);
-	const full = [10, 10, 10, 10, 10, 10, 10, 10];
-	for (let i = 0;i < cats.length;++i) {
-		const TF = cats[i].forms[2];
-		if (TF) {
-			const talents = cats[i].info.talents;
-			if (talents)
-				TF.applyTalents(talents, full) && TF.applySuperTalents(talents, full);
-		}
-	}
 	calculate(filter ? filter : '');
 });
 document.querySelectorAll('button').forEach(elem => {
@@ -270,7 +225,6 @@ document.getElementById('filter-go').onclick = function() {
 }
 document.getElementById('filter-clear').onclick = function() {
 	function fn(x) { x.classList.remove('o-selected'); };
-	cattype_e.querySelectorAll('.o-selected').forEach(fn);
 	trait_s.querySelectorAll('.o-selected').forEach(fn);
 	atk_s.querySelectorAll('.o-selected').forEach(fn);
 	ab_s.querySelectorAll('.o-selected').forEach(fn);
@@ -306,16 +260,13 @@ name_search.oninput = function() {
 		let x = parseInt(search);
 		if (x < cats.length) {
 			s = [...cats];
-			for (let f of cats[x].forms)
-				results.push(f);
+			results.push(s[x]);
 			s.splice(x, 1);
 		}
 	}
 	for (let C of s) {
-		for (let f of C.forms) {
-			if (f.name.includes(search) || f.jp_name.includes(search)) {
-				results.push(f);
-			}
+		if (C.name.includes(search) || C.jp_name.includes(search)) {
+			results.push(C);
 		}
 	}
 	renderTable(results);

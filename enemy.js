@@ -29,19 +29,30 @@ function createAbIcons(E, parent) {
 		case AB_CRIT: write(`${d[0]}%機率爆擊`, 'crit'); break;
 		case AB_ATKBASE: write(`對塔傷害四倍`, 'atkbase'); break;
 		case AB_WAVE: write(`${d[0]}%機率釋放Lv${d[1]}波動`, 'wave'); break;
+		case AB_MINIWAVE: write(`${d[0]}%機率釋放Lv${d[1]}小波動`, 'wave'); break;
 		case AB_WEAK: write(`${d[0]}%機率降低攻擊力至${d[2]}%持續${numStrT(d[1])}`, 'weak'); break;
 		case AB_STRONG: write(`血量${d[0]}%以下攻擊力增加${d[1]}倍`, 'strong'); break;
 		case AB_LETHAL: write(`${d[0]}%機率死後復活`, 'lethal'); break;
 		case AB_WAVES: write(`波動滅止`, 'waves'); break;
-		//case AB_BURROW: write(`${d[0]}%機率${numStrT(d[1])}`); break;
-		//case AB_REVIVE: write(`${d[0]}%機率${numStrT(d[1])}`); break;
-		case AB_WARP: write(`${d[0]}%機率傳送${d[1]} ${d[2]}`, 'warp'); break;
+		case AB_BURROW: write(`進入射程範圍時鑽地${numStrT(d[1])}(${d[0]}次)`); break;
+		case AB_REVIVE: write(`擊倒後${numStrT(d[1])}以${d[1]}%血量復活(${d[0]}次)`); break;
+		case AB_WARP: write(`${d[0]}%機率將向目標${d[2] < 0 ? '前' : '後'}傳送${Math.abs(d[2])}距離持續${numStrT(d[1])}`, 'warp'); break;
 		case AB_CURSE: write(`${d[0]}%機率詛咒持續${numStrT(d[1])}`, 'curse'); break;
 		case AB_S: write(`${d[0]}%機率渾身一擊(攻擊力增加${d[1]}%倍)`, 's'); break;
 		case AB_IMUATK: write(`${d[0]}%機率攻擊無效持續${numStrT(d[1])}`, 'imu-atk'); break;
-		case AB_POIATK: write(`${d[0]}%機率毒擊(造成角色血量${(d[1])}傷害)`, 'poiatk'); break;
-		case AB_VOLC: write(`${d[0]}%機率放出Lv${(d[3]/20).toFixed(0)}烈波(出現位置${d[1]}~${d[2]}，持續${d[3]}f)`, 'volc'); break;
-		case AB_MINIWAVE: write(`${d[0]}%機率放出Lv${(d[3]/20).toFixed(0)}小烈波(出現位置${d[1]}~${d[2]}，持續${d[3]}f)`, 'mini-volc'); break;
+		case AB_SHIELD: write(`宇宙盾 ${d[0]}HP`, 'shield'); break;
+		case AB_DSHIELD: write(`惡魔盾 ${d[0]} HP，KB時惡魔盾恢復${d[1]}%`); break;
+		case AB_COUNTER: write('烈波反擊'); break;
+		case AB_POIATK: 
+			{
+				const img = document.createElement('img');
+				img.src = './data/page/icons/BCPoison.png';
+				parent.appendChild(img);
+				write(`${d[0]}%機率毒擊(造成角色血量${(d[1])}%傷害)`);
+				break;
+			}
+		case AB_VOLC: write(`${d[0]}%機率放出Lv${d[3]}烈波(出現位置${d[1]}~${d[2]}，持續${d[3]*20}f)`, 'volc'); break;
+		case AB_MINIVOLC: write(`${d[0]}%機率放出Lv${d[3]}小烈波(出現位置${d[1]}~${d[2]}，持續${d[3]*20}f)`, 'mini-volc'); break;
 		}
 	}
 	if (E.deathsurge != undefined) {
@@ -53,9 +64,8 @@ function renderTable(E) {
 	const stats = document.getElementById('stats');
 	const chs = stats.children;
 	const ss = t3str(E.id - 2);
-	chs[0].children[0].children[0].innerText = [E.name, E.jp_name].filter(x => x.length).join('/');
-	chs[0].children[0].children[1].src = 'data/enemy/' + ss + '/enemy_icon_' + ss + '.png';
-	chs[0].children[0].children[1].onerror = function(event) {
+	chs[0].children[0].children[0].src = 'data/enemy/' + ss + '/enemy_icon_' + ss + '.png';
+	chs[0].children[0].children[0].onerror = function(event) {
 		event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
 	}
 	chs[0].children[2].innerText = E.hp;
@@ -82,7 +92,7 @@ function renderTable(E) {
   	if (E.trait & TB_ANGEL)
   		traits.push('天使敵人');
   	if (E.trait & TB_ALIEN)
-  		traits.push('異星戰士' + E.star ? '(有星星)' : '');
+  		traits.push('異星戰士' + (E.star ? '(有星星)' : ''));
   	if (E.trait & TB_ZOMBIE)
   		traits.push('不死生物');
   	if (E.trait & TB_RELIC)
@@ -111,7 +121,7 @@ function renderTable(E) {
 		atkType += '遠方';
 	atkType += (E.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
 	if (E.atkType & ATK_KB_REVENGE)
-		atkType += '，擊退反擊';
+		atkType += ' • 擊退反擊';
 	
 	const lds = E.lds;
 	const ldr = E.ldr;
@@ -126,9 +136,9 @@ function renderTable(E) {
 			else
 				s += `${nums[i]}${y}~${x}`;
 		}
-		atkType += `，範圍${s}`;
+		atkType += ` • 範圍${s}`;
 	}
-	if (E.glass)
+	if (E.ab.hasOwnProperty(AB_GLASS))
 		atkType += '一次攻擊';
 	specials.children[0].innerText = atkType;
 	if (E.atk1 || E.atk2) {
@@ -139,18 +149,9 @@ function renderTable(E) {
 		p.innerText = `${atkNum}回連續攻擊(傷害${atksPre.join('-')})`;
 		specials.appendChild(p);
 	}
-	if (E.shield != undefined) {
-		const p = document.createElement('p');
-		p.innerText = `宇宙盾(${E.shield})`;
-		specials.appendChild(p);
-	}
-	if (E.demonshield != undefined) {
-		const p = document.createElement('p');
-		p.innerText = `惡魔盾(${E.demonshield[0]} ${E.demonshield[1]})`;
-		specials.appendChild(p);
-	}
 	createAbIcons(E, specials);
-	document.getElementById('open-db').href = 'https://battlecats-db.com/enemy/' + (my_id).toString() + '.html';
+	document.getElementById('e-id').innerText = [E.name, E.jp_name].filter(x => x.length).join('/');
+	document.getElementById('open-db').href = 'https://battlecats-db.com/enemy/' + t3str(my_id) + '.html';
 }
 loadEnemy(my_id)
 .then(E => {
