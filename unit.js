@@ -354,10 +354,10 @@ function renderForm(form) {
 			var p = document.createElement('p');
 			p.classList.add('fruit');
 			if (r[1]) {
-				img.src = './page/catfruit/gatyaitemD_' + r[1].toString() + '_f.png';
+				img.src = './data/page/catfruit/gatyaitemD_' + r[1].toString() + '_f.png';
 				p.innerText = 'X' + r[0].toString();
 			} else {
-				img.src = './page/catfruit/xp.png';
+				img.src = './data/page/catfruit/xp.png';
 				p.innerText = r[0].toString();
 			}
 			div.appendChild(img);
