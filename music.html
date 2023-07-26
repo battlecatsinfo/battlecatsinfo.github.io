@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html style="width: 100%;">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>貓咪大戰爭 音樂</title>
+</head>
+<body style="width: 100%;text-align: center;">
+<style>a:visited { text-decoration: none;color:initial; }</style>
+<div style="width: 100%;margin: 0 auto;">
+	<h1>音樂下載</h1>
+	<select id="opt" style="min-width: 300px;font-size: 30px;margin: 50px;text-align: center;"></select><br>
+	<a id="dl" style="display: block;margin-bottom: 30px;font-size: 30px;text-decoration: none;" href="https://github.com/battlecatsultimate/bcu-assets/raw/master/music/000.ogg">下載</a><br>
+	<audio style="min-width: 400px;" src="https://github.com/battlecatsultimate/bcu-assets/raw/master/music/000.ogg" id="ad" controls type="audio/ogg"></audio>
+</div>
+<script>
+const opt = document.getElementById('opt');
+const ad = document.getElementById('ad');
+const dl = document.getElementById('dl');
+function t3str(x) {
+	let s = x.toString();
+	switch (s.length) {
+	case 3: return s;
+	case 2: return '0' + s;
+	case 1: return '00' + s;
+	}
+}
+for (let i = 0;i <= 159;++i) {
+	const op = document.createElement('option');
+	op.innerText = t3str(i) + '.ogg';
+	opt.appendChild(op);
+}
+opt.onchange = function() {
+	ad.src = dl.href = 'https://github.com/battlecatsultimate/bcu-assets/raw/master/music/' + opt.value;
+}
+</script>
+</body>
+</html>
