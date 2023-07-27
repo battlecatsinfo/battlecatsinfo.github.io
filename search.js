@@ -16,7 +16,7 @@ const atk_s = document.getElementById('atk-s');
 const ab_s = document.getElementById('ab-s');
 const atkBtn = atk_s.firstElementChild.firstElementChild;
 const traitBtn = trait_s.firstElementChild.firstElementChild;
-const abBtn = ab_s.firstElementChild.nextElementSibling.firstElementChild;
+const abBtn = ab_s.firstElementChild.firstElementChild;
 const name_search = document.getElementById('name-search');
 var last_forms;
 function rerender(event) {
