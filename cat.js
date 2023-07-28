@@ -973,8 +973,20 @@ default: console.assert(false, talent[0]);
 			return dps * 4;
 		if (this.ab.hasOwnProperty(AB_S)) {
 			const s = this.ab[AB_S];
-			dps += dps * ((s[0] * s[1]) / 10000);
+			dps *= 1 + ((s[0] * s[1]) / 10000);
 		}
+		if (this.ab.hasOwnProperty(AB_VOLC)) {
+			const x = this.ab[AB_VOLC];
+			atk *= 1 + (x[4] * x[0] / 100);
+		}
+		else if (this.ab.hasOwnProperty(AB_MINIVOLC)) {
+			const x = this.ab[AB_MINIVOLC];
+			atk *= 1 + (x[4] * x[0] / 500);
+		}
+		if (this.ab.hasOwnProperty(AB_WAVE))
+			atk *= 1 + this.ab[AB_WAVE][0] / 100;
+		else if (this.ab.hasOwnProperty(AB_MINIWAVE))
+			atk *= 1 + this.ab[AB_MINIWAVE][0] / 500;
 		if (this.ab.hasOwnProperty(AB_CRIT))
 			dps += dps * (this.ab[AB_CRIT][0] / 100);
 		if (this.ab.hasOwnProperty(AB_STRONG))
@@ -999,8 +1011,20 @@ default: console.assert(false, talent[0]);
 		let atk = this.getatk();
 		if (this.ab.hasOwnProperty(AB_ATKBASE))
 			return atk * 4;
+		if (this.ab.hasOwnProperty(AB_VOLC)) {
+			const x = this.ab[AB_VOLC];
+			atk *= (1 + x[4]);
+		}
+		else if (this.ab.hasOwnProperty(AB_MINIVOLC)) {
+			const x = this.ab[AB_MINIVOLC];
+			atk *= (1 + x[4] * 0.2);
+		}
+		if (this.ab.hasOwnProperty(AB_WAVE))
+			atk += atk;
+		else if (this.ab.hasOwnProperty(AB_MINIWAVE))
+			atk *= 1.2;
 		if (this.ab.hasOwnProperty(AB_S))
-			atk *= (this.ab[AB_S][1] / 100);
+			atk *= 1 + (this.ab[AB_S][1] / 100);
 		if (this.ab.hasOwnProperty(AB_CRIT))
 			atk += atk;
 		if (this.ab.hasOwnProperty(AB_STRONG))
