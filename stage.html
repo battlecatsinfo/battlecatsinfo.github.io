@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>關卡資訊</title>
+	<link rel="stylesheet" type="text/css" href="w3.css">
+	<script type="text/javascript" src="browserfs.min.js"></script>
+</head>
+<body>
+<style>
+html, body { width: 100%;min-width: 800px; }
+select.L {
+	font-size: 20px;
+	width: 100%;
+	margin: 10px 25px;
+}
+input[type="search"] {
+	width: 100%;
+	padding: 8px 5px;
+	border: 3px solid #ddd;
+	border-radius: 7px;
+	outline: none;
+	transition: 0.2s;
+}
+input[type="search"]:focus {
+	border-color: #bbb;
+}
+table.w3-striped {
+	margin: 15px 12px auto;
+}
+table.w3-striped thead tr {
+	background-color: #d7e4ff;
+}
+table.w3-striped tbody tr:nth-child(odd) {
+    background-color: #f1f8ff;
+}
+table.w3-striped tbody tr:nth-child(even) {
+    background-color: #baff6a3c;
+}
+</style>
+	<div style="width: 25%;">
+		<select class="L" id="M1"></select>
+		<select class="L" id="M2"></select>
+		<select class="L" id="M3"></select>
+		<div style="font-size: 50px;color: white;background-color: rgb(196, 196, 196);border-radius: 8px;width: 100%;margin: 0 10px auto;text-align: center;" id="stars">
+			<span style="color: darkorange;">★</span><span>★</span><span>★</span><span>★</span>
+		</div>
+	</div>
+	<div style="width: 70%;position: absolute;left: calc(25% + 30px);top: 0px;">
+		<input type="search" id="name-search" placeholder="收尋關卡名稱">
+		<table class="w3-table w3-centered w3-striped">
+			<thead>
+				<tr><th colspan="6" id="st-name"></th></tr>
+				<tr><th colspan="6" id="st-name2"></th></tr>
+			</thead>
+			<tbody>
+				<tr id="st-1">
+					<td>消費統帥力</td>
+					<td></td>
+					<td>敵方上限</td>
+					<td></td>
+					<td>總長</td>
+					<td></td>
+				</tr>
+				<tr id="st-2">
+					<td>敵城體力</td>
+					<td></td>
+					<td>敵城圖片</td>
+					<td></td>
+					<td>背景</td>
+					<td></td>
+				</tr>
+				<tr id="st-3">
+					<td>經驗值</td>
+					<td></td>
+					<td>接關</td>
+					<td></td>
+					<td>貓電腦</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="w3-table w3-centered w3-striped">
+			<tbody>
+				<thead>
+					<tr><td>過關獎勵</td><td>機率</td><td>上限</td></tr>
+				</thead>
+				<tbody id="rewards"></tbody>
+			</tbody>
+		</table>
+		<table class="w3-table w3-centered w3-striped">
+			<tbody>
+				<thead>
+					<tr><td>掉落素材</td><td>機率</td><td>抽選次數 3次</td></tr>
+				</thead>
+				<tbody id="drops"></tbody>
+			</tbody>
+		</table>
+		<table class="w3-table w3-centered w3-striped">
+			<tbody>
+				<thead>
+					<tr><td colspan="2">敵人</td><td>倍率</td><td>出現數</td><td>城連動</td><td>初登場</td><td>再登場</td></tr>
+				</thead>
+				<tbody id="lines"></tbody>
+			</tbody>
+		</table>
+	</div>
+<script type="text/javascript" src="stage.js"></script>
+</body>
+</html>

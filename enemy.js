@@ -150,12 +150,13 @@ function renderTable(E) {
 		specials.appendChild(p);
 	}
 	createAbIcons(E, specials);
-	document.getElementById('e-id').innerText = [E.name, E.jp_name].filter(x => x.length).join('/');
+	const title = [E.name, E.jp_name].filter(x => x.length).join('/');
+	document.title = title;
+	document.getElementById('e-id').innerText = title;
 	document.getElementById('open-db').href = 'https://battlecats-db.com/enemy/' + t3str(my_id) + '.html';
 }
 loadEnemy(my_id)
 .then(E => {
-	console.log(E);
 	document.getElementById('loader').style.display = 'none';
 	loader_text.style.display = 'none';
 	document.getElementById('main').style.display = 'block';
