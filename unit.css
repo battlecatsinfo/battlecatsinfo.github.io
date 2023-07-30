@@ -115,3 +115,13 @@ hr {
     border-style: double;
     border-width: 3px;
 }
+div.An {
+  position: relative;
+  display: none;
+  animation-name: An;
+  animation-duration: 0.7s
+}
+@keyframes An { 
+  from { opacity:0; } 
+  to { opacity:1; }
+}

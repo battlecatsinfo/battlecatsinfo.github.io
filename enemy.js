@@ -6,6 +6,7 @@ if (isNaN(my_id)) {
 	throw '';
 }
 my_id += 2;
+var my_mult = my_params.get('mult') || my_params.get('mag');
 const enemy_content = document.getElementById('ctn');
 function createAbIcons(E, parent) {
 	createImuIcons(E.imu, parent);
@@ -64,15 +65,24 @@ function renderTable(E) {
 	const stats = document.getElementById('stats');
 	const chs = stats.children;
 	const ss = t3str(E.id - 2);
+	if (my_mult) {
+		my_mult = parseInt(my_mult);
+		if (isNaN(my_mult))
+			my_mult = 100;
+	} else {
+		my_mult = 100;
+	}
+	document.getElementById('mult').innerText = '倍率: ' + my_mult.toString() + '%';
+	my_mult *= 0.01;
 	chs[0].children[0].children[0].src = 'data/enemy/' + ss + '/enemy_icon_' + ss + '.png';
 	chs[0].children[0].children[0].onerror = function(event) {
 		event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
 	}
-	chs[0].children[2].innerText = E.hp;
-	chs[0].children[4].innerText = [E.atk, E.atk1, E.atk2].filter(x => x).join('/');
+	chs[0].children[2].innerText = E.hp * my_mult;
+	chs[0].children[4].innerText = [E.atk * my_mult, E.atk1 * my_mult, E.atk2 * my_mult].filter(x => x).join('/');
 	chs[0].children[6].innerText = E.speed;
 	chs[1].children[1].innerText = E.kb;
-	chs[1].children[3].innerText = numStr(E.atk * 30 / E.attackF);
+	chs[1].children[3].innerText = numStr((E.atk + E.atk1 + E.atk2) * my_mult * 30 / E.attackF);
 	chs[1].children[5].innerText = E.range;
 	chs[1].children[7].innerText = E.earn;
 	chs[2].children[1].innerText = [E.pre, E.pre1, E.pre2].filter(x => x).map(numStrT).join('/');
@@ -153,7 +163,12 @@ function renderTable(E) {
 	const title = [E.name, E.jp_name].filter(x => x.length).join('/');
 	document.title = title;
 	document.getElementById('e-id').innerText = title;
-	document.getElementById('open-db').href = 'https://battlecats-db.com/enemy/' + t3str(my_id) + '.html';
+	my_mult = my_params.get('mult') || my_params.get('mag');
+	console.log(my_mult);
+	var url = new URL('https://battlecats-db.com/enemy/' + t3str(my_id) + '.html');
+	if (my_mult) 
+		url.searchParams.set('mag', my_mult);
+	document.getElementById('open-db').href = url.href;
 }
 loadEnemy(my_id)
 .then(E => {

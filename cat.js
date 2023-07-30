@@ -219,10 +219,10 @@ const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_Z
 function t3str(x) {
 	let s = x.toString();
 	switch (s.length) {
-	case 3: return s;
 	case 2: return '0' + s;
 	case 1: return '00' + s;
 	}
+	return s;
 }
 function numStr(num) {
 	return parseFloat(num.toFixed(2)).toString();
@@ -1141,7 +1141,7 @@ class Enemy {
 		this.speed = data[2];
 		this.atk = data[3];
 		this.tba = data[4] * 2;
-		this.atkType = data[5] ? ATK_RANGE : ATK_SINGLE;
+		this.atkType = data[11] ? ATK_RANGE : ATK_SINGLE;
 		this.earn = data[6];
 		this.range = data[5];
 		this.trait = 0;

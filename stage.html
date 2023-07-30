@@ -8,15 +8,18 @@
 </head>
 <body>
 <style>
-html, body { width: 100%;min-width: 800px; }
-select.L {
-	font-size: 20px;
-	width: 100%;
-	margin: 10px 25px;
+html, body { width: 100%;font-size: 20px; }
+body { margin: 0px 10px auto; }
+.L {
+	font-size: 22px;
+	text-overflow: ellipsis;
+	width: 32vw;
 }
+th { font-weight: normal; }
 input[type="search"] {
-	width: 100%;
-	padding: 8px 5px;
+	width: 95%;
+	margin: 4px 0px auto;
+	padding: 8px 10px;
 	border: 3px solid #ddd;
 	border-radius: 7px;
 	outline: none;
@@ -26,7 +29,7 @@ input[type="search"]:focus {
 	border-color: #bbb;
 }
 table.w3-striped {
-	margin: 15px 12px auto;
+	margin: 15px 0px;
 }
 table.w3-striped thead tr {
 	background-color: #d7e4ff;
@@ -35,19 +38,43 @@ table.w3-striped tbody tr:nth-child(odd) {
     background-color: #f1f8ff;
 }
 table.w3-striped tbody tr:nth-child(even) {
-    background-color: #baff6a3c;
+    background-color: #dcffdc;
 }
+a.star {
+	font-weight: normal;
+	font-size: 18px;
+	margin: 2px 12px;
+}
+a.star::visited {
+	color: initial;
+}
+div.An {
+  animation-name: An;
+  animation-duration: 0.7s
+}
+@keyframes An { 
+  from { opacity:0; } 
+  to { opacity:1; }
+}
+a.res {
+	display: block;
+	margin: 20px 10px;
+	text-decoration: none;
+}
+a.res::visited {
+	color: initial;
+}
+a.res span { color: #ff634e; }
 </style>
-	<div style="width: 25%;">
-		<select class="L" id="M1"></select>
-		<select class="L" id="M2"></select>
-		<select class="L" id="M3"></select>
-		<div style="font-size: 50px;color: white;background-color: rgb(196, 196, 196);border-radius: 8px;width: 100%;margin: 0 10px auto;text-align: center;" id="stars">
-			<span style="color: darkorange;">★</span><span>★</span><span>★</span><span>★</span>
-		</div>
-	</div>
-	<div style="width: 70%;position: absolute;left: calc(25% + 30px);top: 0px;">
-		<input type="search" id="name-search" placeholder="收尋關卡名稱">
+	<table>
+		<tbody><tr>
+		<td><select class="L" id="M1"></select></td>
+		<td><select class="L" id="M2"></select></td>
+		<td><select class="L" id="M3"></select></td>
+		</tr></tbody>
+	</table>
+	<input type="search" id="name-search" placeholder="收尋關卡名稱">
+	<div id="main" style="display: none;" class="An">
 		<table class="w3-table w3-centered w3-striped">
 			<thead>
 				<tr><th colspan="6" id="st-name"></th></tr>
@@ -99,12 +126,13 @@ table.w3-striped tbody tr:nth-child(even) {
 		<table class="w3-table w3-centered w3-striped">
 			<tbody>
 				<thead>
-					<tr><td colspan="2">敵人</td><td>倍率</td><td>出現數</td><td>城連動</td><td>初登場</td><td>再登場</td></tr>
+					<tr><td>敵人</td><td>圖示</td><td>倍率</td><td>出現數</td><td>城連動</td><td>初登場</td><td>再登場</td></tr>
 				</thead>
 				<tbody id="lines"></tbody>
 			</tbody>
 		</table>
 	</div>
+	<div style="display: none;" id="search-result"></div>
 <script type="text/javascript" src="stage.js"></script>
 </body>
 </html>
