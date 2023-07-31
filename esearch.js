@@ -237,12 +237,12 @@ toggle_s.onclick = function() {
 		tables.style.left = '390px';
 		tables.style.width = 'calc(100% - 400px)';
 		document.documentElement.style.setProperty('--mhide', 'block');
-		toggle_s.innerText = '隱藏收尋器';
+		toggle_s.innerText = '隱藏搜尋器';
 	} else {
 		document.documentElement.style.setProperty('--mhide', 'none');
 		tables.style.left = '0px';
 		tables.style.width = '100%';
-		toggle_s.innerText = '顯示收尋器';
+		toggle_s.innerText = '顯示搜尋器';
 	}
 	hide_seach = !hide_seach;
 }
