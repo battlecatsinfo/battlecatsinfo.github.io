@@ -977,16 +977,16 @@ default: console.assert(false, talent[0]);
 		}
 		if (this.ab.hasOwnProperty(AB_VOLC)) {
 			const x = this.ab[AB_VOLC];
-			atk *= 1 + (x[4] * x[0] / 100);
+			dps *= 1 + (x[4] * x[0] / 100);
 		}
 		else if (this.ab.hasOwnProperty(AB_MINIVOLC)) {
 			const x = this.ab[AB_MINIVOLC];
-			atk *= 1 + (x[4] * x[0] / 500);
+			dps *= 1 + (x[4] * x[0] / 500);
 		}
 		if (this.ab.hasOwnProperty(AB_WAVE))
-			atk *= 1 + this.ab[AB_WAVE][0] / 100;
+			dps *= 1 + this.ab[AB_WAVE][0] / 100;
 		else if (this.ab.hasOwnProperty(AB_MINIWAVE))
-			atk *= 1 + this.ab[AB_MINIWAVE][0] / 500;
+			dps *= 1 + this.ab[AB_MINIWAVE][0] / 500;
 		if (this.ab.hasOwnProperty(AB_CRIT))
 			dps += dps * (this.ab[AB_CRIT][0] / 100);
 		if (this.ab.hasOwnProperty(AB_STRONG))
