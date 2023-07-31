@@ -35,7 +35,7 @@ const constants = {
 	"ab_zkill": AB_ZKILL,
 	"ab_ckill": AB_CKILL,
 	"ab_break": AB_BREAK,
-	"ab_shieldbrak": AB_SHIELDBREAK,
+	"ab_shieldbreak": AB_SHIELDBREAK,
 	"ab_s": AB_S,
 	"ab_bounty": AB_BOUNTY,
 	"ab_metalic": AB_METALIC,
