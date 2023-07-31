@@ -2,22 +2,18 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>XP 花費表格</title>
 	<link rel="stylesheet" type="text/css" href="w3.css">
 </head>
 <body>
-<div class="w3-container">
 	<style>
-	* {
-		text-align: center;
-	}
+	body { text-align: center;margin: 20px 20x auto; }
 	table, th, td {
   		border: 1px solid #d1d5d5;
 	}
 	</style>
-	<h1 style="margin: 50px;">XP 花費表格</h1>
-	<table class="w3-table w3-striped w3-centered" style="vertical-align: middle;width: 900px;margin: 0px auto;">
+	<h1 style="margin: 50px auto;">XP 花費表格</h1>
+	<table class="w3-table w3-striped w3-centered" style="width: 900px;vertical-align: middle;margin: 0px auto;">
 		<tr>
 			<td>Level</td>
 			<td>XP</td>
@@ -32,7 +28,6 @@
 		</tr>
 	</table>
 	<a style="font-size: 30px;text-decoration: underline;color: black;display: block;margin-top: 20px;" href="https://thanksfeanor.pythonanywhere.com/xpcurves">Help</a>
-</div>
 </table>
 <script>
 const my_params = new URLSearchParams(location.search);
