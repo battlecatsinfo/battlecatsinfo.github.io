@@ -7,6 +7,7 @@ var anim1 = null;
 var anim2 = null;
 var _eggs = null;
 var enemy_descs = null;
+const BC_VER = 120503;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -1341,7 +1342,7 @@ function onupgradeneeded(event) {
 }
 async function loadCat(id) {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", 1);
+		var req = indexedDB.open("db", BC_VER);
 		req.onupgradeneeded = onupgradeneeded;
 		req.onsuccess = function(event) {
 			const db = event.target.result;
@@ -1365,7 +1366,7 @@ async function loadCat(id) {
 }
 async function loadEnemy(id) {
 	return new Promise((resolve, reject) => {
-		var req = indexedDB.open("db", 1);
+		var req = indexedDB.open("db", BC_VER);
 		req.onupgradeneeded = onupgradeneeded;
 		req.onsuccess = function(event) {
 			const db = event.target.result;
@@ -1392,7 +1393,7 @@ async function loadEnemy(id) {
 }
 async function loadAllEnemies() {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", 1);
+		var req = indexedDB.open("db", BC_VER);
 		req.onupgradeneeded = onupgradeneeded;
 		req.onsuccess = function(event) {
 			const db = event.target.result;
@@ -1429,7 +1430,7 @@ async function loadAllEnemies() {
 }
 async function loadAllCats() {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", 1);
+		var req = indexedDB.open("db", BC_VER);
 		req.onupgradeneeded = onupgradeneeded;
 		req.onsuccess = function(event) {
 			const db = event.target.result;
