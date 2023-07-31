@@ -4,12 +4,13 @@
 	<meta charset="utf-8">
 	<title>關卡資訊</title>
 	<link rel="stylesheet" type="text/css" href="w3.css">
+	<script src="RewardName.js"></script>
 	<script type="text/javascript" src="browserfs.min.js"></script>
 </head>
 <body>
 <style>
-html, body { width: 100%;font-size: 20px; }
-body { margin: 0px 10px auto; }
+html, body { width: 100%;font-size: 18px; }
+body { padding: 10px 20px;;line-height: initial; }
 .L {
 	font-size: 22px;
 	text-overflow: ellipsis;
@@ -44,6 +45,7 @@ a.star {
 	font-weight: normal;
 	font-size: 18px;
 	margin: 2px 12px;
+	text-decoration: none;
 }
 a.star::visited {
 	color: initial;
@@ -108,28 +110,30 @@ a.res span { color: #ff634e; }
 			</tbody>
 		</table>
 		<table class="w3-table w3-centered w3-striped">
-			<tbody>
-				<thead>
-					<tr><td>過關獎勵</td><td>機率</td><td>上限</td></tr>
-				</thead>
-				<tbody id="rewards"></tbody>
-			</tbody>
+			<thead>
+				<tr><td>過關獎勵</td><td>機率</td><td>上限</td></tr>
+			</thead>
+			<tbody id="rewards"></tbody>
 		</table>
 		<table class="w3-table w3-centered w3-striped">
 			<tbody>
 				<thead>
-					<tr><td>掉落素材</td><td>機率</td><td>抽選次數 3次</td></tr>
+					<tr><td>掉落素材</td><td id="mM">機率</td></tr>
 				</thead>
 				<tbody id="drops"></tbody>
-			</tbody>
 		</table>
 		<table class="w3-table w3-centered w3-striped">
 			<tbody>
 				<thead>
-					<tr><td>敵人</td><td>圖示</td><td>倍率</td><td>出現數</td><td>城連動</td><td>初登場</td><td>再登場</td></tr>
+					<tr><td>時間獎勵</td><td>數量</td><td>時間</td></tr>
 				</thead>
-				<tbody id="lines"></tbody>
-			</tbody>
+				<tbody id="times"></tbody>
+		</table>
+		<table class="w3-table w3-centered w3-striped">
+			<thead>
+				<tr><td>敵人</td><td>圖示</td><td>倍率</td><td>出現數</td><td>塔連動</td><td>初登場</td><td>再登場</td></tr>
+			</thead>
+			<tbody id="lines"></tbody>
 		</table>
 	</div>
 	<div style="display: none;" id="search-result"></div>
