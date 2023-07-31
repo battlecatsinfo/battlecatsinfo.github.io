@@ -1,6 +1,6 @@
 .bc-icon {
     display: inline-block;
-    background-image: url(/data/page/img015.png);    
+    background-image: url(/data/page/img015.png);  
     vertical-align: bottom;
 }
 .bc-icon-trait-red {
@@ -377,4 +377,9 @@
   width: 42px;
   height: 42px;
   background-position: -569px -938px;
+}
+.bc-icon-toxic {
+  width: 42px;
+  height: 42px;
+  background-position: -569px -854px;
 }
