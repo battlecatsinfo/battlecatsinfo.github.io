@@ -270,7 +270,7 @@ M3.oninput = function() {
     m_drops.parentNode.style.display = 'none';
   mM.innerText = `機率(最大掉落量${~~Math.round(mult * info3.mM)})`;
   if (info3.time.length) {
-    times.textContent = '';
+    m_times.textContent = '';
     for (let tm of info3.time) {
       const tr = document.createElement('tr');
       const td0 = document.createElement('td');
@@ -287,11 +287,11 @@ M3.oninput = function() {
       tr.appendChild(td0);
       tr.appendChild(td1);
       tr.appendChild(td2);
-      times.appendChild(tr);
+      m_times.appendChild(tr);
     }
-    times.parentNode.style.display = 'table';
+    m_times.parentNode.style.display = 'table';
   } else {
-    times.parentNode.style.display = 'none';
+    m_times.parentNode.style.display = 'none';
   }
   st1[1].innerText = (M1.selectedOptions[0].value == '/stages/14') ? ('貓力達' + String.fromCharCode(65 + info3.e/1000) + '×' + (info3.e % 1000).toString()) : info3.e;
   st1[3].innerText = info3.max;
