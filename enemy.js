@@ -164,7 +164,6 @@ function renderTable(E) {
 	document.title = title;
 	document.getElementById('e-id').innerText = title;
 	my_mult = my_params.get('mult') || my_params.get('mag');
-	console.log(my_mult);
 	var url = new URL('https://battlecats-db.com/enemy/' + t3str(my_id) + '.html');
 	if (my_mult) 
 		url.searchParams.set('mag', my_mult);

@@ -7,7 +7,7 @@ var anim1 = null;
 var anim2 = null;
 var _eggs = null;
 var enemy_descs = null;
-const BC_VER = 120503;
+const BC_VER = 120504;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -1183,7 +1183,7 @@ class Enemy {
 		(data[38]) && (this.ab[AB_WAVES] = []);
 		(data[43]) && (this.ab[AB_BURROW] = [data[43], data[44] / 4]);
 		(data[45]) && (this.ab[AB_REVIVE] = [data[45], data[46], data[47]]);
-		(data[52]) && (this.ab[AB_GLASS] = []);
+		(data[52] == 2) && (this.ab[AB_GLASS] = []);
 		(data[64]) && (this.ab[AB_SHIELD] = [data[64]]);
 		(data[65]) && (this.ab[AB_WARP] = [data[65], data[66], data[67] / 4]);
 		(data[73]) && (this.ab[AB_CURSE] = [data[73], data[74]]);
@@ -1212,8 +1212,7 @@ class Enemy {
 		(data[40]) && (this.imu |= IMU_STOP);
 		(data[41]) && (this.imu |= IMU_SLOW);
 		(data[42]) && (this.imu |= IMU_WEAK);
-		if (data[52] == 2)
-			this.glass = true;
+		(data[85]) && (this.imu |= IMU_VOLC);
 		const atkCount = this.atk1 == 0 ? 1 : this.atk2 == 0 ? 2 : 3;
 		this.lds = new Array(atkCount);
 		this.lds[0] = data[35];
