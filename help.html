@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <link rel="stylesheet" type="text/css" href="w3.css">
   <title>使用說明</title>
   <style>
     code{white-space: pre-wrap;}
@@ -12,9 +12,11 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    h2, h3 { text-align: left; }
+    h1 { text-align:center;  }
   </style>
 </head>
-<body>
+<body style="padding: 50px 50px;font-size: 18px;text-align: justify;">
 <header id="title-block-header">
 <h1 class="title">使用說明</h1>
 </header>
@@ -46,184 +48,204 @@ ul.task-list{list-style: none;}
 <h3 id="變數">變數</h3>
 <p>在上面的例子中，<code>dps</code>、<code>cd</code>、<code>range</code> 等都稱作變數，代表貓咪的某個資訊</p>
 <p>以下是可以使用的變數清單(變數不分大小寫)</p>
-<table>
+<table class="w3-table w3-striped w3-centered">
 <thead>
-<tr class="header">
+<tr>
 <th>變數</th>
 <th>解釋</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>id</td>
 <td>Cat ID</td>
 </tr>
-<tr class="even">
+<tr>
 <td>trait</td>
 <td>針對屬性</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>imu</td>
 <td>抗性</td>
 </tr>
-<tr class="even">
+<tr>
 <td>hp</td>
 <td>血量</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>atk</td>
 <td>攻擊力總和</td>
 </tr>
-<tr class="even">
+<tr>
 <td>attack</td>
 <td>同 atk</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>range</td>
 <td>攻擊距離或接觸點</td>
 </tr>
-<tr class="even">
+<tr>
 <td>attacks</td>
 <td>攻擊頻率(秒)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>attackf</td>
-<td>攻擊頻率(f)</td>
+<td>攻擊頻率(f 幀數)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>dps</td>
 <td>DPS(<code>attack / attacks</code>)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>kb</td>
 <td>KB</td>
 </tr>
-<tr class="even">
+<tr>
 <td>cd</td>
 <td>再生產</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>atktype</td>
 <td>攻擊類型</td>
 </tr>
-<tr class="even">
+<tr>
 <td>rarity</td>
 <td>稀有度</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>speed</td>
 <td>移動速度</td>
 </tr>
-<tr class="even">
+<tr>
 <td>price</td>
 <td>價格(二章、傳說)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>cost</td>
 <td>同price</td>
 </tr>
-<tr class="even">
+<tr>
 <td>thp</td>
 <td>加上能力和效果的血量</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>tatk</td>
 <td>加上能力和效果的攻擊力</td>
 </tr>
-<tr class="even">
+<tr>
 <td>tdps</td>
 <td>加上能力和效果的DPS</td>
+</tr>
+<tr>
+<td>tba</td>
+<td>Time between attacks</td>
+</tr>
+<tr>
+<td>backswing</td>
+<td>後搖 收招時間</td>
+</tr>
+<tr>
+<td>pre</td>
+<td>前搖(Preswing)(第一個)</td>
+</tr>
+<tr>
+<td>pre1</td>
+<td>前搖(第二個，若沒有是0)</td>
+</tr>
+<tr>
+<td>pre2</td>
+<td>前搖(第三個，若沒有是0)</td>
 </tr>
 </tbody>
 </table>
 <p>在使用 ‘tdps’ 和 ‘thp’ 時要注意<em>終結使徒</em>和<em>終結魔女</em>的加成很大，而且有些效果會疊加，如EVA零號機因<em>終結使徒</em>+<em>很耐打</em>使得 HP 乘 <code>5 * 5 = 25</code> 倍，造成破百萬的血量</p>
 <p>以上數值都是以滿金寶、滿科技計算</p>
 <h3 id="運算子">運算子</h3>
-<table>
+<table class="w3-table w3-centered w3-striped">
 <thead>
-<tr class="header">
+<tr>
 <th>運算子</th>
 <th>解釋</th>
 <th>最先結合順序(最高1)</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code>*</code></td>
 <td>乘法</td>
 <td>1</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>/</code></td>
 <td>除法</td>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>%</code></td>
 <td>取餘數</td>
 <td>1</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>+</code></td>
 <td>加法</td>
 <td>2</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>-</code></td>
 <td>減法</td>
 <td>2</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>&gt;</code></td>
 <td>大於</td>
 <td>3</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>&gt;=</code></td>
 <td>大於等於</td>
 <td>3</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>&lt;</code></td>
 <td>小於</td>
 <td>3</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>&lt;=</code></td>
 <td>小於等於</td>
 <td>3</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>==</code></td>
 <td>等於</td>
 <td>4</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>!=</code></td>
 <td>不等於</td>
 <td>4</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>&amp;</code></td>
 <td>位元AND</td>
 <td>4</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>|</code></td>
 <td>位元OR</td>
 <td>4</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>^</code></td>
 <td>位元XOR</td>
 <td>4</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>&amp;&amp;</code></td>
 <td>邏輯AND</td>
 <td>5</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>||</code></td>
 <td>邏輯OR</td>
 <td>5</td>
@@ -231,10 +253,9 @@ ul.task-list{list-style: none;}
 </tbody>
 </table>
 <p>位元AND、位元OR、位元XOR平常較少用到，如果要用AND功能，請用<code>&amp;&amp;</code>，如果要用OR功能，請用<code>||</code></p>
-<p>另外 <code>-</code> 是負號的意思，<code>(</code> 和 <code>)</code> 可以指定優先運算，如 <code>-(1+2)*3</code> 是 <code>-9</code></p>
+<p>另外 <code>(</code> 和 <code>)</code> 可以指定優先運算，如 <code>-(1+2)*3</code> 是 <code>-9</code></p>
 <h3 id="含式">含式</h3>
-<p><code>hasab</code>: 有某種能力或效果，如 <code>hasab(AB_WAVE)</code> 是有波動能力的貓咪 <code>hasres</code> 是有某種耐性，如 <code>hasres(RES_WEAK)</code> 是有降攻耐性的貓咪 <code>dpsagainst</code>: 是對XXX屬性敵人的dps，其中除了常見的屬性(可以在篩選頁面選擇並複製篩選表達式)，<code>TB_BEAST</code> 是超獸，<code>TB_BARON</code>是超生命體，<code>TB_EVA</code> 是使徒，<code>TB_WITCH</code> 是魔女。而<code>dpsagainst(AB_METAL)</code> 比較特殊，它是計算對<em>鋼鐵敵人</em>造成的每秒傷害，所以沒有爆擊的機率會以1來計算，爆擊機率(含大傷、超傷、善攻)以雙倍計算，dps為兩者之和。</p>
-<p><code>dpsagainst</code> 的緣起是因為看到有人作對某某屬性的dps排行，才做出的功能</p>
+<p><code>hasab</code>: 有某種能力或效果，如 <code>hasab(AB_WAVE)</code> 是有波動能力的貓咪 <code>hasres</code> 是有某種耐性，如 <code>hasres(RES_WEAK)</code> 是有降攻耐性的貓咪 <code>dpsagainst</code>: 是對某屬性敵人的dps，其中除了常見的屬性(可以在篩選頁面選擇並複製篩選表達式)，<code>TB_BEAST</code> 是超獸，<code>TB_BARON</code>是超生命體，<code>TB_EVA</code> 是使徒，<code>TB_WITCH</code> 是魔女。而<code>dpsagainst(AB_METAL)</code> 比較特殊，它是計算對<em>鋼鐵敵人</em>造成的每秒傷害，所以沒有爆擊的機率會以1來計算，爆擊機率(含大傷、超傷、善攻)以雙倍計算，dps為兩者之和。</p>
 <ul>
 <li><code>max</code>: 最大值，如<code>max(1, 2, 3)</code>是3</li>
 <li><code>min</code>: 最小值，如<code>min(1, 2, 3)</code>是1</li>

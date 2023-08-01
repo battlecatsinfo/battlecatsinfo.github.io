@@ -74,5 +74,6 @@ const constants = {
 	"res_wave": RES_WAVE,
 	"res_surge": RES_SURGE,
 	"res_curse": RES_CURSE,
-	"res_toxic": RES_TOXIC
+	"res_toxic": RES_TOXIC,
+	"res_warp": RES_WARP
 };

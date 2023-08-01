@@ -213,7 +213,8 @@ const
   RES_SURGE = 5,
   RES_CURSE = 6,
   RES_TOXIC = 7,
-  RES_LAST = RES_TOXIC;
+  RES_WARP = 8,
+  RES_LAST = RES_WARP;
 const trait_short_names = ['紅','浮', '黑','鐵','天','星','屍','古', '無', '使徒', '魔女', '惡'];
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
@@ -559,6 +560,9 @@ case 3:
 	}
 	break;
 }
+case 4:
+	this.ab[AB_ONLY] = [getTraitNames(this.trait)];
+	break;
 case 5:
 	this.ab[AB_GOOD] = [getTraitNames(this.trait)];
 	break;
@@ -588,6 +592,9 @@ case 11:
 	} else {
 		this.ab[AB_LETHAL] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)];
 	}
+	break;
+case 12:
+	this.ab[AB_ATKBASE] = [];
 	break;
 case 13:
 	if (this.data[31]) {
@@ -631,6 +638,10 @@ case 21:
 case 22:
 	this.res[RES_WAVE] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	break;
+case 23:
+	this.ab[AB_WAVES] = [];
+case 24:
+	this.res[RES_WARP] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 case 25:
 	this.price = this.price - talent[2] * level;
 	break;
@@ -653,8 +664,13 @@ case 32:
 	this.hp *= 1 + (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) * 0.01;
 	break;
 case 33:
-	this.trait |= RB_RED;
+	this.trait |= TB_RED;
 	this.updateTraitNames();
+	break;
+case 34:
+	this.trait |= TB_FLOAT;
+	this.updateTraitNames();
+	break;
 case 35:
 	this.trait |= TB_BLACK;
 	this.updateTraitNames();
@@ -677,6 +693,13 @@ case 39:
 case 40:
 	this.trait |= TB_RELIC;
 	this.updateTraitNames();
+	break;
+case 41:
+	this.trait |= TB_WHITE;
+	this.updateTraitNames();
+	break;
+case 42:
+case 43: /* EVA ? Which ? */
 	break;
 case 44:
 	this.imu |= IMU_WEAK;
@@ -1477,7 +1500,8 @@ const res_icon_names = [
 	"wave",
 	"surge",
 	"curse",
-	"toxic"
+	"toxic",
+	'warp'
 ];
 const res_descs = [
 	'降攻耐性(受到降攻時間減少$%)',
@@ -1488,12 +1512,13 @@ const res_descs = [
 	'烈波耐性(受到烈波傷害減少$%)',
 	'詛咒耐性(受到詛咒時間減少$%)',
 	'毒擊耐性(受到毒擊傷害減少$%)',
+	"抗傳耐性(??未知的能力??)"
 ];
 function createResIcons(res, parent) {
 	for (let i = 1;i <= RES_LAST;++i) {
 		if (res.hasOwnProperty(i)) {
 			const e = document.createElement('span');
-			e.classList.add('bc-icon', `bc-icon-${icon_names[i - 1]}`);
+			e.classList.add('bc-icon', `bc-icon-res-${res_icon_names[i - 1]}2`);
 			parent.appendChild(e);
 			const e2 = document.createElement('span');
 			e2.innerText = res_descs[i].replace('$', res[i]);

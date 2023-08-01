@@ -553,6 +553,7 @@ function getTalentInfo(talent, data) {
 		if (talent[4] && talent[4] != talent[5])
 			return range('緩速時間', 'f', 4, 5);
 		return range('緩速機率', '%', 2, 3);
+	case 4:  return "只能攻擊";
 	case 5:  return "善於攻擊";
 	case 6:  return "耐打";
 	case 7:  return "超大傷害";
@@ -568,6 +569,8 @@ function getTalentInfo(talent, data) {
 		if (data[42])
 			return range('死前存活', '%', 2, 3);
 		return range2("死前存活", '%', 2, 3, talent[2]);
+	case 12:
+		return "善於攻城";
 	case 13:
 		if (data[31])
 			return range('爆擊', '%', 2, 3);
@@ -594,6 +597,10 @@ function getTalentInfo(talent, data) {
 		return range("擊退耐性");
 	case 22:
 		return range("波動耐性");
+	case 23:
+		return '波動滅止';
+	case 24:
+		return range('抗傳耐性');
 	case 25: 
 		return ['成本減少', ~~(talent[2] * 1.5), ~~(talent[3] * 1.5), talent[1], numStr(talent[2] * 1.5)];
 	case 26:
@@ -606,12 +613,16 @@ function getTalentInfo(talent, data) {
 	case 31: return range("攻擊力");
 	case 32: return range("血量");
 	case 33: return "對紅色敵人";
+	case 34: return "對漂浮敵人";
 	case 35: return "對黑色敵人";
 	case 36: return "對鋼鐵敵人";
 	case 37: return '對天使敵人';
 	case 38: return "對異星敵人";
 	case 39: return "對不死敵人";
 	case 40: return "對古代種";
+	case 41: return "對白色種";
+	case 42:
+	case 43: return "請聯絡網站作者!!";
 	case 44: return "降攻無效";
 	case 45: return "暫停無效";
 	case 46: return "緩速無效";
