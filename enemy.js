@@ -168,6 +168,7 @@ function renderTable(E) {
 	if (my_mult) 
 		url.searchParams.set('mag', my_mult);
 	document.getElementById('open-db').href = url.href;
+	document.getElementById('search-appear').href = '/appear.html?id=' + (my_id - 2).toString();
 }
 loadEnemy(my_id)
 .then(E => {

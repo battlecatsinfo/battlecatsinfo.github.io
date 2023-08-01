@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>出現關卡</title>
+	<link rel="stylesheet" type="text/css" href="unit.css">
+	<script src="RewardName.js"></script>
+	<script type="text/javascript" src="browserfs.min.js"></script>
+</head>
+<body>
+<style>
+html, body { width: 100%;font-size: 18px; }
+body { padding: 10px 20px;;line-height: initial; }
+div.An {
+  animation-name: An;
+  animation-duration: 0.7s
+}
+@keyframes An { 
+  from { opacity:0; } 
+  to { opacity:1; }
+}
+a {
+	color: black;
+	display: block;
+	padding: 10px 15px;
+	text-decoration: none;
+}
+a::visited {
+	color: initial;
+}
+details {
+    border: 1px solid #aaa;
+    cursor: pointer;
+    background-color: darkkhaki;
+    border-radius: 4px;
+    padding: 0.5em 0.5em 0;
+    margin-bottom: 0.2em;
+}
+summary {
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+}
+a:hover {
+  background-color: lightcyan;
+}
+</style>
+<div id="main" style="position: relative;" class="An"><h1 style="margin-block: 0;"><img id="icon">出現的關卡</h1></div>
+<script type="text/javascript" src="appear.js"></script>
+</body>
+</html>
