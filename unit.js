@@ -150,9 +150,8 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	return false;
 }
 function getAtkString(atk, abs, trait, level, parent, plus, dps=false) {
+	atk = Math.round(atk * getLevelMulti(level)) * 2.5;
 	parent.innerText = '';
-	atk *= 2.5;
-	atk *= getLevelMulti(level);
 	const Cs = getCombinations(Object.entries(abs).filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
 	parent.appendChild(document.createTextNode(plus ? ('+' + (~~atk).toString()) : (~~atk).toString()));
 	parent.appendChild(document.createElement('br'));
@@ -224,8 +223,7 @@ function getHp(line, theHP, parent, first, trait, plus) {
 }
 function getHpString(hp, abs, trait, level, parent, plus = false) {
 	parent.innerText = '';
-	hp *= 2.5;
-	hp *= getLevelMulti(level);
+	hp = Math.round(hp * getLevelMulti(level)) * 2.5;
 	const Cs = getCombinations(Object.entries(abs).filter(x => hp_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
 	parent.appendChild(document.createTextNode(plus ? ('+' + (~~hp).toString()) : (~~hp).toString()));
 	parent.appendChild(document.createElement('br'));
