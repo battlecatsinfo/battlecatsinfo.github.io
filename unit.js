@@ -149,10 +149,9 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	parent.appendChild(document.createElement('br'));
 	return false;
 }
-function getAtkString(atk, abs, trait, level, parent, plus, dps=false) {
+function getAtkString(form, atk, abs, trait, level, parent, plus, dps=false) {
+	atk = ~~((~~(Math.round(atk * getLevelMulti(level)) * 2.5)) * form.atkM);
 	parent.innerText = '';
-	atk *= 2.5;
-	atk *= getLevelMulti(level);
 	const Cs = getCombinations(Object.entries(abs).filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
 	parent.appendChild(document.createTextNode(plus ? ('+' + (~~atk).toString()) : (~~atk).toString()));
 	parent.appendChild(document.createElement('br'));
@@ -222,10 +221,9 @@ function getHp(line, theHP, parent, first, trait, plus) {
 	parent.appendChild(document.createElement('br'));
 	return false;
 }
-function getHpString(hp, abs, trait, level, parent, plus = false) {
+function getHpString(form, hp, abs, trait, level, parent, plus = false) {
 	parent.innerText = '';
-	hp *= 2.5;
-	hp *= getLevelMulti(level);
+	hp = ~~((~~(Math.round(hp * getLevelMulti(level)) * 2.5)) * form.hpM);
 	const Cs = getCombinations(Object.entries(abs).filter(x => hp_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
 	parent.appendChild(document.createTextNode(plus ? ('+' + (~~hp).toString()) : (~~hp).toString()));
 	parent.appendChild(document.createElement('br'));
@@ -252,20 +250,20 @@ function updateValues(form, tbl) {
 		lvE = lvE.nextElementSibling;
 	}
 	for (let i = 0;i < 5;++i)
-		getHpString(form.hp, form.ab, form.trait, levels[i], HPs[i + 1]);
-	getHpString(form.hp * 0.2, form.ab, form.trait, 1, HPs[6], true);
+		getHpString(form, form.hp, form.ab, form.trait, levels[i], HPs[i + 1]);
+	getHpString(form, form.hp * 0.2, form.ab, form.trait, 1, HPs[6], true);
 	let hppkb = form.hp / form.kb;
 	for (let i = 0;i < 5;++i)
-		getHpString(hppkb, form.ab, form.trait, levels[i], HPPKBs[i + 1]);
-	getHpString(hppkb * 0.2, form.ab, form.trait, 1, HPPKBs[6], true);
+		getHpString(form, hppkb, form.ab, form.trait, levels[i], HPPKBs[i + 1]);
+	getHpString(form, hppkb * 0.2, form.ab, form.trait, 1, HPPKBs[6], true);
 	const totalAtk = form.atk + form.atk1 + form.atk2;
 	for (let i = 0;i < 5;++i)
-		getAtkString(totalAtk, form.ab, form.trait, levels[i], ATKs[i + 1], false);
-	getAtkString(totalAtk * 0.2, form.ab, form.trait, 1, ATKs[6], true);
+		getAtkString(form, totalAtk, form.ab, form.trait, levels[i], ATKs[i + 1], false);
+	getAtkString(form, totalAtk * 0.2, form.ab, form.trait, 1, ATKs[6], true);
 	const attackS = form.attackF / 30;
 	for (let i = 0;i < 5;++i)
-		getAtkString(totalAtk/attackS, form.ab, form.trait, levels[i], DPSs[i + 1], false, true);
-	getAtkString((totalAtk * 0.2)/attackS, form.ab, form.trait, 1, DPSs[6], true, true);
+		getAtkString(form, totalAtk/attackS, form.ab, form.trait, levels[i], DPSs[i + 1], false, true);
+	getAtkString(form, (totalAtk * 0.2)/attackS, form.ab, form.trait, 1, DPSs[6], true, true);
 	chs[6].children[1].innerText = numStrT(form.tba);
 	chs[6].children[3].innerText = numStrT(form.backswing);
 	chs[5].children[1].innerText = numStrT(form.attackF).replace('秒', '秒/下');
@@ -553,6 +551,7 @@ function getTalentInfo(talent, data) {
 		if (talent[4] && talent[4] != talent[5])
 			return range('緩速時間', 'f', 4, 5);
 		return range('緩速機率', '%', 2, 3);
+	case 4:  return "只能攻擊";
 	case 5:  return "善於攻擊";
 	case 6:  return "耐打";
 	case 7:  return "超大傷害";
@@ -568,6 +567,8 @@ function getTalentInfo(talent, data) {
 		if (data[42])
 			return range('死前存活', '%', 2, 3);
 		return range2("死前存活", '%', 2, 3, talent[2]);
+	case 12:
+		return "善於攻城";
 	case 13:
 		if (data[31])
 			return range('爆擊', '%', 2, 3);
@@ -594,6 +595,10 @@ function getTalentInfo(talent, data) {
 		return range("擊退耐性");
 	case 22:
 		return range("波動耐性");
+	case 23:
+		return '波動滅止';
+	case 24:
+		return range('抗傳耐性');
 	case 25: 
 		return ['成本減少', ~~(talent[2] * 1.5), ~~(talent[3] * 1.5), talent[1], numStr(talent[2] * 1.5)];
 	case 26:
@@ -605,12 +610,17 @@ function getTalentInfo(talent, data) {
 		return range("詛咒耐性");
 	case 31: return range("攻擊力");
 	case 32: return range("血量");
+	case 33: return "對紅色敵人";
+	case 34: return "對漂浮敵人";
 	case 35: return "對黑色敵人";
 	case 36: return "對鋼鐵敵人";
 	case 37: return '對天使敵人';
 	case 38: return "對異星敵人";
 	case 39: return "對不死敵人";
 	case 40: return "對古代種";
+	case 41: return "對白色種";
+	case 42:
+	case 43: return "請聯絡網站作者!!";
 	case 44: return "降攻無效";
 	case 45: return "暫停無效";
 	case 46: return "緩速無效";
