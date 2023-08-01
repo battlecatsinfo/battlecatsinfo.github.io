@@ -658,10 +658,10 @@ case 30:
 	this.res[RES_CURSE] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	break;
 case 31:
-	this.atk *= 1 + (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) * 0.01;
+	this.atkM = 1 + (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) * 0.01;
 	break;
 case 32:
-	this.hp *= 1 + (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) * 0.01;
+	this.hpM = 1 + (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) * 0.01;
 	break;
 case 33:
 	this.trait |= TB_RED;
@@ -914,10 +914,12 @@ default: console.assert(false, talent[0]);
 		return this.backswing;
 	}
 	gethp() {
-		return this.hp * 2.5 * getLevelMulti(this.getTotalLv());
+		const x = ~~(2.5 * Math.round(this.hp * getLevelMulti(this.getTotalLv())));
+		return ~~(x * this.hpM);
 	}
 	getatk() {
-		return 2.5 * (this.atk + this.atk1 + this.atk2) * getLevelMulti(this.getTotalLv());
+		const x = ~~(2.5 * Math.round((this.atk + this.atk1 + this.atk2) * getLevelMulti(this.getTotalLv())));
+		return ~~(x * this.atkM);
 	}
 	getdps() {
 		return (this.getatk() * 30) / this.attackF;
@@ -1315,6 +1317,12 @@ class Cat {
 			this.forms[i] = new Form(my_name[i], my_name_jp[i], id, i, datas[i]);
 		}
 	}
+	init() {
+		for (let f of this.forms) {
+			f.hpM = 1;
+			f.atkM = 1;
+		}
+	}
 	getObj() {
 		return { 'info': this.info, 'forms': this.forms };
 	}
@@ -1375,7 +1383,11 @@ async function loadCat(id) {
 			const db = event.target.result;
 			db.transaction(["cats"], "readwrite").objectStore("cats").get(id).onsuccess = function(event) {
 				const res = event.target.result;
-				if (res) return resolve(new Cat(res.data));
+				if (res)  {
+					let c = new Cat(res.data);
+					c.init();
+					return resolve(c);
+				}
 				getAllCats()
 				.then(cats => {
 					const tx = db.transaction(["cats"], "readwrite");
@@ -1383,7 +1395,9 @@ async function loadCat(id) {
 					for (let i = 0;i < cats.length;++i)
 						store.put({'id': i, 'data': cats[i].getObj()});
 					tx.oncomplete = function() {
-						resolve(cats[id]);
+						let c = cats[id];
+						c.init();
+						resolve(c);
 						db.close();
 					}
 				});
@@ -1470,6 +1484,8 @@ async function loadAllCats() {
 						const store = tx.objectStore("cats");
 						for (let i = 0;i < cats.length;++i)
 							store.put({'id': i, 'data': cats[i].getObj()});
+						for (let c of cats)
+							c.init();
 						tx.oncomplete = function() {
 							resolve(cats);
 							db.close();
@@ -1480,7 +1496,9 @@ async function loadAllCats() {
 					db.transaction(["cats"], "readwrite").objectStore("cats").openCursor().onsuccess = function(event) {
 						const cursor = event.target.result;
 						if (cursor) {
-							cats[cursor.value.id] = new Cat(cursor.value.data);
+							const c = new Cat(cursor.value.data);
+							c.init();
+							cats[cursor.value.id] = c;
 							cursor.continue();
 						} else {
 							resolve(cats);

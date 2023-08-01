@@ -149,8 +149,8 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	parent.appendChild(document.createElement('br'));
 	return false;
 }
-function getAtkString(atk, abs, trait, level, parent, plus, dps=false) {
-	atk = Math.round(atk * getLevelMulti(level)) * 2.5;
+function getAtkString(form, atk, abs, trait, level, parent, plus, dps=false) {
+	atk = ~~((~~(Math.round(atk * getLevelMulti(level)) * 2.5)) * form.atkM);
 	parent.innerText = '';
 	const Cs = getCombinations(Object.entries(abs).filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
 	parent.appendChild(document.createTextNode(plus ? ('+' + (~~atk).toString()) : (~~atk).toString()));
@@ -221,9 +221,9 @@ function getHp(line, theHP, parent, first, trait, plus) {
 	parent.appendChild(document.createElement('br'));
 	return false;
 }
-function getHpString(hp, abs, trait, level, parent, plus = false) {
+function getHpString(form, hp, abs, trait, level, parent, plus = false) {
 	parent.innerText = '';
-	hp = Math.round(hp * getLevelMulti(level)) * 2.5;
+	hp = ~~((~~(Math.round(hp * getLevelMulti(level)) * 2.5)) * form.hpM);
 	const Cs = getCombinations(Object.entries(abs).filter(x => hp_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
 	parent.appendChild(document.createTextNode(plus ? ('+' + (~~hp).toString()) : (~~hp).toString()));
 	parent.appendChild(document.createElement('br'));
@@ -250,20 +250,20 @@ function updateValues(form, tbl) {
 		lvE = lvE.nextElementSibling;
 	}
 	for (let i = 0;i < 5;++i)
-		getHpString(form.hp, form.ab, form.trait, levels[i], HPs[i + 1]);
-	getHpString(form.hp * 0.2, form.ab, form.trait, 1, HPs[6], true);
+		getHpString(form, form.hp, form.ab, form.trait, levels[i], HPs[i + 1]);
+	getHpString(form, form.hp * 0.2, form.ab, form.trait, 1, HPs[6], true);
 	let hppkb = form.hp / form.kb;
 	for (let i = 0;i < 5;++i)
-		getHpString(hppkb, form.ab, form.trait, levels[i], HPPKBs[i + 1]);
-	getHpString(hppkb * 0.2, form.ab, form.trait, 1, HPPKBs[6], true);
+		getHpString(form, hppkb, form.ab, form.trait, levels[i], HPPKBs[i + 1]);
+	getHpString(form, hppkb * 0.2, form.ab, form.trait, 1, HPPKBs[6], true);
 	const totalAtk = form.atk + form.atk1 + form.atk2;
 	for (let i = 0;i < 5;++i)
-		getAtkString(totalAtk, form.ab, form.trait, levels[i], ATKs[i + 1], false);
-	getAtkString(totalAtk * 0.2, form.ab, form.trait, 1, ATKs[6], true);
+		getAtkString(form, totalAtk, form.ab, form.trait, levels[i], ATKs[i + 1], false);
+	getAtkString(form, totalAtk * 0.2, form.ab, form.trait, 1, ATKs[6], true);
 	const attackS = form.attackF / 30;
 	for (let i = 0;i < 5;++i)
-		getAtkString(totalAtk/attackS, form.ab, form.trait, levels[i], DPSs[i + 1], false, true);
-	getAtkString((totalAtk * 0.2)/attackS, form.ab, form.trait, 1, DPSs[6], true, true);
+		getAtkString(form, totalAtk/attackS, form.ab, form.trait, levels[i], DPSs[i + 1], false, true);
+	getAtkString(form, (totalAtk * 0.2)/attackS, form.ab, form.trait, 1, DPSs[6], true, true);
 	chs[6].children[1].innerText = numStrT(form.tba);
 	chs[6].children[3].innerText = numStrT(form.backswing);
 	chs[5].children[1].innerText = numStrT(form.attackF).replace('秒', '秒/下');
