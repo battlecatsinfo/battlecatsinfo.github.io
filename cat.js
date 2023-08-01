@@ -7,7 +7,7 @@ var anim1 = null;
 var anim2 = null;
 var _eggs = null;
 var enemy_descs = null;
-const BC_VER = 120505;
+const BC_VER = 120506;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
