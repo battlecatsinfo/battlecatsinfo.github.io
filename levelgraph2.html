@@ -52,7 +52,7 @@ function render(formC) {
   labels.length = 0;
   datas.length = 0;
   for (let level = 0;level <= maxLv;level += 2) {
-  	const hp = my_cat.forms[formC].hp * 2.5 * getLevelMulti(level ? level : 1);
+  	const hp = ~~(2.5 * Math.round(my_cat.forms[formC].hp * getLevelMulti(level ? level : 1)));
   	labels.push(`Lv${level ? level : 1}`);
   	datas.push(hp);
   }
@@ -76,12 +76,12 @@ function render(formC) {
     }
   });
 }
-loadAllCats()
-.then(cats => {
+loadCat(my_id)
+.then(c => {
+	my_cat = c;
 	document.getElementById('loader').style.display = 'none';
 	loader_text.style.display = 'none';
 	document.getElementById('main').style.display = 'block';
-	my_cat = cats[my_id];
 	useCurve(my_id);
 	render(0);
 	for (let i = 0;i <= 2;++i) {
