@@ -67,7 +67,7 @@ function renderTable(forms, page = 1) {
 	for (let i = 0;i < display_forms.length;++i) {
 		const tr = document.createElement('tr');
 		const theForm = display_forms[i][1];
-		const texts = [theForm.id - 2, '', theForm.name + '/' + theForm.jp_name, ~~theForm.gethp(), ~~theForm.getatk(), 
+		const texts = [theForm.id - 2, '', [theForm.name, theForm.jp_name].filter(x => x).join('/'), ~~theForm.gethp(), ~~theForm.getatk(), 
 			~~theForm.getdps(), theForm.kb, theForm.range, numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, theForm.earn, numStr(display_forms[i][0])];
 		for (let j = 0;j < texts.length;++j) {
 			const e = document.createElement('td');
@@ -193,7 +193,6 @@ loadAllEnemies()
 	addBtns(atk_s, params.get('atks'));
 	addBtns(ab_s, params.get('abs'));
 	addBtns(trait_s, params.get('traits'));
-	tcats = new Array(cats.length);
 	calculate(filter ? filter : '');
 });
 document.querySelectorAll('button').forEach(elem => {

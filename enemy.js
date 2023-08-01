@@ -160,7 +160,7 @@ function renderTable(E) {
 		specials.appendChild(p);
 	}
 	createAbIcons(E, specials);
-	const title = [E.name, E.jp_name].filter(x => x.length).join('/');
+	const title = [E.name, E.jp_name].filter(x => x).join('/');
 	document.title = title;
 	document.getElementById('e-id').innerText = title;
 	my_mult = my_params.get('mult') || my_params.get('mag');

@@ -74,7 +74,7 @@ function renderTable(forms, page = 1) {
 		_info = cats[theForm.id].info;
 		const base = Math.min(def_lv, _info.maxBase);
 		const plus = Math.min(plus_lv, _info.maxPlus);
-		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', theForm.name + '/' + theForm.jp_name, ~~theForm.gethp(), ~~theForm.getatk(), 
+		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', [theForm.name, theForm.jp_name].filter(x => x).join('/'), ~~theForm.gethp(), ~~theForm.getatk(), 
 			~~theForm.getdps(), theForm.kb, theForm.range, numStrT(theForm.attackF).replace('秒', '秒/下'), theForm.speed, ~~(theForm.price * 1.5), numStr(display_forms[i][0])];
 		for (let j = 0;j < 13;++j) {
 			const e = document.createElement('td');
@@ -229,7 +229,6 @@ loadAllCats()
 	addBtns(atk_s, params.get('atks'));
 	addBtns(ab_s, params.get('abs'));
 	addBtns(trait_s, params.get('traits'));
-	tcats = new Array(cats.length);
 	const full = [10, 10, 10, 10, 10, 10, 10, 10];
 	for (let i = 0;i < cats.length;++i) {
 		const TF = cats[i].forms[2];

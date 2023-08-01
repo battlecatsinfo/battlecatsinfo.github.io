@@ -7,7 +7,7 @@ var anim1 = null;
 var anim2 = null;
 var _eggs = null;
 var enemy_descs = null;
-const BC_VER = 120504;
+const BC_VER = 120505;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -285,8 +285,8 @@ class Form {
 			this.data = Int16Array.from(data); // We need unit data when calculate talents
 		this.id = cat_id;
 		this.lvc = level_count;
-		this.name = name;
-		this.jp_name = jp_name;
+		this.name = name || '';
+		this.jp_name = jp_name || '';
 		this.trait = 0;
 		this.ab = {};
 		this.res = {};
@@ -1132,8 +1132,8 @@ class Enemy {
 		}
 		this.id = id;
 		id -= 2;
-		this.name = name;
-		this.jp_name = jp_name;
+		this.name = name || '';
+		this.jp_name = jp_name || '';
 		this.desc = enemy_descs[id];
 		this.backswing = anim1[id][0];
 		this.attackF = anim1[id][1];
@@ -1249,7 +1249,7 @@ class Enemy {
 	getimu() { return this.imu; }
 	hasab(i) { return this.ab.hasOwnProperty(i); }
 	dpsagainst() { return 0; }
-	getid() { return this.id; }
+	getid() { return this.id - 2; }
 	hasres() { return 0; }
 	gettba() { return this.tba; }
 	getpre() { return this.pre; }
@@ -1280,8 +1280,8 @@ class Cat {
 			return;
 		}
 		this.info = new CatInfo(id);
-		const my_name = unit_names[id];
-		const my_name_jp = unit_names_jp[id];
+		const my_name = unit_names[id] || [];
+		const my_name_jp = unit_names_jp[id] || []
 		const unit_levels = Math.max(my_name.filter(x => x).length, my_name_jp.filter(x => x).length);
 		this.forms = new Array(unit_levels);
 		const datas = unit_file.replace('\r', '').split('\n').filter(x => x.trim()).map(line => line.split(',').map(x => parseInt(x)));
@@ -1299,7 +1299,7 @@ async function getAllEnemies() {
 	anim1 = await ((await fetch('./anim1')).json());
 	const enemies_names = await ((await fetch('enemyName.json')).json());
 	const jp_names = await ((await fetch('enemyNameJP.json')).json());
-	var enemies = new Array(enemies_names.length);
+	var enemies = new Array(Math.max(enemies_names.length, jp_names.length));
 	for (let id = 2;id < enemies.length;++id) {
 		const unit_file = t_unit[id];
 		const y = id - 2;
@@ -1319,12 +1319,14 @@ async function getAllCats() {
 		await (
 			(await fetch("./all_units.zip")).blob())
 	));
-	var cats = new Array(unit_names.length);
+	var cats = new Array(Math.max(unit_names_jp.length, unit_names.length));
+	try {
 	for (let id = 0;id < cats.length;++id) {
 		const unit_file = await uints_zip.file(`all/${id}`).async('string');
 		cats[id] = new Cat(id, unit_file);
 		loader_text.innerText = `Loading Units (${id+1}/${cats.length})`;
 	}
+	} catch (e) { console.error(e); }
 	uints_zip = null;
 	skill_file = null;
 	uint_buy = null;
@@ -1433,7 +1435,7 @@ async function loadAllCats() {
 		req.onupgradeneeded = onupgradeneeded;
 		req.onsuccess = function(event) {
 			const db = event.target.result;
-			db.transaction(["cats"], "readwrite").objectStore("cats").get(unit_names.length-1).onsuccess = function(event) {
+			db.transaction(["cats"], "readwrite").objectStore("cats").get(717).onsuccess = function(event) {
 				const res = event.target.result;
 				if (!res) {
 					getAllCats()

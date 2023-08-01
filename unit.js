@@ -383,7 +383,9 @@ function renderForm(form) {
 	const tbodytr10 = document.createElement('tr');
 	const tbodytr11 = document.createElement('tr');
 	const tbodytr12 = document.createElement('tr');
+	try {
 	level_text.innerHTML = ['一階：<br>', '二階：<br>', '三階：<br>', '本能完全升滿的數值表格', '超本能完全升滿的數值表格'][level_count] + ((level_count <= 2) ? unit_descs[my_id][level_count] : '');
+	} catch (e) {  }
 	level_text.classList.add('bold-large');
 	makeTd(theadtr);
 	for (let i = 1;i <= 5;++i) {
