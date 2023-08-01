@@ -605,6 +605,7 @@ function getTalentInfo(talent, data) {
 		return range("詛咒耐性");
 	case 31: return range("攻擊力");
 	case 32: return range("血量");
+	case 33: return "對紅色敵人";
 	case 35: return "對黑色敵人";
 	case 36: return "對鋼鐵敵人";
 	case 37: return '對天使敵人';

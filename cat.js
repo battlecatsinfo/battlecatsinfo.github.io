@@ -652,6 +652,9 @@ case 31:
 case 32:
 	this.hp *= 1 + (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) * 0.01;
 	break;
+case 33:
+	this.trait |= RB_RED;
+	this.updateTraitNames();
 case 35:
 	this.trait |= TB_BLACK;
 	this.updateTraitNames();
