@@ -619,8 +619,8 @@ function getTalentInfo(talent, data) {
 	case 39: return "對不死敵人";
 	case 40: return "對古代種";
 	case 41: return "對白色種";
-	case 42:
-	case 43: return "請聯絡網站作者!!";
+	case 42: return "對魔女";
+	case 43: return "對使徒";
 	case 44: return "降攻無效";
 	case 45: return "暫停無效";
 	case 46: return "緩速無效";

@@ -7,7 +7,7 @@ var anim1 = null;
 var anim2 = null;
 var _eggs = null;
 var enemy_descs = null;
-const BC_VER = 120506;
+const BC_VER = 120507;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -583,7 +583,7 @@ case 10:
 	if (this.data[40]) {
 		this.ab[AB_STRONG][1] += talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 	} else {
-		this.ab[AB_STRONG] = [talent[2], talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1)];
+		this.ab[AB_STRONG] = [100 - talent[2], talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1)];
 	}
 	break;
 case 11:
@@ -699,7 +699,12 @@ case 41:
 	this.updateTraitNames();
 	break;
 case 42:
-case 43: /* EVA ? Which ? */
+	this.trait |= TB_WITCH;
+	this.updateTraitNames();
+	break;
+case 43:
+	this.trait |= TB_EVA;
+	this.updateTraitNames();
 	break;
 case 44:
 	this.imu |= IMU_WEAK;

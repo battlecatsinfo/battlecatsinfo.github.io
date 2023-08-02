@@ -339,6 +339,18 @@ M3.oninput = function() {
     makeTd(tr, line[5].toString() + '%');
     makeTd(tr, line[2] == line[10] ? line[10] : `${line[2]}~${line[10]}`);
     makeTd(tr, line[3] == line[4] ? line[3] : `${line[3]}~${line[4]}`);
+    const boss = line[8];
+    if (boss == 2) {
+      const span = document.createElement('span');
+      span.innerText = '(BOSS,震波)';
+      span.classList.add('boss');
+      tr.firstElementChild.appendChild(span);
+    } else if (boss == 1) {
+      const span = document.createElement('span');
+      span.innerText = '(BOSS)';
+      span.classList.add('boss');
+      tr.firstElementChild.appendChild(span);
+    }
     stLines.appendChild(tr);
   }
 }

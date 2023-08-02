@@ -21,6 +21,11 @@
 	table, th, td {
   		border: 1px solid #d1d5d5;
 	}
+	.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+	.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+	.topnav a:hover { background-color: #ddd; color: black; }
+	.topnav a.active { background-color: #f2bb00; color: white; }
+	.topnav a:visited { text-decoration: none; }
 	.w3-centered td { vertical-align: middle;  }
 	.w3-ul li {
 		padding: 0px;
@@ -138,6 +143,14 @@
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
 	<script src="cat.js"></script>
+		<ul class="topnav" style="width: 100%;">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html" class="active">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+		</ul>
 	<div id="main" style="height: 100%;" class="An">
 		<div class="w3-container" style="height: 100%;">
 			  <ul class="w3-ul may-hide" style="width: 150px;" id="trait-s">

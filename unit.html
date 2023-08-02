@@ -15,15 +15,25 @@
 <body style="overflow: scroll;">
 	<style>
 	body { font-size: 18px; }
+	.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+	.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+	.topnav a:hover { background-color: #ddd; color: black; }
+	.topnav a.active { background-color: #f2bb00; color: white; }
+	.topnav a:visited { text-decoration: none; }
 	.bold-large { font-size: 18px; }
 	.w3-table { width: initial;margin: 0 auto;margin-bottom: 60px; }
 	.w3-table td { vertical-align: middle;padding: 9px 0px;min-width: 120px; }
 	.o-selected { background-color: #7fdbff; }
 	</style>
-	<div id="loader-text">Loading...</div>
-	<div id="loader"></div>
-	<script src="cat.js"></script>
-	<div id="main" style="position: relative;" class="An">
+	<div style="position: fixed;width: 100%;z-index: 1;">
+		<ul class="topnav">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+		</ul>
 		<div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width: 170px;">
 	  		<a href="./search.html" class="w3-bar-item">貓咪搜尋</a>
 	  		<a href="#" class="w3-bar-item" id="open-db" rel="noreferrer">開啟超絕</a>
@@ -35,6 +45,11 @@
 	  		<a href="#" class="w3-bar-item" id="star-cat">&bigstar;加入我的最愛</a>
 	  		<a href="./stars.html" class="w3-bar-item" id="star-cat">我的最愛</a>
 		</div>
+	</div>
+	<div id="loader-text">Loading...</div>
+	<div id="loader"></div>
+	<script src="cat.js"></script>
+	<div id="main" style="position: relative;" class="An">
 		<div class="w3-container" style="margin-left: 170px;">
 		<div id="unit-content" style="margin: 0 auto;width: 100%;margin-top: 70px;">
 			<p id="ch_name" class="bold-large"></p>

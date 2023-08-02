@@ -10,7 +10,7 @@
 <body>
 <style>
 html, body { width: 100%;font-size: 18px; }
-body { padding: 10px 20px;;line-height: initial; }
+body { line-height: initial; }
 .L {
 	font-size: 22px;
 	text-overflow: ellipsis;
@@ -67,7 +67,24 @@ a.res::visited {
 	color: initial;
 }
 a.res span { color: #ff634e; }
+.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+.topnav a:hover { background-color: #ddd; color: black; }
+.topnav a.active { background-color: #f2bb00; color: white; }
+.topnav a:visited { text-decoration: none; }
+span.boss {
+	color: darkred;
+}
 </style>
+	<ul class="topnav">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html" class="active">關卡</a>
+		<a href="/music.html">音效</a>
+	</ul>
+	<div style="padding: 12px 12px;">
 	<table>
 		<tbody><tr>
 		<td><select class="L" id="M1"></select></td>
@@ -137,6 +154,7 @@ a.res span { color: #ff634e; }
 		</table>
 	</div>
 	<div style="display: none;" id="search-result"></div>
+	</div>
 <script type="text/javascript" src="stage.js"></script>
 </body>
 </html>

@@ -26,7 +26,7 @@ function rerender(event) {
 	if (id >= 9) {
 		let i = 0;
 		let maxPage = Math.min(Math.ceil(last_forms.length / 10), id + 7);
-		for (let c = id - 2;c < maxPage;++c) {
+		for (let c = id - 2;c <= maxPage;++c) {
 			const td = document.createElement('td');
 			td.innerText = c.toString();
 			td.onclick = rerender;
@@ -293,6 +293,9 @@ toggle_s.onclick = function() {
 }
 name_search.oninput = function() {
 	let search = name_search.value;
+	if (!search) {
+		return calculate(simplify(filter_expr.value));;
+	}
 	let digit = search.length >= 1;
 	for (let c of search) {
 		const x = c.codePointAt(0);

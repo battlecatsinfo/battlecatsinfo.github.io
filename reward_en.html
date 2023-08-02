@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
   <title>貓咪大戰爭獎勵 - 美版</title>
 </head>
 <body>
-  <h1 style="text-align: center;">貓咪大戰爭獎勵 - 美板</h1>
   <style>
-  a {
+html, body { margin:0;padding:0;width:100%;  }
+div a {
     display: block;
-    margin-top: 30px;
-    font-size: 2em;
+    width: 100%;
+    margin: 20px 20px auto;
+    font-size: 18px;
     text-decoration: none;
-  }
-  a::before {
-    content: '• ';
-    color: black;
-  }
+}
+div a::before {
+   content: '• ';
+   color: black;
+}
+.topnav { background-color: #333;margin-block:0; display: inline-block;text-align:center;width:100%; }
+.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+.topnav a:hover { background-color: #ddd; color: black; }
+.topnav a.active { background-color: #f2bb00; color: white; }
+.topnav a:visited { text-decoration: none; }
   </style>
-  <div style="margin: 0 auto;width: 600px;">
+  <ul class="topnav">
+    <a href="/index.html">主頁</a>
+    <a href="/search.html">貓咪</a>
+    <a href="/esearch.html">敵人</a>
+    <a href="/gachas.html">轉蛋</a>
+    <a href="/stage.html">關卡</a>
+    <a href="/music.html">音效</a>
+  </ul>
+  <h1 style="text-align: center;">貓咪大戰爭獎勵 - 美板</h1>
+  <div style="margin: 0 auto;width: 100%;">
   <a href="ponos-battlecatsen://ponos/crashfever1-en">crashfever1-en: Happy 100</a>
 <a href="ponos-battlecatsen://ponos/crashfever2-en">crashfever2-en: 30000 XP</a>
 <a href="ponos-battlecatsen://ponos/crashfever3-en">crashfever3-en: 3 Cat Tickets</a>

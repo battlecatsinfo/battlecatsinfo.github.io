@@ -10,7 +10,13 @@
 </head>
 <body style="overflow: scroll;">
 	<style>
+	html, body {padding: 0;margin: 0;}
 	body { font-size: 18px; }
+	.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+	.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+	.topnav a:hover { background-color: #ddd; color: black; }
+	.topnav a.active { background-color: #f2bb00; color: white; }
+	.topnav a:visited { text-decoration: none; }
 	.bold-large { font-size: 18px; }
 	.w3-table { width: initial;margin: 0 auto;margin-bottom: 60px; }
 	.w3-table td { vertical-align: middle;padding: 9px 25px;min-width: 120px; }
@@ -20,6 +26,14 @@
 	.w3-table td:first-child { padding-left: 15px; }
 	a.A { display: block;width: 100%;text-align: center;  }
 	</style>
+	<ul class="topnav" style="width: 100%;">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+	</ul>
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
 	<script>var curveData0, curveData1, curveData2, curveData3, curveData4, curveData5;</script>

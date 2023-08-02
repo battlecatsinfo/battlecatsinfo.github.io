@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width">
   <title>貓咪大戰爭 資訊網</title>
   <link rel="stylesheet" type="text/css" href="w3.css">
-  <style>
+<style>
+  html, body { padding:0;margin:0;width:100%;  }
   img { display: block; margin: 0 auto; }
-  a, a:visited {
+  td a, td a:visited {
     min-width: 300px;
     display: inline-block;
     background-color: #00bcd42e;
@@ -17,10 +18,23 @@
     border-radius: 10px;
     padding: 15px 30px;
   }
-  </style>
+.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px;width: initial; }
+.topnav a:hover { background-color: #ddd; color: black; }
+.topnav a.active { background-color: #f2bb00; color: white; }
+.topnav a:visited { text-decoration: none; }
+</style>
 </head>
-<body style="width: 100%;">
-  <table style="width: 100%;margin: 0 auto;text-align: center;" class="w3-table w3-centered">
+<body>
+  <ul class="topnav">
+    <a href="/index.html" class="active">主頁</a>
+    <a href="/search.html">貓咪</a>
+    <a href="/esearch.html">敵人</a>
+    <a href="/gachas.html">轉蛋</a>
+    <a href="/stage.html">關卡</a>
+    <a href="/music.html">音效</a>
+  </ul>
+  <table class="w3-table w3-centered">
     <tbody>
       <tr><td><a href="./search.html">貓咪搜尋<img src="res/123.png"></a></td></tr>
       <tr><td><a href="./esearch.html">敵人搜尋<img src="res/456.png"></a></td></tr>
