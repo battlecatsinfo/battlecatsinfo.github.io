@@ -8,6 +8,7 @@ var anim2 = null;
 var _eggs = null;
 var enemy_descs = null;
 var rwMap;
+var tfMap;
 const BC_VER = 120508;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
@@ -1131,6 +1132,8 @@ class CatInfo {
 			this.unclockFood = data[1];
 		if (rwMap.hasOwnProperty(my_id.toString()))
 			this.rw = rwMap[my_id];
+		if (tfMap.hasOwnProperty(my_id.toString()))
+			this.tf = tfMap[my_id];
 		this.rarity = data[13];
 		this.maxBase = data[50];
 		this.maxPlus = data[51];
@@ -1232,7 +1235,7 @@ class Enemy {
 		(data[75]) && (this.ab[AB_S] = [data[75], data[76]]);
 		(data[77]) && (this.ab[AB_IMUATK] = [data[77], data[78]]);
 		(data[79]) && (this.ab[AB_POIATK] = [data[79], data[80]]);
-		(data[87]) && (this.ab[AB_DSHIELD] = [data[87]]);
+		(data[87]) && (this.ab[AB_DSHIELD] = [data[87], data[88]]);
 		(data[89]) && (this.ab[AB_AFTERMATH] = [data[89], data[90] / 4, data[91] / 4 + data[90], data[92] * 20]);
 		(data[103]) && (this.ab[AB_COUNTER] = []);
 		if (data[27]) {
@@ -1364,6 +1367,7 @@ async function getAllCats() {
 	unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
 	skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
 	rwMap = await ((await fetch('./rwMap')).json());
+	tfMap = await ((await fetch('./tfMap')).json());
 	uints_zip = await (await JSZip.loadAsync(
 		await (
 			(await fetch("./all_units.zip")).blob())
@@ -1378,6 +1382,8 @@ async function getAllCats() {
 	} catch (e) { console.error(e); }
 	uints_zip = null;
 	skill_file = null;
+	rwMap = null;
+	tfMap = null;
 	uint_buy = null;
 	return cats;
 }

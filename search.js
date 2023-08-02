@@ -45,7 +45,7 @@ function renderTable(forms, page = 1) {
 	let H = page * 10;
 	let display_forms = forms.slice(H - 10, H);
 	tbody.textContent = '';
-	search_result.innerText = `顯示${H - 9}第到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
+	search_result.innerText = `顯示第${H - 9}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
 	last_forms = forms;
 	if (forms.length == 0) {
 		tbody.innerHTML = 

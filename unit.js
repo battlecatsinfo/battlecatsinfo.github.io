@@ -544,6 +544,18 @@ function renderExtras() {
 		tr.appendChild(td);
 		table.appendChild(tr);
 	}
+	if (my_cat.info.hasOwnProperty('tf')) {
+		const tr = document.createElement('tr');
+		const td = document.createElement('td');
+		const a = document.createElement('a');
+		td.appendChild(a);
+		const s = my_cat.info.tf.join('-');
+		a.innerText = '#' + s;
+		a.href = '/stage.html?s=' + s;
+		makeTd(tr, '進化條件');
+		tr.appendChild(td);
+		table.appendChild(tr);
+	}
 	if (my_cat.info.version) {
 		let version = my_cat.info.version.toString();
 		const div = document.createElement('div');

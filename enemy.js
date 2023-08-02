@@ -7,6 +7,7 @@ if (isNaN(my_id)) {
 }
 my_id += 2;
 var my_mult = my_params.get('mult') || my_params.get('mag');
+var atk_mag = my_params.get('atkMag');
 const enemy_content = document.getElementById('ctn');
 function createAbIcons(E, parent) {
 	createImuIcons(E.imu, parent);
@@ -35,8 +36,8 @@ function createAbIcons(E, parent) {
 		case AB_STRONG: write(`血量${d[0]}%以下攻擊力增加${d[1]}倍`, 'strong'); break;
 		case AB_LETHAL: write(`${d[0]}%機率死後復活`, 'lethal'); break;
 		case AB_WAVES: write(`波動滅止`, 'waves'); break;
-		case AB_BURROW: write(`進入射程範圍時鑽地${numStrT(d[1])}(${d[0]}次)`); break;
-		case AB_REVIVE: write(`擊倒後${numStrT(d[1])}以${d[1]}%血量復活(${d[0]}次)`); break;
+		case AB_BURROW: write(`進入射程範圍時鑽地${numStr(d[1])}距離(${d[0]}次)`); break;
+		case AB_REVIVE: write(`擊倒後${numStrT(d[1])}以${d[2]}%血量復活(${d[0]}次)`); break;
 		case AB_WARP: write(`${d[0]}%機率將向目標${d[2] < 0 ? '前' : '後'}傳送${Math.abs(d[2])}距離持續${numStrT(d[1])}`, 'warp'); break;
 		case AB_CURSE: write(`${d[0]}%機率詛咒持續${numStrT(d[1])}`, 'curse'); break;
 		case AB_S: write(`${d[0]}%機率渾身一擊(攻擊力增加${d[1]}%倍)`, 's'); break;
@@ -72,6 +73,15 @@ function renderTable(E) {
 	} else {
 		my_mult = 100;
 	}
+	if (atk_mag) {
+		atk_mag = parseInt(atk_mag);
+		if (isNaN(atk_mag))
+			atk_mag = my_mult * 0.01;
+		else
+			atk_mag *= 0.01;
+	} else {
+		atk_mag = my_mult * 0.01;
+	}
 	document.getElementById('mult').innerText = '倍率: ' + my_mult.toString() + '%';
 	my_mult *= 0.01;
 	chs[0].children[0].children[0].src = 'data/enemy/' + ss + '/enemy_icon_' + ss + '.png';
@@ -79,7 +89,7 @@ function renderTable(E) {
 		event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
 	}
 	chs[0].children[2].innerText = E.hp * my_mult;
-	chs[0].children[4].innerText = [E.atk * my_mult, E.atk1 * my_mult, E.atk2 * my_mult].filter(x => x).join('/');
+	chs[0].children[4].innerText = [E.atk * atk_mag, E.atk1 * atk_mag, E.atk2 * atk_mag].filter(x => x).join('/');
 	chs[0].children[6].innerText = E.speed;
 	chs[1].children[1].innerText = E.kb;
 	chs[1].children[3].innerText = numStr((E.atk + E.atk1 + E.atk2) * my_mult * 30 / E.attackF);
