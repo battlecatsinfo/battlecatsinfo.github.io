@@ -7,6 +7,7 @@ var anim1 = null;
 var anim2 = null;
 var _eggs = null;
 var enemy_descs = null;
+var rwMap;
 const BC_VER = 120507;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
@@ -1124,12 +1125,20 @@ class CatInfo {
 		}
 		for (end = start;text[end] != '\n';++end) {}
 		const data = text.slice(start, end).split(',').map(x => parseInt(x));
+		if (data[0])
+			this.unclockS = data[0];
+		if (data[1])
+			this.unclockFood = data[1];
+		if (rwMap.hasOwnProperty(my_id.toString()))
+			this.rw = rwMap[my_id];
 		this.rarity = data[13];
 		this.maxBase = data[50];
 		this.maxPlus = data[51];
 		var version = data[data.length - 6];
 		if (version >= 100000)
 			this.version = version;
+		if (data[23])
+			this.tfmethod = data[23];
 		if (data[27]) {
 			this.upReqs = [[data[27], 0]];
 			for (let i = 28;i <= 38;i+=2) {
@@ -1354,6 +1363,7 @@ async function getAllCats() {
 	anim2 = await ((await fetch('./anim2')).json());
 	unit_buy = await ((await fetch('./data/data/unitbuy.csv')).text());
 	skill_file = await ((await fetch('./data/data/SkillAcquisition.csv')).text());
+	rwMap = await ((await fetch('./rwMap')).json());
 	uints_zip = await (await JSZip.loadAsync(
 		await (
 			(await fetch("./all_units.zip")).blob())

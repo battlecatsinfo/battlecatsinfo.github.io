@@ -18,6 +18,7 @@ const mM = document.getElementById('mM');
 var info1, info2, info3;
 var enemy_names;
 var star;
+var char_groups;
 var Buffer = BrowserFS.BFSRequire('buffer').Buffer;
 const materialDrops = [85, 86, 87, 88, 89, 90, 91, 140, 187, 188, 189, 190, 191, 192, 193, 194];
 BrowserFS.install(window);
@@ -33,11 +34,13 @@ fetch('/stages.zip').then(res => res.arrayBuffer()).then(function(zipData) {
     }
     fs = BrowserFS.BFSRequire('fs');
     fs.readdirSync('/stages').forEach(m1 => {
+      if (m1 == 'group') return;
       const p = document.createElement('option');
       const info = JSON.parse(fs.readFileSync((p.value = `/stages/${m1}`) + '/info', 'utf-8', 'r'));
       p.innerText = [info.name, info.jpname].filter(x => x).join('/');
       M1.appendChild(p);
     });
+    char_groups = JSON.parse(fs.readFileSync('/stages/group', 'utf-8', 'r'));
     const url = new URL(location.href);
     const stars = url.searchParams.get('star');
     if (stars) {
@@ -63,6 +66,84 @@ fetch('/stages.zip').then(res => res.arrayBuffer()).then(function(zipData) {
   });
 });
 });
+function merge(g1, g2) {
+  group = [g1[0], [...g1[1]]];
+  if (g1[0] == 0 && g2[0] == 0) {
+    group[1] = [];
+    for (let x of g1[1]) {
+      if (g2[1].includes(x))
+        group[1].push(x);
+    }
+  } else if (g1[0] == 0 && g2[0] == 2) {
+    group[1] = group[1].filter(x => g2[1].contains(x));
+  } else if (g1[0] == 2 && g2[0] == 0) {
+    group[0] = 0;
+    for (let x of g2[1]) {
+      if (!group[1].includes(x))
+        group[1].push(x);
+    }
+    group[1] = group[1].filter(x => g1[1].contains(x));
+  } else if (g1[0] == 2 && g2[0] == 2) {
+    for (let x of g2[1]) {
+      if (!group[1].includes(x))
+        group[1].push(x);
+    }
+  }
+  return group;
+}
+function getRarityString(rare) {
+  const names = ['基本','EX','稀有','激稀有','超激稀有','傳説稀有'];
+  var strs = [];
+  let y = 0;
+  for (let i = 1;i < 64;i <<= 1) {
+    if (rare & i)
+      strs.push(names[y]);
+    ++y;
+  }
+  return strs.join('，');
+}
+class Limit {
+  constructor(x) {
+    if (x != undefined) {
+      this.star = x[0];
+      this.sid = x[1];
+      this.rare = x[2];
+      this.num = x[3];
+      this.line = x[4];
+      this.min = x[5];
+      this.max = x[6];
+      this.group = char_groups[x[7]];
+    } else {
+      this.star = -1;
+      this.sid = -1;
+      this.rare = 0;
+      this.num = 0;
+      this.line = 0;
+      this.min = 0;
+      this.max = 0;
+    }
+  }
+  combine(other) {
+    if (this.rare == 0)
+      this.rare = other.rare;
+    else if (other.rare != 0)
+      this.rare &= other.rare;
+    if (this.num * other.num > 0)
+      this.num = Math.min(this.num, other.num);
+    else
+      this.num = Math.max(this.num, other.num);
+    this.line |= other.line;
+    this.min = Math.max(this.min, other.min);
+    this.max = this.max > 0 && other.max > 0 ? Math.min(this.max, other.max) : (this.max + other.max);
+    if (other.hasOwnProperty('group')) {
+      if (this.hasOwnProperty('group')) {
+        this.group = merge(this.group, other.group);
+      } else {
+        this.group = other.group;
+      }
+    }
+  }
+}
 M1.oninput = function(event, sts) {
   const dir = M1.selectedOptions[0].value;
   info1 = JSON.parse(fs.readFileSync(dir + '/info'));
@@ -159,10 +240,15 @@ M3.oninput = function() {
   const dir = M3.selectedOptions[0].value;
   const url = new URL(location.href);
   url.searchParams.set('s', [M1.selectedIndex, M2.selectedIndex, M3.selectedIndex].join('-'));
+  if (info2.stars.length)
+    star = Math.min(info2.stars.length, star);
+  else
+    star = 1;
+  url.searchParams.set('star', star);
   history.pushState({}, "", url);
   info3 = JSON.parse(fs.readFileSync(dir));
-  stName.innerText = stage_name = [info1.name, info2.name, info3.name].join(' • ');
-  stName2.innerText = [info1.jpname, info2.jpname, info3.jpname].join(' • ');
+  stName.innerText = stage_name = [info1.name, info2.name, info3.name].filter(x => x).join(' • ');
+  stName2.innerText = [info1.jpname, info2.jpname, info3.jpname].filter(x => x).join(' • ');
   document.title = stage_name;
   const stars_tr = document.getElementById('stars-tr');
   if (stars_tr)
@@ -170,6 +256,9 @@ M3.oninput = function() {
   const warn_tr = document.getElementById('warn-tr');
   if (warn_tr)
     warn_tr.parentNode.removeChild(warn_tr);
+  const limit_bt = document.getElementById('limit-bt');
+  if (limit_bt)
+    limit_bt.parentNode.removeChild(limit_bt);
   let mult = info2.stars[star - 1];
   if (!mult) {
     mult = 1;
@@ -236,9 +325,16 @@ M3.oninput = function() {
       const rw = v[1];
       var s = RWSTNAME[rw];
       if (!s)
-        s = RWNAME[rw];
-      s += ` ×${v[2]}`;
-      td0.innerText = s;
+        s = RWNAME[rw] || (`獎勵#` + rw.toString());
+      const cat_id = drop_chara[rw];
+      if (cat_id) {
+        const a = document.createElement('a');
+        a.href = '/unit.html?id=' + cat_id.toString();
+        a.innerText = s;
+        td0.appendChild(a);
+      } else {
+        td0.innerText = s + ` ×${v[2]}`;
+      }
       td1.appendChild(document.createTextNode(chances[i] + '%' + ((i == 0 && info3.drop[i][0] != 100 && info3.rand != -4) ? '(寶雷)' : '')));
       td2.innerText = (i == 0 && (info3.rand == 1 || (info3.drop[0][1] >= 1000 && info3.drop[0][1] < 30000))) ? '一次' : '無';
       tr.appendChild(td0);
@@ -312,7 +408,7 @@ M3.oninput = function() {
   st3[1].innerText = info3.xp;
   const a1 = document.createElement('a');
   a1.innerText = t3str(info3.m0);
-  a1.href = 'https://github.com/battlecatsultimate/bcu-assets/raw/master/music/' + t3str(info3.m0) + '.ogg';
+  a1.href = 'https://github.com/battlecatsultimate/bcu-assets/raw/maste/music/' + t3str(info3.m0) + '.ogg';
   const a2 = document.createElement('a');
   a2.innerText = t3str(info3.m1);
   a2.href = 'https://github.com/battlecatsultimate/bcu-assets/raw/master/music/' + t3str(info3.m1) + '.ogg';
@@ -321,6 +417,45 @@ M3.oninput = function() {
   st3[5].textContent = '';
   st3[5].appendChild(a2);
   stLines.textContent = '';
+  if (info2.hasOwnProperty('Lim')) {
+    const lims = info2.Lim.map(x => new Limit(x));
+    const theStar = star - 1;
+    const lim = new Limit();
+    const m3N = M3.selectedOptions[0].value;
+    const my_sid = parseInt(m3N.slice(m3N.lastIndexOf('/') + 1));
+    for (l of lims)
+      if (l.star == -1 || l.star == theStar)
+        if (l.sid == -1 || l.sid == my_sid) 
+          lim.combine(l);
+    var limits = [];
+    if (lim.rare)
+      limits.push('稀有度：' + getRarityString(lim.rare));
+    if (lim.num)
+      limits.push('最多可出戰角色數量：' + lim.num);
+    if (lim.max && lim.min)
+      limits.push(`生產成本：${lim.min}元與${lim.min}元之間`);
+    else if (lim.max)
+      limits.push(`生產成本：${lim.max}元以上`);
+    else if (lim.min) 
+      limits.push(`生產成本：${lim.min}元以下`);
+    if (lim.line)
+      limits.push('出陣列表：僅限第1頁');
+    if (lim.group && lim.group[1].length)
+      limits.push('可出擊角色的ID: ' + lim.group[1].join(','));
+    if (limits.length) {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th');
+      const div = document.createElement('div');
+      div.innerText = '出擊制限：' + limits.join('、');
+      div.style.color = '#8d5b00';
+      tr.style.fontSize = '15px';
+      th.colSpan = 6;
+      th.appendChild(div);
+      tr.appendChild(th);
+      tr.id = 'limit-bt';
+      stName.parentNode.parentNode.appendChild(tr);
+    }
+  }
   for (let line of info3.l) {
     const tr = document.createElement('tr');
     const enemy = line[0];
@@ -334,7 +469,7 @@ M3.oninput = function() {
     a.appendChild(img);
     td.appendChild(a);
     tr.appendChild(td);
-    makeTd(tr, ((line[9] || 100) * mult).toString() + '%');
+    makeTd(tr, ((line[9] || 100) * mult).toFixed(0) + '%');
     makeTd(tr, line[1] || '無限');
     makeTd(tr, line[5].toString() + '%');
     makeTd(tr, line[2] == line[10] ? line[10] : `${line[2]}~${line[10]}`);
@@ -396,6 +531,7 @@ function doSearch(t) {
   let num_results = 0;
   for (let i = 0;i < s1.length;++i) {
     const m1 = s1[i];
+    if (m1 == 'group') continue;
     const i1 = JSON.parse(fs.readFileSync(`/stages/${m1}/info`, 'utf-8', 'r'));
     if (f(i1.name) || f(i1.jpname)) {
       add([i], [i1]);

@@ -447,13 +447,13 @@ function renderForm(form) {
 	makeTd(tbodytr8);
 	makeTd(tbodytr8, '三章');
 	makeTd(tbodytr8);
-	makeTd(tbodytr9, '屬性');
+	makeTd(tbodytr9, '屬性').style.textAlign = 'center';
 	makeTd(tbodytr9).colSpan = 6;
 	makeTd(tbodytr10, '抗性');
 	makeTd(tbodytr10).colSpan = 6;
-	makeTd(tbodytr11, '能力');
+	makeTd(tbodytr11, '能力').style.textAlign = 'center';
 	makeTd(tbodytr11).colSpan = 6;
-	makeTd(tbodytr12, '效果');
+	makeTd(tbodytr12, '效果').style.textAlign = 'center';
 	makeTd(tbodytr12).colSpan = 6;
 	tbodytr9.classList.add('spec');
 	tbodytr10.classList.add('spec');
@@ -511,6 +511,39 @@ function renderExtras() {
 	const tr3 = document.createElement('tr');
 	makeTd(tr3, '最大加值等級');
 	makeTd(tr3, '+' + my_cat.info.maxPlus.toString());
+	table.appendChild(th);
+	table.appendChild(tr1);
+	table.appendChild(tr2);
+	table.appendChild(tr3);
+	if (my_cat.info.hasOwnProperty('unclockS')) {
+		const tr = document.createElement('tr');
+		const td = document.createElement('td');
+		const a = document.createElement('a');
+		td.appendChild(a);
+		a.innerText = '世界篇第' + (my_cat.info.unclockS % 100) + '關';
+		a.href = '/stage.html?s=3-9-' + (my_cat.info.unclockS - 1).toString();
+		makeTd(tr, '解鎖關卡');
+		tr.appendChild(td);
+		table.appendChild(tr);
+	}
+	if (my_cat.info.hasOwnProperty('unclockFood')) {
+		const tr = document.createElement('tr');
+		makeTd(tr, my_cat.info.rarity ? '購買所需貓罐頭' : '購入XP');
+		makeTd(tr, my_cat.info.unclockFood);
+		table.appendChild(tr);
+	}
+	if (my_cat.info.hasOwnProperty('rw')) {
+		const tr = document.createElement('tr');
+		const td = document.createElement('td');
+		const a = document.createElement('a');
+		td.appendChild(a);
+		const s = my_cat.info.rw.join('-');
+		a.innerText = '#' + s;
+		a.href = '/stage.html?s=' + s;
+		makeTd(tr, '破關掉落');
+		tr.appendChild(td);
+		table.appendChild(tr);
+	}
 	if (my_cat.info.version) {
 		let version = my_cat.info.version.toString();
 		const div = document.createElement('div');
@@ -518,10 +551,6 @@ function renderExtras() {
 		div.classList.add('r-ribbon');
 		document.getElementById('main').appendChild(div);
 	}
-	table.appendChild(th);
-	table.appendChild(tr1);
-	table.appendChild(tr2);
-	table.appendChild(tr3);
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	let odd = true;
 	for (let e of table.children) {
