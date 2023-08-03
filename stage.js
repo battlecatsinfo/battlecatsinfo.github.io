@@ -474,6 +474,16 @@ M3.oninput = function() {
     makeTd(tr, hpM == atkM ? (hpM + '%') : `HP:${hpM}%,ATK:${atkM}%`);
     makeTd(tr, line[1] || '無限');
     makeTd(tr, line[5].toString() + '%');
+    if (line[2] > line[10]) {
+      const tmp = line[2];
+      line[2] = line[10];
+      line[10] = tmp;
+    }
+    if (line[3] > line[4]) {
+      const tmp = line[3];
+      line[3] = line[4];
+      line[4] = tmp;
+    }
     makeTd(tr, line[2] == line[10] ? line[10] : `${line[2]}~${line[10]}`);
     makeTd(tr, line[3] == line[4] ? line[3] : `${line[3]}~${line[4]}`);
     makeTd(tr, line[14]);
