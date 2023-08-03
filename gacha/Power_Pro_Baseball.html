@@ -3,31 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>實況野球/実況パワフルプロ野球/Power Pro Baseball</title>
+  <link rel="stylesheet" type="text/css" href="/w3.css">
+  <link rel="stylesheet" type="text/css" href="/dracula.css">
 </head>
 <style>
 html, body { width: 100%%;margin: 0 auto;padding: 0;background-color: aliceblue;text-align: center; }
 table { margin: 0 auto;border-collapse: collapse;margin-top: 50px;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
 td { width: 300px;border: #cfcfcf 4px solid; }
 p { margin-block-start: 0px;margin-block-end: 0px; }
-a { display: block; }
+tbody > a { display: block; }
 p { font-size: larger;margin-block-start: 0;margin-block-end: 0; }
-.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-.topnav a:hover { background-color: #ddd; color: black; }
-.topnav a.active { background-color: #f2bb00; color: white; }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
 .topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
 </style>
 <body>
-<ul class="topnav">
-	<a href="/index.html">主頁</a>
-	<a href="/search.html">貓咪</a>
-	<a href="/esearch.html">敵人</a>
-	<a href="/gachas.html">轉蛋</a>
-	<a href="/stage.html">關卡</a>
-	<a href="/music.html">音效</a>
-</ul>
+	<ul class="topnav">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="/theme.svg" style="background-color: initial !important;">Theme</button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+      	</div>
+      	</div>
+	</ul>
+	<script src="/dracula.js"></script>
 <h1>實況野球/実況パワフルプロ野球/Power Pro Baseball</h1>
 <img style="display: block;margin: 0 auto;" src="/bnr/123.png">
-<table><tbody><tr><td><p>新島早紀</p><a href="/unit.html?id=393"><img src="/data/unit/393/f/uni393_f00.png"></a>來自實況野球的新人物！<br>對棒球一心一意，也獲得女子支持的外野手<br>能使飄浮和黑色敵人動作變慢(範圍攻擊)</td><td><p>星井昴</p><a href="/unit.html?id=394"><img src="/data/unit/394/f/uni394_f00.png"></a>來自實況野球的新人物！<br>風度翩翩美男子，對人處事或運動都很優<br>善於攻擊紅色和天使敵人(遠距範圍攻擊)</td></tr><tr><td><p>小山雅</p><a href="/unit.html?id=395"><img src="/data/unit/395/f/uni395_f00.png"></a>來自實況野球的新人物！<br>守備穩定，出壘率高的游擊手<br>體力下降時攻擊力上升(範圍攻擊)</td><td><p>早川蒼</p><a href="/unit.html?id=390"><img src="/data/unit/390/f/uni390_f00.png"></a>來自實況野球的新人物！<br>料理手腕絕對ＮＧ<br>能給予異星戰士超大傷害(範圍攻擊)</td></tr><tr><td><p>橘水月</p><a href="/unit.html?id=391"><img src="/data/unit/391/f/uni391_f00.png"></a>來自實況野球的新人物！<br>男人婆又愛逞強的投手學妹<br>能給予天使敵人超大傷害(範圍攻擊)</td><td><p>六道聖</p><a href="/unit.html?id=392"><img src="/data/unit/392/f/uni392_f00.png"></a>來自實況野球的新人物！<br>接捕能力很高的捕手學妹<br>善於攻擊不死生物</td></tr></tbody></table>
+<table><tbody><tr><td><p>新島早紀</p><a class="B" href="/unit.html?id=393"><img src="/data/unit/393/f/uni393_f00.png"></a>來自實況野球的新人物！<br>對棒球一心一意，也獲得女子支持的外野手<br>能使飄浮和黑色敵人動作變慢(範圍攻擊)</td><td><p>星井昴</p><a class="B" href="/unit.html?id=394"><img src="/data/unit/394/f/uni394_f00.png"></a>來自實況野球的新人物！<br>風度翩翩美男子，對人處事或運動都很優<br>善於攻擊紅色和天使敵人(遠距範圍攻擊)</td></tr><tr><td><p>小山雅</p><a class="B" href="/unit.html?id=395"><img src="/data/unit/395/f/uni395_f00.png"></a>來自實況野球的新人物！<br>守備穩定，出壘率高的游擊手<br>體力下降時攻擊力上升(範圍攻擊)</td><td><p>早川蒼</p><a class="B" href="/unit.html?id=390"><img src="/data/unit/390/f/uni390_f00.png"></a>來自實況野球的新人物！<br>料理手腕絕對ＮＧ<br>能給予異星戰士超大傷害(範圍攻擊)</td></tr><tr><td><p>橘水月</p><a class="B" href="/unit.html?id=391"><img src="/data/unit/391/f/uni391_f00.png"></a>來自實況野球的新人物！<br>男人婆又愛逞強的投手學妹<br>能給予天使敵人超大傷害(範圍攻擊)</td><td><p>六道聖</p><a class="B" href="/unit.html?id=392"><img src="/data/unit/392/f/uni392_f00.png"></a>來自實況野球的新人物！<br>接捕能力很高的捕手學妹<br>善於攻擊不死生物</td></tr></tbody></table>
 </body>
 </html>

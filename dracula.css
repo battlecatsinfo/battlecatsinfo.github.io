@@ -1,0 +1,67 @@
+:root {
+	--bg: initial;
+	--color: initial;
+	--acolor: initial;
+	--abg: initial;
+	--ahover: initial;
+	--avisited: initial;
+	--hcolor: initial;
+	--tcolor: initial;
+	--aactive: initial;
+	--bgd: #f1f1f1;
+}
+a, textarea {
+	appearance: none;
+}
+[data-theme="dark"] {
+	--bg: rgba(40, 42, 54, 1);
+	--color: rgba(248, 248, 242, 1);
+	--acolor: rgba(80, 250, 123, 1);
+	--abg: transparent;
+	--ahover: rgba(241, 250, 140, 1);
+	--avisited: rgba(98, 114, 164, 1);
+	--hcolor: rgba(255, 184, 108, 1);
+	--tcolor: rgba(68, 71, 90, 1);
+	--aactive: rgba(139, 233, 253, 1);
+	--bgd: initial;
+}
+html,body {
+	background-color: var(--bg) !important;
+}
+body * {
+	color: var(--color) !important;
+	background-color: var(--bg) !important;
+}
+a, a * {
+	color: var(--acolor) !important;
+	background-color: var(--abg) !important;
+}
+a:hover,a:hover *,a:visited:hover,a:visited:hover *,span[onclick]:hover,div[onclick]:hover,[role="link"]:hover,[role="link"]:hover *,[role="button"]:hover *,[role="menuitem"]:hover,[role="menuitem"]:hover *,.link:hover,.link:hover * {
+	color: var(--ahover) !important;
+}
+a:visited,a:visited * {
+	color: var(--avisited) !important;
+}
+h1,h2,h3,h4,h5,h6,strong,[id*="headline"],[class*="headline"],[id*="header"],[class*="header"],[class*="header"] td {
+	color: var(--hcolor) !important;
+}
+table {
+	background-color: var(--bg) !important;
+}
+[id*="overlay"],[id*="lightbox"],blockquote {
+	background-color: var(--tcolor) !important;
+}
+pre,
+dl {
+	background-color: var(--tcolor) !important;
+}
+input,select,button,[role="button"],a.button,a.submit,a.BigButton,a.TabLink,.install[onclick] {
+	text-indent: 5px;
+	background: var(--tcolor) !important;
+}
+textarea {
+	background: var(--tcolor) !important;
+}
+a.highlight,a.highlight *,a.active,a.active *,.selected,.selected *,[href="#"] {
+	color: var(--aactive) !important;
+}

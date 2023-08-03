@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="icons.css">
 	<link rel="stylesheet" type="text/css" href="w3.css">
 	<link rel="stylesheet" type="text/css" href="unit.css">
+	<link rel="stylesheet" type="text/css" href="dracula.css">
 	<script src="jszip.min.js"></script>
 	<script src="data/lang/zh/UnitName.js"></script>
 	<script src="data/lang/jp/UnitName.js"></script>
@@ -21,11 +22,11 @@
 	table, th, td {
   		border: 1px solid #d1d5d5;
 	}
-	.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-	.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-	.topnav a:hover { background-color: #ddd; color: black; }
-	.topnav a.active { background-color: #f2bb00; color: white; }
+	.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+	.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+	.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
 	.topnav a:visited { text-decoration: none; }
+	.w3-dropdown-content > a { color: var(--color) !important;  }
 	.w3-centered td { vertical-align: middle;  }
 	.w3-ul li {
 		padding: 0px;
@@ -143,14 +144,22 @@
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
 	<script src="cat.js"></script>
-		<ul class="topnav" style="width: 100%;">
+	<ul class="topnav">
 		<a href="/index.html">主頁</a>
 		<a href="/search.html" class="active">貓咪</a>
 		<a href="/esearch.html">敵人</a>
 		<a href="/gachas.html">轉蛋</a>
 		<a href="/stage.html">關卡</a>
 		<a href="/music.html">音效</a>
-		</ul>
+		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+      	</div>
+      	</div>
+	</ul>
+	<script src="dracula.js"></script>
 	<div id="main" style="height: 100%;" class="An">
 		<div class="w3-container" style="height: 100%;">
 			  <ul class="w3-ul may-hide" style="width: 150px;" id="trait-s">

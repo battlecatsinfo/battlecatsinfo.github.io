@@ -487,7 +487,7 @@ function renderForm(form) {
 	let odd = true;
 	for (let e of tbl.children) {
 		if (odd)
-			e.style.backgroundColor = '#f1f1f1';
+			e.classList.add('modd');
 		odd = !odd;
 	}
 	unit_content.appendChild(level_text);
@@ -567,7 +567,7 @@ function renderExtras() {
 	let odd = true;
 	for (let e of table.children) {
 		if (odd)
-			e.style.backgroundColor = '#f1f1f1';
+			e.classList.add('modd');
 		odd = !odd;
 	}
 	unit_content.appendChild(table);
@@ -771,7 +771,7 @@ function rednerTalentInfos(talents, data, _super = false) {
 	let odd = true;
 	for (let e of table.children) {
 		if (odd)
-			e.style.backgroundColor = '#f1f1f1';
+			e.classList.add('modd');
 		odd = !odd;
 	}
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
@@ -915,7 +915,7 @@ function renderTalentCosts(talent_names, talents, data, _super = false) {
 	let odd = true;
 	for (let e of table.children) {
 		if (odd)
-			e.style.backgroundColor = '#f1f1f1';
+			e.classList.add('modd');
 		odd = !odd;
 	}
 	table.classList.add('w3-table', 'w3-centered', 'tcost');

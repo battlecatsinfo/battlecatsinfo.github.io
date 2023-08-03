@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width">
   <title>貓咪大戰爭 資訊網</title>
   <link rel="stylesheet" type="text/css" href="w3.css">
+  <link rel="stylesheet" type="text/css" href="dracula.css">
 <style>
   html, body { padding:0;margin:0;width:100%;  }
-  img { display: block; margin: 0 auto; }
+  .A { display: block; margin: 0 auto; }
   td a, td a:visited {
     min-width: 300px;
     display: inline-block;
@@ -18,11 +19,11 @@
     border-radius: 10px;
     padding: 15px 30px;
   }
-.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px;width: initial; }
-.topnav a:hover { background-color: #ddd; color: black; }
-.topnav a.active { background-color: #f2bb00; color: white; }
-.topnav a:visited { text-decoration: none; }
+  .topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+  .topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+  .topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+  .topnav a:visited { text-decoration: none; }
+  .w3-dropdown-content > a { color: var(--color) !important;  }
 </style>
 </head>
 <body>
@@ -33,12 +34,20 @@
     <a href="/gachas.html">轉蛋</a>
     <a href="/stage.html">關卡</a>
     <a href="/music.html">音效</a>
+    <div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+    <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+          <a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+          <a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+        </div>
+        </div>
   </ul>
+  <script src="dracula.js"></script>
   <table class="w3-table w3-centered">
     <tbody>
-      <tr><td><a href="./search.html">貓咪搜尋<img src="res/123.png"></a></td></tr>
-      <tr><td><a href="./esearch.html">敵人搜尋<img src="res/456.png"></a></td></tr>
-      <tr><td><a href="./gachas.html">轉蛋一覽<img style="max-width: 430px;" src="res/789.png"></a></td></tr>
+      <tr><td><a href="./search.html">貓咪搜尋<img class="A" src="res/123.png"></a></td></tr>
+      <tr><td><a href="./esearch.html">敵人搜尋<img class="A" src="res/456.png"></a></td></tr>
+      <tr><td><a href="./gachas.html">轉蛋一覽<img class="A" style="max-width: 430px;" src="res/789.png"></a></td></tr>
       <tr><td><a href="./stage.html">關卡資訊</a></td></tr>
       <tr><td><a href="./music.html">音樂</a></td></tr>
       <tr><td><a href="./reward_jp.html">貓咪大戰爭 日版獎勵</a></td></tr>

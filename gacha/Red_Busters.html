@@ -3,31 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>鋼鐵破壞者/メタルバスターズ/Red Busters</title>
+  <link rel="stylesheet" type="text/css" href="/w3.css">
+  <link rel="stylesheet" type="text/css" href="/dracula.css">
 </head>
 <style>
 html, body { width: 100%%;margin: 0 auto;padding: 0;background-color: aliceblue;text-align: center; }
 table { margin: 0 auto;border-collapse: collapse;margin-top: 50px;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
 td { width: 300px;border: #cfcfcf 4px solid; }
 p { margin-block-start: 0px;margin-block-end: 0px; }
-a { display: block; }
+tbody > a { display: block; }
 p { font-size: larger;margin-block-start: 0;margin-block-end: 0; }
-.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-.topnav a:hover { background-color: #ddd; color: black; }
-.topnav a.active { background-color: #f2bb00; color: white; }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
 .topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
 </style>
 <body>
-<ul class="topnav">
-	<a href="/index.html">主頁</a>
-	<a href="/search.html">貓咪</a>
-	<a href="/esearch.html">敵人</a>
-	<a href="/gachas.html">轉蛋</a>
-	<a href="/stage.html">關卡</a>
-	<a href="/music.html">音效</a>
-</ul>
+	<ul class="topnav">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="/theme.svg" style="background-color: initial !important;">Theme</button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+      	</div>
+      	</div>
+	</ul>
+	<script src="/dracula.js"></script>
 <h1>鋼鐵破壞者/メタルバスターズ/Red Busters</h1>
 <img style="display: block;margin: 0 auto;" src="https://cdn.discordapp.com/attachments/934738752557948968/951770971134652416/gatya_bnr717.png">
-<table><tbody><tr><td><p>風隼櫻</p><a href="/unit.html?id=397"><img src="/data/unit/397/f/uni397_f00.png"></a>以代代相傳的退魔刀斬奸除惡的女國中生<br>偶爾會發出會心一擊，對上鋼鐵敵人很耐打<br>並且能使其動作變慢攻擊力下降</td></tr></tbody></table>
+<table><tbody><tr><td><p>風隼櫻</p><a class="B" href="/unit.html?id=397"><img src="/data/unit/397/f/uni397_f00.png"></a>以代代相傳的退魔刀斬奸除惡的女國中生<br>偶爾會發出會心一擊，對上鋼鐵敵人很耐打<br>並且能使其動作變慢攻擊力下降</td></tr></tbody></table>
 </body>
 </html>

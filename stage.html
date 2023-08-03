@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>關卡資訊</title>
 	<link rel="stylesheet" type="text/css" href="w3.css">
+	<link rel="stylesheet" type="text/css" href="dracula.css">
 	<script src="RewardName.js"></script>
 	<script type="text/javascript" src="browserfs.min.js"></script>
 	<script src="drop_chara.js"></script>
@@ -68,11 +69,11 @@ a.res::visited {
 	color: initial;
 }
 a.res span { color: #ff634e; }
-.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-.topnav a:hover { background-color: #ddd; color: black; }
-.topnav a.active { background-color: #f2bb00; color: white; }
-.topnav a:visited { text-decoration: none; }
+	.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+	.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+	.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+	.topnav a:visited { text-decoration: none; }
+	.w3-dropdown-content > a { color: var(--color) !important;  }
 span.boss {
 	color: darkred;
 }
@@ -84,7 +85,15 @@ span.boss {
 		<a href="/gachas.html">轉蛋</a>
 		<a href="/stage.html" class="active">關卡</a>
 		<a href="/music.html">音效</a>
+		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+      	</div>
+      	</div>
 	</ul>
+	<script src="dracula.js"></script>
 	<div style="padding: 12px 12px;">
 	<table>
 		<tbody><tr>

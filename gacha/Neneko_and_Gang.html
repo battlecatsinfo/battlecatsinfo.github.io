@@ -3,31 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>限定激稀有系列/キャンペーン/Neneko and Gang</title>
+  <link rel="stylesheet" type="text/css" href="/w3.css">
+  <link rel="stylesheet" type="text/css" href="/dracula.css">
 </head>
 <style>
 html, body { width: 100%%;margin: 0 auto;padding: 0;background-color: aliceblue;text-align: center; }
 table { margin: 0 auto;border-collapse: collapse;margin-top: 50px;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
 td { width: 300px;border: #cfcfcf 4px solid; }
 p { margin-block-start: 0px;margin-block-end: 0px; }
-a { display: block; }
+tbody > a { display: block; }
 p { font-size: larger;margin-block-start: 0;margin-block-end: 0; }
-.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-.topnav a:hover { background-color: #ddd; color: black; }
-.topnav a.active { background-color: #f2bb00; color: white; }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
 .topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
 </style>
 <body>
-<ul class="topnav">
-	<a href="/index.html">主頁</a>
-	<a href="/search.html">貓咪</a>
-	<a href="/esearch.html">敵人</a>
-	<a href="/gachas.html">轉蛋</a>
-	<a href="/stage.html">關卡</a>
-	<a href="/music.html">音效</a>
-</ul>
+	<ul class="topnav">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="/theme.svg" style="background-color: initial !important;">Theme</button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+      	</div>
+      	</div>
+	</ul>
+	<script src="/dracula.js"></script>
 <h1>限定激稀有系列/キャンペーン/Neneko and Gang</h1>
 <img style="display: block;margin: 0 auto;" src="/res/4.png">
-<table><tbody><tr><td><p>黃金貓</p><a href="/unit.html?id=129"><img src="/data/unit/129/f/uni129_f00.png"></a>全身以金粉上漆，是隻超豪華角色<br>當然屬性就是隻貓<br>可換成ＸＰ來升級其他角色唷！</td><td><p>萌萌貓</p><a href="/unit.html?id=131"><img src="/data/unit/131/f/uni131_f00.png"></a>是隻幻想當偶像的鄰家小貓<br>雖然想唱歌但是沒有勇氣…<br>崇拜的對象是萌貓（有時候會心一擊）</td></tr><tr><td><p>貓咪城Mｉｎｉ</p><a href="/unit.html?id=144"><img src="/data/unit/144/f/uni144_f00.png"></a>不知道是得到了誰的力量<br>為了成為雄偉的城<br>憑著氣勢發射波動的努力家</td><td><p>鋼鐵貓</p><a href="/unit.html?id=200"><img src="/data/unit/200/f/uni200_f00.png"></a>被怎麼攻擊都只會受到最小傷害的鋼鐵貓<br>雖是純度100%的稀有金屬但很怕會心一擊<br>無法靠解開等級上限來提升「+等級」（鋼鐵屬性）</td></tr></tbody></table>
+<table><tbody><tr><td><p>黃金貓</p><a class="B" href="/unit.html?id=129"><img src="/data/unit/129/f/uni129_f00.png"></a>全身以金粉上漆，是隻超豪華角色<br>當然屬性就是隻貓<br>可換成ＸＰ來升級其他角色唷！</td><td><p>萌萌貓</p><a class="B" href="/unit.html?id=131"><img src="/data/unit/131/f/uni131_f00.png"></a>是隻幻想當偶像的鄰家小貓<br>雖然想唱歌但是沒有勇氣…<br>崇拜的對象是萌貓（有時候會心一擊）</td></tr><tr><td><p>貓咪城Mｉｎｉ</p><a class="B" href="/unit.html?id=144"><img src="/data/unit/144/f/uni144_f00.png"></a>不知道是得到了誰的力量<br>為了成為雄偉的城<br>憑著氣勢發射波動的努力家</td><td><p>鋼鐵貓</p><a class="B" href="/unit.html?id=200"><img src="/data/unit/200/f/uni200_f00.png"></a>被怎麼攻擊都只會受到最小傷害的鋼鐵貓<br>雖是純度100%的稀有金屬但很怕會心一擊<br>無法靠解開等級上限來提升「+等級」（鋼鐵屬性）</td></tr></tbody></table>
 </body>
 </html>

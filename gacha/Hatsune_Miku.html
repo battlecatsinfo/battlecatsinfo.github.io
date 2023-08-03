@@ -3,31 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>初音未來/初音ミク/Hatsune Miku</title>
+  <link rel="stylesheet" type="text/css" href="/w3.css">
+  <link rel="stylesheet" type="text/css" href="/dracula.css">
 </head>
 <style>
 html, body { width: 100%%;margin: 0 auto;padding: 0;background-color: aliceblue;text-align: center; }
 table { margin: 0 auto;border-collapse: collapse;margin-top: 50px;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
 td { width: 300px;border: #cfcfcf 4px solid; }
 p { margin-block-start: 0px;margin-block-end: 0px; }
-a { display: block; }
+tbody > a { display: block; }
 p { font-size: larger;margin-block-start: 0;margin-block-end: 0; }
-.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-.topnav a:hover { background-color: #ddd; color: black; }
-.topnav a.active { background-color: #f2bb00; color: white; }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
 .topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
 </style>
 <body>
-<ul class="topnav">
-	<a href="/index.html">主頁</a>
-	<a href="/search.html">貓咪</a>
-	<a href="/esearch.html">敵人</a>
-	<a href="/gachas.html">轉蛋</a>
-	<a href="/stage.html">關卡</a>
-	<a href="/music.html">音效</a>
-</ul>
+	<ul class="topnav">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="/theme.svg" style="background-color: initial !important;">Theme</button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+      	</div>
+      	</div>
+	</ul>
+	<script src="/dracula.js"></script>
 <h1>初音未來/初音ミク/Hatsune Miku</h1>
 <img style="display: block;margin: 0 auto;" src="/bnr/gatya_bnr583.png">
-<table><tbody><tr><td><p>初音未來</p><a href="/unit.html?id=535"><img src="/data/unit/535/f/uni535_f00.png"></a>來自虛擬世界的人氣歌手！<br>俏皮又可愛的電子歌姬(範圍攻擊)<br>善於攻擊紅,飄浮,天使敵,使瞬間攻擊力下降</td><td><p>櫻花未來</p><a href="/unit.html?id=536"><img src="/data/unit/536/f/uni536_f00.png"></a>來自虛擬世界的人氣歌手！<br>宣告春天到來的特別歌姬(遠距範圍攻擊)<br>使異星戰士瞬間動作停止，有時候能破壞護盾</td></tr><tr><td><p>鏡音鈴&連</p><a href="/unit.html?id=537"><img src="/data/unit/537/f/uni537_f00.png"></a>來自虛擬世界的人氣歌手！<br>有活力&魅力的雙子主唱(遠距範圍)<br>有時候打飛黑色和鋼鐵敵人並使動作變慢</td><td><p>巡音流歌</p><a href="/unit.html?id=560"><img src="/data/unit/560/f/uni560_f00.png"></a>來自虛擬世界的人氣歌手！<br>略帶神秘氣質的雙語歌手<br>可以給予飄浮與黑色敵人超大傷害(遠距範圍)</td></tr><tr><td><p>初音未來 MAGICAL MIRAI 2020大阪</p><a href="/unit.html?id=582"><img src="/data/unit/582/f/uni582_f00.png"></a>來自虛擬世界的人氣歌手！<br>點綴"初音未來 MAGICAL MIRAI 2020 in OSAKA"的特別歌姬<br>給予紅敵、天使超大傷害，有時候施放渾身一擊</td><td><p>初音未來 MAGICAL MIRAI 2020東京</p><a href="/unit.html?id=583"><img src="/data/unit/583/f/uni583_f00.png"></a>來自虛擬世界的人氣歌手！<br>點綴"初音未來 MAGICAL MIRAI 2020 in TOKYO"的特別歌姬<br>對上紅敵、天使很耐打，並能抵消波動</td></tr><tr><td><p>雪未來 2021</p><a href="/unit.html?id=590"><img src="/data/unit/590/f/uni590_f00.png"></a>來自虛擬世界的人氣歌手！<br>由純白雪雕中誕生的特別歌姬(遠距範圍)<br>善於攻擊無屬性敵人,有時候能使動作停止</td><td><p>MEIKO＆貓咪</p><a href="/unit.html?id=561"><img src="/data/unit/561/f/uni561_f00.png"></a>來自虛擬世界的人氣歌手！<br>廣範歌種皆可完美詮釋的實力派唱將<br>可以給予紅色敵人超大傷害(遠距範圍攻擊)</td></tr><tr><td><p>KAITO＆貓咪</p><a href="/unit.html?id=591"><img src="/data/unit/591/f/uni591_f00.png"></a>來自虛擬世界的人氣歌手！<br>潛在能演唱多彩樂曲可能性的唱將<br>對上不死生物很耐打(範圍攻擊)</td><td><p>貓咪流歌</p><a href="/unit.html?id=562"><img src="/data/unit/562/f/uni562_f00.png"></a>很憧憬有著神秘氣質虛擬歌手的貓咪<br>試著自己跳舞看看結果超詭異從此停止<br>有時候可使異星戰士的攻擊無效化</td></tr><tr><td><p>貓咪鈴</p><a href="/unit.html?id=592"><img src="/data/unit/592/f/uni592_f00.png"></a>很憧憬鮮活感十足的虛擬歌手的貓咪<br>最近把新鮮蜜柑丟到觀眾席上的演出梗討論度很高<br>有時候可使黑色敵人的攻擊無效化</td><td><p>貓咪連</p><a href="/unit.html?id=593"><img src="/data/unit/593/f/uni593_f00.png"></a>很憧憬有活力的虛擬歌手的貓咪<br>正值青春期的結果就是變聲了<br>有時候可使鋼鐵敵人的攻擊無效化</td></tr></tbody></table>
+<table><tbody><tr><td><p>初音未來</p><a class="B" href="/unit.html?id=535"><img src="/data/unit/535/f/uni535_f00.png"></a>來自虛擬世界的人氣歌手！<br>俏皮又可愛的電子歌姬(範圍攻擊)<br>善於攻擊紅,飄浮,天使敵,使瞬間攻擊力下降</td><td><p>櫻花未來</p><a class="B" href="/unit.html?id=536"><img src="/data/unit/536/f/uni536_f00.png"></a>來自虛擬世界的人氣歌手！<br>宣告春天到來的特別歌姬(遠距範圍攻擊)<br>使異星戰士瞬間動作停止，有時候能破壞護盾</td></tr><tr><td><p>鏡音鈴&連</p><a class="B" href="/unit.html?id=537"><img src="/data/unit/537/f/uni537_f00.png"></a>來自虛擬世界的人氣歌手！<br>有活力&魅力的雙子主唱(遠距範圍)<br>有時候打飛黑色和鋼鐵敵人並使動作變慢</td><td><p>巡音流歌</p><a class="B" href="/unit.html?id=560"><img src="/data/unit/560/f/uni560_f00.png"></a>來自虛擬世界的人氣歌手！<br>略帶神秘氣質的雙語歌手<br>可以給予飄浮與黑色敵人超大傷害(遠距範圍)</td></tr><tr><td><p>初音未來 MAGICAL MIRAI 2020大阪</p><a class="B" href="/unit.html?id=582"><img src="/data/unit/582/f/uni582_f00.png"></a>來自虛擬世界的人氣歌手！<br>點綴"初音未來 MAGICAL MIRAI 2020 in OSAKA"的特別歌姬<br>給予紅敵、天使超大傷害，有時候施放渾身一擊</td><td><p>初音未來 MAGICAL MIRAI 2020東京</p><a class="B" href="/unit.html?id=583"><img src="/data/unit/583/f/uni583_f00.png"></a>來自虛擬世界的人氣歌手！<br>點綴"初音未來 MAGICAL MIRAI 2020 in TOKYO"的特別歌姬<br>對上紅敵、天使很耐打，並能抵消波動</td></tr><tr><td><p>雪未來 2021</p><a class="B" href="/unit.html?id=590"><img src="/data/unit/590/f/uni590_f00.png"></a>來自虛擬世界的人氣歌手！<br>由純白雪雕中誕生的特別歌姬(遠距範圍)<br>善於攻擊無屬性敵人,有時候能使動作停止</td><td><p>MEIKO＆貓咪</p><a class="B" href="/unit.html?id=561"><img src="/data/unit/561/f/uni561_f00.png"></a>來自虛擬世界的人氣歌手！<br>廣範歌種皆可完美詮釋的實力派唱將<br>可以給予紅色敵人超大傷害(遠距範圍攻擊)</td></tr><tr><td><p>KAITO＆貓咪</p><a class="B" href="/unit.html?id=591"><img src="/data/unit/591/f/uni591_f00.png"></a>來自虛擬世界的人氣歌手！<br>潛在能演唱多彩樂曲可能性的唱將<br>對上不死生物很耐打(範圍攻擊)</td><td><p>貓咪流歌</p><a class="B" href="/unit.html?id=562"><img src="/data/unit/562/f/uni562_f00.png"></a>很憧憬有著神秘氣質虛擬歌手的貓咪<br>試著自己跳舞看看結果超詭異從此停止<br>有時候可使異星戰士的攻擊無效化</td></tr><tr><td><p>貓咪鈴</p><a class="B" href="/unit.html?id=592"><img src="/data/unit/592/f/uni592_f00.png"></a>很憧憬鮮活感十足的虛擬歌手的貓咪<br>最近把新鮮蜜柑丟到觀眾席上的演出梗討論度很高<br>有時候可使黑色敵人的攻擊無效化</td><td><p>貓咪連</p><a class="B" href="/unit.html?id=593"><img src="/data/unit/593/f/uni593_f00.png"></a>很憧憬有活力的虛擬歌手的貓咪<br>正值青春期的結果就是變聲了<br>有時候可使鋼鐵敵人的攻擊無效化</td></tr></tbody></table>
 </body>
 </html>

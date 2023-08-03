@@ -3,31 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>聖魔大戰/ビックリマン/Bikkuriman</title>
+  <link rel="stylesheet" type="text/css" href="/w3.css">
+  <link rel="stylesheet" type="text/css" href="/dracula.css">
 </head>
 <style>
 html, body { width: 100%%;margin: 0 auto;padding: 0;background-color: aliceblue;text-align: center; }
 table { margin: 0 auto;border-collapse: collapse;margin-top: 50px;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
 td { width: 300px;border: #cfcfcf 4px solid; }
 p { margin-block-start: 0px;margin-block-end: 0px; }
-a { display: block; }
+tbody > a { display: block; }
 p { font-size: larger;margin-block-start: 0;margin-block-end: 0; }
-.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-.topnav a:hover { background-color: #ddd; color: black; }
-.topnav a.active { background-color: #f2bb00; color: white; }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
 .topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
 </style>
 <body>
-<ul class="topnav">
-	<a href="/index.html">主頁</a>
-	<a href="/search.html">貓咪</a>
-	<a href="/esearch.html">敵人</a>
-	<a href="/gachas.html">轉蛋</a>
-	<a href="/stage.html">關卡</a>
-	<a href="/music.html">音效</a>
-</ul>
+	<ul class="topnav">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="/theme.svg" style="background-color: initial !important;">Theme</button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+      	</div>
+      	</div>
+	</ul>
+	<script src="/dracula.js"></script>
 <h1>聖魔大戰/ビックリマン/Bikkuriman</h1>
 <img style="display: block;margin: 0 auto;" src="/bnr/gatya_bnr524.png">
-<table><tbody><tr><td><p>超級宙斯</p><a href="/unit.html?id=467"><img src="/data/unit/467/f/uni467_f00.png"></a>以第一首領姿態在天使們居住的天聖界中由聖神<br>納迪雅創造出的次世代領袖。無法抵擋美女與金錢。<br>對上有屬性的敵人很耐打，必定能使攻擊力下降(範圍攻擊)</td><td><p>聖鳳凰</p><a href="/unit.html?id=468"><img src="/data/unit/468/f/uni468_f00.png"></a>聖神子鳳凰是結合愛與勇理的結晶下<br>誕生的次界創造的聖神！(範圍攻擊)<br>有時候可讓飄浮與黑敵與異星戰士的動作停止</td></tr><tr><td><p>超級惡魔</p><a href="/unit.html?id=469"><img src="/data/unit/469/f/uni469_f00.png"></a>君臨魔性暗黑地域的阿修羅惡魔<br>將用暗黑戒律操控全惡魔界！！<br>必定能讓天使敵人的動作變慢(遠距範圍攻擊)</td><td><p>撒旦瑪利亞</p><a href="/unit.html?id=470"><img src="/data/unit/470/f/uni470_f00.png"></a>奪走了豐・光・動・夢・遊・靈六聖球的<br>瑪利亞將會更強！開始無敵的魔重進攻？<br>波動傷害無效，可以給予紅色敵人超大傷害</td></tr><tr><td><p>耶穌大力士</p><a href="/unit.html?id=471"><img src="/data/unit/471/f/uni471_f00.png"></a>12天使創造的聖神。根據惡魔界的傳說<br>如果使12個理力平衡亂序了就可能急激烈的減力！<br>善於攻擊飄浮敵人！</td><td><p>巫師汗</p><a href="/unit.html?id=555"><img src="/data/unit/555/f/uni555_f00.png"></a>侍奉聖神納迪雅的天聖界賢者。<br>也是養育超級宙斯的親本。<br>有時候打飛有屬性敵人並使動作變慢(遠距範圍)</td></tr><tr><td><p>猊玀魔身</p><a href="/unit.html?id=472"><img src="/data/unit/472/f/uni472_f00.png"></a>超越魔限界的能力炸裂，將要開始<br>暴露魔身！究竟會是魔肖崩壞還是天聖界？<br>可以給予不死生物超大傷害(全方位攻擊)</td><td><p>騎神阿里巴巴</p><a href="/unit.html?id=556"><img src="/data/unit/556/f/uni556_f00.png"></a>於聖夢源下誕生的天使。如願飛速於天聖界<br>用打敗魔族的聖夢劍奪還了遭奪走的理力。<br>次界若神子1！對黑色敵人造成超大傷害(遠距範圍)</td></tr></tbody></table>
+<table><tbody><tr><td><p>超級宙斯</p><a class="B" href="/unit.html?id=467"><img src="/data/unit/467/f/uni467_f00.png"></a>以第一首領姿態在天使們居住的天聖界中由聖神<br>納迪雅創造出的次世代領袖。無法抵擋美女與金錢。<br>對上有屬性的敵人很耐打，必定能使攻擊力下降(範圍攻擊)</td><td><p>聖鳳凰</p><a class="B" href="/unit.html?id=468"><img src="/data/unit/468/f/uni468_f00.png"></a>聖神子鳳凰是結合愛與勇理的結晶下<br>誕生的次界創造的聖神！(範圍攻擊)<br>有時候可讓飄浮與黑敵與異星戰士的動作停止</td></tr><tr><td><p>超級惡魔</p><a class="B" href="/unit.html?id=469"><img src="/data/unit/469/f/uni469_f00.png"></a>君臨魔性暗黑地域的阿修羅惡魔<br>將用暗黑戒律操控全惡魔界！！<br>必定能讓天使敵人的動作變慢(遠距範圍攻擊)</td><td><p>撒旦瑪利亞</p><a class="B" href="/unit.html?id=470"><img src="/data/unit/470/f/uni470_f00.png"></a>奪走了豐・光・動・夢・遊・靈六聖球的<br>瑪利亞將會更強！開始無敵的魔重進攻？<br>波動傷害無效，可以給予紅色敵人超大傷害</td></tr><tr><td><p>耶穌大力士</p><a class="B" href="/unit.html?id=471"><img src="/data/unit/471/f/uni471_f00.png"></a>12天使創造的聖神。根據惡魔界的傳說<br>如果使12個理力平衡亂序了就可能急激烈的減力！<br>善於攻擊飄浮敵人！</td><td><p>巫師汗</p><a class="B" href="/unit.html?id=555"><img src="/data/unit/555/f/uni555_f00.png"></a>侍奉聖神納迪雅的天聖界賢者。<br>也是養育超級宙斯的親本。<br>有時候打飛有屬性敵人並使動作變慢(遠距範圍)</td></tr><tr><td><p>猊玀魔身</p><a class="B" href="/unit.html?id=472"><img src="/data/unit/472/f/uni472_f00.png"></a>超越魔限界的能力炸裂，將要開始<br>暴露魔身！究竟會是魔肖崩壞還是天聖界？<br>可以給予不死生物超大傷害(全方位攻擊)</td><td><p>騎神阿里巴巴</p><a class="B" href="/unit.html?id=556"><img src="/data/unit/556/f/uni556_f00.png"></a>於聖夢源下誕生的天使。如願飛速於天聖界<br>用打敗魔族的聖夢劍奪還了遭奪走的理力。<br>次界若神子1！對黑色敵人造成超大傷害(遠距範圍)</td></tr></tbody></table>
 </body>
 </html>

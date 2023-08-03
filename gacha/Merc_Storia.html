@@ -3,31 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>梅露可物語/メルクストーリ/Merc Storia</title>
+  <link rel="stylesheet" type="text/css" href="/w3.css">
+  <link rel="stylesheet" type="text/css" href="/dracula.css">
 </head>
 <style>
 html, body { width: 100%%;margin: 0 auto;padding: 0;background-color: aliceblue;text-align: center; }
 table { margin: 0 auto;border-collapse: collapse;margin-top: 50px;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
 td { width: 300px;border: #cfcfcf 4px solid; }
 p { margin-block-start: 0px;margin-block-end: 0px; }
-a { display: block; }
+tbody > a { display: block; }
 p { font-size: larger;margin-block-start: 0;margin-block-end: 0; }
-.topnav { background-color: #333;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-.topnav a { display: inline-block;color: #f2f2f2; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-.topnav a:hover { background-color: #ddd; color: black; }
-.topnav a.active { background-color: #f2bb00; color: white; }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
 .topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
 </style>
 <body>
-<ul class="topnav">
-	<a href="/index.html">主頁</a>
-	<a href="/search.html">貓咪</a>
-	<a href="/esearch.html">敵人</a>
-	<a href="/gachas.html">轉蛋</a>
-	<a href="/stage.html">關卡</a>
-	<a href="/music.html">音效</a>
-</ul>
+	<ul class="topnav">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="/theme.svg" style="background-color: initial !important;">Theme</button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+      	</div>
+      	</div>
+	</ul>
+	<script src="/dracula.js"></script>
 <h1>梅露可物語/メルクストーリ/Merc Storia</h1>
 <img style="display: block;margin: 0 auto;" src="/bnr/gatya_bnr414.png">
-<table><tbody><tr><td><p>艾沃茲</p><a href="/unit.html?id=506"><img src="/data/unit/506/f/uni506_f00.png"></a>來自梅露可物語的戰士！<br>放棄了曾是海盜的過去，成爲某海兵部下的青年<br>必定能死前存活，有時候施放渾身一擊(範圍攻擊)</td><td><p>留姬</p><a href="/unit.html?id=346"><img src="/data/unit/346/f/uni346_f00.png"></a>來自梅露可物語的戰士！<br>留在現世一直尋找其兄長的和之國少女<br>有時候會讓異星戰士和不死生物的動作變慢(範圍攻擊)</td></tr><tr><td><p>米希利亞</p><a href="/unit.html?id=345"><img src="/data/unit/345/f/uni345_f00.png"></a>來自梅露可物語的戰士！<br>有著巨大的翅膀而被稱為聖翼的少女(範圍攻擊)<br>善於攻擊飄浮敵人，有時候能使其動作停止</td><td><p>奧爾托斯</p><a href="/unit.html?id=344"><img src="/data/unit/344/f/uni344_f00.png"></a>來自梅露可物語的戰士！<br>空之國一名沒有翅膀的少年。每天都從高塔窗口眺望街景<br>有時候可以打飛飄浮敵人(範圍攻擊)</td></tr><tr><td><p>斯托魯伊悠</p><a href="/unit.html?id=190"><img src="/data/unit/190/f/uni190_f00.png"></a>來自梅露可物語的戰士！<br>和某個少年交換了契約的夜間生物紳士(範圍攻擊)<br>有時候能打飛紅色與黑色敵人並使其動作變慢</td><td><p>阿洛伊斯</p><a href="/unit.html?id=189"><img src="/data/unit/189/f/uni189_f00.png"></a>來自梅露可物語的戰士！<br>因爲某種原因而遭到詛咒的超強魔法師<br>有時候能打飛天使敵人(範圍攻擊)</td></tr><tr><td><p>米絲蒂卡</p><a href="/unit.html?id=188"><img src="/data/unit/188/f/uni188_f00.png"></a>來自梅露可物語的戰士！<br>和「夜間生物」交換了契約的神奇少女<br>攻擊距離長，且善於攻擊黑色敵人(範圍攻擊)</td><td><p>悠凡斯</p><a href="/unit.html?id=187"><img src="/data/unit/187/f/uni187_f00.png"></a>來自梅露可物語的戰士！<br>天生怪力又性格乖僻的騎士。但其實是個<br>內心溫柔的好青年。對上天使敵人很耐打</td></tr><tr><td><p>可納莉亞</p><a href="/unit.html?id=186"><img src="/data/unit/186/f/uni186_f00.png"></a>來自梅露可物語的戰士！<br>憧憬飛龍，夢想著建造通天之橋的女性。<br>有時候會讓黑色與紅色敵人瞬間動作停止(範圍攻擊)</td><td><p>哈爾修特</p><a href="/unit.html?id=185"><img src="/data/unit/185/f/uni185_f00.png"></a>來自梅露可物語的戰士！<br>理性與直覺兼備的銀色野獸。有時候<br>發出會心一擊，對上鋼鐵敵人很耐打</td></tr><tr><td><p>賽蕾絲</p><a href="/unit.html?id=110"><img src="/data/unit/110/f/uni110_f00.png"></a>來自梅露可物語的戰士！<br>不論遇到任何事都會接受的善良少女<br>偶爾使紅色敵人動作變慢</td><td><p>諾諾</p><a href="/unit.html?id=111"><img src="/data/unit/111/f/uni111_f00.png"></a>來自梅露可物語的戰士！<br>穩重大方卻又天真爛漫的少女<br>對上黑色敵人很耐打</td></tr><tr><td><p>奧爾加</p><a href="/unit.html?id=112"><img src="/data/unit/112/f/uni112_f00.png"></a>來自梅露可物語的戰士！<br>離鄉背井出來體驗社會的大小姐<br>偶爾能打飛紅色敵人</td><td><p>諾倫</p><a href="/unit.html?id=113"><img src="/data/unit/113/f/uni113_f00.png"></a>來自梅露可物語的戰士！<br>個性文靜，喜歡觀星的好青年<br>偶爾會讓紅色敵人瞬間動作停止</td></tr><tr><td><p>優依</p><a href="/unit.html?id=114"><img src="/data/unit/114/f/uni114_f00.png"></a>來自梅露可物語的戰士！<br>平常是個有點恍神，但卻殷勤有禮的青年<br>偶爾會讓黑色敵人動作變慢</td><td><p>賽拉姆</p><a href="/unit.html?id=115"><img src="/data/unit/115/f/uni115_f00.png"></a>來自梅露可物語的戰士！<br>效忠位於空之國的主人的少女<br>偶爾能打飛黑色敵人</td></tr><tr><td><p>弗舞</p><a href="/unit.html?id=116"><img src="/data/unit/116/f/uni116_f00.png"></a>來自梅露可物語的戰士！<br>天空之民，但因爲是混血所以頭上長角<br>有時候會讓黑色敵人瞬間動作停止</td><td><p>阿烏拉</p><a href="/unit.html?id=117"><img src="/data/unit/117/f/uni117_f00.png"></a>來自梅露可物語的戰士！<br>平常非常害羞，但一談到槍就說個不停<br>有時候能打飛黑色敵人(範圍攻擊)</td></tr><tr><td><p>雷伊</p><a href="/unit.html?id=118"><img src="/data/unit/118/f/uni118_f00.png"></a>來自梅露可物語的戰士！<br>情緒一激動，就會讓人觸電的女孩<br>有時候會讓黑色敵人動作變慢(範圍攻擊)</td><td><p>飛翼龍</p><a href="/unit.html?id=119"><img src="/data/unit/119/f/uni119_f00.png"></a>來自梅露可物語的戰士！<br>從空中放出強烈的一擊<br>能對黑色敵人造成超大傷害(範圍攻擊)</td></tr></tbody></table>
+<table><tbody><tr><td><p>艾沃茲</p><a class="B" href="/unit.html?id=506"><img src="/data/unit/506/f/uni506_f00.png"></a>來自梅露可物語的戰士！<br>放棄了曾是海盜的過去，成爲某海兵部下的青年<br>必定能死前存活，有時候施放渾身一擊(範圍攻擊)</td><td><p>留姬</p><a class="B" href="/unit.html?id=346"><img src="/data/unit/346/f/uni346_f00.png"></a>來自梅露可物語的戰士！<br>留在現世一直尋找其兄長的和之國少女<br>有時候會讓異星戰士和不死生物的動作變慢(範圍攻擊)</td></tr><tr><td><p>米希利亞</p><a class="B" href="/unit.html?id=345"><img src="/data/unit/345/f/uni345_f00.png"></a>來自梅露可物語的戰士！<br>有著巨大的翅膀而被稱為聖翼的少女(範圍攻擊)<br>善於攻擊飄浮敵人，有時候能使其動作停止</td><td><p>奧爾托斯</p><a class="B" href="/unit.html?id=344"><img src="/data/unit/344/f/uni344_f00.png"></a>來自梅露可物語的戰士！<br>空之國一名沒有翅膀的少年。每天都從高塔窗口眺望街景<br>有時候可以打飛飄浮敵人(範圍攻擊)</td></tr><tr><td><p>斯托魯伊悠</p><a class="B" href="/unit.html?id=190"><img src="/data/unit/190/f/uni190_f00.png"></a>來自梅露可物語的戰士！<br>和某個少年交換了契約的夜間生物紳士(範圍攻擊)<br>有時候能打飛紅色與黑色敵人並使其動作變慢</td><td><p>阿洛伊斯</p><a class="B" href="/unit.html?id=189"><img src="/data/unit/189/f/uni189_f00.png"></a>來自梅露可物語的戰士！<br>因爲某種原因而遭到詛咒的超強魔法師<br>有時候能打飛天使敵人(範圍攻擊)</td></tr><tr><td><p>米絲蒂卡</p><a class="B" href="/unit.html?id=188"><img src="/data/unit/188/f/uni188_f00.png"></a>來自梅露可物語的戰士！<br>和「夜間生物」交換了契約的神奇少女<br>攻擊距離長，且善於攻擊黑色敵人(範圍攻擊)</td><td><p>悠凡斯</p><a class="B" href="/unit.html?id=187"><img src="/data/unit/187/f/uni187_f00.png"></a>來自梅露可物語的戰士！<br>天生怪力又性格乖僻的騎士。但其實是個<br>內心溫柔的好青年。對上天使敵人很耐打</td></tr><tr><td><p>可納莉亞</p><a class="B" href="/unit.html?id=186"><img src="/data/unit/186/f/uni186_f00.png"></a>來自梅露可物語的戰士！<br>憧憬飛龍，夢想著建造通天之橋的女性。<br>有時候會讓黑色與紅色敵人瞬間動作停止(範圍攻擊)</td><td><p>哈爾修特</p><a class="B" href="/unit.html?id=185"><img src="/data/unit/185/f/uni185_f00.png"></a>來自梅露可物語的戰士！<br>理性與直覺兼備的銀色野獸。有時候<br>發出會心一擊，對上鋼鐵敵人很耐打</td></tr><tr><td><p>賽蕾絲</p><a class="B" href="/unit.html?id=110"><img src="/data/unit/110/f/uni110_f00.png"></a>來自梅露可物語的戰士！<br>不論遇到任何事都會接受的善良少女<br>偶爾使紅色敵人動作變慢</td><td><p>諾諾</p><a class="B" href="/unit.html?id=111"><img src="/data/unit/111/f/uni111_f00.png"></a>來自梅露可物語的戰士！<br>穩重大方卻又天真爛漫的少女<br>對上黑色敵人很耐打</td></tr><tr><td><p>奧爾加</p><a class="B" href="/unit.html?id=112"><img src="/data/unit/112/f/uni112_f00.png"></a>來自梅露可物語的戰士！<br>離鄉背井出來體驗社會的大小姐<br>偶爾能打飛紅色敵人</td><td><p>諾倫</p><a class="B" href="/unit.html?id=113"><img src="/data/unit/113/f/uni113_f00.png"></a>來自梅露可物語的戰士！<br>個性文靜，喜歡觀星的好青年<br>偶爾會讓紅色敵人瞬間動作停止</td></tr><tr><td><p>優依</p><a class="B" href="/unit.html?id=114"><img src="/data/unit/114/f/uni114_f00.png"></a>來自梅露可物語的戰士！<br>平常是個有點恍神，但卻殷勤有禮的青年<br>偶爾會讓黑色敵人動作變慢</td><td><p>賽拉姆</p><a class="B" href="/unit.html?id=115"><img src="/data/unit/115/f/uni115_f00.png"></a>來自梅露可物語的戰士！<br>效忠位於空之國的主人的少女<br>偶爾能打飛黑色敵人</td></tr><tr><td><p>弗舞</p><a class="B" href="/unit.html?id=116"><img src="/data/unit/116/f/uni116_f00.png"></a>來自梅露可物語的戰士！<br>天空之民，但因爲是混血所以頭上長角<br>有時候會讓黑色敵人瞬間動作停止</td><td><p>阿烏拉</p><a class="B" href="/unit.html?id=117"><img src="/data/unit/117/f/uni117_f00.png"></a>來自梅露可物語的戰士！<br>平常非常害羞，但一談到槍就說個不停<br>有時候能打飛黑色敵人(範圍攻擊)</td></tr><tr><td><p>雷伊</p><a class="B" href="/unit.html?id=118"><img src="/data/unit/118/f/uni118_f00.png"></a>來自梅露可物語的戰士！<br>情緒一激動，就會讓人觸電的女孩<br>有時候會讓黑色敵人動作變慢(範圍攻擊)</td><td><p>飛翼龍</p><a class="B" href="/unit.html?id=119"><img src="/data/unit/119/f/uni119_f00.png"></a>來自梅露可物語的戰士！<br>從空中放出強烈的一擊<br>能對黑色敵人造成超大傷害(範圍攻擊)</td></tr></tbody></table>
 </body>
 </html>
