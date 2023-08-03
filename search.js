@@ -1,5 +1,6 @@
 var used_variables;
 var cats;
+var cats_old;
 const filter_expr = document.getElementById('filter-expr');
 const sort_expr = document.getElementById('sort-expr');
 const search_result = document.getElementById('search-result');
@@ -8,6 +9,7 @@ const pages_a = document.getElementById('pages-a');
 var hide_seach = false;
 const tables = document.getElementById('tables');
 const toggle_s = document.getElementById('toggle-s');
+const only_my_cats = document.getElementById('only-my-cats');
 const def_lv_e = document.getElementById('def-lv');
 const plus_lv_e = document.getElementById('plus-lv');
 const cattype_e = document.getElementById('cattype');
@@ -19,6 +21,7 @@ const traitBtn = trait_s.firstElementChild.firstElementChild;
 const abBtn = ab_s.firstElementChild.firstElementChild;
 const name_search = document.getElementById('name-search');
 var last_forms;
+var save_my_cats;
 function rerender(event) {
 	event.preventDefault();
 	const id = event.currentTarget.id;
@@ -71,7 +74,7 @@ function renderTable(forms, page = 1) {
 		const tr = document.createElement('tr');
 		const theForm = display_forms[i][1];
 		useCurve(theForm.id);
-		_info = cats[theForm.id].info;
+		_info = cats_old[theForm.id].info;
 		const base = Math.min(def_lv, _info.maxBase);
 		const plus = Math.min(plus_lv, _info.maxPlus);
 		const texts = [`${theForm.id}-${theForm.lvc+1}`, `Lv ${base} + ${plus}`, '', [theForm.name, theForm.jp_name].filter(x => x).join('/'), ~~theForm.gethp(), ~~theForm.getatk(), 
@@ -158,9 +161,9 @@ function calculate(code = '') {
 		alert(e.toString());
 	}
 	let f = eval(`form => (${pcode})`);
-	for (let id = 0;id < cats.length;++id) {
-		useCurve(id);
-		let c = cats[id];
+	for (let i = 0;i < cats.length;++i) {
+		let c = cats[i];
+		useCurve(c.id);
 		_info = c.info;
 		for (let form of c.forms) {
 			if (f(form)) {
@@ -176,7 +179,7 @@ function calculate(code = '') {
 	let fn = eval(`form => (${pcode})`);
 	results = results.map((form, i) => {
 		useCurve(form.id);
-		_info = cats[form.id].info;
+		_info = cats_old[form.id].info;
 		const x = fn(form);
 		return [isFinite(x) ? x : 0, form];
 	}).sort((a, b) => b[0] - a[0]);
@@ -203,6 +206,7 @@ function addBtns(parent, s) {
 loadAllCats()
 .then(_cats => {
 	cats = _cats;
+	cats_old = _cats;
 	document.getElementById('loader').style.display = 'none';
 	loader_text.style.display = 'none';
 	document.getElementById('main').style.display = 'block';
@@ -267,6 +271,28 @@ document.querySelectorAll('.or-and').forEach(e => {
 document.getElementById('filter-go').onclick = function() {
 	calculate(simplify(filter_expr.value));
 }
+async function loadStats() {
+	return new Promise(resolve => {
+	var req = indexedDB.open("data", 1);
+	req.onupgradeneeded = function(event) {
+		const db = event.target.result;
+		let store = db.createObjectStore('data', {"keyPath": "i"});
+	}
+	req.onsuccess = function(event) {
+		const db = event.target.result;
+		const tx = db.transaction(["data"], "readwrite");
+		tx.objectStore("data").get(0).onsuccess = function(event) {
+			const res = event.target.result;
+			if (res)
+				resolve(res.data);
+			resolve(null);
+		}
+		tx.oncomplete = function() {
+			db.close();
+		}
+	}
+	});
+}
 document.getElementById('filter-clear').onclick = function() {
 	function fn(x) { x.classList.remove('o-selected'); };
 	cattype_e.querySelectorAll('.o-selected').forEach(fn);
@@ -276,6 +302,24 @@ document.getElementById('filter-clear').onclick = function() {
 	filter_expr.value = '';
 	sort_expr.value = '';
 	calculate();
+}
+only_my_cats.onchange = async function() {
+	if (!save_my_cats) {
+		save_my_cats = (await loadStats())['cats'];
+		if (!save_my_cats) return;
+	}
+	if (only_my_cats.checked) {
+		var my_cats = [];
+		for (let i = 0;i < cats.length;++i) {
+			if (save_my_cats[i])
+				my_cats.push(cats[i]);
+		}
+		cats = my_cats;
+		calculate(simplify(filter_expr.value));
+	} else {
+		cats = cats_old;
+		calculate(simplify(filter_expr.value));
+	}
 }
 toggle_s.onclick = function() {
 	if (hide_seach) {
@@ -294,7 +338,7 @@ toggle_s.onclick = function() {
 name_search.oninput = function() {
 	let search = name_search.value;
 	if (!search) {
-		return calculate(simplify(filter_expr.value));;
+		return calculate(simplify(filter_expr.value));
 	}
 	let digit = search.length >= 1;
 	for (let c of search) {

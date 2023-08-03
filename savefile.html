@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="w3.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="jszip.min.js"></script>
+	<script src="data/lang/zh/UnitName.js"></script>
+	<script src="data/lang/zh/UnitExplanation.js"></script>
+	<script src="data/lang/jp/UnitName.js"></script>
+	<link rel="stylesheet" type="text/css" href="dracula.css">
+	<script src="unitlevels.js"></script>
+	<title>喵咪大戰爭 紀錄檔</title>
+</head>
+<body>
+<style>
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+.topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
+</style>
+<ul class="topnav">
+	<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a href="/music.html">音效</a>
+		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+      	</div>
+    </div>
+</ul><script src="dracula.js"></script>
+<div id="loader-text">Loading...</div>
+<div id="loader"></div>
+<script src="cat.js"></script>
+<div id="main" style="display:none;">
+	<input type="file" name="file" id="file">
+	<select id="country" style="width: 100px;">
+		<option value="tw" selected>台灣 - tw</option>
+		<option value="jp">日本 - jp</option>
+		<option value="en">英美 - en</option>
+	</select>
+	<table class="w3-table w3-striped w3-centered">
+		<tbody id="stats"></tbody>
+	</table>
+	<div id="cat-dict" class="w3-container">
+		
+	</div>
+</div>
+<script>
+var cats;
+const cat_dict = document.getElementById('cat-dict');
+const m_file = document.getElementById('file');
+const m_country = document.getElementById('country');
+const m_stats = document.getElementById('stats');
+function t3str(x) {
+	let s = x.toString();
+	switch (s.length) {
+	case 2: return '0' + s;
+	case 1: return '00' + s;
+	}
+	return s;
+}
+loadAllCats().then(c => {
+	cats = c;
+	loader_text.style.display = 'none';
+	document.getElementById('loader').style.display = 'none';
+	document.getElementById('main').style.display = 'block';
+	m_file.addEventListener('change', function (event) {
+		const file = event.target.files[0];
+		if (!file) return;
+		file.arrayBuffer().then(buffer => {
+			do_parse(new DataView(buffer));
+		});
+	});
+	loadStats().then(s => {
+		if (s)
+			display(s);
+	});
+});
+async function saveStats(data) {
+	var req = indexedDB.open("data", 1);
+	req.onupgradeneeded = function(event) {
+		const db = event.target.result;
+		let store = db.createObjectStore('data', {"keyPath": "i"});
+	}
+	req.onsuccess = function(event) {
+		const db = event.target.result;
+		const tx = db.transaction(["data"], "readwrite");
+		const store = tx.objectStore("data");
+		store.put({'i': 0, 'data': data});
+		tx.oncomplete = function() {
+			db.close();
+		}
+	}
+}
+async function loadStats() {
+	return new Promise(resolve => {
+	var req = indexedDB.open("data", 1);
+	req.onupgradeneeded = function(event) {
+		const db = event.target.result;
+		let store = db.createObjectStore('data', {"keyPath": "i"});
+	}
+	req.onsuccess = function(event) {
+		const db = event.target.result;
+		const tx = db.transaction(["data"], "readwrite");
+		tx.objectStore("data").get(0).onsuccess = function(event) {
+			const res = event.target.result;
+			if (res)
+				resolve(res.data);
+			resolve(null);
+		}
+		tx.oncomplete = function() {
+			db.close();
+		}
+	}
+	});
+}
+function do_parse(view) {
+	const version_int = view.getUint32(0, true);
+	const stats = {};
+	stats['game-version'] = `${~~(version_int / 10000)}.${~~((version_int % 1000) / 100)}.${version_int % 100}`;
+	stats['country'] = country.selectedOptions[0].value;
+	stats['cat-food'] = view.getUint32(7, true);
+	stats['energy'] = view.getUint32(11, true);
+	var address;
+	for (let i = 15;i < 115;i += 4) {
+		const val = view.getUint32(i, true);
+		if (val >= 2000 && val <= 3000) {
+			address = i;
+			break;
+		}
+	}
+	if (!address)
+		throw 'Count not find date';
+	var dst = view.getUint8(address + 118) >= 15 && view.getUint8(address + 118) <= 20;
+	address += 44;
+	if (dst)
+		address += 1;
+	address += 16;
+	stats['xp'] = view.getUint32(address, true);
+	address += 4;
+	address += 4;
+	address += 48;
+	address += 1;
+	stats['slots'] = new Array(view.getUint8(address));
+	address += 1;
+	function get_arr(view, len) {
+		const results = new Array(len);
+		for (let i = 0;i < len;++i)
+			results[i] = view.getUint32(i * 4, true);
+		return results;
+	}
+	for (let i = 0;i < stats['slots'].length;++i) {
+		stats['slots'][i] = get_arr(new DataView(view.buffer, address, 40), 10);
+		address += 40;
+	}
+	address += 4; // cat stamp
+	stats['cat-stamp-collected'] = get_arr(new DataView(view.buffer, address, address + 120), 30);
+	address += 120;
+	address += 4;
+	stats['daily-reward-flag'] = view.getUint32(address, true)
+	address += 4;
+	address += 40;
+	stats['chapter-progress'] = new Array(10);
+	for (let i = 0;i < 10;++i) {
+		stats['chapter-progress'][i] = view.getUint32(address, true);
+		address += 4;
+	}
+	address += 51 * 10 * 4; // times
+	address += 10 * 49 * 4; // treasures
+	let length = view.getUint32(address, true);
+	address += 4;
+	address += 4 * length;
+	length = view.getUint32(address, true);
+	address += 4;
+	stats['cats'] = new Uint8Array(length);
+	for (let i = 0;i < length;++i) {
+		stats['cats'][i] = view.getUint32(address, true);
+		address += 4;
+	}
+	length = view.getUint32(address, true);
+	address += 4;
+	stats['cat_upgrades1'] = new Uint8Array(length);
+	stats['cat_upgrades2'] = new Uint8Array(length);
+	for (let i = 0;i < length;++i) {
+		stats['cat_upgrades1'][i] = view.getUint16(address, true);
+		address += 2;
+		stats['cat_upgrades2'][i] = view.getUint16(address, true);
+		address += 2;
+	}
+	length = view.getUint32(address, true);
+	address += 4;
+	stats['current_forms'] = new Uint8Array(length);
+	for (let i = 0;i < length;++i) {
+		stats['current_forms'][i] = view.getUint32(address, true);
+		address += 4;
+	}
+	stats['blue_upgrades'] = [];
+	for (let i = 0;i < 11;++i) {
+		stats['blue_upgrades'].push([view.getUint8(address), view.getUint8(address + 1)]);
+		address += 2;
+	}
+	saveStats(stats);
+	display(stats);
+}
+function display(stats) {
+	function makePair(a, b) {
+		const tr = document.createElement('tr');
+		const td0 = document.createElement('td');
+		const td1 = document.createElement('td');
+		td0.innerText = a;
+		td1.innerText = b;
+		tr.appendChild(td0);
+		tr.appendChild(td1);
+		m_stats.appendChild(tr);
+	}
+	makePair('版本', stats['game-version']);
+	makePair('貓罐頭', stats['cat-food']);
+	makePair('XP', stats['xp']);
+	makePair('科技', stats['blue_upgrades'].map(x => `${x[0]}+${x[1]}`).join(','));
+	var i = 0;
+	for (;i < 9;++i) {
+		if (stats['chapter-progress'][i])
+			break;
+	}
+	makePair('主章節進度', ['世界篇第一章', '世界篇第二章', '世界篇第三章', '未來篇第一章', '未來篇第二章', '世界篇第三章', '宇宙篇第一章, 宇宙篇第二章', '宇宙篇第三章'][i] + ' 第' + stats['chapter-progress'][i].toString() + '關');
+	i = 0;
+	const current_forms = stats['current_forms'];
+	for (let c of stats['cats']) {
+		if (c) {
+			const f = Math.min(current_forms[i], cats[i].forms.length);
+			const div = document.createElement('span');
+			const a = document.createElement('a');
+			const img = document.createElement('img');
+			img.src = cats[i].forms[f].icon;
+			a.appendChild(img);
+			a.href = '/unit.html?id=' + i.toString();
+			div.appendChild(a);
+			div.appendChild(document.createTextNode(`Lv${stats.cat_upgrades2[i] + 1}+${stats.cat_upgrades1[i]}`));
+			cat_dict.appendChild(div);
+		}
+		++i;
+	}
+}
+</script>
+</body>
+</html>

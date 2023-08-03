@@ -9,6 +9,8 @@
 	--tcolor: initial;
 	--aactive: initial;
 	--bgd: #f1f1f1;
+	--spans: #7fdbff;
+	--liselect: #7fdbff;
 }
 a, textarea {
 	appearance: none;
@@ -24,6 +26,8 @@ a, textarea {
 	--tcolor: rgba(68, 71, 90, 1);
 	--aactive: rgba(139, 233, 253, 1);
 	--bgd: initial;
+	--spans: #797270;
+	--liselect: #638593;
 }
 html,body {
 	background-color: var(--bg) !important;
@@ -64,4 +68,8 @@ textarea {
 }
 a.highlight,a.highlight *,a.active,a.active *,.selected,.selected *,[href="#"] {
 	color: var(--aactive) !important;
+}
+.o-selected button, .o-selected input {
+	box-shadow: 0 0 2px black !important;
+	background-color: var(--liselect) !important;
 }
