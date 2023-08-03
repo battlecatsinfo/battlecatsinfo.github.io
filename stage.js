@@ -485,7 +485,7 @@ M3.oninput = function() {
       line[4] = tmp;
     }
     makeTd(tr, line[2] == line[10] ? line[10] : `${line[2]}~${line[10]}`);
-    makeTd(tr, line[3] == line[4] ? line[3] : `${line[3]}~${line[4]}`);
+    makeTd(tr, line[1] ? '-' : (line[3] == line[4] ? line[3] : `${line[3]}~${line[4]}`));
     makeTd(tr, line[14]);
     const boss = line[8];
     if (boss == 2) {
