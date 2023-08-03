@@ -234,6 +234,12 @@ function numStr(num) {
 function numStrT(num) {
 	return parseFloat((num / 30).toFixed(2)).toString() + '秒';
 }
+function getCover(p, durationF, attackF) {
+	const x = durationF / attackF;
+	const q = ~~x;
+	const r = x - q;
+	return Math.min(1 - r * Math.pow(1 - p, q + 1) - (1 - r) * Math.pow(1 - p, q), 1);
+}
 function get_trait_short_names(trait) {
 	var s = '';
 	let i = 0;
@@ -335,18 +341,18 @@ class Form {
 			(data[24]) && (this.ab[AB_KB] = [data[24], trait_names[0]]);
 			if (data[25]) {
 				let stop_time = data[26];
-				let cover = Math.min((data[25] * stop_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(data[25], stop_time * 1.2, this.attackF);
 				this.ab[AB_STOP] = [data[25], trait_names[0], numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
 			}
 			if (data[27]) {
 				let slow_time = data[28];
-				let cover = Math.min((data[27] * slow_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(data[27], slow_time * 1.2, this.attackF - 1);
 				this.ab[AB_SLOW] = [data[27], trait_names[0], numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
 			}
 			(data[32]) && (this.ab[AB_ONLY] = trait_names);
 			if (data[37]) {
 				let weak_time = data[38];
-				let cover = Math.min((data[37] * weak_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(data[37], weak_time * 1.2, this.attackF);
 				this.ab[AB_WEAK] = [data[37], trait_names[0], data[39], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
 			}
 			(data[29]) && (this.ab[AB_RESIST] = trait_names);
@@ -355,7 +361,7 @@ class Form {
 			(data[81]) && (this.ab[AB_MASSIVES] = trait_names);
 			if (data[92]) {
 				let curse_time = data[93];
-				let cover = Math.min((data[92] * curse_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(data[92], curse_time * 1.2, this.attackF);
 				this.ab[AB_CURSE] = [data[92], trait_names[0], numStrT(curse_time),  numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
 			}
 		}
@@ -470,14 +476,14 @@ case 1:
 			o[1] = getTraitNames(this.trait);
 			if (talent[4] && talent[4] != talent[5]) {
 				const weak_time = this.data[38] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
-				const cover = Math.min((this.data[37] * weak_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(this.data[37], weak_time * 1.2, this.attackF);
 				o[3] = numStrT(weak_time);
 				o[4] = numStrT(weak_time * 1.2);
 				o[5] = numStr(cover*100) + '%';
 			} else {
 				const weak_time = this.data[38];
 				const pos = this.data[37] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				const cover = Math.min((pos * weak_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(pos, weak_time * 1.2, this.attackF);
 				o[0] = pos;
 				o[5] = numStr(cover*100) + '%';
 			}
@@ -485,12 +491,12 @@ case 1:
 			if (talent[4] && talent[4] != talent[5]) {
 				const weak_time = this.data[38] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 				const pos = talent[2];
-				const cover = Math.min((pos * weak_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(pos, weak_time * 1.2, this.attackF);
 				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
 			} else {
 				const weak_time = this.data[38];
 				const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				const cover = Math.min((pos * weak_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(pos, weak_time * 1.2, this.attackF);
 				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
 			}
 	}
@@ -503,14 +509,14 @@ case 2:
 			o[1] = getTraitNames(this.trait);
 			if (talent[4] && talent[4] != talent[5]) {
 				const stop_time = this.data[26] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
-				const cover = Math.min((this.data[25] * stop_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(this.data[25], stop_time * 1.2, this.attackF);
 				o[2] = numStrT(stop_time);
 				o[3] = numStrT(stop_time * 1.2);
 				o[4] = numStr(cover*100) + '%';
 			} else {
 				const stop_time = this.data[26];
 				const pos = this.data[25] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				const cover = Math.min((pos * stop_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(pos, stop_time * 1.2, this.attackF);
 				o[0] = pos;
 				o[4] = numStr(cover*100) + '%';
 			}
@@ -518,12 +524,12 @@ case 2:
 			if (talent[4] && talent[4] != talent[5]) {
 					const stop_time = this.data[26] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 					const pos = talent[2];
-					const cover = Math.min((pos * stop_time * 1.2) / (this.attackF * 100), 1);
+					let cover = getCover(pos, stop_time * 1.2, this.attackF);
 					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
 			} else {
 					const stop_time = this.data[26];
 					const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-					const cover = Math.min((pos * stop_time * 1.2) / (this.attackF * 100), 1);
+					let cover = getCover(pos, stop_time * 1.2, this.attackF);
 					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
 			}
 		}
@@ -536,14 +542,14 @@ case 3:
 			o[1] = getTraitNames(this.trait);
 			if (talent[4] && talent[4] != talent[5]) {
 				const slow_time = this.data[28] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
-				const cover = Math.min((this.data[27] * slow_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(this.data[27], slow_time * 1.2, this.attackF - 1);
 				o[2] = numStrT(slow_time);
 				o[3] = numStrT(slow_time * 1.2);
 				o[4] = numStr(cover*100) + '%';
 			} else {
 				const slow_time = this.data[28];
 				const pos = this.data[27] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				const cover = Math.min((pos * slow_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(pos, slow_time * 1.2, this.attackF - 1);
 				o[0] = pos;
 				o[4] = numStr(cover*100) + '%';
 			}
@@ -551,12 +557,12 @@ case 3:
 			if (talent[4] && talent[4] != talent[5]) {
 					const slow_time = this.data[28] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 					const pos = talent[2];
-					const cover = Math.min((pos * slow_time * 1.2) / (this.attackF * 100), 1);
+					let cover = getCover(pos, slow_time * 1.2, this.attackF - 1);
 					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
 			} else {
 					const slow_time = this.data[28];
 					const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-					const cover = Math.min((pos * slow_time * 1.2) / (this.attackF * 100), 1);
+					let cover = getCover(pos, slow_time * 1.2, this.attackF - 1);
 					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
 			}
 	}
@@ -790,14 +796,14 @@ case 60:
 			if (talent[4] && talent[4] != talent[5]) {
 				o[1] = getTraitNames(this.trait);
 				const curse_time = this.data[93] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
-				const cover = Math.min((this.data[92] * curse_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(this.data[92], curse_time * 1.2, this.attackF);
 				o[2] = numStrT(curse_time);
 				o[3] = numStrT(curse_time * 1.2);
 				o[4] = numStr(cover*100) + '%';
 			} else {
 				const curse_time = this.data[93];
 				const pos = this.data[92] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				const cover = Math.min((pos * curse_time * 1.2) / (this.attackF * 100), 1);
+				let cover = getCover(pos, curse_time * 1.2, this.attackF);
 				o[0] = pos;
 				o[4] = numStr(cover*100) + '%';
 			}
@@ -805,12 +811,12 @@ case 60:
 			if (talent[4] && talent[4] != talent[5]) {
 					const curse_time = this.data[93] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 					const pos = this.data[92];
-					const cover = Math.min((pos * curse_time * 1.2) / (this.attackF * 100), 1);
+					let cover = getCover(pos, curse_time * 1.2, this.attackF);
 					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
 			} else {
 					const curse_time = this.data[93];
 					const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-					const cover = Math.min((pos * curse_time * 1.2) / (this.attackF * 100), 1);
+					let cover = getCover(pos, curse_time * 1.2, this.attackF);
 					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
 			}
 		}
@@ -1602,7 +1608,7 @@ const icon_names = [
 	  'curse'
 ]
 const icon_descs = [
-	'血量{1}%以下攻擊力增加{2}%倍',
+	'血量{1}%以下攻擊力增加{2}%',
 	'{1}%機率以1血存活一次', 
 	'善於攻城({1}%倍s傷害)',
 	'{1}%機率會心一擊',
@@ -1610,9 +1616,9 @@ const icon_descs = [
 	'靈魂攻擊',
 	'{1}%機率打破宇宙盾',
 	'{1}%機率打破惡魔盾',
-	'{1}%機率渾身一擊(攻擊力增加{2}%倍)',
+	'{1}%機率渾身一擊(攻擊力增加{2}%)',
 	'擊倒敵人獲得兩倍金錢',
-	'鋼鐵特性(爆擊之外攻擊只會受1傷害)',
+	'鋼鐵特性(爆擊、毒擊之外攻擊只會受1傷害)',
 	'{1}%機率放出Lv{2}小波動',
 	'{1}%機率放出Lv{2}波動',
 	'{1}%機率放出Lv{5}小烈波(出現位置{2}~{3}，持續{4}f)',
@@ -1626,7 +1632,7 @@ const icon_descs = [
 	'{1}%機率暫停{2}持續{3}({4}，控場覆蓋率{5})',
 	'{1}%機率緩速{2}持續{3}({4}，控場覆蓋率{5})',
 	'只能攻擊{1}',
-	'對{1}傷害傷害1.5倍(1.8倍)受到紅屬性的敵人傷害減少50%(60%)',
+	'對{1}傷害傷害1.5倍(1.8倍)，受到傷害減少50%(60%)',
 	'受到{1}攻擊的傷害減至1/4(1/5)',
 	'受到{1}攻擊的傷害減至1/6(1/7)',
 	'對{1}造成3倍(4倍)傷害',

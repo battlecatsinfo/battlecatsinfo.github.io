@@ -462,18 +462,16 @@ M3.oninput = function() {
     makeTd(tr, enemy_names[enemy]);
     const img = new Image(85, 32);
     const a = document.createElement('a');
-    let atkM = line[13] || 100;
-    let hpM = line[9] || 100;
-    atkM *= mult;
-    atkM *= mult;
+    let atkM = ((line[13] || 100) * mult).toFixed(0);
+    let hpM = ((line[9] || 100) * mult).toFixed(0);
     a.href = `/enemy.html?id=${enemy}&mag=${hpM}&atkMag=${atkM}`;
-    s = t3str(enemy)
+    s = t3str(enemy);
     img.src = '/data/enemy/' + s + '/edi_' + s + '.png';
     const td = document.createElement('td');
     a.appendChild(img);
     td.appendChild(a);
     tr.appendChild(td);
-    makeTd(tr, hpM == atkM ? hpM.toFixed(0) : `HP:${hpM.toFixed(0)}%,ATK:${atkM.toFixed(0)}%`);
+    makeTd(tr, hpM == atkM ? (hpM + '%') : `HP:${hpM}%,ATK:${atkM}%`);
     makeTd(tr, line[1] || '無限');
     makeTd(tr, line[5].toString() + '%');
     makeTd(tr, line[2] == line[10] ? line[10] : `${line[2]}~${line[10]}`);

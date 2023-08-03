@@ -265,10 +265,8 @@ name_search.oninput = function() {
 			s.splice(x, 1);
 		}
 	}
-	for (let C of s) {
-		if (C.name.includes(search) || C.jp_name.includes(search)) {
+	for (let C of s)
+		if ((C.name && C.name[0].includes(search) || (C.jp_name && C.jp_name[0].includes(search))))
 			results.push([1, C]);
-		}
-	}
 	renderTable(results);
 }
