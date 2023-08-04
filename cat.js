@@ -762,6 +762,7 @@ case 53:
 	break;
 case 54:
 	this.res[RES_SURGE] = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	break;
 case 55:
 	this.imu |= IMU_VOLC;
 	break;
