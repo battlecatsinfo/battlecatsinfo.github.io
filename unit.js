@@ -85,7 +85,7 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 			break;
 		case AB_CRIT:
 			if (dps)
-				theATK *= (ab[1] / 50);
+				theATK += theATK * (ab[1] / 100);
 			else
 				theATK *= 2;
 			lines.push('爆');

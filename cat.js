@@ -9,7 +9,7 @@ var _eggs = null;
 var enemy_descs = null;
 var rwMap;
 var tfMap;
-const BC_VER = 120510;
+const BC_VER = 120511;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -235,6 +235,7 @@ function numStrT(num) {
 	return parseFloat((num / 30).toFixed(2)).toString() + '秒';
 }
 function getCover(p, durationF, attackF) {
+	p /= 100;
 	const x = durationF / attackF;
 	const q = ~~x;
 	const r = x - q;
