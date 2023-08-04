@@ -15,6 +15,7 @@ const m_drops = document.getElementById('drops');
 const rewards = document.getElementById('rewards');
 const m_times = document.getElementById('times');
 const mM = document.getElementById('mM');
+const ex_stages = document.getElementById('ex-stages');
 var info1, info2, info3;
 var enemy_names;
 var star;
@@ -463,6 +464,25 @@ M3.oninput = function() {
       stName.parentNode.parentNode.appendChild(tr);
     }
   }
+  ex_stages.textContent = '';
+  if (info3.eC > 0) {
+    const td = document.createElement('div');
+    td.innerText = 'EX關卡(出現機率 ' + info3.eC + '%)';
+    ex_stages.appendChild(td);
+    for (let i = info3.eI;i <= info3.eA;++i) {
+      const td = document.createElement('div');
+      const info = JSON.parse(fs.readFileSync('/stages/4/' + info3.eM.toString() + '/' + i.toString(), 'utf-8', 'r'));
+      const a = document.createElement('a');
+      a.innerText = [info.name, info.jpname].join('/');
+      a.href = '/stage.html?s=4-' + info3.eM.toString() + '-' + i.toString();
+      td.appendChild(a);
+      ex_stages.appendChild(td);
+    }
+  }
+  if (ex_stages.children.length)
+    ex_stages.style.display = 'block';
+  else
+    ex_stages.style.display = 'none';
   for (let line of info3.l) {
     const tr = document.createElement('tr');
     const enemy = line[0];
@@ -481,18 +501,16 @@ M3.oninput = function() {
     makeTd(tr, hpM == atkM ? (hpM + '%') : `HP:${hpM}%,ATK:${atkM}%`);
     makeTd(tr, line[1] || '無限');
     makeTd(tr, line[5].toString() + '%');
-    if (line[2] > line[10]) {
-      const tmp = line[2];
-      line[2] = line[10];
-      line[10] = tmp;
-    }
     if (line[3] > line[4]) {
       const tmp = line[3];
       line[3] = line[4];
       line[4] = tmp;
     }
-    // (line[2] == line[10] ? line[10] : `${line[2]}~${line[10]}`)
-    makeTd(tr, line[2] < 0 ? (-line[2]) : '-');
+    if (Math.abs(line[2]) >= Math.abs(line[10])) {
+      makeTd(tr, line[2]);
+    } else {
+      makeTd(tr, `${line[2]}~${line[10]}`);
+    }
     makeTd(tr, (line[1] == 1)  ? '-' : (line[3] == line[4] ? line[3] : `${line[3]}~${line[4]}`));
     makeTd(tr, line[14]);
     const boss = line[8];
