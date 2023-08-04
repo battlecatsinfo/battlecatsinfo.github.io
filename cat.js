@@ -900,8 +900,8 @@ default: console.assert(false, talent[0]);
 	getTotalLv() {
 		return Math.min(def_lv, _info.maxBase) + Math.min(plus_lv, _info.maxPlus);
 	}
-	getlevelcount() {
-		this.lvc;
+	getformc() {
+		return this.lvc + 1;
 	}
 	getkb() {
 		return this.kb;
