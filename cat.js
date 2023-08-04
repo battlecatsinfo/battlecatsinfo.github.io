@@ -9,7 +9,7 @@ var _eggs = null;
 var enemy_descs = null;
 var rwMap;
 var tfMap;
-const BC_VER = 120509;
+const BC_VER = 120510;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
