@@ -405,7 +405,14 @@ M3.oninput = function() {
   a.innerText = t3str(info3.bg);
   st2[5].textContent = '';
   st2[5].appendChild(a);
-  st3[1].innerText = info3.xp;
+  if (!info3.xp) {
+    if (M1.selectedIndex == 3)
+      info3.xp = 1000 + Math.min(M3.selectedIndex, 47) * 300;
+  }
+  let totalXP = info3.xp * 4.7;
+  if ([0, 9, 16].includes(M1.selectedIndex))
+    totalXP *= 9;
+  st3[1].innerText = `${info3.xp}(滿:${~~totalXP})`;
   const a1 = document.createElement('a');
   a1.innerText = t3str(info3.m0);
   a1.href = 'https://github.com/battlecatsultimate/bcu-assets/raw/maste/music/' + t3str(info3.m0) + '.ogg';
@@ -459,7 +466,7 @@ M3.oninput = function() {
   for (let line of info3.l) {
     const tr = document.createElement('tr');
     const enemy = line[0];
-    makeTd(tr, enemy_names[enemy]);
+    makeTd(tr, enemy_names[enemy] || '?');
     const img = new Image(85, 32);
     const a = document.createElement('a');
     let atkM = ((line[13] || 100) * mult).toFixed(0);
@@ -484,8 +491,9 @@ M3.oninput = function() {
       line[3] = line[4];
       line[4] = tmp;
     }
-    makeTd(tr, line[2] == line[10] ? line[10] : `${line[2]}~${line[10]}`);
-    makeTd(tr, line[1] ? '-' : (line[3] == line[4] ? line[3] : `${line[3]}~${line[4]}`));
+    // (line[2] == line[10] ? line[10] : `${line[2]}~${line[10]}`)
+    makeTd(tr, line[2] < 0 ? (-line[2]) : '-');
+    makeTd(tr, (line[1] == 1)  ? '-' : (line[3] == line[4] ? line[3] : `${line[3]}~${line[4]}`));
     makeTd(tr, line[14]);
     const boss = line[8];
     if (boss == 2) {
