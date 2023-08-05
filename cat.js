@@ -9,7 +9,7 @@ var _eggs = null;
 var enemy_descs = null;
 var rwMap;
 var tfMap;
-const BC_VER = 120511;
+const BC_VER = 120512;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -1272,7 +1272,7 @@ class Enemy {
 		this.ldr = new Array(atkCount);
 		this.ldr[0] = data[36];
 		for (let i = 1;i < atkCount;++i) {
-			if (data[99 + (i - 1) * 3] == 1) {
+			if (data[95 + (i - 1) * 3] == 1) {
 				this.lds[i] = data[95 + (i - 1) * 3 + 1];
 				this.ldr[i] = data[95 + (i - 1) * 3 + 2];
 			} else {

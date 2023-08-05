@@ -88,11 +88,12 @@ function renderTable(E) {
 	chs[0].children[0].children[0].onerror = function(event) {
 		event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
 	}
-	chs[0].children[2].innerText = E.hp * my_mult;
-	chs[0].children[4].innerText = [E.atk * atk_mag, E.atk1 * atk_mag, E.atk2 * atk_mag].filter(x => x).join('/');
+	chs[0].children[2].innerText = ~~(E.hp * my_mult);
+	chs[0].children[4].innerText = [E.atk * atk_mag, E.atk1 * atk_mag, E.atk2 * atk_mag].filter(x => x).map(x => ~~x).join('/');
 	chs[0].children[6].innerText = E.speed;
 	chs[1].children[1].innerText = E.kb;
-	chs[1].children[3].innerText = numStr((E.atk + E.atk1 + E.atk2) * my_mult * 30 / E.attackF);
+	const allAtk = (E.atk + E.atk1 + E.atk2) * atk_mag;
+	chs[1].children[3].innerText = numStr((~~allAtk) * 30 / E.attackF);
 	chs[1].children[5].innerText = E.range;
 	chs[1].children[7].innerText = E.earn;
 	chs[2].children[1].innerText = [E.pre, E.pre1, E.pre2].filter(x => x).map(numStrT).join('/');
@@ -142,7 +143,6 @@ function renderTable(E) {
 	atkType += (E.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
 	if (E.atkType & ATK_KB_REVENGE)
 		atkType += ' • 擊退反擊';
-	
 	const lds = E.lds;
 	const ldr = E.ldr;
 	if (lds[0] || ldr[0]) {
