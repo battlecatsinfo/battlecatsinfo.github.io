@@ -6,6 +6,7 @@ const M3 = document.getElementById('M3');
 const st1 = document.getElementById('st-1').children;
 const st2 = document.getElementById('st-2').children;
 const st3 = document.getElementById('st-3').children;
+const st4 = document.getElementById('st-4').children;
 const stName = document.getElementById('st-name');
 const stName2 = document.getElementById('st-name2');
 const stLines = document.getElementById('lines');
@@ -23,6 +24,314 @@ var char_groups;
 var Buffer = BrowserFS.BFSRequire('buffer').Buffer;
 const materialDrops = [85, 86, 87, 88, 89, 90, 91, 140, 187, 188, 189, 190, 191, 192, 193, 194];
 BrowserFS.install(window);
+mapConditions = {
+    "1": {
+        "name": "世界篇第一章"
+    },
+    "2": {
+        "name": "世界篇第二章"
+    },
+    "3": {
+        "name": "世界篇第三章"
+    },
+    "4": {
+        "name": "未來篇第一章"
+    },
+    "5": {
+        "name": "未來篇第二章"
+    },
+    "6": {
+        "name": "未來篇第三章"
+    },
+    "7": {
+        "name": "宇宙篇第一章"
+    },
+    "8": {
+        "name": "宇宙篇第二章"
+    },
+    "9": {
+        "name": "宇宙篇第三章"
+    },
+    "10": {
+    "condition":[101017,-114024]
+      },
+    "11": {
+    "condition":[101018,-114025]
+      },
+    "12": {
+    "condition":[101019,-114026]
+      },
+    "13": {
+    "condition":[101020,-114027]
+      },
+    "14": {
+    "condition":[101021,-114028]
+      },
+    "15": {
+    "condition":[101022,-114029]
+      },
+    "16": {
+    "condition":[101023,-114030]
+      },
+    "17": {
+    "condition":[101024,-114031]
+      },
+    "18": {
+    "condition":[101025,-114032]
+      },
+    "19": {
+    "name": "全狂亂貓關卡"
+      },
+    "21": {
+    "name": "New Challenger全部關卡任4關完成"
+      },
+    "30": {
+    "condition":[101014,-114018]
+      },
+    "31": {
+    "condition":[101015,-114019]
+      },
+    "32": {
+    "condition":[101016,-114020]
+      },
+    "33": {
+    "condition":[101039,-114021]
+      },
+    "34": {
+    "condition":[101043,-114022]
+      },
+    "35": {
+    "condition":[101066,-114023]
+      },
+    "36": {
+    "condition":[101095,-114012]
+      },
+    "37": {
+    "condition":[101117,-114013]
+      },
+    "38": {
+    "condition":[101119,-114014]
+      },
+    "39": {
+    "condition":[101128,-114015]
+      },
+    "40": {
+    "condition":[101158,-114016]
+      },
+    "41": {
+    "condition":[101177,-114017]
+      },
+    "42": {
+    "condition":[101095,-201095]
+      },
+    "43": {
+    "condition":[101117,-201117]
+      },
+    "44": {
+    "condition":[101119,-201119]
+      },
+    "45": {
+    "condition":[101128,-201128]
+      },
+    "46": {
+    "condition":[101158,-201158]
+      },
+    "47": {
+    "condition":[101177,-201177]
+      },
+    "48": {
+    "condition":[101014,-201014]
+      },
+    "49": {
+    "condition":[101015,-201015]
+      },
+    "50": {
+    "condition":[101016,-201016]
+      },
+    "51": {
+    "condition":[101039,-201039]
+      },
+    "52": {
+    "condition":[101043,-201043]
+      },
+    "53": {
+    "condition":[101066,-201066]
+      },
+    "54": {
+    "condition":[101017,-201017]
+      },
+    "55": {
+    "condition":[101018,-201018]
+      },
+    "56": {
+    "condition":[101019,-201019]
+      },
+    "57": {
+    "condition":[101020,-201020]
+      },
+    "58": {
+    "condition":[101021,-201021]
+      },
+    "59": {
+    "condition":[101022,-201022]
+      },
+    "60": {
+    "condition":[101023,-201023]
+      },
+    "61": {
+    "condition":[101024,-201024]
+      },
+    "62": {
+    "condition":[101025,-201025]
+      },
+    "63": {
+    "condition":[102065,102066,102205,102206]
+      },
+    "64": {
+    "condition":[101095,-114012,101117,-114013]
+      },
+    "65": {
+    "condition":[101119,-114014,101128,-114015]
+      },
+    "66": {
+    "condition":[101158,-114016,101177,-114017]
+      },
+    "67": {
+    "condition":[101257,101258,101266]
+      },
+    "68": {
+    "condition":[101268]
+      },
+    "69": {
+    "condition":[107000],
+    "stage":39
+      },
+    "70": {
+    "condition":[130000],
+    "stage":29
+      },
+    "71": {
+    "condition":[101128,-114015,101215,-114033]
+      },
+    "72": {
+    "condition":[101119,-114014,101177,-114017]
+      },
+    "73": {
+    "condition":[101095,-114012,101158,-114016]
+      },
+    "74": {
+    "condition":[101215,-201215]
+      },
+    "75": {
+    "condition":[101161,-201161]
+      },
+    "76": {
+    "condition":[101096,-201096]
+      },
+    "77": {
+    "condition":[101122,-201122]
+      },
+    "78": {
+    "condition":[101189,-201189]
+      },
+    "79": {
+    "condition":[101259,-201259]
+      },
+    "80": {
+    "condition":[101226,-201226]
+      },
+    "81": {
+    "condition":[101102,-201102]
+      },
+    "82": {
+    "condition":[101103,-201103]
+      },
+    "83": {
+    "condition":[101104,-201104]
+      },
+    "84": {
+    "condition":[101105,-201105]
+      },
+    "85": {
+    "condition":[101106,-201106]
+      },
+    "86": {
+    "condition":[101107,-201107]
+      },
+    "87": {
+    "condition":[101108,-201108]
+      },
+    "88": {
+    "condition":[101109,-201109]
+      },
+    "89": {
+    "condition":[101110,-201110]
+      },
+    "90": {
+    "condition":[101157,-201157]
+      },
+    "91": {
+    "condition":[101096,-114035]
+      },
+    "92": {
+    "condition":[101122,-114036]
+      },
+    "93": {
+    "condition":[101157,-114049]
+      },
+    "94": {
+    "condition":[101189,-114037]
+      },
+    "95": {
+    "condition":[101226,-114039]
+      },
+    "96": {
+    "condition":[131000],
+    "stage":3
+      },
+    "97": {
+    "condition":[131001],
+    "stage":3
+      },
+    "98": {
+    "condition":[131002],
+    "stage":3
+      },
+    "99": {
+    "condition":[113047],
+    "stage":4
+      },
+    "100": {
+    "condition":[131000],
+    "stage":9
+      },
+    "101": {
+    "condition":[131001],
+    "stage":9
+      },
+    "102": {
+    "condition":[131002],
+    "stage":9
+      },
+    "103": {
+    "condition":[101130,101131,101132,101133,101134,101135,101136,101137,101138]
+      },
+    "104": {
+    "condition":[101259,-114038]
+      },
+    "105": {
+    "condition":[131000],
+    "stage":15
+      },
+    "106": {
+    "condition":[131001],
+    "stage":15
+      },
+    "107": {
+    "condition":[131002],
+    "stage":15
+      }
+}
 fetch('enemyName.json').then(res => res.json()).then(json => enemy_names = json).then(function() {
 fetch('/stages.zip').then(res => res.arrayBuffer()).then(function(zipData) {
   BrowserFS.configure({
@@ -42,6 +351,11 @@ fetch('/stages.zip').then(res => res.arrayBuffer()).then(function(zipData) {
       M1.appendChild(p);
     });
     char_groups = JSON.parse(fs.readFileSync('/stages/group', 'utf-8', 'r'));
+    main();
+  });
+});
+});
+function main() {
     const url = new URL(location.href);
     const stars = url.searchParams.get('star');
     if (stars) {
@@ -64,9 +378,73 @@ fetch('/stages.zip').then(res => res.arrayBuffer()).then(function(zipData) {
     M1.selectedIndex = 0;
     M1.oninput();
     main_div.style.display = 'block';
-  });
-});
-});
+}
+function getConditionHTML(obj) {
+  if (obj > 100000) {
+    const x = Math.abs(obj) % 100000;
+    const m = ~~(x / 1000);
+    const s = x % 1000;
+    const info = JSON.parse(fs.readFileSync(`/stages/${m}/${s}/info`));
+    const a = document.createElement('a');
+    const div = document.createElement('div');
+    div.append('破完');
+    a.href = '#';
+    a.innerText = info.name;
+    a.onclick = function(event) {
+      M1.selectedIndex = m;
+      M1.oninput(null, [m, s]);
+      return false;
+    }
+    div.appendChild(a);
+    return div;
+  } else {
+    obj = mapConditions[obj];
+    if (!obj) return document.createTextNode('???');
+  }
+  if (obj.hasOwnProperty('name'))
+    return document.createTextNode(obj.name);
+  if (obj.hasOwnProperty('stage')) {
+    const x = Math.abs(obj.condition) % 100000;
+    const m = ~~(x / 1000);
+    const s = x % 1000;
+    const info = JSON.parse(fs.readFileSync(`/stages/${m}/${s}/info`));
+    const a = document.createElement('a');
+    const div = document.createElement('div');
+    div.append('破完');
+    a.href = '#';
+    const st = obj.stage;
+    a.innerText = info.name + '第' + (st + 1).toString() + '關';
+    a.onclick = function(event) {
+      M1.selectedIndex = m;
+      M1.oninput(null, [m, s, st]);
+      return false;
+    }
+    div.appendChild(a);
+    return div;
+  }
+  const div = document.createElement('div');
+  div.append('破完');
+  let i = 0;
+  for (const y of obj.condition) {
+    const x = Math.abs(y) % 100000;
+    const m = ~~(x / 1000);
+    const s = x % 1000;
+    const info = JSON.parse(fs.readFileSync(`/stages/${m}/${s}/info`));
+    const a = document.createElement('a');
+    a.href = '#';
+    a.innerText = info.name;
+    a.onclick = function(event) {
+      M1.selectedIndex = m;
+      M1.oninput(null, [m, s]);
+      return false;
+    }
+    if (i)
+      div.append(y < 0 ? 'or' : '+');
+    div.appendChild(a);
+    ++i;
+  }
+  return div;
+}
 function merge(g1, g2) {
   group = [g1[0], [...g1[1]]];
   if (g1[0] == 0 && g2[0] == 0) {
@@ -393,6 +771,12 @@ M3.oninput = function() {
   st1[1].innerText = (M1.selectedOptions[0].value == '/stages/14') ? ('貓力達' + String.fromCharCode(65 + info3.e/1000) + '×' + (info3.e % 1000).toString()) : info3.e;
   st1[3].innerText = info3.max;
   st1[5].innerText = info3.len;
+  if (info2.hasOwnProperty('mapcond')) {
+    st4[1].textContent = '';
+    st4[1].appendChild(getConditionHTML(info2.mapcond));
+  } else {
+    st4[1].textContent = '無制限';
+  }
   st2[1].innerText = info3.H;
   const ca = document.createElement('a');
   const cas = t3str(info3.castle % 1000);
@@ -406,6 +790,12 @@ M3.oninput = function() {
   a.innerText = t3str(info3.bg);
   st2[5].textContent = '';
   st2[5].appendChild(a);
+  if (info2.hasOwnProperty('stagecond')) {
+    st4[3].textContent = '';
+    st4[3].appendChild(getConditionHTML(info2.stagecond));
+  } else {
+    st4[3].textContent = '無制限';
+  }
   if (!info3.xp) {
     if (M1.selectedIndex == 3)
       info3.xp = 1000 + Math.min(M3.selectedIndex, 47) * 300;
@@ -424,6 +814,7 @@ M3.oninput = function() {
   st3[3].appendChild(a1);
   st3[5].textContent = '';
   st3[5].appendChild(a2);
+  st4[5].textContent = info2.hasOwnProperty('userrank') ? info2.userrank : '無制限';
   stLines.textContent = '';
   if (info2.hasOwnProperty('Lim')) {
     const lims = info2.Lim.map(x => new Limit(x));
@@ -600,3 +991,4 @@ function doSearch(t) {
   if (!num_results)
     search_result.innerText = '沒有結果';
 }
+window.onpopstate = main;
