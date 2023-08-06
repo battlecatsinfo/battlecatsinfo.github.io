@@ -663,7 +663,7 @@ M3.oninput = function() {
     tr.id = 'stars-tr';
     stName.parentNode.parentNode.appendChild(tr);
   }
-  if (info3.hasOwnProperty('nC') || info2.rM || info1.hasOwnProperty('gc') || info2.hasOwnProperty('gc')) {
+  if (info3.hasOwnProperty('nC') || info2.rM || info1.hasOwnProperty('gc') || info2.hasOwnProperty('gc') || info2.hasOwnProperty('wT') || info2.hasOwnProperty('hC')) {
     var s;
     const tr = document.createElement('tr');
     const th = document.createElement('th');
@@ -685,6 +685,18 @@ M3.oninput = function() {
       const span = document.createElement('div');
       span.style.color = '#ff634e';
       span.innerText = '接關不可';
+      th.appendChild(span);
+    }
+    if (info2.hasOwnProperty('wT')) {
+      const span = document.createElement('div');
+      span.style.color = '#ff634e';
+      span.innerText = '元氣恢復時間' + info2.wT.toString() + '分鐘';
+      th.appendChild(span);
+    }
+    if (info2.hasOwnProperty('hC')) {
+      const span = document.createElement('div');
+      span.style.color = '#ff634e';
+      span.innerText = '全破後隱藏';
       th.appendChild(span);
     }
     tr.appendChild(th);
@@ -869,6 +881,43 @@ M3.oninput = function() {
       td.appendChild(a);
       ex_stages.appendChild(td);
     }
+  } else if (info3.hasOwnProperty('exS')) {
+    const table = document.createElement('table');
+    table.classList.add('w3-table', 'w3-centered');
+    const tbody = document.createElement('tbody');
+    const tr = document.createElement('tr');
+    const td0 = document.createElement('td');
+    const td1 = document.createElement('td');
+    td0.innerText = 'EX關卡';
+    td1.innerText = '機率';
+    tr.appendChild(td0);
+    tr.appendChild(td1);
+    tbody.appendChild(tr);
+    for (let i = 0;i < info3.exS.length;++i) {
+      const s = info3.exS[i];
+      const td0 = document.createElement('td');
+      const td1 = document.createElement('td');
+      const tr = document.createElement('tr');
+      const a = document.createElement('a');
+      const st = s % 100;
+      const sm = Math.floor((s % 100000) / 100);
+      const mc = Math.floor(s / 100000);
+      const sts = [mc, sm, st];
+      a.innerText = '???';
+      a.innerText = JSON.parse(fs.readFileSync(`/stages/${mc}/${sm}/${st}`)).name;
+      a.onclick = function(event) {
+          M1.selectedIndex = sts[0];
+          M1.oninput(null, sts);
+          return false;
+      }
+      td0.appendChild(a);
+      td1.innerText = info3.exC[i].toFixed(1) + '%';
+      tr.appendChild(td0);
+      tr.appendChild(td1);
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    ex_stages.appendChild(table);
   }
   if (ex_stages.children.length)
     ex_stages.style.display = 'block';
