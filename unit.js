@@ -711,7 +711,7 @@ function getTalentInfo(talent, data) {
 	case 65:
 		if (data[108])
 			return range('小烈波', '%', 2, 3);
-		return range2(`Lv${talent[2]}小烈波`, '%', 2, 3, talent[2]);
+		return range2(`Lv${talent[4]}小烈波`, '%', 2, 3, talent[2]);
 	default: console.assert(false, `${talent[0]} not handled`);
 	}
 	return '???';
