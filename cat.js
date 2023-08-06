@@ -9,7 +9,7 @@ var _eggs = null;
 var enemy_descs = null;
 var rwMap;
 var tfMap;
-const BC_VER = 120512;
+const BC_VER = 120514;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -234,12 +234,78 @@ function numStr(num) {
 function numStrT(num) {
 	return parseFloat((num / 30).toFixed(2)).toString() + '秒';
 }
+function combineChances(count, chance) {
+	let x = 1;
+	for (let i = 0;i < count;++i)
+		x *= (100 - chance) / 100;
+	return 1 - x;
+}
+function getChances(freq, pres, chance, duration) {
+	const segments = [];
+	outer: for (let now = 0;;now -= freq) {
+		for (let i = pres.length - 1;i >= 0;--i) {
+			if (now + pres[i] + duration >= 0) {
+				const a = now + pres[i];
+				const z = Math.min(a + duration, freq);
+				(a != z) && segments.push([Math.max(a, 0), z]);
+			} else break outer;
+		}
+	}
+	const steps = [];
+	let substeps = [];
+	for (let i = 0;i <= freq;++i) {
+		for (let x of segments) {
+			if (i == x[0] || i == x[1]) {
+				if (i == x[0])
+					substeps.push(true);
+				else
+					substeps.push(false);
+			}
+		}
+		if (substeps.length) {
+			steps.push([i, substeps]);
+			substeps = [];
+		}
+	}
+	let cover = 0;
+	let last = steps[0][0];
+	let count = 0;
+	for (let x of steps) {
+		const now = x[0];
+		const substeps = x[1];
+		cover += combineChances(count, chance) * (now - last) / freq;
+		for (let s of substeps) {
+			if (s) {
+				++count;
+			} else {
+				--count;
+			}
+		}
+		last = now;
+	}
+	return Math.min(cover, 1) * 100;
+}
 function getCover(p, durationF, attackF) {
 	p /= 100;
 	const x = durationF / attackF;
 	const q = ~~x;
 	const r = x - q;
-	return Math.min(1 - r * Math.pow(1 - p, q + 1) - (1 - r) * Math.pow(1 - p, q), 1);
+	return Math.min(1 - r * Math.pow(1 - p, q + 1) - (1 - r) * Math.pow(1 - p, q), 1) * 100;
+}
+function getCoverUnit(unit, chance, duration) {
+	if (!(unit.pre2 + unit.pre1))
+		return getCover(chance, duration, unit.attackF);
+	let pres = [];
+	for (let i = 4;i >= 1;i >>= 1) {
+		if (unit.abi & i) {
+			switch (i) {
+			case 1: pres.push(unit.pre2); break;
+			case 2: pres.push(unit.pre1); break;
+			case 4: pres.push(unit.pre); break;
+			}
+		}
+	}
+	return getChances(unit.attackF, pres, chance, duration);
 }
 function get_trait_short_names(trait) {
 	var s = '';
@@ -314,6 +380,7 @@ class Form {
 		this.pre2 = data[62];
 		this.tba = data[4] * 2;
 		this.speed = data[2];
+		this.abi = (data[63] << 2) + (data[64] << 1) + data[65];
 		const atkAnim = anim2[cat_id][level_count];
 		this.backswing = atkAnim[0];
 		this.attackF = atkAnim[1];
@@ -342,19 +409,19 @@ class Form {
 			(data[24]) && (this.ab[AB_KB] = [data[24], trait_names[0]]);
 			if (data[25]) {
 				let stop_time = data[26];
-				let cover = getCover(data[25], stop_time * 1.2, this.attackF);
-				this.ab[AB_STOP] = [data[25], trait_names[0], numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
+				let cover = getCoverUnit(this, data[25], stop_time * 1.2);
+				this.ab[AB_STOP] = [data[25], trait_names[0], numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover) + '%'];
 			}
 			if (data[27]) {
 				let slow_time = data[28];
-				let cover = getCover(data[27], slow_time * 1.2, this.attackF - 1);
-				this.ab[AB_SLOW] = [data[27], trait_names[0], numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
+				let cover = getCoverUnit(this, data[27], slow_time * 1.2);
+				this.ab[AB_SLOW] = [data[27], trait_names[0], numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover) + '%'];
 			}
 			(data[32]) && (this.ab[AB_ONLY] = trait_names);
 			if (data[37]) {
 				let weak_time = data[38];
-				let cover = getCover(data[37], weak_time * 1.2, this.attackF);
-				this.ab[AB_WEAK] = [data[37], trait_names[0], data[39], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
+				let cover = getCoverUnit(this, data[37], weak_time * 1.2);
+				this.ab[AB_WEAK] = [data[37], trait_names[0], data[39], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover) + '%'];
 			}
 			(data[29]) && (this.ab[AB_RESIST] = trait_names);
 			(data[30]) && (this.ab[AB_MASSIVE] = trait_names);
@@ -362,8 +429,8 @@ class Form {
 			(data[81]) && (this.ab[AB_MASSIVES] = trait_names);
 			if (data[92]) {
 				let curse_time = data[93];
-				let cover = getCover(data[92], curse_time * 1.2, this.attackF);
-				this.ab[AB_CURSE] = [data[92], trait_names[0], numStrT(curse_time),  numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
+				let cover = getCoverUnit(this, data[92], curse_time * 1.2);
+				this.ab[AB_CURSE] = [data[92], trait_names[0], numStrT(curse_time),  numStrT(curse_time * 1.2), numStr(cover) + '%'];
 			}
 		}
 		(data[31]) && (this.ab[AB_CRIT] = [data[31]]);
@@ -477,28 +544,28 @@ case 1:
 			o[1] = getTraitNames(this.trait);
 			if (talent[4] && talent[4] != talent[5]) {
 				const weak_time = this.data[38] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
-				let cover = getCover(this.data[37], weak_time * 1.2, this.attackF);
+				let cover = getCoverUnit(this, this.data[37], weak_time * 1.2);
 				o[3] = numStrT(weak_time);
 				o[4] = numStrT(weak_time * 1.2);
-				o[5] = numStr(cover*100) + '%';
+				o[5] = numStr(cover) + '%';
 			} else {
 				const weak_time = this.data[38];
 				const pos = this.data[37] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				let cover = getCover(pos, weak_time * 1.2, this.attackF);
+				let cover = getCoverUnit(this, pos, weak_time * 1.2);
 				o[0] = pos;
-				o[5] = numStr(cover*100) + '%';
+				o[5] = numStr(cover) + '%';
 			}
 		} else {
 			if (talent[4] && talent[4] != talent[5]) {
 				const weak_time = this.data[38] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 				const pos = talent[2];
-				let cover = getCover(pos, weak_time * 1.2, this.attackF);
-				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
+				let cover = getCoverUnit(this, pos, weak_time * 1.2);
+				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover) + '%'];
 			} else {
 				const weak_time = this.data[38];
 				const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				let cover = getCover(pos, weak_time * 1.2, this.attackF);
-				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover*100) + '%'];
+				let cover = getCoverUnit(this, pos, weak_time * 1.2);
+				this.ab[AB_WEAK] = [pos, getTraitNames(this.trait), talent[7], numStrT(weak_time), numStrT(weak_time * 1.2), numStr(cover) + '%'];
 			}
 	}
 	break;
@@ -510,28 +577,28 @@ case 2:
 			o[1] = getTraitNames(this.trait);
 			if (talent[4] && talent[4] != talent[5]) {
 				const stop_time = this.data[26] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
-				let cover = getCover(this.data[25], stop_time * 1.2, this.attackF);
+				let cover = getCoverUnit(this, this.data[25], stop_time * 1.2);
 				o[2] = numStrT(stop_time);
 				o[3] = numStrT(stop_time * 1.2);
-				o[4] = numStr(cover*100) + '%';
+				o[4] = numStr(cover) + '%';
 			} else {
 				const stop_time = this.data[26];
 				const pos = this.data[25] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				let cover = getCover(pos, stop_time * 1.2, this.attackF);
+				let cover = getCoverUnit(this, pos, stop_time * 1.2);
 				o[0] = pos;
-				o[4] = numStr(cover*100) + '%';
+				o[4] = numStr(cover) + '%';
 			}
 		} else {
 			if (talent[4] && talent[4] != talent[5]) {
 					const stop_time = this.data[26] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 					const pos = talent[2];
-					let cover = getCover(pos, stop_time * 1.2, this.attackF);
-					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
+					let cover = getCoverUnit(this, pos, stop_time * 1.2);
+					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover) + '%'];
 			} else {
 					const stop_time = this.data[26];
 					const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-					let cover = getCover(pos, stop_time * 1.2, this.attackF);
-					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover*100) + '%'];
+					let cover = getCoverUnit(this, pos, stop_time * 1.2);
+					this.ab[AB_STOP] = [pos, getTraitNames(this.trait), numStrT(stop_time), numStrT(stop_time * 1.2), numStr(cover) + '%'];
 			}
 		}
 	break;
@@ -543,28 +610,28 @@ case 3:
 			o[1] = getTraitNames(this.trait);
 			if (talent[4] && talent[4] != talent[5]) {
 				const slow_time = this.data[28] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
-				let cover = getCover(this.data[27], slow_time * 1.2, this.attackF - 1);
+				let cover = getCoverUnit(this, this.data[27], slow_time * 1.2);
 				o[2] = numStrT(slow_time);
 				o[3] = numStrT(slow_time * 1.2);
-				o[4] = numStr(cover*100) + '%';
+				o[4] = numStr(cover) + '%';
 			} else {
 				const slow_time = this.data[28];
 				const pos = this.data[27] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				let cover = getCover(pos, slow_time * 1.2, this.attackF - 1);
+				let cover = getCoverUnit(this, pos, slow_time * 1.2);
 				o[0] = pos;
-				o[4] = numStr(cover*100) + '%';
+				o[4] = numStr(cover) + '%';
 			}
 		} else {
 			if (talent[4] && talent[4] != talent[5]) {
 					const slow_time = this.data[28] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 					const pos = talent[2];
-					let cover = getCover(pos, slow_time * 1.2, this.attackF - 1);
-					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
+					let cover = getCoverUnit(this, pos, slow_time * 1.2);
+					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover) + '%'];
 			} else {
 					const slow_time = this.data[28];
 					const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-					let cover = getCover(pos, slow_time * 1.2, this.attackF - 1);
-					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover*100) + '%'];
+					let cover = getCoverUnit(this, pos, slow_time * 1.2);
+					this.ab[AB_SLOW] = [pos, getTraitNames(this.trait), numStrT(slow_time), numStrT(slow_time * 1.2), numStr(cover) + '%'];
 			}
 	}
 	break;
@@ -798,34 +865,34 @@ case 60:
 			if (talent[4] && talent[4] != talent[5]) {
 				o[1] = getTraitNames(this.trait);
 				const curse_time = this.data[93] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
-				let cover = getCover(this.data[92], curse_time * 1.2, this.attackF);
+				let cover = getCoverUnit(this, this.data[92], curse_time * 1.2);
 				o[2] = numStrT(curse_time);
 				o[3] = numStrT(curse_time * 1.2);
-				o[4] = numStr(cover*100) + '%';
+				o[4] = numStr(cover) + '%';
 			} else {
 				const curse_time = this.data[93];
 				const pos = this.data[92] + talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-				let cover = getCover(pos, curse_time * 1.2, this.attackF);
+				let cover = getCoverUnit(this, pos, curse_time * 1.2);
 				o[0] = pos;
-				o[4] = numStr(cover*100) + '%';
+				o[4] = numStr(cover) + '%';
 			}
 		} else {
 			if (talent[4] && talent[4] != talent[5]) {
 					const curse_time = this.data[93] + talent[4] + (level-1) * (talent[5] - talent[4]) / (talent[1] - 1);
 					const pos = this.data[92];
-					let cover = getCover(pos, curse_time * 1.2, this.attackF);
-					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
+					let cover = getCoverUnit(this, pos, curse_time * 1.2);;
+					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover) + '%'];
 			} else {
 					const curse_time = this.data[93];
 					const pos = talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
-					let cover = getCover(pos, curse_time * 1.2, this.attackF);
-					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover*100) + '%'];
+					let cover = getCoverUnit(this, pos, curse_time * 1.2);;
+					this.ab[AB_CURSE] = [pos, getTraitNames(this.trait), numStrT(curse_time), numStrT(curse_time * 1.2), numStr(cover) + '%'];
 			}
 		}
 	break;
 }
 case 61:
-	this.tba -= talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
+	this.tba -= this.tba * (talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1)) / 100;
 	this.attackF = (this.pre2 ? this.pre2 : (this.pre1 ? this.pre1 : this.pre)) + Math.max(this.backswing, this.tba - 1);
 	break;
 case 62:
@@ -1185,8 +1252,8 @@ class Enemy {
 		}
 		this.id = id;
 		id -= 2;
-		this.name = name || '';
-		this.jp_name = jp_name || '';
+		this.name = name || [];
+		this.jp_name = jp_name || [];
 		this.desc = enemy_descs[id];
 		this.backswing = anim1[id][0];
 		this.attackF = anim1[id][1];
@@ -1206,6 +1273,7 @@ class Enemy {
 		this.atk2 = data[56];
 		this.pre1 = data[57];
 		this.pre2 = data[58];
+		this.abi = (data[59] << 2) + (data[60] << 1) + data[61];
 		(data[69]) && (this.star = true);
 		this.ab = {};
 		this.imu = 0;
@@ -1224,13 +1292,13 @@ class Enemy {
 		(data[93]) && (this.trait |= TB_DEMON);
 		(data[94]) && (this.trait |= TB_BARON);
 		(data[101]) && (this.trait |= TB_BEAST);
-		
 		(data[20]) && (this.ab[AB_KB] = [data[20]]);
-		(data[21]) && (this.ab[AB_STOP] = [data[21], data[22]]);
-		(data[23]) && (this.ab[AB_SLOW] = [data[23], data[24]]);
+		(data[29]) && (this.ab[AB_WEAK] = [data[29], data[30], data[31], getCoverUnit(this, data[29], data[30])]);
+		(data[21]) && (this.ab[AB_STOP] = [data[21], data[22], getCoverUnit(this, data[21], data[22])]);
+		(data[23]) && (this.ab[AB_SLOW] = [data[23], data[24], getCoverUnit(this, data[23], data[24])]);
+		(data[73]) && (this.ab[AB_CURSE] = [data[73], data[74], getCoverUnit(this, data[73], data[74])]);
 		(data[25]) && (this.ab[AB_CRIT] = [data[25]]);
 		(data[26]) && (this.ab[AB_ATKBASE] = []);
-		(data[29]) && (this.ab[AB_WEAK] = [data[29], data[30], data[31]]);
 		(data[32]) && (this.ab[AB_STRONG] = [data[32], data[33]]);
 		(data[34]) && (this.ab[AB_LETHAL] = [data[34]]);
 		(data[38]) && (this.ab[AB_WAVES] = []);
@@ -1239,7 +1307,6 @@ class Enemy {
 		(data[52] == 2) && (this.ab[AB_GLASS] = []);
 		(data[64]) && (this.ab[AB_SHIELD] = [data[64]]);
 		(data[65]) && (this.ab[AB_WARP] = [data[65], data[66], data[67] / 4]);
-		(data[73]) && (this.ab[AB_CURSE] = [data[73], data[74]]);
 		(data[75]) && (this.ab[AB_S] = [data[75], data[76]]);
 		(data[77]) && (this.ab[AB_IMUATK] = [data[77], data[78]]);
 		(data[79]) && (this.ab[AB_POIATK] = [data[79], data[80]]);
@@ -1727,4 +1794,15 @@ function createTraitIcons(trait, parent) {
 		++i;
 	}
 	parent.appendChild(document.createElement('br'));
+}
+function getAbiString(abi) {
+	if (!abi) return '';
+	const strs = [];
+	if (abi & 4)
+		strs.push('第一擊');
+	if (abi & 2)
+		strs.push('第二擊');
+	if (abi & 1)
+		strs.push('第三擊');
+	return "，" + strs.join('/') + '附加能力';
 }

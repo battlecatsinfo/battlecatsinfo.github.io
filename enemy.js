@@ -26,20 +26,20 @@ function createAbIcons(E, parent) {
 		const d = i[1];
 		switch (parseInt(i[0])) {
 		case AB_KB: write(`${d[0]}%機率擊退`, 'kb'); break;
-		case AB_STOP: write(`${d[0]}%機率暫停持續${numStrT(d[1])}`, 'stop'); break;
-		case AB_SLOW: write(`${d[0]}%機率緩速持續${numStrT(d[1])}`, 'slow'); break;
+		case AB_STOP: write(`${d[0]}%機率暫停持續${numStrT(d[1])}，控場覆蓋率${numStr(d[2])}%`, 'stop'); break;
+		case AB_SLOW: write(`${d[0]}%機率緩速持續${numStrT(d[1])}，控場覆蓋率${numStr(d[2])}%`, 'slow'); break;
 		case AB_CRIT: write(`${d[0]}%機率爆擊`, 'crit'); break;
 		case AB_ATKBASE: write(`對塔傷害四倍`, 'atkbase'); break;
 		case AB_WAVE: write(`${d[0]}%機率釋放Lv${d[1]}波動`, 'wave'); break;
 		case AB_MINIWAVE: write(`${d[0]}%機率釋放Lv${d[1]}小波動`, 'wave'); break;
-		case AB_WEAK: write(`${d[0]}%機率降低攻擊力至${d[2]}%持續${numStrT(d[1])}`, 'weak'); break;
+		case AB_WEAK: write(`${d[0]}%機率降低攻擊力至${d[2]}%持續${numStrT(d[1])}，控場覆蓋率${numStr(d[3])}%`, 'weak'); break;
 		case AB_STRONG: write(`血量${d[0]}%以下攻擊力增加${d[1]}倍`, 'strong'); break;
 		case AB_LETHAL: write(`${d[0]}%機率死後復活`, 'lethal'); break;
 		case AB_WAVES: write(`波動滅止`, 'waves'); break;
 		case AB_BURROW: write(`進入射程範圍時鑽地${numStr(d[1])}距離(${d[0]}次)`); break;
 		case AB_REVIVE: write(`擊倒後${numStrT(d[1])}以${d[2]}%血量復活(${d[0]}次)`); break;
 		case AB_WARP: write(`${d[0]}%機率將向目標${d[2] < 0 ? '前' : '後'}傳送${Math.abs(d[2])}距離持續${numStrT(d[1])}`, 'warp'); break;
-		case AB_CURSE: write(`${d[0]}%機率詛咒持續${numStrT(d[1])}`, 'curse'); break;
+		case AB_CURSE: write(`${d[0]}%機率詛咒持續${numStrT(d[1])}，控場覆蓋率${numStr(d[2])}%`, 'curse'); break;
 		case AB_S: write(`${d[0]}%機率渾身一擊(攻擊力增加${d[1]}%倍)`, 's'); break;
 		case AB_IMUATK: write(`${d[0]}%機率攻擊無效持續${numStrT(d[1])}`, 'imu-atk'); break;
 		case AB_SHIELD: write(`宇宙盾 ${d[0]}HP`, 'shield'); break;
@@ -166,11 +166,11 @@ function renderTable(E) {
 		const atkNum = E.atk2 ? 3 : 2;
 		const atksPre = [E.atk, E.atk1, E.atk2].slice(0, atkNum).map(x => ((x / totalAtk)*100).toFixed(0)+'%');
 		const p = document.createElement('p');
-		p.innerText = `${atkNum}回連續攻擊(傷害${atksPre.join('-')})`;
+		p.innerText = `${atkNum}回連續攻擊(傷害${atksPre.join('-')})` + getAbiString(E.abi);
 		specials.appendChild(p);
 	}
 	createAbIcons(E, specials);
-	const title = [E.name, E.jp_name].filter(x => x).join('/');
+	const title = [E.name[0], E.jp_name[0]].filter(x => x).join('/') || '?';
 	document.title = title;
 	document.getElementById('e-id').innerText = title;
 	my_mult = my_params.get('mult') || my_params.get('mag');
@@ -186,4 +186,4 @@ loadEnemy(my_id)
 	loader_text.style.display = 'none';
 	document.getElementById('main').style.display = 'block';
 	renderTable(E);
-}).catch(e => alert('找不到此敵人'));
+});

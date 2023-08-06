@@ -292,7 +292,7 @@ function updateValues(form, tbl) {
 		const atkNum = form.atk2 ? 3 : 2;
 		const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => ((x / totalAtk)*100).toFixed(0)+'%');
 		const p = document.createElement('p');
-		p.innerText = `${atkNum}回連續攻擊(傷害${atksPre.join('-')})`;
+		p.innerText = `${atkNum}回連續攻擊(傷害${atksPre.join('-')})` + getAbiString(form.abi);
 		specials.appendChild(p);
 	}
 	if (lds[0] || ldr[0]) {
@@ -699,8 +699,8 @@ function getTalentInfo(talent, data) {
 	case 61:
 		{
 			const tba = data[4] * 2;
-			const first = `${talent[2]}f`;
-			return ["TBA縮短", first, `${talent[3]}f`, talent[1], first];
+			const first = `${talent[2]}%`;
+			return ["TBA縮短", first, `${talent[3]}%`, talent[1], first];
 		}
 	case 62:
 		if (data[94])
