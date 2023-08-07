@@ -708,7 +708,7 @@ M3.oninput = function() {
     if (info2.hasOwnProperty('wT')) {
       const span = document.createElement('div');
       span.style.color = '#ff634e';
-      span.innerText = '元氣恢復時間' + info2.wT.toString() + '分鐘';
+      span.innerText = '成功挑戰冷卻時長' + info2.wT.toString() + '分鐘';
       th.appendChild(span);
     }
     if (info2.hasOwnProperty('hC')) {
