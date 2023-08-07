@@ -24,7 +24,25 @@ var char_groups;
 var Buffer = BrowserFS.BFSRequire('buffer').Buffer;
 const materialDrops = [85, 86, 87, 88, 89, 90, 91, 140, 187, 188, 189, 190, 191, 192, 193, 194];
 BrowserFS.install(window);
-mapConditions = {
+const hidden_groups = [
+[25000, 25001, 25003],       
+[25007, 25002, 25004],       
+[25008, 25005, 25006],       
+[25009, 25012, 25015, 25018, 25021, 25024, 25027],
+[25010, 25013, 25016, 25019, 25022, 25025, 25028],
+[25011, 25014, 25017, 25020, 25023, 25026, 25029],
+[25063],           
+[25064],           
+[25065],           
+[25030, 25051, 25052, 25053],     
+[25031, 25054, 25055, 25056],     
+[25032, 25057, 25058, 25059],     
+[25060],           
+[25061],           
+[25062],           
+[25066],
+];
+const mapConditions = {
     "1": {
         "name": "世界篇第一章"
     },
@@ -391,7 +409,7 @@ function getConditionHTML(obj) {
     a.href = '#';
     a.innerText = info.name;
     a.onclick = function(event) {
-      M1.selectedIndex = m;
+      M1.value = `/stages/${m}`;
       M1.oninput(null, [m, s]);
       return false;
     }
@@ -415,7 +433,7 @@ function getConditionHTML(obj) {
     const st = obj.stage;
     a.innerText = info.name + '第' + (st + 1).toString() + '關';
     a.onclick = function(event) {
-      M1.selectedIndex = m;
+      M1.value = `/stages/${m}`;
       M1.oninput(null, [m, s, st]);
       return false;
     }
@@ -434,7 +452,7 @@ function getConditionHTML(obj) {
     a.href = '#';
     a.innerText = info.name;
     a.onclick = function(event) {
-      M1.selectedIndex = m;
+      M1.value = `/stages/${m}`;
       M1.oninput(null, [m, s]);
       return false;
     }
@@ -900,13 +918,12 @@ M3.oninput = function() {
       const tr = document.createElement('tr');
       const a = document.createElement('a');
       const st = s % 100;
-      const sm = Math.floor((s % 100000) / 100);
-      const mc = Math.floor(s / 100000);
+      const sm = ~~((s % 100000) / 100);
+      const mc = ~~(s / 100000);
       const sts = [mc, sm, st];
-      a.innerText = '???';
       a.innerText = JSON.parse(fs.readFileSync(`/stages/${mc}/${sm}/${st}`)).name;
       a.onclick = function(event) {
-          M1.selectedIndex = sts[0];
+          M1.value = `/stages/${sts[0]}`;
           M1.oninput(null, sts);
           return false;
       }
@@ -914,6 +931,45 @@ M3.oninput = function() {
       td1.innerText = info3.exC[i].toFixed(1) + '%';
       tr.appendChild(td0);
       tr.appendChild(td1);
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    ex_stages.appendChild(table);
+  } else if (info3.hasOwnProperty('enc')) {
+    const table = document.createElement('table');
+    table.classList.add('w3-table', 'w3-centered');
+    const tbody = document.createElement('tbody');
+    const tr = document.createElement('tr');
+    const td0 = document.createElement('td');
+    const td1 = document.createElement('td');
+    td0.innerText = 'EX關卡';
+    td1.innerText = '機率';
+    tr.appendChild(td0);
+    tr.appendChild(td1);
+    tbody.appendChild(tr);
+    for (let i = 0;i < info3.eni.length;++i) {
+      const td0 = document.createElement('td');
+      const td1 = document.createElement('td');
+      const tr = document.createElement('tr');
+      td1.innerText = info3.enc[i].toFixed(1) + '%';
+      tr.appendChild(td0);
+      tr.appendChild(td1);
+      const groups = hidden_groups[info3.eni[i]];
+      for (let j = 0;j < groups.length;++j) {
+        const a = document.createElement('a');
+        const mc = ~~(groups[j] / 1000);
+        const sm = groups[j] % 1000;
+        a.innerText = JSON.parse(fs.readFileSync(`/stages/${mc}/${sm}/info`)).name;
+        const sts = [mc, sm];
+        a.onclick = function(event) {
+            M1.value = `/stages/${sts[0]}`;
+            M1.oninput(null, sts);
+            return false;
+        }
+        td0.appendChild(a);
+        if (j != (groups.length - 1)) 
+          td0.appendChild(document.createTextNode(' or '));
+      }
       tbody.appendChild(tr);
     }
     table.appendChild(tbody);
