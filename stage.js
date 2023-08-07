@@ -862,11 +862,11 @@ M3.oninput = function() {
     if (lim.num)
       limits.push('最多可出戰角色數量：' + lim.num);
     if (lim.max && lim.min)
-      limits.push(`生產成本：${lim.min}元與${lim.min}元之間`);
+      limits.push(`生產成本${lim.min}元與${lim.max}元之間`);
     else if (lim.max)
-      limits.push(`生產成本：${lim.max}元以上`);
-    else if (lim.min) 
-      limits.push(`生產成本：${lim.min}元以下`);
+      limits.push(`生產成本${lim.max}元以下`);
+    else if (lim.min)
+      limits.push(`生產成本${lim.min}元以上`);
     if (lim.line)
       limits.push('出陣列表：僅限第1頁');
     if (lim.group && lim.group[1].length)
