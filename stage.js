@@ -101,7 +101,7 @@ const mapConditions = {
     "name": "全狂亂貓關卡"
       },
     "21": {
-    "name": "New Challenger全部關卡任4關完成"
+    "name": "New Challenger全部關卡完成任意4關"
       },
     "30": {
     "condition":[101014,-114018]
@@ -696,7 +696,7 @@ M3.oninput = function() {
     if (info1.hasOwnProperty('gc') || info2.hasOwnProperty('gc')) {
       const span = document.createElement('div');
       span.style.color = 'darkgoldenrod';
-      span.innerText = '黃金貓電腦貓電腦掃蕩不可';
+      span.innerText = '掃蕩不可';
       th.appendChild(span);
     }
     if (info3.hasOwnProperty('nC')) {
@@ -744,7 +744,7 @@ M3.oninput = function() {
       } else {
         td0.innerText = s + ` ×${v[2]}`;
       }
-      td1.appendChild(document.createTextNode(chances[i] + '%' + ((i == 0 && info3.drop[i][0] != 100 && info3.rand != -4) ? '(寶雷)' : '')));
+      td1.appendChild(document.createTextNode(chances[i] + '%' + ((i == 0 && info3.drop[i][0] != 100 && info3.rand != -4) ? ' (寶雷)' : '')));
       td2.innerText = (i == 0 && (info3.rand == 1 || (info3.drop[0][1] >= 1000 && info3.drop[0][1] < 30000))) ? '一次' : '無';
       tr.appendChild(td0);
       tr.appendChild(td1);
@@ -798,14 +798,14 @@ M3.oninput = function() {
   } else {
     m_times.parentNode.style.display = 'none';
   }
-  st1[1].innerText = (M1.selectedOptions[0].value == '/stages/14') ? ('貓力達' + String.fromCharCode(65 + info3.e/1000) + '×' + (info3.e % 1000).toString()) : info3.e;
+  st1[1].innerText = (M1.selectedOptions[0].value == '/stages/14') ? ('喵力達' + String.fromCharCode(65 + info3.e/1000) + '×' + (info3.e % 1000).toString()) : info3.e;
   st1[3].innerText = info3.max;
   st1[5].innerText = info3.len;
   if (info2.hasOwnProperty('mapcond')) {
     st4[1].textContent = '';
     st4[1].appendChild(getConditionHTML(info2.mapcond));
   } else {
-    st4[1].textContent = '無制限';
+    st4[1].textContent = '無限制';
   }
   st2[1].innerText = info3.H;
   const ca = document.createElement('a');
@@ -824,7 +824,7 @@ M3.oninput = function() {
     st4[3].textContent = '';
     st4[3].appendChild(getConditionHTML(info2.stagecond));
   } else {
-    st4[3].textContent = '無制限';
+    st4[3].textContent = '無限制';
   }
   if (!info3.xp) {
     if (M1.selectedIndex == 3)
@@ -844,7 +844,7 @@ M3.oninput = function() {
   st3[3].appendChild(a1);
   st3[5].textContent = '';
   st3[5].appendChild(a2);
-  st4[5].textContent = info2.hasOwnProperty('userrank') ? info2.userrank : '無制限';
+  st4[5].textContent = info2.hasOwnProperty('userrank') ? info2.userrank : '無限制';
   stLines.textContent = '';
   if (info2.hasOwnProperty('Lim')) {
     const lims = info2.Lim.map(x => new Limit(x));
