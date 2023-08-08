@@ -722,7 +722,7 @@ M3.oninput = function() {
     stName.parentNode.parentNode.appendChild(tr);
   }
   rewards.textContent = '';
-  if (info3.drop.length && M2.selectedOptions[0].value != '/stages/3/3') {
+  if (info3.drop.length && M1.selectedIndex != 3) {
     const chances = getDropData();
     for (let i =0;i < info3.drop.length;++i) {
       if (!parseInt(chances[i])) continue;
@@ -773,7 +773,7 @@ M3.oninput = function() {
     m_drops.parentNode.style.display = 'table';
   else
     m_drops.parentNode.style.display = 'none';
-  mM.innerText = `機率(最大掉落量${~~Math.round(mult * info3.mM)})`;
+  mM.innerText = `抽選次數: ${~~Math.round(info3.mM * info2.mP[star - 1])}回`;
   if (info3.time.length) {
     m_times.textContent = '';
     for (let tm of info3.time) {
