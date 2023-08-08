@@ -8,10 +8,11 @@
 	<title>貓咪大戰爭 音樂</title>
 	<style>
 	html, body { padding:0;margin:0;  }
-	.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-	.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-	.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
-	.topnav a:visited { text-decoration: none; }
+  .topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+  .topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+  .topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+  .topnav a:visited { text-decoration: none; }
+  .w3-dropdown-content > a { color: var(--color) !important;  }
 	.w3-dropdown-content > a { color: var(--color) !important;  }
 	#dl {
 		display: block;
@@ -21,28 +22,28 @@
 	}
 	#dl:visited { text-decoration: none;color: initial;  }
 	</style>
-<body style="width: 100%;text-align: center;">
-	<ul class="topnav">
-		<a href="/index.html">主頁</a>
-		<a href="/search.html">貓咪</a>
-		<a href="/esearch.html">敵人</a>
-		<a href="/gachas.html">轉蛋</a>
-		<a href="/stage.html">關卡</a>
-		<a href="/music.html" class="active">音效</a>
-		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
-		<div class="w3-dropdown-content w3-bar-block w3-card-4">
-        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
-        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
-        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
-      	</div>
-      	</div>
-	</ul>
+<body style="width: 100%;text-align: center !important;">
+  <div class="topnav">
+    <a href="/index.html">主頁</a>
+    <a href="/search.html">貓咪</a>
+    <a href="/esearch.html">敵人</a>
+    <a href="/gachas.html">轉蛋</a>
+    <a href="/stage.html">關卡</a>
+    <a href="/music.html" class="active">音效</a>
+    <div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;padding: 0 3px !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+    <div class="w3-dropdown-content w3-bar-block">
+          <a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+          <a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+          <a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+        </div>
+        </div>
+  </div>
 	<script src="dracula.js"></script>
 	<div style="width: 100%;margin: 0 auto;">
 	<h1>音樂下載</h1>
-	<select id="opt" style="min-width: 300px;font-size: 24px;margin: 50px;text-align: center;"></select><br>
-	<a id="dl" href="https://github.com/battlecatsultimate/bcu-assets/raw/master/music/000.ogg">下載</a><br>
-	<audio style="min-width: 400px;" src="https://github.com/battlecatsultimate/bcu-assets/raw/master/music/000.ogg" id="ad" controls type="audio/ogg"></audio>
+	<select id="opt" style="width: 80%;text-align: center !important;font-size: min(30px, 5vw) !important;"></select><br>
+	<a id="dl" style="padding: 20px;" href="https://github.com/battlecatsultimate/bcu-assets/raw/master/music/000.ogg">下載</a><br>
+	<audio style="width: max(70%, 300px);" src="https://github.com/battlecatsultimate/bcu-assets/raw/master/music/000.ogg" id="ad" controls type="audio/ogg"></audio>
 </div>
 <script>
 const opt = document.getElementById('opt');
@@ -59,7 +60,7 @@ function t3str(x) {
 }
 for (let i = 0;i <= 159;++i) {
     const op = document.createElement('option');
-    op.innerText = t3str(i) + '.ogg - ' + descriptions[i][1] + (descriptions[i][2] ? " (音樂)" : " (音效)"); /*true音樂 false音效*/
+    op.innerText = t3str(i) + '.ogg - ' + descriptions[i][1] + (descriptions[i][2] ? " (音樂)" : " (音效)");
     op.value = t3str(i) + '.ogg';
     opt.appendChild(op);
 }

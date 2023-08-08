@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>關卡資訊</title>
 	<link rel="stylesheet" type="text/css" href="w3.css">
 	<link rel="stylesheet" type="text/css" href="dracula.css">
@@ -11,19 +12,19 @@
 </head>
 <body>
 <style>
-html, body { width: 100%;font-size: 18px; }
+html, body { width: 100%;margin: 0;padding: 0;font-size: max(1vw, 9px); }
 body { line-height: initial; }
-.L {
-	font-size: 22px;
+select {
+	font-size: min(22px, 2vw);
 	text-overflow: ellipsis;
-	width: 32vw;
+	width: 100%;
 }
 th { font-weight: normal; }
 input[type="search"] {
-	width: 95%;
-	margin: 4px 0px auto;
-	padding: 8px 10px;
-	border: 3px solid #ddd;
+	width: 97vw;
+	margin: 4px 4px auto;
+	padding: 0.8vh 10px;
+	border: min(4px, 0.5vw) solid #ddd;
 	border-radius: 7px;
 	outline: none;
 	transition: 0.2s;
@@ -44,13 +45,11 @@ table.w3-striped tbody tr:nth-child(even) {
     background-color: #dcffdc;
 }
 a.star {
-	font-weight: normal;
-	font-size: 18px;
 	margin: 2px 12px;
 	text-decoration: none;
 }
 a.star::visited {
-	color: initial;
+	color: var(--acolor) !important;
 }
 div.An {
   animation-name: An;
@@ -69,37 +68,41 @@ a.res::visited {
 	color: initial;
 }
 a.res span { color: #ff634e; }
-	.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-	.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-	.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
-	.topnav a:visited { text-decoration: none; }
-	.w3-dropdown-content > a { color: var(--color) !important;  }
+  .topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+  .topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+  .topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+  .topnav a:visited { text-decoration: none; }
+  .w3-dropdown-content > a { color: var(--color) !important;  }
 span.boss {
 	color: darkred;
 }
+a img {
+	max-width: 7vw;
+	height: auto;
+}
 </style>
-	<ul class="topnav">
-		<a href="/index.html">主頁</a>
-		<a href="/search.html">貓咪</a>
-		<a href="/esearch.html">敵人</a>
-		<a href="/gachas.html">轉蛋</a>
-		<a href="/stage.html" class="active">關卡</a>
-		<a href="/music.html">音效</a>
-		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
-		<div class="w3-dropdown-content w3-bar-block w3-card-4">
-        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
-        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
-        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
-      	</div>
-      	</div>
-	</ul>
+  <div class="topnav">
+    <a href="/index.html" class="active">主頁</a>
+    <a href="/search.html">貓咪</a>
+    <a href="/esearch.html">敵人</a>
+    <a href="/gachas.html">轉蛋</a>
+    <a href="/stage.html">關卡</a>
+    <a href="/music.html">音效</a>
+    <div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;padding: 0 3px !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+    <div class="w3-dropdown-content w3-bar-block">
+          <a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+          <a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+          <a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+        </div>
+        </div>
+  </div>
 	<script src="dracula.js"></script>
-	<div style="padding: 12px 12px;">
-	<table>
+	<div>
+	<table class="w3-table w3-centered">
 		<tbody><tr>
-		<td><select class="L" id="M1"></select></td>
-		<td><select class="L" id="M2"></select></td>
-		<td><select class="L" id="M3"></select></td>
+		<td><select id="M1"></select></td>
+		<td><select id="M2"></select></td>
+		<td><select id="M3"></select></td>
 		</tr></tbody>
 	</table>
 	<input type="search" id="name-search" placeholder="搜尋關卡名稱">
