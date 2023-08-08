@@ -77,7 +77,7 @@
       border: 1px solid darkgray;
     }
     tbody > tr:hover {
-    	background-color: lightcyan;
+    	background-color: lightcyan !important;
     }
     textarea {
     	margin-bottom: 10px;
@@ -89,8 +89,7 @@
     	border-radius: 5px;
     	width: 90px;
     	padding: 3px 10px;
-	    background-color: #ccc;
-	}
+		}
     #pages-a > td {
     	font-size: 1.2em;
     	width: 50px;
@@ -99,7 +98,7 @@
     	cursor: pointer;
     }
     #pages-a > td:hover {
-    	background-color: #ccc;
+    	background-color: #ccc !important;
     }
     .w3-table td {
     	padding: 0px;
@@ -127,6 +126,9 @@
     #name-search:focus {
     	border-color: #bbb;
     }
+  td.N {
+  	background-color: var(--spans) !important;
+  }
 	</style>
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
@@ -190,7 +192,7 @@
 				<br>
 				<a href="./help.html">使用說明</a>
 			</div>
-			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: scroll;width: 190px;" id="ab-s">
+			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 50%;overflow: scroll;width: 190px;" id="ab-s">
 <li style="text-align: center;">能力</li>
 <li data-expr="hasab(AB_STRONG)"><button><span class="bc-icon bc-icon-strong"></span>攻擊力上升</button></li>
 <li data-expr="hasab(AB_LETHAL)"><button><span class="bc-icon bc-icon-lethal"></span>死前存活	</button></li>
@@ -214,6 +216,7 @@
 <li data-expr="hasab(AB_STOP)"><button><span class="bc-icon bc-icon-stop"></span>使動作停止</button></li>
 <li data-expr="hasab(AB_SLOW)"><button><span class="bc-icon bc-icon-slow"></span>使動作變慢</button></li>
 <li data-expr="hasab(AB_CURSE)"><button><span class="bc-icon bc-icon-curse"></span>詛咒</button></li>
+<li data-expr="hasab(AB_POIATK)"><button><img style="vertical-align: bottom !important;" src="data/page/icons/BCPoison.png">毒擊</button></li>
 <li data-expr="hasab(AB_KB)"><button><span class="bc-icon bc-icon-kb"></span>打飛</button></li>
 <li data-expr="hasab(AB_IMUATK)"><button><span class="bc-icon bc-icon-imu-atk"></span>攻擊無效</button></li>
 <li style="text-align: center;">抗性</li>
@@ -226,6 +229,81 @@
 <li data-expr="imu&IMU_CURSE"><button><span class="bc-icon bc-icon-imu-curse"></span>詛咒無效</button></li>
 <li data-expr="imu&IMU_POIATK"><button><span class="bc-icon bc-icon-imu-poiatk"></span>毒擊無效</button></li>
 			 </ul>
+<ul style="position: absolute;top: 52%;height: 50%;overflow: scroll;width: 190px;left: 180px;" class="w3-ul may-hide" style="width: 150px;" id="kind-s">
+  <li data-expr="(id==237||id==238||id==239||id==269||id==270||id==279||id==295||id==296||id==311||id==451||id==457||id==633)"><button>貓</button></li>
+  <li data-expr="(id==0||id==46||id==114||id==167||id==284||id==407||id==603||id==19||id==20||id==46||id==103||id==117||id==147||id==167||id==197||id==111||id==268||id==293||id==303||id==309||id==307||id==336||id==351||id==260||id==437||id==470||id==494||id==503||id==537||id==539||id==548||id==552||id==564||id==565||id==566||id==567||id==568||id==569||id==595||id==608||id==612||id==631)"><button>狗</button></li>
+  <li data-expr="(id==41||id==110||id==390)"><button>臘腸狗</button></li>
+  <li data-expr="(id==42||id==99||id==184||id==416||id==513||id==636)"><button>貴賓狗</button></li>
+  <li data-expr="(id==44)"><button>杜賓狗</button></li>
+  <li data-expr="(id==43||id==592)"><button>鬣狼</button></li>
+  <li data-expr="(id==1||id==104||id==118||id==285||id==358||id==553)"><button>蛇</button></li>
+  <li data-expr="(id==146||id==254||id==281||id==584||id==593)"><button>小人</button></li>
+  <li data-expr="(id==2||id==554||id==637)"><button>尛人</button></li>
+  <li data-expr="(id==3||id==47||id==54||id==65||id==113||id==169||id==337||id==525)"><button>河馬</button></li>
+  <li data-expr="(id==4||id==48||id==178||id==111||id==287||id==379||id==640)"><button>豬</button></li>
+  <li data-expr="(id==5||id==62||id==109||id==288||id==361||id==555||id==594)"><button>企鵝</button></li>
+  <li data-expr="(id==255)"><button>巨嘴鳥</button></li>
+  <li data-expr="(id==256||id==387||id==587)"><button>海馬</button></li>
+  <li data-expr="(id==6||id==51||id==87||id==289||id==356||id==362||id==411||id==471||id==504||id==549||id==556||id==613)"><button>猩猩</button></li>
+  <li data-expr="(id==103||id==104||id==105)"><button>幽靈</button></li>
+  <li data-expr="(id==7||id==105||id==388||id==449)"><button>綿羊</button></li>
+  <li data-expr="(id==8||id==59||id==170||id==290||id==499)"><button>海豹</button></li>
+  <li data-expr="(id==123)"><button>鴿子</button></li>
+  <li data-expr="(id==207||id==527)"><button>燕子</button></li>
+  <li data-expr="(id==160||id==282||id==624)"><button>小雞</button></li>
+  <li data-expr="(id==614)"><button>螞蟻</button></li>
+  <li data-expr="(id==498)"><button>火雞</button></li>
+  <li data-expr="(id==355||id==418)"><button>青蛙</button></li>
+  <li data-expr="(id==9||id==101||id==149||id==306||id==363||id==421||id==510||id==557||id==641)"><button>大象</button></li>
+  <li data-expr="(id==10||id==52||id==182||id==291)"><button>袋鼠</button></li>
+  <li data-expr="(id==365||id==417)"><button>鼴鼠</button></li>
+  <li data-expr="(id==550)"><button>哥吉拉</button></li>
+  <li data-expr="(id==304||id==445)"><button>大鯢</button></li>
+  <li data-expr="(id==11||id==56||id==85||id==183||id==413)"><button>犀牛</button></li>
+  <li data-expr="(id==271||id==493)"><button>蜜蜂</button></li>
+  <li data-expr="(id==22||id==171||id==414||id==515)"><button>蛾</button></li>
+  <li data-expr="(id==172||id==420)"><button>眼鏡猴</button></li>
+  <li data-expr="(id==462)"><button>老鷹</button></li>
+  <li data-expr="(id==173||id==606)"><button>寄居蟹</button></li>
+  <li data-expr="(id==125||id==639)"><button>馬</button></li>
+  <li data-expr="(id==31||id==84||id==195||id==364||id==634)"><button>食蟻獸</button></li>
+  <li data-expr="(id==32||id==338||id==424)"><button>鴕鳥</button></li>
+  <li data-expr="(id==33||id==124||id==210||id==263||id==426||id==649)"><button>海獺</button></li>
+  <li data-expr="(id==119||id==150||id==151||id==152||id==366||id==609)"><button>曼波魚生化魚</button></li>
+  <li data-expr="(id==153)"><button>螃蟹</button></li>
+  <li data-expr="(id==477||id==479)"><button>河豚</button></li>
+  <li data-expr="(id==154)"><button>魚</button></li>
+  <li data-expr="(id==199)"><button>蝙蝠</button></li>
+  <li data-expr="(id==155||id==208||id==340)"><button>烏賊魷魚</button></li>
+  <li data-expr="(id==341||id==342||id==343)"><button>鼻涕蟲</button></li>
+  <li data-expr="(id==34||id==156||id==206||id==517||id==588)"><button>無尾熊</button></li>
+  <li data-expr="(id==235)"><button>鼴鼠</button></li>
+  <li data-expr="(id==35||id==209||id==310)"><button>駱駝</button></li>
+  <li data-expr="(id==318)"><button>海豚</button></li>
+  <li data-expr="(id==36||id==331||id==468||id==604||id==611||id==627)"><button>鴨子</button></li>
+  <li data-expr="(id==444)"><button>花園鰻</button></li>
+  <li data-expr="(id==37||id==198||id==605)"><button>貓頭鷹</button></li>
+  <li data-expr="(id==266)"><button>燈籠魚</button></li>
+  <li data-expr="(id==12||id==16||id==57||id==67||id==100||id==108||id==175||id==522||id==427||id==505||id==558)"><button>熊</button></li>
+  <li data-expr="(id==13||id==168||id==292||id==497)"><button>鱷魚</button></li>
+  <li data-expr="(id==15||id==412)"><button>松鼠</button></li>
+  <li data-expr="(id==205||id==600)"><button>水豚</button></li>
+  <li data-expr="(id==332||id==607)"><button>兔子</button></li>
+  <li data-expr="(id==24||id==49||id==50||id==211||id==272||id==405||id==406)"><button>噴噴</button></li>
+  <li data-expr="(id==18||id==58||id==102||id==174||id==267||id==423||id==425||id==472||id==491||id==509||id==559||id==585)"><button>臉君大頭</button></li>
+  <li data-expr="(id==21||id==116)"><button>看板小妹</button></li>
+  <li data-expr="(id==38||id==177||id==261||id==280||id==428||id==439||id==538)"><button>山豬</button></li>
+  <li data-expr="(id==39||id==66||id==359||id==610)"><button>樹懶</button></li>
+  <li data-expr="(id==583||id==650)"><button>魚尾獅</button></li>
+  <li data-expr="(id==40||id==213||id==586)"><button>麋鹿</button></li>
+  <li data-expr="(id==176||id==232||id==511||id==615)"><button>海蝶</button></li>
+  <li data-expr="(id==23||id==53||id==63||id==180)"><button>惡之帝王</button></li>
+  <li data-expr="(id==64||id==69||id==70||id==71||id==112||id==179||id==236||id==294||id==377||id==443||id==512||id==560||id==638)"><button>旋渦</button></li>
+  <li data-expr="(id==25||id==26||id==27||id==28||id==29||id==30||id==60||id==61||id==334||id==335)"><button>公主踢合作</button></li>
+  <li data-expr="(id==45||id==148||id==258||id==316||id==354||id==380||id==450||id==496||id==516||id==526||id==551||id==589||id==599||id==616||id==628)"><button>傳奇/風雲塔BOSS</button></li>
+  <li data-expr="(id==75||id==76||id==77||id==78||id==79||id==80||id==81||id==82||id==83||id==242||id==243||id==244||id==245||id==246||id==247||id==248||id==249||id==250||id==396||id==397||id==322||id==323||id==324||id==325||id==326||id==327||id==328||id==329||id==330||id==561||id==562||id==563)"><button>狂亂/小小/惡魔貓</button></li>
+  <li data-expr="(id==127||id==128||id==129||id==130||id==131||id==132||id==133||id==134||id==135||id==136||id==137||id==138||id==139||id==140||id==230||id==231)"><button>EX開演</button></li>
+</ul>
 			 <div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
 			 	<div class="may-hide">
 			 		<input type="search" placeholder="搜尋名稱或敵人id" id="name-search">

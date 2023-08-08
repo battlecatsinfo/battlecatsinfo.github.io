@@ -11,6 +11,7 @@ const toggle_s = document.getElementById('toggle-s');
 const trait_s = document.getElementById('trait-s');
 const atk_s = document.getElementById('atk-s');
 const ab_s = document.getElementById('ab-s');
+const kind_s = document.getElementById('kind-s');
 const atkBtn = atk_s.firstElementChild.firstElementChild;
 const traitBtn = trait_s.firstElementChild.firstElementChild;
 const abBtn = ab_s.firstElementChild.nextElementSibling.firstElementChild;
@@ -29,7 +30,7 @@ function rerender(event) {
 			td.onclick = rerender;
 			td.id = c;
 			if (c == id) {
-				td.style.backgroundColor = '#ccc';
+				td.classList.add('N');
 				td.onclick = null;
 			}
 			pages_a.appendChild(td);
@@ -57,7 +58,7 @@ function renderTable(forms, page = 1) {
 			td.onclick = rerender;
 			td.id = c;
 			if (page == c) {
-				td.style.backgroundColor = '#ccc';
+				td.classList.add('N');
 				td.onclick = null;
 			}
 			pages_a.appendChild(td);
@@ -105,6 +106,12 @@ function calculate(code = '') {
 			} else {
 				codes.push(M.join('&&'));
 			}
+		}
+		const kinds = Array.from(kind_s.querySelectorAll('.o-selected'));
+		if (kinds.length) {
+			let M = kinds.map(x => x.getAttribute('data-expr'));
+			url.searchParams.set('kinds', M.join(' '));
+			codes.push(M.join('||'));
 		}
 		const atks = Array.from(atk_s.querySelectorAll('.o-selected'));
 		if (atks.length) {
@@ -193,6 +200,7 @@ loadAllEnemies()
 	addBtns(atk_s, params.get('atks'));
 	addBtns(ab_s, params.get('abs'));
 	addBtns(trait_s, params.get('traits'));
+	addBtns(kind_s, params.get('kinds'));
 	calculate(filter ? filter : '');
 });
 document.querySelectorAll('button').forEach(elem => {
@@ -227,6 +235,7 @@ document.getElementById('filter-clear').onclick = function() {
 	trait_s.querySelectorAll('.o-selected').forEach(fn);
 	atk_s.querySelectorAll('.o-selected').forEach(fn);
 	ab_s.querySelectorAll('.o-selected').forEach(fn);
+	kind_s.querySelectorAll('.o-selected').forEach(fn);
 	filter_expr.value = '';
 	sort_expr.value = '';
 	calculate();

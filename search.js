@@ -35,7 +35,7 @@ function rerender(event) {
 			td.onclick = rerender;
 			td.id = c;
 			if (c == id) {
-				td.style.backgroundColor = '#ccc';
+				td.classList.add("N");
 				td.onclick = null;
 			}
 			pages_a.appendChild(td);
@@ -63,7 +63,7 @@ function renderTable(forms, page = 1) {
 			td.onclick = rerender;
 			td.id = c;
 			if (page == c) {
-				td.style.backgroundColor = '#ccc';
+				td.classList.add("N");
 				td.onclick = null;
 			}
 			pages_a.appendChild(td);

@@ -74,7 +74,7 @@
       border: 1px solid darkgray;
     }
     tbody > tr:hover {
-    	background-color: lightcyan;
+    	background-color: lightcyan !important;
     }
     textarea {
     	margin-bottom: 10px;
@@ -86,7 +86,6 @@
     	border-radius: 5px;
     	width: 90px;
     	padding: 3px 10px;
-	    background-color: #ccc;
 	}
     #pages-a > td {
     	font-size: 1.2em;
@@ -96,7 +95,7 @@
     	cursor: pointer;
     }
     #pages-a > td:hover {
-    	background-color: #ccc;
+    	background-color: #ccc !important;
     }
     .w3-table td {
     	padding: 0px;
@@ -133,6 +132,9 @@
     #name-search:focus {
     	border-color: #bbb;
     }
+    td.N {
+  		background-color: var(--spans) !important;
+  	}
 	</style>
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
