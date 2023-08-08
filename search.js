@@ -10,6 +10,7 @@ var hide_seach = false;
 const tables = document.getElementById('tables');
 const toggle_s = document.getElementById('toggle-s');
 const only_my_cats = document.getElementById('only-my-cats');
+const only_my_fav = document.getElementById('only-my-fav');
 const def_lv_e = document.getElementById('def-lv');
 const plus_lv_e = document.getElementById('plus-lv');
 const cattype_e = document.getElementById('cattype');
@@ -22,6 +23,7 @@ const abBtn = ab_s.firstElementChild.firstElementChild;
 const name_search = document.getElementById('name-search');
 var last_forms;
 var save_my_cats;
+var fav_my_cats;
 function rerender(event) {
 	event.preventDefault();
 	const id = event.currentTarget.id;
@@ -310,11 +312,25 @@ only_my_cats.onchange = async function() {
 	}
 	if (only_my_cats.checked) {
 		var my_cats = [];
-		for (let i = 0;i < cats.length;++i) {
+		for (let i = 0;i < cats_old.length;++i) {
 			if (save_my_cats[i])
-				my_cats.push(cats[i]);
+				my_cats.push(cats_old[i]);
 		}
 		cats = my_cats;
+		calculate(simplify(filter_expr.value));
+	} else {
+		cats = cats_old;
+		calculate(simplify(filter_expr.value));
+	}
+}
+only_my_fav.onchange = function() {
+	if (!fav_my_cats) {
+		fav_my_cats = localStorage.getItem('star-cats');
+		if (!fav_my_cats || fav_my_cats == '[]') return alert('我的最愛裡還沒有貓咪，去貓咪詳細資料新增');
+		fav_my_cats = JSON.parse(fav_my_cats);
+	}
+	if (only_my_fav.checked) {
+		cats = fav_my_cats.map(x => cats_old[x.id]);
 		calculate(simplify(filter_expr.value));
 	} else {
 		cats = cats_old;

@@ -2,7 +2,6 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" type="text/css" href="icons.css">
 	<link rel="stylesheet" type="text/css" href="w3.css">
 	<link rel="stylesheet" type="text/css" href="unit.css">
@@ -15,17 +14,20 @@
 </head>
 <body>
 	<style>
-	* {
+	html, body {
 		vertical-align: middle;
 		font-size: 16px;
+		padding: 0;
+		margin: 0;
+		width: 100%;
 	}
 	table, th, td {
   		border: 1px solid #d1d5d5;
 	}
-	.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-	.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-	.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
-	.topnav a:visited { text-decoration: none; }
+  .topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+  .topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+  .topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+  .topnav a:visited { text-decoration: none; }
 	.w3-dropdown-content > a { color: var(--color) !important;  }
 	.w3-centered td { vertical-align: middle;  }
 	.w3-ul li {
@@ -113,7 +115,6 @@
     }
     #cattype > span {
     	margin: 0px 20px;
-    	font-size: 18px;
     }
     input.or-and {
     	margin-top: 0px;
@@ -139,24 +140,24 @@
 	<div id="loader-text">Loading...</div>
 	<div id="loader"></div>
 	<script src="cat.js"></script>
-	<ul class="topnav">
-		<a href="/index.html">主頁</a>
-		<a href="/search.html" class="active">貓咪</a>
-		<a href="/esearch.html">敵人</a>
-		<a href="/gachas.html">轉蛋</a>
-		<a href="/stage.html">關卡</a>
-		<a href="/music.html">音效</a>
-		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
-		<div class="w3-dropdown-content w3-bar-block w3-card-4">
-        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
-        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
-        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
-      	</div>
-      	</div>
-	</ul>
+  <div class="topnav">
+    <a href="/index.html">主頁</a>
+    <a href="/search.html" class="active">貓咪</a>
+    <a href="/esearch.html">敵人</a>
+    <a href="/gachas.html">轉蛋</a>
+    <a href="/stage.html">關卡</a>
+    <a href="/music.html">音效</a>
+    <div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;padding: 0 3px !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+    <div class="w3-dropdown-content w3-bar-block">
+          <a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+          <a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+          <a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+        </div>
+        </div>
+  </div>
 	<script src="dracula.js"></script>
-	<div id="main" style="height: 100%;" class="An">
-		<div class="w3-container" style="height: 100%;">
+	<div id="main" class="An">
+		<div class="w3-container">
 			  <ul class="w3-ul may-hide" style="width: 150px;" id="trait-s">
 			  	<li><input type="button" value="AND" class="or-and"></li>
 			  	<li data-expr="trait&RED" ><button><span class="bc-icon bc-icon-trait-red"></span>紅色敵人</button></li>
@@ -198,7 +199,7 @@
 				<br>
 				<a href="./help.html">使用說明</a>
 			</div>
-			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 97vh;overflow: scroll;width: 190px;" id="ab-s">
+			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 1000px;overflow: scroll;width: 190px;" id="ab-s">
 <li><input type="button" value="AND" class="or-and"></li>
 <li style="text-align: center;">能力</li>
 <li data-expr="hasab(AB_STRONG)"><button><span class="bc-icon bc-icon-strong"></span>攻擊力上升</button></li>
@@ -270,6 +271,8 @@
 			 	<p><span id="search-result"></span><a href="#" id="toggle-s" style="padding-left: 1em;">隱藏搜尋器</a>
 			 		<input type="checkbox" name="only-my-cats" id="only-my-cats" style="margin-left: 2em;"></input>
 			 		<label for="only-my-cats">只顯示我擁有的貓咪</label>
+			 		<input type="checkbox" name="only-my-fav" id="only-my-fav" style="margin-left: 2em;"></input>
+			 		<label for="only-my-fav">只顯示我的最愛</label>
 			 	</p>
 				<table class="w3-table w3-centered" style="min-height: 886px;width: 100%;margin-bottom: 0px;">
 					<thead>

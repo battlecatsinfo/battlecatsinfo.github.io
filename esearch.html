@@ -18,10 +18,11 @@
 	table, th, td {
   		border: 1px solid #d1d5d5;
 	}
-	.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center; }
-	.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 20px; text-decoration: none; font-size: 20px; }
-	.topnav a.active { background-color: #f2bb00; color: white !important; }
-	.topnav a:visited { text-decoration: none; }
+  .topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+  .topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+  .topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+  .topnav a:visited { text-decoration: none; }
+  .w3-dropdown-content > a { color: var(--color) !important;  }
 	.w3-dropdown-content > a { color: var(--color) !important;  }
 	.w3-centered td { vertical-align: middle;  }
 	.w3-ul li {
@@ -134,25 +135,25 @@
 	<div id="loader"></div>
 	<script>var curveData0, curveData1, curveData2, curveData3, curveData4, curveData5;</script>
 	<script src="cat.js"></script>
-	<ul class="topnav">
-		<a href="/index.html">主頁</a>
-		<a href="/search.html">貓咪</a>
-		<a href="/esearch.html" class="active">敵人</a>
-		<a href="/gachas.html">轉蛋</a>
-		<a href="/stage.html">關卡</a>
-		<a href="/music.html">音效</a>
-		<div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
-		<div class="w3-dropdown-content w3-bar-block w3-card-4">
-        	<a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
-        	<a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
-        	<a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
-      	</div>
-      	</div>
-	</ul>
+  <div class="topnav">
+    <a href="/index.html" class="active">主頁</a>
+    <a href="/search.html">貓咪</a>
+    <a href="/esearch.html">敵人</a>
+    <a href="/gachas.html">轉蛋</a>
+    <a href="/stage.html">關卡</a>
+    <a href="/music.html">音效</a>
+    <div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;padding: 0 3px !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+    <div class="w3-dropdown-content w3-bar-block">
+          <a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+          <a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+          <a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+        </div>
+        </div>
+  </div>
 	<script src="dracula.js"></script>
-	<div id="main" style="height: 100%;" class="An">
-		<div class="w3-container" style="height: 100%;">
-			  <ul class="w3-ul may-hide" style="width: 150px;height: 55%;overflow: scroll;" id="trait-s">
+	<div id="main" class="An">
+		<div class="w3-container">
+			  <ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: scroll;" id="trait-s">
 			  	<li><input type="button" value="AND" class="or-and"></li>
 			  	<li data-expr="trait&RED" ><button><span class="bc-icon bc-icon-trait-red"></span>紅色敵人</button></li>
     			<li data-expr="trait&FLOAT"><button><span class="bc-icon bc-icon-trait-float"></span>漂浮敵人</button></li>
@@ -183,7 +184,7 @@
 				<input type="button" value="GO!" id="filter-go"></p>
 				<input type="button" value="清除" id="filter-clear"></p>
 			</form>
-			<div class="no-print may-hide" style="margin-top: 120px;">
+			<div class="no-print may-hide" style="position: absolute;top: 1100px;left: 0px;">
 				<label for="filter-expr">篩選表達式</label>
 				<textarea rows="3" cols="60" name="filter-expr" id="filter-expr" spellcheck="false"></textarea>
 				<br>
@@ -192,7 +193,7 @@
 				<br>
 				<a href="./help.html">使用說明</a>
 			</div>
-			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 50%;overflow: scroll;width: 190px;" id="ab-s">
+			  <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: scroll;width: 190px;" id="ab-s">
 <li style="text-align: center;">能力</li>
 <li data-expr="hasab(AB_STRONG)"><button><span class="bc-icon bc-icon-strong"></span>攻擊力上升</button></li>
 <li data-expr="hasab(AB_LETHAL)"><button><span class="bc-icon bc-icon-lethal"></span>死前存活	</button></li>
@@ -229,7 +230,7 @@
 <li data-expr="imu&IMU_CURSE"><button><span class="bc-icon bc-icon-imu-curse"></span>詛咒無效</button></li>
 <li data-expr="imu&IMU_POIATK"><button><span class="bc-icon bc-icon-imu-poiatk"></span>毒擊無效</button></li>
 			 </ul>
-<ul style="position: absolute;top: 52%;height: 50%;overflow: scroll;width: 190px;left: 180px;" class="w3-ul may-hide" style="width: 150px;" id="kind-s">
+<ul style="position: absolute;top: 605px;height: 395px;overflow: scroll;width: 190px;left: 180px;" class="w3-ul may-hide" style="width: 150px;" id="kind-s">
   <li data-expr="(id==237||id==238||id==239||id==269||id==270||id==279||id==295||id==296||id==311||id==451||id==457||id==633)"><button>貓</button></li>
   <li data-expr="(id==0||id==46||id==114||id==167||id==284||id==407||id==603||id==19||id==20||id==46||id==103||id==117||id==147||id==167||id==197||id==111||id==268||id==293||id==303||id==309||id==307||id==336||id==351||id==260||id==437||id==470||id==494||id==503||id==537||id==539||id==548||id==552||id==564||id==565||id==566||id==567||id==568||id==569||id==595||id==608||id==612||id==631)"><button>狗</button></li>
   <li data-expr="(id==41||id==110||id==390)"><button>臘腸狗</button></li>
