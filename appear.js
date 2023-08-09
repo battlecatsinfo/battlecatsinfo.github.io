@@ -37,7 +37,7 @@ fetch('/stages.zip').then(res => res.arrayBuffer()).then(function(zipData) {
     const S1 = fs.readdirSync('/stages');
     main_div.style.display = 'block';
     const ss = t3str(q_id);
-    img.src = 'data/enemy/' + ss + '/enemy_icon_' + ss + '.png';
+    img.src = 'https://ponosgames.com/information/appli/battlecats/stage/img/enemy/enemy_icon_' + ss + '.png';
     img.onerror = function(event) {
       event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
     }
@@ -51,6 +51,7 @@ function do_search() {
   for (let i = 0;i < s1.length;++i) {
   	const d1 = document.createElement('details');
     const m1 = s1[i];
+    if (m1 == 'group') continue;
     const i1 = JSON.parse(fs.readFileSync(`/stages/${m1}/info`, 'utf-8', 'r'));
     const s2 = fs.readdirSync(`/stages/${m1}`);
     for (let j = 0;j < s2.length;++j) {

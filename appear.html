@@ -2,15 +2,18 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>出現關卡</title>
 	<link rel="stylesheet" type="text/css" href="unit.css">
+	<link rel="stylesheet" type="text/css" href="w3.css">
+	<link rel="stylesheet" type="text/css" href="dracula.css">
 	<script src="RewardName.js"></script>
 	<script type="text/javascript" src="browserfs.min.js"></script>
 </head>
 <body>
 <style>
-html, body { width: 100%;font-size: 18px; }
-body { padding: 10px 20px;;line-height: initial; }
+html, body { width: 100%;margin: 0;padding: 0;font-size: min(3vw, 26px); }
+body { line-height: initial; }
 div.An {
   animation-name: An;
   animation-duration: 0.7s
@@ -43,8 +46,29 @@ summary {
 a:hover {
   background-color: lightcyan;
 }
+  .topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+  .topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+  .topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+  .topnav a:visited { text-decoration: none; }
+  .w3-dropdown-content > a { color: var(--color) !important;  }
 </style>
-<div id="main" style="position: relative;" class="An"><h1 style="margin-block: 0;"><img id="icon">出現的關卡</h1></div>
+  <div class="topnav">
+    <a href="/index.html">主頁</a>
+    <a href="/search.html">貓咪</a>
+    <a href="/esearch.html">敵人</a>
+    <a href="/gachas.html">轉蛋</a>
+    <a href="/stage.html" class="active">關卡</a>
+    <a href="/music.html">音效</a>
+    <div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;padding: 0 3px !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+    <div class="w3-dropdown-content w3-bar-block">
+          <a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+          <a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+          <a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+        </div>
+        </div>
+  </div>
+	<script src="dracula.js"></script>
+<div id="main" style="position: relative;padding: 1em 1vw;" class="An"><h1 style="margin-block: 0;"><img id="icon" width="64" height="64">出現的關卡</h1></div>
 <script type="text/javascript" src="appear.js"></script>
 </body>
 </html>
