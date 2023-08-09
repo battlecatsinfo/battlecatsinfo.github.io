@@ -84,7 +84,7 @@ function renderTable(E) {
 	}
 	document.getElementById('mult').innerText = '倍率: ' + my_mult.toString() + '%';
 	my_mult *= 0.01;
-	chs[0].children[0].children[0].src = 'data/enemy/' + ss + '/enemy_icon_' + ss + '.png';
+	chs[0].children[0].children[0].src = 'https://ponosgames.com/information/appli/battlecats/stage/img/enemy/enemy_icon_' + ss + '.png';
 	chs[0].children[0].children[0].onerror = function(event) {
 		event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
 	}
