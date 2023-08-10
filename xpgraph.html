@@ -2,32 +2,47 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="w3.css">
+	<link rel="stylesheet" type="text/css" href="dracula.css">
 	<title>XP 花費表格</title>
 	<link rel="stylesheet" type="text/css" href="w3.css">
 </head>
 <body>
-	<style>
-	body { text-align: center;margin: 20px 20x auto; }
-	table, th, td {
-  		border: 1px solid #d1d5d5;
-	}
-	</style>
-	<h1 style="margin: 50px auto;">XP 花費表格</h1>
-	<table class="w3-table w3-striped w3-centered" style="width: 900px;vertical-align: middle;margin: 0px auto;">
-		<tr>
-			<td>Level</td>
-			<td>XP</td>
-			<td>Level</td>
-			<td>XP</td>
-			<td>Level</td>
-			<td>XP</td>
-			<td>Level</td>
-			<td>XP</td>
-			<td>Level</td>
-			<td>XP</td>
-		</tr>
-	</table>
-	<a style="font-size: 30px;text-decoration: underline;color: black;display: block;margin-top: 20px;" href="https://thanksfeanor.pythonanywhere.com/xpcurves">Help</a>
+<style>
+body { text-align: center;font-size: min(2vw, 18px); }
+table, th, td { border: 1px solid #d1d5d5; }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+.topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
+.w3-table td {
+	padding: min(1vh, 6px) 0;
+}
+.w3-table td:first-child {
+	padding-left: initial;
+}
+</style>
+<div class="topnav">
+    <a href="/index.html">主頁</a>
+    <a href="/search.html">貓咪</a>
+    <a href="/esearch.html">敵人</a>
+    <a href="/gachas.html">轉蛋</a>
+    <a href="/stage.html">關卡</a>
+    <a href="/music.html">音效</a>
+    <a href="/reward_all.html">獎勵</a>
+    <div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;padding: 0 3px !important;"><img src="theme.svg" style="background-color: initial !important;">Theme</button>
+    <div class="w3-dropdown-content w3-bar-block">
+          <a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+          <a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+          <a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+        </div>
+        </div>
+</div><script src="dracula.js"></script>
+<h1 style="font-size: 2em;margin: 4vw auto;">XP 花費表格</h1>
+<table class="w3-table w3-centered" style="margin: 0 auto;max-width: 1200px;"><tr><td>Level</td><td>XP</td><td>Level</td><td>XP</td><td>Level</td><td>XP</td><td>Level</td><td>XP</td><td>Level</td><td>XP</td><td>Level</td><td>XP</td></tr></table>
+<a style="font-size: 2em;text-decoration: underline;color: black;display: block;margin-top: 20px;" href="https://thanksfeanor.pythonanywhere.com/xpcurves">Help</a>
 </table>
 <script>
 const my_params = new URLSearchParams(location.search);
@@ -38,32 +53,26 @@ if (!my_q) {
 	throw '';
 }
 const my_datas = atob(my_q).split(',').map(x => parseInt(x));
-
 const table = document.querySelector('table');
-function calc_cost(costs, i) {
-	const defaults = [1, 2, 3, 3.5, 4, 4.5];
-	let f = Math.floor(i / 10);
-	return defaults[f] * costs[i % 10];
-}
+
 function getCosts(datas) {
-	let costs = new Array(50).fill(0);
+	const curve = [1, 2, 3, 3.5, 4, 4.5];
+	let costs = new Uint32Array(60);
 	for (let i = 0;i < datas.length;++i)
 		costs[i] = datas[i];
-	var freeInit = false;
-	if (!costs[0] && costs[10]) {
-		costs[0] = costs[10] / 2;
-		freeInit = true;
+	for (let i = 1;i <= 5;++i) {
+		for (let j = 0;j < 10;++j) {
+			costs[i * 10 + j] = costs[j] * curve[i];
+		}
 	}
-	for (let i = 0;i < 50;++i)
-		costs[i] = calc_cost(costs, i);
-	if (freeInit) costs[0] = 0;
+	costs[0] = 0;
 	return costs;	
 }
 function drawTable(costs) {
 	for (let i = 1;i <= 10;++i) {
 		let tr = document.createElement('tr');
 		var sum = 0;
-		for (let j = 0;j < 10;j += 2) {
+		for (let j = 0;j < 12;j += 2) {
 			let td1 = document.createElement('td');
 			let td2 = document.createElement('td');
 			let idx = i + (j * 5);
@@ -80,12 +89,12 @@ function drawTable(costs) {
 	let sums = [];
 	var totalSum = 0;
 	var tr = document.createElement('tr');
-	for (let j = 0;j < 10;j += 2) {
+	for (let j = 0;j < 12;j += 2) {
 		var sum = 0;
 		let i = j / 2;
 		let td1 = document.createElement('td');
 		let td2 = document.createElement('td');
-		td1.innerText = `Lv${i*10}-Lv${(i+1)*10}`;
+		td1.innerText = `${i*10}-${(i+1)*10}`;
 		i *= 10;
 		let end = i + 10;
 		for (;i < end;++i)
@@ -98,7 +107,7 @@ function drawTable(costs) {
 	}
 	table.appendChild(tr);
 	tr = document.createElement('tr');
-	for (let j = 0;j < 10;j += 2) {
+	for (let j = 0;j < 12;j += 2) {
 		var sum = 0;
 		let i = j / 2;
 		let td1 = document.createElement('td');

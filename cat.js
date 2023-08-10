@@ -9,7 +9,7 @@ var _eggs = null;
 var enemy_descs = null;
 var rwMap;
 var tfMap;
-const BC_VER = 120514;
+const BC_VER = 120515;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -1227,8 +1227,7 @@ class CatInfo {
 			}
 		}
 		this.crazed = (data[3] > 50000) && (data[13] == 3);
-		let xp_last = this.crazed ? data[3] * 1.5 : data[2] * 2;
-		this.xp_data = [0].concat(data.slice(3, 12), xp_last).join(',');
+		this.xp_data = data.slice(2, 12).join(',');
 		_eggs = data.slice(data.length - 2);
 	}
 	loadTalents(my_id) {

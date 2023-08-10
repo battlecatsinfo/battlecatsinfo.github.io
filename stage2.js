@@ -24,6 +24,7 @@ var char_groups;
 var Buffer = BrowserFS.BFSRequire('buffer').Buffer;
 const materialDrops = [85, 86, 87, 88, 89, 90, 91, 140, 187, 188, 189, 190, 191, 192, 193, 194];
 BrowserFS.install(window);
+const event_types = {"3":[1000,1001,1002,1003,1004,1250,1150,1151,1152,1073,1074,1075,1076,1077,1208,1269,1270,1271,1275,1276,1111,1112,1114,1184,1186,1192,1194,1197,1165,1166,1167,1168,1170,1171,1175,1140,1149,1154,1125,1160,1234,1235,1236,1237,24032,24033,24039,24040,24043,24044,24046,24047,24050,24051,24015,24016,24017,24018,24021,24022,24023,24024,24025,24026,24028,24029,24030,24031,7000,7001,7002,7003,7004,7005,7006,7007,7008,16000,33000,2066,2208,2209,27007,1343,1309,1182,1069,1120,1190,1287,1289,24053,24054,2100,2185,2089,27013,1344],"4":[1027,1028,1059,1124,1155,1319,1308,1033,1034,1035,1070,1079,1146,24049,2080],"5":[1097,1098,1099,1100,1101,1162,1222,1274,1118,1326,31000,31001,31002,1315,1316,1317,1318],"0":[1014,1016,1015,1043,1039,1066,1096,1122,1157,1189,1259,1095,1119,1117,1128,1158,1177,1215,1226,1246,1272,1217,1219,1220,1229,1231,1232,1273,1340,1017,1018,1019,1020,1021,1022,1023,1024,1025,1161,1277,1278,1279,1280,1011,1012,1013,1026,1029,1030,1031,1032,1036,1038,1009,1010,2006,1297,24042,1129,1164,1115,1174,1072,1325,2065,2205,2001,2002,2088,1348],"1":[1169,1172,1176,1185,1187,1193,1195,1196,1198,1247,1199,1201,1203,1205,1207,1214,1243,1296,1338,1102,1103,1104,1105,1106,1107,1108,1109,1110,1130,1131,1132,1133,1134,1135,1136,1137,1138,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1083,1084,1085,1086,1087,1088,1089,1090,1091,1092,1093,1094,1143,1144,1153,2037,1337,2206,2207,1342,2043,2044],"6":[24055,24020,24027,24034,24035,24037,24038,24061],"7":[1006,1007,1078,1173,1336],"-1":[1255,1256,1257,1258,1265,1266,1312,1313,1314,1333,1334,1335,1339,1251,1252,1253,1305,1306,1307,11000,11001,11002,11003,11004,11005,11006,11007,11008,11009,11011,11012,11013,11014,11015,11016,11017,11018,11019,11020,11021,11022,11023,11024,1345,1346,1347],"2":[1209],"8":[24052,24019]};
 const hidden_groups = [
 [25000, 25001, 25003],       
 [25007, 25002, 25004],       
@@ -360,14 +361,14 @@ fetch('/stages.zip').then(res => res.arrayBuffer()).then(function(zipData) {
       console.error(e);
       return;
     }
+    const event_names = ["未分類","角色","進化權利","貓罐頭","道具","XP","進化素材","本能珠珠","貓咪券","活動券"];
     fs = BrowserFS.BFSRequire('fs');
-    fs.readdirSync('/stages').forEach(m1 => {
-      if (m1 == 'group') return;
+    for (let x of Object.entries(event_types)) {
       const p = document.createElement('option');
-      const info = JSON.parse(fs.readFileSync((p.value = `/stages/${m1}`) + '/info', 'utf-8', 'r'));
-      p.innerText = [info.name, info.jpname].filter(x => x).join('/');
+      p.innerText = event_names[parseInt(x[0]) + 1];
+      p.value = x[0];
       M1.appendChild(p);
-    });
+    }
     char_groups = JSON.parse(fs.readFileSync('/stages/group', 'utf-8', 'r'));
     main();
   });
@@ -383,7 +384,7 @@ function main() {
     } else {
       star = 1;
     }
-    let st = url.searchParams.get('s');
+    const st = url.searchParams.get('s');
     if (st) {
       const sts = st.split('-').map(x => parseInt(x)).filter(x => !isNaN(x));
       if (sts.length) {
@@ -391,16 +392,6 @@ function main() {
         M1.oninput(null, sts);
         main_div.style.display = 'block';
         return;
-      }
-    } else {
-      if (st = url.searchParams.get('v')) {
-        const sts = st.split('-').map(x => parseInt(x)).filter(x => !isNaN(x));
-        if (sts.length) {
-          M1.value = `/stages/${sts[0]}`;
-          M1.oninput(null, sts, true);
-          main_div.style.display = 'block';
-          return;
-        }
       }
     }
     M1.selectedIndex = 0;
@@ -416,13 +407,8 @@ function getConditionHTML(obj) {
     const a = document.createElement('a');
     const div = document.createElement('div');
     div.append('破完');
-    a.href = '#';
+    a.href = `/stage.html?v=${m}-${s}`;
     a.innerText = info.name;
-    a.onclick = function(event) {
-      M1.value = `/stages/${m}`;
-      M1.oninput(null, [m, s]);
-      return false;
-    }
     div.appendChild(a);
     return div;
   } else {
@@ -439,14 +425,9 @@ function getConditionHTML(obj) {
     const a = document.createElement('a');
     const div = document.createElement('div');
     div.append('破完');
-    a.href = '#';
     const st = obj.stage;
     a.innerText = info.name + '第' + (st + 1).toString() + '關';
-    a.onclick = function(event) {
-      M1.value = `/stages/${m}`;
-      M1.oninput(null, [m, s, st]);
-      return false;
-    }
+    a.href = `/stage.html?v=${m}-${s}-${st}`;
     div.appendChild(a);
     return div;
   }
@@ -459,13 +440,8 @@ function getConditionHTML(obj) {
     const s = x % 1000;
     const info = JSON.parse(fs.readFileSync(`/stages/${m}/${s}/info`));
     const a = document.createElement('a');
-    a.href = '#';
+    a.href = `/stage.html?v=${m}-${s}`;
     a.innerText = info.name;
-    a.onclick = function(event) {
-      M1.value = `/stages/${m}`;
-      M1.oninput(null, [m, s]);
-      return false;
-    }
     if (i)
       div.append(y < 0 ? 'or' : '+');
     div.appendChild(a);
@@ -552,15 +528,14 @@ class Limit {
   }
 }
 M1.oninput = function(event, sts) {
-  const dir = M1.selectedOptions[0].value;
-  info1 = JSON.parse(fs.readFileSync(dir + '/info'));
   M2.textContent = '';
-  M3.textContent = '';
-  fs.readdirSync(dir).forEach(m1 => {
-    if (m1 == 'info') return;
+  event_types[M1.selectedOptions[0].value].forEach(m1 => {
     const p = document.createElement('option');
-    const info = JSON.parse(fs.readFileSync((p.value = dir + '/' + m1) + '/info', 'utf-8', 'r'));
-    p.innerText = [info.name, info.jpname].filter(x => x).join('/');
+    const mc = ~~(m1 / 1000);
+    const m = m1 % 1000;
+    try {
+      p.innerText = JSON.parse(fs.readFileSync(`/stages/${mc}/${m}/info`)).name;
+    } catch (e) { return; };
     M2.appendChild(p);
   });
   if (sts && sts.length > 1)
@@ -570,9 +545,9 @@ M1.oninput = function(event, sts) {
   M2.oninput(null, sts);
 }
 M2.oninput = function(event, sts) {
-  const dir = M2.selectedOptions[0].value;
-  info2 = JSON.parse(fs.readFileSync(dir + '/info'));
   M3.textContent = '';
+  const m = event_types[M1.selectedOptions[0].value][M2.selectedIndex];
+  const dir = `/stages/${~~(m / 1000)}/${m % 1000}`;
   fs.readdirSync(dir).forEach(m1 => {
     if (m1 == 'info') return;
     const p = document.createElement('option');
@@ -644,7 +619,14 @@ function getDropData() {
   return res;
 }
 M3.oninput = function() {
-  const dir = M3.selectedOptions[0].value;
+  {
+    const x = event_types[M1.selectedOptions[0].value][M2.selectedIndex];
+    const mc = ~~(x / 1000);
+    const m = x % 1000;
+    info1 = JSON.parse(fs.readFileSync(`/stages/${mc}/info`));
+    info2 = JSON.parse(fs.readFileSync(`/stages/${mc}/${m}/info`));
+    info3 = JSON.parse(fs.readFileSync(`/stages/${mc}/${m}/0`));
+  }
   const url = new URL(location.href);
   url.searchParams.set('s', [M1.selectedIndex, M2.selectedIndex, M3.selectedIndex].join('-'));
   if (info2.stars.length)
@@ -653,7 +635,6 @@ M3.oninput = function() {
     star = 1;
   url.searchParams.set('star', star);
   history.pushState({}, "", url);
-  info3 = JSON.parse(fs.readFileSync(dir));
   stName.innerText = stage_name = [info1.name, info2.name, info3.name].filter(x => x).join(' • ');
   stName2.innerText = [info1.jpname, info2.jpname, info3.jpname].filter(x => x).join(' • ');
   document.title = stage_name;
@@ -732,7 +713,7 @@ M3.oninput = function() {
     stName.parentNode.parentNode.appendChild(tr);
   }
   rewards.textContent = '';
-  if (info3.drop.length && M1.selectedIndex != 3) {
+  if (info3.drop.length) {
     const chances = getDropData();
     for (let i =0;i < info3.drop.length;++i) {
       if (!parseInt(chances[i])) continue;
@@ -932,11 +913,7 @@ M3.oninput = function() {
       const mc = ~~(s / 100000);
       const sts = [mc, sm, st];
       a.innerText = JSON.parse(fs.readFileSync(`/stages/${mc}/${sm}/${st}`)).name;
-      a.onclick = function(event) {
-          M1.value = `/stages/${sts[0]}`;
-          M1.oninput(null, sts);
-          return false;
-      }
+      a.href = `/stage.html?${mc}-${sm}-${st}`;
       td0.appendChild(a);
       td1.innerText = info3.exC[i].toFixed(1) + '%';
       tr.appendChild(td0);
@@ -970,12 +947,8 @@ M3.oninput = function() {
         const mc = ~~(groups[j] / 1000);
         const sm = groups[j] % 1000;
         a.innerText = JSON.parse(fs.readFileSync(`/stages/${mc}/${sm}/info`)).name;
+        a.href = `/stage.html?v=${mc}-${sm}`;
         const sts = [mc, sm];
-        a.onclick = function(event) {
-            M1.value = `/stages/${sts[0]}`;
-            M1.oninput(null, sts);
-            return false;
-        }
         td0.appendChild(a);
         if (j != (groups.length - 1)) 
           td0.appendChild(document.createTextNode(' or '));
