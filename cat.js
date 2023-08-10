@@ -1008,26 +1008,20 @@ default: console.assert(false, talent[0]);
 	}
 	getthp() {
 		let hp = this.gethp();
-		if (this.ab.hasOwnProperty(AB_RESIST)) {
+		if (this.ab.hasOwnProperty(AB_EKILL))
+			return hp * 5;
+		if (this.ab.hasOwnProperty(AB_WKILL))
+			return hp * 10;
+		if (this.ab.hasOwnProperty(AB_RESIST))
 			hp *= (this.trait & trait_treasure) ? 5 : 4;
-		} else if (this.ab.hasOwnProperty(AB_RESISTS)) {
+		else if (this.ab.hasOwnProperty(AB_RESISTS))
 			hp *= (this.trait & trait_treasure) ? 7 : 6;
-		}
-		if (this.ab.hasOwnProperty(AB_GOOD)) {
+		if (this.ab.hasOwnProperty(AB_GOOD))
 			hp *= (this.trait & trait_treasure) ? 2.5 : 2;
-		}
-		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
+		if (this.ab.hasOwnProperty(AB_BSTHUNT))
 			hp /= 0.6;
-		}
-		if (this.ab.hasOwnProperty(AB_BAIL)) {
+		if (this.ab.hasOwnProperty(AB_BAIL))
 			hp /= 0.7;
-		}
-		if (this.ab.hasOwnProperty(AB_EKILL)) {
-			hp *= 5;
-		}
-		if (this.ab.hasOwnProperty(AB_WKILL)) {
-			hp *= 10;
-		}
 		return hp;
 	}
 	dpsagainst(traits) {
@@ -1100,6 +1094,10 @@ default: console.assert(false, talent[0]);
 			dps *= 1 + this.ab[AB_MINIWAVE][0] / 500;
 		if (this.ab.hasOwnProperty(AB_CRIT))
 			dps += dps * (this.ab[AB_CRIT][0] / 100);
+		if (this.ab.hasOwnProperty(AB_EKILL))
+			return dps * 5;
+		if (this.ab.hasOwnProperty(AB_WKILL))
+			return dps * 5;
 		if (this.ab.hasOwnProperty(AB_STRONG))
 			dps *= 1 + (this.ab[AB_STRONG][1] / 100);
 		if (this.ab.hasOwnProperty(AB_MASSIVE))
@@ -1112,10 +1110,6 @@ default: console.assert(false, talent[0]);
 			dps *= 2.5;
 		if (this.ab.hasOwnProperty(AB_BAIL))
 			dps *= 1.6;
-		if (this.ab.hasOwnProperty(AB_EKILL))
-			dps *= 5;
-		if (this.ab.hasOwnProperty(AB_WKILL))
-			dps *= 5;
 		return dps;
 	}
 	gettatk() {
@@ -1138,6 +1132,10 @@ default: console.assert(false, talent[0]);
 			atk *= 1 + (this.ab[AB_S][1] / 100);
 		if (this.ab.hasOwnProperty(AB_CRIT))
 			atk += atk;
+		if (this.ab.hasOwnProperty(AB_EKILL))
+			return atk * 5;
+		if (this.ab.hasOwnProperty(AB_WKILL))
+			return atk * 5;
 		if (this.ab.hasOwnProperty(AB_STRONG))
 			atk *= 1 + (this.ab[AB_STRONG][1] / 100);
 		if (this.ab.hasOwnProperty(AB_MASSIVE))
@@ -1150,10 +1148,6 @@ default: console.assert(false, talent[0]);
 			atk *= 2.5;
 		if (this.ab.hasOwnProperty(AB_BAIL))
 			atk *= 1.6;
-		if (this.ab.hasOwnProperty(AB_EKILL))
-			atk *= 5;
-		if (this.ab.hasOwnProperty(AB_WKILL))
-			atk *= 5;
 		return atk;
 	}
 	getspeed() {

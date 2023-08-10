@@ -13,7 +13,7 @@
 	<script src="unitlevels.js"></script>
 	<title>貓咪資訊</title>
 </head>
-<body style="overflow: scroll;">
+<body style="overflow: scroll;position: relative;">
 <style>
 body { font-size: min(18px, 1.7vw); }
 .topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
@@ -28,7 +28,7 @@ body { font-size: min(18px, 1.7vw); }
 .modd { background-color: var(--bgd) !important; }
 </style>
  <div class="topnav">
- 	<a href="#" onclick="w3_open()" class="w3-button w3-hide-large" title="open menu"><img src="menu_icon.png"></a>
+ 	<a href="#" onclick="w3_open()" class="w3-button w3-hide-large" title="open menu" style="float: left;"><img src="menu_icon.png"></a>
     <a href="/index.html">主頁</a>
     <a href="/search.html">貓咪</a>
     <a href="/esearch.html">敵人</a>
@@ -45,7 +45,7 @@ body { font-size: min(18px, 1.7vw); }
         </div>
   </div>
 <script src="dracula.js"></script>
-<nav class="w3-sidebar w3-collapse w3-animate-left" style="z-index:3;width:200px;" id="sidebar">
+<nav class="w3-sidebar w3-collapse w3-animate-left" style="z-index:1;width:200px;" id="sidebar">
   <div class="w3-container">
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu"><img src="close_icon.png"></a>
   </div>
@@ -61,12 +61,11 @@ body { font-size: min(18px, 1.7vw); }
 	  		<a href="./stars.html" class="w3-bar-item" id="star-cat">我的最愛</a>
   </div>
 </nav>
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="overlay"></div>
 <div id="loader-text">Loading...</div>
 <div id="loader"></div>
 <script src="cat.js"></script>
 <div id="main" style="position: relative;" class="An">
-<div class="w3-main">
+<div class="w3-main" style="margin-left: 200px;">
 <div id="unit-content" style="margin: 0 auto;width: 100%;margin-top: 70px;">
 	<p id="ch_name" class="bold-large"></p>
 	<p id="jp_name" class="bold-large"></p>

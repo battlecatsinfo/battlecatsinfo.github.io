@@ -45,14 +45,14 @@ pre {
 }
 .r-ribbon {
   position: absolute;
-  top: 2em;
-  right: 0px;
+  top: 1em;
+  right: 1em;
   color: white !important;
   background: #4CAF50 !important;
   box-shadow: 0 0 0 999px #4CAF50;
   clip-path: inset(0 -100%);
   transform-origin: 0 0;
-  transform: translate(29.3%) rotate(45deg);
+  transform: rotate(45deg);
 }
 .fruit {
   background-color: white;

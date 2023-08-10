@@ -46,6 +46,8 @@ function getCombinations(arr)
 function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	const lines = [];
 	var spec = false;
+	var t_ef = false;
+	var eva_ef = false;
 	var treasure;
 	for (const ab of line) {
 		switch (parseInt(ab[0])) {
@@ -82,6 +84,7 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 			treasure = spec ? first : (trait & trait_treasure);
 			theATK *= (treasure ? 1.8 : 1.5);
 			lines.push('善攻');
+			t_ef = true;
 			break;
 		case AB_CRIT:
 			if (dps)
@@ -106,31 +109,38 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 			treasure = spec ? first : (trait & trait_treasure);
 			theATK *= (treasure ? 4 : 3);
 			lines.push('大傷');
+			t_ef = true;
 			break;
 		case AB_MASSIVES:
 			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 			treasure = spec ? first : (trait & trait_treasure);
 			theATK *= (treasure ? 6 : 5)
 			lines.push('極傷');
+			t_ef = true;
 			break;
 		case AB_EKILL:
 			lines.push('使徒');
 			theATK *= 5;
+			eva_ef = true;
 			break;
 		case AB_WKILL:
 			theATK *= 5;
 			lines.push('魔女');
+			eva_ef = true;
 			break;
 		case AB_BSTHUNT:
 			theATK *= 2.5;
 			lines.push('超獸');
+			t_ef = true;
 			break;
 		case AB_BAIL:
 			theATK *= 1.6;
 			lines.push('超生命體');
+			t_ef = true;
 			break;
 		}
 	}
+	if (eva_ef && t_ef) return false;
 	let s = lines.join(' • ');
 	s += ':';
 	const atks = plus ? ('+' + (~~theATK).toString()) : ((~~theATK).toString());
@@ -164,6 +174,8 @@ function getAtkString(form, atk, abs, trait, level, parent, plus, dps=false) {
 function getHp(line, theHP, parent, first, trait, plus) {
 	const lines = [];
 	var spec = false;
+	var t_ef = false;
+	var eva_ef = false;
 	var treasure;
 	for (const ab of line) {
 		switch (parseInt(ab[0])) {
@@ -172,26 +184,31 @@ function getHp(line, theHP, parent, first, trait, plus) {
 			treasure = spec ? first : (trait & trait_treasure);
 			theHP *= (treasure ? 2.5 : 2);
 			lines.push('善攻');
+			t_ef = true;
 			break;
 		case AB_RESIST:
 			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 			treasure = spec ? first : (trait & trait_treasure);
 			theHP *= (treasure ? 5 : 4);
 			lines.push('耐打');
+			t_ef = true;
 			break;
 		case AB_RESISTS:
 			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 			treasure = spec ? first : (trait & trait_treasure);
 			theHP *= (treasure ? 7 : 6);
 			lines.push('超級耐打');
+			t_ef = true;
 			break;
 		case AB_EKILL:
 			lines.push('使徒');
 			theHP *= 5;
+			eva_ef = true;
 			break;
 		case AB_WKILL:
 			theHP *= 10;
 			lines.push('魔女');
+			eva_ef = true;
 			break;
 		case AB_BSTHUNT:
 			theHP /= 0.6;
@@ -200,9 +217,11 @@ function getHp(line, theHP, parent, first, trait, plus) {
 		case AB_BAIL:
 			theHP /= 0.7;
 			lines.push('超生命體');
+			t_ef = true;
 			break;
 		}
 	}
+	if (t_ef && eva_ef) return false;
 	let s = lines.join(' • ');
 	s += ':';
 	const hps = plus ? ('+' + (~~theHP).toString()) : ((~~theHP).toString());
@@ -560,7 +579,7 @@ function renderExtras() {
 		const div = document.createElement('div');
 		div.innerText = `Ver ${parseInt(version.slice(0, 2))}.${parseInt(version.slice(2, 4))}.${parseInt(version.slice(4))} 新增`;
 		div.classList.add('r-ribbon');
-		document.getElementById('main').appendChild(div);
+		document.body.appendChild(div);
 	}
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	let odd = true;
@@ -1020,10 +1039,7 @@ loadCat(my_id)
 });
 function w3_open() {
     document.getElementById("sidebar").style.display = "block";
-    document.getElementById("overlay").style.display = "block";
 }
- 
 function w3_close() {
     document.getElementById("sidebar").style.display = "none";
-    document.getElementById("overlay").style.display = "none";
 }
