@@ -9,7 +9,12 @@ if (q_id < 0 || isNaN(q_id)) {
 	alert('Invalid Enemy id!');
 	throw '';
 }
-const img = document.getElementById('icon');
+const img = document.getElementById('eicon');
+const ss = t3str(q_id);
+img.src = 'https://ponosgames.com/information/appli/battlecats/stage/img/enemy/enemy_icon_' + ss + '.png';
+img.onerror = function() {
+  document.getElementById('eicon').src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
+}
 const main_div = document.getElementById('main');
 var Buffer = BrowserFS.BFSRequire('buffer').Buffer;
 const materialDrops = [85, 86, 87, 88, 89, 90, 91, 140, 187, 188, 189, 190, 191, 192, 193, 194];
@@ -36,11 +41,6 @@ fetch('/stages.zip').then(res => res.arrayBuffer()).then(function(zipData) {
     fs = BrowserFS.BFSRequire('fs');
     const S1 = fs.readdirSync('/stages');
     main_div.style.display = 'block';
-    const ss = t3str(q_id);
-    img.src = 'https://ponosgames.com/information/appli/battlecats/stage/img/enemy/enemy_icon_' + ss + '.png';
-    img.onerror = function(event) {
-      event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
-    }
     setTimeout(do_search, 0);
   });
 });
@@ -66,7 +66,7 @@ function do_search() {
         	const i3 = JSON.parse(fs.readFileSync(`/stages/${m1}/${m2}/${m3}`, 'utf-8', 'r'));
         	for (let line of i3.l) {
         		if (line[0] == q_id) {
-        			if (++num_results > 1000) return;
+              ++num_results;
         			const a = document.createElement('a');
         			a.href = '/stage.html?s=' + [i, j, k].join('-');
         			a.innerHTML = [i3.name, i3.jpname].filter(x => x).join('/');
