@@ -1,6 +1,7 @@
 :root {
 	--bg: transparent;
 	--color: initial;
+	--dcolor: black;
 	--acolor: initial;
 	--abg: initial;
 	--ahover: initial;
@@ -18,6 +19,7 @@ a, textarea {
 [data-theme="dark"] {
 	--bg: rgba(40, 42, 54, 1);
 	--color: rgba(248, 248, 242, 1);
+	--dcolor: black;
 	--acolor: rgba(80, 250, 123, 1);
 	--abg: transparent;
 	--ahover: rgba(241, 250, 140, 1);

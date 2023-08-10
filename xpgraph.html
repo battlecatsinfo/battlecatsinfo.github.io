@@ -23,6 +23,14 @@ table, th, td { border: 1px solid #d1d5d5; }
 .w3-table td:first-child {
 	padding-left: initial;
 }
+.odd td {
+	color: var(--dcolor) !important;
+	background-color: #ece1ff !important;
+}
+[data-theme="dark"] .odd td {
+	color: #bcd9ef !important;
+	background-color: var(--abg) !important;
+}
 </style>
 <div class="topnav">
     <a href="/index.html">主頁</a>
@@ -118,6 +126,12 @@ function drawTable(costs) {
 		tr.appendChild(td2);
 	}
 	table.appendChild(tr);
+	let odd = true;
+	for (let x of table.children) {
+		if (odd)
+			x.classList.add('odd');
+		odd = !odd;
+	}
 }
 let costs = getCosts(my_datas);
 drawTable(costs);

@@ -384,7 +384,6 @@ function renderForm(form) {
 	try {
 	level_text.innerHTML = ['一階：<br>', '二階：<br>', '三階：<br>', '本能完全升滿的數值表格', '超本能完全升滿的數值表格'][level_count] + ((level_count <= 2) ? unit_descs[my_id][level_count] : '');
 	} catch (e) {  }
-	level_text.classList.add('bold-large');
 	makeTd(theadtr);
 	for (let i = 1;i <= 5;++i) {
 		const e = makeTd(theadtr, `Lv${i * 10}`);
@@ -1019,3 +1018,12 @@ loadCat(my_id)
 	document.getElementById('show-level-graph3').href = './levelgraph3.html?id=' + my_id.toString();
 	document.getElementById('show-level-graph4').href = './levelgraph4.html?id=' + my_id.toString();
 });
+function w3_open() {
+    document.getElementById("sidebar").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("sidebar").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+}
