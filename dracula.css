@@ -54,9 +54,6 @@ h1,h2,h3,h4,h5,h6,strong,[id*="headline"],[class*="headline"],[id*="header"],[cl
 table {
 	background-color: var(--bg) !important;
 }
-[id*="overlay"],[id*="lightbox"],blockquote {
-	background-color: var(--tcolor) !important;
-}
 pre,
 dl {
 	background-color: var(--tcolor) !important;

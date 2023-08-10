@@ -1037,9 +1037,13 @@ loadCat(my_id)
 	document.getElementById('show-level-graph3').href = './levelgraph3.html?id=' + my_id.toString();
 	document.getElementById('show-level-graph4').href = './levelgraph4.html?id=' + my_id.toString();
 });
+const overlay = document.getElementById('overlay');
+const sidebar = document.getElementById('sidebar');
 function w3_open() {
-    document.getElementById("sidebar").style.display = "block";
+    sidebar.style.display = "block";
+    overlay.style.display = 'block';
 }
 function w3_close() {
-    document.getElementById("sidebar").style.display = "none";
+    sidebar.style.display = "none";
+    overlay.style.display = 'none';
 }

@@ -26,9 +26,12 @@ body { font-size: min(18px, 1.7vw); }
 .w3-table td { vertical-align: middle;padding: 9px 0px;min-width: 120px; }
 .o-selected { background-color: #7fdbff !important; }
 .modd { background-color: var(--bgd) !important; }
+.w3-overlay { background-color: rgba(0,0,0,0.5) !important; }
+.w3-sidebar { background-color: #fff !important; }
+[data-theme='dark'] .w3-sidebar { background-color: var(--bg) !important; }
 </style>
  <div class="topnav">
- 	<a href="#" onclick="w3_open()" class="w3-button w3-hide-large" title="open menu" style="float: left;"><img src="menu_icon.png"></a>
+ 		<a href="#" class="w3-button w3-hide-large" title="open menu" style="float: left;" onclick="w3_open()"><img src="menu_icon.png"></a>
     <a href="/index.html">主頁</a>
     <a href="/search.html">貓咪</a>
     <a href="/esearch.html">敵人</a>
@@ -45,7 +48,8 @@ body { font-size: min(18px, 1.7vw); }
         </div>
   </div>
 <script src="dracula.js"></script>
-<nav class="w3-sidebar w3-collapse w3-animate-left" style="z-index:1;width:200px;" id="sidebar">
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="overlay"></div>
+<nav class="w3-sidebar w3-collapse w3-animate-left" style="z-index:3;width:200px;" id="sidebar">
   <div class="w3-container">
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu"><img src="close_icon.png"></a>
   </div>

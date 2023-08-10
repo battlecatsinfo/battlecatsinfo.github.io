@@ -78,9 +78,9 @@ function renderTable(forms, page = 1) {
 		const a = document.createElement('a');
 		const img = new Image();
 		const ss = t3str(theForm.id - 2);
-		img.src = 'https://ponosgames.com/information/appli/battlecats/stage/img/enemy/enemy_icon_' + ss + '.png';
+		img.src = '/data/enemy/' + ss + 'enemy_icon_' + ss + '.png';
 		img.onerror = function(event) {
-			event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
+			event.currentTarget.src = '/data/enemy/' + ss + '/edi_' + ss + '.png';
 		}
 		a.href = './enemy.html?id=' + (theForm.id - 2).toString();
 		a.appendChild(img);

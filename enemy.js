@@ -84,9 +84,9 @@ function renderTable(E) {
 	}
 	document.getElementById('mult').innerText = '倍率: ' + my_mult.toString() + '%';
 	my_mult *= 0.01;
-	chs[0].children[0].children[0].src = 'https://ponosgames.com/information/appli/battlecats/stage/img/enemy/enemy_icon_' + ss + '.png';
+	chs[0].children[0].children[0].src = '/data/enemy/' + ss + 'enemy_icon_' + ss + '.png';
 	chs[0].children[0].children[0].onerror = function(event) {
-		event.currentTarget.src = 'data/enemy/' + ss + '/edi_' + ss + '.png';
+		event.currentTarget.src = '/data/enemy/' + ss + '/edi_' + ss + '.png';
 	}
 	chs[0].children[2].innerText = ~~(E.hp * my_mult);
 	chs[0].children[4].innerText = [E.atk * atk_mag, E.atk1 * atk_mag, E.atk2 * atk_mag].filter(x => x).map(x => ~~x).join('/');
