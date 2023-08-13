@@ -38,17 +38,14 @@ body * {
 	color: var(--color) !important;
 	background-color: var(--bg) !important;
 }
-a, a * {
+a, a:visited {
 	color: var(--acolor) !important;
 	background-color: var(--abg) !important;
 }
-a:hover,a:hover *,a:visited:hover,a:visited:hover *,span[onclick]:hover,div[onclick]:hover,[role="link"]:hover,[role="link"]:hover *,[role="button"]:hover *,[role="menuitem"]:hover,[role="menuitem"]:hover *,.link:hover,.link:hover * {
+a:hover {
 	color: var(--ahover) !important;
 }
-a:visited,a:visited * {
-	color: var(--avisited) !important;
-}
-h1,h2,h3,h4,h5,h6,strong,[id*="headline"],[class*="headline"],[id*="header"],[class*="header"],[class*="header"] td {
+h1,h2,h3 {
 	color: var(--hcolor) !important;
 }
 table {

@@ -11,7 +11,7 @@ if (q_id < 0 || isNaN(q_id)) {
 }
 const img = document.getElementById('eicon');
 const ss = t3str(q_id);
-img.src = '/data/enemy/' + ss + 'enemy_icon_' + ss + '.png';
+img.src = '/data/enemy/' + ss + '/enemy_icon_' + ss + '.png';
 img.onerror = function() {
   document.getElementById('eicon').src = '/data/enemy/' + ss + '/edi_' + ss + '.png';
 }

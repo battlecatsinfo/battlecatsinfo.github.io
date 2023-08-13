@@ -9,7 +9,7 @@ var _eggs = null;
 var enemy_descs = null;
 var rwMap;
 var tfMap;
-const BC_VER = 120515;
+const BC_VER = 120516;
 const loader_text = document.getElementById('loader-text');
 var def_lv;
 var plus_lv;
@@ -676,7 +676,7 @@ case 13:
 	if (this.data[31]) {
 		this.ab[AB_CRIT][0] += talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1);
 	} else {
-		this.ab[AB_CRIT] = talent[2];
+		this.ab[AB_CRIT] = [talent[2]];
 	}
 	break;
 case 14:

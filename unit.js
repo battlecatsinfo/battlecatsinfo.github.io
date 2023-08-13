@@ -355,7 +355,7 @@ function renderForm(form) {
 	const info = my_cat.info;
 	if (level_count == 2 && info.upReqs != undefined) {
 		const container = document.createElement('table');
-		container.classList.add('.w3-table', 'w3-centered', 'fruit-table');
+		container.classList.add('.w3-table', 'w3-centered', 'fruit');
 		container.style.margin = '0px auto';
 		const tr0 = document.createElement('tr');
 		const tr1 = document.createElement('tr');
@@ -365,11 +365,9 @@ function renderForm(form) {
 		tr0.appendChild(td);
 		for (const r of info.upReqs) {
 			const img = new Image(128, 128);
-			img.classList.add('fruit');
 			const div = document.createElement('td');
 			div.style.width = '128px';
 			var p = document.createElement('p');
-			p.classList.add('fruit');
 			if (r[1]) {
 				img.src = './data/page/catfruit/gatyaitemD_' + r[1].toString() + '_f.png';
 				p.innerText = 'X' + r[0].toString();

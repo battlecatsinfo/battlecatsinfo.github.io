@@ -54,18 +54,19 @@ pre {
   transform-origin: 0 0;
   transform: rotate(45deg);
 }
-.fruit {
-  background-color: white;
-  border-radius: 5px;
-}
-table.fruit-table {
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  border: 10px solid #f1f1f1;
-}
 .w3-table td {
   padding: 7px 30px;
   border: #cfcfcf 1px solid;
+}
+.fruit tr, .fruit {
+  background-color: #f1f1f1 !important;
+}
+[data-theme='dark'] .fruit tr, [data-theme='dark'] .fruit {
+  background-color: inherit !important;
+}
+.fruit td { padding:0; }
+.fruit {
+  border-radius: 5px;
 }
 table.tcost {
   width: initial;
