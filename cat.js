@@ -229,10 +229,10 @@ function t3str(x) {
 	return s;
 }
 function numStr(num) {
-	return parseFloat(num.toFixed(2)).toString();
+	return (Math.round((num + Number.EPSILON) * 100) / 100).toString();
 }
 function numStrT(num) {
-	return parseFloat((num / 30).toFixed(2)).toString() + '秒';
+	return (Math.round(((num / 30) + Number.EPSILON) * 100) / 100).toString() + '秒';
 }
 function combineChances(count, chance) {
 	let x = 1;

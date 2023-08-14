@@ -22,28 +22,26 @@ const cat_icons = document.getElementById('cat-icons');
 const unit_content = document.getElementById('unit-content');
 function getCombinations(arr)
 {
+	if (!arr.length) return [];
 	const combi = [];
-	let temp = [];
-	const slent = Math.pow(2, arr.length);
-
+	var temp;
+	const slent = 2 << arr.length - 1;
 	for (var i = 0; i < slent; i++)
 	{
     	temp = [];
     	for (var j = 0; j < arr.length; j++)
-    	{
-        	if ((i & Math.pow(2, j)))
-        	{
+        	if (i & (j ? (2 << j - 1) : 1))
             	temp.push(arr[j]);
-        	}
-    	}
-    	if (temp.length > 0)
-    	{
+    	if (temp.length)
         	combi.push(temp);
-    	}
 	}
 	return combi;
 }
 function getAtk(line, theATK, parent, first, trait, plus, dps) {
+	function mul(arr, s) {
+		for (let i = 0;i < arr.length;++i)
+			arr[i] *= s;
+	}
 	const lines = [];
 	var spec = false;
 	var t_ef = false;
@@ -54,87 +52,87 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 		case AB_WAVE:
 			lines.push('波動');
 			if (dps)
-				theATK *= 1 + ab[1] / 100;
+				mul(theATK, 1 + ab[1] / 100);
 			else
-				theATK += theATK;
+				mul(theATK, 2);
 			break;
 		case AB_MINIWAVE:
 			if (dps)
-				theATK *= 1 + ab[1] / 500;
+				mul(theATK, 1 + ab[1] / 500);
 			else
-				theATK *= 1.2;
+				mul(theATK, 1.2);
 			lines.push('小波動');
 			break;
 		case AB_VOLC:
 			if (dps)
-				theATK *= 1 + (ab[5] * ab[1] / 100);
+				mul(theATK, 1 + ab[5] * ab[1] / 100);
 			else
-				theATK *= 1 + ab[5];
+				mul(theATK, 1 + ab[5]);
 			lines.push('烈波');
 			break;
 		case AB_MINIVOLC:
 			if (dps)
-				theATK *= 1 + (ab[5] * ab[1] / 500);
+				mul(theATK,  1 + ab[5] * ab[1] / 500);
 			else
-				theATK *= 1 + ab[5] * 0.2;
+				mul(theATK, 1 + ab[5] * 0.2);
 			lines.push('小烈波');
 			break;
 		case AB_GOOD:
 			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 			treasure = spec ? first : (trait & trait_treasure);
-			theATK *= (treasure ? 1.8 : 1.5);
+			mul(theATK,  treasure ? 1.8 : 1.5);
 			lines.push('善攻');
 			t_ef = true;
 			break;
 		case AB_CRIT:
 			if (dps)
-				theATK += theATK * (ab[1] / 100);
+				mul(theATK, 1 + ab[1] / 100);
 			else
-				theATK *= 2;
+				mul(theATK, 2);
 			lines.push('爆');
 			break;
 		case AB_STRONG:
-			theATK *= (1 + (ab[2] / 100));
+			mul(theATK, 1 + ab[2] / 100);
 			lines.push('增攻');
 			break;
 		case AB_S:
 			if (dps)
-				theATK += theATK * ((ab[1] * ab[2]) / 10000);
+				mul(theATK, 1 + ab[1] * ab[2] / 10000);
 			else
-				theATK *= 1 + (ab[2] / 100);
+				mul(theATK, 1 + ab[2] / 100);
 			lines.push('渾身');
 			break;
 		case AB_MASSIVE:
 			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 			treasure = spec ? first : (trait & trait_treasure);
-			theATK *= (treasure ? 4 : 3);
+			mul(theATK, treasure ? 4 : 3);
 			lines.push('大傷');
 			t_ef = true;
 			break;
 		case AB_MASSIVES:
 			spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 			treasure = spec ? first : (trait & trait_treasure);
-			theATK *= (treasure ? 6 : 5)
+			mul(theATK, treasure ? 6 : 5);
 			lines.push('極傷');
 			t_ef = true;
 			break;
 		case AB_EKILL:
 			lines.push('使徒');
-			theATK *= 5;
+			mul(theATK, 5);
 			eva_ef = true;
 			break;
 		case AB_WKILL:
-			theATK *= 5;
+			mul(theATK, 5);
 			lines.push('魔女');
 			eva_ef = true;
 			break;
 		case AB_BSTHUNT:
-			theATK *= 2.5;
+			mul(theATK, 2.5);
 			lines.push('超獸');
 			t_ef = true;
 			break;
 		case AB_BAIL:
-			theATK *= 1.6;
+			mul(theATK, 1.6);
 			lines.push('超生命體');
 			t_ef = true;
 			break;
@@ -143,11 +141,14 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	if (eva_ef && t_ef) return false;
 	let s = lines.join(' • ');
 	s += ':';
-	const atks = plus ? ('+' + (~~theATK).toString()) : ((~~theATK).toString());
-	s += atks;
+	let atkstr = '';
+	if (plus)
+		atkstr += '+';
+	atkstr += theATK.map(x => ~~x).join('/');
+	s += atkstr;
 	if (spec) {
 		if (!first) {
-			parent.appendChild(document.createTextNode('/' + atks + '(' + get_trait_short_names(trait & trait_no_treasure) + ')'));
+			parent.appendChild(document.createTextNode('/' + atkstr + '(' + get_trait_short_names(trait & trait_no_treasure) + ')'));
 			parent.appendChild(document.createElement('br'));
 			return;
 		}
@@ -159,17 +160,17 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	parent.appendChild(document.createElement('br'));
 	return false;
 }
-function getAtkString(form, atk, abs, trait, level, parent, plus, dps=false) {
-	atk = ~~((~~(Math.round(atk * getLevelMulti(level)) * 2.5)) * form.atkM);
+function getAtkString(form, atks, abs, trait, level, parent, plus, dps=false) {
+	atks = atks.map(x => ~~((~~(Math.round(x * getLevelMulti(level)) * 2.5)) * form.atkM));
 	parent.innerText = '';
 	const Cs = getCombinations(Object.entries(abs).filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
-	parent.appendChild(document.createTextNode(plus ? ('+' + (~~atk).toString()) : (~~atk).toString()));
+	const first = atks.join('/');
+	parent.appendChild(document.createTextNode(plus ? '+' + first : first));
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)
-		getAtk(line, atk, parent, true, trait, plus, dps) && getAtk(line, atk, parent, false, trait, plus, dps);
-	if (abs.hasOwnProperty(AB_ATKBASE)) {
-		parent.appendChild(document.createTextNode(`城堡:` + (~~(atk * 4)).toString()));
-	}
+		getAtk(line, atks, parent, true, trait, plus, dps) && getAtk(line, atks, parent, false, trait, plus, dps);
+	if (abs.hasOwnProperty(AB_ATKBASE))
+		parent.appendChild(document.createTextNode(`城堡:` + atks.join('/')));
 }
 function getHp(line, theHP, parent, first, trait, plus) {
 	const lines = [];
@@ -275,14 +276,14 @@ function updateValues(form, tbl) {
 	for (let i = 0;i < 5;++i)
 		getHpString(form, hppkb, form.ab, form.trait, levels[i], HPPKBs[i + 1]);
 	getHpString(form, hppkb * 0.2, form.ab, form.trait, 1, HPPKBs[6], true);
-	const totalAtk = form.atk + form.atk1 + form.atk2;
+	const atks = [form.atk, form.atk1, form.atk2].filter(x => x);
 	for (let i = 0;i < 5;++i)
-		getAtkString(form, totalAtk, form.ab, form.trait, levels[i], ATKs[i + 1], false);
-	getAtkString(form, totalAtk * 0.2, form.ab, form.trait, 1, ATKs[6], true);
+		getAtkString(form, atks, form.ab, form.trait, levels[i], ATKs[i + 1], false);
 	const attackS = form.attackF / 30;
 	for (let i = 0;i < 5;++i)
-		getAtkString(form, totalAtk/attackS, form.ab, form.trait, levels[i], DPSs[i + 1], false, true);
-	getAtkString(form, (totalAtk * 0.2)/attackS, form.ab, form.trait, 1, DPSs[6], true, true);
+		getAtkString(form, atks.map(x => x / attackS), form.ab, form.trait, levels[i], DPSs[i + 1], false, true);
+	getAtkString(form, atks.map(x => x * 0.2), form.ab, form.trait, 1, ATKs[6], true);
+	getAtkString(form, atks.map(x => x * 0.2 / attackS), form.ab, form.trait, 1, DPSs[6], true, true);
 	chs[6].children[1].innerText = numStrT(form.tba);
 	chs[6].children[3].innerText = numStrT(form.backswing);
 	chs[5].children[1].innerText = numStrT(form.attackF).replace('秒', '秒/下');
@@ -302,6 +303,7 @@ function updateValues(form, tbl) {
 	const specials = chs[9].children[1];
 	const lds = form.lds;
 	const ldr = form.ldr;
+	specials.textContent = '';
 	if (form.atkType & ATK_KB_REVENGE) {
 		const p = document.createElement('p');
 		p.innerText = '擊退反擊';
@@ -309,7 +311,7 @@ function updateValues(form, tbl) {
 	}
 	if (form.atk1 || form.atk2) {
 		const atkNum = form.atk2 ? 3 : 2;
-		const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => ((x / totalAtk)*100).toFixed(0)+'%');
+		const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => ((x / (form.atk + form.atk1 + form.atk2))*100).toFixed(0)+'%');
 		const p = document.createElement('p');
 		p.innerText = `${atkNum}回連續攻擊(傷害${atksPre.join('-')})` + getAbiString(form.abi);
 		specials.appendChild(p);
@@ -465,7 +467,7 @@ function renderForm(form) {
 	makeTd(tbodytr8);
 	makeTd(tbodytr9, '屬性').style.textAlign = 'center';
 	makeTd(tbodytr9).colSpan = 6;
-	makeTd(tbodytr10, '抗性');
+	makeTd(tbodytr10, '抗性').style.textAlign = 'center';
 	makeTd(tbodytr10).colSpan = 6;
 	makeTd(tbodytr11, '能力').style.textAlign = 'center';
 	makeTd(tbodytr11).colSpan = 6;

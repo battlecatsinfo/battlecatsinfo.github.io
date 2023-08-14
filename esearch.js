@@ -47,7 +47,7 @@ function renderTable(forms, page = 1) {
 	last_forms = forms;
 	if (forms.length == 0) {
 		tbody.innerHTML = 
-'<tr><td colSpan="13">沒有符合調件的貓咪!</td></tr>';
+'<tr><td colSpan="13">沒有符合調件的敵人!</td></tr>';
 		return;
 	}
 	if (!pages_a.children.length) {

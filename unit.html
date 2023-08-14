@@ -15,7 +15,7 @@
 </head>
 <body style="overflow: scroll;position: relative;">
 <style>
-body { font-size: min(18px, 1.7vw); }
+body { font-size: max(18px, 1vw); }
 .topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
 .topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
 .topnav a.active { background-color: #f2bb00 !important; color: white !important; }
@@ -23,7 +23,7 @@ body { font-size: min(18px, 1.7vw); }
 .w3-dropdown-content > a { color: var(--color) !important;  }
 .bold-large { font-size: 1.2em; }
 .w3-table { width: initial;margin: 0 auto;margin-bottom: 60px; }
-.w3-table td { vertical-align: middle;padding: 9px 0px;min-width: 120px; }
+.w3-table td { vertical-align: middle;padding: 9px 2px;min-width: 120px; }
 .o-selected { background-color: #7fdbff !important; }
 .modd { background-color: var(--bgd) !important; }
 .w3-overlay { background-color: rgba(0,0,0,0.5) !important; }
@@ -49,7 +49,7 @@ body { font-size: min(18px, 1.7vw); }
   </div>
 <script src="dracula.js"></script>
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="overlay"></div>
-<nav class="w3-sidebar w3-collapse w3-animate-left" style="z-index:3;width:200px;font-size:min(20px, 2vw);" id="sidebar">
+<nav class="w3-sidebar w3-collapse w3-animate-left" style="z-index:3;width:200px;font-size: max(20px, 1.2vw);" id="sidebar">
   <div class="w3-container">
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu"><img src="close_icon.png"></a>
   </div>

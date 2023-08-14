@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/dracula.css">
+	<link rel="stylesheet" type="text/css" href="/w3.css">
+	<title>ImgCut</title>
+</head>
+<body>
+<style>
+html, body { width:100%;padding:0;margin:0; }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+.topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
+#imgcut {
+	margin: 2vw;
+	background-size: 40px 40px;
+ 	background-image:
+	linear-gradient(to right, grey 1px, transparent 1px),
+	linear-gradient(to bottom, grey 1px, transparent 1px);
+	width: 60%;
+}
+</style>
+<div class="topnav">
+    <a href="/index.html">主頁</a>
+    <a href="/search.html">貓咪</a>
+    <a href="/esearch.html">敵人</a>
+    <a href="/gachas.html">轉蛋</a>
+    <a href="/stage.html" class="active">關卡</a>
+    <a href="/music.html">音效</a>
+    <a href="/reward_all.html">獎勵</a>
+    <div class="w3-dropdown-hover"><button class="w3-button" style="color: white !important;padding: 0 3px !important;"><img src="/theme.svg" style="background-color: initial !important;">Theme</button>
+    <div class="w3-dropdown-content w3-bar-block">
+          <a href="#" id="theme-system" class="w3-bar-item w3-button">系統</a>
+          <a href="#" id="theme-dark" class="w3-bar-item w3-button">深色</a>
+          <a href="#" id="theme-light" class="w3-bar-item w3-button">白色</a>
+        </div>
+        </div>
+</div><script src="/dracula.js"></script>
+<canvas id="imgcut"></canvas>
+<table class="w3-table w3-centered w3-hoverable w3-border w3-bordered" style="width: 90%;margin: 0 auto;">
+	<thead><tr><td>id</td><td>x</td><td>y</td><td>寬度</td><td>高度</td></tr></thead>
+	<tbody id="edit"></tbody>
+</table>
+<script src="imgcut.js"></script>
+</body>
+</html>
