@@ -9,24 +9,45 @@ const preview = document.getElementById('preview');
 const pctx = preview.getContext('2d');
 var last_t;
 var cut;
+var imgloaded = false;
 
 img.onload = function() {
   canvas.width = this.naturalWidth;
   canvas.height = this.naturalHeight;
-  ctx.drawImage(this, 0, 0);
   ctx.drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight);
+  imgloaded = true;
 };
-imgfile && (img.src = imgfile);
-cutfile && fetch(cutfile)
-.then(res => res.text())
-.then(text => {
-  cut = new ImgCut(text);
-  for (let i = 0;i < cut.cuts.length;++i)
-    edit.appendChild(createLine(cut.cuts[i], i));
-});
-
+img.onerror = function() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillText("導入圖片失敗", canvas.width / 2, canvas.height / 2);
+  imgloaded = false;
+}
+if (imgfile) {
+  img.src = imgfile;
+} else {
+  ctx.font = "30px serif";
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText("導入圖片以開始", canvas.width / 2, canvas.height / 2);
+}
+if (cutfile) {
+  fetch(cutfile)
+  .then(res => res.text())
+  .then(text => {
+    cut = new ImgCut(text);
+    for (let i = 0;i < cut.cuts.length;++i)
+      edit.appendChild(createLine(cut.cuts[i], i));
+  });
+} else {
+  cutfile = '';
+}
 class ImgCut {
   constructor(text) {
+    if (!text) {
+      this.name = '';
+      this.cuts = [];
+      return;
+    }
     const arr = text.replaceAll('\r', '').split('\n');
     this.name = arr[2];
     const L = parseInt(arr[3]);
@@ -52,7 +73,9 @@ class ImgCut {
     }
   }
 }
+cut = new ImgCut();
 function draw() {
+  if (!imgloaded) return;
   let i = 0;
   const nodes = edit.getElementsByClassName('ihover');
   if (nodes.length)
@@ -186,6 +209,7 @@ function createLine(c, i) {
   return tr;
 }
 function exportaimg() {
+  if (!imgloaded) return;
   var a = document.createElement("a");
   a.href = img.src;
   a.click();
@@ -198,6 +222,7 @@ function exportcut() {
   a.click();
 }
 function exportimga() {
+  if (!imgloaded) return;
   function download(i) {
     const c = cut.cuts[i];
     if (!c) return;
@@ -214,6 +239,7 @@ function exportimga() {
   download(0);
 }
 function exportimg() {
+  if (!imgloaded) return;
   let i = 0;
   const nodes = edit.getElementsByClassName('ihover');
   if (nodes.length)
@@ -291,6 +317,7 @@ function importImgU() {
   let url = prompt('圖片網址', '/data/page/img015.png');
   if (url) {
     img.src = url;
+    imgfile = url;
     const u = new URL(location.href);
     u.searchParams.set('imgfile', url);
     history.pushState({}, "", u);
@@ -322,10 +349,11 @@ function importCutU() {
       edit.textContent = '';
       for (let i = 0;i < cut.cuts.length;++i)
         edit.appendChild(createLine(cut.cuts[i], i));
+      cutfile = url;
+      const u = new URL(location.href);
+      u.searchParams.set('cutfile', url);
+      history.pushState({}, "", u);
     });
-    const u = new URL(location.href);
-    u.searchParams.set('cutfile', url);
-    history.pushState({}, "", u);
   }
 }
 document.onpaste = function (event) {
