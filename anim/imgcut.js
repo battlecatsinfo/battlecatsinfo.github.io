@@ -10,6 +10,21 @@ const pctx = preview.getContext('2d');
 var last_t;
 var cut;
 
+img.onload = function() {
+  canvas.width = this.naturalWidth;
+  canvas.height = this.naturalHeight;
+  ctx.drawImage(this, 0, 0);
+  ctx.drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight);
+};
+imgfile && (img.src = imgfile);
+cutfile && fetch(cutfile)
+.then(res => res.text())
+.then(text => {
+  cut = new ImgCut(text);
+  for (let i = 0;i < cut.cuts.length;++i)
+    edit.appendChild(createLine(cut.cuts[i], i));
+});
+
 class ImgCut {
   constructor(text) {
     const arr = text.replaceAll('\r', '').split('\n');
@@ -170,27 +185,6 @@ function createLine(c, i) {
   }
   return tr;
 }
-(function() {
-  ctx.strokeStyle = '#000000';
-  img.onload = function() {
-    canvas.width = this.naturalWidth;
-    canvas.height = this.naturalHeight;
-    ctx.drawImage(this, 0, 0);
-    ctx.drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight);
-  };
-  imgfile && (img.src = imgfile);
-  fetch(cutfile)
-  .then(res => res.text())
-  .then(text => {
-    cut = new ImgCut(text);
-    for (let i = 0;i < cut.cuts.length;++i)
-      edit.appendChild(createLine(cut.cuts[i], i));
-  });
-  document.getElementById('color').oninput = function() {
-    ctx.strokeStyle = this.value;
-    draw();
-  }
-})();
 function exportaimg() {
   var a = document.createElement("a");
   a.href = img.src;
@@ -333,4 +327,41 @@ function importCutU() {
     u.searchParams.set('cutfile', url);
     history.pushState({}, "", u);
   }
+}
+document.onpaste = function (event) {
+    const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    for (var index in items) {
+        const item = items[index];
+        if (item.kind === 'file') {
+            var blob = item.getAsFile();
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                img.src = event.target.result;
+                imgfile = 'clipboard';
+            }; 
+            reader.readAsDataURL(blob);
+            return;
+        }
+    }
+};
+async function pasteImg() {
+  const items = await navigator.clipboard.read();
+  for (const c of items) {
+      const imageTypes = c.types.filter(x => x.startsWith('image/'));
+      for (const t of imageTypes) {
+        const blob = await c.getType(t);
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            img.src = event.target.result;
+            imgfile = 'clipboard';
+        }; 
+        reader.readAsDataURL(blob);
+        return;
+      }
+  }
+}
+const color = document.getElementById('color');
+function scolor() {
+  ctx.strokeStyle = color.value;
+  draw();
 }

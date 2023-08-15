@@ -350,8 +350,35 @@ const mapConditions = {
     "stage":15
       }
 }
+function loadStage() {
+  return new Promise(resolve => {
+    let req = indexedDB.open("stage", 1);
+    req.onupgradeneeded = function(event) {
+      const db = event.target.result;
+      let store = db.createObjectStore('data', {"keyPath": "name"});
+      store.createIndex("data", '', {"unique": false});
+    }
+    req.onsuccess = function(event) {
+      const db = event.target.result;
+      db.transaction('data').objectStore('data').get('stages').onsuccess = function(event) {
+        const res = event.target.result;
+        if (res)
+          return resolve(res.data);
+        fetch('/stages.zip').then(res => res.arrayBuffer()).then(buffer => {
+          const tx = db.transaction(["data"], "readwrite");
+          const store = tx.objectStore("data");
+          store.put({'name': 'stages', 'data': buffer});
+          tx.oncomplete = function() {
+            db.close();
+          }
+          resolve(buffer);
+        });
+      }
+    }
+  });
+}
 fetch('enemyName.json').then(res => res.json()).then(json => enemy_names = json).then(function() {
-fetch('/stages.zip').then(res => res.arrayBuffer()).then(function(zipData) {
+loadStage().then(function(zipData) {
   BrowserFS.configure({
     fs: "ZipFS",
     options: { 'zipData': Buffer.from(zipData) }

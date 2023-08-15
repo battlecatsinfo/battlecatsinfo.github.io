@@ -65,6 +65,7 @@ canvas {
     <div class="w3-dropdown-content w3-bar-block w3-border">
       <a href="#" class="w3-bar-item w3-button" onclick="importImg()">選擇檔案</a>
       <a href="#" class="w3-bar-item w3-button" onclick="importImgU()">輸入圖片連結</a>
+      <a href="#" class="w3-bar-item w3-button" onclick="pasteImg()">剪貼簿:Ctrl+V</a>
     </div>
   </div>
   <input type="file" style="display: none;" name="file" id="file">
@@ -75,7 +76,7 @@ canvas {
       <a href="#" class="w3-bar-item w3-button" onclick="importCutU()">輸入ImgCut連結</a>
     </div>
   </div>
-<label for="color" class="w3-orange w3-button">框顏色</label><input type="color" name="color" id="color" style="display: none;">
+<label for="color" class="w3-orange w3-button">框顏色</label><input onchange="scolor()" type="color" name="color" id="color" style="display: none;">
 <button onclick="exportimg()" class="w3-button w3-teal">下載部件</button>
 <button onclick="exportimga()" class="w3-button w3-green">下載全部部件</button>
 <button onclick="exportaimg()" class="w3-button" style="background-color: sienna !important;">下載整張圖片</button>
