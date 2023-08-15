@@ -984,8 +984,6 @@ function renderCombos() {
 	}
 }
 function renderUintPage() {
-	const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
-	const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
 	for (let form of my_cat.forms) {
 		const img = new Image();
 		img.src = form.icon;
@@ -1008,22 +1006,30 @@ function renderUintPage() {
 		}
 	}
 	renderExtras();
-	document.getElementById('open-db').href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';
-	document.getElementById('ch_name').innerText = cat_names;
-	document.getElementById('jp_name').innerText = cat_names_jp;
-	document.getElementById('show-xp-graph').href = './xpgraph.html?data=' + btoa(my_cat.info.xp_data);
-	document.title = cat_names.replaceAll(' → ', ' ') + ' - 貓咪資訊';
 	renderCombos();
 }
 loadCat(my_id)
 .then(res => {
 	my_cat = res;
 	useCurve(my_id);
+	const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
+	const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
+	document.getElementById('ch_name').innerText = cat_names;
+	document.getElementById('jp_name').innerText = cat_names_jp;
 	renderUintPage();
 	document.getElementById('loader').style.display = 'none';
 	loader_text.style.display = 'none';
 	document.getElementById('main').style.display = 'block';
-	document.getElementById('star-cat').onclick = function() {
+	document.title = cat_names.replaceAll(' → ', ' ') + ' - 貓咪資訊';
+	const abar = document.getElementById('abar').children;
+	abar[1].href = 'https://battlecats-db.com/unit/' + t3str(my_id+1) + '.html';
+	abar[2].href = './levelgraph1.html?id=' + my_id.toString();
+	abar[3].href = './levelgraph2.html?id=' + my_id.toString();
+	abar[4].href = './levelgraph3.html?id=' + my_id.toString();
+	abar[5].href = './levelgraph4.html?id=' + my_id.toString();
+	abar[6].href = './xpgraph.html?data=' + btoa(my_cat.info.xp_data);
+	const s = t3str(my_id);
+	abar[7].onclick = function() {
 		var oldList = localStorage.getItem('star-cats');
 		if (oldList == null)
 			oldList = [];
@@ -1032,10 +1038,24 @@ loadCat(my_id)
 		oldList.push({'id': my_id, 'icon': my_cat.forms[0].icon, 'name': my_cat.forms[0].name});
 		localStorage.setItem('star-cats', JSON.stringify(oldList));
 	};
-	document.getElementById('show-level-graph1').href = './levelgraph1.html?id=' + my_id.toString();
-	document.getElementById('show-level-graph2').href = './levelgraph2.html?id=' + my_id.toString();
-	document.getElementById('show-level-graph3').href = './levelgraph3.html?id=' + my_id.toString();
-	document.getElementById('show-level-graph4').href = './levelgraph4.html?id=' + my_id.toString();
+	for (let i = 0;i < my_cat.forms.length;++i) {
+		const a = document.createElement('a');
+		a.classList.add('w3-bar-item');
+		a.innerText = 'ImgCut(' + (i + 1).toString() + '階)';
+		let imgfile;
+		let cutfile;
+		if (my_cat.forms[i].icon.startsWith('./data/img/m/')) {
+			const c = my_cat.forms[i].icon.slice(13, 16);
+			imgfile = `/data/img/m/${c}/${c}_m.png`;
+			cutfile = `/data/img/m/${c}/${c}_m.imgcut`;
+		} else {
+			const f = 'fcs'[i];
+			imgfile = `/data/unit/${s}/${f}/${s}_${f}.png`;
+			cutfile = `/data/unit/${s}/${f}/${s}_${f}.imgcut`;
+		}
+		a.href = '/anim/imgcut.html?cutfile=' + cutfile + '&imgfile=' + imgfile;
+		abar[0].parentNode.appendChild(a);
+	}
 });
 const overlay = document.getElementById('overlay');
 const sidebar = document.getElementById('sidebar');

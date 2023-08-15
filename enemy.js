@@ -179,6 +179,10 @@ function renderTable(E) {
 		url.searchParams.set('mag', my_mult);
 	document.getElementById('open-db').href = url.href;
 	document.getElementById('search-appear').href = '/appear.html?id=' + (my_id - 2).toString();
+	const m = t3str(my_id - 2);
+	let imgfile = `/data/enemy/${m}/${m}_e.png`;
+	let cutfile = `/data/enemy/${m}/${m}_e.imgcut`;
+	document.getElementById('open-imgcut').href = `/anim/imgcut.html?cutfile=${cutfile}&imgfile=${imgfile}`;
 }
 loadEnemy(my_id)
 .then(E => {
