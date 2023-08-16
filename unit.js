@@ -168,9 +168,9 @@ function getAtkString(form, atks, abs, trait, level, parent, plus, dps=false) {
 	parent.appendChild(document.createTextNode(plus ? '+' + first : first));
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)
-		getAtk(line, atks, parent, true, trait, plus, dps) && getAtk(line, atks, parent, false, trait, plus, dps);
+		getAtk(line, new Float64Array(atks), parent, true, trait, plus, dps) && getAtk(line, new Float64Array(atks), parent, false, trait, plus, dps);
 	if (abs.hasOwnProperty(AB_ATKBASE))
-		parent.appendChild(document.createTextNode(`城堡:` + atks.join('/')));
+		parent.appendChild(document.createTextNode(`城堡:` + atks.map(x => x * 4).join('/')));
 }
 function getHp(line, theHP, parent, first, trait, plus) {
 	const lines = [];
