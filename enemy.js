@@ -36,8 +36,8 @@ function createAbIcons(E, parent) {
 		case AB_STRONG: write(`血量${d[0]}%以下攻擊力增加${d[1]}倍`, 'strong'); break;
 		case AB_LETHAL: write(`${d[0]}%機率死後復活`, 'lethal'); break;
 		case AB_WAVES: write(`波動滅止`, 'waves'); break;
-		case AB_BURROW: write(`進入射程範圍時鑽地${numStr(d[1])}距離(${d[0]}次)`); break;
-		case AB_REVIVE: write(`擊倒後${numStrT(d[1])}以${d[2]}%血量復活(${d[0]}次)`); break;
+		case AB_BURROW: write(`進入射程範圍時鑽地${numStr(d[1])}距離(${d[0] == -1 ? '無限' : d[0]}次)`); break;
+		case AB_REVIVE: write(`擊倒後${numStrT(d[1])}以${d[2]}%血量復活(${d[0] == -1 ? '無限' : d[0]}次)`); break;
 		case AB_WARP: write(`${d[0]}%機率將向目標${d[2] < 0 ? '前' : '後'}傳送${Math.abs(d[2])}距離持續${numStrT(d[1])}`, 'warp'); break;
 		case AB_CURSE: write(`${d[0]}%機率詛咒持續${numStrT(d[1])}，控場覆蓋率${numStr(d[2])}%`, 'curse'); break;
 		case AB_S: write(`${d[0]}%機率渾身一擊(攻擊力增加${d[1]}%倍)`, 's'); break;
