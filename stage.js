@@ -710,7 +710,7 @@ M3.oninput = function() {
       url.searchParams.set('star', i+1);
       a.href = url.href;
       if ((!star && !i) || (star -1 == i)) {
-        a.style.color = '#a5652a';
+        a.style.setProperty('color', '#ffd53a', 'important');
       }
       th.appendChild(a);
     }
@@ -722,23 +722,23 @@ M3.oninput = function() {
     var s;
     const tr = document.createElement('tr');
     const th = document.createElement('th');
-    tr.style.fontSize = '15px';
+    tr.style.fontSize = 'larger';
     th.colSpan = 6;
     if (info2.rM) {
       const span = document.createElement('div');
       span.innerText = ["過關獎勵將會在再次出現時重置", "清除狀況將會在再次出現時重置", "可過關次數將會在再次出現時重置"][info2.rM - 1];
-      span.style.color = 'brown';
+      span.style.setProperty('color', '#3F51B5', 'important');
       th.appendChild(span);
     }
     if (info1.hasOwnProperty('gc') || info2.hasOwnProperty('gc')) {
       const span = document.createElement('div');
-      span.style.color = 'darkgoldenrod';
+      span.style.setProperty('color', '#3F51B5', 'important');
       span.innerText = '掃蕩不可';
       th.appendChild(span);
     }
     if (info3.hasOwnProperty('nC')) {
       const span = document.createElement('div');
-      span.style.color = '#ff634e';
+      span.style.setProperty('color', '#3F51B5', 'important');
       span.innerText = '接關不可';
       th.appendChild(span);
     }
@@ -750,7 +750,7 @@ M3.oninput = function() {
     }
     if (info2.hasOwnProperty('hC')) {
       const span = document.createElement('div');
-      span.style.color = '#ff634e';
+      span.style.setProperty('color', '#3F51B5', 'important');
       span.innerText = '全破後隱藏';
       th.appendChild(span);
     }
@@ -895,9 +895,9 @@ M3.oninput = function() {
           lim.combine(l);
     var limits = [];
     if (lim.rare)
-      limits.push('稀有度：' + getRarityString(lim.rare));
+      limits.push('稀有度:' + getRarityString(lim.rare));
     if (lim.num)
-      limits.push('最多可出戰角色數量：' + lim.num);
+      limits.push('最多可出戰角色數量:' + lim.num);
     if (lim.max && lim.min)
       limits.push(`生產成本${lim.min}元與${lim.max}元之間`);
     else if (lim.max)
@@ -905,16 +905,16 @@ M3.oninput = function() {
     else if (lim.min)
       limits.push(`生產成本${lim.min}元以上`);
     if (lim.line)
-      limits.push('出陣列表：僅限第1頁');
+      limits.push('出陣列表:僅限第1頁');
     if (lim.group && lim.group[1].length)
-      limits.push('可出擊角色的ID: ' + lim.group[1].join(','));
+      limits.push('可出擊角色的ID: ' + lim.group[1].join('/'));
     if (limits.length) {
       const tr = document.createElement('tr');
       const th = document.createElement('th');
       const div = document.createElement('div');
-      div.innerText = '出擊制限：' + limits.join('、');
-      div.style.color = '#8d5b00';
-      tr.style.fontSize = '15px';
+      div.innerText = '出擊限制：' + limits.join('、');
+      div.style.setProperty('color', '#e97c47', 'important');
+      tr.style.fontSize = 'larger';
       th.colSpan = 6;
       th.appendChild(div);
       tr.appendChild(th);
