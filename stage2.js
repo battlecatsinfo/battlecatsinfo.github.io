@@ -708,7 +708,7 @@ M3.oninput = function() {
     if (info2.rM) {
       const span = document.createElement('div');
       span.innerText = ["過關獎勵將會在再次出現時重置", "清除狀況將會在再次出現時重置", "可過關次數將會在再次出現時重置"][info2.rM - 1];
-      span.style.setProperty('color, ''#3F51B5', 'important');
+      span.style.setProperty('color', '#3F51B5', 'important');
       th.appendChild(span);
     }
     if (info1.hasOwnProperty('gc') || info2.hasOwnProperty('gc')) {
