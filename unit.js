@@ -144,7 +144,14 @@ function getAtk(line, theATK, parent, first, trait, plus, dps) {
 	let atkstr = '';
 	if (plus)
 		atkstr += '+';
-	atkstr += theATK.map(x => ~~x).join('/');
+	if (dps) {
+		let t = 0;
+		for (let x of theATK)
+			t += ~~x;
+		atkstr += t.toString();
+	} else {
+		atkstr += theATK.map(x => ~~x).join('/');
+	}
 	s += atkstr;
 	if (spec) {
 		if (!first) {
@@ -164,7 +171,14 @@ function getAtkString(form, atks, abs, trait, level, parent, plus, dps=false) {
 	atks = atks.map(x => ~~((~~(Math.round(x * getLevelMulti(level)) * 2.5)) * form.atkM));
 	parent.innerText = '';
 	const Cs = getCombinations(Object.entries(abs).filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
-	const first = atks.join('/');
+	let first;
+	if (dps) {
+		let t = 0;
+		for (let x of atks)
+			t += ~~x;
+		first = t.toString();
+	} else 
+		first = atks.join('/');
 	parent.appendChild(document.createTextNode(plus ? '+' + first : first));
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)
@@ -730,7 +744,7 @@ function getTalentInfo(talent, data) {
 		if (data[108])
 			return range('小烈波', '%', 2, 3);
 		return range2(`Lv${talent[4]}小烈波`, '%', 2, 3, talent[2]);
-	default: console.assert(false, `${talent[0]} not handled`);
+	default: console.assert(false);
 	}
 	return '???';
 }

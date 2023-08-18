@@ -356,6 +356,7 @@ function loadStage() {
     let req = indexedDB.open("stage", 1);
     req.onupgradeneeded = function(event) {
       const db = event.target.result;
+      try { db.deleteObjectStore('data'); } catch (e) { }
       let store = db.createObjectStore('data', {"keyPath": "name"});
       store.createIndex("data", '', {"unique": false});
     }

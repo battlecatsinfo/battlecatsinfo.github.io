@@ -918,7 +918,7 @@ case 65:
 		this.ab[AB_MINIVOLC] = [talent[2] + (level-1) * (talent[3] - talent[2]) / (talent[1] - 1), des1, des2, lv * 20, lv];
 	}
 	break;
-default: console.assert(false, talent[0]);
+default: console.assert(false);
 		}
 	}
 	applySuperTalents(talents, levels) {
@@ -927,7 +927,6 @@ default: console.assert(false, talent[0]);
 			if (!talents[i]) break;
 			if (talents[i + 13] != 1) continue;
 			this.applyTalent(talents.subarray(i, i + 14), levels[j++]);
-			++j;
 		}
 	}
 	applyTalents(talents, levels) {
