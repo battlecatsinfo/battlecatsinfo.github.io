@@ -612,8 +612,9 @@ function getDropData() {
     for (let x of drops)
       res.push((x[0] / 10).toFixed(0));
   } else if ((sum == drops.length && sum != -1) || info3.rand == -3) {
+    const c = Math.floor(100 / drops.length).toString();
     for (let x of drops)
-      res.push(x[0].toString());
+      res.push(c);
     return res;
   } else if (sum == 100) {
     for (let x of drops) {
