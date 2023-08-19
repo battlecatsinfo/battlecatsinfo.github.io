@@ -1,23 +1,21 @@
-## The battle cats information website
+## The Battle Cats information website
 
-### Build instruction
+### Build from source
 
-1. Download/Clone build scripts
-  https://github.com/battlecatsinfo/battlecats-scripts
-2. Make sure you have installed BCU
-3. Copy BCU's BC Data (org `folder`) to battlecats-scripts
-4. Copy BCU's `assets` folder to battlecats-scripts
-5. Clone this repo to the folder constaining battlecats-scripts
+1. Clone [build scripts](https://github.com/battlecatsinfo/battlecats-scripts)
+2. Clone [source code of this website](https://github.com/battlecatsinfo/battlecatsinfo-source)
+3. Make sure you have installed [BCU](https://github.com/battlecatsultimate/BCU-java-PC) and update to lastest version
+4. Extract BCU's org folder to battlecats-scripts
+5. Copy BCU's `assets` folder to battlecats-scripts
+6. Make a folder named `battlecatsinfo.github.io`
 
-   xxx/battlecatsinfo.github.io/
-   xxx/battlecats-scripts
+  parent/battlecatsinfo.github.io/
+  parent/battlecats-scripts
 
-6. Run makefile
+7. Run makefile
 
 ```bash
 $ make all
 $ make update
 ```
-
-7. Fork & Make a pull request
-
+8. Build source code of this website and copy to `battlecatsinfo.github.io` folder
