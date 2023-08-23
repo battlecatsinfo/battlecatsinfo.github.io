@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>角色動畫</title>      
+        <style>
+body {
+    margin: 0;
+    overflow: hidden;
+}  
+        </style>
+        <script src="gif.js"></script>
+    </head>
+    <body>
+<style>
+html, body { width: 100% !important;padding: 0 !important;margin: 0 !important;touch-action: none !important; }
+#icons img {
+    float: left !important;
+    width: min(8vw, 128px) !important;
+    height: auto !important;
+    border: 0.3vw solid transparent !important;
+}
+#icons img.active {
+    background-color: #ffe3af !important;
+    border: 0.3vw solid black !important;
+}
+input[type="range"] {
+    width: 90%;
+}
+</style>
+        <canvas id="canvas" style="position: fixed;left: 0px;right: 0px;width: 100vw !important;height: 100vh !important;margin: 0;padding: 0;z-index: 0;background: linear-gradient(#e66465, #9198e5) !important;"></canvas>
+        <script type="module" src="bundle.js"></script>
+        <div style="position: fixed;z-index: 1;top: 10px;left: 0px;width: 100%;">
+        <input type="range" min="0" max="1" step="1" value="0" id="range" name="range" style="width: 95%;margin: 0 auto;display: block;">
+        <div style="margin-left: 1vw;margin-top: 0.5vh;position: relative;">
+        <select id="animtype">
+            <option selected>移動</option>
+            <option>閒置</option>
+            <option>攻擊</option>
+            <option>擊退</option>
+        </select>
+        <input type="number" value="0" id="unitid">
+        <button id="pause">暫停</button>
+        <button id="next">下一禎</button>
+        <button id="downloadImg">下載圖片</button>
+        <button id="downloadV" data-state="0">下載Gif</button>
+        <div style="position: absolute;z-index: 1;top: 1vh;right: 0px;" id="icons">
+            <img data-i="0">
+            <img data-i="1">
+            <img data-i="2">
+        </div>
+        </div>
+        </div>
+        <div style="position: fixed;bottom: 1vh;width: 100%;left: 1vw;">
+            <label for="color1">背景顏色1</label>
+            <input type="color" value="#e66465" id="color1">
+            <label for="color1">背景顏色2</label>
+            <input type="color" value="#9198e5" id="color2">
+        </div>
+    </body>
+</html>
