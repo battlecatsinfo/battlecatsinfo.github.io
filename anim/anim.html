@@ -3,14 +3,14 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <title>角色動畫</title>      
+        <title>角色動畫</title>
+        <script src="gif.js"></script>
         <style>
 body {
     margin: 0;
     overflow: hidden;
 }  
         </style>
-        <script src="gif.js"></script>
     </head>
     <body>
 <style>
@@ -19,14 +19,16 @@ html, body { width: 100% !important;padding: 0 !important;margin: 0 !important;t
     float: left !important;
     width: min(8vw, 128px) !important;
     height: auto !important;
-    border: 0.3vw solid transparent !important;
+    border: 0.27vw solid transparent !important;
 }
 #icons img.active {
-    background-color: #ffe3af !important;
-    border: 0.3vw solid black !important;
+    background-color: #ffffff73 !important;
+    border: 0.27vw solid black !important;
 }
 input[type="range"] {
-    width: 90%;
+    margin: 0 auto;
+    display: block;
+    width: 96%;
 }
 </style>
         <canvas id="canvas" style="position: fixed;left: 0px;right: 0px;width: 100vw !important;height: 100vh !important;margin: 0;padding: 0;z-index: 0;background: linear-gradient(#e66465, #9198e5) !important;"></canvas>
@@ -40,7 +42,7 @@ input[type="range"] {
             <option>攻擊</option>
             <option>擊退</option>
         </select>
-        <input type="number" value="0" id="unitid">
+        <input type="number" value="0" id="unitid" style="width: 6vw;">
         <button id="pause">暫停</button>
         <button id="next">下一禎</button>
         <button id="downloadImg">下載圖片</button>
@@ -56,7 +58,9 @@ input[type="range"] {
             <label for="color1">背景顏色1</label>
             <input type="color" value="#e66465" id="color1">
             <label for="color1">背景顏色2</label>
-            <input type="color" value="#9198e5" id="color2">
+            <input type="color" value="#9198e5" id="color2"><br>
+            <input type="range" id="zoom" name="zoom" value="100" min="10" max="200">
+            <input type="range" id="fps" name="zoom" value="30" min="5" max="90">
         </div>
     </body>
 </html>
