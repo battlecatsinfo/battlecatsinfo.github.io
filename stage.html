@@ -98,13 +98,12 @@ a img {
         </div>
   </div>
   <table class="w3-table w3-centered"><tbody><tr><td>
-    <select onchange="optionHandler(this.value)">
+    <select oninput="location.href=this.value">
       <option value="">選擇顯示模式···</option>
       <option value="/stage.html">依ID順序</option>
       <option value="/stage2.html">依地圖分類</option>
     </select>
   </td></tr></tbody></table>
-  <script>function optionHandler(value) {window.location.assign(`${value}`);}</script>
 	<script src="dracula.js"></script>
 	<div>
 	<table class="w3-table w3-centered">

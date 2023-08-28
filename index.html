@@ -59,6 +59,18 @@
   <a href="/anim/imgcut.html">ImgCut編輯器</a>
   <a href="/anim/anim.html">檢視動畫</a>
   <a href="./savefile.html">遊戲存檔讀取</a>
+  <a href="#" onclick="Switch()">單位切換(F/秒)</a>
   </div>
+<script>
+function Switch() {
+  let x = localStorage.getItem('unit');
+  if (!x || x == 'S') {
+    localStorage.setItem('unit', 'F');
+    return alert('單位切換成「F」(幀)');
+  }
+  localStorage.setItem('unit', 'S');
+  alert('單位切換成「秒」');
+}
+</script>
 </body>
 </html>
