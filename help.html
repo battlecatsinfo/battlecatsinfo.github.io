@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html>
 <head>
   <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -9,28 +10,27 @@
   <link rel="stylesheet" type="text/css" href="w3.css">
   <title>使用說明</title>
   <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    h2, h3 { text-align: left; }
-    h1 { text-align:center;  }
-  </style>
-</head>
-<body style="padding: 50px 50px;font-size: 18px;text-align: justify;">
-<header id="title-block-header">
-<h1 class="title">使用說明</h1>
-</header>
-<style>
+html, body { width: 100%;margin:0;font-size: max(1.5vw, 12px); }
+h1 { font-size: 1.8em !important;font-weight:bold; }
+h2 { font-size: 1.4em !important;font-weight:bold; }
+h3 { font-size: 1.2em !important;font-weight:bold; }
+body { padding: 2vw; }
+code{ white-space: pre-wrap; }
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
-</style>
+  </style>
+</head>
+<body>
+<h1>使用說明</h1>
 <h2 id="篩選表達式排序表達式">篩選表達式、排序表達式</h2>
 <p>如<code>1+1</code>、<code>2*3</code>等，是用來篩選和排序貓咪的運算式，類似數學的表達式，在程式語言裡通常稱做expression。</p>
 <ul>
@@ -51,7 +51,7 @@ ul.task-list{list-style: none;}
 <h3 id="變數">變數</h3>
 <p>在上面的例子中，<code>dps</code>、<code>cd</code>、<code>range</code> 等都稱作變數，代表貓咪的某個資訊</p>
 <p>以下是可以使用的變數清單(變數不分大小寫)</p>
-<table class="w3-table w3-striped w3-centered">
+<table class="w3-table w3-striped w3-centered w3-border w3-bordered">
 <thead>
 <tr>
 <th>變數</th>
@@ -106,6 +106,16 @@ ul.task-list{list-style: none;}
 <tr>
 <td>cd</td>
 <td>再生產</td>
+</tr>
+<tr>
+<td>crit</td>
+<td>暴擊率(0~100)</td>
+</tr>
+<td>wavelv</td>
+<td>波動等級</td>
+</tr>
+<td>volclv</td>
+<td>烈波等級</td>
 </tr>
 <tr>
 <td>atktype</td>
@@ -172,7 +182,7 @@ ul.task-list{list-style: none;}
 <p>在使用 ‘tdps’ 和 ‘thp’ 時要注意<em>終結使徒</em>和<em>終結魔女</em>的加成很大，而且有些效果會疊加，如EVA零號機因<em>終結使徒</em>+<em>很耐打</em>使得 HP 乘 <code>5 * 5 = 25</code> 倍，造成破百萬的血量</p>
 <p>以上數值都是以滿金寶、滿科技計算</p>
 <h3 id="運算子">運算子</h3>
-<table class="w3-table w3-centered w3-striped">
+<table class="w3-table w3-striped w3-centered w3-border w3-bordered">
 <thead>
 <tr>
 <th>運算子</th>
@@ -266,7 +276,150 @@ ul.task-list{list-style: none;}
 <p>位元AND、位元OR、位元XOR平常較少用到，如果要用AND功能，請用<code>&amp;&amp;</code>，如果要用OR功能，請用<code>||</code></p>
 <p>另外 <code>(</code> 和 <code>)</code> 可以指定優先運算，如 <code>-(1+2)*3</code> 是 <code>-9</code></p>
 <h3 id="含式">含式</h3>
-<p><code>hasab</code>: 有某種能力或效果，如 <code>hasab(AB_WAVE)</code> 是有波動能力的貓咪 <code>hasres</code> 是有某種耐性，如 <code>hasres(RES_WEAK)</code> 是有降攻耐性的貓咪 <code>dpsagainst</code>: 是對某屬性敵人的dps，其中除了常見的屬性(可以在篩選頁面選擇並複製篩選表達式)，<code>BEAST</code> 是超獸，<code>BARON</code>是超生命體，<code>EVA</code> 是使徒，<code>WITCH</code> 是魔女。而<code>dpsagainst(METAL)</code> 比較特殊，它是計算對<em>鋼鐵敵人</em>造成的每秒傷害，所以沒有爆擊的機率會以1來計算，爆擊機率(含大傷、超傷、善攻)以雙倍計算，dps為兩者之和。</p>
+<p><code>hasab</code>: 有某種能力或效果，如 <code>hasab(AB_WAVE)</code> 是有波動能力的貓咪 <code>hasres</code> 是有某種耐性，如 <code>hasres(RES_WEAK)</code> 是有降攻耐性的貓咪</p>
+<p><code>dpsagainst(屬性)</code> 可以用在排序表達式上，用來表示對某某屬性的DPS</p>
+<table class="w3-table w3-striped w3-centered w3-border w3-bordered">
+<thead>
+<tr class="header">
+<th>表達式</th>
+<th>意義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dpsagainst(RED)</code></td>
+<td>對紅色敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(FLOAT)</code></td>
+<td>對漂浮敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(BLACK)</code></td>
+<td>對黑色敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(METAL)</code></td>
+<td>對鋼鐵敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(ANGEL)</code></td>
+<td>對天使敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(ALIEN)</code></td>
+<td>對異星戰士敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(ZOMBIE)</code></td>
+<td>對不死生物DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(WHITE)</code></td>
+<td>對無屬性敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(RELIC)</code></td>
+<td>對古代種DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(DEMON)</code></td>
+<td>對惡魔敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(BEAST)</code></td>
+<td>對超獸敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(INFN)</code></td>
+<td>對道場塔DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(BARON)</code></td>
+<td>對超生命體敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(EVA)</code></td>
+<td>對使徒敵人DPS</td>
+</tr>
+<tr>
+<td><code>dpsagainst(WITCH)</code></td>
+<td>對魔女DPS</td>
+</tr>
+</tbody>
+</table>
+<p><code>dpsagainst(METAL)</code> 比較特殊，它是計算對<em>鋼鐵敵人</em>造成的每秒傷害，所以沒有爆擊的機率會以1來計算，爆擊機率(含大傷、超傷、善攻)以雙倍計算，dps為兩者之和</p>
+<p><code>hpagainst(屬性)</code> 可以用在排序表達式上，用來表示對某某屬性的血量</p>
+<table class="w3-table w3-striped w3-centered w3-border w3-bordered">
+<thead>
+<tr class="header">
+<th>表達式</th>
+<th>意義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hpagainst(RED)</code></td>
+<td>對紅色敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(FLOAT)</code></td>
+<td>對漂浮敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(BLACK)</code></td>
+<td>對黑色敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(METAL)</code></td>
+<td>對鋼鐵敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(ANGEL)</code></td>
+<td>對天使敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(ALIEN)</code></td>
+<td>對異星戰士敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(ZOMBIE)</code></td>
+<td>對不死生物血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(WHITE)</code></td>
+<td>對無屬性敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(RELIC)</code></td>
+<td>對古代種血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(DEMON)</code></td>
+<td>對惡魔敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(BEAST)</code></td>
+<td>對超獸敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(INFN)</code></td>
+<td>對道場塔血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(BARON)</code></td>
+<td>對超生命體敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(EVA)</code></td>
+<td>對使徒敵人血量</td>
+</tr>
+<tr>
+<td><code>hpagainst(WITCH)</code></td>
+<td>對魔女血量</td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li><code>max</code>: 最大值，如<code>max(1, 2, 3)</code>是3</li>
 <li><code>min</code>: 最小值，如<code>min(1, 2, 3)</code>是1</li>
