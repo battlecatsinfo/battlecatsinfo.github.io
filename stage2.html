@@ -105,6 +105,14 @@ a img {
         </div>
         </div>
   </div>
+  <table class="w3-table w3-centered"><tbody><tr><td>
+    <select onchange="optionHandler(this.value)">
+      <option value="">選擇顯示模式···</option>
+      <option value="/stage.html">依ID順序</option>
+      <option value="/stage2.html">依地圖分類</option>
+    </select>
+  </td></tr></tbody></table>
+  <script>function optionHandler(value) {window.location.assign(`${value}`);}</script>
 	<script src="dracula.js"></script>
 	<div>
 	<table class="w3-table w3-centered">
@@ -123,11 +131,11 @@ a img {
 			</thead>
 			<tbody>
 				<tr id="st-1">
-					<td>消費統帥力</td>
+					<td>消費統率力</td>
 					<td></td>
 					<td>敵方上限</td>
 					<td></td>
-					<td>總長</td>
+					<td>背景長度</td>
 					<td></td>
 				</tr>
 				<tr id="st-2">
