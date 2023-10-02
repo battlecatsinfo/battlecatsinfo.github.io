@@ -1,0 +1,55 @@
+<!DOCTYPE html><html style="width: 100%;"><head><meta charset=utf-8><title>貓咪大戰爭 音樂</title><meta name=viewport content="width=device-width, initial-scale=1"><meta name=description content="音樂和音效 | 貓咪大戰爭中文資訊網站"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=stylesheet type=text/css href=/dracula.css><link rel=stylesheet type=text/css href=w3.css><style>
+	html, body { padding:0;margin:0;font-size: max(12px, 1.2vw); }
+
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+.topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
+
+	</style><body style="width: 100%;text-align: center !important;"><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html>轉蛋</a><a href=/stage.html>關卡</a><a href=/music.html class=active>音效</a><a href=/reward_all.html>獎勵</a><div class=w3-dropdown-hover><button class=w3-button style="background-color: #333 !important;padding: 0;"><svg viewbox="0 0 32 30" style="background-color: #333 !important;height: 1.4em;" stroke=white><rect x=2.95 y=1.95 width=26.1 height=26.1 fill=none stroke=none></rect><ellipse cx=16 cy=15 rx=5.22 ry=5.22 class=w-ctl stroke-width=1.74></ellipse><path d="M 16 1.95 L 16 8.48 M 16 21.53 L 16 28.05 M 22.53 15 L 29.05 15 M 9.47 15 L 2.95 15 M 6.73 5.73 L 11.43 10.43 M 11.43 19.57 L 6.73 24.27 M 25.27 5.73 L 20.57 10.43 M 20.57 19.57 L 25.27 24.27" fill=none stroke-width=1.74></path></svg></button><div class="w3-dropdown-content w3-bar-block"><a href=# id=theme-system class="w3-bar-item w3-button">系統</a><a href=# id=theme-dark class="w3-bar-item w3-button">深色</a><a href=# id=theme-light class="w3-bar-item w3-button">白色</a></div></div></div><script src=/dracula.js></script><div style="width: 100%;margin: 0 auto;"><h1 id=header>音樂下載</h1><div><select id=opt class="w3-select w3-border" style="width: 80%;text-align: center;"></select></div><div><button class="w3-button w3-teal" style="margin: 0 auto;margin-top: 1em;"><a id=dl style="text-decoration: none;color: white !important;">下載(MP3)</a></button></div><div><button class="w3-button w3-orange" style="margin: 0 auto;margin-bottom: 1em;margin-top: 1em;"><a style="text-decoration: none;color: white !important;" id=dl2>下載(OGG)</a></button></div><audio style="width: max(70%, 300px);" id=ad controls type=audio/ogg></audio></div><script>
+const header = document.getElementById('header');
+const opt = document.getElementById('opt');
+const ad = document.getElementById('ad');
+const dl = document.getElementById('dl');
+const dl2 = document.getElementById('dl2');
+const descriptions = [ [0, "「侵略の始まり」", true], [1, "「集まれ！にゃんこ軍団」", true], [2, "「出陣」", true], [3, "「日本侵略！」", true], [4, "「西表島の戦い」", true], [5, "「終わりの会」", true], [6, "「Challenge Battle」", true], [7, "戰鬥開始!!", false], [8, "大獲全勝!!", false], [9, "慘敗···", false], [10, "滑動", false], [11, "選擇", false], [12, "UNUSED", false], [13, "UNUSED", false], [14, "使用資源", false], [15, "選擇失敗", false], [16, "貓咪神社香油錢之1", false], [17, "貓咪神社香油錢之2", false], [18, "?", false], [19, "生產角色", false], [20, "有效攻擊之1", false], [21, "有效攻擊之2", false], [22, "攻擊城堡", false], [23, "陣亡之1", false], [24, "陣亡之2", false], [25, "貓咪砲準備", false], [26, "波動", false], [27, "角色再生產", false], [28, "貓咪砲充電完成", false], [29, "破關獎勵入手啦！！", false], [30, "「Slow Battle」", true], [31, "「大地揺るがす猛者たち」", true], [32, "「民族大移動」", true], [33, "「なにわの恋人」", true], [34, "「神様降臨」", true], [35, "神的力量：神的憤怒", false], [36, "落雷之1", false], [37, "落雷之2", false], [38, "神的力量：神的噴嚏", false], [39, "神的力量：治癒樂園", false], [40, "神的力量：嬰兒潮", false], [41, "簽到", false], [42, "通知", false], [43, "使用轉蛋", false], [44, "會心一擊", false], [45, "魔王震波", false], [46, "基地之門之1", false], [47, "「未来の侵略者」", true], [48, "「未知なる世界へ」", true], [49, "「アポロ決戦」", true], [50, "死前存活", false], [51, "進化", false], [52, "「ガマトト探検♪」", true], [53, "加碼多多：經驗增加", false], [54, "加碼多多：探險日記", false], [55, "加碼多多：整隊", false], [56, "觸摸偵探菇菇栽培實驗室：基地之門", false], [57, "貓咪道場：結算", false], [58, "「道場の間」", true], [59, "終結不死", false], [60, "低速砲發射", false], [61, "鐵壁砲發射", false], [62, "消滅都市：戰鬥1", true], [63, "基地之門之2", false], [64, "排行賽會場：排行獲取", false], [65, "水喉砲發射", false], [66, "「宇宙浪漫飛行」", true], [67, "「銀河の英雄」", true], [68, "「奇襲！未確認生物」", true], [69, "「ビッグバン組曲」", true], [70, "破壞護盾", false], [71, "護盾生效", false], [72, "強力破壞護盾", false], [73, "傳送：進入", false], [74, "傳送：離開", false], [75, "實況野球：戰鬥1", true], [76, "新世紀福音戰士：戰鬥1", true], [77, "新世紀福音戰士：戰鬥2", true], [78, "新世紀福音戰士：戰鬥3", true], [79, "新世紀福音戰士：戰鬥4", true], [80, "「太古の力」", true], [81, "「古代の呪い」", true], [82, "「驚愕！古代生物」", true], [83, "水喉砲攻擊", false], [84, "天使砲發射", false], [85, "天使砲攻擊", false], [86, "斬盾砲攻擊", false], [87, "謎之生命體入侵", true], [88, "新世紀福音戰士：貓咪基地", true], [89, "新世紀福音戰士：戰鬥5", true], [90, "渾身一擊", false], [91, "快打旋風V：貓咪基地", true], [92, "快打旋風V：基地之門之1", false], [93, "快打旋風V：基地之門之2", false], [94, "快打旋風V：基地之門之3", false], [95, "快打旋風V：基地之門之4", false], [96, "快打旋風V：基地之門之5", false], [97, "快打旋風V：戰鬥1/VS 隆", true], [98, "快打旋風V：戰鬥2/VS 春麗", true], [99, "快打旋風V：戰鬥3/VS 蓋爾", true], [100, "快打旋風V：戰鬥4/VS 桑吉爾夫", true], [101, "快打旋風V：戰鬥5/VS 布蘭卡", true], [102, "快打旋風V：戰鬥6/VS 塔爾錫", true], [103, "快打旋風V：戰鬥7/VS 肯", true], [104, "快打旋風V：戰鬥8/VS 豪鬼", true], [105, "快打旋風V：戰鬥開始!!", false], [106, "快打旋風V：大獲全勝!!", false], [107, "獲得貓咪獎章", false], [108, "貓咪拉霸之1", false], [109, "貓咪拉霸之2", false], [110, "毒擊", false], [111, "烈波：觸發", false], [112, "烈波：持續", false], [113, "初音未來：貓咪基地", true], [114, "初音未來：基地之門之1", false], [115, "初音未來：基地之門之2", false], [116, "初音未來：破關獎勵入手啦！！", false], [117, "初音未來：戰鬥1/「千本桜」", true], [118, "初音未來：戰鬥2/「テオ」", true], [119, "初音未來：戰鬥3/「火花」", true], [120, "初音未來：戰鬥4/「日本侵略！」初音未來版", true], [121, "消滅都市：貓咪基地", true], [122, "消滅都市：戰鬥2/「にゃんこ大行進 Raid Remix〜Phase3」", true], [123, "消滅都市：戰鬥3/「にゃんこ大行進 Reloaded Remix」", true], [124, "詛咒砲發射", false], [125, "風雲貓咪塔50樓", true], [126, "快打旋風V：戰鬥9/VS E. Honda", true], [127, "快打旋風V：戰鬥10/VS影羅四大天王", true], [128, "初音未來：戰鬥5/「Because You're Here」", true], [129, "初音未來：戰鬥6/「Fondant Step / Heavenz」", true], [130, "哥吉拉：戰鬥1", true], [131, "貓咪的暑假：戰鬥1", true], [132, "貓咪的暑假：戰鬥2", true], [133, "貓咪的暑假：戰鬥3", true], [134, "貓咪的暑假：基地之門", false], [135, "貓咪刮刮樂", false], [136, "攻擊惡魔盾", false], [137, "破壞惡魔盾", false], [138, "惡魔盾恢復", false], [139, "強力破壞惡魔盾", false], [140, "貓咪大運動會：戰鬥1", true], [141, "魔界篇：戰鬥1", true], [142, "魔界篇：戰鬥2", true], [143, "絕命烈波", false], [144, "紅包來襲！", true], [145, "農曆新年HAPPY大禮！", true], [146, "心動時分貓咪學園：戰鬥1", true], [147, "古代神樹", true], [148, "密林的異變", true], [149, "沙漠的怪事", true], [150, "火山的威脅", true], [151, "快打旋風V：戰鬥11/VS 櫻", true], [152, "快打旋風V：戰鬥12/VS 路克", true], [153, "地下深淵：普通", true], [154, "地下深淵：魔王", true], [155, "傳奇故事0：戰鬥1", true], [156, "新世紀福音戰士：戰鬥6", true], [157, "傳奇故事0：戰鬥2", true], [158, "傳奇故事0：戰鬥3", true], [159, "烈波反擊", false], ];
+function t3str(x) {
+	let s = x.toString();
+	switch (s.length) {
+	case 3: return s;
+	case 2: return '0' + s;
+	case 1: return '00' + s;
+	}
+}
+for (let i = 0;i <= 159;++i) {
+    const op = document.createElement('option');
+    const x = t3str(i);
+    op.innerText = x + ' - ' + descriptions[i][1] + (descriptions[i][2] ? '' : ' (音效)');
+    op.value = x;
+    opt.appendChild(op);
+}
+opt.onchange = function() {
+  const url = new URL(location.href);
+  url.searchParams.set('id', opt.selectedOptions[0].value);
+  history.pushState({},"",url);
+	ad.src = dl.href = 'https://github.com/battlecatsinfo/battlecats-music/raw/main/' + opt.value + '.mp3';
+	dl2.href = 'https://github.com/battlecatsultimate/bcu-assets/raw/master/music/' + opt.value + '.ogg';
+  header.textContent = opt.selectedOptions[0].textContent;
+}
+function main() {
+  const u = new URL(location.href).searchParams;
+  let i = u.get('id');
+  if (i) {
+    i = parseInt(i);
+    if (isFinite(i)) {
+      opt.selectedIndex = i;
+      opt.onchange();
+      return;
+    }
+  }
+  opt.selectedIndex = 123;
+  opt.onchange();
+}
+main();
+</script></body></html>

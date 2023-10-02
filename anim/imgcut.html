@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>ImgCut</title><meta name=description content="編輯ImgCut檔案 | 貓咪大戰爭中文資訊網站"><meta name=viewport content="width=device-width, initial-scale=1"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=stylesheet type=text/css href=/dracula.css><link rel=stylesheet type=text/css href=/w3.css></head><body><style>
+html, body { width:100%;padding:0;margin:0; }
+
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+.topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
+
+canvas {
+	background-color: white !important;
+}
+#imgcut {
+	margin: 1vw;
+	background-size: 14px 14px;
+ 	background-image:
+	linear-gradient(to right, grey 1px, transparent 1px),
+	linear-gradient(to bottom, grey 1px, transparent 1px);
+}
+@media (min-width: 500px) {
+  #imgcut {
+    min-height: 40vh;
+  }
+}
+.ihover {
+	background-color: #ccc !important;
+}
+[data-theme='dark'] .ihover td {
+	background-color: #4b4b4b !important;
+}
+td, th {
+  padding: 7px 30px;
+  border: #cfcfcf 1px solid;
+}
+</style><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html>轉蛋</a><a href=/stage.html>關卡</a><a href=/music.html>音效</a><a href=/reward_all.html>獎勵</a><div class=w3-dropdown-hover><button class=w3-button style="background-color: #333 !important;padding: 0;"><svg viewbox="0 0 32 30" style="background-color: #333 !important;height: 1.4em;" stroke=white><rect x=2.95 y=1.95 width=26.1 height=26.1 fill=none stroke=none></rect><ellipse cx=16 cy=15 rx=5.22 ry=5.22 class=w-ctl stroke-width=1.74></ellipse><path d="M 16 1.95 L 16 8.48 M 16 21.53 L 16 28.05 M 22.53 15 L 29.05 15 M 9.47 15 L 2.95 15 M 6.73 5.73 L 11.43 10.43 M 11.43 19.57 L 6.73 24.27 M 25.27 5.73 L 20.57 10.43 M 20.57 19.57 L 25.27 24.27" fill=none stroke-width=1.74></path></svg></button><div class="w3-dropdown-content w3-bar-block"><a href=# id=theme-system class="w3-bar-item w3-button">系統</a><a href=# id=theme-dark class="w3-bar-item w3-button">深色</a><a href=# id=theme-light class="w3-bar-item w3-button">白色</a></div></div></div><script src=/dracula.js></script><canvas id=imgcut style="border: 1px solid;border-color: var(--color);"></canvas><canvas id=preview style="display: none;"></canvas><br><div style="margin: 1vw;"><div class=w3-dropdown-hover><button class="w3-button w3-black">導入圖片</button><div class="w3-dropdown-content w3-bar-block w3-border"><a class="w3-bar-item w3-button" onclick=importImg()>選擇檔案</a><a class="w3-bar-item w3-button" onclick=importImgU()>輸入圖片連結</a><a class="w3-bar-item w3-button" onclick=pasteImg()>剪貼簿:Ctrl+V</a></div></div><input type=file style="display: none;" name=file id=file><div class=w3-dropdown-hover><button class="w3-button w3-black">導入ImgCut</button><div class="w3-dropdown-content w3-bar-block w3-border"><a class="w3-bar-item w3-button" onclick=importCut()>選擇檔案</a><a class="w3-bar-item w3-button" onclick=importCutU()>輸入ImgCut連結</a></div></div><label for=color class="w3-orange w3-button">框顏色</label><input onchange=scolor() type=color name=color id=color><button onclick=exportimg() class="w3-button w3-teal">下載部件</button><button onclick=exportimga() class="w3-button w3-green">下載全部部件</button><button onclick=exportaimg() class=w3-button style="background-color: sienna !important;">下載整張圖片</button><button onclick=exportcut() class=w3-button style="background-color: #aa00ff !important;">下載ImgCut</button><button onclick=addline() class="w3-button w3-deep-purple">添加行</button><button onclick=removeline() class="w3-button w3-red">刪除行</button></div><div style="max-height: 50vh;overflow: scroll;margin: 0 2vw auto;"><table class="w3-table w3-centered w3-border"><thead><tr><th>id</th><th>x</th><th>y</th><th>寬度</th><th>高度</th><th>註解</th></tr></thead><tbody id=edit></tbody></table></div><script src=imgcut.js></script></body></html>

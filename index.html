@@ -1,0 +1,29 @@
+<!DOCTYPE html><html manifest=.appcache><head style="width: 100%;"><meta charset=utf-8><title>貓咪大戰爭 資訊網</title><meta name=viewport content="width=device-width, initial-scale=1"><meta name=description content=貓咪大戰爭中文資訊網站，可以查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等><meta property=og:url content=https://battlecatsinfo.github.io><meta property=og:site_name content=battlecatsinfo.github.io><meta property=og:title content=貓咪大戰爭中文資訊網站><meta property=og:description content=查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=stylesheet type=text/css href=/dracula.css><link rel=stylesheet type=text/css href=w3.css><style>
+html, body { padding:0;margin:0;width:100%;text-align:center;font-size: min(22px, 4vw); }
+.A { display: block; margin: 0 auto;max-width: min(100%, 430px); }
+
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+.topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
+
+.D a {
+  text-decoration: none;
+  padding: 1em 0px;
+  display: block;
+}
+a img {
+  border-radius: 4px;
+}
+</style></head><body><div class=topnav><a href=/index.html class=active>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html>轉蛋</a><a href=/stage.html>關卡</a><a href=/music.html>音效</a><a href=/reward_all.html>獎勵</a><div class=w3-dropdown-hover><button class=w3-button style="background-color: #333 !important;padding: 0;"><svg viewbox="0 0 32 30" style="background-color: #333 !important;height: 1.4em;" stroke=white><rect x=2.95 y=1.95 width=26.1 height=26.1 fill=none stroke=none></rect><ellipse cx=16 cy=15 rx=5.22 ry=5.22 class=w-ctl stroke-width=1.74></ellipse><path d="M 16 1.95 L 16 8.48 M 16 21.53 L 16 28.05 M 22.53 15 L 29.05 15 M 9.47 15 L 2.95 15 M 6.73 5.73 L 11.43 10.43 M 11.43 19.57 L 6.73 24.27 M 25.27 5.73 L 20.57 10.43 M 20.57 19.57 L 25.27 24.27" fill=none stroke-width=1.74></path></svg></button><div class="w3-dropdown-content w3-bar-block"><a href=# id=theme-system class="w3-bar-item w3-button">系統</a><a href=# id=theme-dark class="w3-bar-item w3-button">深色</a><a href=# id=theme-light class="w3-bar-item w3-button">白色</a></div></div></div><script src=/dracula.js></script><div class="w3-row D"><a class="w3-col s6" href=/search.html>貓咪搜尋<img class="A w3-card-4 w3-hover-grayscale" src=https://cdn.discordapp.com/attachments/1148597630012768267/1148600814412238870/123.png></a><a class="w3-col s6" href=/esearch.html>敵人搜尋<img class="A w3-card-4 w3-hover-grayscale" src=https://cdn.discordapp.com/attachments/1148597630012768267/1148600814844264468/456.png></a><a class="w3-col s6" href=/gachas.html>轉蛋一覽<img class="A w3-card-4 w3-hover-opacity" src=https://cdn.discordapp.com/attachments/1148597630012768267/1148600815179800648/789.png></a><a class="w3-col s6" href=/stage.html><img class=w3-hover-opacity src=https://cdn.discordapp.com/attachments/1148597630012768267/1148600815502770226/castle.png style="max-height: calc(50vw * 220/430);"></a><a class="w3-col s6" href=/music.html>配樂音效</a><a class="w3-col s6" href=/reward_all.html>獎勵</a><a class="w3-col s6" href=/medal.html>貓咪獎章</a><a class="w3-col s6" href=/rank.html>等級排行獎勵</a><a class="w3-col s6" href=/combos.html>聯組一覽</a><a class="w3-col s6" href=/anim/imgcut.html>ImgCut編輯器</a><a class="w3-col s6" href=/stage2.html>關卡資訊(依分類)</a><a class="w3-col s6" href=/anim/anim.html>檢視動畫</a><a class="w3-col s6" href=/savefile.html>遊戲存檔讀取</a><a class="w3-col s6" href=/treasure_settings.html>金寶科技設定</a><a class="w3-col s6" href=/treasure_list.html>金寶一覽</a><a class="w3-col s6" href=/ onclick=Switch()>單位切換(F/秒)</a></div><script>
+function Switch() {
+  let x = localStorage.getItem('unit');
+  if (!x || x == 'S') {
+    localStorage.setItem('unit', 'F');
+    return alert('單位切換成「F」(幀)');
+  }
+  localStorage.setItem('unit', 'S');
+  alert('單位切換成「秒」');
+}
+</script><div style="width: 100%;"><a style="margin-top: 1em;width: 100%;text-align: center;text-decoration: none;" class="w3-col s6" href=${discord}$><img src=https://cdn.discordapp.com/attachments/1148597630012768267/1148600832787492894/discord.png></a><p style="color: var(--acolor) !important;">中文板本: Ver 12.6.1</p><p style="color: var(--acolor) !important;">日文板本: Ver 12.7.0</p></div></body></html>

@@ -1,0 +1,15 @@
+[modelanim:animation2]
+2
+4
+2,12,1,0,0,chr_dummy<color=7>	
+1
+0,0,1,0
+5,12,1,0,0,atk_dummy<color=7>	
+1
+0,0,1,0
+14,5,1,0,0,010_dam.png<color=2>	
+1
+0,-8,0,0
+15,12,1,0,0,ef_dummy<color=7>	
+1
+0,0,1,0

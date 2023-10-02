@@ -1,0 +1,73 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width, initial-scale=1"><title>關卡資訊</title><meta name=description content="關卡資訊 | 貓咪大戰爭中文資訊網站"><meta property=og:site_name content=battlecatsinfo.github.io><meta property=og:title content=關卡資訊><meta property=og:description content=查詢關卡詳細資訊><meta property=og:image content=https://cdn.discordapp.com/attachments/1148597630012768267/1148600815502770226/castle.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=stylesheet type=text/css href=/dracula.css><link rel=stylesheet type=text/css href=w3.css><script src=RewardName.js></script><script src=EnemyName.js></script><script type=text/javascript src=browserfs.min.js></script></head><body><style>
+html, body { width: 100%;margin: 0;padding: 0;font-size: max(1.1vw, 8px);vertical-align:middle; }
+body { line-height: initial; }
+select {
+	font-size: larger;
+	text-overflow: ellipsis;
+	width: 100%;
+}
+th { font-weight: normal; }
+input[type="search"] {
+	display: block;
+	width: 97vw;
+	margin: 4px auto;
+	padding: 0.6vw;
+	border: min(4px, 0.2vw) solid #ddd;
+	outline: none;
+	transition: 0.2s;
+}
+input[type="search"]:focus {
+	border-color: #999 !important;
+}
+table.w3-striped {
+	margin: 15px 0px;
+}
+.w3-table td {
+	padding: 0.5vw;
+}
+a.star {
+	margin: 2px 12px;
+	text-decoration: none;
+}
+a.star::visited {
+	color: var(--acolor) !important;
+}
+div.An {
+  animation-name: An;
+  animation-duration: 0.7s
+}
+@keyframes An { 
+  from { opacity:0; } 
+  to { opacity:1; }
+}
+a.res {
+	display: block;
+	margin: 20px 10px;
+	text-decoration: none;
+}
+a.res::visited {
+	color: initial;
+}
+a.res span { color: #ff634e; }
+
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+.topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
+
+.w3-table td:first-child, .w3-table th:first-child { padding-left: initial; }
+span.boss {
+	color: darkred;
+}
+a img {
+	max-width: 10vw;
+	height: auto;
+}
+a.L {
+	text-decoration: none;
+	display: block;
+	text-align: center;
+	width: 100%;
+}
+</style><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html>轉蛋</a><a href=/stage.html class=active>關卡</a><a href=/music.html>音效</a><a href=/reward_all.html>獎勵</a><div class=w3-dropdown-hover><button class=w3-button style="background-color: #333 !important;padding: 0;"><svg viewbox="0 0 32 30" style="background-color: #333 !important;height: 1.4em;" stroke=white><rect x=2.95 y=1.95 width=26.1 height=26.1 fill=none stroke=none></rect><ellipse cx=16 cy=15 rx=5.22 ry=5.22 class=w-ctl stroke-width=1.74></ellipse><path d="M 16 1.95 L 16 8.48 M 16 21.53 L 16 28.05 M 22.53 15 L 29.05 15 M 9.47 15 L 2.95 15 M 6.73 5.73 L 11.43 10.43 M 11.43 19.57 L 6.73 24.27 M 25.27 5.73 L 20.57 10.43 M 20.57 19.57 L 25.27 24.27" fill=none stroke-width=1.74></path></svg></button><div class="w3-dropdown-content w3-bar-block"><a href=# id=theme-system class="w3-bar-item w3-button">系統</a><a href=# id=theme-dark class="w3-bar-item w3-button">深色</a><a href=# id=theme-light class="w3-bar-item w3-button">白色</a></div></div></div><script src=/dracula.js></script><div><table class="w3-table w3-centered"><tbody><tr><td><select id=M1></select></td><td><select id=M2></select></td><td><select id=M3></select></td></tr></tbody></table><input type=search id=name-search placeholder=搜尋關卡名稱><div id=main style="display: none;" class=An><table class="w3-table w3-centered w3-striped"><thead><tr><th colspan=6 id=st-name></th></tr><tr><th colspan=6 id=st-name2></th></tr></thead><tbody><tr id=st-1><td>消費統率力</td><td></td><td>敵方上限</td><td></td><td>背景長度</td><td></td></tr><tr id=st-2><td>敵城體力</td><td></td><td>敵城圖片</td><td></td><td>背景</td><td></td></tr><tr id=st-3><td>經驗值</td><td></td><td>初始BGM</td><td></td><td>魔王BGM</td><td></td></tr><tr id=st-4><td>顯示條件</td><td></td><td>解放條件</td><td></td><td>Rank條件</td><td></td></tr></tbody></table><table class="w3-table w3-centered w3-striped"><thead><tr><td>過關獎勵</td><td>機率</td><td>上限</td></tr></thead><tbody id=rewards></tbody></table><table class="w3-table w3-centered w3-striped"><thead><tr><td>掉落素材</td><td id=mM>機率</td></tr></thead><tbody id=drops></tbody></table><table class="w3-table w3-centered w3-striped"><thead><tr><td>時間獎勵</td><td>數量</td><td>時間</td></tr></thead><tbody id=times></tbody></table><div id=ex-stages style="width: 100% !important;margin: 0 auto !important;text-align: center !important;"></div><table class="w3-table w3-centered w3-striped"><thead><tr><td>敵人</td><td>圖示</td><td>倍率</td><td>出現數</td><td>塔連動</td><td>初登場</td><td>再登場</td><td>貓魂召喚數</td></tr></thead><tbody id=lines></tbody></table></div><div style="display: none;" id=search-result></div></div><script type=text/javascript src=stage.js></script></body></html>

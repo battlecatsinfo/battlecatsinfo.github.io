@@ -1,0 +1,10 @@
+﻿[imgcut]
+0
+005_m.png
+6
+0,0,1,1
+1,118,60,4,001_shadow.png
+1,1,69,79,002_body.png
+72,1,23,32,003_body_word.png
+63,82,29,13,004_body_top.png
+1,82,45,34,005_body_hl.png

@@ -1,0 +1,15 @@
+[modelanim:animation2]
+2
+4
+2,4,1,0,0,004_body.png<color=0>
+1
+0,3,1,0
+2,5,1,0,0,004_body.png<color=0>
+1
+0,-3,1,0
+2,11,1,0,0,004_body.png<color=0>
+1
+0,200,1,0
+10,12,1,0,0,ef_dummy<color=7>
+1
+0,0,0,0

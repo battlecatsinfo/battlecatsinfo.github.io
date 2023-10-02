@@ -1,0 +1,37 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>敵人資訊</title><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=stylesheet type=text/css href=/dracula.css><link rel=stylesheet type=text/css href=icons.css><link rel=stylesheet type=text/css href=w3.css><link rel=stylesheet type=text/css href=unit.css></head><body style="overflow: scroll;"><style>
+	html, body {padding: 0;margin: 0;}
+	body { font-size: 18px; }
+
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 1vw; text-decoration: none; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+.topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
+
+.bold-large { font-size: 18px; }
+.w3-table { width: initial;margin: 0 auto;margin-bottom: 60px; }
+.w3-table td { vertical-align: middle;padding: 9px 25px;min-width: 60px; }
+.left > * { text-align: left; }
+.left > p { margin-block-start: 7px;margin-block-end: 7px; }
+.left { text-align: left !important;padding: 4px 12px !important; }	
+.w3-table td:first-child { padding-left: 15px; }
+.w3-bar-item {
+	background-color: #ededed !important;
+	text-decoration: none;
+}
+[data-theme='dark'] .w3-bar-item {
+	background-color: #2f2f2f !important;
+}
+#abar .w3-bar-item:hover {
+	color: var(--ahover) !important;
+}
+.v-ctl {
+	float: right;
+  width: max(min(3vw,3vh), 15px);
+  height: auto;
+}
+.v-ctl path {
+	stroke: white;
+	fill: transparent;
+}
+	</style><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html>轉蛋</a><a href=/stage.html>關卡</a><a href=/music.html>音效</a><a href=/reward_all.html>獎勵</a><div class=w3-dropdown-hover><button class=w3-button style="background-color: #333 !important;padding: 0;"><svg viewbox="0 0 32 30" style="background-color: #333 !important;height: 1.4em;" stroke=white><rect x=2.95 y=1.95 width=26.1 height=26.1 fill=none stroke=none></rect><ellipse cx=16 cy=15 rx=5.22 ry=5.22 class=w-ctl stroke-width=1.74></ellipse><path d="M 16 1.95 L 16 8.48 M 16 21.53 L 16 28.05 M 22.53 15 L 29.05 15 M 9.47 15 L 2.95 15 M 6.73 5.73 L 11.43 10.43 M 11.43 19.57 L 6.73 24.27 M 25.27 5.73 L 20.57 10.43 M 20.57 19.57 L 25.27 24.27" fill=none stroke-width=1.74></path></svg></button><div class="w3-dropdown-content w3-bar-block"><a href=# id=theme-system class="w3-bar-item w3-button">系統</a><a href=# id=theme-dark class="w3-bar-item w3-button">深色</a><a href=# id=theme-light class="w3-bar-item w3-button">白色</a></div></div></div><script src=/dracula.js></script><div id=loader-text>載入中...</div><div id=loader></div><script>var curveData0, curveData1, curveData2, curveData3, curveData4, curveData5;</script><script src=cat.js></script><div id=main class="w3-container An"><table class="w3-table w3-centered" style="margin-top: 100px;"><thead><tr><th colspan=6 id=e-id></th><th id=st-mag style="white-space: nowrap;" contenteditable><th id=mult-atk contenteditable style="white-space: nowrap;"></th><th id=mult style="white-space: nowrap;" contenteditable></th></tr></thead><tbody id=stats><tr><td rowspan=3><img></td><td>HP</td><td></td><td>攻擊力</td><td></td><td>速度</td><td></td><td>屬性</td><td colspan=2></td></tr><tr><td>KB</td><td></td><td>DPS</td><td></td><td>射程</td><td></td><td>獎金</td><td></td></tr><tr><td>出招時間</td><td></td><td>收招時間</td><td></td><td>攻擊間隔</td><td></td><td>攻擊頻率</td><td></td></tr><tr><td>其他</td><td colspan=8 class=left><p></p></td></tr><tr><td>描述</td><td class=left colspan=8></td></tr></tbody></table><div style="position: fixed;bottom: 30px;left: 30px;"><button class=w3-button style="border: none;margin: 0;padding: 0;text-indent: 0;"><img src=https://cdn.discordapp.com/attachments/1148597630012768267/1148600833106255872/dog.png onmouseenter="this.src='https://cdn.discordapp.com/attachments/1148597630012768267/1148600833378893824/dog1.png'" onmouseleave="this.src='https://cdn.discordapp.com/attachments/1148597630012768267/1148600833106255872/dog.png'"></button><div id=abar class="w3-dropdown-content w3-bar-block" style="bottom: 50px;right: -120px;font-size: larger;"><a class=w3-bar-item style=cursor:pointer; onclick=navigator.clipboard.writeTe×t(location.href);>複製連結<svg viewbox="0 0 32 30" class=v-ctl><path d="M 17.05 20.4 L 10.29 27.14 C 9.15 28.05 7.53 28.05 6.39 27.14 L 3.79 24.55 C 2.95 23.44 2.95 21.9 3.79 20.79 L 12.89 11.69 C 14.01 10.85 15.55 10.87 16.66 11.72 L 19.44 14.57 M 16.01 18.71 C 17.25 19.22 18.67 18.87 19.55 17.86 L 28.1 9.25 C 29.05 7.97 28.88 6.18 27.71 5.1 L 25.37 2.77 C 24.16 1.95 22.53 2.08 21.47 3.08 L 15.23 9.25" stroke=black fill=none stroke-width=1.74></path></svg></a><a class=w3-bar-item id=open-db rel=noreferrer>超絕</a><a class=w3-bar-item id=fandom>Fandom</a><a class=w3-bar-item id=search-appear href=#>搜尋出現關卡</a><a class=w3-bar-item id=open-imgcut href=#>編輯ImgCut</a><a class=w3-bar-item id=open-anim href=#>檢視動畫</a><a class=w3-bar-item href=/treasure_settings.html>金寶科技設定</a></div></div></div><script src=enemy.js></script></body></html>

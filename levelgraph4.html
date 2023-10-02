@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang=zh><head><meta charset=utf-8><title>等級-DPS曲線</title><meta name=viewport content="width=device-width, initial-scale=1"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=stylesheet type=text/css href=/dracula.css><script src=chart.js></script><script src=/levelcurve.js></script></head><body><div id=loader-text>載入中...</div><div id=loader></div><script src=cat.js></script><div id=main style="display: none;"><canvas id=myChart></canvas><select id=select style="display: block;margin: 0 auto;font-size: 1.5em;"><option selected>一階</option><option>二階</option><option>三階</option></select></div><script>
+const my_params = new URLSearchParams(location.search);
+const my_id = parseInt(my_params.get('id'));
+if (isNaN(my_id)) {
+	alert('Missing cat id in URL query!');
+	window.stop()
+	throw '';
+}
+if (my_id < 0 || my_id >= curveMap.length) {
+	alert('沒有這個喵咪!');
+	window.stop()
+	throw '';
+}
+var my_cat;
+let labels = [];
+let datas = [];
+const select = document.getElementById('select');
+const ctx = document.getElementById('myChart');
+var C;
+select.addEventListener('change', function () {
+	render(select.selectedIndex);
+});
+function render(formC) {
+  const maxLv = my_cat.info.maxBase + my_cat.info.maxPlus
+  labels.length = 0;
+  datas.length = 0;
+  for (let level = 0;level <= maxLv;level += 2) {
+  	let t = my_cat.forms[formC];
+  	const atk = ~~(2.5 * Math.round((t.atk + t.atk1 + t.atk2) * getLevelMulti(level ? level : 1)));
+  	labels.push(`Lv${level ? level : 1}`);
+  	datas.push(atk * 30 / t.attackF);
+  }
+  if (C != undefined)
+  	return C.update();
+  C = new Chart(ctx, {
+   	type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'DPS',
+        data: datas
+      }]
+    },
+    options: {
+      	scales: {
+        	y: {
+          	beginAtZero: true
+        	}
+      	}
+    }
+  });
+}
+loadCat(my_id)
+.then(c => {
+	document.getElementById('loader').style.display = 'none';
+	loader_text.style.display = 'none';
+	document.getElementById('main').style.display = 'block';
+	my_cat = c;
+	useCurve(my_id);
+	render(0);
+	for (let i = 0;i <= 2;++i) {
+		if (!my_cat.forms[i])
+			select.options[i].disabled = true;
+	}
+});
+</script></body></html>
