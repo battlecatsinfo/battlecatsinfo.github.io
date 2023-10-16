@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang=zh-Hant><head><meta charset=utf-8><title>關卡字型</title><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=stylesheet type=text/css href=/dracula.css><link rel=stylesheet type=text/css href=w3.css><style>
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
+.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 2vw; text-decoration: none; }
+.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
+.topnav a:visited { text-decoration: none; }
+.w3-dropdown-content > a { color: var(--color) !important;  }
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc !important;
+  border-radius: 4px;
+  resize: vertical;
+}
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+input[type=submit] {
+  background-color: #04AA6D !important;
+  color: white !important;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+input[type=submit]:hover {
+  background-color: #45a049 !important;
+}
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+input[type=button] {
+	margin: 1vw;
+  background-color: #04AA6D !important;
+  color: white !important;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+input[type=button]:hover {
+  background-color: #45a049 !important;
+}
+input[type=range] {
+	width: 95%;
+}
+</style></head><body><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html>轉蛋</a><a href=/stage.html>關卡</a><a href=/music.html>音效</a><a href=/reward_all.html>獎勵</a><div class=w3-dropdown-hover><button class=w3-button style="background-color: #333 !important;padding: 0;"><svg viewbox="0 0 32 30" style="background-color: #333 !important;height: 1.4em;" stroke=white><rect x=2.95 y=1.95 width=26.1 height=26.1 fill=none stroke=none></rect><ellipse cx=16 cy=15 rx=5.22 ry=5.22 class=w-ctl stroke-width=1.74></ellipse><path d="M 16 1.95 L 16 8.48 M 16 21.53 L 16 28.05 M 22.53 15 L 29.05 15 M 9.47 15 L 2.95 15 M 6.73 5.73 L 11.43 10.43 M 11.43 19.57 L 6.73 24.27 M 25.27 5.73 L 20.57 10.43 M 20.57 19.57 L 25.27 24.27" fill=none stroke-width=1.74></path></svg></button><div class="w3-dropdown-content w3-bar-block"><a href=# id=theme-system class="w3-bar-item w3-button">系統</a><a href=# id=theme-dark class="w3-bar-item w3-button">深色</a><a href=# id=theme-light class="w3-bar-item w3-button">白色</a></div></div></div><script src=/dracula.js></script><h1 style="text-align: center;">關卡字型</h1><form name="font settings" onsubmit="return false();" style="margin: 2vw;"><div class=row><div class=col-25><label for=lineWidth>Line width(邊框線寬度):</label></div><div class=col-75><input type=range min=0 max=10 step=0.1 name=lineWidth id=lineWidth value=3></div></div><div class=row><div class=col-25><label for=strokeColor>Stroke color(邊框顏色):</label></div><div class=col-75><input type=color name=strokeColor id=strokeColor value=#000000></div></div><div class=row><div class=col-25><label for=fontSize>Font size(字型大小):</label></div><div class=col-75><input type=range min=2 max=270 name=fontSize id=fontSize value=100></div></div><div class=row><div class=col-25><label for=startG>開始漸層</label></div><div class=col-75><input type=color name=startG id=startG value=#fff500></div></div><div class=row><div class=col-25><label for=endG>結束漸層:</label></div><div class=col-75><input type=color name=endG id=endG value=#ec9c00></div></div><div class=row><div class=col-25><label for=fontFamily>字型</label></div><div class=col-75><input type=text name=endG id=fontFamily value=StageFont></div></div><div class=row><div class=col-25><label for=bg>背景</label></div><div class=col-75><input type=color name=bg id=bg value=#ffffff></div></div><div class=row><div class=col-25><label for=text>文字</label></div><div class=col-75><input type=text name=text id=text value="The Battle Cats"></div></div><div class=row><input type=button onclick=download(event) value=下載></div></form><canvas id=canvas style="display: block;padding: 0;margin: 1vh auto;width: 98vw;height: max(100px, 30vh);border: 1px solid gray;"></canvas><script>
+
+const lineWidth   = document.getElementById('lineWidth');
+const fontSize    = document.getElementById('fontSize');
+const startG      = document.getElementById('startG');
+const endG        = document.getElementById('endG');
+const fontFamily  = document.getElementById('fontFamily');
+const strokeColor = document.getElementById('strokeColor');
+const bg = document.getElementById('bg');
+const text = document.getElementById('text');
+
+const c = document.getElementById("canvas");
+var ctx = c.getContext("2d");
+
+function setStyles(fill) {
+  if (fill) {
+	ctx.fillStyle = bg.value;
+  	ctx.fillRect(0, 0, c.width, c.height);
+  }
+  var gradient = ctx.createLinearGradient(0, 0, 0, parseInt(fontSize.value) * 0.76);
+  gradient.addColorStop("0", startG.value);
+  gradient.addColorStop("1.0", endG.value);
+  ctx.fillStyle = gradient;
+  ctx.strokeStyle = strokeColor.value;
+  ctx.lineWidth = lineWidth.value;
+  ctx.font = fontSize.value + 'px "' + fontFamily.value + '"';
+}
+function measureText() {
+  	ctx.clearRect(0, 0, c.width, c.height);
+  	setStyles(false);
+  	ctx.strokeStyle = '#000000FF';
+  	const w = c.width;
+  	const h = c.height;
+	ctx.fillText(text.value, w / 2, h / 2);
+	ctx.strokeText(text.value, w / 2, h / 2);
+	ctx.fill();
+	ctx.stroke();
+  	var left = -1, right = -1, top = -1, buttom = -1;
+
+  	const data = ctx.getImageData(0, 0, w, h);
+  	const raw = data.data;
+  	const wh = w * h * 4;
+  	const w4 = 4 * w;
+
+  	for (let i = 3;i < wh;i += 4) {
+  		if (raw[i]) {
+  			top = ~~(i / w4);
+  			break;
+  		}
+  	}
+
+  	for (let i = wh - 1;i >= 0;i -= 4) {
+  		if (raw[i]) {
+  			buttom = ~~(i / w4);
+  			break;
+  		}
+  	}
+
+  	o1: for (let x = 0;x < w;++x) {
+  		const end = wh - (w - x) * 4;
+  		for (let i = x * 4 + 3;i < end;i += w4) {
+  			if (raw[i]) {
+  				left = x;
+  				break o1;
+  			}
+  		}
+  	}
+
+  	o2: for (let x = w - 1;x >= 0;--x) {
+  		const end = wh - (w - x) * 4;
+  		for (let i = x * 4 + 3;i < end;i += w4) {
+  			if (raw[i]) {
+  				right = x;
+  				break o2;
+  			}
+  		}
+  	}
+
+  	return {
+  		'data': data,
+  		'left': left, 
+  		'right': right,
+  		'top': top, 
+  		'buttom': buttom,
+	};
+}
+function download(event) {
+	event.preventDefault();
+
+	const { data, left, right, top, buttom } = measureText();
+
+
+	if (left < 0 || right < 0 || buttom < 0 || top < 0)
+		return;
+
+	if (left >= right || top >= buttom)
+		return;
+
+	const canvas = document.createElement('canvas');
+
+	canvas.width = right - left;
+	canvas.height = buttom - top;
+
+	const tx = canvas.getContext('2d');
+
+	tx.putImageData(data, -left, -top, left, top, canvas.width, canvas.height);
+
+	canvas.toBlob(blob => {
+	  const url = URL.createObjectURL(blob);
+	  const a = document.createElement('a');
+	  a.href = url;
+	  a.download = 'stage image - ' + text.value.slice(0, 20);
+	  a.click();
+	  URL.revokeObjectURL(url);
+	});
+
+	return false;
+}
+
+function drawFont() {
+  setStyles(true);
+  const x = c.width / 2;
+  const y = 0;
+  ctx.fillText(text.value, x, y);
+  ctx.strokeText(text.value, x, y);
+  ctx.fill();
+  ctx.stroke();
+}
+let stF;
+if (window.FontFace)
+	stF = new FontFace('StageFont', 'url(stage_font.otf)');
+else {
+	stF = {};
+	var s = document.createElement('style');
+	s.textContent = "@font-face { font-family: StageFont; src: url('stage_font.otf') format('opentype');";
+	document.head.appendChild(s);
+	stF.load = function() {
+		return Promise.resolve(undefined);
+	}
+}
+stF.load().then(font => {
+	font && document.fonts.add(font);
+	(onresize = function() {
+		const dpr = (window.devicePixelRatio || 1);
+		c.height = Math.round(c.clientHeight * dpr);
+		c.width = Math.round(c.clientWidth * dpr);
+		ctx.lineCap = "round";
+		ctx.lineJoin = "round";
+		ctx.textBaseline = 'top';
+		ctx.textAlign = 'center';
+		drawFont();
+	})();
+});
+text.oninput = bg.oninput = lineWidth.oninput = fontSize.oninput = startG.oninput = endG.oninput = fontFamily.oninput = strokeColor.oninput = drawFont;
+</script></body></html>
