@@ -4,13 +4,65 @@ html, body { width: 100%;margin: 0 auto;padding: 0;text-align: center;font-size:
 table { margin: 0 auto;border-collapse: collapse;margin-top: 50px;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
 tbody > a { display: block; }
 
-.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
-.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 2vw; text-decoration: none; }
-.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
-.topnav a:visited { text-decoration: none; }
-.w3-dropdown-content > a { color: var(--color) !important;  }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(2vw, 20px) !important; }
+.topnav > a { display: inline-block;color: #f2f2f2 !important; padding: 1vh 2vw; text-decoration: none;cursor: pointer;vertical-align: middle; }
+.topnav > a.active { background-color: #4caf50 !important; }
+.topnav > a:visited { text-decoration: none; }
+.topnav > a:hover { background-color: #009688 !important; }
+.topnav svg { background-color: inherit !important;height: 1.3em; }
+#site-search {
+  display: none;
+  width: 175px;
+  padding: 0.1em 0.2em;
+}
+#search-btn {
+  all: unset;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: transparent !important;
+}
+#search-btn svg {
+  width: 12px;
+  height: 12px;
+  fill: white;
+}
+@media (min-width:800px) {
+  #site-search {
+    display: inline-block;
+    width: 20vw;
+    padding: 5px 10px;
+  }
+  #search-btn {
+    position: relative;
+    top: 3px;
+    right: 30px;
+  }
+  #search-btn svg {
+    height: 22px;
+    width: 22px;
+    fill: black;
+  }
+}
+#site-s-result {
+  background-color: white !important;
+  display: none;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+}
+#site-s-result > * {
+  width: 100%;
+  padding: 0.7em 2em;
+  color: black !important;
+  background-color: transparent !important;
+}
+#site-s-result > *:hover {
+  background-color: #e7e7e7 !important;
+  color: black !important;
+}
 
 .w3-table td { padding: 0; }
 .w3-table td:first-child { width: 50%; }
 p { margin-block-end: 0; }
-</style><body><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html class=active>轉蛋</a><a href=/stage.html>關卡</a><a href=/music.html>音效</a><a href=/reward_all.html>獎勵</a><div class=w3-dropdown-hover><button class=w3-button style="background-color: #333 !important;padding: 0;"><svg viewbox="0 0 32 30" style="background-color: #333 !important;height: 1.4em;" stroke=white><rect x=2.95 y=1.95 width=26.1 height=26.1 fill=none stroke=none></rect><ellipse cx=16 cy=15 rx=5.22 ry=5.22 class=w-ctl stroke-width=1.74></ellipse><path d="M 16 1.95 L 16 8.48 M 16 21.53 L 16 28.05 M 22.53 15 L 29.05 15 M 9.47 15 L 2.95 15 M 6.73 5.73 L 11.43 10.43 M 11.43 19.57 L 6.73 24.27 M 25.27 5.73 L 20.57 10.43 M 20.57 19.57 L 25.27 24.27" fill=none stroke-width=1.74></path></svg></button><div class="w3-dropdown-content w3-bar-block"><a href=# id=theme-system class="w3-bar-item w3-button">系統</a><a href=# id=theme-dark class="w3-bar-item w3-button">深色</a><a href=# id=theme-light class="w3-bar-item w3-button">白色</a></div></div></div><script src=/dracula.js></script><h1 style="font-size: min(30px,3vw);margin: 3vw;">遠古的蛋/古びたタマゴ/Ancient Eggs</h1><img style="display: block;margin: 0 auto;max-width: 100%;" src=https://cdn.discordapp.com/attachments/1148597630012768267/1148600811497197680/12.png><p>P.S. 激稀有貓於Lv60後成長幅度減半，於Lv80後成長幅度再次減半<br>P.S. 稀有貓於Lv70後成長幅度減半，於Lv90後成長幅度再次減半<br>P.S. EX貓於Lv60後成長幅度減半</p><table class="w3-table w3-centered w3-striped" style="width: 95%"><tbody><tr><td class=w3-card><p>遠古的蛋：N001</p><a class=B href="/unit.html?id=656"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N001」的小小字樣</td><td class=w3-card><p>遠古的蛋：N101</p><a class=B href="/unit.html?id=658"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N101」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N102</p><a class=B href="/unit.html?id=659"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N102」的小小字樣</td><td class=w3-card><p>遠古的蛋：N103</p><a class=B href="/unit.html?id=663"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N103」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N104</p><a class=B href="/unit.html?id=664"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N104」的小小字樣</td><td class=w3-card><p>遠古的蛋：N201</p><a class=B href="/unit.html?id=665"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N201」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N003</p><a class=B href="/unit.html?id=669"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N003」的小小字樣</td><td class=w3-card><p>遠古的蛋：N202</p><a class=B href="/unit.html?id=670"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N202」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N105</p><a class=B href="/unit.html?id=675"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N105」的小小字樣</td><td class=w3-card><p>遠古的蛋：N106</p><a class=B href="/unit.html?id=676"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N106」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N004</p><a class=B href="/unit.html?id=685"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N004」的小小字樣</td><td class=w3-card><p>遠古的蛋：N000</p><a class=B href="/unit.html?id=691"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N000」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N107</p><a class=B href="/unit.html?id=697"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N107」的小小字樣</td><td class=w3-card><p>遠古的蛋：N005</p><a class=B href="/unit.html?id=700"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N005」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N108</p><a class=B href="/unit.html?id=706"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N108」的小小字樣</td><td class=w3-card><p>遠古的蛋：N109</p><a class=B href="/unit.html?id=707"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N109」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N203</p><a class=B href="/unit.html?id=713"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N203」的小小字樣</td><td class=w3-card><p>遠古的蛋：N111</p><a class=B href="/unit.html?id=716"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N111」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N110</p><a class=B href="/unit.html?id=717"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N110」的小小字樣</td><td class=w3-card><p>遠古的蛋：N006</p><a class=B href="/unit.html?id=720"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N006」的小小字樣</td></tr><tr><td class=w3-card><p>古びたタマゴ:N112</p><a class=B href="/unit.html?id=724"><img src=/data/img/m/000/000_m.png></a>タマゴのような形をした謎の物体<br>長い歳月を経て土がこびりつき風化している<br>「N112」と小さく刻まれているように見えるが…<br>フルビタタマゴ</td></tr></tbody></table></body></html>
+</style><body><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html class=active>轉蛋</a><a href=/stage.html>關卡</a><a href=/music.html>音效</a><a href=/reward_all.html>獎勵</a><a title=設定 href=/settings.html style="float: right;"><svg viewbox="0 0 24 24"><path fill=white d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z"/></svg></a><a title=佈景主題 onclick=toggleTheme() style="float: right;"><svg viewbox="0 0 24 24"><path fill=white d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20 L12,4 C16.418278,4 20,7.581722 20,12 C20,16.418278 16.418278,20 12,20 Z"></path></svg></a><a style="position: relative;float: right;"><input autocomplete=off id=site-search type=text name=search style="font-size: 17px;border: 1px solid rgba(0, 0, 0, 0.25) !important;border-radius: 25px;font-style: italic;background-color: white !important;color: black !important;" placeholder=Search... aria-label=search><button id=search-btn onclick=site_search()><svg viewbox="0 0 50 50" width=50px height=50px><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"/></svg></button><div style="position: relative;" class=w3-card><div id=site-s-result><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div><script src=/dracula.js></script><h1 style="font-size: min(30px,3vw);margin: 3vw;">遠古的蛋/古びたタマゴ/Ancient Eggs</h1><img style="display: block;margin: 0 auto;max-width: 100%;" src=https://cdn.discordapp.com/attachments/1148597630012768267/1148600811497197680/12.png><p>P.S. 稀有貓於Lv70後成長幅度減半，於Lv90後成長幅度再次減半<br>P.S. EX貓於Lv60後成長幅度減半<br>P.S. 激稀有貓於Lv60後成長幅度減半，於Lv80後成長幅度再次減半</p><table class="w3-table w3-centered w3-striped" style="width: 95%"><tbody><tr><td class=w3-card><p>遠古的蛋：N001</p><a class=B href="/unit.html?id=656"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N001」的小小字樣</td><td class=w3-card><p>遠古的蛋：N101</p><a class=B href="/unit.html?id=658"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N101」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N102</p><a class=B href="/unit.html?id=659"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N102」的小小字樣</td><td class=w3-card><p>遠古的蛋：N103</p><a class=B href="/unit.html?id=663"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N103」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N104</p><a class=B href="/unit.html?id=664"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N104」的小小字樣</td><td class=w3-card><p>遠古的蛋：N201</p><a class=B href="/unit.html?id=665"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N201」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N003</p><a class=B href="/unit.html?id=669"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N003」的小小字樣</td><td class=w3-card><p>遠古的蛋：N202</p><a class=B href="/unit.html?id=670"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N202」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N105</p><a class=B href="/unit.html?id=675"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N105」的小小字樣</td><td class=w3-card><p>遠古的蛋：N106</p><a class=B href="/unit.html?id=676"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N106」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N004</p><a class=B href="/unit.html?id=685"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N004」的小小字樣</td><td class=w3-card><p>遠古的蛋：N000</p><a class=B href="/unit.html?id=691"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N000」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N107</p><a class=B href="/unit.html?id=697"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N107」的小小字樣</td><td class=w3-card><p>遠古的蛋：N005</p><a class=B href="/unit.html?id=700"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N005」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N108</p><a class=B href="/unit.html?id=706"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N108」的小小字樣</td><td class=w3-card><p>遠古的蛋：N109</p><a class=B href="/unit.html?id=707"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N109」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N203</p><a class=B href="/unit.html?id=713"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N203」的小小字樣</td><td class=w3-card><p>遠古的蛋：N111</p><a class=B href="/unit.html?id=716"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N111」的小小字樣</td></tr><tr><td class=w3-card><p>遠古的蛋：N110</p><a class=B href="/unit.html?id=717"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N110」的小小字樣</td><td class=w3-card><p>遠古的蛋：N006</p><a class=B href="/unit.html?id=720"><img src=/data/img/m/000/000_m.png></a>外形像蛋的謎樣物體<br>經年累月附著了塵土且遭受風化<br>上頭似乎刻有「N006」的小小字樣</td></tr><tr><td class=w3-card><p>古びたタマゴ:N112</p><a class=B href="/unit.html?id=724"><img src=/data/img/m/000/000_m.png></a>タマゴのような形をした謎の物体<br>長い歳月を経て土がこびりつき風化している<br>「N112」と小さく刻まれているように見えるが…<br>フルビタタマゴ</td></tr></tbody></table></body></html>

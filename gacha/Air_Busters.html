@@ -4,13 +4,65 @@ html, body { width: 100%;margin: 0 auto;padding: 0;text-align: center;font-size:
 table { margin: 0 auto;border-collapse: collapse;margin-top: 50px;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
 tbody > a { display: block; }
 
-.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(3vw, 26px) !important; }
-.topnav a { display: inline-block;color: #f2f2f2 !important; padding: 5px 2vw; text-decoration: none; }
-.topnav a.active { background-color: #f2bb00 !important; color: white !important; }
-.topnav a:visited { text-decoration: none; }
-.w3-dropdown-content > a { color: var(--color) !important;  }
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: min(2vw, 20px) !important; }
+.topnav > a { display: inline-block;color: #f2f2f2 !important; padding: 1vh 2vw; text-decoration: none;cursor: pointer;vertical-align: middle; }
+.topnav > a.active { background-color: #4caf50 !important; }
+.topnav > a:visited { text-decoration: none; }
+.topnav > a:hover { background-color: #009688 !important; }
+.topnav svg { background-color: inherit !important;height: 1.3em; }
+#site-search {
+  display: none;
+  width: 175px;
+  padding: 0.1em 0.2em;
+}
+#search-btn {
+  all: unset;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: transparent !important;
+}
+#search-btn svg {
+  width: 12px;
+  height: 12px;
+  fill: white;
+}
+@media (min-width:800px) {
+  #site-search {
+    display: inline-block;
+    width: 20vw;
+    padding: 5px 10px;
+  }
+  #search-btn {
+    position: relative;
+    top: 3px;
+    right: 30px;
+  }
+  #search-btn svg {
+    height: 22px;
+    width: 22px;
+    fill: black;
+  }
+}
+#site-s-result {
+  background-color: white !important;
+  display: none;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+}
+#site-s-result > * {
+  width: 100%;
+  padding: 0.7em 2em;
+  color: black !important;
+  background-color: transparent !important;
+}
+#site-s-result > *:hover {
+  background-color: #e7e7e7 !important;
+  color: black !important;
+}
 
 .w3-table td { padding: 0; }
 .w3-table td:first-child { width: 50%; }
 p { margin-block-end: 0; }
-</style><body><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html class=active>轉蛋</a><a href=/stage.html>關卡</a><a href=/music.html>音效</a><a href=/reward_all.html>獎勵</a><div class=w3-dropdown-hover><button class=w3-button style="background-color: #333 !important;padding: 0;"><svg viewbox="0 0 32 30" style="background-color: #333 !important;height: 1.4em;" stroke=white><rect x=2.95 y=1.95 width=26.1 height=26.1 fill=none stroke=none></rect><ellipse cx=16 cy=15 rx=5.22 ry=5.22 class=w-ctl stroke-width=1.74></ellipse><path d="M 16 1.95 L 16 8.48 M 16 21.53 L 16 28.05 M 22.53 15 L 29.05 15 M 9.47 15 L 2.95 15 M 6.73 5.73 L 11.43 10.43 M 11.43 19.57 L 6.73 24.27 M 25.27 5.73 L 20.57 10.43 M 20.57 19.57 L 25.27 24.27" fill=none stroke-width=1.74></path></svg></button><div class="w3-dropdown-content w3-bar-block"><a href=# id=theme-system class="w3-bar-item w3-button">系統</a><a href=# id=theme-dark class="w3-bar-item w3-button">深色</a><a href=# id=theme-light class="w3-bar-item w3-button">白色</a></div></div></div><script src=/dracula.js></script><h1 style="font-size: min(30px,3vw);margin: 3vw;">漂浮破壞者/エアバスターズ/Air Busters</h1><img style="display: block;margin: 0 auto;max-width: 100%;" src=https://cdn.discordapp.com/attachments/934738752557948968/934740788594753576/gatya_bnr452.png><p>P.S. 超激稀有貓於Lv60後成長幅度減半，於Lv80後成長幅度再次減半</p><table class="w3-table w3-centered w3-striped" style="width: 95%"><tbody><tr><td class=w3-card><p>閃電機兵飛雷</p><a class=B href="/unit.html?id=286"><img src=/img/u/286/f/uni286_f00.png></a>使用被禁止的技術製造出的帶有感情<br>的防空兵器NE-KO，通稱 雷。<br>對上飄浮敵人很耐打，並能給予超大傷害(範圍攻擊)</td><td class=w3-card><p>貓俠大帝</p><a class=B href="/unit.html?id=196"><img src=/img/u/196/f/uni196_f00.png></a>穿著能夠完全遮蔽紫外線的華麗套裝<br>有著午間連續劇絕對看不到的黑暗容顏<br>給予異星戰士和飄浮敵人超大傷害（範圍攻擊）</td></tr><tr><td class=w3-card><p>貓護士</p><a class=B href="/unit.html?id=143"><img src=/img/u/143/f/uni143_f00.png></a>有著溫暖眼神與迷人笑容的小護士。帶著溫暖的<br>正面能量和貓咪印記的注射針筒強力攻擊。<br>有時候打飛飄浮和黑色敵人並使移動變慢(範圍攻擊)</td><td class=w3-card><p>白鶴貓</p><a class=B href="/unit.html?id=135"><img src=/img/u/135/f/uni135_f00.png></a>每年參加湖上舉辦的變身鳥比賽<br>並且屢次飛出最遠紀錄的攻擊性貓咪<br>有時候可以把天使與飄浮敵人打飛（範圍攻擊）</td></tr><tr><td class=w3-card><p>寶杖使者・悟淨貓</p><a class=B href="/unit.html?id=107"><img src=/img/u/107/f/uni107_f00.png></a>使用魔力法杖來戰鬥的魔法女孩<br>能施放光彈打擊惡勢力（範圍攻擊）<br>有時候讓飄浮敵人暫時動作停止</td><td class=w3-card><p>召喚・八戒貓</p><a class=B href="/unit.html?id=106"><img src=/img/u/106/f/uni106_f00.png></a>騎在機器小豬「咚咚」上的天然女孩<br>能讓小豬發射壓倒性的超近距離光束砲（範圍攻擊）<br>對上飄浮敵人很耐打，死前能存活一次</td></tr><tr><td class=w3-card><p>聖龍梅基多拉</p><a class=B href="/unit.html?id=84"><img src=/img/u/084/f/uni084_f00.png></a>為了淨化世界而誕生的傳說的龍族<br>以壓倒性的破壞力攻擊敵人（範圍攻擊）<br>有時候打飛飄浮敵人並使之移動變慢</td><td class=w3-card><p>地龍索多姆</p><a class=B href="/unit.html?id=83"><img src=/img/u/083/f/uni083_f00.png></a>被古代兵器封印的傳說龍族<br>使用壓倒性的破壞力攻擊敵人（範圍攻擊）<br>對上飄浮敵人很耐打，有時候也能打飛他們</td></tr><tr><td class=w3-card><p>風神溫蒂</p><a class=B href="/unit.html?id=75"><img src=/img/u/075/f/uni075_f00.png></a>能夠操縱風的力量的超能少女<br>從遠距離發射的真空砲<br>可以給予飄浮敵人超大傷害（範圍攻擊）</td><td class=w3-card><p>貓咪Baby</p><a class=B href="/unit.html?id=59"><img src=/img/u/059/f/uni059_f00.png></a>一個人什麼也做不了的嬰兒貓咪<br>一旦被欺負，恐怖的爸爸就會出現<br>有時候打飛飄浮敵人和異星戰士（範圍攻擊）</td></tr></tbody></table><div><p>轉蛋歷史</p><br><p>2023/7/5(11:00)~7/8(10:59) 漂浮破壞者 5% 好康轉蛋</p><p>2022/3/21(11:00)~3/23(10:59) 漂浮破壞者 5% 好康轉蛋</p><p>2021/10/18(11:00)~2021/10/20(10:59) 漂浮破壞者 5% 好康轉蛋</p><p>2021/8/2(11:00)~2021/8/4(10:59) 漂浮破壞者 5% 好康轉蛋</p><p>2021/4/26~2021/4/28 漂浮破壞者 5% 好康轉蛋</p><p>2021/2/4~2021/2/6 漂浮破壞者 5% 好康轉蛋</p><p>2020/11/30~2020/12/2 漂浮破壞者 5% 好康轉蛋</p><p>2020/8/19~2020/8/21 漂浮破壞者 5% 好康轉蛋</p><p>2020/2/7~2020/2/10 漂浮破壞者 5% 好康轉蛋</p><p>2019/12/9~2019/12/11 飄浮破壞者 5% 好康轉蛋</p><p>2019/8/29~2019/9/1 漂浮破壞者 5% 好康轉蛋</p><p>2019/6/21~2019/6/24 漂浮破壞者 5% 好康轉蛋</p><p>2019/4/6~2019/4/8 漂浮破壞者 5% 好康轉蛋</p><p>2019/2/11~2019/2/13 漂浮破壞者 5% 好康轉蛋</p><p>2018/12/11~2018/12/13 漂浮破壞者 5% 好康轉蛋</p><p>2018/8/21~2018/8/23 漂浮破壞者 5%</p><p>2018/7/19~2018/7/21 漂浮破壞者 5%</p><p>2018/5/24~2018/5/26 漂浮破壞者 5%</p><p>2018/2/9~2018/2/11 漂浮破壞者 5%</p><p>2018/1/9~2018/1/11 漂浮破壞者 5%</p><p>2017/11/15~2017/11/17 漂浮破壞者 5%</p><p>2017/9/27~2017/9/29 漂浮破壞者 5%</p><p>2017/8/27~2017/8/29 漂浮破壞者 5%</p><p>2017/7/24~2017/7/27 飄浮破壞者 5%</p><p>2017/6/21~2017/6/23 漂浮破壞者 5%</p><p>2017/5/16~2017/5/19 漂浮破壞者 5%</p><p>2017/3/29~2017/4/1 漂浮破壞者 5%</p><p>2017/3/4~2017/3/6 漂浮破壞者 5%</p><p>2017/2/10~2017/2/12 漂浮破壞者 5%</p><p>2017/1/18~2017/1/20 漂浮破壞者 5%</p><p>2016/12/7~2016/12/10 漂浮破壞者 5%</p><p>2016/10/28~2016/10/31 漂浮破壞者 5%</p><p>2016/9/23~2016/9/26 漂浮破壞者5%</p></div></body></html>
+</style><body><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html>敵人</a><a href=/gachas.html class=active>轉蛋</a><a href=/stage.html>關卡</a><a href=/music.html>音效</a><a href=/reward_all.html>獎勵</a><a title=設定 href=/settings.html style="float: right;"><svg viewbox="0 0 24 24"><path fill=white d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z"/></svg></a><a title=佈景主題 onclick=toggleTheme() style="float: right;"><svg viewbox="0 0 24 24"><path fill=white d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20 L12,4 C16.418278,4 20,7.581722 20,12 C20,16.418278 16.418278,20 12,20 Z"></path></svg></a><a style="position: relative;float: right;"><input autocomplete=off id=site-search type=text name=search style="font-size: 17px;border: 1px solid rgba(0, 0, 0, 0.25) !important;border-radius: 25px;font-style: italic;background-color: white !important;color: black !important;" placeholder=Search... aria-label=search><button id=search-btn onclick=site_search()><svg viewbox="0 0 50 50" width=50px height=50px><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"/></svg></button><div style="position: relative;" class=w3-card><div id=site-s-result><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div><script src=/dracula.js></script><h1 style="font-size: min(30px,3vw);margin: 3vw;">漂浮破壞者/エアバスターズ/Air Busters</h1><img style="display: block;margin: 0 auto;max-width: 100%;" src=https://cdn.discordapp.com/attachments/934738752557948968/934740788594753576/gatya_bnr452.png><p>P.S. 超激稀有貓於Lv60後成長幅度減半，於Lv80後成長幅度再次減半</p><table class="w3-table w3-centered w3-striped" style="width: 95%"><tbody><tr><td class=w3-card><p>閃電機兵飛雷</p><a class=B href="/unit.html?id=286"><img src=/img/u/286/f/uni286_f00.png></a>使用被禁止的技術製造出的帶有感情<br>的防空兵器NE-KO，通稱 雷。<br>對上飄浮敵人很耐打，並能給予超大傷害(範圍攻擊)</td><td class=w3-card><p>貓俠大帝</p><a class=B href="/unit.html?id=196"><img src=/img/u/196/f/uni196_f00.png></a>穿著能夠完全遮蔽紫外線的華麗套裝<br>有著午間連續劇絕對看不到的黑暗容顏<br>給予異星戰士和飄浮敵人超大傷害（範圍攻擊）</td></tr><tr><td class=w3-card><p>貓護士</p><a class=B href="/unit.html?id=143"><img src=/img/u/143/f/uni143_f00.png></a>有著溫暖眼神與迷人笑容的小護士。帶著溫暖的<br>正面能量和貓咪印記的注射針筒強力攻擊。<br>有時候打飛飄浮和黑色敵人並使移動變慢(範圍攻擊)</td><td class=w3-card><p>白鶴貓</p><a class=B href="/unit.html?id=135"><img src=/img/u/135/f/uni135_f00.png></a>每年參加湖上舉辦的變身鳥比賽<br>並且屢次飛出最遠紀錄的攻擊性貓咪<br>有時候可以把天使與飄浮敵人打飛（範圍攻擊）</td></tr><tr><td class=w3-card><p>寶杖使者・悟淨貓</p><a class=B href="/unit.html?id=107"><img src=/img/u/107/f/uni107_f00.png></a>使用魔力法杖來戰鬥的魔法女孩<br>能施放光彈打擊惡勢力（範圍攻擊）<br>有時候讓飄浮敵人暫時動作停止</td><td class=w3-card><p>召喚・八戒貓</p><a class=B href="/unit.html?id=106"><img src=/img/u/106/f/uni106_f00.png></a>騎在機器小豬「咚咚」上的天然女孩<br>能讓小豬發射壓倒性的超近距離光束砲（範圍攻擊）<br>對上飄浮敵人很耐打，死前能存活一次</td></tr><tr><td class=w3-card><p>聖龍梅基多拉</p><a class=B href="/unit.html?id=84"><img src=/img/u/084/f/uni084_f00.png></a>為了淨化世界而誕生的傳說的龍族<br>以壓倒性的破壞力攻擊敵人（範圍攻擊）<br>有時候打飛飄浮敵人並使之移動變慢</td><td class=w3-card><p>地龍索多姆</p><a class=B href="/unit.html?id=83"><img src=/img/u/083/f/uni083_f00.png></a>被古代兵器封印的傳說龍族<br>使用壓倒性的破壞力攻擊敵人（範圍攻擊）<br>對上飄浮敵人很耐打，有時候也能打飛他們</td></tr><tr><td class=w3-card><p>風神溫蒂</p><a class=B href="/unit.html?id=75"><img src=/img/u/075/f/uni075_f00.png></a>能夠操縱風的力量的超能少女<br>從遠距離發射的真空砲<br>可以給予飄浮敵人超大傷害（範圍攻擊）</td><td class=w3-card><p>貓咪Baby</p><a class=B href="/unit.html?id=59"><img src=/img/u/059/f/uni059_f00.png></a>一個人什麼也做不了的嬰兒貓咪<br>一旦被欺負，恐怖的爸爸就會出現<br>有時候打飛飄浮敵人和異星戰士（範圍攻擊）</td></tr></tbody></table><div><p>轉蛋歷史</p><br><p>2023/7/5(11:00)~7/8(10:59) 漂浮破壞者 5% 好康轉蛋</p><p>2022/3/21(11:00)~3/23(10:59) 漂浮破壞者 5% 好康轉蛋</p><p>2021/10/18(11:00)~2021/10/20(10:59) 漂浮破壞者 5% 好康轉蛋</p><p>2021/8/2(11:00)~2021/8/4(10:59) 漂浮破壞者 5% 好康轉蛋</p><p>2021/4/26~2021/4/28 漂浮破壞者 5% 好康轉蛋</p><p>2021/2/4~2021/2/6 漂浮破壞者 5% 好康轉蛋</p><p>2020/11/30~2020/12/2 漂浮破壞者 5% 好康轉蛋</p><p>2020/8/19~2020/8/21 漂浮破壞者 5% 好康轉蛋</p><p>2020/2/7~2020/2/10 漂浮破壞者 5% 好康轉蛋</p><p>2019/12/9~2019/12/11 飄浮破壞者 5% 好康轉蛋</p><p>2019/8/29~2019/9/1 漂浮破壞者 5% 好康轉蛋</p><p>2019/6/21~2019/6/24 漂浮破壞者 5% 好康轉蛋</p><p>2019/4/6~2019/4/8 漂浮破壞者 5% 好康轉蛋</p><p>2019/2/11~2019/2/13 漂浮破壞者 5% 好康轉蛋</p><p>2018/12/11~2018/12/13 漂浮破壞者 5% 好康轉蛋</p><p>2018/8/21~2018/8/23 漂浮破壞者 5%</p><p>2018/7/19~2018/7/21 漂浮破壞者 5%</p><p>2018/5/24~2018/5/26 漂浮破壞者 5%</p><p>2018/2/9~2018/2/11 漂浮破壞者 5%</p><p>2018/1/9~2018/1/11 漂浮破壞者 5%</p><p>2017/11/15~2017/11/17 漂浮破壞者 5%</p><p>2017/9/27~2017/9/29 漂浮破壞者 5%</p><p>2017/8/27~2017/8/29 漂浮破壞者 5%</p><p>2017/7/24~2017/7/27 飄浮破壞者 5%</p><p>2017/6/21~2017/6/23 漂浮破壞者 5%</p><p>2017/5/16~2017/5/19 漂浮破壞者 5%</p><p>2017/3/29~2017/4/1 漂浮破壞者 5%</p><p>2017/3/4~2017/3/6 漂浮破壞者 5%</p><p>2017/2/10~2017/2/12 漂浮破壞者 5%</p><p>2017/1/18~2017/1/20 漂浮破壞者 5%</p><p>2016/12/7~2016/12/10 漂浮破壞者 5%</p><p>2016/10/28~2016/10/31 漂浮破壞者 5%</p><p>2016/9/23~2016/9/26 漂浮破壞者5%</p></div></body></html>
