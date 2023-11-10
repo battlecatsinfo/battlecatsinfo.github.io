@@ -85,10 +85,13 @@ td {
   display: inline-block;
   width: 100px;
   border-radius: 5px;
-  background-color: #7777774a !important;
+  background-color: #7777774a;
   padding: 10px;
-  color: white;
   user-select: none;
+}
+li.o-selected {
+  box-shadow: 0 0 2px black;
+  background-color: #7fdbff !important;
 }
 .w3-ul {
   border-radius: 3px;
@@ -122,9 +125,14 @@ ul::-webkit-scrollbar-thumb {
   background-color: gray;
   border: 1px solid darkgray;
 }
-tr:hover,
-li:hover {
-  background-color: lightcyan !important;
+.w3-table tr:hover td, li:hover {
+  background-color: lightcyan;
+}
+[data-theme='dark'] .w3-table tr:hover td {
+	background-color: #638593 !important;
+}
+[data-theme='dark'] li:hover {
+	background-color: darkcyan !important;
 }
 textarea {
   font-size: 20px;

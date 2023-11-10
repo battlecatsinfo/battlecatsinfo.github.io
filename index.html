@@ -9,6 +9,12 @@ function Switch() {
   alert('單位切換成「秒」');
 }
 </script><style>
+:root {
+  --t: #2e2725;
+}
+[data-theme='dark'] {
+  --t: white;
+}
 html, body { padding:0;margin:0;width:100%;text-align:center;font-size: min(22px, 4vw); }
 .A { display: block; margin: 0 auto;max-width: min(100%, 430px); }
 
@@ -78,7 +84,7 @@ html, body { padding:0;margin:0;width:100%;text-align:center;font-size: min(22px
 }
 svg {
   background-color: transparent !important;
-  fill: var(--color);
+  fill: var(--t);
   width: 2em;
   height: 2em;
 }
