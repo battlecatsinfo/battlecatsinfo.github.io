@@ -1,6 +1,6 @@
-﻿[modelanim:animation]
+﻿[modelanim:animation2]
+2
 1
+2,2,-1,0,0,b01
 1
-1,2,-1,-1000,1000,攻撃待機
-1
-0,0,1,0
+0,2,1,0
