@@ -85,7 +85,7 @@ let chart;
         td2.textContent = hp;
 	tbody.appendChild(tr);
 	do {
-		hp -= 1 + ~~(hp * m);
+		hp -= 1 + Math.max(~~(hp * m), 1);
 		Ys.push(hp);
 		tr = document.createElement('tr');
 		td1 = document.createElement('td');
