@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang=zh-Hant><head><meta charset=utf-8><title>敵人搜尋</title><meta name=description content="搜尋敵人 | 貓咪大戰爭中文資訊網站"><meta property=og:site_name content=battlecatsinfo.github.io><meta property=og:title content=敵人搜尋><meta property=og:description content=篩選和排序敵人><meta property=og:image content=https://i.imgur.com/wzLaUm2.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=stylesheet type=text/css href=/dracula.css><link rel=stylesheet type=text/css href=w3.css></head><body><style>
+html,
+body {
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 120px;
+  height: 120px;
+  margin: -76px 0 0 -76px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+#loader-text {
+  position: absolute;
+  left: calc(50% - 60px);
+  top: 60%;
+  z-index: 2;
+  text-align: center;
+  width: 120px;
+  height: 120px;
+}
+.An {
+  position: relative;
+  display: none;
+  animation-name: An;
+  animation-duration: 0.7s
+}
+@keyframes An { 
+  from { opacity:0; } 
+  to { opacity:1; }
+}
+img {
+	background-color: transparent !important;
+}
+table,
+th,
+td {
+  border: 1px solid #d1d5d5;
+}
+
+.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: max(1.5vw, 10px) !important; }
+.topnav > a { display: inline-block;color: #f2f2f2 !important; padding: 1vh 2vw; text-decoration: none;cursor: pointer;vertical-align: middle; }
+.topnav > a.active { background-color: #4caf50 !important; }
+.topnav > a:visited { text-decoration: none; }
+.topnav > a:hover { background-color: #009688 !important; }
+.topnav svg { background-color: inherit !important;height: 1.3em; }
+#site-search {
+  display: none;
+  width: 175px;
+  padding: 0.1em 0.2em;
+}
+#search-btn {
+  all: unset;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: transparent !important;
+}
+#search-btn svg {
+  width: 12px;
+  height: 12px;
+  fill: white;
+}
+@media (min-width:800px) {
+  #site-search {
+    display: inline-block;
+    width: 20vw;
+    padding: 5px 10px;
+  }
+  #search-btn {
+    position: relative;
+    top: 3px;
+    right: 30px;
+  }
+  #search-btn svg {
+    height: 22px;
+    width: 22px;
+    fill: black;
+  }
+}
+#site-s-result {
+  background-color: white !important;
+  display: none;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+}
+#site-s-result > * {
+  width: 100%;
+  padding: 0.7em 2em;
+  color: black !important;
+  background-color: transparent !important;
+}
+#site-s-result > *:hover {
+  background-color: #e7e7e7 !important;
+  color: black !important;
+}
+
+.w3-centered td {
+  vertical-align: middle;
+}
+.w3-ul li {
+  padding: 0px;
+  cursor: default;
+  border-radius: 1px;
+}
+li img {
+	vertical-align: bottom;
+}
+li.o-selected {
+  box-shadow: 0 0 2px black;
+  background-color: #7fdbff;
+}
+span.o-selected > button {
+  background-color: #795548;
+}
+.type-btn {
+  text-align: center;
+  display: inline-block;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #7777774a !important;
+  padding: 10px;
+  user-select: none;
+}
+.w3-ul {
+  border-radius: 3px;
+  border: 1.5px solid #818181;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+button {
+  display: block;
+  text-align: left;
+  width: 100%;
+  cursor: default;
+  transition: opacity 0s;
+  border: 0px;
+  background-color: inherit;
+  padding: 5px;
+}
+ul::-webkit-scrollbar {
+  width: 10px;
+}
+ul::-webkit-scrollbar-button {
+  background: #ebebeb;
+  border-radius: 4px;
+}
+ul::-webkit-scrollbar-track-piece {
+  background: #ebebeb;
+}
+ul::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: gray;
+  border: 1px solid darkgray;
+}
+.w3-table tr:hover td, li:hover {
+  background-color: lightcyan;
+}
+[data-theme='dark'] .w3-table tr:hover td {
+	background-color: #638593 !important;
+}
+[data-theme='dark'] li:hover {
+	background-color: steelblue !important;
+}
+textarea {
+  font-size: 20px;
+  font-family: "Source Code Pro", "Ubuntu Mono", monospace;
+}
+input[type="button"] {
+  margin: 0px auto;
+  margin-top: 20px;
+  border-radius: 5px;
+  width: 90px;
+  padding: 3px 10px;
+}
+#pages-a > td {
+  font-size: 1.2em;
+  width: 50px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+#pages-a > td:hover {
+  background-color: #ccc !important;
+}
+.w3-table td {
+  padding: 0px;
+}
+:root {
+  --mhide: block;
+}
+.may-hide {
+  display: var(--mhide);
+}
+.or-and {
+  margin-top: 0px;
+  width: 100%;
+}
+#name-search {
+  width: 100%;
+  padding: 6px 20px;
+  border: 3px solid #ddd;
+  border-radius: 7px;
+  outline: none;
+  transition: 0.2s;
+  margin: 0 auto;
+}
+#name-search:focus {
+  border-color: #bbb;
+}
+td.N {
+  background-color: var(--spans) !important;
+}
+p {
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+}
+	</style><div id=loader-text>載入中...</div><div id=loader></div><script src=cat.js></script><div class=topnav><a href=/index.html>主頁</a><a href=/search.html>貓咪</a><a href=/esearch.html class=active>敵人</a><a href=/gachas.html>轉蛋</a><a href=/stage.html>關卡</a><a title=設定 href=/settings.html style="float: right;"><svg viewbox="0 0 24 24"><path fill=white d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z"/></svg></a><a title=佈景主題 onclick=toggleTheme() style="float: right;"><svg viewbox="0 0 24 24"><path fill=white d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20 L12,4 C16.418278,4 20,7.581722 20,12 C20,16.418278 16.418278,20 12,20 Z"></path></svg></a><a style="position: relative;float: right;"><form style=display:inline;background-color:transparent;><input autocomplete=off id=site-search type=text name=search style="font-size: 17px;border: 1px solid rgba(0, 0, 0, 0.25) !important;border-radius: 25px;font-style: italic;background-color: white !important;color: black !important;" placeholder=Search... aria-label=search></form><button id=search-btn onclick=site_search()><svg viewbox="0 0 50 50" width=50px height=50px><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"/></svg></button><div style="position: relative;" class=w3-card><div id=site-s-result><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div><script src=/dracula.js></script><div id=main class=An><div class=w3-container><ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: scroll;" id=trait-s><li><span class="w3-button or-and w3-pale-red">AND</span></li><li data-expr=trait&amp;RED><button><img src=https://i.imgur.com/BUxdmA6.png width=40 height=40>紅色敵人</button></li><li data-expr=trait&amp;FLOAT><button><img src=https://i.imgur.com/GlcKsa6.png width=40 height=40>飄浮敵人</button></li><li data-expr=trait&amp;BLACK><button><img src=https://i.imgur.com/XbBWQIp.png width=40 height=40>黑色敵人</button></li><li data-expr=trait&amp;METAL><button><img src=https://i.imgur.com/fVfHaCQ.png width=40 height=40>鋼鐵敵人</button></li><li data-expr=trait&amp;ANGEL><button><img src=https://i.imgur.com/kxvTRTQ.png width=40 height=40>天使敵人</button></li><li data-expr=trait&amp;ALIEN><button><img src=https://i.imgur.com/PPpWAPy.png width=40 height=40>異星戰士</button></li><li data-expr=trait&amp;ZOMBIE><button><img src=https://i.imgur.com/oqVjofz.png width=40 height=40>不死生物</button></li><li data-expr=trait&amp;WHITE><button><img src=https://i.imgur.com/qOEibJt.png width=40 height=40>無屬性敵人</button></li><li data-expr=trait&amp;RELIC><button><img src=https://i.imgur.com/caSziI9.png width=40 height=40>古代種</button></li><li data-expr=trait&amp;DEMON><button><img src=https://i.imgur.com/hp6EvG6.png width=40 height=40>惡魔</button></li><li data-expr=trait&amp;BARON><button><img src=https://i.imgur.com/jxD6MKL.png width=40 height=40>超生命體</button></li><li data-expr=trait&amp;BEAST><button><img src=https://i.imgur.com/l3uHons.png width=40 height=40>超獸</button></li><li data-expr=trait&amp;EVA><button><img src=https://i.imgur.com/r1T5A0R.png width=40 height=40>使徒</button></li><li data-expr=trait&amp;WITCH><button><img src=https://i.imgur.com/SzLv3I7.png width=40 height=40>魔女</button></li><li data-expr=trait&amp;SAGE><button><img src=https://i.imgur.com/ERkdLLP.png width=40 height=40>超賢者</button></li><li data-expr=trait&amp;INFN><button><img src=https://i.imgur.com/ovv5SXv.png width=40 height=40>道場塔</button></li><li data-expr="speed == 0 && trait == 0"><button><img src=https://i.imgur.com/s5AVkib.png width=41 height=41>動畫塔</button></li></ul><ul class="w3-ul may-hide" style="width: 150px;" id=atk-s><li><span class="w3-button or-and w3-blue-gray">AND</span></li><li data-expr=atktype&ATK_SINGLE><button><img src=https://i.imgur.com/CZwFP3H.png width=40 height=40>單體攻擊</button></li><li data-expr=atktype&ATK_RANGE><button><img src=https://i.imgur.com/BeuHYlZ.png width=40 height=40>範圍攻擊</button></li><li data-expr=atktype&ATK_LD><button><img src=https://i.imgur.com/fYILfa8.png width=40 height=40>遠距攻擊</button></li><li data-expr=atktype&ATK_OMNI><button><img src=https://i.imgur.com/rvGrwIL.png width=40 height=40>全方位攻擊</button></li><li data-expr=atktype&ATK_KB_REVENGE><button><img src=https://i.imgur.com/KqtrO2b.png>擊退反擊</button></li><li data-expr=pre1><button><img src=https://i.imgur.com/veNQ90x.png width=40 height=40>連續攻擊</button></li></ul><form action=javascript:void(0); onsubmit="return false;" class=may-hide style="width: 150px;"><span class="w3-button w3-teal" id=filter-go style="width: 80px;">排序</span><span class="w3-button w3-red" id=filter-clear style="width: 80px;">清除</span></form><div class="no-print may-hide" style="position: absolute;top: 1047px;left: 17px;"><div>篩選表達式</div><textarea class=w3-code rows=3 cols=60 name=filter-expr id=filter-expr spellcheck=false></textarea><br><div>排序表達式</div><textarea class=w3-code rows=3 cols=60 name=sort-expr id=sort-expr spellcheck=false></textarea><br><a href=/help.html style="display: block;text-align: center;">使用說明</a></div><ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: scroll;width: 190px;" id=ab-s><li><span class="w3-button or-and w3-green">AND</span></li><li style="text-align: center;">能力</li><li data-expr=hasab(AB_STRONG)><button><img src=https://i.imgur.com/IE6ihRp.png width=40 height=40>攻擊力上升</button></li><li data-expr=hasab(AB_LETHAL)><button><img src=https://i.imgur.com/WcMDxXS.png width=40 height=40>死前存活</button></li><li data-expr=hasab(AB_ATKBASE)><button><img src=https://i.imgur.com/xIcbDzl.png width=40 height=40>善於攻城</button></li><li data-expr=hasab(AB_CRIT)><button><img src=https://i.imgur.com/FV6We1L.png width=40 height=40>會心一擊</button></li><li data-expr=hasab(AB_S)><button><img src=https://i.imgur.com/KDpH72p.png width=40 height=40>渾身一擊</button></li><li data-expr=hasab(AB_MINIWAVE)><button><img src=https://i.imgur.com/W18c1hw.png width=40 height=40>小波動</button></li><li data-expr=hasab(AB_WAVE)><button><img src=https://i.imgur.com/ZbPqGoj.png width=40 height=40>波動</button></li><li data-expr=hasab(AB_MINIVOLC)><button><img src=https://i.imgur.com/AEITK8t.png width=40 height=40>小烈波</button></li><li data-expr=hasab(AB_VOLC)><button><img src=https://i.imgur.com/at4bW0n.png width=40 height=40>烈波攻擊</button></li><li data-expr=hasab(AB_BURROW)><button><img src=https://i.imgur.com/if5GWkl.png width=40 height=40>鑽地</button></li><li data-expr=hasab(AB_REVIVE)><button><img src=https://i.imgur.com/ppocQfB.png width=40 height=40>復活</button></li><li data-expr=hasab(AB_SHIELD)><button><img src=https://i.imgur.com/l2VfcmX.png width=40 height=40>護盾</button></li><li data-expr=hasab(AB_DSHIELD)><button><img src=https://i.imgur.com/LESVycw.png width=40 height=40>惡魔盾</button></li><li data-expr=hasab(AB_AFTERMATH)><button><img src=https://i.imgur.com/WmB7utZ.png width=40 height=40>死後烈波</button></li><li data-expr=hasab(AB_COUNTER)><button><img src=https://i.imgur.com/tchDtAr.png width=40 height=40>烈波反擊</button></li><li data-expr=hasab(AB_GLASS)><button><img src=https://i.imgur.com/VY93npj.png width=40 height=40>一次攻擊</button></li><li style="text-align: center;">效果</li><li data-expr=hasab(AB_WEAK)><button><img src=https://i.imgur.com/yRkhAHL.png width=40 height=40>攻擊力下降</button></li><li data-expr=hasab(AB_STOP)><button><img src=https://i.imgur.com/i1pP3Mi.png width=40 height=40>使動作停止</button></li><li data-expr=hasab(AB_SLOW)><button><img src=https://i.imgur.com/MyoCUMu.png width=40 height=40>使動作變慢</button></li><li data-expr=hasab(AB_CURSE)><button><img src=https://i.imgur.com/0Rraywl.png width=40 height=40>詛咒</button></li><li data-expr=hasab(AB_POIATK)><button><img src=https://i.imgur.com/0yOBnDL.png width=40 height=40>毒擊</button></li><li data-expr=hasab(AB_WARP)><button><img src=https://i.imgur.com/KkYm2Og.png width=40 height=40>傳送</button></li><li data-expr=hasab(AB_KB)><button><img src=https://i.imgur.com/cLZsanQ.png width=40 height=40>打飛敵人</button></li><li data-expr=hasab(AB_IMUATK)><button><img src=https://i.imgur.com/8Eq6vPV.png width=40 height=40>攻擊無效</button></li><li style="text-align: center;">抗性</li><li data-expr=imu&IMU_WEAK><button><img src=https://i.imgur.com/aN6I67V.png width=40 height=40>攻擊力下降無效</button></li><li data-expr=imu&IMU_STOP><button><img src=https://i.imgur.com/OSjMN62.png width=40 height=40>動作停止無效</button></li><li data-expr=imu&IMU_SLOW><button><img src=https://i.imgur.com/rPx4aA2.png width=40 height=40>動作變慢無效</button></li><li data-expr=imu&IMU_KB><button><img src=https://i.imgur.com/5CYatS4.png width=40 height=40>打飛敵人無效</button></li><li data-expr=imu&IMU_WAVE><button><img src=https://i.imgur.com/MacWKW6.png width=40 height=40>波動傷害無效</button></li><li data-expr=imu&IMU_VOLC><button><img src=https://i.imgur.com/Uadt9Fa.png width=40 height=40>烈波傷害無效</button></li><li data-expr=imu&IMU_WARP><button><img src=https://i.imgur.com/T7BXYAw.png width=40 height=40>傳送無效</button></li><li data-expr=imu&IMU_CURSE><button><img src=https://i.imgur.com/27mAxhl.png width=40 height=40>詛咒無效</button></li><li data-expr=imu&IMU_POIATK><button><img src=https://i.imgur.com/5zleNqO.png width=40 height=40>毒擊傷害無效</button></li></ul><ul style="position: absolute;top: 605px;height: 395px;overflow: scroll;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" style="width: 150px;" id=kind-s><li data-expr="(id==237||id==238||id==239||id==269||id==270||id==279||id==295||id==296||id==311||id==451||id==457||id==633||id==260)"><button>貓</button></li><li data-expr="(id==75||id==76||id==77||id==78||id==79||id==80||id==81||id==82||id==83||id==242||id==243||id==244||id==245||id==246||id==247||id==248||id==249||id==250||id==396||id==397)"><button>狂亂貓</button></li><li data-expr="(id==322||id==323||id==324||id==325||id==326||id==327||id==328||id==329||id==330)"><button>小小貓</button></li><li data-expr="(id==561||id==562||id==563)"><button>惡魔貓</button></li><li data-expr="(id==127||id==128||id==129||id==130||id==131||id==132||id==133||id==134||id==135||id==136||id==137||id==138||id==139||id==140||id==230||id==231)"><button>EX開眼</button></li><li data-expr="(id==0||id==46||id==103||id==117||id==114||id==147||id==167||id==197||id==111||id==268||id==284||id==293||id==303||id==309||id==307||id==336||id==351||id==407||id==437||id==470||id==494||id==503||id==537||id==539||id==548||id==552||id==595||id==603||id==608||id==612||id==631)"><button>小狗</button></li><li data-expr="(id==41||id==110||id==390)"><button>臘腸狗</button></li><li data-expr="(id==42||id==99||id==184||id==416||id==513||id==636)"><button>貴賓狗</button></li><li data-expr="(id==44)"><button>杜賓狗</button></li><li data-expr="(id==1||id==104||id==118||id==285||id==358||id==553)"><button>蛇</button></li><li data-expr="(id==146||id==254||id==281||id==584||id==593)"><button>小人</button></li><li data-expr="(id==2||id==554||id==637)"><button>尛人</button></li><li data-expr="(id==3||id==47||id==54||id==65||id==113||id==169||id==337||id==525)"><button>河馬</button></li><li data-expr="(id==4||id==48||id==178||id==111||id==287||id==379||id==640)"><button>豬</button></li><li data-expr="(id==5||id==62||id==109||id==288||id==361||id==555||id==594)"><button>企鵝</button></li><li data-expr="(id==6||id==51||id==87||id==289||id==356||id==362||id==411||id==471||id==504||id==549||id==556||id==613)"><button>猩猩</button></li><li data-expr="(id==7||id==105||id==388||id==449)"><button>綿羊</button></li><li data-expr="(id==8||id==59||id==170||id==290||id==499)"><button>海豹</button></li><li data-expr="(id==9||id==101||id==149||id==306||id==363||id==421||id==510||id==557||id==641)"><button>大象</button></li><li data-expr="(id==10||id==52||id==182||id==291)"><button>袋鼠</button></li><li data-expr="(id==11||id==56||id==85||id==183||id==413)"><button>犀牛</button></li><li data-expr="(id==12||id==16||id==57||id==67||id==100||id==108||id==175||id==422||id==427||id==505||id==558)"><button>熊</button></li><li data-expr="(id==13||id==168||id==292||id==497)"><button>鱷魚</button></li><li data-expr="(id==14||id==332||id==607)"><button>兔子</button></li><li data-expr="(id==15||id==412)"><button>松鼠</button></li><li data-expr="(id==22||id==171||id==414||id==515)"><button>蛾</button></li><li data-expr="(id==172||id==420)"><button>眼鏡猴</button></li><li data-expr="(id==173||id==606)"><button>寄居蟹</button></li><li data-expr="(id==155||id==208||id==340)"><button>烏賊魷魚</button></li><li data-expr="(id==31||id==84||id==185||id==364||id==634)"><button>食蟻獸</button></li><li data-expr="(id==32||id==338||id==424)"><button>鴕鳥</button></li><li data-expr="(id==33||id==124||id==210||id==263||id==426||id==649)"><button>海獺</button></li><li data-expr="(id==34||id==156||id==206||id==517||id==588)"><button>無尾熊</button></li><li data-expr="(id==35||id==209||id==310)"><button>駱駝</button></li><li data-expr="(id==36||id==331||id==468||id==604||id==611||id==627)"><button>鴨子</button></li><li data-expr="(id==37||id==198||id==462||id==605)"><button>鷹</button></li><li data-expr="(id==38||id==177||id==261||id==280||id==428||id==439||id==538)"><button>山豬</button></li><li data-expr="(id==39||id==66||id==359||id==610)"><button>樹懶</button></li><li data-expr="(id==40||id==213||id==586)"><button>麋鹿</button></li><li data-expr="(id==43||id==592)"><button>鬣狼</button></li><li data-expr="(id==123)"><button>鴿子</button></li><li data-expr="(id==125||id==639)"><button>馬</button></li><li data-expr="(id==160||id==282||id==624)"><button>小雞</button></li><li data-expr="(id==498)"><button>火雞</button></li><li data-expr="(id==205||id==600)"><button>水豚</button></li><li data-expr="(id==207||id==527)"><button>燕子</button></li><li data-expr="(id==235||id==365)"><button>鼴鼠</button></li><li data-expr="(id==266||id==652)"><button>燈籠魚</button></li><li data-expr="(id==318||id==417)"><button>海豚</button></li><li data-expr="(id==255||id==375)"><button>巨嘴鳥</button></li><li data-expr="(id==256||id==387||id==587)"><button>海馬</button></li><li data-expr="(id==304||id==445)"><button>大鯢</button></li><li data-expr="(id==355||id==418)"><button>青蛙</button></li><li data-expr="(id==365||id==417)"><button>鼴鼠</button></li><li data-expr="(id==152||id==366||id==609)"><button>生化魚</button></li><li data-expr="(id==444)"><button>花園鰻</button></li><li data-expr="(id==447||id==630)"><button>議事阻撓貓</button></li><li data-expr="(id==583||id==650)"><button>魚尾獅</button></li><li data-expr="(id==614)"><button>螞蟻</button></li><li data-expr="(id==103||id==104||id==105)"><button>幽靈</button></li><li data-expr="(id==199)"><button>蝙蝠</button></li><li data-expr="(id==341||id==342||id==343)"><button>鼻涕蟲</button></li><li data-expr="(id==271||id==493)"><button>蜜蜂</button></li><li data-expr="(id==477||id==479)"><button>河豚</button></li><li data-expr="(id==495||id==653)"><button>河童</button></li><li data-expr="(id==571||id==643)"><button>魔導士</button></li><li data-expr="(id==21||id==116)"><button>看板小妹</button></li><li data-expr="(id==18||id==58||id==102||id==174||id==267||id==423||id==425||id==472||id==491||id==509||id==559||id==585)"><button>臉君</button></li><li data-expr="(id==23||id==53||id==63||id==180||id==642)"><button>惡之帝王</button></li><li data-expr="(id==24||id==49||id==50||id==211||id==272||id==405||id==406)"><button>噴噴</button></li><li data-expr="(id==176||id==232||id==511||id==615)"><button>海蝶</button></li><li data-expr="(id==64||id==69||id==70||id==71||id==112||id==179||id==236||id==294||id==377||id==443||id==512||id==560||id==638)"><button>旋渦</button></li><li data-expr="(id==18||id==23||id==24||id==176||id==181||id==212||id==419||id==446||id==367)"><button>主篇章BOSS</button></li><li data-expr="(id==45||id==148||id==258||id==316||id==354||id==380||id==450||id==496||id==516||id==526||id==551||id==589||id==599||id==616||id==628)"><button>傳奇/風雲塔BOSS</button></li><li data-expr="(id==232||id==257||id==267||id==271||id==317||id==431||id==479||id==495||id==535||id==573||id==585||id==491||id==492||id==493||id==506||id==511||id==514)"><button>降臨BOSS</button></li><li data-expr="(id==642||id==653)"><button>大降臨BOSS</button></li><li data-expr="(id==25||id==26||id==27||id==28||id==29||id==30||id==60||id==61||id==334||id==335||id==462||id==463)"><button>公主踢合作</button></li><li data-expr="(id==88||id==89||id==90||id==91||id==92||id==93||id==94||id==95||id==96||id==97||id==98||id==163||id==164||id==165||id==166||id==346||id==347||id==348||id==349||id==350)"><button>梅露可物語合作</button></li><li data-expr="(id==119||id==150||id==151||id==152||id==154)"><button>曼波魚合作</button></li><li data-expr="(id==158||id==159||id==259||id==339||id==408||id==461||id==507||id==646)"><button>消滅都市合作</button></li><li data-expr="(id==189||id==190||id==191||id==192||id==193||id==194||id==195||id==196)"><button>越南大戰合作</button></li><li data-expr="(id==214||id==215||id==216||id==217||id==218||id==219||id==220||id==221||id==222||id==223||id==224||id==225||id==226||id==227||id==228||id==229)"><button>城與龍合作</button></li><li data-expr="(id==273||id==274||id==275||id==276||id==277||id==278||id==429||id==579)"><button>魔法少女小圓合作</button></li><li data-expr="(id==319||id==320||id==321)"><button>Crash Fever合作</button></li><li data-expr="(id==351||id==352||id==353||id==409||id==410)"><button>蛋黃哥合作</button></li><li data-expr="(id==368||id==369||id==370||id==371||id==372||id==373||id==374)"><button>Fate合作</button></li><li data-expr="(id==381||id==382||id==383||id==384||id==385||id==386)"><button>實況野球合作</button></li><li data-expr="(id==392||id==393||id==394||id==395||id==464||id==647)"><button>EVA合作</button></li><li data-expr="(id==452||id==453||id==454||id==455||id==456||id==518||id==519||id==520)"><button>聖魔大戰合作</button></li><li data-expr="(id==470||id==471||id==472||id==473||id==474||id==475)"><button>戽斗星球合作</button></li><li data-expr="(id==480||id==481||id==482||id==483||id==484||id==485||id==486||id==487||id==488||id==528||id==529||id==530||id==531||id==532||id==622||id==623)"><button>快打旋風合作</button></li><li data-expr="(id==500||id==501||id==502||id==503||id==504||id==505||id==523||id==536||id==540)"><button>初音未來合作</button></li><li data-expr="(id==542||id==543||id==544||id==545||id==546)"><button>亂馬1/2合作</button></li><li data-expr="(id==550)"><button>哥吉拉合作</button></li></ul><div id=tables style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);"><div class=may-hide><input type=search placeholder=搜尋名稱或敵人id id=name-search></div><p><span id=search-result></span><a href=# id=toggle-s style="padding-left: 1em;">隱藏搜尋器</a><span style="float: right;"> 每頁顯示 <select oninput=setRange(event)><option value=10>10個</option><option value=25>25個</option><option value=50>50個</option><option value=100>100個</option><option value=9999>全部</option></select></span></p><table class="w3-table w3-centered" style="width: 100%;margin-bottom: 0px;"><thead><tr id=th style="cursor: pointer;"><td title=id>ID</td><td style="width: 110px;">圖示</td><td>名稱</td><td title=hp>HP</td><td title=atk>攻擊力</td><td title=dps>DPS</td><td title=kb>KB</td><td title=range>射程</td><td title=attackf>攻擊頻率</td><td title=speed>跑速</td><td title=cost>獎金</td><td>排序值</td></tr></thead><tbody id=tbody></tbody></table><table style="margin: 1em auto;"><tbody><tr id=pages-a></tr></tbody></table></div></div><script src=constants.js></script><script src=parser.js></script><script src=esearch.js></script></div></body></html>

@@ -1,0 +1,15 @@
+[modelanim:animation2]
+2
+4
+3,2,-1,0,0,012_leg_1<color=1>
+1
+0,0,0,0
+4,2,1,0,0,008_ef_shade.png<color=2>	
+1
+0,0,0,0
+5,12,-1,0,0,009_ef_smoke_l1.png<color=5>	
+1
+0,0,1,0
+6,12,-1,0,0,012_ef_smoke_r1.png<color=2>	
+1
+0,0,1,0
