@@ -54,7 +54,9 @@
 {{#*inline "content"}}
 	<h1 style="text-align:center;">合作一覽</h1>
 	<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59 !important;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
-		{{{nav-menu}}}
+		{{#each nav-menu}}
+		<a href="{{this.path}}">{{this.index}}. {{this.name}}</a>
+		{{/each}}
 	</div>
 	<div style="margin: 0 auto;text-align: center;width: 100%;padding: 2vw 2vw;font-size: min(2.5vw, 18px);">
 		<h2>合作活動史</h2>
@@ -71,7 +73,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{{taiwan-collab-history}}}
+				{{#each taiwan-collab-history as |hx|}}
+				<tr><td colspan="4" class="E">{{hx.[0]}}年</td></tr>
+				{{#each hx.[1] as |dur|}}
+				<tr><td>{{hx.[0]}}</td><td>{{dur.[0]}}</td><td>{{dur.[1]}}</td><td>{{dur.[2]}}</td></tr>
+				{{/each}}
+				{{/each}}
 			</tbody>
 		</table>
 		<h3>日版歷年合作活動史</h3>
@@ -85,7 +92,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{{japan-collab-history}}}
+				{{#each japan-collab-history as |hx|}}
+				<tr><td colspan="4" class="E">{{hx.[0]}}年</td></tr>
+				{{#each hx.[1] as |dur|}}
+				<tr><td>{{hx.[0]}}</td><td>{{dur.[0]}}</td><td>{{dur.[1]}}</td><td>{{dur.[2]}}</td></tr>
+				{{/each}}
+				{{/each}}
 			</tbody>
 		</table>
 	</div>
