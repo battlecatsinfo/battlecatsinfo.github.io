@@ -2,10 +2,10 @@
 
 ### Installation
 
-static-maker use [Node.js](https://nodejs.org/) to generate static files.
+We use [Node.js](https://nodejs.org/) to generate static files.
 
 ```sh
-$ git clone "https://github.com/battlecatsinfo/static-maker.git"
+$ git clone "https://github.com/battlecatsinfo/battlecatsinfo.github.io.git"
 $ npm install
 $ mkdir _out
 ```
@@ -17,7 +17,7 @@ $ node server.js # or npm start
 $ node.server.js --verbose
 ```
 
-Note: To display images successfully, you may need to clone https://github.com/battlecatsinfo/img to `static-maker/img/`.
+Note: To display images successfully, you may need to clone https://github.com/battlecatsinfo/img to `img/`.
 
 ### Build
 
@@ -34,8 +34,8 @@ $ cd js
 $ node build_all.js
 ```
 
-* `copy-assets.js`: copy files at `staic-maker/static/` folder.
-* `copy-data.js`: copy files at `static-maker/data/` folder.
+* `copy-assets.js`: copy files at `static/` folder.
+* `copy-data.js`: copy files at `data/` folder.
 * `combo.js`: produces `combos.html`.
 * `rank.js`: produces `rank.html`.
 * `medal.js`: produces `medal.html`.
