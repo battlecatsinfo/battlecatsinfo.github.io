@@ -1,0 +1,72 @@
+:root {
+	--vbg: white;
+	--bg: white;
+	--color: initial;
+	--dcolor: black;
+	--acolor: initial;
+	--abg: initial;
+	--ahover: #0b68b7;
+	--avisited: initial;
+	--tcolor: #f9f9f9;
+	--aactive: initial;
+	--bgd: #f1f1f1;
+	--spans: #7fdbff;
+	--liselect: #7fdbff;
+	--strip: #f1f1f1;
+}
+a,
+textarea {
+	appearance: none;
+}
+[data-theme="dark"] {
+	--vbg: #282a36;
+	--bg: #282a36;
+	--color: #f8f8f2;
+	--dcolor: black;
+	--acolor: #50fa7b;
+	--abg: transparent;
+	--ahover: #f1fa8c;
+	--avisited: #6272a4;
+	--tcolor: #44475a;
+	--aactive: #8be9fd;
+	--bgd: initial;
+	--spans: #797270;
+	--liselect: #638593;
+	--strip: #323541;
+}
+body {
+	color: var(--color);
+	background-color: var(--bg);
+}
+input,
+select,
+button {
+	color: var(--color);
+	background-color: var(--tcolor);
+}
+a,
+a:visited {
+	color: var(--acolor) !important;
+	background-color: var(--abg);
+}
+a:hover {
+	color: var(--ahover);
+}
+table {
+	background-color: var(--bg);
+}
+textarea {
+	color: var(--color);
+	background: var(--tcolor);
+}
+.o-selected button,
+.o-selected input {
+	box-shadow: 0 0 2px black;
+	background-color: var(--liselect);
+}
+.w3-bar-item {
+	background-color: var(--vbg);
+}
+.w3-striped tbody tr:nth-child(even) {
+	background-color: var(--strip);
+}

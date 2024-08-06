@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>偏好設定</title>
+	{{{favicon}}}
+	<link rel="stylesheet" type="text/css" href="w3.css">
+</head>
+
+<body>
+	<style>
+{{{nav-style}}}
+body {font-size: max(1vw, 10px);padding: 0;font-family: monospace;}
+.form {
+	padding: 1em 1.5em;
+	margin: 1em;
+	margin-right: 0.3em;
+	border-radius: 0.5em;
+	background-color: #93939300 !important;
+}
+.form * {
+	background-color: #93939300 !important;
+}
+.w3-section {
+	margin: 2em 1em !important;
+	margin-right: 0 !important;
+	padding: 1em;
+	padding-right: 0;
+	border-left: 0.7em #ffb86c solid;
+}
+.odds {
+	border-left: 0.7em #00bcd4 solid;
+}
+#s-trea .w3-section {
+	border-left: 0.7em #673ab7 solid;
+}
+h3 {
+	color: #3f51b5 !important;
+	background-color: transparent !important;
+	padding-left: 1vw;
+}
+[data-theme='dark'] h3 {
+	color: cyan !important;
+}
+label {
+	padding-left: 1vw;
+}
+.w3-sidebar > .w3-bar-item {
+	color: var(--color) !important;
+	background-color: transparent;
+	padding: 2vh 1vw !important;
+	padding-right: 0 !important;
+}
+.fucus {
+	background-color: #ababab4f !important;
+}
+.w3-table td {
+	vertical-align: middle;
+}
+.treasure {
+	display: none;
+}
+.w3-section {
+	box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.12);
+	background-color: #9393931c !important;
+	border-radius: 0.4em;
+	padding: 0.5em;
+	margin-bottom: 4em;
+}
+#s-trea .w3-section > * {
+	background-color: transparent !important;
+}
+h3 {
+	font-size: 1.3em !important;
+}
+#s-trea h3 {
+	padding-left: 0.4vw;
+}
+#s-trea h4 {
+	padding-left: 0.6vw;
+}
+[data-theme="dark"] h2 {
+	color: #8bc34a !important;  
+}
+[data-theme="dark"] h1 {
+	color: #00bcd4 !important;
+}
+.atab {
+	background-color: #9191919c !important;
+}
+[data-theme="dark"] .atab {
+	color: var(--ahover) !important;
+}
+.w3-input {
+	margin-left: 1em;
+	width: 7em;
+	margin-bottom: 1em;
+}
+.w3-input:invalid {
+	background-color: pink !important;
+}
+.w3-section p {
+	text-align: left;
+	padding-left: 1vw;
+}
+input[type='radio'] {
+	width: 1.2em;
+	height: 1.2em;
+	position:relative;
+	top:0.25em;
+}
+	</style>
+	{{{nav-bar}}}
+	<div class="w3-sidebar w3-bar-block w3-card" style="width: max(6em,10vw);background-color: #8080803d !important;">
+		<p class="w3-bar-item" style="background-color: transparent !important;">
+			<svg viewBox="0 0 24 24" style="width: 80%;background-color: transparent !important;">
+				<path style="fill: var(--color);background-color: transparent !important;" d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z"
+				/>
+			</svg>
+		</p>
+		<a href="#general" class="w3-bar-item w3-button w3-border-bottom fucus" onclick="fucus(event)">一般</a>
+		<a href="#favorite" class="w3-bar-item w3-button w3-border-bottom" onclick="fucus(event)">我的最愛</a>
+		<a href="#treasure" class="w3-bar-item w3-button w3-border-bottom" onclick="fucus(event)">金寶設定</a>
+	</div>
+
+	<div style="margin: 0.5em;padding-left: max(6.2em,11vw);">
+		<h1 style="margin: 10px;text-align: center;">設定</h1>
+
+		<h2 id="general" style="text-align: center;">一般</h2>
+
+		<div class="w3-row w3-section">
+			<h3>時間單位</h3>
+			<div class="form w3-card-4">
+				<p>
+					<input oninput="localStorage.setItem('unit', 'S')" type="radio" name="unit" id="unit-s" checked>
+					<label for="unit-s">秒</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('unit', 'F')" type="radio" name="unit" id="unit-f">
+					<label for="unit-f">F（幀數）</label>
+				</p>
+				<p>通常表示上30F等於1秒，但實際上1秒大約在28F~30F之間。用F為單位可以作更精確的計算。</p>
+			</div>
+		</div>
+
+		<div class="w3-row w3-section odds">
+			<h3>小數點</h3>
+			<div class="form w3-card-4">
+				<p>
+					<input oninput="localStorage.setItem('prec', '1')" type="radio" name="prec" id="prec-1">
+					<label for="prec-1">1位</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('prec', '2')" type="radio" name="prec" id="prec-2" checked>
+					<label for="prec-2">2位</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('prec', '3')" type="radio" name="prec" id="prec-3">
+					<label for="prec-3">3位</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('prec', '4')" type="radio" name="prec" id="prec-4">
+					<label for="prec-4">4位</label>
+				</p>
+				<p>設定最大要顯示幾個小數點</p>
+			</div>
+		</div>
+
+		<div class="w3-row w3-section">
+			<h3>佈景主題</h3>
+			<div class="form w3-card-4">
+				<p>
+					<input oninput="localStorage.setItem('theme', 'light');document.documentElement.setAttribute('data-theme', 'light')" type="radio" name="theme" id="theme-light">
+					<label for="theme-light">淺色主題 - Light</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('theme', 'dark');document.documentElement.setAttribute('data-theme', 'dark')" type="radio" name="theme" id="theme-dark">
+					<label for="theme-dark">深色主題 - Dark</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('theme', '');document.documentElement.setAttribute('data-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : '');" type="radio" name="theme" id="theme-auto" checked>
+					<label for="theme-auto">使用系統預設 - OS Default</label>
+				</p>
+			</div>
+		</div>
+
+		<div class="w3-row w3-section">
+			<h3>關卡資訊語言</h3>
+			<div class="form w3-card-4">
+				<p>
+					<input oninput="localStorage.setItem('stagel', '0')" type="radio" name="stagel" id="stagel-0" checked>
+					<label for="stagel-0">繁體中文</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('stagel', '1')" type="radio" name="stagel" id="stagel-1">
+					<label for="stagel-1">日文</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('stagel', '2')" type="radio" name="stagel" id="stagel-2">
+					<label for="stagel-2">繁體中文 + 日文</label>
+				</p>
+				<p>選擇關卡下拉選單的語言。如果你是日文版玩家，可以考慮用「繁體中文 + 日文」，否則建議用繁體中文（預設選項）。</p>
+			</div>
+		</div>
+
+		<div class="w3-row w3-section">
+			<h3>關卡資訊時間單位</h3>
+			<div class="form w3-card-4">
+				<p>
+					<input oninput="localStorage.setItem('stagef', 'f')" type="radio" name="stagef" id="stagef-f" checked>
+					<label for="stagef-f">F（幀數）</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('stagef', 's')" type="radio" name="stagef" id="stagef-s">
+					<label for="stagef-s">秒</label>
+				</p>
+				<p>選擇關卡資訊中「初登場」、「再登場」的顯示單位，預設為F（幀數）。</p>
+			</div>
+		</div>
+
+		<div class="w3-row w3-section">
+			<h3>表格</h3>
+			<div class="form w3-card-4">
+				<p>
+					<input oninput="localStorage.setItem('layout', '1')" type="radio" name="layout" id="layout-1" checked>
+					<label for="layout-1">巴哈精華區表格風格（複雜）</label>
+				</p>
+				<p>
+					<input oninput="localStorage.setItem('layout', '2')" type="radio" name="layout" id="layout-2">
+					<label for="layout-2">麻糬的貓咪查詢表風格（精簡、超絕）</label>
+				</p>
+				<p>巴哈風格會顯示5種等級的數值，並在全部能的能力效果加成下的數值</p>
+				<p>麻糬風格類似超絕，只會顯示一種數值，但可以點選要加成的項目</p>
+			</div>
+		</div>
+
+		<h2 id="favorite" style="text-align: center;">我的最愛</h2>
+		<div class="w3-row w3-section odds">
+			<table id="my-stars" class="w3-table w3-striped w3-centered">
+				<tr>
+					<td>ID</td>
+					<td>圖示</td>
+					<td>名稱</td>
+					<td>動作</td>
+				</tr>
+			</table>
+		</div>
+
+		<h2 id="treasure" style="text-align: center;">金寶設定</h2>
+		<div class="w3-row w3-section" id="s-trea" style="padding: 0;">
+			<div class="w3-bar w3-border-bottom">
+				<button class="tablink w3-bar-item w3-button atab" onclick="tab(event, 'b-hp')">體力</button>
+				<button class="tablink w3-bar-item w3-button" onclick="tab(event, 'b-atk')">攻擊力</button>
+				<button class="tablink w3-bar-item w3-button" onclick="tab(event, 'b-xp')">經驗值</button>
+				<button class="tablink w3-bar-item w3-button" onclick="tab(event, 'b-cd')">研究力</button>
+				<button class="tablink w3-bar-item w3-button" onclick="tab(event, 'b-trait')">特殊能力</button>
+				<button class="tablink w3-bar-item w3-button" onclick="tab(event, 'b-alien')">異星戰士</button>
+				<button class="tablink w3-bar-item w3-button" onclick="tab(event, 'b-energy')">統率力</button>
+				<button class="tablink w3-bar-item w3-button" onclick="tab(event, 'b-cannon')">貓咪砲</button>
+				<button class="tablink w3-bar-item w3-button" onclick="tab(event, 'b-other')">其他</button>
+			</div>
+
+			<div id="b-hp" class="treasure" style="display: block;">
+				<form>
+					<div class="w3-section">
+						<p>優先度: 高，從 1 倍的體力到 2.5 倍的體力影響非常大</p>
+						<h3>傳說的貓之盾・甲信越の雪景色・Legendary Cat Shield</h3>
+						<h4>角色的體力超大幅提高中！</h4>
+						<p>效果: 體力 = 原始體力 × (1 + 1.5 × (體力金寶(300%) / 3))</p>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<input data-i="1" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+					</div>
+				</form>
+			</div>
+
+			<div id="b-atk" class="treasure">
+				<form>
+					<div class="w3-section">
+						<p>優先度: 高，從 1 倍的攻擊力到 2.5 倍的攻擊力影響非常大</p>
+						<h3>傳說的貓咪神劍・関東のカリスマ・Legendary Cat Sword</h3>
+						<h4>角色的攻擊力超大幅增強中！</h4>
+						<p>效果: 攻擊力 = 原始攻擊力 × (1 + 1.5 × (攻擊力金寶(300%) / 3))</p>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<input data-i="0" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+					</div>
+				</form>
+			</div>
+
+			<div id="b-xp" class="treasure">
+				<form>
+					<div class="w3-section">
+						<p>優先度: 高，在初期時經驗值大部分是從世界篇和傳奇關卡取得，可以得到更多經驗值</p>
+						<h3>學習力・勉強力・Study</h3>
+						<h4>可以提高過關時所獲得的經驗值</h4>
+						<p>最大: Lv20 + 10</p>
+						<input data-i="19" class="w3-input w3-border" type="number" value="30" min="1" max="30">
+
+						<h3>賢者之石・関西のノリ・Philosopher's Stone</h3>
+						<h4>過關時的經驗值增加中！</h4>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<input data-i="9" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+
+						<h3>微中子・ニュートリノ・Neutrino</h3>
+						<h4>過關時的經驗值增加中！</h4>
+						<p>最大: 300%(宇宙篇 一/二/三章)</p>
+						<input data-i="10" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+
+						<p>經驗值計算: 0.95 + 學習力科技(30) × 0.05 + 世界篇金寶(300%) × 0.5 + 宇宙篇金寶(300%) × 0.25</p>
+						<p>最大: 4.7 倍原始經驗值</p>
+					</div>
+				</form>
+			</div>
+
+			<div id="b-cd" class="treasure">
+				<form>
+					<div class="w3-section">
+						<p>優先度: 高，可以使角色更密集，單位時間內能產出的火力也越強(假設金錢負擔得起的狀態)，而研究力中、大聯組可以讓一些稀有角色(如拉麵、鬥士)成為密集的肉盾</p>
+						<h3>研究力・研究力・Research</h3>
+						<h4>可以加快角色的生產速度</h4>
+						<p>最大: Lv20 + 10</p>
+						<input data-i="17" class="w3-input w3-border" type="number" value="30" min="1" max="30">
+
+						<h3>時間縮短鐘・中国の伝統・Relativity Clock</h3>
+						<h4>戰鬥中角色的生產速度加快中！</h4>
+						<p>效果: 角色再生產縮短 6 × (研究力科技(30) - 1) + 30 × 研究力金寶(300%)，單位為F</p>
+						<p>若有聯組，則再生產時間縮短所有研究力聯組相加後的百分比</p>
+						<p>滿金寶和科技時角色再生產-264F</p>
+						<p>如三個研究力小是 floor(264 × (10% + 10% + 10%)) = 縮短 79F</p>
+						<p>最短再生產時間為 60F(2秒)</p>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<input data-i="2" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+					</div>
+				</form>
+			</div>
+
+			<div id="b-alien" class="treasure">
+				<form>
+					<div class="w3-section">
+						<p>優先度: 高，此金寶可以大幅降低未來篇的難度，在傳說關卡也會遇到異星戰士</p>
+						<h3>藍/紅 水晶</h3>
+						<h3>ブルー/レッド クリスタル</h3>
+						<h3>Aqua/Plasma Crystal</h3>
+						<h4>對異星戰士屬性的敵人發動大幅力量中！</h4>
+						<p>效果: 異星戰士體力和攻擊力倍率 = 700% - 未來篇水晶(600%)</p>
+						<p>滿金寶時倍率為 100% ，即體力和攻擊力一樣</p>
+						<p>最大: 600%(未來篇 一/二/三章)</p>
+						<input data-i="21" class="w3-input w3-border" type="number" value="600" min="0" max="600">
+					</div>
+					<div class="w3-section">
+						<p>優先度: 高，此金寶可以大幅降低宇宙篇的難度</p>
+						<h3>綠/黃/橙/青/紫 水晶</h3>
+						<h3>グリーン/イエロー/オレンジ/ライトブルー/パープル クリスタル</h3>
+						<h3>Stellar Garnet/Phoebe Beryl/Lunar Citrine/Ganymede Topaz/Callisto Amethyst</h3>
+						<h4>對異星戰士(有星星)發動大幅力量中！</h4>
+						<p>效果: 異星戰士(有星星)體力和攻擊力倍率 = 1600% - 宇宙篇水晶(1500%)</p>
+						<p>滿金寶時倍率為 100% ，即體力和攻擊力一樣</p>
+						<p>最大: 1500%(宇宙篇 一/二/三章)</p>
+						<input data-i="22" class="w3-input w3-border" type="number" value="1500" min="0" max="1500">
+					</div>
+				</form>
+			</div>
+
+			<div id="b-trait" class="treasure">
+				<form>
+					<p>優先度: 普通，應優先統率力和異星敵人金寶</p>
+					<p>特殊能力金寶是加強我方貓咪對特定屬性敵人的效果</p>
+					<p>以下的金寶對特定屬性的效果都是一樣的計算公式，金寶的成長為線性</p>
+					<ul>
+						<li>超大傷害從3倍到4倍傷害</li>
+						<li>極度傷害從5倍到6倍傷害</li>
+						<li>善於攻擊從1.5倍到1.8倍傷害</li>
+						<li>善於攻擊的減傷從1/2到2/5 (0.4)倍</li>
+						<li>很耐打的減傷從1/4到1/5</li>
+						<li>超耐打的減傷從1/6倍到1/7</li>
+						<li>打飛敵人的擊退距離從100%到130%原距離</li>
+						<li>攻擊力下降、使動作停止、使動作變慢的時間從100%到120%原時間</li>
+					</ul>
+					<p>設定所有特殊能力金寶</p>
+					<input data-i="23" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+					<div class="w3-section">
+						<h3>暗黑果實・暗黒の果実・Void Fruit </h3>
+						<h4>對黑色敵人發動特殊能力效果中！</h4>
+						<p>最大: 300%(未來篇 一/二/三章)</p>
+					</div>
+					<div class="w3-section">
+						<h3>紅血果實・紅血の果実・Blood Fruit </h3>
+						<h4>對紅色敵人發動特殊能力效果中！</h4>
+						<p>最大: 300%(未來篇 一/二/三章)</p>
+					</div>
+					<div class="w3-section">
+						<h3>飛翔果實・飛翔の果実・Sky Fruit</h3>
+						<h4>對飄浮敵人發動特殊能力效果中！</h4>
+						<p>最大: 300%(未來篇 一/二/三章)</p>
+					</div>
+					<div class="w3-section">
+						<h3>天界果實・天界の果実・Heaven's Fruit</h4>
+		  <h4>對天使敵人發動特殊能力效果中！</h3>
+						<p>最大: 300%(未來篇 一/二/三章)</p>
+					</div>
+					<div class="w3-section">
+						<h3>鋼鐵果實・鋼鉄の果実・Titanium Fruit</h3>
+						<h4>對鋼鐵敵人發動特殊能力效果中！</h4>
+						<p>最大: 300%(宇宙篇 一/二/三章)</p>
+					</div>
+					<div class="w3-section">
+						<h3>冥界果實・冥界の果実・Antimatter Fruit</h3>
+						<h4>對不死生物發動特殊能力效果中！</h4>
+						<p>最大: 300%(宇宙篇 一/二/三章)</p>
+					</div>
+					<div class="w3-section">
+						<h3>異星果實・異星の果実・Enigma Fruit</h3>
+						<h4>對異星戰士發動特殊能力效果中！</h4>
+						<p>最大: 300%(宇宙篇 一/二/三章)</p>
+					</div>
+				</form>
+			</div>
+
+			<div id="b-cannon" class="treasure">
+				<form>
+					<div class="w3-section">
+						<p>優先度: 低，在初期貓咪砲不是很重要</p>
+						<h3>貓咪砲攻擊力・にゃんこ砲攻撃力・Cat Cannon Attack</h3>
+						<h4>加強攻擊力<br>但充電時間會稍微延長</h4>
+						<p>每提昇一級，貓咪砲攻擊力 +50，但充電時間 +50 F</p>
+						<p>最大: Lv20 + 10</p>
+						<input data-i="11" class="w3-input w3-border" type="number" value="30" min="1" max="30">
+
+						<h3>新能源核心・東北の魂・Energy Core</h3>
+						<h4>貓咪砲的攻擊力加強中！</h4>
+						<p>效果: 貓咪砲攻擊力增加 1500 × (貓咪砲攻擊力金寶(300%) / 3)</p>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<input data-i="7" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+					</div>
+					<div class="w3-section">
+						<p>優先度: 低，在初期貓咪砲不是很重要</p>
+						<h3>貓咪砲充電・にゃんこ砲チャージ・Cat Cannon Charge</h3>
+						<h4>加快充電至貓咪砲能發射的時間</h4>
+						<p>每提昇一級，貓咪砲充電減少 50F</p>
+						<p>最大: Lv30</p>
+						<input data-i="13" class="w3-input w3-border" type="number" value="30" min="1" max="30">
+
+						<h3>超強渦輪機・北海道のデカさ・Turbo Machine</h3>
+						<h4>貓咪砲的充電速度加快中！</h4>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<input data-i="6" class="w3-input w3-border" type="number" value="30" min="0" max="300">
+
+						<h3>未知的力量・未知なる力・Mysterious Force</h3>
+						<h4>貓咪砲的充電速度加快中！</h4>
+						<p>最大: 300%(未來篇 一/二/三章)</p>
+						<input data-i="29" class="w3-input w3-border" type="number" value="30" min="0" max="300">
+
+						<p>貓咪砲充電速度計算:</p>
+						<p>充電時間 = 1500 + 50 × (貓咪砲攻擊力科技 - 貓咪砲充電科技) - 金寶效果 + 450 × 關卡加權 - floor(聯組效果)，單位為F</p>
+						<p>金寶效果計算:</p>
+						<p>1. 世界篇 + 未來篇金寶 小於等於 300%
+							<br> 則 金寶效果 = 450 × ((世界篇 + 未來篇金寶) / 3)
+						</p>
+						<p>2. 世界篇 + 未來篇金寶 大於300%
+							<br> 則 金寶效果 = 900 × ((世界篇 + 未來篇金寶) / 3) - 450
+						</p>
+						<p>關卡加權: 詳見 <a href="https://forum.gamer.com.tw/G2.php?bsn=23772&sn=397">XLSkyの貓戰教室</a></p>
+						<p>最快充電時間為 950F，大約 31.6 秒</p>
+					</div>
+					<div class="w3-section">
+						<h3>貓咪砲射程・にゃんこ砲射程・Cat Cannon Range</h3>
+						<h4>加長射程距離</h4>
+						<p>每提昇一級，貓咪砲波動多一級(Lv1時是Lv3波動，Lv10時Lv12波動)</p>
+						<p>最大: Lv10</p>
+						<input data-i="12" class="w3-input w3-border" type="number" value="10" min="1" max="10">
+					</div>
+				</form>
+			</div>
+
+			<div id="b-energy" class="treasure">
+				<form>
+					<div class="w3-section">
+						<p>優先度: 高，首領旗子恢復統率力時的效益增加</p>
+						<h3>統率力・統率力・Cat Energy</h3>
+						<h4>可以提高闖關時所需的統率力</h4>
+						<p>每提昇一級，統率力的最大值增加10，最大 +300 統率力最大值(包含第一級)</p>
+						<p>最大: Lv20 + 10</p>
+						<input data-i="25" class="w3-input w3-border" type="number" value="10" min="1" max="30">
+
+						<h3>經營聖經・南国の風・Management Bible</h3>
+						<h4>統率力的最大值提高中！</h4>
+						<p>效果: 300%時可增加 60 × 3 = 180 統率力的最大值</p>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<input data-i="26" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+
+						<h3>未來科技・ 未来テクノロジー・Future Tech</h3>
+						<h4>統率力最大值發動中！</h4>
+						<p>效果: 300%時可增加 30 × 3 = 90 統率力的最大值</p>
+						<p>最大: 300%(未來篇 一/二/三章)</p>
+						<input data-i="27" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+
+						<h3>⿊暗物質・ダークマター・Dark Matter</h3>
+						<h4>統率⼒最⼤值提升中！</h4>
+						<p>效果: 300%時可增加 30 × 3 = 90 統率力的最大值</p>
+						<p>最大: 300%(宇宙篇 一/二/三章)</p>
+						<input data-i="28" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+
+						<p>統率力的最大值 = 100 +</p>
+						<div style="padding-left: 2em;">
+							10 × (統率力科技(30) - 1) +
+							<br> 60 × 統率力世界篇寶物(300%) +
+							<br> 30 × 未來篇統率力寶物(300%) +
+							<br> 30 × 宇宙篇統率力寶物(300%) +
+							<br> 世界篇不死生物來襲(50 × 3) +
+							<br> 未來篇不死生物來襲(50 × 3) +
+							<br> 宇宙篇不死生物來襲(50 × 2)</div>
+						<p>最大1150統率力</p>
+					</div>
+				</form>
+			</div>
+
+			<div id="b-other" class="treasure">
+				<form>
+					<div class="w3-section">
+						<p>優先度: 高，除了工作狂貓以外，敵人掉落的金錢是很重要的收入來源</p>
+						<h3>會計能力・会計力・Accountant</h3>
+						<h4>可以提高每次打倒敵人時所獲得的金錢</h4>
+						<p>最大: Lv20 + 10</p>
+						<input data-i="18" class="w3-input w3-border" type="number" value="30" min="1" max="30">
+
+						<h3>無敵收銀機・東海のがめつさ・Super Register</h3>
+						<h4>每次打倒敵人時能得到的金錢正在增加中！</h4>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<input data-i="3" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+						<p>效果: 打倒敵人時獲得金錢 = 原掉落金錢 × (0.95 + 0.05 × 科技 + 0.5 × 金寶(300%)</p>
+						<p>滿金寶和科技時掉落金錢為原本的 3.95 倍</p>
+					</div>
+					<div class="w3-section">
+						<p>優先度: 高，世界篇二、三章貓咪的成召喚金額提高1.5/2倍，有錢才能召喚貓咪</p>
+						<h3>工作狂貓的工作效率・働きネコ仕事効率・Worker Cat Rate</h3>
+						<h4>提高工作狂貓的工作效率<br>金錢增加的速度變快</h4>
+						<p>最大: Lv20 + 10</p>
+						<input data-i="14" class="w3-input w3-border" type="number" value="30" min="1" max="30">
+
+						<h3>提神飲料・九州の男らしさ・Energy Drink</h3>
+						<h4>戰鬥中工作狂貓的金錢生產量大幅提高中！</h4>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<input data-i="4" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+
+						<p>工作狂貓工作效率計算</p>
+						<p>每F的金錢產量 = (0.15 + 0.1 × 科技) × (0.9 + 0.1 × 戰鬥中工作狂貓等級) + 金寶(300%)</p>
+					</div>
+					<div class="w3-section">
+						<p>優先度: 普通，但打BOSS時(如世界篇第三章噴噴老師)時刷滿可以在BOSS登場時叫出更多的貓來對付BOSS</p>
+						<h3>工作狂貓錢包・働きネコお財布・Worker Cat Wallet</h3>
+						<h4>加大工作狂貓錢包的大小<br>增加戰鬥中可持有的金錢</h4>
+						<p>最大: Lv20 + 10</p>
+						<input data-i="15" class="w3-input w3-border" type="number" value="30" min="1" max="30">
+
+						<h3>巨大金庫・四国のうまいもん・Giant Safe</h3>
+						<h4>戰鬥中工作狂貓的錢包容量大幅提高中！</h4>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<p>效果: 錢包容量增加 3000 × (錢包容量金寶(300%)/3)</p>
+						<input data-i="5" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+
+						<p>工作狂貓錢包容量計算</p>
+						<p>容量 = 50 × 工作狂貓錢包科技(30) × (戰鬥中工作狂貓等級 + 1) + 3000 × (錢包容量金寶(300%)/3)</p>
+						<p>若有聯組，是計算出來的容量再乘聯組效果</p>
+						<p>當滿金寶和科技、工作狂貓Lv8時，錢包容量為16500元</p>
+					</div>
+					<div class="w3-section">
+						<p>優先度: 低，城堡體力對世界篇的影響不大，基本上大部分關卡可以不被敵方碰到 我方塔就過關
+						</p>
+						<h3>お城体力・城堡體力・Base Defense</h3>
+						<h4>加強我方城堡的體力</h4>
+						<p>
+							1. 等級介於 Lv1 ~ Lv5 之間，每提昇一級(包含Lv1)，城堡體力增加1000
+							<br> 2. 等級介於 Lv6 ~ Lv7 之間，每提昇一級，城堡體力增加2000
+							<br> 3. 等級介於 Lv8 ~ Lv30 之間，每提昇一級，城堡體力增加3000
+							<br>
+						</p>
+						<p>最大: Lv20 + 10</p>
+						<input data-i="16" class="w3-input w3-border" type="number" value="30" min="1" max="30">
+						<h3>銅牆鐵壁・北陸の豪邸・Smart Material Wall</h3>
+						<h4>城堡的體力大幅提高中！</h4>
+						<p>效果: 城堡體力 + 21000 × (金寶(300%) / 3)</p>
+						<p>最大: 300%(世界篇 一/二/三章)</p>
+						<h3>古代石版・古代の石板・Ancient Tablet</h3>
+						<h4>城堡的體力大幅提高中！</h4>
+						<p>效果: 城堡體力 + 21000 × (金寶(300%) / 3)</p>
+						<p>最大: 300%(未來篇 一/二/三章)</p>
+						<input data-i="8" class="w3-input w3-border" type="number" value="300" min="0" max="300">
+						<p>城堡體力計算方式較複雜</p>
+						<p>當科技Lv30時，城堡體力為5 × 1000 + 2 × 2000 + 3000 × 23 = 78000</p>
+						<p>再來計算金寶的效果
+							<br>滿金寶時，城堡體力為78000(科技) + 21000(世界篇) + 21000(未來篇) = 120000</p>
+						<p>再來計算城堡開發隊的影響
+							<br> 城堡開發隊的城堡體力於Lv1~Lv10時，每提昇一級，城堡體力增加3600
+							<br> 城堡開發隊的城堡體力於Lv11~Lv20時，每提昇一級，城堡體力增加4000
+							<br> 所以當且開發程度 Lv10 + 20 時，城堡體力為 120000 + 10 × 3600 + 20 × 4000 = 236000</p>
+					</div>
+					<div class="w3-section">
+						<p>優先度: 高，除非你想挑戰自我，沒金寶過關</p>
+						<p>注意宇宙篇有三個神，他們的金寶不互相影響</p>
+						<h3>神秘面具・謎のお面・Mystery Mask</h3>
+						<h4>在宇宙篇第1章最後一關發揮效果的神秘面具</h4>
+						<p>宇宙篇第1章最後一關的BOSS - <a href="/enemy.html?id=367">神</a>的倍率 = 1100% - 10 × 金寶(100%)</p>
+						<p>最大: 100%(宇宙篇第一章)</p>
+						<input data-i="20" class="w3-input w3-border" type="number" value="100" min="0" max="100">
+						<h3>神秘面具・謎のお面・Mystery Mask</h3>
+						<h4>在宇宙篇第2章最後一關發揮效果的神秘面具</h4>
+						<p>宇宙篇第2章最後一關的BOSS - <a href="/enemy.html?id=419">神（認真）</a>的倍率 = 1100% - 10 × 金寶(100%)</p>
+						<p>最大: 100%(宇宙篇第二章)</p>
+						<input data-i="24" class="w3-input w3-border" type="number" value="100" min="0" max="100">
+						<h3>神秘面具・謎のお面・Mystery Mask</h3>
+						<h4>在宇宙篇第3章最後一關發揮效果的神秘面具</h4>
+						<p>宇宙篇第3章最後一關的BOSS - <a href="/enemy.html?id=446">終極千兆宏偉神</a>的倍率 = 1100% - 10 × 金寶(100%)</p>
+						<p>最大: 100%(宇宙篇第三章)</p>
+						<input data-i="30" class="w3-input w3-border" type="number" value="100" min="0" max="100">
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="settings.js"></script>
+</body>
+
+</html>

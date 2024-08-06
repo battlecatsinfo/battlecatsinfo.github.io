@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+	<meta charset="utf-8">
+	<title>ImgCut</title>
+	<meta name="description" content="編輯ImgCut檔案 | 貓咪大戰爭中文資訊網站">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{{{favicon}}}
+	<link rel="stylesheet" type="text/css" href="/w3.css">
+</head>
+
+<body>
+	<style>
+body {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+canvas {
+  background-color: white !important;
+}
+#imgcut {
+  margin: 1vw;
+  background-size: 14px 14px;
+  background-image: linear-gradient(to right, grey 1px, transparent 1px),
+	linear-gradient(to bottom, grey 1px, transparent 1px);
+}
+@media (min-width: 500px) {
+  #imgcut {
+	min-height: 40vh;
+  }
+}
+.ihover {
+  background-color: #ccc !important;
+}
+[data-theme="dark"] .ihover td {
+  background-color: #4b4b4b !important;
+}
+td,
+th {
+  padding: 7px 30px;
+  border: #cfcfcf 1px solid;
+}
+{{{nav-style}}}
+	</style>
+	{{{nav-bar}}}
+	<canvas id="imgcut" style="border: 1px solid;border-color: var(--color);"></canvas>
+	<canvas id="preview" style="display: none;"></canvas>
+	<br>
+	<div style="margin: 1vw;">
+		<div class="w3-dropdown-hover">
+			<button class="w3-button w3-black w3-round">導入圖片</button>
+			<div class="w3-dropdown-content w3-bar-block w3-border">
+				<a class="w3-bar-item w3-button w3-round" onclick="importImg()">選擇檔案</a>
+				<a class="w3-bar-item w3-button w3-round" onclick="importImgU()">輸入圖片連結</a>
+				<a class="w3-bar-item w3-button w3-round" onclick="pasteImg()">剪貼簿:Ctrl+V</a>
+			</div>
+		</div>
+		<input type="file" style="display: none;" name="file" id="file">
+		<div class="w3-dropdown-hover">
+			<button class="w3-button w3-black w3-round">導入ImgCut</button>
+			<div class="w3-dropdown-content w3-bar-block w3-border">
+				<a class="w3-bar-item w3-button w3-round" onclick="importCut()">選擇檔案</a>
+				<a class="w3-bar-item w3-button w3-round" onclick="importCutU()">輸入ImgCut連結</a>
+			</div>
+		</div>
+		<label for="color" class="w3-orange w3-button w3-round">框顏色</label>
+		<input onchange="scolor()" type="color" name="color" id="color">
+		<button onclick="exportimg()" class="w3-button w3-teal w3-round">下載部件</button>
+		<button onclick="exportimga()" class="w3-button w3-green w3-round">下載全部部件</button>
+		<button onclick="exportaimg()" class="w3-button w3-round" style="background-color: sienna !important;">下載整張圖片</button>
+		<button onclick="exportcut()" class="w3-button w3-round" style="background-color: #aa00ff !important;">下載ImgCut</button>
+		<button onclick="addline()" class="w3-button w3-deep-purple w3-round">添加行</button>
+		<button onclick="removeline()" class="w3-button w3-red w3-round">刪除行</button>
+	</div>
+	<div style="max-height: 50vh;overflow: scroll;margin: 0 2vw auto;">
+		<table class="w3-table w3-centered w3-border">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>x</th>
+					<th>y</th>
+					<th>寬度</th>
+					<th>高度</th>
+					<th>註解</th>
+				</tr>
+			</thead>
+			<tbody id="edit"></tbody>
+		</table>
+	</div>
+	<script src="/imgcut.js"></script>
+</body>
+
+</html>

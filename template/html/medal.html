@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+	<meta charset="utf-8">
+	<title>喵咪獎章</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="喵咪獎章一覽 | 貓咪大戰爭中文資訊網站"> {{{favicon}}}
+	<link rel="stylesheet" type="text/css" href="w3.css">
+</head>
+
+<body>
+	<style>
+body {
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+.M:hover {
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.M {
+	cursor: pointer;
+	margin: 0.4vw;
+	padding: 0.4vw;
+	float: left;
+	max-width: 30%;
+	min-width: 10%;
+}
+.I {
+	border-radius: 0.7vw;
+	font-size: larger;
+	color: white !important;
+	background-color: #282a36 !important;
+	padding: 1vw;
+	width: max(30%, 300px);
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.M img {
+	display: block;
+	margin: 0 auto;
+}
+.M p {
+	display: none;
+}
+.O {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4) !important;
+}
+{{{nav-style}}}
+	</style>
+	{{{nav-bar}}}
+	<div class="w3-row-padding w3-margin-top">{{{medals}}}</div>
+	<script>
+var G;
+function F(event) {
+	if (!G) {
+		G && (G.style.display = 'none');
+		(G = event.currentTarget.nextElementSibling).style.display = 'block';
+	}
+	event.stopPropagation();
+	event.preventDefault();
+}
+document.onclick = function() {
+	G && (G.style.display = 'none', G = null);
+};
+document.ontouchstart = function() {
+	G && (G.style.display = 'none', G = null);
+	event.stopPropagation();
+};
+	</script>
+</body>
+
+</html>

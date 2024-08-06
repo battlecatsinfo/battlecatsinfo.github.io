@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+	<meta charset="utf-8">
+	<title>鋼鐵殺手計算</title>
+	<link rel="stylesheet" href="/w3.css">
+	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+</head>
+
+<body>
+	<style>
+input[type="number"] {
+	padding-left: 1em;
+	background-color: aliceblue !important;
+}
+:root {
+	--a: #fff;
+	--b: #000;
+	--c: #f1f1f1;
+	--d: #0027ff;
+}
+[data-Q="dark1"] {
+	--a: #2a2a2a;
+	--b: #fff;
+	--c: #2a2a2a;
+	--d: #2196f3;
+}
+[data-Q="dark2"] {
+	--a: #32373a;
+	--b: #fff;
+	--c: #32373a;
+	--d: #2196f3;
+}
+body {
+	color: var(--b);
+	background-color: var(--a) !important;
+}
+.topnav {
+	background-color: #333 !important;
+	margin-block: 0;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	font-size: max(1.5vw, 10px) !important;
+}
+.topnav > a {
+	display: inline-block;
+	color: #f2f2f2 !important;
+	padding: 1vh 2vw;
+	text-decoration: none;
+	cursor: pointer;
+	vertical-align: middle;
+}
+.topnav > a.active {
+	background-color: #4caf50 !important;
+}
+.topnav > a:visited {
+	text-decoration: none;
+}
+.topnav > a:hover {
+	background-color: #009688 !important;
+}
+.topnav svg {
+	background-color: inherit !important;
+	height: 1.3em;
+}
+	</style>
+	<div class="topnav">
+		<a href="/index.html">主頁</a>
+		<a href="/search.html">貓咪</a>
+		<a href="/esearch.html">敵人</a>
+		<a href="/gachas.html">轉蛋</a>
+		<a href="/stage.html">關卡</a>
+		<a title="設定" href="/settings.html" style="float: right;">
+			<svg viewBox="0 0 24 24">
+				<path d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z"
+				fill="white" />
+			</svg>
+		</a>
+	</div>
+	<div style="position:absolute;top:10vh;right: 1vw;">
+		主題
+		<select id="S">
+			<option value="light1" selected>淺色1</option>
+			<option value="light2">淺色2</option>
+			<option value="dark1">深色1</option>
+			<option value="dark2">深色2</option>
+		</select>
+	</div>
+	<h1 style="text-align: center;" style="margin: 1em 0 auto;">鋼鐵殺手</h1>
+	<form action="#" style="padding: 2em;">
+		<p>
+			<label for="kill">扣敵方體力百分比<span style="float: right;">Metal killer percentage</span></label>
+			<input class="w3-input" type="number" id="kill" value="12" min="1" max="99">
+		</p>
+		<p>
+			<label for="hp">敵方體力<span style="float: right;">Enemy's health point</span></label>
+			<input class="w3-input" type="number" id="hp" value="77777" min="1">
+		</p>
+	</form>
+	<div id="canvas"></div>
+	<script>
+const kill = document.getElementById('kill');
+const HP = document.getElementById('hp');
+const S = document.getElementById('S');
+let chart;
+
+(S.onclick = HP.oninput = kill.oninput = function () {
+	let hp = Math.max(parseInt(HP.value), 1);
+	let Ys = [{y: hp}];
+	let m = parseInt(kill.value) / 100;
+	while (true) {
+		hp -= 1 + Math.max(~~(hp * m), 1);
+		if (hp <= 0) {
+			Ys.push({y: 0});
+			break;
+		}
+		Ys.push({y: hp});
+	}
+	if (!chart) {
+		chart = new CanvasJS.Chart('canvas', {
+			'animationEnabled': true,
+			'responsive':true,
+			'exportEnabled': true,
+			'theme': "light2",
+			'axisY': {
+				'title': "Enemy HP"
+			},
+			'axisX': {
+				'title': 'Nth attack'
+			},
+			'theme': S.value,
+			'title': { 'text': "Metal Killer" },
+			'data': [{
+				'xValueFormatString': '0th attack',
+				'yValueFormatString': '#,##0 HP remaining',
+				'type': 'line',
+				'dataPoints': Ys
+			}]
+		});
+		chart.render();
+	} else {
+		chart.options.data[0].dataPoints = Ys;
+		document.documentElement.setAttribute("data-Q", chart.options.theme = S.value);
+		chart.render();
+	}
+})();
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,395 @@
+.bc-icon {
+	display: inline-block;
+	background-image: url(https://i.imgur.com/4qjy99Z.png);
+	vertical-align: bottom;
+}
+.bc-icon-trait-red {
+	width: 43px;
+	height: 43px;
+	background-position: -172px -492px;
+}
+.bc-icon-trait-float {
+	width: 43px;
+	height: 43px;
+	background-position: -215px -492px;
+}
+.bc-icon-trait-black {
+	width: 43px;
+	height: 43px;
+	background-position: -258px -492px;
+}
+.bc-icon-trait-metal {
+	width: 43px;
+	height: 43px;
+	background-position: -344px -492px;
+}
+.bc-icon-trait-angel {
+	width: 43px;
+	height: 43px;
+	background-position: -301px -492px;
+}
+.bc-icon-trait-alien {
+	width: 43px;
+	height: 43px;
+	background-position: -387px -492px;
+}
+.bc-icon-trait-zombie {
+	width: 43px;
+	height: 43px;
+	background-position: -210px -697px;
+}
+.bc-icon-trait-relic {
+	width: 43px;
+	height: 43px;
+	background-position: -173px -856px;
+}
+.bc-icon-trait-demon {
+	width: 43px;
+	height: 43px;
+	background-position: -173px -899px;
+}
+.bc-icon-trait-white {
+	width: 43px;
+	height: 43px;
+	background-position: -173px -942px;
+}
+.bc-icon-imu-curse {
+	width: 42px;
+	height: 42px;
+	background-position: -876px -778px;
+}
+.bc-icon-weak {
+	width: 42px;
+	height: 42px;
+	background-position: -645px -171px;
+}
+.bc-icon-strong {
+	width: 42px;
+	height: 42px;
+	background-position: -687px -171px;
+}
+.bc-icon-stop {
+	width: 42px;
+	height: 42px;
+	background-position: -739px -213px;
+}
+.bc-icon-slow {
+	width: 42px;
+	height: 42px;
+	background-position: -781px -213px;
+}
+.bc-icon-lethal {
+	width: 42px;
+	height: 42px;
+	background-position: -813px -171px;
+}
+.bc-icon-atkbase {
+	width: 42px;
+	height: 42px;
+	background-position: -855px -171px;
+}
+.bc-icon-crit {
+	width: 42px;
+	height: 42px;
+	background-position: -729px -171px;
+}
+.bc-icon-bsthunt {
+	width: 42px;
+	height: 42px;
+	background-position: -527px -896px;
+}
+.bc-icon-kb {
+	width: 42px;
+	height: 42px;
+	background-position: -865px -213px;
+}
+.bc-icon-wave {
+	width: 42px;
+	height: 42px;
+	background-position: -823px -255px;
+}
+.bc-icon-imu-wave {
+	width: 42px;
+	height: 42px;
+	background-position: -907px -213px;
+}
+.bc-icon-area-atk {
+	width: 42px;
+	height: 42px;
+	background-position: -865px -255px;
+}
+.bc-icon-ld-atk {
+	width: 42px;
+	height: 42px;
+	background-position: -907px -255px;
+}
+.bc-icon-single-atk {
+	width: 42px;
+	height: 42px;
+	background-position: -977px -297px;
+}
+.bc-icon-omni-atk {
+	width: 42px;
+	height: 42px;
+	background-position: -876px -694px;
+}
+.bc-icon-imu-atk {
+	width: 42px;
+	height: 42px;
+	background-position: -934px -407px;
+}
+.bc-icon-imu-volc {
+	width: 42px;
+	height: 42px;
+	background-position: -611px -938px;
+}
+.bc-icon-massive {
+	width: 42px;
+	height: 42px;
+	background-position: -823px -213px;
+}
+.bc-icon-metalic {
+	width: 42px;
+	height: 42px;
+	background-position: -771px -171px;
+}
+.bc-icon-only {
+	width: 42px;
+	height: 42px;
+	background-position: -739px -255px;
+}
+.bc-icon-good {
+	width: 42px;
+	height: 42px;
+	background-position: -781px -255px;
+}
+.bc-icon-resist {
+	width: 42px;
+	height: 42px;
+	background-position: -897px -171px;
+}
+.bc-icon-resists {
+	width: 42px;
+	height: 42px;
+	background-position: -850px -407px;
+}
+.bc-icon-bounty {
+	width: 42px;
+	height: 42px;
+	background-position: -939px -171px;
+}
+.bc-icon-imu-weak {
+	width: 42px;
+	height: 42px;
+	background-position: -949px -213px;
+}
+.bc-icon-imu-stop {
+	width: 42px;
+	height: 42px;
+	background-position: -949px -255px;
+}
+.bc-icon-imu-slow {
+	width: 42px;
+	height: 42px;
+	background-position: -893px -297px;
+}
+.bc-icon-imu-kb {
+	width: 42px;
+	height: 42px;
+	background-position: -935px -297px;
+}
+.bc-icon-imu-poiatk {
+	width: 42px;
+	height: 42px;
+	background-position: -569px -896px;
+}
+.bc-icon-mini-wave {
+	width: 42px;
+	height: 42px;
+	background-position: -611px -980px;
+}
+.bc-icon-curse {
+	width: 42px;
+	height: 42px;
+	background-position: -918px -747px;
+}
+.bc-icon-shieldbreak {
+	width: 42px;
+	height: 42px;
+	background-position: -569px -980px;
+}
+.bc-icon-volc {
+	width: 42px;
+	height: 42px;
+	background-position: -611px -896px;
+}
+.bc-icon-warp {
+	width: 42px;
+	height: 42px;
+	background-position: -355px -103px;
+}
+.bc-icon-break {
+	width: 42px;
+	height: 42px;
+	background-position: -313px -145px;
+}
+.bc-icon-imu-warp {
+	width: 42px;
+	height: 42px;
+	background-position: -355px -145px;
+}
+.bc-icon-mini-volc {
+	width: 42px;
+	height: 42px;
+	background-position: -485px -980px;
+}
+.bc-icon-z-kill {
+	width: 42px;
+	height: 42px;
+	background-position: -313px -305px;
+}
+.bc-icon-waves {
+	width: 42px;
+	height: 42px;
+	background-position: -981px -171px;
+}
+.bc-icon-wkill {
+	width: 42px;
+	height: 42px;
+	background-position: -961px -107px;
+}
+.bc-icon-s {
+	width: 42px;
+	height: 42px;
+	background-position: -892px -407px;
+}
+.bc-icon-bail {
+	width: 42px;
+	height: 42px;
+	background-position: -527px -980px;
+}
+.bc-icon-ckill {
+	width: 42px;
+	height: 42px;
+	background-position: -527px -938px;
+}
+.bc-icon-shield-break {
+	width: 42px;
+	height: 42px;
+	background-position: -569px -980px;
+}
+.bc-icon-ekill {
+	width: 42px;
+	height: 42px;
+	background-position: -876px -736px;
+}
+.bc-icon-massives {
+	width: 42px;
+	height: 42px;
+	background-position: -808px -407px;
+}
+.bc-icon-res-weak {
+	width: 53px;
+	height: 53px;
+	background-position: -640px -449px;
+}
+.bc-icon-res-freeze {
+	width: 53px;
+	height: 53px;
+	background-position: -693px -449px;
+}
+.bc-icon-res-slow {
+	width: 53px;
+	height: 53px;
+	background-position: -746px -449px;
+}
+.bc-icon-res-kb {
+	width: 53px;
+	height: 53px;
+	background-position: -799px -449px;
+}
+.bc-icon-res-wave {
+	width: 53px;
+	height: 53px;
+	background-position: -852px -449px;
+}
+.bc-icon-res-warp {
+	width: 53px;
+	height: 53px;
+	background-position: -905px -449px;
+}
+.bc-icon-res-curse {
+	width: 53px;
+	height: 53px;
+	background-position: -812px -795px;
+}
+.bc-icon-res-toxic {
+	width: 53px;
+	height: 53px;
+	background-position: -918px -694px;
+}
+.bc-icon-res-surge {
+	width: 53px;
+	height: 53px;
+	background-position: -706px -588px;
+}
+.bc-icon-res-weak2 {
+	width: 42px;
+	height: 42px;
+	background-position: -640px -365px;
+}
+.bc-icon-res-freeze2 {
+	width: 42px;
+	height: 42px;
+	background-position: -682px -365px;
+}
+.bc-icon-res-slow2 {
+	width: 42px;
+	height: 42px;
+	background-position: -724px -365px;
+}
+.bc-icon-res-kb2 {
+	width: 42px;
+	height: 42px;
+	background-position: -766px -365px;
+}
+.bc-icon-res-wave2 {
+	width: 42px;
+	height: 42px;
+	background-position: -808px -365px;
+}
+.bc-icon-res-warp2 {
+	width: 42px;
+	height: 42px;
+	background-position: -850px -365px;
+}
+.bc-icon-res-curse2 {
+	width: 42px;
+	height: 42px;
+	background-position: -682px -407px;
+}
+.bc-icon-res-toxic2 {
+	width: 42px;
+	height: 42px;
+	background-position: -611px -854px;
+}
+.bc-icon-res-surge2 {
+	width: 42px;
+	height: 42px;
+	background-position: -569px -938px;
+}
+.bc-icon-toxic {
+	width: 42px;
+	height: 42px;
+	background-position: -569px -854px;
+}
+.bc-icon-res-warp {
+	width: 53px;
+	height: 53px;
+	background-position: -905px -449px;
+}
+.bc-icon-res-warp {
+	width: 42px;
+	height: 42px;
+	background-position: -850px -365px;
+}
