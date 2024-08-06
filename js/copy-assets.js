@@ -93,7 +93,7 @@ new (class extends require('./base.js') {
 		try {
 			last_mods = JSON.parse(fs.readFileSync(last_mods_path, 'utf-8'));
 		} catch (e) {
-			if (e.errno != -4058)
+			if (e.code != 'ENOENT')
 				console.error(e);
 			last_mods = {};
 		}
