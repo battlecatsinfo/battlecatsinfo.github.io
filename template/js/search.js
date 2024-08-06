@@ -36,7 +36,7 @@ function rerender(event) {
 	if (id >= 9) {
 		let i = 0;
 		let maxPage = Math.min(Math.ceil(last_forms.length / per_page), id + 7);
-		for (let c = id - 2; c <= maxPage; ++c) {
+		for (let c = id - 5; c <= maxPage; ++c) {
 			const td = document.createElement('td');
 			td.textContent = c.toString();
 			td.onclick = rerender;
