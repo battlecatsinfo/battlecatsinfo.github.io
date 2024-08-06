@@ -14,7 +14,7 @@ $ mkdir _out
 
 ```bash
 $ node server.js # or npm start
-$ node.server.js --verbose
+$ node server.js --verbose
 ```
 
 Note: To display images successfully, you may need to clone https://github.com/battlecatsinfo/img to `img/`.
