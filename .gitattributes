@@ -1,0 +1,16 @@
+* text=auto eof=lf
+
+*.gitattributes eol=lf
+*.gitignore eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.js text eol=lf
+*.tsv text eol=lf
+*.csv text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+
+*.png binary
+*.jpg binary
