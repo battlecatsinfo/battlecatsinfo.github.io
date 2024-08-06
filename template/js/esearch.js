@@ -296,6 +296,8 @@ name_search.oninput = function() {
 	for (let C of clone)
 		if (C.name.includes(search) || C.jp_name.includes(search))
 			results.push([1, C]);
+
+	pages_a.textContent = "";
 	renderTable(results);
 }
 const th = document.getElementById('th');

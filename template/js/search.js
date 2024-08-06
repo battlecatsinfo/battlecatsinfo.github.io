@@ -400,6 +400,7 @@ loadAllCats().then(_cats => {
 	}
 	for (C of s)
 		for (let f of C.forms)(f.name.includes(search) || f.jp_name.includes(search)) && results.push([1, f]);
+	pages_a.textContent = "";
 	renderTable(results);
 };
 document.getElementById('form-s').onchange = function() {
