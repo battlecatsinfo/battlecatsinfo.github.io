@@ -27,9 +27,7 @@ new (class extends require('./base.js') {
 		Promise.all([
 			this.load_map(),
 			this.load_stage()
-		]).then(function (_, reject) {
-			if (reject)
-				throw reject;
+		]).then(() => {
 			self.write_collabs();
 		});
 	}
