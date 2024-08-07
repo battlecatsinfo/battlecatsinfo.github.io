@@ -7,7 +7,6 @@ We use [Node.js](https://nodejs.org/) to generate static files.
 ```sh
 $ git clone "https://github.com/battlecatsinfo/battlecatsinfo.github.io.git"
 $ npm install
-$ mkdir _out
 ```
 
 ### Running the local server
