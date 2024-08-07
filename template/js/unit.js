@@ -1266,7 +1266,7 @@ function mkTool(tbl) {
 	node.style.top = '-2em';
 	node.style.display = 'block';
 	node._t = tbl;
-	node.firstChild.onclick = function(e) { // Camera
+	node.firstElementChild.onclick = function(e) { // Camera
 		const t = e.currentTarget.parentNode._t;
 		if (window.domtoimage != undefined) return drawPNG([null, t]);
 		const script = document.createElement('script');
