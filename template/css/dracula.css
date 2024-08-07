@@ -13,12 +13,14 @@
 	--spans: #7fdbff;
 	--liselect: #7fdbff;
 	--strip: #f1f1f1;
+	--bd: hsla(210, 18%, 87%, 1);
 }
 a,
 textarea {
 	appearance: none;
 }
 [data-theme="dark"] {
+	color-scheme: dark;
 	--vbg: #282a36;
 	--bg: #282a36;
 	--color: #f8f8f2;
@@ -33,10 +35,36 @@ textarea {
 	--spans: #797270;
 	--liselect: #638593;
 	--strip: #323541;
+	--bd: #21262d;
 }
 body {
 	color: var(--color);
 	background-color: var(--bg);
+}
+h1 {
+	margin: 0.67em 0;
+	font-weight: 600;
+	padding-bottom: 0.3em;
+	font-size: 2em;
+	border-bottom: 1px solid var(--bd);
+}
+h1,
+h2,
+h3 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+h2 {
+	font-weight: 600;
+	padding-bottom: 0.3em;
+	font-size: 1.5em;
+	border-bottom: 1px solid var(--color-border-muted);
+}
+h3 {
+	font-weight: 600;
+	font-size: 1.25em;
 }
 input,
 select,
