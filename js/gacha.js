@@ -126,10 +126,8 @@ function to_path(s) {
 	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');
 }
 
-new (class extends require('./base.js') {
-	constructor() {
-		super();
-
+module.exports = class extends require('./base.js') {
+	run() {
 		try {
 			fs.mkdirSync(resolve(__dirname, '../_out/gacha'));
 		} catch (e) {
@@ -587,4 +585,4 @@ new (class extends require('./base.js') {
 			}
 		}
 	}
-});
+};

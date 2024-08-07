@@ -1,6 +1,5 @@
-new (class extends require('./base.js') {
-	constructor() {
-		super();
+module.exports = class extends require('./base.js') {
+	run() {
 		this.write_template('html/esearch.html', 'esearch.html', {
 			'species': this.load('species.tsv').split('\n').map(line => {
 				line = line.split(/\t+/);
@@ -8,4 +7,4 @@ new (class extends require('./base.js') {
 			}).join('\n')
 		}, 'enemy');
 	}
-})();
+};

@@ -1,6 +1,5 @@
-new (class extends require('./base.js') {
-	constructor() {
-		super();
+module.exports = class extends require('./base.js') {
+	run() {
 		this.write_template('html/rank.html', 'rank.html', {
 			'rank': this.load('rank.tsv').split('\n').map(function(x) {
 				if (x.length == 0 || x[0] == 'r') return '';
@@ -11,4 +10,4 @@ new (class extends require('./base.js') {
 			}).join('\n')
 		});
 	}
-})();
+};

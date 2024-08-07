@@ -21,31 +21,11 @@ Note: To display images successfully, you may need to clone https://github.com/b
 
 ### Build
 
-Use Node.js to run build scripts.
+Use Node.js to run the build script.
 
 ```sh
-$ node js/build_all.js
+$ node build.js
 ```
-
-or
-
-```sh
-$ cd js
-$ node build_all.js
-```
-
-* `copy-assets.js`: copy files at `static/` folder.
-* `copy-data.js`: copy files at `data/` folder.
-* `combo.js`: produces `combos.html`.
-* `rank.js`: produces `rank.html`.
-* `medal.js`: produces `medal.html`.
-* `collab.js`: produces `collabs.html`, `collab/`.
-* `gacha.js`: produces `gachas.html`, `gacha/`.
-* `material.js`: produces `material.js`.
-* `crown.js`: produces `crown.js`.
-* `gamatoto.js`: produces `gamatoto.html`.
-* `esearch.js`: produces `esearch.html`.
-* `build_all.js`: run all build scripts.
 
 ### Coding style
 
