@@ -6,7 +6,7 @@ function fucus(event) {
 const my_stars = document.getElementById('my-stars');
 var my_stars_list = localStorage.getItem('star-cats');
 if (my_stars_list == null || my_stars_list == '[]') {
-	my_stars.parentNode.innerHTML = '你還沒有收藏的貓咪，在貓咪檢視畫面按下「★加入我的最愛」或貓咪圖鑑收藏貓咪';
+	my_stars.parentNode.innerHTML = '你還沒有收藏的貓咪，在貓咪檢視畫面按下「★加入我的最愛」或貓咪圖鑑收藏貓咪。';
 } else {
 	my_stars_list = JSON.parse(my_stars_list);
 	let i = 0;
