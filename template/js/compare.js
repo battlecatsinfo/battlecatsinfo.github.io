@@ -501,9 +501,11 @@ loadAllCats().then(s => {
 
 function newTab() {
 	let t;
+	let i = 0;
 	for (const tr of tby) {
 		t = document.createElement('td');
-		t.contentEditable = true;
+		if (++i > 2)
+			t.contentEditable = true;
 		tr.appendChild(t);
 	}
 	return tby[0].children.length - 1;
@@ -816,7 +818,7 @@ function addCat(id, I, FC = 0) {
 			x.textContent = '';
 			x.style.display = 'none';
 		}
-		targets.delete(id);
+		targets.delete(`${id}-${FC}`);
 		if (targets.size)
 			history.pushState({}, "", '/compare.html?forms=' + Array.from(targets).join(','));
 		else
