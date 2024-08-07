@@ -1,6 +1,5 @@
-new (class extends require('./base.js') {
-	constructor() {
-		super();
+module.exports = class extends require('./base.js') {
+	run() {
 		this.write_template('html/medal.html', 'medal.html', {
 			'medals': this.load('medal.tsv').split('\n').map(function(x) {
 				if (x.startsWith('【')) {
@@ -11,4 +10,4 @@ new (class extends require('./base.js') {
 			}).join('\n')
 		});
 	}
-})();
+};

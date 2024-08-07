@@ -4,9 +4,8 @@ function convert(o) {
 	
 	return o;
 }
-new (class extends require('./base.js') {
-	constructor() {
-		super();
+module.exports = class extends require('./base.js') {
+	run() {
 		this.write_template('js/crown.js', 'crown.js', convert(JSON.parse(this.load('crown.json'))));
 	}
-})();
+};

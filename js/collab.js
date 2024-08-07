@@ -6,10 +6,8 @@ function to_path(s) {
 	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');
 }
 
-new (class extends require('./base.js') {
-	constructor() {
-		super();
-
+module.exports = class extends require('./base.js') {
+	run() {
 		try {
 			fs.mkdirSync(resolve(__dirname, '../_out/collab'));
 		} catch (e) {
@@ -24,7 +22,7 @@ new (class extends require('./base.js') {
 			this.gacha_pools[p['tw-name']] = p;
 
 		const self = this;
-		Promise.all([
+		return Promise.all([
 			this.load_map(),
 			this.load_stage()
 		]).then(() => {
@@ -243,4 +241,4 @@ new (class extends require('./base.js') {
 				this.stage_rewards[id] = false;
 		}
 	}
-})();
+};

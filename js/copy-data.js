@@ -16,9 +16,8 @@ const sources = [
 ];
 
 
-new (class extends require('./base.js') {
-	constructor() {
-		super();
+module.exports = class extends require('./base.js') {
+	run({force = false}) {
 		const last_mods_path = resolve(__dirname, '../last_mods_data.json');
 		let last_mods;
 		try {
@@ -32,7 +31,7 @@ new (class extends require('./base.js') {
 		for (const file of sources) {
 			const src = resolve(__dirname, '../data/', file);
 			const last = fs.statSync(src).mtime.getTime();
-			if (last_mods[file] != last) {
+			if (last_mods[file] != last || force) {
 				console.log(`updating ${file}...`);
 				last_mods[file] = last;
 				fs.copyFileSync(src, resolve(__dirname, '../_out/', file));
@@ -41,4 +40,4 @@ new (class extends require('./base.js') {
 	
 		fs.writeFileSync(last_mods_path, JSON.stringify(last_mods), 'utf8');
 	}
-})();
+};

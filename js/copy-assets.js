@@ -85,9 +85,8 @@ const active_map = {
 	'stage3.html': 'stage',
 };
 
-new (class extends require('./base.js') {
-	constructor() {
-		super();
+module.exports = class extends require('./base.js') {
+	run({force = false}) {
 		const last_mods_path = resolve(__dirname, '../last_mods.json');
 		let last_mods;
 		try {
@@ -110,7 +109,7 @@ new (class extends require('./base.js') {
 			}
 			const path = resolve(__dirname, `../template/${base}/${file}`);
 			const last = fs.statSync(path).mtime.getTime();
-			if (last_mods[file] != last) {
+			if (last_mods[file] != last || force) {
 				console.log(`updating ${file}...`);
 				let contents;
 				if (base == 'raw')
@@ -156,4 +155,4 @@ new (class extends require('./base.js') {
 		}
 		fs.writeFileSync(last_mods_path, JSON.stringify(last_mods), 'utf8');
 	}
-})();
+};
