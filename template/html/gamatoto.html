@@ -2,33 +2,35 @@
 <html lang="zh-Hant">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="description" content="加碼多多隊員一覽 | 貓咪大戰爭中文資訊網站">
-	{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
 	<title>加碼多多隊員一覽</title>
+	<meta name="color-scheme" content="light dark">
+	<link rel="stylesheet" href="gh.css">
 </head>
 
 <body>
-	<style>
-body {
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	font-size: max(10px, 1.2vw);
-	text-align: center;
+
+<script type="text/javascript">
+var _th = localStorage.getItem('theme');
+if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
+	document.documentElement.setAttribute("data-theme", "dark");
+function toggleTheme() {
+	const x = localStorage.getItem('theme');
+	if (x == 'dark') {
+		document.documentElement.setAttribute("data-theme", "light");
+		localStorage.setItem('theme', 'light');
+	} else {
+		document.documentElement.setAttribute("data-theme", "dark");
+		localStorage.setItem('theme', 'dark');
+	}
 }
-{{{nav-style}}}
-.w3-centered td {
-	vertical-align: middle;
-}
-	</style>
-	{{{nav-bar}}}
+</script>
+
 	<h1>加碼多多隊員一覽</h1>
 	<p>圖片來源： <a href="https://battle-cats.fandom.com/wiki/Gamatoto_Expedition">Battle Cats Wiki - Fandom</a>
 	</p>
-	<table class="w3-table w3-striped w3-centered w3-border w3-bordered w3-hoverable">
+	<table>
 		<thead>
 			<tr>
 				<th>名稱</th>
