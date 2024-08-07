@@ -143,19 +143,19 @@ new (class extends require('./base.js') {
 	write_other(O) {
 		let S = '<h2>其他獲取方式的貓咪</h2>';
 		for (const u of O)
-			S += `<a style="margin-left:1em;" href="/unit.html?id=${u}"><img width="128" height="128" loading="lazy" src="/img/u/${u}/0.png"></a>`;
+			S += `<a style="margin-left:1em;" href="/unit.html?id=${u}"><img width="104" height="79" loading="lazy" src="/img/u/${u}/0.png"></a>`;
 		return S;
 	}
 	write_buy(O) {
 		let S = '<h2>課金購買貓咪</h2>';
 		for (const u of O)
-			S += `<a style="margin-left:1em;" href="/unit.html?id=${u}"><img width="128" height="128" loading="lazy" src="/img/u/${u}/0.png"></a>`;
+			S += `<a style="margin-left:1em;" href="/unit.html?id=${u}"><img width="104" height="79" loading="lazy" src="/img/u/${u}/0.png"></a>`;
 		return S;
 	}
 	write_stamps(O) {
 		let S = '<h2>登入獎章</h2>';
 		for (const u of O)
-			S += `<a style="margin-left:1em;" href="/unit.html?id=${u}"><img width="128" height="128" loading="lazy" src="/img/u/${u}/0.png"></a>`;
+			S += `<a style="margin-left:1em;" href="/unit.html?id=${u}"><img width="104" height="79" loading="lazy" src="/img/u/${u}/0.png"></a>`;
 
 		return S;
 	}
@@ -196,10 +196,10 @@ new (class extends require('./base.js') {
 				len += 1;
 			} while (true);
 			for (const u of dup_u)
-				rewards += `<a href="/unit.html?id=${u}"><img class="R" width="128" height="128" loading="lazy" src="/img/u/${u}/0.png"></a>`;
+				rewards += `<a href="/unit.html?id=${u}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/${u}/0.png"></a>`;
 			dup_u.clear();
 			for (const t of dup_t)
-				rewards += `<a href="/unit.html?id=${t}"><img class="R" width="128" height="128" loading="lazy" src="/img/u/${t}/2.png"></a>`;
+				rewards += `<a href="/unit.html?id=${t}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/${t}/2.png"></a>`;
 			dup_t.clear();
 			for (let r of dup_r) {
 				r = parseInt(r, 10);
