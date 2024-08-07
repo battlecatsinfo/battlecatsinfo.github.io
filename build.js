@@ -16,6 +16,9 @@ const modules = new Set([
 
 const args = parseArgs({
 	options: {
+		minify: {
+			type: 'boolean',
+		},
 		force: {
 			type: 'boolean',
 		},
@@ -37,6 +40,7 @@ ${[...modules].map(x => `  ${x}`).join('\n')}
 Options:
   --help|-h  Display usage help.
   --force    Skip update check and rebuild all requested parts.
+	--minify   Minify HTML/CSS/JS files.
 `;
 	process.stdout.write(usage);
 	process.exit(0);
@@ -62,6 +66,9 @@ const parts = ((_parts) => {
 	for (const part of parts) {
 		console.log(`Running ${part}.js`);
 		const mod = require(`./js/${part}.js`);
-		await (new mod).run({force: args.values.force});
+		await (new mod).run({
+			force: args.values.force,
+			minify: args.values.minify,
+		});
 	}
 })();
