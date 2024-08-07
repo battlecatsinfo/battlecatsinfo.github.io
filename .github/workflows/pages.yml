@@ -48,8 +48,7 @@ jobs:
 
       - name: Build static site contents
         run: |
-          mkdir -p _out
-          node js/build_all.js
+          node build.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

@@ -1,4 +1,6 @@
 const {parseArgs} = require('node:util');
+const fs = require('node:fs');
+const resolve = require('node:path').resolve;
 
 const modules = new Set([
 	'collab',
@@ -63,6 +65,13 @@ const parts = ((_parts) => {
 })(args.positionals);
 
 (async () => {
+	try {
+		fs.mkdirSync(resolve(__dirname, '_out'));
+	} catch (e) {
+		if (e.code !== 'EEXIST') 
+			throw e;
+	}
+
 	for (const part of parts) {
 		console.log(`Running ${part}.js`);
 		const mod = require(`./js/${part}.js`);
