@@ -29,7 +29,7 @@ $ node build.js
 
 ### Coding style
 
-* Always indent using tabs(except for `package.json`, `last_mods_data.json`, `.github/workflows/pages.yml`)
+* Always indent using tabs(except for `package.json`, `package-lock.json`, `.github/workflows/pages.yml`)
 * Always use LF line ending
 * Use `require` instead of `import` in JavaScript files
 
