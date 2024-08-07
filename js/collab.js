@@ -81,7 +81,7 @@ new (class extends require('./base.js') {
 				'img2': img2,
 				'C': S.join('\n'),
 				'name': C['tw-name'],
-				'name-br': [C['tw-name'], C['jp-name'], C['en-name']].filter(x => x).join('<br>')
+				'name-br': Array.from(new Set([C['tw-name'], C['jp-name'], C['en-name']].filter(x => x))).join('<br>')
 			}));
 		}
 		this.write_menu(data['tw-history'], data['jp-history'], nav_menu);
