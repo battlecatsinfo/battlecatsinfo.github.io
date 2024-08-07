@@ -126,7 +126,7 @@ new (class extends require('./base.js') {
 					[width, height] = size.split('x');
 				else
 					width = '860', height = '240';
-				S += `<a style="margin-left:1em;text-align:center;" href="/gacha/${to_path(pool['en-name'])}">${pool['tw-name']}</a><img class="I" src="${pool['img']}" width="${width}" height="${height}" loading="lazy">`;
+				S += `<a style="display:block;text-align:center;" href="/gacha/${to_path(pool['en-name'])}">${pool['tw-name']}<img class="I" src="${pool['img']}" width="${width}" height="${height}" loading="lazy"></a>`;
 			} else {
 				console.warn('collab.js: pool not found:', p);
 			}
