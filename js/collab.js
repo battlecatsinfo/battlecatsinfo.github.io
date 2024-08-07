@@ -188,7 +188,8 @@ new (class extends require('./base.js') {
 							else
 								dup_u.add(v[4]);
 						} else {
-							dup_r.add(v[1]);
+							if (v[1] < 1000) // ensure reward is valid
+								dup_r.add(v[1]);
 						}
 					}
 				}
