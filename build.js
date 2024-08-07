@@ -61,7 +61,7 @@ const parts = ((_parts) => {
 (async () => {
 	for (const part of parts) {
 		console.log(`Running ${part}.js`);
-		const mod = require(`./${part}.js`);
+		const mod = require(`./js/${part}.js`);
 		await (new mod).run({force: args.values.force});
 	}
 })();

@@ -21,17 +21,10 @@ Note: To display images successfully, you may need to clone https://github.com/b
 
 ### Build
 
-Use Node.js to run build scripts.
+Use Node.js to run the build script.
 
 ```sh
-$ node js/build_all.js
-```
-
-or
-
-```sh
-$ cd js
-$ node build_all.js
+$ node build.js
 ```
 
 ### Coding style
