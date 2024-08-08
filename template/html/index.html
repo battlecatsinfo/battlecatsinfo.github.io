@@ -12,15 +12,15 @@
 	<meta property="og:description" content="查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等"> {{{favicon}}}
 	<link rel="stylesheet" type="text/css" href="w3.css">
 	<script>
-		function Switch() {
-		  let x = localStorage.getItem('unit');
-		  if (!x || x == 'S') {
-			localStorage.setItem('unit', 'F');
-			return alert('單位切換成「F」(幀)');
-		  }
-		  localStorage.setItem('unit', 'S');
-		  alert('單位切換成「秒」');
-		}
+function Switch() {
+	let x = localStorage.getItem('unit');
+	if (!x || x == 'S') {
+		localStorage.setItem('unit', 'F');
+		return alert('單位切換成「F」(幀)');
+	}
+	localStorage.setItem('unit', 'S');
+	alert('單位切換成「秒」');
+}
 	</script>
 </head>
 

@@ -33,19 +33,19 @@ th img {width: 22px;height:auto;vertical-align:middle;}
 
 <body>
 	<script>
-		var _th = localStorage.getItem('theme');
-		if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
-		  document.documentElement.classList.add("dark");
-		function toggleTheme() {
-		  const x = localStorage.getItem('theme');
-		  if (x == 'dark') {
-			document.documentElement.classList.remove('dark');
-			localStorage.setItem('theme', 'light');
-		  } else {
-			document.documentElement.classList.add('dark');
-			localStorage.setItem('theme', 'dark');
-		  }
-		}
+var _th = localStorage.getItem('theme');
+if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
+	document.documentElement.classList.add("dark");
+function toggleTheme() {
+	const x = localStorage.getItem('theme');
+	if (x == 'dark') {
+		document.documentElement.classList.remove('dark');
+		localStorage.setItem('theme', 'light');
+	} else {
+		document.documentElement.classList.add('dark');
+		localStorage.setItem('theme', 'dark');
+	}
+}
 	</script>
 	<div class="topnav">
 		<a href="/index.html">主頁</a>

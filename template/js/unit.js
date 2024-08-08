@@ -355,7 +355,7 @@ function createAbIcons(form, p1, p2, tbody) {
 						du = numStrT(du);
 					}
 				} else {
-					du =  numStrT(v[2]);
+					du = numStrT(v[2]);
 					cv = getCoverUnit(form, v[0], v[2]) + ' %';
 				}
 				if (layout == '2') {
@@ -376,7 +376,7 @@ function createAbIcons(form, p1, p2, tbody) {
 						du = numStrT(du);
 					}
 				} else {
-					du =  numStrT(v[1]);
+					du = numStrT(v[1]);
 					cv = getCoverUnit(form, v[0], v[1]) + ' %';
 				}
 				if (layout == '2') {
@@ -397,7 +397,7 @@ function createAbIcons(form, p1, p2, tbody) {
 						du = numStrT(du);
 					}
 				} else {
-					du =  numStrT(v[1]);
+					du = numStrT(v[1]);
 					cv = getCoverUnit(form, v[0], v[1]) + ' %';
 				}
 				if (layout == '2') {
@@ -491,7 +491,7 @@ function createAbIcons(form, p1, p2, tbody) {
 						du = numStrT(du);
 					}
 				} else {
-					du =  numStrT(v[1]);
+					du = numStrT(v[1]);
 					cv = getCoverUnit(form, v[0], v[1]) + ' %';
 				}
 				if (layout == '2') {
