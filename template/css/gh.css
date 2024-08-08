@@ -430,12 +430,6 @@ input::-webkit-inner-spin-button {
 .mr-2 {
 	margin-right: var(--base-size-8, 8px) !important;
 }
-> *:first-child {
-	margin-top: 0 !important;
-}
-> *:last-child {
-	margin-bottom: 0 !important;
-}
 a:not([href]) {
 	color: inherit;
 	text-decoration: none;
