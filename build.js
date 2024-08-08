@@ -57,7 +57,8 @@ const parts = ((_parts) => {
 
 	for (const part of _parts) {
 		if (!modules.has(part)) {
-			throw new Error(`Unsupported part: ${part}`);
+			console.error(`Unsupported part: ${part}`);
+			process.exit(1);
 		}
 	}
 
