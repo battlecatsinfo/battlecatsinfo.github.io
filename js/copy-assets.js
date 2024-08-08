@@ -1,8 +1,5 @@
 const fs = require('node:fs');
 const resolve = require('node:path').resolve;
-const UglifyJS = require("uglify-js");
-const CleanCSS = require('clean-css');
-const htmlmin = require('html-minifier');
 
 const sources = [
 	'unit.css',
@@ -86,30 +83,39 @@ const active_map = {
 };
 
 module.exports = class extends require('./base.js') {
-	run({force = false, minify = false}) {
+	run({force = false, minify = false}) {		
+		let UglifyJS, CleanCSS, htmlmin, last_mods = {};
+
 		const last_mods_path = resolve(__dirname, '../last_mods.json');
-		let last_mods;
-		try {
-			last_mods = JSON.parse(fs.readFileSync(last_mods_path, 'utf-8'));
-		} catch (e) {
-			if (e.code != 'ENOENT')
-				console.error(e);
-			last_mods = {};
+		if (!force) {
+			try {
+				last_mods = JSON.parse(fs.readFileSync(last_mods_path, 'utf-8'));
+			} catch (e) {
+				if (e.code != 'ENOENT')
+					console.error(e);
+			}
+		}
+		if (minify) {
+			UglifyJS = require("uglify-js");
+			CleanCSS = require('clean-css');
+			htmlmin = require('html-minifier');
 		}
 		for (const file of sources) {
 			let base = 'raw';
-			if (file.endsWith('.css')) {
+
+			if (file.endsWith('.css'))
 				base = 'css';
-			} else if (file.endsWith('.html')) {
+			else if (file.endsWith('.html'))
 				base = 'html';
-			} else if (file.endsWith('.min.js')) {
+			else if (file.endsWith('.min.js'))
 				base = 'js';
-			} else if (file.endsWith('.js')) {
+			else if (file.endsWith('.js'))
 				base = 'js';
-			}
+
 			const path = resolve(__dirname, `../template/${base}/${file}`);
 			const last = fs.statSync(path).mtime.getTime();
-			if (last_mods[file] != last || force) {
+
+			if (last_mods[file] != last) {
 				console.log(`updating ${file}...`);
 				let contents;
 				if (base == 'raw')
@@ -118,7 +124,7 @@ module.exports = class extends require('./base.js') {
 					contents = fs.readFileSync(path, 'utf8');
 				if (file.endsWith('.css')) {
 					last_mods[file] = last;
-					if (minify) {
+					if (CleanCSS) {
 						const r = new CleanCSS().minify(contents);
 						if (r.errors.length) {
 							console.error('Error on minifying CSS:', file, r.errors);
@@ -131,7 +137,7 @@ module.exports = class extends require('./base.js') {
 				} else if (file.endsWith('.html')) {
 					last_mods[file] = last;
 					contents = this.template(contents, {}, active_map[file]);
-					if (minify) {
+					if (htmlmin) {
 						contents = htmlmin.minify(contents, {
 							collapseBooleanAttributes: true,
 							collapseWhitespace: true,
@@ -149,14 +155,14 @@ module.exports = class extends require('./base.js') {
 				} else if (file.endsWith('.js')) {
 					last_mods[file] = last;
 					contents = this.template(contents, {});
-					if (minify) {
+					if (UglifyJS) {
 						const r = UglifyJS.minify(contents, {'mangle': {}});
 						if (r.error) {
 							console.error('Error on minifying JS:', file, r.error);
 							continue;
 						}
 						if (r.warnings)
-							console.warn('Error on minifying JS:', file, r.warnings);
+							console.warn('Warning on minifying JS:', file, r.warnings);
 						contents = r.code;
 					}
 				} else {

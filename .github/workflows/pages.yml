@@ -48,7 +48,7 @@ jobs:
 
       - name: Build static site contents
         run: |
-          node build.js
+          node build.js -f -m
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

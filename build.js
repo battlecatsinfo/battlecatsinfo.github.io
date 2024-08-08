@@ -20,13 +20,15 @@ const args = parseArgs({
 	options: {
 		minify: {
 			type: 'boolean',
+			short: 'm'
 		},
 		force: {
 			type: 'boolean',
+			short: 'f'
 		},
 		help: {
 			type: 'boolean',
-			short: 'h',
+			short: 'h'
 		},
 	},
 	allowPositionals: true,
@@ -41,8 +43,8 @@ ${[...modules].map(x => `    ${x}`).join('\n')}
 
 Options:
     --help | -h      Display usage help.
-    --force          Skip update check and rebuild all requested parts.
-    --minify         Minify HTML/CSS/JS files.
+    --force | -f     Skip update check and rebuild all requested parts.
+    --minify | -m    Minify HTML/CSS/JS files.
 `;
 	process.stdout.write(usage);
 	process.exit(0);
