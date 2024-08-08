@@ -2,6 +2,16 @@
 
 {{#block "title"}}關卡資訊{{/block}}
 
+{{#block "description"}}
+	<meta name="description" content="關卡資訊(特製分類) | 貓咪大戰爭中文資訊網站">
+{{/block}}
+
+{{#block "og" mode="append"}}
+	<meta property="og:title" content="關卡資訊(特製分類)">
+	<meta property="og:description" content="查詢關卡詳細資訊">
+	<meta property="og:image" content="https://i.imgur.com/uzobngO.png">
+{{/block}}
+
 {{#block "styles-inline"}}
 	<style>
 	body {
@@ -41,8 +51,8 @@
 		animation-name: An;
 		animation-duration: 0.7s
 	}
-	@keyframes An { 
-		from { opacity:0; } 
+	@keyframes An {
+		from { opacity:0; }
 		to { opacity:1; }
 	}
 	a.res {
