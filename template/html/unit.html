@@ -1,123 +1,128 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#extends "base.html"}}
 
-<head>
-	<meta charset="utf-8">
-	<title>貓咪資訊</title>
-	{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
+{{#block "viewport"}}{{/block}}
+
+{{#block "title"}}貓咪資訊{{/block}}
+
+{{#block "styles" mode="append"}}
 	<link rel="stylesheet" type="text/css" href="unit.css">
-	<script src="levelcurve.js"></script>
-</head>
+{{/block}}
 
-<body style="overflow: scroll;position: relative;">
+{{#block "styles-inline"}}
 	<style>
-body {
-	font-size: max(20px, 1vw);
-}
-.bold-large {
-	font-size: 1.2em;
-}
-.w3-table {
-	width: initial;
-	margin: 0 auto;
-	margin-bottom: 60px;
-}
-.w3-table td {
-	vertical-align: middle;
-	padding: 9px 2px;
-	min-width: 120px;
-}
-#abar,
-.w3-bar-item {
-	background-color: #ededed;
-	text-decoration: none;
-}
-#abar {
-	border: 1vw solid #ededed;
-}
-[data-theme="dark"] .w3-bar-item {
-	background-color: #2f2f2f;
-}
-[data-theme="dark"] #abar {
-	background-color: #2f2f2f;
-	border: 1vw solid #2f2f2f;
-}
-#abar a {
-	user-select: none;
-	cursor: pointer;
-	border-radius: 0.7vw;
-	white-space: nowrap;
-	text-align: center;
-	padding: 0.8vh 3vw;
-}
-#abar .w3-bar-item:hover {
-	background-color: #80808052;
-}
-.v-ctl {
-	float: right;
-	width: max(min(3vw, 3vh), 15px);
-	height: auto;
-}
-.v-ctl path {
-	stroke: white;
-	fill: transparent;
-}
-td select {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-}
-.orb td {
-	padding: 5px;
-}
-.orb td:first-child {
-	padding-left: 5px;
-}
-.S {
-	padding-left: ;
-	border-radius: 0.5em;
-}
-.A > * {
-	padding-left: 0.5em;
-	padding-top: 0.1em;
-	padding-bottom: 0.1em;
-}
-.f {
-	background-color: #dedede;
-}
-.F {
-	background-color: #efefef;
-}
-[data-theme="dark"] .F {
-	background-color: #31343f;
-}
-[data-theme="dark"] .f {
-	background-color: #3c3f4b;
-}
-.o-selected {
-	background-color: #7fdbff !important;
-}
-td img {
-	vertical-align: bottom !important;
-}
-.tooltip svg {
-	margin-right: 0.6em;
-	fill: var(--color);
-	width: 1.5em;
-	height: 1.5em;
-	cursor: pointer;
-}
-select {
-	color: var(--color);
-}
-.xp td {
-	padding: 0.2em 0.4em;
-	min-width: initial;
-}
-{{{nav-style}}}
+	body {
+		font-size: max(20px, 1vw);
+	}
+	.bold-large {
+		font-size: 1.2em;
+	}
+	.w3-table {
+		width: initial;
+		margin: 0 auto;
+		margin-bottom: 60px;
+	}
+	.w3-table td {
+		vertical-align: middle;
+		padding: 9px 2px;
+		min-width: 120px;
+	}
+	#abar,
+	.w3-bar-item {
+		background-color: #ededed;
+		text-decoration: none;
+	}
+	#abar {
+		border: 1vw solid #ededed;
+	}
+	[data-theme="dark"] .w3-bar-item {
+		background-color: #2f2f2f;
+	}
+	[data-theme="dark"] #abar {
+		background-color: #2f2f2f;
+		border: 1vw solid #2f2f2f;
+	}
+	#abar a {
+		user-select: none;
+		cursor: pointer;
+		border-radius: 0.7vw;
+		white-space: nowrap;
+		text-align: center;
+		padding: 0.8vh 3vw;
+	}
+	#abar .w3-bar-item:hover {
+		background-color: #80808052;
+	}
+	.v-ctl {
+		float: right;
+		width: max(min(3vw, 3vh), 15px);
+		height: auto;
+	}
+	.v-ctl path {
+		stroke: white;
+		fill: transparent;
+	}
+	td select {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	.orb td {
+		padding: 5px;
+	}
+	.orb td:first-child {
+		padding-left: 5px;
+	}
+	.S {
+		padding-left: ;
+		border-radius: 0.5em;
+	}
+	.A > * {
+		padding-left: 0.5em;
+		padding-top: 0.1em;
+		padding-bottom: 0.1em;
+	}
+	.f {
+		background-color: #dedede;
+	}
+	.F {
+		background-color: #efefef;
+	}
+	[data-theme="dark"] .F {
+		background-color: #31343f;
+	}
+	[data-theme="dark"] .f {
+		background-color: #3c3f4b;
+	}
+	.o-selected {
+		background-color: #7fdbff !important;
+	}
+	td img {
+		vertical-align: bottom !important;
+	}
+	.tooltip svg {
+		margin-right: 0.6em;
+		fill: var(--color);
+		width: 1.5em;
+		height: 1.5em;
+		cursor: pointer;
+	}
+	select {
+		color: var(--color);
+	}
+	.xp td {
+		padding: 0.2em 0.4em;
+		min-width: initial;
+	}
 	</style>
-	{{{nav-bar}}}
+{{/block}}
+
+{{#block "scripts"}}
+	<script src="levelcurve.js"></script>
+{{/block}}
+
+{{#block "body-attrs"}} style="overflow: scroll;position: relative;"{{/block}}
+
+{{#block "content"}}
 	<div id="loader"></div>
 	<script src="cat.js"></script>
 	<div id="modal" class="w3-modal">
@@ -164,6 +169,6 @@ select {
 		<script src="combo.js"></script>
 		<script src="unit.js"></script>
 	</div>
-</body>
+{{/block}}
 
-</html>
+{{/extends}}

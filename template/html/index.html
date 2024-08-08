@@ -1,80 +1,83 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#extends "base.html"}}
 
-<head>
-	<meta charset="utf-8">
-	<title>貓咪大戰爭 中文資訊網站</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+{{#block "title"}}貓咪大戰爭 中文資訊網站{{/block}}
+
+{{#block "description"}}
 	<meta name="description" content="貓咪大戰爭中文資訊網站，查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等">
-	<meta property="og:url" content="https://battlecatsinfo.github.io">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
-	<meta property="og:title" content="貓咪大戰爭中文資訊網站">
-	<meta property="og:description" content="查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等"> {{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-	<script>
-function Switch() {
-	let x = localStorage.getItem('unit');
-	if (!x || x == 'S') {
-		localStorage.setItem('unit', 'F');
-		return alert('單位切換成「F」(幀)');
-	}
-	localStorage.setItem('unit', 'S');
-	alert('單位切換成「秒」');
-}
-	</script>
-</head>
+{{/block}}
 
-<body>
+{{#block "og" mode="append"}}
+	<meta property="og:url" content="https://battlecatsinfo.github.io">
+	<meta property="og:title" content="貓咪大戰爭中文資訊網站">
+	<meta property="og:description" content="查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等">
+{{/block}}
+
+{{#block "styles-inline"}}
 	<style>
-:root {
-	--t: #2e2725;
-}
-[data-theme="dark"] {
-	--t: white;
-}
-body {
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	text-align: center;
-	font-size: min(22px, 4vw);
-}
-.A {
-	display: block;
-	margin: 0 auto;
-	max-width: min(100%, 430px);
-}
-.w3-row a {
-	text-decoration: none;
-	padding: 2vh 0;
-	display: block;
-	border-radius: 1vw;
-}
-svg {
-	background-color: transparent !important;
-	fill: var(--t);
-	width: 2em;
-	height: 2em;
-}
-.w3-row svg {
-	vertical-align: middle;
-	display: block;
-	margin: 0 auto;
-	width: 3em;
-	height: 3em;
-}
-a img {
-	border-radius: 4px;
-}
-.s6:hover {
-	background-color: #ccc !important;
-}
-[data-theme="dark"] .s6:hover {
-	background-color: gray !important;
-}
-{{{nav-style}}}
+	:root {
+		--t: #2e2725;
+	}
+	[data-theme="dark"] {
+		--t: white;
+	}
+	body {
+		padding: 0;
+		margin: 0;
+		width: 100%;
+		text-align: center;
+		font-size: min(22px, 4vw);
+	}
+	.A {
+		display: block;
+		margin: 0 auto;
+		max-width: min(100%, 430px);
+	}
+	.w3-row a {
+		text-decoration: none;
+		padding: 2vh 0;
+		display: block;
+		border-radius: 1vw;
+	}
+	svg {
+		background-color: transparent !important;
+		fill: var(--t);
+		width: 2em;
+		height: 2em;
+	}
+	.w3-row svg {
+		vertical-align: middle;
+		display: block;
+		margin: 0 auto;
+		width: 3em;
+		height: 3em;
+	}
+	a img {
+		border-radius: 4px;
+	}
+	.s6:hover {
+		background-color: #ccc !important;
+	}
+	[data-theme="dark"] .s6:hover {
+		background-color: gray !important;
+	}
 	</style>
-	{{{nav-bar}}}
+{{/block}}
+
+{{#block "scripts"}}
+	<script>
+	function Switch() {
+		let x = localStorage.getItem('unit');
+		if (!x || x == 'S') {
+			localStorage.setItem('unit', 'F');
+			return alert('單位切換成「F」(幀)');
+		}
+		localStorage.setItem('unit', 'S');
+		alert('單位切換成「秒」');
+	}
+	</script>
+{{/block}}
+
+{{#block "content"}}
 	<div class="w3-row">
 		<a class="w3-col s6" href="/search.html">貓咪搜尋<img class="A w3-card-4" src="https://i.imgur.com/cnYnN81.png"></a>
 		<a class="w3-col s6" href="/esearch.html">敵人搜尋<img class="A w3-card-4" src="https://i.imgur.com/wzLaUm2.png"></a>
@@ -175,6 +178,6 @@ a img {
 
 
 	</div>
-</body>
+{{/block}}
 
-</html>
+{{/extends}}

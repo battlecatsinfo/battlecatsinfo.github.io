@@ -1,50 +1,56 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#extends "base.html"}}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>DPS曲線</title>
+{{#block "title"}}DPS曲線{{/block}}
+
+{{#block "styles"}}
 	<link rel="stylesheet" href="/w3.css">
-	<script src="/levelcurve.js"></script>
-</head>
+{{/block}}
 
-<body>
+{{#block "styles-inline"}}
 	<style>
-:root {
-	--a: #fff;
-	--b: #000;
-	--c: #f1f1f1;
-}
-[data-Q="dark1"] {
-	--a: #2a2a2a;
-	--b: #fff;
-	--c: #2a2a2a;
-}
-[data-Q="dark2"] {
-	--a: #32373a;
-	--b: #fff;
-	--c: #32373a;
-}
-body {
-	color: var(--b);
-	background-color: var(--a) !important;
-}
-.w3-light-grey {
-	background-color: var(--c) !important;
-	color: var(--b) !important;
-}
-.w3-modal-content {
-	color: var(--b);
-	background-color: var(--a) !important;
-}
-.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: max(1.5vw, 10px) !important; }
-.topnav > a { display: inline-block;color: #f2f2f2 !important; padding: 1vh 2vw; text-decoration: none;cursor: pointer;vertical-align: middle; }
-.topnav > a.active { background-color: #4caf50 !important; }
-.topnav > a:visited { text-decoration: none; }
-.topnav > a:hover { background-color: #009688 !important; }
-.topnav svg { background-color: inherit !important;height: 1.3em; }
+	:root {
+		--a: #fff;
+		--b: #000;
+		--c: #f1f1f1;
+	}
+	[data-Q="dark1"] {
+		--a: #2a2a2a;
+		--b: #fff;
+		--c: #2a2a2a;
+	}
+	[data-Q="dark2"] {
+		--a: #32373a;
+		--b: #fff;
+		--c: #32373a;
+	}
+	body {
+		color: var(--b);
+		background-color: var(--a) !important;
+	}
+	.w3-light-grey {
+		background-color: var(--c) !important;
+		color: var(--b) !important;
+	}
+	.w3-modal-content {
+		color: var(--b);
+		background-color: var(--a) !important;
+	}
+	.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: max(1.5vw, 10px) !important; }
+	.topnav > a { display: inline-block;color: #f2f2f2 !important; padding: 1vh 2vw; text-decoration: none;cursor: pointer;vertical-align: middle; }
+	.topnav > a.active { background-color: #4caf50 !important; }
+	.topnav > a:visited { text-decoration: none; }
+	.topnav > a:hover { background-color: #009688 !important; }
+	.topnav svg { background-color: inherit !important;height: 1.3em; }
 	</style>
+{{/block}}
+
+{{#block "scripts"}}
+	<script src="/levelcurve.js"></script>
+{{/block}}
+
+{{#block "nav-bar"}}{{/block}}
+
+{{#block "content"}}
 	<div class="topnav">
 		<a href="/index.html">主頁</a>
 		<a href="/search.html">貓咪</a>
@@ -95,6 +101,6 @@ body {
 	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 	<script src="svg.js"></script>
 	<script src="dpsgraph.js"></script>
-</body>
+{{/block}}
 
-</html>
+{{/extends}}

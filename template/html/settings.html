@@ -1,118 +1,112 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#extends "base.html"}}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>偏好設定</title>
-	{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-</head>
+{{#block "title"}}偏好設定{{/block}}
 
-<body>
+{{#block "styles-inline"}}
 	<style>
-{{{nav-style}}}
-body {font-size: max(1.2vw, 10px);padding: 0;}
-.form {
-	padding: 1em 1.5em;
-	margin: 1em;
-	margin-right: 0.3em;
-	border-radius: 0.5em;
-	background-color: #93939300 !important;
-}
-.form * {
-	background-color: #93939300 !important;
-}
-.w3-section {
-	margin: 2em 1em !important;
-	margin-right: 0 !important;
-	padding: 1em;
-	padding-right: 0;
-	border-left: 0.7em #ffb86c solid;
-}
-.odds {
-	border-left: 0.7em #00bcd4 solid;
-}
-#s-trea .w3-section {
-	border-left: 0.7em #673ab7 solid;
-}
-h3 {
-	color: #3f51b5 !important;
-	background-color: transparent !important;
-	padding-left: 1vw;
-}
-[data-theme='dark'] h3 {
-	color: cyan !important;
-}
-label {
-	padding-left: 1vw;
-}
-.w3-sidebar > .w3-bar-item {
-	color: var(--color) !important;
-	background-color: transparent;
-	padding: 2vh 1vw !important;
-	padding-right: 0 !important;
-}
-.fucus {
-	background-color: #ababab4f !important;
-}
-.w3-table td {
-	vertical-align: middle;
-}
-.treasure {
-	display: none;
-}
-.w3-section {
-	box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.12);
-	background-color: #9393931c !important;
-	border-radius: 0.4em;
-	padding: 0.5em;
-	margin-bottom: 4em;
-}
-#s-trea .w3-section > * {
-	background-color: transparent !important;
-}
-h3 {
-	font-size: 1.3em !important;
-}
-#s-trea h3 {
-	padding-left: 0.4vw;
-}
-#s-trea h4 {
-	padding-left: 0.6vw;
-}
-[data-theme="dark"] h2 {
-	color: #8bc34a !important;
-}
-[data-theme="dark"] h1 {
-	color: #00bcd4 !important;
-}
-.atab {
-	background-color: #9191919c !important;
-}
-[data-theme="dark"] .atab {
-	color: var(--ahover) !important;
-}
-.w3-input {
-	margin-left: 1em;
-	width: 7em;
-	margin-bottom: 1em;
-}
-.w3-input:invalid {
-	background-color: pink !important;
-}
-.w3-section p {
-	text-align: left;
-	padding-left: 1vw;
-}
-input[type='radio'] {
-	width: 1.2em;
-	height: 1.2em;
-	position:relative;
-	top:0.25em;
-}
+	body {font-size: max(1.2vw, 10px);padding: 0;}
+	.form {
+		padding: 1em 1.5em;
+		margin: 1em;
+		margin-right: 0.3em;
+		border-radius: 0.5em;
+		background-color: #93939300 !important;
+	}
+	.form * {
+		background-color: #93939300 !important;
+	}
+	.w3-section {
+		margin: 2em 1em !important;
+		margin-right: 0 !important;
+		padding: 1em;
+		padding-right: 0;
+		border-left: 0.7em #ffb86c solid;
+	}
+	.odds {
+		border-left: 0.7em #00bcd4 solid;
+	}
+	#s-trea .w3-section {
+		border-left: 0.7em #673ab7 solid;
+	}
+	h3 {
+		color: #3f51b5 !important;
+		background-color: transparent !important;
+		padding-left: 1vw;
+	}
+	[data-theme='dark'] h3 {
+		color: cyan !important;
+	}
+	label {
+		padding-left: 1vw;
+	}
+	.w3-sidebar > .w3-bar-item {
+		color: var(--color) !important;
+		background-color: transparent;
+		padding: 2vh 1vw !important;
+		padding-right: 0 !important;
+	}
+	.fucus {
+		background-color: #ababab4f !important;
+	}
+	.w3-table td {
+		vertical-align: middle;
+	}
+	.treasure {
+		display: none;
+	}
+	.w3-section {
+		box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.12);
+		background-color: #9393931c !important;
+		border-radius: 0.4em;
+		padding: 0.5em;
+		margin-bottom: 4em;
+	}
+	#s-trea .w3-section > * {
+		background-color: transparent !important;
+	}
+	h3 {
+		font-size: 1.3em !important;
+	}
+	#s-trea h3 {
+		padding-left: 0.4vw;
+	}
+	#s-trea h4 {
+		padding-left: 0.6vw;
+	}
+	[data-theme="dark"] h2 {
+		color: #8bc34a !important;
+	}
+	[data-theme="dark"] h1 {
+		color: #00bcd4 !important;
+	}
+	.atab {
+		background-color: #9191919c !important;
+	}
+	[data-theme="dark"] .atab {
+		color: var(--ahover) !important;
+	}
+	.w3-input {
+		margin-left: 1em;
+		width: 7em;
+		margin-bottom: 1em;
+	}
+	.w3-input:invalid {
+		background-color: pink !important;
+	}
+	.w3-section p {
+		text-align: left;
+		padding-left: 1vw;
+	}
+	input[type='radio'] {
+		width: 1.2em;
+		height: 1.2em;
+		position:relative;
+		top:0.25em;
+	}
 	</style>
-	{{{nav-bar}}}
+{{/block}}
+
+{{#block "content"}}
 	<div class="w3-sidebar w3-bar-block w3-card" style="width: max(6em,10vw);background-color: #8080803d !important;">
 		<p class="w3-bar-item" style="background-color: transparent !important;">
 			<svg viewBox="0 0 24 24" style="width: 80%;background-color: transparent !important;">
@@ -621,6 +615,6 @@ input[type='radio'] {
 	</div>
 
 	<script src="settings.js"></script>
-</body>
+{{/block}}
 
-</html>
+{{/extends}}
