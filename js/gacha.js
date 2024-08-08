@@ -181,7 +181,7 @@ module.exports = class extends require('./base.js') {
 
 			history = pool['history'];
 			if (history)
-				history = `<p style="margin-block-end:0;">${history}</p>`;
+				history = `<p style="margin-block-end:0;font-size:.8em;">轉蛋歷史：<br>${history.join('<br>')}</p>`;
 
 			path = 'gacha/' + to_path(pool['en-name']) + '.html';
 
@@ -294,7 +294,7 @@ module.exports = class extends require('./base.js') {
 				const bg = ['', '', '#795548', '#93254b', '#9C27B0', '#673AB7'][rarity];
 				S += `<details open>
 <summary class="w3-tag w3-padding w3-round-large" style="background-color:${bg} !important">${['基本', 'EX', '稀有', '激稀有', '超激稀有', '傳說稀有'][rarity]}</summary>
-<table class="w3-table w3-centered R" style="width:auto;margin:0 auto"><tbody>`;
+<table class="w3-table w3-centered R" style="width:95%;margin:0 auto"><tbody>`;
 				let i = 0;
 				v.sort((a, b) => a - b);
 				while (i < (v.length - 1)) {
