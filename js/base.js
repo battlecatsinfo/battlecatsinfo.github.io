@@ -1,6 +1,19 @@
 const Handlebars = require('handlebars');
 const fs = require('node:fs');
-const resolve = require('node:path').resolve;
+const {resolve, extname} = require('node:path');
+
+// register partials for template/layouts/*.hbs
+const layoutDir = resolve(__dirname, '../template/layouts');
+for (const file of fs.readdirSync(layoutDir)) {
+	const ext = extname(file);
+	if (ext.toLowerCase() !== '.hbs') {
+		continue;
+	}
+	Handlebars.registerPartial(
+		file.slice(0, -ext.length),
+		fs.readFileSync(resolve(layoutDir, file), 'utf-8')
+	);
+}
 
 const gEnv = JSON.parse(fs.readFileSync(resolve(__dirname, '../data/config.json'), 'utf-8'));
 
