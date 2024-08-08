@@ -255,7 +255,7 @@ module.exports = class extends require('./base.js') {
 			S += `<details open>
 <summary class="w3-tag w3-padding w3-round-large">11連自動出現在倉庫</summary>
 <p class="w3-center">
-	<a class="B" href="/unit.html?id="${O['free']}">
+	<a class="B" href="/unit.html?id=${O['free']}">
 		<img src="${this.uimg(O['free'])}" width="104" height="79" loading="lazy">
 	</a>${this.unit_desc[O['free']].replaceAll('|', '<br>')}
 </p>
