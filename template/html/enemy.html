@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>敵人資訊</title>
-	{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
+{{#*inline "viewport"}}{{/inline}}
+
+{{#*inline "title"}}敵人資訊{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "styles"}}
+	{{~> @partial-block}}
 	<link rel="stylesheet" type="text/css" href="unit.css">
-</head>
+{{/inline}}
 
-<body style="overflow: scroll;">
+{{#*inline "pre-content"}}
 	<style>
 body {
 	padding: 0;
@@ -84,7 +86,11 @@ td img {
 }
 {{{nav-style}}}
 	</style>
-	{{{nav-bar}}}
+{{/inline}}
+
+{{#*inline "body-attrs"}} style="overflow: scroll;"{{/inline}}
+
+{{#*inline "content"}}
 	<div id="loader"></div>
 	<div id="modal" class="w3-modal">
 		<div class="w3-modal-content" style="padding: 1em;">
@@ -161,6 +167,6 @@ td img {
 		</div>
 	</div>
 	<script src="enemy.js"></script>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

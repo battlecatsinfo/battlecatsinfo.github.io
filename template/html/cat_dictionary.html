@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html>
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>貓咪圖鑑</title>
-</head>
+{{#*inline "html-attrs"}}{{/inline}}
 
-<body>
+{{#*inline "viewport"}}{{/inline}}
+
+{{#*inline "title"}}貓咪圖鑑{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}{{/inline}}
+
+{{#*inline "pre-content"}}
 	<style>
 body {
 	padding: 0;
@@ -241,6 +247,11 @@ input[type="radio"] {
 	) !important;
 }
 	</style>
+{{/inline}}
+
+{{#*inline "nav-bar"}}{{/inline}}
+
+{{#*inline "content"}}
 	<div id="loader"></div>
 	<h1 style="background-image: linear-gradient(#955100, #633600);text-shadow: -1px 0 2px #e9ac64, 0 1px 2px #e9ac64, 1px 0 2px white, 0 -1px 2px #e9ac64;font-size: larger;margin: 0;padding: 0.1em 3em;"> 貓咪圖鑑 <a href="https://ponosgames.com/information/appli/battlecats/zukan/tw/index.html" rel="noreferrer" style="text-shadow: none;color: black;color: white;font-size: smaller;text-decoration: none;font-weight: lighter;float: right;"> 什麼是貓咪圖鑑？ </a>
 		</h1>
@@ -572,6 +583,6 @@ input[type="radio"] {
 	<button class="btn" style="position: fixed;right: 1vw;bottom: 1vh;" onclick="favorite(event)" data-s="0">★設定我的最愛</button>
 	<script src="cat.js"></script>
 	<script src="cat_dict.js"></script>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

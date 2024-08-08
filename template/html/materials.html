@@ -1,15 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>城堡素材掉落率</title>
+{{#*inline "title"}}城堡素材掉落率{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	<link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.css" rel="stylesheet">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 	<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
+{{/inline}}
+
+{{#*inline "styles-inline"}}
 	<style>
 {{{nav-style}}}
 :root {
@@ -29,9 +34,13 @@ body {
 }
 th img {width: 22px;height:auto;vertical-align:middle;}
 	</style>
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "nav-bar-content"}}{{/inline}}
+
+{{#*inline "nav-bar-scripts"}}{{/inline}}
+
+{{#*inline "content"}}
 	<script>
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
@@ -167,5 +176,6 @@ function toggleTheme() {
 		<br>
 	</div>
 	<script type="text/javascript" src="materials.js"></script>
+{{/inline}}
 
-</html>
+{{/base.html}}

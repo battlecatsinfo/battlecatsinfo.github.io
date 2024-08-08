@@ -1,19 +1,21 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>敵人搜尋</title>
+{{#*inline "viewport"}}{{/inline}}
+
+{{#*inline "title"}}敵人搜尋{{/inline}}
+
+{{#*inline "description"}}
 	<meta name="description" content="搜尋敵人 | 貓咪大戰爭中文資訊網站">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
+{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
 	<meta property="og:title" content="敵人搜尋">
 	<meta property="og:description" content="篩選和排序敵人">
 	<meta property="og:image" content="https://i.imgur.com/wzLaUm2.png">
-	{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "pre-content"}}
 	<style>
 body {
 	font-size: 16px;
@@ -191,7 +193,9 @@ p {
 	</style>
 	<div id="loader"></div>
 	<script src="cat.js"></script>
-	{{{nav-bar}}}
+{{/inline}}
+
+{{#*inline "content"}}
 	<div id="main" class="An">
 		<div class="w3-container">
 			<ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: auto;" id="trait-s">
@@ -437,6 +441,6 @@ p {
 		<script src="parser.js"></script>
 		<script src="esearch.js"></script>
 	</div>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

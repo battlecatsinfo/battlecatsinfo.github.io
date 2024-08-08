@@ -1,16 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="UTF-8">
-	<title>加碼多多隊員一覽</title>
+{{#*inline "title"}}加碼多多隊員一覽{{/inline}}
+
+{{#*inline "color-theme"}}
 	<meta name="color-scheme" content="light dark">
+{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}
 	<link rel="stylesheet" href="gh.css">
-</head>
+{{/inline}}
 
-<body>
-
+{{#*inline "pre-content"}}
 <script type="text/javascript">
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
@@ -26,7 +30,11 @@ function toggleTheme() {
 	}
 }
 </script>
+{{/inline}}
 
+{{#*inline "nav-bar"}}{{/inline}}
+
+{{#*inline "content"}}
 	<h1>加碼多多隊員一覽</h1>
 	<p>圖片來源： <a href="https://battle-cats.fandom.com/wiki/Gamatoto_Expedition">Battle Cats Wiki - Fandom</a>
 	</p>
@@ -95,6 +103,6 @@ function toggleTheme() {
 
 		</tbody>
 	</table>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

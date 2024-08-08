@@ -1,13 +1,16 @@
-<!DOCTYPE html>
-<html dir=ltr>
+{{#> base.html}}
 
-<head>
-	<meta charset=utf-8>
-	<meta name=viewport content="width=device-width, initial-scale=1">
-	<title>Blockly程式編輯工具</title>
-</head>
+{{#*inline "html-attrs"}} dir=ltr{{/inline}}
 
-<body>
+{{#*inline "title"}}Blockly程式編輯工具{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}{{/inline}}
+
+{{#*inline "pre-content"}}
 	<style>
 body {
 	width: 100%;
@@ -53,6 +56,11 @@ body {
 	border: 1px solid #ddd;
 }
 	</style>
+{{/inline}}
+
+{{#*inline "nav-bar"}}{{/inline}}
+
+{{#*inline "content"}}
 	<div id=menu>
 		<span class=active onclick="tab(event, 'blocklyDiv')">程式</span>
 		<span onclick="tab(event, 'textDiv')">文字</span>
@@ -87,6 +95,6 @@ body {
 		loadAllCats().then(cats => CCC.cats = cats);
 	</script>
 	<img src=https://i.imgur.com/otr5jus.png style="z-index: 100;position: fixed;left: 5.5vw;bottom: 2vh;width: 17vh;height: auto;">
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

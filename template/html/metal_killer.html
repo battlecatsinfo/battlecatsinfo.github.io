@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>鋼鐵殺手計算</title>
+{{#*inline "title"}}鋼鐵殺手計算{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}
 	<link rel="stylesheet" href="/w3.css">
-	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "pre-content"}}
 	<style>
 input[type="number"] {
 	padding-left: 1em;
@@ -66,6 +68,15 @@ body {
 	height: 1.3em;
 }
 	</style>
+{{/inline}}
+
+{{#*inline "scripts"}}
+	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+{{/inline}}
+
+{{#*inline "nav-bar"}}{{/inline}}
+
+{{#*inline "content"}}
 	<div class="topnav">
 		<a href="/index.html">主頁</a>
 		<a href="/search.html">貓咪</a>
@@ -147,7 +158,6 @@ let chart;
 	}
 })();
 	</script>
+{{/inline}}
 
-</body>
-
-</html>
+{{/base.html}}

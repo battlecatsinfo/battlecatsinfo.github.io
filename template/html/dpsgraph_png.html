@@ -1,15 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>DPS曲線</title>
+{{#*inline "title"}}DPS曲線{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}
 	<link rel="stylesheet" href="/w3.css">
-	<script src="/levelcurve.js"></script>
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "scripts"}}
+	<script src="/levelcurve.js"></script>
+{{/inline}}
+
+{{#*inline "pre-content"}}
 	<style>
 :root {
 	--a: #fff;
@@ -51,6 +56,11 @@ a {
 .topnav > a:hover { background-color: #009688 !important; }
 .topnav svg { background-color: inherit !important;height: 1.3em; }
 	</style>
+{{/inline}}
+
+{{#*inline "nav-bar"}}{{/inline}}
+
+{{#*inline "content"}}
 	<div class="topnav">
 		<a href="/index.html">主頁</a>
 		<a href="/search.html">貓咪</a>
@@ -109,6 +119,6 @@ a {
 	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 	<script src="png.js"></script>
 	<script src="dpsgraph.js" type="module"></script>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

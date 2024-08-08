@@ -15,6 +15,33 @@ for (const file of fs.readdirSync(layoutDir)) {
 	);
 }
 
+Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+	switch (operator) {
+		case '==':
+			return (v1 == v2) ? options.fn(this) : options.inverse(this);
+		case '===':
+			return (v1 === v2) ? options.fn(this) : options.inverse(this);
+		case '!=':
+			return (v1 != v2) ? options.fn(this) : options.inverse(this);
+		case '!==':
+			return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+		case '<':
+			return (v1 < v2) ? options.fn(this) : options.inverse(this);
+		case '<=':
+			return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+		case '>':
+			return (v1 > v2) ? options.fn(this) : options.inverse(this);
+		case '>=':
+			return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+		case '&&':
+			return (v1 && v2) ? options.fn(this) : options.inverse(this);
+		case '||':
+			return (v1 || v2) ? options.fn(this) : options.inverse(this);
+		default:
+			return options.inverse(this);
+	}
+});
+
 const gEnv = JSON.parse(fs.readFileSync(resolve(__dirname, '../data/config.json'), 'utf-8'));
 
 gEnv['favicon'] = `<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -28,6 +55,7 @@ for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])
 module.exports = class {
 	template(s, env, ac='') {
 		Object.assign(env, gEnv);
+		env['nav-bar-active'] = ac;
 		if (s.includes('nav-bar')) {
 			let
 				a_index = '', 

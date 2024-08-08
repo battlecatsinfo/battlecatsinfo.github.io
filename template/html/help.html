@@ -1,15 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<title>使用說明</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="UTF-8">
+{{#*inline "title"}}使用說明{{/inline}}
+
+{{#*inline "color-theme"}}
 	<meta name="color-scheme" content="light dark">
-	<link rel="stylesheet" href="gh.css">
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}
+	<link rel="stylesheet" href="gh.css">
+{{/inline}}
+
+{{#*inline "pre-content"}}
 <script type="text/javascript">
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
@@ -25,6 +30,11 @@ function toggleTheme() {
 	}
 }
 </script>
+{{/inline}}
+
+{{#*inline "nav-bar"}}{{/inline}}
+
+{{#*inline "content"}}
 	<h1 id="guide"><a class="anchor" href="#guide"><span class="octicon octicon-link"></span></a>使用說明</h1>
 	<h2>篩選表達式、排序表達式</h2>
 	<p>如<code>1 + 1</code>、<code>2 * 3</code>等，是用來篩選和排序貓咪的運算式，類似數學的表達式，在程式語言裡通常稱做 <i>expression</i>。</p>
@@ -1212,7 +1222,6 @@ function toggleTheme() {
 		<li><code>sign</code>: 如果輸入大於 0，傳回 1，如果輸入小於 0，傳回 -1，否則傳回 0 或 -0</li>
 	</ul>
 	<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Math">在 MDN 上的數學函數參考</a></p>
+{{/inline}}
 
-</body>
-
-</html>
+{{/base.html}}

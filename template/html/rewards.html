@@ -1,16 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>關卡獎勵一覽</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+{{#*inline "title"}}關卡獎勵一覽{{/inline}}
+
+{{#*inline "color-theme"}}
 	<meta name="color-scheme" content="light dark">
+{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}
 	<link rel="stylesheet" href="gh.css">
-</head>
+{{/inline}}
 
-<body>
-
+{{#*inline "pre-content"}}
 <script type="text/javascript">
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
@@ -26,7 +30,11 @@ function toggleTheme() {
 	}
 }
 </script>
+{{/inline}}
 
+{{#*inline "nav-bar"}}{{/inline}}
+
+{{#*inline "content"}}
 	<h1 style="text-align:center;">關卡獎勵一覽</h1>
 	<h3>超生命體強襲</h3>
 	<p>Lv. 1 ~ Lv. MAX 獎勵</p>
@@ -1746,8 +1754,6 @@ function toggleTheme() {
 		<br>※如有複數獎勵在同一格，則代表各自的機率，如在「紅獸石 / 紫獸石」標示 4% 代表紅獸石與紫獸石的期望值都是 4%
 		<br>※將弗裂火山的素材掉落機率省略
 		<br>※第 20 區是最終關，只會掉落一次的稀有券</p>
+{{/inline}}
 
-
-</body>
-
-</html>
+{{/base.html}}

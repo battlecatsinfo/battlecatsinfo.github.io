@@ -1,15 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>其他功能</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+{{#*inline "title"}}其他功能{{/inline}}
+
+{{#*inline "color-theme"}}
 	<meta name="color-scheme" content="light dark">
-	<link rel="stylesheet" href="gh.css">
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}
+	<link rel="stylesheet" href="gh.css">
+{{/inline}}
+
+{{#*inline "pre-content"}}
 <script type="text/javascript">
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
@@ -25,6 +30,11 @@ function toggleTheme() {
 	}
 }
 </script>
+{{/inline}}
+
+{{#*inline "nav-bar"}}{{/inline}}
+
+{{#*inline "content"}}
 	<h2>其他功能</h2>
 	<ul>
 		<li><a href="ototo.html">城堡寶開發隊</a></li>
@@ -94,7 +104,6 @@ function toggleTheme() {
 		<li><a target="_blank" href="https://arca.live/b/nyanko">Arcalive</a></li>
 		<li><a target="_blank" href="https://gall.dcinside.com/mgallery/board/lists/?id=yavetwarch">DCinside</a></li>
 	</ul>
+{{/inline}}
 
-</body>
-
-</html>
+{{/base.html}}

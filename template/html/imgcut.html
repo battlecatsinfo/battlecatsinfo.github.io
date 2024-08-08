@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>ImgCut</title>
+{{#*inline "title"}}ImgCut{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "description"}}
 	<meta name="description" content="編輯ImgCut檔案 | 貓咪大戰爭中文資訊網站">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="/w3.css">
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "pre-content"}}
 	<style>
 body {
 	width: 100%;
@@ -44,7 +42,9 @@ th {
 }
 {{{nav-style}}}
 	</style>
-	{{{nav-bar}}}
+{{/inline}}
+
+{{#*inline "content"}}
 	<canvas id="imgcut" style="border: 1px solid;border-color: var(--color);"></canvas>
 	<canvas id="preview" style="display: none;"></canvas>
 	<br>
@@ -90,6 +90,6 @@ th {
 		</table>
 	</div>
 	<script src="/imgcut.js"></script>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-	<meta charset="utf-8">
-	<title>金寶與關卡對照表</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
+{{#> base.html}}
+
+{{#*inline "title"}}金寶與關卡對照表{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
 	<meta property="og:title" content="金寶與關卡對照表">
 	<meta property="og:description" content="世界篇、未來篇、宇宙篇的寶物和關卡對照表">
-{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
+{{/inline}}
+
+{{#*inline "styles-inline"}}
 	<style>
 body {
 	width: 100%;
@@ -51,8 +51,12 @@ th {
 }
 {{{nav-style}}}
 </style>
-</head>
-<body style="font-size: max(6px,1vw);margin: 0;padding: 0;">{{{nav-bar}}}<h1 style="font-size: 2em;line-height: 4;">金寶與關卡對照表</h1>
+{{/inline}}
+
+{{#*inline "body-attrs"}} style="font-size: max(6px,1vw);margin: 0;padding: 0;"{{/inline}}
+
+{{#*inline "content"}}
+<h1 style="font-size: 2em;line-height: 4;">金寶與關卡對照表</h1>
 
 <div>※本篇已收錄至<a href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=20591" target="_blank">【情報】貓咪大戰爭寶物關卡與效果一覽</a>中，寶物效果也整理在文章中※</div>
 
@@ -1159,6 +1163,6 @@ th {
 <td>블랙홀</td><td>시공</td>
 </tr>
 </table>
+{{/inline}}
 
-</body>
-</html>
+{{/base.html}}

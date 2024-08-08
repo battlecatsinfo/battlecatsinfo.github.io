@@ -1,16 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="UTF-8">
-	<title>等級排行獎勵</title>
+{{#*inline "title"}}等級排行獎勵{{/inline}}
+
+{{#*inline "color-theme"}}
 	<meta name="color-scheme" content="light dark">
+{{/inline}}
+
+{{#*inline "og"}}{{/inline}}
+
+{{#*inline "favicon"}}{{/inline}}
+
+{{#*inline "styles"}}
 	<link rel="stylesheet" href="gh.css">
-</head>
+{{/inline}}
 
-<body>
-
+{{#*inline "pre-content"}}
 <style type="text/css">
 td img {
 	width: 3em;
@@ -20,7 +24,6 @@ td:nth-child(4) {
 	padding: 0 !important;
 }
 </style>
-
 <script type="text/javascript">
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
@@ -36,7 +39,11 @@ function toggleTheme() {
 	}
 }
 </script>
+{{/inline}}
 
+{{#*inline "nav-bar"}}{{/inline}}
+
+{{#*inline "content"}}
 	<h1 style="text-align:center;">等級排行獎勵<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>
 
 	<p style="text-align:center;">※解放「？？稀有角色」是指「傳說稀有」※</p>
@@ -53,7 +60,6 @@ function toggleTheme() {
 			<tbody id="rank">{{{rank}}}</tbody>
 		</table>
 	</div>
+{{/inline}}
 
-</body>
-
-</html>
+{{/base.html}}

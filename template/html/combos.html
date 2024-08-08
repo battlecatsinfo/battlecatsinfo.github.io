@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
+{{#*inline "title"}}貓咪聯組一覽{{/inline}}
+
+{{#*inline "description"}}
 	<meta name="description" content="貓咪聯組一覽 | 貓咪大戰爭中文資訊網站">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
+{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
 	<meta property="og:title" content="貓咪搜尋">
 	<meta property="og:description" content="貓咪大戰爭全部貓咪聯組一覽">
 	<meta property="og:image" content="https://i.imgur.com/F2yiAC3.png">
-	{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>貓咪聯組一覽</title>
+{{/inline}}
+
+{{#*inline "styles-inline"}}
 	<style>
 body {
 	padding: 0;
@@ -60,10 +62,11 @@ p a {
 }
 {{{nav-style}}}
 	</style>
-</head>
+{{/inline}}
 
-<body style="text-align: center !important;">
-	{{{nav-bar}}}
+{{#*inline "body-attrs"}} style="text-align: center !important;"{{/inline}}
+
+{{#*inline "content"}}
 	<div>
 		<a class="w3-button w3-teal" style="display: block;color: white !important;" href="https://ponosgames.com/information/appli/battlecats/combo/tw/index.html">官方說明</a>
 		<a class="w3-button w3-deep-purple" style="display: block;color: white !important;" href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=20133">【情報】貓咪大戰爭全聯組統整圖鑑</a>
@@ -98,6 +101,6 @@ p a {
 	</div>
 	{{{combos}}}
 	</div>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

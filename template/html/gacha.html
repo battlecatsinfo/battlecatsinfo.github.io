@@ -1,23 +1,24 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>{{{title}}}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+{{#*inline "title"}}{{{title}}}{{/inline}}
+
+{{#*inline "description"}}
 	<meta name="description" content="{{{title}}} | 貓咪大戰爭中文資訊網站">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
+{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
 	<meta property="og:title" content="{{{title}}} | 貓咪大戰爭中文資訊網站">
 	<meta property="og:description" content="{{{title}}}轉蛋詳細資訊">
 	<meta property="og:image" content="{{{img}}}">
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+{{/inline}}
+
+{{#*inline "styles"}}
 	<link rel="stylesheet" type="text/css" href="/dracula2.css">
 	<link rel="stylesheet" type="text/css" href="/w3.css">
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "pre-content"}}
 	<style type="text/css">
 body {
 	width: 100%;
@@ -186,6 +187,9 @@ summary {
 	user-select: none;
 }
 	</style>
+{{/inline}}
+
+{{#*inline "nav-bar"}}
 	<div class="topnav">
 		<a href="/index.html">主頁</a>
 		<a href="/search.html">貓咪</a>
@@ -224,7 +228,9 @@ summary {
 		</a>
 	</div>
 	<script type="text/javascript" src="/dracula2.js"></script>
+{{/inline}}
 
+{{#*inline "content"}}
 	<h1 style="font-size:max(12px,2.2vw);">{{{h1}}}</h1> {{{collab}}}
 
 	<img style="display: block;margin: 0 auto;width:min(95%, 860px);height:auto;" src="{{{img}}}" width="{{{width}}}" height="{{{height}}}"> {{{contents}}} {{{history}}}
@@ -240,6 +246,6 @@ summary {
 			/>
 		</svg>
 	</div>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

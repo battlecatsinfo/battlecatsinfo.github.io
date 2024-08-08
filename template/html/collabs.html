@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>合作一覽</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+{{#*inline "title"}}合作一覽{{/inline}}
+
+{{#*inline "description"}}
 	<meta name="description" content="合作一覽 | 貓咪大戰爭中文資訊網站">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
-	<meta property="og:title" content="合作一覽">
-	<meta property="og:description" content="貓咪大戰爭合作活動一覽"> {{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "og"}}
+	{{~> @partial-block}}
+	<meta property="og:title" content="合作一覽">
+	<meta property="og:description" content="貓咪大戰爭合作活動一覽">
+{{/inline}}
+
+{{#*inline "pre-content"}}
 	<style>
 body {
 	width: 100%;
@@ -51,7 +51,9 @@ tr:hover {
 }
 {{{nav-style}}}
 	</style>
-	{{{nav-bar}}}
+{{/inline}}
+
+{{#*inline "content"}}
 	<h1 style="text-align:center;">合作一覽</h1>
 	<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59 !important;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
 		{{{nav-menu}}}
@@ -89,6 +91,6 @@ tr:hover {
 			</tbody>
 		</table>
 	</div>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

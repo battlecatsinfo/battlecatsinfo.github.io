@@ -1,16 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>{{{name}}}合作活動</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="{{{name}}}合作活動 | 貓咪大戰爭中文資訊網站">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
-	<meta property="og:title" content="{{{name}}}合作活動">
-	<meta property="og:description" content="{{{name}}}合作活動 | 貓咪大戰爭中文資訊網站"> {{{img1}}} {{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="/w3.css">
-</head>
+{{#*inline "title"}}{{name}}合作活動{{/inline}}
+
+{{#*inline "description"}}
+	<meta name="description" content="{{name}}合作活動 | 貓咪大戰爭中文資訊網站">
+{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
+	<meta property="og:title" content="{{name}}合作活動">
+	<meta property="og:description" content="{{name}}合作活動 | 貓咪大戰爭中文資訊網站">
+	{{{img1}}}
+{{/inline}}
+
+{{#*inline "pre-body"}}
 <style>
 body {
 	width: 100%;
@@ -60,12 +63,13 @@ a:hover {
 {{{nav-style}}}
 </style>
 
-<body>
-	{{{nav-bar}}}
+{{/inline}}
+
+{{#*inline "content"}}
 	<h1 style="font-size:1.5em;text-align:center;margin: 1em;">{{{name-br}}}</h1> {{{img2}}}
 	<div class="MC">
 		{{{C}}}
 	</div>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

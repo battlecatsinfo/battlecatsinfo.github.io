@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>貓咪搜尋</title>
+{{#*inline "viewport"}}{{/inline}}
+
+{{#*inline "title"}}貓咪搜尋{{/inline}}
+
+{{#*inline "description"}}
 	<meta name="description" content="貓咪搜尋 | 貓咪大戰爭中文資訊網站">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
+{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
 	<meta property="og:title" content="貓咪搜尋">
 	<meta property="og:description" content="篩選和排序貓咪">
-	<meta property="og:image" content="https://i.imgur.com/cnYnN81.png"> {{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-</head>
+	<meta property="og:image" content="https://i.imgur.com/cnYnN81.png">
+{{/inline}}
 
-<body>
+{{#*inline "pre-content"}}
 	<style>
 body {
 	font-size: 16px;
@@ -193,10 +196,15 @@ p {
 	margin-block-end: 5px;
 }
 	</style>
+{{/inline}}
+
+{{#*inline "pre-content"}}
 	<div id="loader"></div>
 	<script src="levelcurve.js"></script>
 	<script src="cat.js"></script>
-	{{{nav-bar}}}
+{{/inline}}
+
+{{#*inline "content"}}
 	<div id="main" class="An">
 		<div>
 			<ul class="w3-ul may-hide" style="width: 150px;height: 575px;overflow: auto;" id="trait-s">
@@ -514,6 +522,6 @@ p {
 		<script src="parser.js"></script>
 		<script src="search.js"></script>
 	</div>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

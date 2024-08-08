@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>關卡資訊</title>
+{{#*inline "title"}}關卡資訊{{/inline}}
+
+{{#*inline "description"}}
 	<meta name="description" content="關卡資訊(依分類) | 貓咪大戰爭中文資訊網站">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
+{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
 	<meta property="og:title" content="關卡資訊(依分類)">
 	<meta property="og:description" content="查詢關卡詳細資訊">
-	<meta property="og:image" content="https://i.imgur.com/uzobngO.png"> {{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-</head>
+	<meta property="og:image" content="https://i.imgur.com/uzobngO.png">
+{{/inline}}
 
-<body>
+{{#*inline "pre-content"}}
 	<style>
 body { 
 	width: 100%;
@@ -166,7 +166,9 @@ input, input button {
 	color: #50fa7b;
 }
 	</style>
-	{{{nav-bar}}}
+{{/inline}}
+
+{{#*inline "content"}}
 	<div>
 		<div style="display:flex;width:100%;">
 			<select id="M1">
@@ -291,6 +293,6 @@ input, input button {
 		<div style="display: none;" id="search-result"></div>
 	</div>
 	<script src="stage2.js"></script>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}

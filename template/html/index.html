@@ -1,16 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> base.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>貓咪大戰爭 中文資訊網站</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+{{#*inline "title"}}貓咪大戰爭 中文資訊網站{{/inline}}
+
+{{#*inline "description"}}
 	<meta name="description" content="貓咪大戰爭中文資訊網站，查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等">
+{{/inline}}
+
+{{#*inline "og"}}
 	<meta property="og:url" content="https://battlecatsinfo.github.io">
 	<meta property="og:site_name" content="battlecatsinfo.github.io">
 	<meta property="og:title" content="貓咪大戰爭中文資訊網站">
-	<meta property="og:description" content="查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等"> {{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
+	<meta property="og:description" content="查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等">
+{{/inline}}
+
+{{#*inline "scripts"}}
 	<script>
 function Switch() {
 	let x = localStorage.getItem('unit');
@@ -22,9 +25,9 @@ function Switch() {
 	alert('單位切換成「秒」');
 }
 	</script>
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "pre-content"}}
 	<style>
 :root {
 	--t: #2e2725;
@@ -74,7 +77,9 @@ a img {
 }
 {{{nav-style}}}
 	</style>
-	{{{nav-bar}}}
+{{/inline}}
+
+{{#*inline "content"}}
 	<div class="w3-row">
 		<a class="w3-col s6" href="/search.html">貓咪搜尋<img class="A w3-card-4" src="https://i.imgur.com/cnYnN81.png"></a>
 		<a class="w3-col s6" href="/esearch.html">敵人搜尋<img class="A w3-card-4" src="https://i.imgur.com/wzLaUm2.png"></a>
@@ -175,6 +180,6 @@ a img {
 
 
 	</div>
-</body>
+{{/inline}}
 
-</html>
+{{/base.html}}
