@@ -17,11 +17,11 @@ module.exports = class {
 		Object.assign(env, gEnv);
 		if (s.includes('nav-bar')) {
 			let
-			  a_index = '', 
-			  a_cat = '', 
-			  a_enemy = '', 
-			  a_gacha = '', 
-			  a_stage = '';
+				a_index = '', 
+				a_cat = '', 
+				a_enemy = '', 
+				a_gacha = '', 
+				a_stage = '';
 			const s = ' class="active"';
 			switch (ac) {
 			case 'index': a_index = s; break;

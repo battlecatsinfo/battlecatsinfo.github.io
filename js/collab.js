@@ -35,7 +35,7 @@ module.exports = class extends require('./base.js') {
 			return i.length == 1 ? ' ' + i : i;
 		}
 		const
-		 	collab_template = this.load_a('html/collab.html'),
+			collab_template = this.load_a('html/collab.html'),
 			data = JSON.parse(this.load('collab.json')),
 			collabs = data['collabs'];
 		let nav_menu = '';
