@@ -1,6 +1,38 @@
 const Handlebars = require('handlebars');
+const wax = require("wax-on");
 const fs = require('node:fs');
 const resolve = require('node:path').resolve;
+
+Handlebars.registerHelper('ifCond', (v1, operator, v2, options) => {
+	switch (operator) {
+		case '==':
+			return (v1 == v2) ? options.fn(this) : options.inverse(this);
+		case '===':
+			return (v1 === v2) ? options.fn(this) : options.inverse(this);
+		case '!=':
+			return (v1 != v2) ? options.fn(this) : options.inverse(this);
+		case '!==':
+			return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+		case '<':
+			return (v1 < v2) ? options.fn(this) : options.inverse(this);
+		case '<=':
+			return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+		case '>':
+			return (v1 > v2) ? options.fn(this) : options.inverse(this);
+		case '>=':
+			return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+		case '&&':
+			return (v1 && v2) ? options.fn(this) : options.inverse(this);
+		case '||':
+			return (v1 || v2) ? options.fn(this) : options.inverse(this);
+		default:
+			return options.inverse(this);
+	}
+});
+
+// register Wax On helpers with Handlebars
+wax.on(Handlebars);
+wax.setLayoutPath(resolve(__dirname, '../template/layouts'));
 
 const gEnv = JSON.parse(fs.readFileSync(resolve(__dirname, '../data/config.json'), 'utf-8'));
 
@@ -15,6 +47,7 @@ for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])
 module.exports = class {
 	template(s, env, ac='') {
 		Object.assign(env, gEnv);
+		env['nav-bar-active'] = ac;
 		if (s.includes('nav-bar')) {
 			let
 				a_index = '', 
