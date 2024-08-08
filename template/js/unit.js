@@ -2653,7 +2653,6 @@ function renderUintPage() {
 		mkTool(tbl);
 	}
 	if (my_cat.info[10]) {
-		unit_content.appendChild(document.createElement('hr'));
 		const TF = new Form(structuredClone(my_cat.forms[2]));
 		const names = rednerTalentInfos(my_cat.info[10]);
 		renderTalentCosts(names, my_cat.info[10]);
@@ -2662,7 +2661,6 @@ function renderUintPage() {
 		tables.push(['三階+本能數值表格', tf_tbl]);
 		mkTool(tf_tbl);
 		if (_super) {
-			unit_content.appendChild(document.createElement('hr'));
 			const names = rednerTalentInfos(my_cat.info[10], true, true);
 			renderTalentCosts(names, my_cat.info[10], true);
 			TF.applySuperTalents(my_cat.info[10], custom_super_talents);
