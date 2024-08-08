@@ -1460,7 +1460,7 @@
 			500,
 			0
 		],
-		"ver": "tw",
+		"jp-url": "",
 		"type": "rare",
 		"units": [
 			73,
@@ -1520,8 +1520,7 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R889.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R889.html"
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R889.html"
 	},
 	{
 		"tw-name": "心動時分貓咪學園活動轉蛋",
@@ -1764,26 +1763,10 @@
 		],
 		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每100統率力</th></tr><tr><td>暑假的開始</td><td>夏休みのはじまり</td><td>30</td><td>0.3</td><td>1</td></tr><tr><td>日暮的合唱</td><td>ひぐらしの合唱</td><td>35</td><td>0.36</td><td>1.03</td></tr><tr><td>泛亮夜的光</td><td>夜にあふれる光</td><td>40</td><td>0.42</td><td>1.05</td></tr><tr><td>樹上的基地</td><td>樹上のひみつ基地</td><td>45</td><td>0.48</td><td>1.07</td></tr><tr><td>晚餐到來音</td><td>夕飯を告げる声</td><td>50</td><td>0.54</td><td>1.08</td></tr><tr><td>臭丸味浴衣</td><td>防虫剤の匂いの浴衣</td><td>60</td><td>0.65</td><td>1.08</td></tr><tr><td>今夜來晚睡</td><td>今日だけは夜ふかし</td><td>70</td><td>0.76</td><td>1.09</td></tr><tr><td>手拿捕蟲網</td><td>虫取り網を握って</td><td>80</td><td>0.88</td><td>1.1</td></tr><tr><td>海底發光寶</td><td>海底に光るお宝</td><td>90</td><td>1</td><td>1.11</td></tr><tr><td>驅蚊香煙霧</td><td>蚊取り線香のけむり</td><td>100</td><td>1.12</td><td>1.12</td></tr><tr><td>校園內圍舞</td><td>校庭で盆踊り</td><td>110</td><td>1.25</td><td>1.14</td></tr><tr><td>不思議小姐</td><td>ふしぎなお姉さん</td><td>120</td><td>1.4</td><td>1.17</td></tr><tr><td>曬黑王小白</td><td>日焼けしたタケシ君</td><td>130</td><td>1.55</td><td>1.19</td></tr><tr><td>遠處的藝聲</td><td>遠くに聞こえる祭囃子</td><td>140</td><td>1.7</td><td>1.21</td></tr><tr><td>試膽友失蹤</td><td>肝試しで消えた友達</td><td>150</td><td>1.85</td><td>1.23</td></tr><tr><td>醒來已中午</td><td>起きたら昼だった</td><td>160</td><td>2</td><td>1.25</td></tr><tr><td>秘密的海浦</td><td>発見！ヒミツの入り江</td><td>170</td><td>2.15</td><td>1.26</td></tr><tr><td>微微秋意涼</td><td>かすかな秋の気配</td><td>180</td><td>2.3</td><td>1.28</td></tr><tr><td>今夏末煙火</td><td>この夏最後の花火</td><td>190</td><td>2.45</td><td>1.29</td></tr><tr><td>寫不完作業</td><td>終わらない宿題</td><td>200</td><td>2.6</td><td>1.3</td></tr></tbody>",
 		"ticket": [
-			"傳說中的捕蟲網",
+			"傳說的捕蟲網",
 			"/img/r/203.png"
 		],
 		"max": "<tbody><tr><td></td><td>農人貓</td><td>獨角貓</td><td>鍬形貓</td><td>鎧甲螢火貓</td></tr><tr><td>繁中版</td><td>Lv. 50+20</td><td>Lv. 50+40</td><td>Lv. 50+40</td><td>Lv. 50+20</td></tr><tr><td>日文版</td><td>Lv. 50+20</td><td>Lv. 50+40</td><td>Lv. 50+40</td><td>Lv. 50+20</td></tr></tbody>",
-		"//comment": {
-			"tw-name": "魔物獵人大狩獵活動轉蛋",
-			"jp-name": "モンハン大狩猟クエストガチャ",
-			"en-name": "Monster Hunter",
-			"img": "https://i.imgur.com/E7Z9RpW.png",
-			"size": "860x240",
-			"id": "E1"
-		},
-		"//comment2": {
-			"tw-name": "貓咪拼圖＆納豆君（暫譯）活動轉蛋",
-			"jp-name": "にゃんパズル＆ねば～る君ガチャ",
-			"en-name": "Nebaaru-kun and Nyanpazuru",
-			"img": "https://i.imgur.com/k5MIn1E.png",
-			"size": "860x240",
-			"id": "E2"
-		},
 		"type": "event",
 		"units": [
 			[
@@ -1812,6 +1795,74 @@
 		],
 		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E031.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E031.html"
+	},
+	{
+		"tw-name": "魔物獵人大狩獵活動轉蛋",
+		"jp-name": "モンハン大狩猟クエストガチャ",
+		"en-name": "Monster Hunter",
+		"img": "https://i.imgur.com/E7Z9RpW.png",
+		"tw-url": "",
+		"ticket": [
+			"MH大狩猟チケット",
+			"/img/r/24.png"
+		],
+		"type": "event",
+		"units": [
+			[],
+			[
+				-210,
+				-211,
+				-212
+			],
+			[
+				-206,
+				-209
+			],
+			[
+				-207,
+				-208
+			],
+			[]
+		],
+		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E001.html"
+	},
+	{
+		"tw-name": "貓咪拼圖＆納豆君（暫譯）活動轉蛋",
+		"jp-name": "にゃんパズル＆ねば～る君ガチャ",
+		"en-name": "Nebaaru-kun and Nyanpazuru",
+		"img": "https://i.imgur.com/k5MIn1E.png",
+		"tw-url": "",
+		"ticket": [
+			"まもるよチケット",
+			"/img/r/25.png"
+		],
+		"type": "event",
+		"units": [
+			[
+				10
+			],
+			[
+				-248,
+				-247,
+				-246,
+				-212,
+				-211,
+				-210,
+				11,
+				12
+			],
+			[
+				-266,
+				-265,
+				-264
+			],
+			[
+				-267,
+				-263
+			],
+			[]
+		],
+		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E002.html"
 	},
 	{
 		"tw-name": "聖魔大戰活動轉蛋",
@@ -1879,24 +1930,12 @@
 		"jp-name": "ねこのなつやすみ サバイバル",
 		"en-name": "Summer Break Cats: Survival",
 		"img": "https://i.imgur.com/1UJPng1.png",
-		"rate": [
-			3000,
-			0,
-			2500,
-			0,
-			1300,
-			0,
-			2500,
-			0,
-			0,
-			0
-		],
 		"stage": [
 			"stage.html?s=11-67",
 			"ねこのなつやすみ サバイバル"
 		],
 		"ticket": [
-			"傳說中的捕魚網",
+			"傳說的陷阱",
 			"/img/r/204.png"
 		],
 		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td>清晨的海岸</td><td>目覚めの海岸</td><td>30</td><td>0.3</td><td>1</td></tr><tr><td>在洞窟裡顫抖的夜晚</td><td>洞窟で震える夜</td><td>50</td><td>0.55</td><td>1.1</td></tr><tr><td>無人接收的SOS</td><td>誰にも届かぬSOS</td><td>60</td><td>0.7</td><td>1.17</td></tr><tr><td>因為毒蘑菇而腹瀉</td><td>毒キノコで腹下し</td><td>65</td><td>0.8</td><td>1.23</td></tr><tr><td>夢中的逃脫，食欲爆棚</td><td>夢見る脱出、溢れる食欲</td><td>70</td><td>0.9</td><td>1.29</td></tr><tr><td>捕獲了！</td><td>狩ったどー！</td><td>75</td><td>1</td><td>1.33</td></tr><tr><td>開始製作木筏</td><td>始まるいかだ作り</td><td>80</td><td>1.2</td><td>1.5</td></tr><tr><td>揚帆起航</td><td>いざ出航</td><td>85</td><td>1.3</td><td>1.53</td></tr><tr><td>被風暴吞噬的木筏</td><td>嵐に飲まれるいかだ</td><td>90</td><td>1.4</td><td>1.56</td></tr><tr><td>歡迎回家 貓咪的暑假</td><td>おかえり ねこのなつやすみ</td><td>100</td><td>1.5</td><td>1.5</td></tr></tbody>",
@@ -1951,7 +1990,7 @@
 		],
 		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td>出馬表チェックは入念に</td><td>10</td><td>1</td><td>10</td></tr><tr><td>天気には人一倍敏感</td><td>20</td><td>1.05</td><td>5.25</td></tr><tr><td>競馬新聞とにらめっこ</td><td>30</td><td>1.1</td><td>3.67</td></tr><tr><td>一度は当てたい万馬券</td><td>40</td><td>1.2</td><td>3</td></tr><tr><td>パドックで馬の調子を熟考</td><td>50</td><td>1.3</td><td>2.6</td></tr><tr><td>血統の知識は一級品</td><td>60</td><td>1.34</td><td>2.23</td></tr><tr><td>ラッキーナンバー頼み</td><td>70</td><td>1.38</td><td>1.97</td></tr><tr><td>オッズに踊らされる</td><td>80</td><td>1.42</td><td>1.775</td></tr><tr><td>財布はなぜか小銭だけ</td><td>90</td><td>1.46</td><td>1.62</td></tr><tr><td>迫る馬券発売の締切</td><td>100</td><td>1.5</td><td>1.5</td></tr><tr><td>追いつけ追い越せ引っこ抜け</td><td>110</td><td>1.56</td><td>1.42</td></tr><tr><td>逃げ馬たちの逆噴射</td><td>120</td><td>1.62</td><td>1.35</td></tr><tr><td>大番狂わせの大波乱</td><td>130</td><td>1.68</td><td>1.29</td></tr><tr><td>最後尾から驚異的な末脚</td><td>140</td><td>1.74</td><td>1.24</td></tr><tr><td>最後はスタミナ勝負</td><td>150</td><td>1.8</td><td>1.2</td></tr><tr><td>ハナ差で決着の超接戦</td><td>160</td><td>1.9</td><td>1.19</td></tr><tr><td>ハラハラ写真判定</td><td>170</td><td>2</td><td>1.18</td></tr><tr><td>買った馬券を三度見</td><td>180</td><td>2.1</td><td>1.17</td></tr><tr><td>まさかの同着に大興奮</td><td>190</td><td>2.2</td><td>1.16</td></tr><tr><td>来週もまた観ます</td><td>200</td><td>2.3</td><td>1.15</td></tr></tbody>",
 		"ticket": [
-			"傳說中的胡蘿蔔",
+			"傳說的胡蘿蔔",
 			"/img/r/162.png"
 		],
 		"max": "<tbody><tr><td></td><td>ネコキリンモドキ</td><td>ネコノトリッキー</td><td>ネコノドラゴーン</td></tr><tr><td>日文版</td><td>Lv. 1+30</td><td>Lv. 1+30</td><td>Lv. 1+30</td></tr></tbody>",
@@ -2004,11 +2043,12 @@
 			"第1部 10年の軌跡パレード"
 		],
 		"ticket": [
-			"伝説のフリーパス",
+			"傳說的票券",
 			"/img/r/178.png"
 		],
 		"farm": "<tbody><tr><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td></td><td>2012年</td><td>10</td><td>0.25</td><td>2.5</td></tr><tr><td></td><td>2013年 その1</td><td>20</td><td>0.35</td><td>1.75</td></tr><tr><td></td><td>2013年 その2</td><td>30</td><td>0.45</td><td>1.5</td></tr><tr><td></td><td>2014年 その1</td><td>40</td><td>0.55</td><td>1.375</td></tr><tr><td></td><td>2014年 その2</td><td>50</td><td>0.65</td><td>1.3</td></tr><tr><td></td><td>2015年 その1</td><td>60</td><td>0.75</td><td>1.25</td></tr><tr><td></td><td>2015年 その2</td><td>70</td><td>0.8</td><td>1.14</td></tr><tr><td></td><td>2016年 その1</td><td>80</td><td>0.9</td><td>1.125</td></tr><tr><td></td><td>2016年 その2</td><td>90</td><td>1</td><td>1.11</td></tr><tr><td></td><td>2017年 その1</td><td>100</td><td>1.08</td><td>1.08</td></tr><tr><td></td><td>2017年 その2</td><td>110</td><td>1.1</td><td>1</td></tr><tr><td></td><td>2018年 その1</td><td>120</td><td>1.2</td><td>1</td></tr><tr><td></td><td>2018年 その2</td><td>130</td><td>1.35</td><td>1.04</td></tr><tr><td></td><td>2019年 その1</td><td>140</td><td>1.45</td><td>1.04</td></tr><tr><td></td><td>2019年 その2</td><td>150</td><td>1.6</td><td>1.07</td></tr><tr><td></td><td>2020年 その1</td><td>160</td><td>1.7</td><td>1.06</td></tr><tr><td></td><td>2020年 その2</td><td>170</td><td>1.85</td><td>1.09</td></tr><tr><td></td><td>2021年 その1</td><td>180</td><td>2</td><td>1.11</td></tr><tr><td></td><td>2021年 その2</td><td>190</td><td>2.15</td><td>1.13</td></tr><tr><td></td><td>2022年</td><td>200</td><td>2.3</td><td>1.15</td></tr></tbody>",
 		"max": "<tbody><tr><td></td><td>にゃんこバーガー</td><td>招財貓</td><td>紀念幣貓</td><td>一百萬的貓</td><td>石の上にも10年ネコ*</td></tr><tr><td>日文版</td><td>Lv. 50+30</td><td>Lv. 50+35</td><td>Lv. 50+35</td><td>Lv. 50+15</td><td>Lv. 50+15</td></tr></tbody>",
+		"tw-url": "",
 		"type": "event",
 		"units": [
 			[
@@ -2035,7 +2075,6 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E021.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E021.html"
 	},
 	{
@@ -2060,7 +2099,7 @@
 			"第1章 ネコたちの冒険"
 		],
 		"ticket": [
-			"伝説のちいさいメダル",
+			"傳說的小徽章",
 			"/img/r/198.png"
 		],
 		"farm": "<tbody><tr><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td></td><td>旅立ちの朝</td><td>10</td><td>0.25</td><td>2.5</td></tr><tr><td></td><td>ネコはタンスを開けた</td><td>20</td><td>0.35</td><td>1.75</td></tr><tr><td></td><td>しかし中身はからっぽだった</td><td>30</td><td>0.45</td><td>1.5</td></tr><tr><td></td><td>やせいの犬がとびだしてきた！</td><td>40</td><td>0.55</td><td>1.375</td></tr><tr><td></td><td>不思議な踊りを踊った</td><td>50</td><td>0.65</td><td>1.3</td></tr><tr><td></td><td>薬草も尽きた</td><td>60</td><td>0.75</td><td>1.25</td></tr><tr><td></td><td>ネコは急所をついた</td><td>70</td><td>0.8</td><td>1.14</td></tr><tr><td></td><td>起き上がりこちらを見ている</td><td>80</td><td>0.9</td><td>1.125</td></tr><tr><td></td><td>ゆうべは夜更かしでしたね</td><td>90</td><td>1</td><td>1.11</td></tr><tr><td></td><td>故郷の村が壊滅した！</td><td>100</td><td>1.08</td><td>1.08</td></tr><tr><td></td><td>宝箱は罠だった</td><td>110</td><td>1.1</td><td>1</td></tr><tr><td></td><td>使うと回復する杖</td><td>120</td><td>1.2</td><td>1</td></tr><tr><td></td><td>呪いで装備が外れない</td><td>130</td><td>1.35</td><td>1.04</td></tr><tr><td></td><td>おや！？ネコの様子が…！</td><td>140</td><td>1.45</td><td>1.04</td></tr><tr><td></td><td>ジョブチェンジした</td><td>150</td><td>1.6</td><td>1.07</td></tr><tr><td></td><td>伝説の剣が抜けない</td><td>160</td><td>1.7</td><td>1.06</td></tr><tr><td></td><td>すり抜けられる壁</td><td>170</td><td>1.75</td><td>1.03</td></tr><tr><td></td><td>王様が操られている！</td><td>180</td><td>2</td><td>1.11</td></tr><tr><td></td><td>決戦前夜</td><td>190</td><td>2.15</td><td>1.13</td></tr><tr><td></td><td>冒険のきろくが消えました</td><td>200</td><td>2.3</td><td>1.15</td></tr></tbody>",
@@ -2095,11 +2134,10 @@
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E027.html"
 	},
 	{
-		"tw-name": "猜猜我是誰活動轉蛋（繁中版9周年）",
+		"tw-name": "猜猜我是誰活動轉蛋（繁中9周年）",
 		"jp-name": "箱の中身クイズ",
 		"en-name": "What's in the Box",
 		"img": "https://i.imgur.com/uxUvGHy.png",
-		"ver": "tw",
 		"rate": [
 			1000,
 			0,
@@ -5568,6 +5606,7 @@
 			500,
 			0
 		],
+		"tw-url": "",
 		"collab": [
 			"悠閒世界樹",
 			"/collab/Yurudrasil.html"
@@ -5580,7 +5619,6 @@
 			233,
 			232
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R049.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R049.html"
 	},
 	{
@@ -5595,6 +5633,7 @@
 			500,
 			0
 		],
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R486.html",
 		"history": [
 			"2023/8/28(11:00)~9/11(10:59) 活下去曼波魚 5% [9/8(11:00)~9/11(10:59) 5% 必中]",
 			"2022/8/29(11:00)~9/12(10:59) 活下去曼波魚 5% [2022/9/9(11:00)~9/12(10:59) 5% 必中]",
@@ -5662,7 +5701,6 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R496.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R496.html"
 	},
 	{
@@ -5677,6 +5715,7 @@
 			500,
 			0
 		],
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R411.html",
 		"history": [
 			"2022/10/24(11:00)~11/7(10:59) 消滅都市合作轉蛋 5% [碎] [2022/11/4(11:00)~11/7(10:59) 5% 必中]",
 			"2021/10/25(11:00)~2021/11/8(10:59) 消滅都市合作轉蛋 5% [11/5(11:00)~11/8(10:59) 5% 必中]",
@@ -5752,7 +5791,6 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R505.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R505.html"
 	},
 	{
@@ -5767,6 +5805,7 @@
 			500,
 			0
 		],
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R045.html",
 		"history": [
 			"2017/11/1~2017/11/15 越南大戰合作轉蛋 5%(2017/11/10~2017/11/15 4%必中)",
 			"2015/10/6~2015/11/4 越南大戰合作轉蛋(2015/10/6~2015/10/14 必中)"
@@ -5846,7 +5885,6 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R864.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R864.html"
 	},
 	{
@@ -6042,6 +6080,7 @@
 			500,
 			0
 		],
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R805.html",
 		"history": [
 			"2023/4/10(11:00)~4/24(10:59) Fate/stay night [HF]合作轉蛋 5% [4/21(11:00)~4/24(10:59) 5% 必中]",
 			"2019/2/25~2019/3/11 Fate/stay night [HF]合作轉蛋 5%(2019/3/6~2019/3/11 5%必中)"
@@ -6124,7 +6163,6 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R788.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R788.html"
 	},
 	{
@@ -6194,6 +6232,7 @@
 			500,
 			0
 		],
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R820.html",
 		"history": [
 			"2020/8/10~2020/8/17 福音戰士合作轉蛋 5% (2020/8/14~2020/8/17 5% 必中)",
 			"2019/7/18~2019/8/1 福音戰士合作轉蛋 5%(2019/7/21(15:00)~2019/8/1 5%必中)"
@@ -6273,7 +6312,6 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R818.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R818.html"
 	},
 	{
@@ -6288,6 +6326,7 @@
 			500,
 			0
 		],
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R821.html",
 		"history": [
 			"2020/8/10~2020/8/17 福音戰士合作轉蛋 5% (2020/8/14~2020/8/17 5% 必中)",
 			"2019/7/18~2019/8/1 福音戰士合作轉蛋 5%(2019/7/21(15:00)~2019/8/1 5%必中)"
@@ -6365,7 +6404,6 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R819.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R819.html"
 	},
 	{
@@ -6463,6 +6501,7 @@
 			30,
 			0
 		],
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R777.html",
 		"history": [
 			"2022/11/28(11:00)~12/12(10:59) 快打旋風V CE合作轉蛋 BLUE TEAM 5%/0.3% [碎] (新增: 櫻) [2022/11/28(11:00)~12/12(10:59) 5%/0.3% 必中]"
 		],
@@ -6541,7 +6580,6 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R763.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R763.html"
 	},
 	{
@@ -6557,6 +6595,7 @@
 			30,
 			0
 		],
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R778.html",
 		"history": [
 			"2022/11/28(11:00)~12/12(10:59) 快打旋風V CE合作轉蛋 RED TEAM 5%/0.3% [碎] (新增: 路克) [2022/11/28(11:00)~12/12(10:59) 5%/0.3% 必中]"
 		],
@@ -6635,7 +6674,6 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R764.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R764.html"
 	},
 	{
@@ -6743,6 +6781,7 @@
 			500,
 			0
 		],
+		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R757.html",
 		"history": [
 			"2022/10/10(11:00)~10/24(10:59) 亂馬1/2合作轉蛋 5% [碎] (新增: 早乙女亂馬（體操選手）) [2022/10/19(11:00)~10/24(10:59) 5% 必中]",
 			"2021/5/17~2021/5/31 亂馬1/2合作轉蛋 5% (2021/5/28~2021/5/31 5% 必中)"
@@ -6820,7 +6859,6 @@
 			38,
 			37
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R748.html",
 		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R748.html"
 	},
 	{

@@ -141,7 +141,7 @@ module.exports = class extends require('./base.js') {
 		}
 
 		const gacha_template = this.load_a('html/gacha.html');
-		let size, width, height, collab, path, history, contents, gacha_menu = '', gacha_list = '', idx = 0;
+		let size, width, height, collab, path, history, contents, urls, gacha_menu = '', gacha_list = '', idx = 0;
 
 		this.fmt = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 5 });
 		this.load_unit();
@@ -183,6 +183,14 @@ module.exports = class extends require('./base.js') {
 			if (history)
 				history = `<p style="margin-block-end:0;font-size:.8em;">轉蛋歷史：<br>${history.join('<br>')}</p>`;
 
+			urls = '';
+			size = pool['tw-url'];
+			if (size)
+				urls += `<a href="${size}">繁中版官方介紹</a><br>`;
+			size = pool['jp-url'];
+			if (size)
+				urls += `<a href="${size}">日文版官方介紹</a><br>`;
+
 			path = 'gacha/' + to_path(pool['en-name']) + '.html';
 
 			this.write_string(path, this.template(
@@ -196,8 +204,7 @@ module.exports = class extends require('./base.js') {
 					'collab': collab,
 					'history': history,
 					'contents': contents,
-					'tw-url': pool['tw-url'],
-					'jp-url': pool['jp-url']
+					'urls': urls
 				},
 				'gacha'
 			));
@@ -424,6 +431,7 @@ module.exports = class extends require('./base.js') {
 	write_event(O) {
 		const
 			units = O['units'],
+			d_rate = O['rate'] || [0,0,0,0,0,0,0,0,0,0],
 			result = [];
 		let
 			I,
@@ -432,13 +440,13 @@ module.exports = class extends require('./base.js') {
 			must_drop_rate = 0;
 
 		for (let i = 0;i < 9;i += 2) {
-			let rate = O['rate'][i];
-			if (!rate)
-				continue;
+			let rate = d_rate[i];
+			//if (!rate)
+			//	continue;
 
 			let group = units[i >> 1];
-			let R = new Fraction(rate, group.length);
-			let must = O['rate'][i + 1] ? '*' : '';
+			let R = new Fraction(rate, group.length || 1);
+			let must = d_rate[i + 1] ? '*' : '';
 			if (must) {
 				must_drop_rate = Fraction(10000 - rate);
 				must_drop_group = group;
@@ -492,7 +500,7 @@ module.exports = class extends require('./base.js') {
 				++count;
 			} else {
 				e_type = v[0];
-				result[last_i][5] = `<td rowSpan="${count}">${this.fmt.format(rate.valueOf() / 100)}%</td>`;
+				result[last_i][5] = `<td rowSpan="${count}">${rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A'}</td>`;
 				count = 1;
 				rate = v[4];
 				last_i = i;
@@ -500,8 +508,7 @@ module.exports = class extends require('./base.js') {
 			}
 			v[1] = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'][color];
 		}
-
-		result[last_i][5] = `<td rowSpan="${count}">${this.fmt.format(rate.valueOf() / 100)}%</td>`;
+		result[last_i][5] = `<td rowSpan="${count}">${rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A'}</td>`;
 		S += `<p>使用道具：${O['ticket'][0]}</p><img src="${O['ticket'][1]}" width="128" height="128"><br>`;
 		S += '<table class="w3-table N" style="position: relative;width:auto;margin-top:3em;"><thead><tr class="w3-black"><th colSpan=';
 		if (must_drop_rate)
@@ -509,7 +516,7 @@ module.exports = class extends require('./base.js') {
 		else
 			S += '4>轉蛋詳細</th></tr><tr class="w3-light-gray"><th>圖示</th><th>項目</th><th>機率</th><th>總和</th></tr></thead><tbody>';
 		for (const v of result) {
-			const r = this.fmt.format(v[4].valueOf() / 100);
+			const r = v[4].n ? this.fmt.format(v[4].valueOf() / 100) + '%' : 'N/A';
 			if (must_drop_rate) {
 				let a;
 				if (v[3].endsWith('*')) {
@@ -518,9 +525,9 @@ module.exports = class extends require('./base.js') {
 				} else {
 					a = v[4].mul(must_drop_rate).valueOf() / 1000000;
 				}
-				S += `<tr style="background-color:${v[1]}"><td><img ${v[9]}src="${v[2]}" width="${v[7]}" height="${v[8]}"></td><td>${v[3]}</td><td>${r}%</td>${v[5]}<td>${this.fmt.format(a)}%</td></tr>`;
+				S += `<tr style="background-color:${v[1]}"><td><img ${v[9]}src="${v[2]}" width="${v[7]}" height="${v[8]}"></td><td>${v[3]}</td><td>${r}</td>${v[5]}<td>${a ? this.fmt.format(a) + '%' : 'N/A'}</td></tr>`;
 			} else {
-				S += `<tr style="background-color:${v[1]}"><td><img ${v[9]}src="${v[2]}" width="${v[7]}" height="${v[8]}"></td><td>${v[3]}</td><td>${r}%</td>${v[5]}</tr>`;
+				S += `<tr style="background-color:${v[1]}"><td><img ${v[9]}src="${v[2]}" width="${v[7]}" height="${v[8]}"></td><td>${v[3]}</td><td>${r}</td>${v[5]}</tr>`;
 			}
 		}
 		S += '</tbody></table><small>有*標示為每十抽必定可獲得的限定角色</small>';
