@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>轉蛋一覽</title>
+	<meta name="description" content="轉蛋一覽 | 貓咪大戰爭中文資訊網站">
+	<meta property="og:site_name" content="battlecatsinfo.github.io">
+	<meta property="og:title" content="轉蛋一覽">
+	<meta property="og:description" content="貓咪大戰爭的各種合作和非合作轉蛋"> <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel=stylesheet type=text/css href="/dracula.css">
+	<link rel="stylesheet" type="text/css" href="w3.css">
+</head>
+
+<body>
+	<style type="text/css">
+body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-size: min(2vw, 18px);
+}
+h2 {
+	font-size: min(28px, 3vw);
+}
+.B {
+	text-align: center;
+	text-decoration: none;
+	display: block;
+	width: 100%;
+}
+.A {
+	display: block;
+	margin: 0 auto;
+	max-width: min(100%, 860px);
+	height: auto;
+}
+
+.E {
+	font-weight: bold;
+	font-size: larger;
+}
+tr:hover {
+	background-color: #ccc !important;
+}
+#nav a {
+	text-decoration: none;
+	display: block;
+	text-align: left;
+	padding: 0.2em 0.6em;
+	font-size: larger;
+}
+.topnav {
+	background-color: #333 !important;
+	margin-block: 0;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	font-size: max(1.5vw, 10px) !important;
+}
+.topnav > a {
+	display: inline-block;
+	color: #f2f2f2 !important;
+	padding: 1vh 2vw;
+	text-decoration: none;
+	cursor: pointer;
+	vertical-align: middle;
+}
+.topnav > a.active {
+	background-color: #4caf50 !important;
+}
+.topnav > a:visited {
+	text-decoration: none;
+}
+.topnav > a:hover {
+	background-color: #009688 !important;
+}
+.topnav svg {
+	background-color: inherit !important;
+	height: 1.3em;
+}
+#site-search {
+	display: none;
+	width: 175px;
+	padding: 0.1em 0.2em;
+}
+#search-btn {
+	all: unset;
+	vertical-align: middle;
+	cursor: pointer;
+	background-color: transparent !important;
+}
+#search-btn svg {
+	width: 12px;
+	height: 12px;
+	fill: white;
+}
+@media (min-width: 800px) {
+	#site-search {
+		display: inline-block;
+		width: 20vw;
+	}
+	#search-btn {
+		position: relative;
+		top: 3px;
+		right: 30px;
+	}
+	#search-btn svg {
+		height: 22px;
+		width: 22px;
+		fill: black;
+	}
+}
+#site-s-result {
+	background-color: white !important;
+	display: none;
+	position: absolute;
+	z-index: 10;
+	left: 0;
+	top: 0;
+}
+#site-s-result > * {
+	width: 100%;
+	padding: 0.7em 2em;
+	color: black !important;
+	background-color: transparent !important;
+}
+#site-s-result > *:hover {
+	background-color: #e7e7e7 !important;
+	color: black !important;
+}
+
+	</style>
+
+	<div class="topnav">
+<a href="/index.html">主頁</a>
+<a href="/search.html">貓咪</a>
+<a href="/esearch.html">敵人</a>
+<a href="/gachas.html" class="active">轉蛋</a>
+<a href="/stage.html">關卡</a>
+<a title="設定" href="/settings.html" style="float:right;"><svg viewBox="0 0 24 24"><path d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z" fill="white" /></svg></a>
+<a title="佈景主題" onclick="toggleTheme()" style="float:right;"><svg viewBox="0 0 24 24"><path fill="white" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20 L12,4 C16.418278,4 20,7.581722 20,12 C20,16.418278 16.418278,20 12,20 Z"></path></svg></a>
+<a style="position:relative;float:right;">
+<form style="display:inline;background-color:transparent;">
+	<input autocomplete="off" id="site-search" type="text" name="search" style="font-size: 17px;border: 1px solid rgba(0, 0, 0, 0.25) !important;border-radius: 25px;font-style: italic;background-color: white !important;color: black !important;" placeholder="Search..." aria-label="search">
+</form><button id="search-btn" onclick="site_search()"><svg viewBox="0 0 50 50" width="50px" height="50px"><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" /></svg></button><div style="position: relative;" class="w3-card"><div id="site-s-result"><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div><script src="/dracula.js"></script>
+
+	<h1 style="text-align:center;padding-top:0.5em;">轉蛋一覽</h1>
+
+	<div id="nav" style="margin: 5vh auto;background-color: #cfcfcf59 !important;width: max(40vw,200px);border-radius:0.6vw;padding: 0.7em;list-style-type:none;">
+		<a href="#1"> 1. 貓咪轉蛋</a>
+<a href="#2"> 2. 貓咪轉蛋+</a>
+<a href="#3"> 3. 常駐稀有貓</a>
+<a href="#4"> 4. 常駐激稀有貓</a>
+<a href="#5"> 5. 土龍鑽部隊</a>
+<a href="#6"> 6. 限定激稀有系列</a>
+<a href="#7"> 7. 貓咪軍團支援隊</a>
+<a href="#8"> 8. 洗腦貓</a>
+<a href="#9"> 9. 狂亂貓</a>
+<a href="#10">10. 殺意貓</a>
+<a href="#11">11. 招福轉蛋</a>
+<a href="#12">12. 招福轉蛋Ｇ</a>
+<a href="#13">13. 貓眼石轉蛋</a>
+<a href="#14">14. 貓薄荷轉蛋</a>
+<a href="#15">15. EX罐頭購買貓</a>
+<a href="#16">16. 世界/未來/宇宙/魔界掉落貓</a>
+<a href="#17">17. 傳說關卡掉落貓</a>
+<a href="#18">18. 風雲貓咪塔掉落貓</a>
+<a href="#19">19. 降臨和漩渦關卡掉落</a>
+<a href="#20">20. 遠古的蛋</a>
+<a href="#21">21. 月份貓</a>
+<a href="#22">22. 超級貓咪祭</a>
+<a href="#23">23. 特級貓咪祭</a>
+<a href="#24">24. 傳說轉蛋</a>
+<a href="#25">25. 白金轉蛋</a>
+<a href="#26">26. 9000万ダウンロード記念選抜ガチャ</a>
+<a href="#27">27. 繁中版9周年紀念超級選拔祭</a>
+<a href="#28">28. 心動時分貓咪學園活動轉蛋</a>
+<a href="#29">29. 春節活動轉蛋（日）</a>
+<a href="#30">30. 春節活動轉蛋（繁中版）</a>
+<a href="#31">31. 惡魔的完美新娘活動轉蛋</a>
+<a href="#32">32. 貓咪的暑假活動轉蛋</a>
+<a href="#33">33. 魔物獵人大狩獵活動轉蛋</a>
+<a href="#34">34. 貓咪拼圖＆納豆君（暫譯）活動轉蛋</a>
+<a href="#35">35. 聖魔大戰活動轉蛋</a>
+<a href="#36">36. 貓咪的暑假 漂流記</a>
+<a href="#37">37. G1競馬活動轉蛋</a>
+<a href="#38">38. 日文版10週年紀念活動轉蛋</a>
+<a href="#39">39. 日文版11週年紀念轉蛋</a>
+<a href="#40">40. 猜猜我是誰活動轉蛋（繁中9周年）</a>
+<a href="#41">41. 傳說中的不明貓一族</a>
+<a href="#42">42. 超激烈爆彈</a>
+<a href="#43">43. 戰國武神巴薩拉斯</a>
+<a href="#44">44. 電腦學園銀河美少女</a>
+<a href="#45">45. 超破壞大帝龍皇因佩拉斯</a>
+<a href="#46">46. 超古代勇者超級靈魂勇者</a>
+<a href="#47">47. 逆襲的戰士黑暗英雄</a>
+<a href="#48">48. 究極降臨巨神宙斯</a>
+<a href="#49">49. 革命軍隊鋼鐵戰團</a>
+<a href="#50">50. 古靈精怪元素小精靈</a>
+<a href="#51">51. 絕命美少女怪物萌娘隊</a>
+<a href="#52">52. 情人節淑女們</a>
+<a href="#53">53. 白色情人節轉蛋</a>
+<a href="#54">54. 復活節嘉年華</a>
+<a href="#55">55. 完美新娘</a>
+<a href="#56">56. 夏日美少女團 - 蔚藍海洋</a>
+<a href="#57">57. 夏日美少女團 - 絢爛陽光</a>
+<a href="#58">58. 萬聖節轉蛋</a>
+<a href="#59">59. 聖誕美少女</a>
+<a href="#60">60. 破壞者祭</a>
+<a href="#61">61. 紅色破壞者</a>
+<a href="#62">62. 飄浮破壞者</a>
+<a href="#63">63. 鋼鐵破壞者</a>
+<a href="#64">64. 波動破壞者</a>
+<a href="#65">65. 超生命體破壞者</a>
+<a href="#66">66. 超國王祭</a>
+<a href="#67">67. 女王祭</a>
+<a href="#68">68. 神劍闖江湖－明治劍客浪漫譚－</a>
+<a href="#69">69. 神魔之塔</a>
+<a href="#70">70. 公主踢騎士Sweets</a>
+<a href="#71">71. 梅露可物語</a>
+<a href="#72">72. 悠閒世界樹</a>
+<a href="#73">73. 活下去！曼波魚！</a>
+<a href="#74">74. 消滅都市</a>
+<a href="#75">75. 越南大戰DEFENSE</a>
+<a href="#76">76. 魔法少女小圓</a>
+<a href="#77">77. Crash Fever</a>
+<a href="#78">78. 劇場版 Fate/stay night</a>
+<a href="#79">79. 實況野球</a>
+<a href="#80">80. 福音戰士合作轉蛋</a>
+<a href="#81">81. 福音戰士合作轉蛋2nd</a>
+<a href="#82">82. 聖魔大戰</a>
+<a href="#83">83. 快打旋風V CE合作轉蛋 BLUE TEAM</a>
+<a href="#84">84. 快打旋風V CE合作轉蛋 RED TEAM</a>
+<a href="#85">85. 初音未來</a>
+<a href="#86">86. 亂馬1/2</a>
+<a href="#87">87. 熱血！大運動會 紅隊</a>
+<a href="#88">88. 熱血！大運動會 白隊</a>
+<a href="#89">89. 龍族撲克</a>
+
+	</div>
+
+	<h2 id="1">
+	<a class="B" href="gacha/Cat_Capsules.html" target="_blank">貓咪轉蛋</a>
+</h2>
+<a class="B" href="gacha/Cat_Capsules.html">
+	<img class="A" src="https://i.imgur.com/561Pb57.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="2">
+	<a class="B" href="gacha/Cat_Capsules.html" target="_blank">貓咪轉蛋+</a>
+</h2>
+<a class="B" href="gacha/Cat_Capsules.html">
+	<img class="A" src="https://i.imgur.com/MiQNzJl.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="3">
+	<a class="B" href="gacha/Rare_Cats.html" target="_blank">常駐稀有貓</a>
+</h2>
+<a class="B" href="gacha/Rare_Cats.html">
+	<img class="A" src="https://i.imgur.com/i1mtywM.png" loading="lazy" width="860" height="535">
+</a>
+<br>
+<h2 id="4">
+	<a class="B" href="gacha/Super_Rare_Cats.html" target="_blank">常駐激稀有貓</a>
+</h2>
+<a class="B" href="gacha/Super_Rare_Cats.html">
+	<img class="A" src="https://i.imgur.com/QAYMhmu.png" loading="lazy" width="860" height="324">
+</a>
+<br>
+<h2 id="5">
+	<a class="B" href="gacha/Grandon_Mining_Corps.html" target="_blank">土龍鑽部隊</a>
+</h2>
+<a class="B" href="gacha/Grandon_Mining_Corps.html">
+	<img class="A" src="https://i.imgur.com/qCh8O5f.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="6">
+	<a class="B" href="gacha/Neneko_and_Gang.html" target="_blank">限定激稀有系列</a>
+</h2>
+<a class="B" href="gacha/Neneko_and_Gang.html">
+	<img class="A" src="https://i.imgur.com/onevqGI.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="7">
+	<a class="B" href="gacha/Reinforcements.html" target="_blank">貓咪軍團支援隊</a>
+</h2>
+<a class="B" href="gacha/Reinforcements.html">
+	<img class="A" src="https://i.imgur.com/pnxB3iR.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="8">
+	<a class="B" href="gacha/Brainwashed_Cats.html" target="_blank">洗腦貓</a>
+</h2>
+<a class="B" href="gacha/Brainwashed_Cats.html">
+	<img class="A" src="https://i.imgur.com/PleHxPZ.png" loading="lazy" width="860" height="282">
+</a>
+<br>
+<h2 id="9">
+	<a class="B" href="gacha/Crazed_Cats.html" target="_blank">狂亂貓</a>
+</h2>
+<a class="B" href="gacha/Crazed_Cats.html">
+	<img class="A" src="https://i.imgur.com/SL998IE.png" loading="lazy" width="860" height="282">
+</a>
+<br>
+<h2 id="10">
+	<a class="B" href="gacha/Killer_Cats.html" target="_blank">殺意貓</a>
+</h2>
+<a class="B" href="gacha/Killer_Cats.html">
+	<img class="A" src="https://i.imgur.com/HBAeof6.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="11">
+	<a class="B" href="gacha/Lucky_Capsules.html" target="_blank">招福轉蛋</a>
+</h2>
+<a class="B" href="gacha/Lucky_Capsules.html">
+	<img class="A" src="https://i.imgur.com/FaX35wb.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="12">
+	<a class="B" href="gacha/Lucky_Capsule_G.html" target="_blank">招福轉蛋Ｇ</a>
+</h2>
+<a class="B" href="gacha/Lucky_Capsule_G.html">
+	<img class="A" src="https://i.imgur.com/MOGnEpa.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="13">
+	<a class="B" href="gacha/Catseye_Capsule.html" target="_blank">貓眼石轉蛋</a>
+</h2>
+<a class="B" href="gacha/Catseye_Capsule.html">
+	<img class="A" src="https://i.imgur.com/NPek7Qd.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="14">
+	<a class="B" href="gacha/Catfruit_Capsule.html" target="_blank">貓薄荷轉蛋</a>
+</h2>
+<a class="B" href="gacha/Catfruit_Capsule.html">
+	<img class="A" src="https://i.imgur.com/b7DTsTz.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="15">
+	<a class="B" href="gacha/Purchasable_Special_Cats.html" target="_blank">EX罐頭購買貓</a>
+</h2>
+<a class="B" href="gacha/Purchasable_Special_Cats.html">
+	<img class="A" src="https://i.imgur.com/uslm8O3.png" loading="lazy" width="860" height="320">
+</a>
+<br>
+<h2 id="16">
+	<a class="B" href="gacha/Main_Chapters_Unlockable.html" target="_blank">世界/未來/宇宙/魔界掉落貓</a>
+</h2>
+<a class="B" href="gacha/Main_Chapters_Unlockable.html">
+	<img class="A" src="https://i.imgur.com/RKJyQHk.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="17">
+	<a class="B" href="gacha/Legend_Chapters_Unlockable.html" target="_blank">傳說關卡掉落貓</a>
+</h2>
+<a class="B" href="gacha/Legend_Chapters_Unlockable.html">
+	<img class="A" src="https://i.imgur.com/AcHg40M.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="18">
+	<a class="B" href="gacha/Heavenly_Tower_Unlockable.html" target="_blank">風雲貓咪塔掉落貓</a>
+</h2>
+<a class="B" href="gacha/Heavenly_Tower_Unlockable.html">
+	<img class="A" src="https://i.imgur.com/LYxIQDI.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="19">
+	<a class="B" href="gacha/Advent_and_Cyclone_Drops.html" target="_blank">降臨和漩渦關卡掉落</a>
+</h2>
+<a class="B" href="gacha/Advent_and_Cyclone_Drops.html">
+	<img class="A" src="https://i.imgur.com/7c1iOlB.png" loading="lazy" width="860" height="650">
+</a>
+<br>
+<h2 id="20">
+	<a class="B" href="gacha/Ancient_Eggs.html" target="_blank">遠古的蛋</a>
+</h2>
+<a class="B" href="gacha/Ancient_Eggs.html">
+	<img class="A" src="https://i.imgur.com/vqEcus9.png" loading="lazy" width="860" height="510">
+</a>
+<br>
+<h2 id="21">
+	<a class="B" href="gacha/Monthly_Event_Cats.html" target="_blank">月份貓</a>
+</h2>
+<a class="B" href="gacha/Monthly_Event_Cats.html">
+	<img class="A" src="https://i.imgur.com/CbRi6y0.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="22">
+	<a class="B" href="gacha/Uberfest.html" target="_blank">超級貓咪祭</a>
+</h2>
+<a class="B" href="gacha/Uberfest.html">
+	<img class="A" src="https://i.imgur.com/GHO2qFp.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="23">
+	<a class="B" href="gacha/Epicfest.html" target="_blank">特級貓咪祭</a>
+</h2>
+<a class="B" href="gacha/Epicfest.html">
+	<img class="A" src="https://i.imgur.com/jktoBqr.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="24">
+	<a class="B" href="gacha/Legend_Capsules.html" target="_blank">傳說轉蛋</a>
+</h2>
+<a class="B" href="gacha/Legend_Capsules.html">
+	<img class="A" src="https://i.imgur.com/MdxnEMn.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="25">
+	<a class="B" href="gacha/Platinum_Capsules.html" target="_blank">白金轉蛋</a>
+</h2>
+<a class="B" href="gacha/Platinum_Capsules.html">
+	<img class="A" src="https://i.imgur.com/kixYMGy.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="26">
+	<a class="B" href="gacha/90_Million_DL_Special_Capsules.html" target="_blank">9000万ダウンロード記念選抜ガチャ</a>
+</h2>
+<a class="B" href="gacha/90_Million_DL_Special_Capsules.html">
+	<img class="A" src="https://i.imgur.com/wCufd44.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="27">
+	<a class="B" href="gacha/Best_of_the_Best(9th_Anniversary).html" target="_blank">繁中版9周年紀念超級選拔祭</a>
+</h2>
+<a class="B" href="gacha/Best_of_the_Best(9th_Anniversary).html">
+	<img class="A" src="https://i.imgur.com/V6IuGMR.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="28">
+	<a class="B" href="gacha/Heartbeat_Catcademy.html" target="_blank">心動時分貓咪學園活動轉蛋</a>
+</h2>
+<a class="B" href="gacha/Heartbeat_Catcademy.html">
+	<img class="A" src="https://i.imgur.com/eTQn1S8.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="29">
+	<a class="B" href="gacha/Lunar_New_Year(Japan).html" target="_blank">春節活動轉蛋（日）</a>
+</h2>
+<a class="B" href="gacha/Lunar_New_Year(Japan).html">
+	<img class="A" src="https://i.imgur.com/PqXIYGV.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="30">
+	<a class="B" href="gacha/Lunar_New_Year(Chinese).html" target="_blank">春節活動轉蛋（繁中版）</a>
+</h2>
+<a class="B" href="gacha/Lunar_New_Year(Chinese).html">
+	<img class="A" src="https://i.imgur.com/gWOy8vf.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="31">
+	<a class="B" href="gacha/June_Bride_of_the_Devil.html" target="_blank">惡魔的完美新娘活動轉蛋</a>
+</h2>
+<a class="B" href="gacha/June_Bride_of_the_Devil.html">
+	<img class="A" src="https://i.imgur.com/NjYaOzS.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="32">
+	<a class="B" href="gacha/Summer_Break_Cats.html" target="_blank">貓咪的暑假活動轉蛋</a>
+</h2>
+<a class="B" href="gacha/Summer_Break_Cats.html">
+	<img class="A" src="https://i.imgur.com/fq9nxTL.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="33">
+	<a class="B" href="gacha/Monster_Hunter.html" target="_blank">魔物獵人大狩獵活動轉蛋</a>
+</h2>
+<a class="B" href="gacha/Monster_Hunter.html">
+	<img class="A" src="https://i.imgur.com/E7Z9RpW.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="34">
+	<a class="B" href="gacha/Nebaaru-kun_and_Nyanpazuru.html" target="_blank">貓咪拼圖＆納豆君（暫譯）活動轉蛋</a>
+</h2>
+<a class="B" href="gacha/Nebaaru-kun_and_Nyanpazuru.html">
+	<img class="A" src="https://i.imgur.com/k5MIn1E.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="35">
+	<a class="B" href="gacha/Bikkuriman_Collaboration.html" target="_blank">聖魔大戰活動轉蛋</a>
+</h2>
+<a class="B" href="gacha/Bikkuriman_Collaboration.html">
+	<img class="A" src="https://i.imgur.com/WJkKX2g.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="36">
+	<a class="B" href="gacha/Summer_Break_Survival_Capsules.html" target="_blank">貓咪的暑假 漂流記</a>
+</h2>
+<a class="B" href="gacha/Summer_Break_Survival_Capsules.html">
+	<img class="A" src="https://i.imgur.com/1UJPng1.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="37">
+	<a class="B" href="gacha/JRA_Collaboration.html" target="_blank">G1競馬活動轉蛋</a>
+</h2>
+<a class="B" href="gacha/JRA_Collaboration.html">
+	<img class="A" src="https://i.imgur.com/u6bIt6X.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="38">
+	<a class="B" href="gacha/10th_Anniversary_Memorial.html" target="_blank">日文版10週年紀念活動轉蛋</a>
+</h2>
+<a class="B" href="gacha/10th_Anniversary_Memorial.html">
+	<img class="A" src="https://i.imgur.com/tcNNnrq.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="39">
+	<a class="B" href="gacha/11th_Anniversary_Memorial.html" target="_blank">日文版11週年紀念轉蛋</a>
+</h2>
+<a class="B" href="gacha/11th_Anniversary_Memorial.html">
+	<img class="A" src="https://i.imgur.com/lwRlHnM.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="40">
+	<a class="B" href="gacha/What_s_in_the_Box.html" target="_blank">猜猜我是誰活動轉蛋（繁中9周年）</a>
+</h2>
+<a class="B" href="gacha/What_s_in_the_Box.html">
+	<img class="A" src="https://i.imgur.com/uxUvGHy.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="41">
+	<a class="B" href="gacha/Tales_of_the_Nekoluga.html" target="_blank">傳說中的不明貓一族</a>
+</h2>
+<a class="B" href="gacha/Tales_of_the_Nekoluga.html">
+	<img class="A" src="https://i.imgur.com/ijJn7oA.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="42">
+	<a class="B" href="gacha/The_Dynamites.html" target="_blank">超激烈爆彈</a>
+</h2>
+<a class="B" href="gacha/The_Dynamites.html">
+	<img class="A" src="https://i.imgur.com/0LNCQ0o.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="43">
+	<a class="B" href="gacha/Sengoku_Wargods_Vajiras.html" target="_blank">戰國武神巴薩拉斯</a>
+</h2>
+<a class="B" href="gacha/Sengoku_Wargods_Vajiras.html">
+	<img class="A" src="https://i.imgur.com/PDlts9r.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="44">
+	<a class="B" href="gacha/Cyber_Academy_Galaxy_Gals.html" target="_blank">電腦學園銀河美少女</a>
+</h2>
+<a class="B" href="gacha/Cyber_Academy_Galaxy_Gals.html">
+	<img class="A" src="https://i.imgur.com/Z1Mc8rF.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="45">
+	<a class="B" href="gacha/Lords_of_Destruction_Dragon_Emperors.html" target="_blank">超破壞大帝龍皇因佩拉斯</a>
+</h2>
+<a class="B" href="gacha/Lords_of_Destruction_Dragon_Emperors.html">
+	<img class="A" src="https://i.imgur.com/MY2mZpW.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="46">
+	<a class="B" href="gacha/Ancient_Heroes_Ultra_Souls.html" target="_blank">超古代勇者超級靈魂勇者</a>
+</h2>
+<a class="B" href="gacha/Ancient_Heroes_Ultra_Souls.html">
+	<img class="A" src="https://i.imgur.com/uMybcfm.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="47">
+	<a class="B" href="gacha/Justice_Strikes_Back__Dark_Heroes.html" target="_blank">逆襲的戰士黑暗英雄</a>
+</h2>
+<a class="B" href="gacha/Justice_Strikes_Back__Dark_Heroes.html">
+	<img class="A" src="https://i.imgur.com/QAi8Lz1.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="48">
+	<a class="B" href="gacha/The_Almighties_The_Majestic_Zeus.html" target="_blank">究極降臨巨神宙斯</a>
+</h2>
+<a class="B" href="gacha/The_Almighties_The_Majestic_Zeus.html">
+	<img class="A" src="https://i.imgur.com/2UHhHg3.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="49">
+	<a class="B" href="gacha/Frontline_Assault_Iron_Legion.html" target="_blank">革命軍隊鋼鐵戰團</a>
+</h2>
+<a class="B" href="gacha/Frontline_Assault_Iron_Legion.html">
+	<img class="A" src="https://i.imgur.com/OcBGD94.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="50">
+	<a class="B" href="gacha/Nature_s_Guardians_Elemental_Pixies.html" target="_blank">古靈精怪元素小精靈</a>
+</h2>
+<a class="B" href="gacha/Nature_s_Guardians_Elemental_Pixies.html">
+	<img class="A" src="https://i.imgur.com/70eeVra.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="51">
+	<a class="B" href="gacha/Girls___Monsters__Angels_of_Terror.html" target="_blank">絕命美少女怪物萌娘隊</a>
+</h2>
+<a class="B" href="gacha/Girls___Monsters__Angels_of_Terror.html">
+	<img class="A" src="https://i.imgur.com/u4KGOMl.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="52">
+	<a class="B" href="gacha/Valentine_Gals.html" target="_blank">情人節淑女們</a>
+</h2>
+<a class="B" href="gacha/Valentine_Gals.html">
+	<img class="A" src="https://i.imgur.com/TMLzf9o.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="53">
+	<a class="B" href="gacha/White_Day.html" target="_blank">白色情人節轉蛋</a>
+</h2>
+<a class="B" href="gacha/White_Day.html">
+	<img class="A" src="https://i.imgur.com/ndGUagg.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="54">
+	<a class="B" href="gacha/Easter_Carnival.html" target="_blank">復活節嘉年華</a>
+</h2>
+<a class="B" href="gacha/Easter_Carnival.html">
+	<img class="A" src="https://i.imgur.com/XGwm3il.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="55">
+	<a class="B" href="gacha/June_Bride.html" target="_blank">完美新娘</a>
+</h2>
+<a class="B" href="gacha/June_Bride.html">
+	<img class="A" src="https://i.imgur.com/w6dXndQ.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="56">
+	<a class="B" href="gacha/Gals_of_Summer_-_Blue_Ocean.html" target="_blank">夏日美少女團 - 蔚藍海洋</a>
+</h2>
+<a class="B" href="gacha/Gals_of_Summer_-_Blue_Ocean.html">
+	<img class="A" src="https://i.imgur.com/3S4c2lZ.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="57">
+	<a class="B" href="gacha/Gals_of_Summer_-_Sunshine.html" target="_blank">夏日美少女團 - 絢爛陽光</a>
+</h2>
+<a class="B" href="gacha/Gals_of_Summer_-_Sunshine.html">
+	<img class="A" src="https://i.imgur.com/AbmBdU9.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="58">
+	<a class="B" href="gacha/Halloween_Capsules.html" target="_blank">萬聖節轉蛋</a>
+</h2>
+<a class="B" href="gacha/Halloween_Capsules.html">
+	<img class="A" src="https://i.imgur.com/PQ8cC2O.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="59">
+	<a class="B" href="gacha/Xmas_Gals.html" target="_blank">聖誕美少女</a>
+</h2>
+<a class="B" href="gacha/Xmas_Gals.html">
+	<img class="A" src="https://i.imgur.com/2YSC6YJ.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="60">
+	<a class="B" href="gacha/BUSTERFEST.html" target="_blank">破壞者祭</a>
+</h2>
+<a class="B" href="gacha/BUSTERFEST.html">
+	<img class="A" src="https://i.imgur.com/aihuRfD.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="61">
+	<a class="B" href="gacha/Red_Busters.html" target="_blank">紅色破壞者</a>
+</h2>
+<a class="B" href="gacha/Red_Busters.html">
+	<img class="A" src="https://i.imgur.com/QNb5sLa.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="62">
+	<a class="B" href="gacha/Air_Busters.html" target="_blank">飄浮破壞者</a>
+</h2>
+<a class="B" href="gacha/Air_Busters.html">
+	<img class="A" src="https://i.imgur.com/YFarjIR.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="63">
+	<a class="B" href="gacha/Metal_Busters.html" target="_blank">鋼鐵破壞者</a>
+</h2>
+<a class="B" href="gacha/Metal_Busters.html">
+	<img class="A" src="https://imgur.com/cGGGSMy.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="64">
+	<a class="B" href="gacha/Wave_Busters.html" target="_blank">波動破壞者</a>
+</h2>
+<a class="B" href="gacha/Wave_Busters.html">
+	<img class="A" src="https://i.imgur.com/7MESzzI.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="65">
+	<a class="B" href="gacha/Colossus_Busters.html" target="_blank">超生命體破壞者</a>
+</h2>
+<a class="B" href="gacha/Colossus_Busters.html">
+	<img class="A" src="https://i.imgur.com/w1JYffg.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="66">
+	<a class="B" href="gacha/Dynasty_Fest.html" target="_blank">超國王祭</a>
+</h2>
+<a class="B" href="gacha/Dynasty_Fest.html">
+	<img class="A" src="https://i.imgur.com/Z6LOBdg.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="67">
+	<a class="B" href="gacha/Royal_Fest.html" target="_blank">女王祭</a>
+</h2>
+<a class="B" href="gacha/Royal_Fest.html">
+	<img class="A" src="https://i.imgur.com/SnV6dl8.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="68">
+	<a class="B" href="gacha/Rurouni_Kenshin.html" target="_blank">神劍闖江湖－明治劍客浪漫譚－</a>
+</h2>
+<a class="B" href="gacha/Rurouni_Kenshin.html">
+	<img class="A" src="https://i.imgur.com/jPny0Ou.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="69">
+	<a class="B" href="gacha/Tower_of_Saviors.html" target="_blank">神魔之塔</a>
+</h2>
+<a class="B" href="gacha/Tower_of_Saviors.html">
+	<img class="A" src="https://i.imgur.com/VXmz8Ce.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="70">
+	<a class="B" href="gacha/Princess_Punt.html" target="_blank">公主踢騎士Sweets</a>
+</h2>
+<a class="B" href="gacha/Princess_Punt.html">
+	<img class="A" src="https://i.imgur.com/zPlPdwJ.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="71">
+	<a class="B" href="gacha/Merc_Storia.html" target="_blank">梅露可物語</a>
+</h2>
+<a class="B" href="gacha/Merc_Storia.html">
+	<img class="A" src="https://i.imgur.com/5yvGQZK.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="72">
+	<a class="B" href="gacha/Yurudrasil.html" target="_blank">悠閒世界樹</a>
+</h2>
+<a class="B" href="gacha/Yurudrasil.html">
+	<img class="A" src="https://i.imgur.com/kj4q6uM.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="73">
+	<a class="B" href="gacha/Survive__Mola_Mola_.html" target="_blank">活下去！曼波魚！</a>
+</h2>
+<a class="B" href="gacha/Survive__Mola_Mola_.html">
+	<img class="A" src="https://i.imgur.com/zk0IwbX.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="74">
+	<a class="B" href="gacha/Shoumetsu_Toshi.html" target="_blank">消滅都市</a>
+</h2>
+<a class="B" href="gacha/Shoumetsu_Toshi.html">
+	<img class="A" src="https://i.imgur.com/Mqq3Ddb.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="75">
+	<a class="B" href="gacha/Metal_Slug_Defense.html" target="_blank">越南大戰DEFENSE</a>
+</h2>
+<a class="B" href="gacha/Metal_Slug_Defense.html">
+	<img class="A" src="https://i.imgur.com/nhRwTmQ.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="76">
+	<a class="B" href="gacha/Puella_Magi_Madoka_Magica.html" target="_blank">魔法少女小圓</a>
+</h2>
+<a class="B" href="gacha/Puella_Magi_Madoka_Magica.html">
+	<img class="A" src="https://i.imgur.com/sKOYLIO.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="77">
+	<a class="B" href="gacha/Crash_Fever.html" target="_blank">Crash Fever</a>
+</h2>
+<a class="B" href="gacha/Crash_Fever.html">
+	<img class="A" src="https://i.imgur.com/Q5jd2jG.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="78">
+	<a class="B" href="gacha/Fate_Stay_Night__Heaven_s_Feel.html" target="_blank">劇場版 Fate/stay night</a>
+</h2>
+<a class="B" href="gacha/Fate_Stay_Night__Heaven_s_Feel.html">
+	<img class="A" src="https://i.imgur.com/4dPvKrG.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="79">
+	<a class="B" href="gacha/Power_Pro_Baseball.html" target="_blank">實況野球</a>
+</h2>
+<a class="B" href="gacha/Power_Pro_Baseball.html">
+	<img class="A" src="https://i.imgur.com/MjGI3aj.png" loading="lazy" width="860" height="241">
+</a>
+<br>
+<h2 id="80">
+	<a class="B" href="gacha/Neon_Genesis_Evangelion.html" target="_blank">福音戰士合作轉蛋</a>
+</h2>
+<a class="B" href="gacha/Neon_Genesis_Evangelion.html">
+	<img class="A" src="https://i.imgur.com/WtY7mH8.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="81">
+	<a class="B" href="gacha/Neon_Genesis_Evangelion_2nd.html" target="_blank">福音戰士合作轉蛋2nd</a>
+</h2>
+<a class="B" href="gacha/Neon_Genesis_Evangelion_2nd.html">
+	<img class="A" src="https://i.imgur.com/jtY1Qvd.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="82">
+	<a class="B" href="gacha/Bikkuriman.html" target="_blank">聖魔大戰</a>
+</h2>
+<a class="B" href="gacha/Bikkuriman.html">
+	<img class="A" src="https://i.imgur.com/0Z9ksXk.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="83">
+	<a class="B" href="gacha/Street_Fighter_V_BLUE_TEAM.html" target="_blank">快打旋風V CE合作轉蛋 BLUE TEAM</a>
+</h2>
+<a class="B" href="gacha/Street_Fighter_V_BLUE_TEAM.html">
+	<img class="A" src="https://i.imgur.com/lleQPVM.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="84">
+	<a class="B" href="gacha/Street_Fighter_V_RED_TEAM.html" target="_blank">快打旋風V CE合作轉蛋 RED TEAM</a>
+</h2>
+<a class="B" href="gacha/Street_Fighter_V_RED_TEAM.html">
+	<img class="A" src="https://i.imgur.com/gWWYI7A.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="85">
+	<a class="B" href="gacha/Hatsune_Miku.html" target="_blank">初音未來</a>
+</h2>
+<a class="B" href="gacha/Hatsune_Miku.html">
+	<img class="A" src="https://i.imgur.com/mybKLFK.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="86">
+	<a class="B" href="gacha/Ranma_1_2.html" target="_blank">亂馬1/2</a>
+</h2>
+<a class="B" href="gacha/Ranma_1_2.html">
+	<img class="A" src="https://i.imgur.com/APRMTCx.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="87">
+	<a class="B" href="gacha/River_City_Clash_Red_Team.html" target="_blank">熱血！大運動會 紅隊</a>
+</h2>
+<a class="B" href="gacha/River_City_Clash_Red_Team.html">
+	<img class="A" src="https://i.imgur.com/ICQMhtn.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="88">
+	<a class="B" href="gacha/River_City_Clash_White_Team.html" target="_blank">熱血！大運動會 白隊</a>
+</h2>
+<a class="B" href="gacha/River_City_Clash_White_Team.html">
+	<img class="A" src="https://i.imgur.com/r8NOxMy.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+<h2 id="89">
+	<a class="B" href="gacha/Dragon_Poker.html" target="_blank">龍族撲克</a>
+</h2>
+<a class="B" href="gacha/Dragon_Poker.html">
+	<img class="A" src="https://i.imgur.com/4PtV8GA.png" loading="lazy" width="860" height="240">
+</a>
+<br>
+
+</body>
+
+</html>

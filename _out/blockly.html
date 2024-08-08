@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html dir=ltr>
+
+<head>
+	<meta charset=utf-8>
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<title>Blockly程式編輯工具</title>
+</head>
+
+<body>
+	<style>
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+	Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+#menu > span {
+	border: 1px solid #ccc;
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0.4vh 2vw;
+}
+#menu > span:hover {
+	background-color: #eee;
+}
+.active {
+	background-color: #eee;
+}
+.content {
+	width: 100%;
+	height: 95%;
+}
+#runBlockly * {
+	cursor: pointer;
+}
+#mytable {
+	margin-top: 1.5em;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+#mytable tr {
+	border-bottom: 1px solid #ddd;
+}
+#mytable td {
+	text-align: center;
+	padding: 8px 8px;
+	border: 1px solid #ddd;
+}
+	</style>
+	<div id=menu>
+		<span class=active onclick="tab(event, 'blocklyDiv')">程式</span>
+		<span onclick="tab(event, 'textDiv')">文字</span>
+		<span onclick="tab(event, 'tableDiv')">表格</span>
+		<span onclick="tab(event, 'graphDiv')">圖表</span>
+		<span style="border: none;">Built on <a href=https://developers.google.com/blockly>Blockly</a>
+			</span>
+	</div>
+	<button title=執行程式 id=runBlockly style="position: fixed;right: 2vw;top: 2vh;z-index: 100;">
+		<svg xmlns=http://www.w3.org/2000/svg height=32 width=24 viewbox="0 0 384 512">
+			<path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+		</svg>
+	</button>
+	<div class=content id=blocklyDiv></div>
+	<div class=content id=textDiv>
+		<pre id=pre style="margin: 1em;"></pre>
+	</div>
+	<div class=content id=tableDiv>
+		<table id=mytable>
+			<tbody id=tbody></tbody>
+		</table>
+	</div>
+	<div class=content id=graphDiv>
+		<canvas id=chart></canvas>
+	</div>
+	<script src=blockly.min.js></script>
+	<script src=https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js></script>
+	<script src=levelcurve.js></script>
+	<script src=cat.js></script>
+	<script src=CCC.js></script>
+	<script>
+		loadAllCats().then(cats => CCC.cats = cats);
+	</script>
+	<img src=https://i.imgur.com/otr5jus.png style="z-index: 100;position: fixed;left: 5.5vw;bottom: 2vh;width: 17vh;height: auto;">
+</body>
+
+</html>
