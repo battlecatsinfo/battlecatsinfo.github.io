@@ -33,16 +33,16 @@ const args = parseArgs({
 });
 
 if (args.values.help) {
-	const usage = `
-Usage: node build_all.js [parts ...] [options ...]
+	const usage = `\
+Usage: node build.js [parts ...] [options ...]
 
 Supported parts (default: all):
-${[...modules].map(x => `  ${x}`).join('\n')}
+${[...modules].map(x => `    ${x}`).join('\n')}
 
 Options:
-  --help|-h  Display usage help.
-  --force    Skip update check and rebuild all requested parts.
-	--minify   Minify HTML/CSS/JS files.
+    --help | -h      Display usage help.
+    --force          Skip update check and rebuild all requested parts.
+    --minify         Minify HTML/CSS/JS files.
 `;
 	process.stdout.write(usage);
 	process.exit(0);
