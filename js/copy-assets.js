@@ -46,8 +46,9 @@ const sources = [
 	'fav.png',
 
 	'html2canvas.min.js',
-	'dracula.js',
-	'dracula2.js',
+	'theme.js',
+	'navbar-search.js',
+	'gacha.js',
 	"enemy.js",
 	"constants.js",
 	"parser.js",
@@ -136,7 +137,7 @@ module.exports = class extends require('./base.js') {
 					}
 				} else if (file.endsWith('.html')) {
 					last_mods[file] = last;
-					contents = this.template(contents, {}, active_map[file]);
+					contents = this.template(contents, {'nav-bar-active': active_map[file]});
 					if (htmlmin) {
 						contents = htmlmin.minify(contents, {
 							collapseBooleanAttributes: true,
