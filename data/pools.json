@@ -1931,7 +1931,7 @@
 		"en-name": "Summer Break Survival Capsules",
 		"img": "https://i.imgur.com/1UJPng1.png",
 		"stage": [
-			"stage.html?s=11-67",
+			"/stage.html?s=11-67",
 			"ねこのなつやすみ サバイバル"
 		],
 		"rate": [
