@@ -196,6 +196,7 @@ module.exports = class extends require('./base.js') {
 			this.write_string(path, this.template(
 				gacha_template,
 				{
+					'nav-bar-active': 'gacha',
 					'title': pool['tw-name'],
 					'img': pool['img'],
 					'h1': [pool['tw-name'], pool['jp-name'], pool['en-name']].filter(x => x).join('<br>'),
@@ -206,7 +207,6 @@ module.exports = class extends require('./base.js') {
 					'contents': contents,
 					'urls': urls
 				},
-				'gacha'
 			));
 			gacha_menu += `<a href="#${idx}">${index(idx)}. ${pool['tw-name']}</a>\n`;
 			gacha_list += `<h2 id="${idx}">
@@ -218,9 +218,10 @@ module.exports = class extends require('./base.js') {
 		}
 
 		this.write_template('html/gachas.html', 'gachas.html', {
+			'nav-bar-active': 'gacha',
 			'nav-menu': gacha_menu,
 			'content': gacha_list
-		}, 'gacha');
+		});
 	}
 	uimg(u) {
 		return this.egg_set.has(u) ? `/img/u/${u}/2.png` : `/img/u/${u}/0.png`;

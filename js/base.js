@@ -48,15 +48,14 @@ for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])
 	gEnv[key] = JSON.stringify(gEnv[key]);
 
 module.exports = class {
-	template(s, env, ac='') {
+	template(s, env) {
 		Object.assign(env, gEnv);
-		env['nav-bar-active'] = ac;
 		return Handlebars.compile(s)(env);
 	}
-	write_template(in_f, out_f, env, ac='') {
+	write_template(in_f, out_f, env) {
 		fs.writeFileSync(
 			resolve(__dirname, '../_out/', out_f),
-			this.template(fs.readFileSync(resolve(__dirname, '../template/', in_f), 'utf8'), env, ac),
+			this.template(fs.readFileSync(resolve(__dirname, '../template/', in_f), 'utf8'), env),
 			'utf8'
 		);
 	}
