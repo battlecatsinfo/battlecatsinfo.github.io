@@ -441,9 +441,6 @@ module.exports = class extends require('./base.js') {
 
 		for (let i = 0;i < 9;i += 2) {
 			let rate = d_rate[i];
-			//if (!rate)
-			//	continue;
-
 			let group = units[i >> 1];
 			let R = new Fraction(rate, group.length || 1);
 			let must = d_rate[i + 1] ? '*' : '';
@@ -519,12 +516,10 @@ module.exports = class extends require('./base.js') {
 			const r = v[4].n ? this.fmt.format(v[4].valueOf() / 100) + '%' : 'N/A';
 			if (must_drop_rate) {
 				let a;
-				if (v[3].endsWith('*')) {
-					const R = v[6] / 10000;
-					a = 100 * ((R * (1 - R) + R) / must_drop_group.length);
-				} else {
+				if (v[3].endsWith('*'))
+					a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
+				else 
 					a = v[4].mul(must_drop_rate).valueOf() / 1000000;
-				}
 				S += `<tr style="background-color:${v[1]}"><td><img ${v[9]}src="${v[2]}" width="${v[7]}" height="${v[8]}"></td><td>${v[3]}</td><td>${r}</td>${v[5]}<td>${a ? this.fmt.format(a) + '%' : 'N/A'}</td></tr>`;
 			} else {
 				S += `<tr style="background-color:${v[1]}"><td><img ${v[9]}src="${v[2]}" width="${v[7]}" height="${v[8]}"></td><td>${v[3]}</td><td>${r}</td>${v[5]}</tr>`;
