@@ -71,33 +71,29 @@
 	</div>
 	<h1 style="text-align: center;">聯組一覽<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>
 	<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59 !important;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
-		<a href="#0">1. 角色攻擊力</a>
-		<a href="#1">2. 角色體力</a>
-		<a href="#2">3. 角色移動速度</a>
-		<a href="#3">4. 初期貓咪砲能量值</a>
-		<a href="#4">5. 初期工作狂貓等級</a>
-		<a href="#5">6. 初期所持金額</a>
-		<a href="#6">7. 貓咪砲攻擊力</a>
-		<a href="#7">8. 貓咪砲充電速度</a>
-		<a href="#8">9. 工作狂貓的工作效率</a>
-		<a href="#9">10. 工作狂貓錢包</a>
-		<a href="#10">11. 城堡耐久力</a>
-		<a href="#11">12. 研究力</a>
-		<a href="#12">13. 會計能力</a>
-		<a href="#13">14. 學習力</a>
-		<a href="#14">15. 「善於攻擊」的效果</a>
-		<a href="#15">16. 「超大傷害」的效果</a>
-		<a href="#16">17. 「很耐打」的效果</a>
-		<a href="#17">18. 「打飛敵人」的效果</a>
-		<a href="#18">19. 「使動作變慢」的效果</a>
-		<a href="#19">20. 「使動作停止」的效果</a>
-		<a href="#20">21. 「攻擊力下降」的效果</a>
-		<a href="#21">22. 「攻擊力上升」的效果</a>
-		<a href="#22">23. 「終結魔女」的效果</a>
-		<a href="#23">24. 「終結使徒」的效果</a>
-		<a href="#24">25. 「會心一擊」的發動率</a>
+		{{#each combos as |combo type|}}
+		<a href="#{{@index}}">{{sum @index 1}}. {{type}}</a>
+		{{/each}}
 	</div>
-	{{{combos}}}
+	{{#each combos as |combo type|}}
+	<h2><a class="H" href="#{{@index}}" id="{{@index}}">{{type}}</a></h2>
+	<table class="combo">
+		{{#each combo as |combo|}}
+		<tr id="{{combo.name}}">
+			<td>
+				<p><a href="#{{combo.name}}">{{combo.name}}</a></p>
+				<p>{{combo.desc}}</p>
+				{{#if combo.requirement}}
+				<p style="font-size:smaller;">{{combo.requirement}}</p>
+				{{/if}}
+			</td>
+			{{#each combo.units as |unit|}}
+			<td><a{{#if unit}} href="/unit.html?id={{unit.[0]}}"{{/if}}><img class="icon" width="104" height="79" loading="lazy" src="{{#if unit}}/img/u/{{unit.[0]}}/{{unit.[1]}}.png{{else}}uni.png{{/if}}"></a></td>
+			{{/each}}
+		</tr>
+		{{/each}}
+	</table>
+	{{/each}}
 	</div>
 {{/inline}}
 
