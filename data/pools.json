@@ -1928,11 +1928,23 @@
 	{
 		"tw-name": "貓咪的暑假 漂流記",
 		"jp-name": "ねこのなつやすみ サバイバル",
-		"en-name": "Summer Break Cats: Survival",
+		"en-name": "Summer Break Survival Capsules",
 		"img": "https://i.imgur.com/1UJPng1.png",
 		"stage": [
 			"stage.html?s=11-67",
 			"ねこのなつやすみ サバイバル"
+		],
+		"rate": [
+			1400,
+			0,
+			5000,
+			0,
+			3000,
+			0,
+			600,
+			1,
+			0,
+			0
 		],
 		"ticket": [
 			"傳說的陷阱",
