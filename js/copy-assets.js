@@ -46,8 +46,9 @@ const sources = [
 	'fav.png',
 
 	'html2canvas.min.js',
-	'dracula.js',
-	'dracula2.js',
+	'utils.js',
+	'navbar-search.js',
+	'gacha.js',
 	"enemy.js",
 	"constants.js",
 	"parser.js",

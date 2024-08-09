@@ -12,7 +12,7 @@
 		--bg: #fff;
 		--color: black;
 	}
-	:root.dark {
+	:root[data-theme="dark"] {
 		--bg: rgba(40, 42, 54, 1);
 		--color: rgba(248, 248, 242, 1);
 	}
@@ -33,26 +33,10 @@
 {{/inline}}
 
 {{#*inline "scripts"}}
+	{{~> @partial-block}}
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/rg-1.5.0/datatables.min.js"></script>
-	<script>
-		var _th = localStorage.getItem('theme');
-		if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
-		document.documentElement.classList.add("dark");
-		function toggleTheme() {
-			const x = localStorage.getItem('theme');
-			if (x == 'dark') {
-				document.documentElement.classList.remove('dark');
-				localStorage.setItem('theme', 'light');
-			} else {
-				document.documentElement.classList.add('dark');
-				localStorage.setItem('theme', 'dark');
-			}
-		}
-	</script>
 {{/inline}}
-
-{{#*inline "nav-bar-scripts"}}{{/inline}}
 
 {{#*inline "content"}}
 	<h1 style="text-align:center;margin:1.5em 0;">關卡倍率一覽<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>

@@ -33,7 +33,7 @@
 		--ac: #4d64ff;
 		--th: #eee;
 	}
-	:root.dark {
+	:root[data-theme="dark"] {
 		--bg: #141414;
 		--color: #f8f8f2;
 		--ac: #7c8eff;
@@ -180,14 +180,6 @@
 	}
 	</style>
 {{/inline}}
-
-{{#*inline "scripts"}}
-	<script>
-	var _th=localStorage.getItem("theme");function toggleTheme(){let e=localStorage.getItem("theme");"dark"==e?(document.documentElement.classList.remove("dark"),localStorage.setItem("theme","light")):(document.documentElement.classList.add("dark"),localStorage.setItem("theme","dark"))}("dark"==_th||!_th&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.documentElement.classList.add("dark");
-	</script>
-{{/inline}}
-
-{{#*inline "nav-bar-scripts"}}{{/inline}}
 
 {{#*inline "content"}}
 	<div class="M" style="display:none">
