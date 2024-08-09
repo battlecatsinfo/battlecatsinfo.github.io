@@ -1,116 +1,122 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>城堡素材掉落率</title>
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<meta name="description" content="貓咪大戰爭中文資訊網站，查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等">
+	<meta property="og:site_name" content="battlecatsinfo.github.io">
+	<meta property="og:url" content="https://battlecatsinfo.github.io">
+	<meta property="og:title" content="貓咪大戰爭中文資訊網站">
+	<meta property="og:description" content="查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 	<link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.css" rel="stylesheet">
+	<style>
+	:root {
+		--bg: #fff;
+		--color: black;
+	}
+	:root.dark {
+		--bg: rgba(40, 42, 54, 1);
+		--color: rgba(248, 248, 242, 1);
+	}
+	body {
+		color: var(--color);
+		background-color: var(--bg);
+		padding: 0;
+		margin: 0;
+		font-family:'Noto Sans TC',微軟正黑體,'Microsoft JhengHei',system-ui;
+	}
+	th img {width: 22px;height:auto;vertical-align:middle;}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 	<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
+</head>
+<body>
 	<style>
-.topnav {
-	background-color: #333 !important;
-	margin-block: 0;
-	display: inline-block;
-	width: 100%;
-	text-align: center;
-	font-size: max(1.5vw, 10px) !important;
-}
-.topnav > a {
-	display: inline-block;
-	color: #f2f2f2 !important;
-	padding: 1vh 2vw;
-	text-decoration: none;
-	cursor: pointer;
-	vertical-align: middle;
-}
-.topnav > a.active {
-	background-color: #4caf50 !important;
-}
-.topnav > a:visited {
-	text-decoration: none;
-}
-.topnav > a:hover {
-	background-color: #009688 !important;
-}
-.topnav svg {
-	background-color: inherit !important;
-	height: 1.3em;
-}
-#site-search {
-	display: none;
-	width: 175px;
-	padding: 0.1em 0.2em;
-}
-#search-btn {
-	all: unset;
-	vertical-align: middle;
-	cursor: pointer;
-	background-color: transparent !important;
-}
-#search-btn svg {
-	width: 12px;
-	height: 12px;
-	fill: white;
-}
-@media (min-width: 800px) {
-	#site-search {
+	.topnav {
+		background-color: #333 !important;
+		margin-block: 0;
 		display: inline-block;
-		width: 20vw;
+		width: 100%;
+		text-align: center;
+		font-size: max(1.5vw, 10px) !important;
+	}
+	.topnav > a {
+		display: inline-block;
+		color: #f2f2f2 !important;
+		padding: 1vh 2vw;
+		text-decoration: none;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	.topnav > a.active {
+		background-color: #4caf50 !important;
+	}
+	.topnav > a:visited {
+		text-decoration: none;
+	}
+	.topnav > a:hover {
+		background-color: #009688 !important;
+	}
+	.topnav svg {
+		background-color: inherit !important;
+		height: 1.3em;
+	}
+	#site-search {
+		display: none;
+		width: 175px;
+		padding: 0.1em 0.2em;
 	}
 	#search-btn {
-		position: relative;
-		top: 3px;
-		right: 30px;
+		all: unset;
+		vertical-align: middle;
+		cursor: pointer;
+		background-color: transparent !important;
 	}
 	#search-btn svg {
-		height: 22px;
-		width: 22px;
-		fill: black;
+		width: 12px;
+		height: 12px;
+		fill: white;
 	}
-}
-#site-s-result {
-	background-color: white !important;
-	display: none;
-	position: absolute;
-	z-index: 10;
-	left: 0;
-	top: 0;
-}
-#site-s-result > * {
-	width: 100%;
-	padding: 0.7em 2em;
-	color: black !important;
-	background-color: transparent !important;
-}
-#site-s-result > *:hover {
-	background-color: #e7e7e7 !important;
-	color: black !important;
-}
-
-:root {
-	--bg: #fff;
-	--color: black;
-}
-:root.dark {
-	--bg: rgba(40, 42, 54, 1);
-	--color: rgba(248, 248, 242, 1);
-}
-body {
-	color: var(--color);
-	background-color: var(--bg);
-	padding: 0;
-	margin: 0;
-	font-family:'Noto Sans TC',微軟正黑體,'Microsoft JhengHei',system-ui;
-}
-th img {width: 22px;height:auto;vertical-align:middle;}
+	@media (min-width: 800px) {
+		#site-search {
+			display: inline-block;
+			width: 20vw;
+		}
+		#search-btn {
+			position: relative;
+			top: 3px;
+			right: 30px;
+		}
+		#search-btn svg {
+			height: 22px;
+			width: 22px;
+			fill: black;
+		}
+	}
+	#site-s-result {
+		background-color: white !important;
+		display: none;
+		position: absolute;
+		z-index: 10;
+		left: 0;
+		top: 0;
+	}
+	#site-s-result > * {
+		width: 100%;
+		padding: 0.7em 2em;
+		color: black !important;
+		background-color: transparent !important;
+	}
+	#site-s-result > *:hover {
+		background-color: #e7e7e7 !important;
+		color: black !important;
+	}
 	</style>
-</head>
-
-<body>
 	<script>
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
@@ -246,5 +252,5 @@ function toggleTheme() {
 		<br>
 	</div>
 	<script type="text/javascript" src="materials.js"></script>
-
+</body>
 </html>

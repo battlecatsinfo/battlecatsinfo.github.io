@@ -1,202 +1,202 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
 	<meta charset="utf-8">
 	<title>貓咪資訊</title>
+	<meta property="og:site_name" content="battlecatsinfo.github.io">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel=stylesheet type=text/css href="/dracula.css">
-	<link rel="stylesheet" type="text/css" href="w3.css">
+	<link rel=stylesheet type=text/css href="/dracula.css">
+	<link rel="stylesheet" type="text/css" href="/w3.css">
 	<link rel="stylesheet" type="text/css" href="unit.css">
+	<style>
+	body {
+		font-size: max(20px, 1vw);
+	}
+	.bold-large {
+		font-size: 1.2em;
+	}
+	.w3-table {
+		width: initial;
+		margin: 0 auto;
+		margin-bottom: 60px;
+	}
+	.w3-table td {
+		vertical-align: middle;
+		padding: 9px 2px;
+		min-width: 120px;
+	}
+	#abar,
+	.w3-bar-item {
+		background-color: #ededed;
+		text-decoration: none;
+	}
+	#abar {
+		border: 1vw solid #ededed;
+	}
+	[data-theme="dark"] .w3-bar-item {
+		background-color: #2f2f2f;
+	}
+	[data-theme="dark"] #abar {
+		background-color: #2f2f2f;
+		border: 1vw solid #2f2f2f;
+	}
+	#abar a {
+		user-select: none;
+		cursor: pointer;
+		border-radius: 0.7vw;
+		white-space: nowrap;
+		text-align: center;
+		padding: 0.8vh 3vw;
+	}
+	#abar .w3-bar-item:hover {
+		background-color: #80808052;
+	}
+	.v-ctl {
+		float: right;
+		width: max(min(3vw, 3vh), 15px);
+		height: auto;
+	}
+	.v-ctl path {
+		stroke: white;
+		fill: transparent;
+	}
+	td select {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	.orb td {
+		padding: 5px;
+	}
+	.orb td:first-child {
+		padding-left: 5px;
+	}
+	.S {
+		padding-left: ;
+		border-radius: 0.5em;
+	}
+	.A > * {
+		padding-left: 0.5em;
+		padding-top: 0.1em;
+		padding-bottom: 0.1em;
+	}
+	.f {
+		background-color: #dedede;
+	}
+	.F {
+		background-color: #efefef;
+	}
+	[data-theme="dark"] .F {
+		background-color: #31343f;
+	}
+	[data-theme="dark"] .f {
+		background-color: #3c3f4b;
+	}
+	.o-selected {
+		background-color: #7fdbff !important;
+	}
+	td img {
+		vertical-align: bottom !important;
+	}
+	.tooltip svg {
+		margin-right: 0.6em;
+		fill: var(--color);
+		width: 1.5em;
+		height: 1.5em;
+		cursor: pointer;
+	}
+	select {
+		color: var(--color);
+	}
+	.xp td {
+		padding: 0.2em 0.4em;
+		min-width: initial;
+	}
+	</style>
 	<script src="levelcurve.js"></script>
 </head>
-
 <body style="overflow: scroll;position: relative;">
 	<style>
-body {
-	font-size: max(20px, 1vw);
-}
-.bold-large {
-	font-size: 1.2em;
-}
-.w3-table {
-	width: initial;
-	margin: 0 auto;
-	margin-bottom: 60px;
-}
-.w3-table td {
-	vertical-align: middle;
-	padding: 9px 2px;
-	min-width: 120px;
-}
-#abar,
-.w3-bar-item {
-	background-color: #ededed;
-	text-decoration: none;
-}
-#abar {
-	border: 1vw solid #ededed;
-}
-[data-theme="dark"] .w3-bar-item {
-	background-color: #2f2f2f;
-}
-[data-theme="dark"] #abar {
-	background-color: #2f2f2f;
-	border: 1vw solid #2f2f2f;
-}
-#abar a {
-	user-select: none;
-	cursor: pointer;
-	border-radius: 0.7vw;
-	white-space: nowrap;
-	text-align: center;
-	padding: 0.8vh 3vw;
-}
-#abar .w3-bar-item:hover {
-	background-color: #80808052;
-}
-.v-ctl {
-	float: right;
-	width: max(min(3vw, 3vh), 15px);
-	height: auto;
-}
-.v-ctl path {
-	stroke: white;
-	fill: transparent;
-}
-td select {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-}
-.orb td {
-	padding: 5px;
-}
-.orb td:first-child {
-	padding-left: 5px;
-}
-.S {
-	padding-left: ;
-	border-radius: 0.5em;
-}
-.A > * {
-	padding-left: 0.5em;
-	padding-top: 0.1em;
-	padding-bottom: 0.1em;
-}
-.f {
-	background-color: #dedede;
-}
-.F {
-	background-color: #efefef;
-}
-[data-theme="dark"] .F {
-	background-color: #31343f;
-}
-[data-theme="dark"] .f {
-	background-color: #3c3f4b;
-}
-.o-selected {
-	background-color: #7fdbff !important;
-}
-td img {
-	vertical-align: bottom !important;
-}
-.tooltip svg {
-	margin-right: 0.6em;
-	fill: var(--color);
-	width: 1.5em;
-	height: 1.5em;
-	cursor: pointer;
-}
-select {
-	color: var(--color);
-}
-.xp td {
-	padding: 0.2em 0.4em;
-	min-width: initial;
-}
-.topnav {
-	background-color: #333 !important;
-	margin-block: 0;
-	display: inline-block;
-	width: 100%;
-	text-align: center;
-	font-size: max(1.5vw, 10px) !important;
-}
-.topnav > a {
-	display: inline-block;
-	color: #f2f2f2 !important;
-	padding: 1vh 2vw;
-	text-decoration: none;
-	cursor: pointer;
-	vertical-align: middle;
-}
-.topnav > a.active {
-	background-color: #4caf50 !important;
-}
-.topnav > a:visited {
-	text-decoration: none;
-}
-.topnav > a:hover {
-	background-color: #009688 !important;
-}
-.topnav svg {
-	background-color: inherit !important;
-	height: 1.3em;
-}
-#site-search {
-	display: none;
-	width: 175px;
-	padding: 0.1em 0.2em;
-}
-#search-btn {
-	all: unset;
-	vertical-align: middle;
-	cursor: pointer;
-	background-color: transparent !important;
-}
-#search-btn svg {
-	width: 12px;
-	height: 12px;
-	fill: white;
-}
-@media (min-width: 800px) {
-	#site-search {
+	.topnav {
+		background-color: #333 !important;
+		margin-block: 0;
 		display: inline-block;
-		width: 20vw;
+		width: 100%;
+		text-align: center;
+		font-size: max(1.5vw, 10px) !important;
+	}
+	.topnav > a {
+		display: inline-block;
+		color: #f2f2f2 !important;
+		padding: 1vh 2vw;
+		text-decoration: none;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	.topnav > a.active {
+		background-color: #4caf50 !important;
+	}
+	.topnav > a:visited {
+		text-decoration: none;
+	}
+	.topnav > a:hover {
+		background-color: #009688 !important;
+	}
+	.topnav svg {
+		background-color: inherit !important;
+		height: 1.3em;
+	}
+	#site-search {
+		display: none;
+		width: 175px;
+		padding: 0.1em 0.2em;
 	}
 	#search-btn {
-		position: relative;
-		top: 3px;
-		right: 30px;
+		all: unset;
+		vertical-align: middle;
+		cursor: pointer;
+		background-color: transparent !important;
 	}
 	#search-btn svg {
-		height: 22px;
-		width: 22px;
-		fill: black;
+		width: 12px;
+		height: 12px;
+		fill: white;
 	}
-}
-#site-s-result {
-	background-color: white !important;
-	display: none;
-	position: absolute;
-	z-index: 10;
-	left: 0;
-	top: 0;
-}
-#site-s-result > * {
-	width: 100%;
-	padding: 0.7em 2em;
-	color: black !important;
-	background-color: transparent !important;
-}
-#site-s-result > *:hover {
-	background-color: #e7e7e7 !important;
-	color: black !important;
-}
-
+	@media (min-width: 800px) {
+		#site-search {
+			display: inline-block;
+			width: 20vw;
+		}
+		#search-btn {
+			position: relative;
+			top: 3px;
+			right: 30px;
+		}
+		#search-btn svg {
+			height: 22px;
+			width: 22px;
+			fill: black;
+		}
+	}
+	#site-s-result {
+		background-color: white !important;
+		display: none;
+		position: absolute;
+		z-index: 10;
+		left: 0;
+		top: 0;
+	}
+	#site-s-result > * {
+		width: 100%;
+		padding: 0.7em 2em;
+		color: black !important;
+		background-color: transparent !important;
+	}
+	#site-s-result > *:hover {
+		background-color: #e7e7e7 !important;
+		color: black !important;
+	}
 	</style>
 	<div class="topnav">
 <a href="/index.html">主頁</a>
@@ -209,7 +209,8 @@ select {
 <a style="position:relative;float:right;">
 <form style="display:inline;background-color:transparent;">
 	<input autocomplete="off" id="site-search" type="text" name="search" style="font-size: 17px;border: 1px solid rgba(0, 0, 0, 0.25) !important;border-radius: 25px;font-style: italic;background-color: white !important;color: black !important;" placeholder="Search..." aria-label="search">
-</form><button id="search-btn" onclick="site_search()"><svg viewBox="0 0 50 50" width="50px" height="50px"><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" /></svg></button><div style="position: relative;" class="w3-card"><div id="site-s-result"><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div><script src="/dracula.js"></script>
+</form><button id="search-btn" onclick="site_search()"><svg viewBox="0 0 50 50" width="50px" height="50px"><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" /></svg></button><div style="position: relative;" class="w3-card"><div id="site-s-result"><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div>
+	<script src="/dracula.js"></script>
 	<div id="loader"></div>
 	<script src="cat.js"></script>
 	<div id="modal" class="w3-modal">
@@ -257,5 +258,4 @@ select {
 		<script src="unit.js"></script>
 	</div>
 </body>
-
 </html>

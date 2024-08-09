@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
 	<meta charset="utf-8">
 	<title>貓咪搜尋</title>
@@ -8,275 +7,274 @@
 	<meta property="og:site_name" content="battlecatsinfo.github.io">
 	<meta property="og:title" content="貓咪搜尋">
 	<meta property="og:description" content="篩選和排序貓咪">
-	<meta property="og:image" content="https://i.imgur.com/cnYnN81.png"> <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<meta property="og:image" content="https://i.imgur.com/cnYnN81.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel=stylesheet type=text/css href="/dracula.css">
-	<link rel="stylesheet" type="text/css" href="w3.css">
-</head>
+	<link rel=stylesheet type=text/css href="/dracula.css">
+	<link rel="stylesheet" type="text/css" href="/w3.css">
+	<style>
+	body {
+		font-size: 16px;
+		padding: 0;
+		margin: 0;
+		width: 100%;
+	}
+	#loader {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		z-index: 1;
+		width: 120px;
+		height: 120px;
+		margin: -76px 0 0 -76px;
+		border: 16px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 16px solid #3498db;
+		-webkit-animation: spin 2s linear infinite;
+		animation: spin 2s linear infinite;
+	}
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+	.An {
+		position: relative;
+		display: none;
+		animation-name: An;
+		animation-duration: 0.7s
+	}
+	@keyframes An { 
+		from { opacity:0; } 
+		to { opacity:1; }
+	}
 
+	label {margin: 1em;}
+	table,
+	th,
+	td {
+		border: 1px solid #d1d5d5;
+	}
+	
+	.w3-centered td {
+		vertical-align: middle;
+	}
+	.w3-ul li {
+		padding: 0px;
+		cursor: default;
+		border-radius: 1px;
+	}
+	li img {
+		vertical-align: bottom;
+	}
+	.type-btn {
+		text-align: center;
+		display: inline-block;
+		width: 100px;
+		border-radius: 5px;
+		background-color: #7777774a;
+		padding: 10px;
+		user-select: none;
+	}
+	li.o-selected {
+		box-shadow: 0 0 2px black;
+		background-color: #7fdbff !important;
+	}
+	.w3-ul {
+		border-radius: 3px;
+		border: 1.5px solid #818181;
+		margin-bottom: 4px;
+		margin-left: 2px;
+		margin-top: 4px;
+	}
+	button {
+		display: block;
+		text-align: left;
+		width: 100%;
+		cursor: default;
+		transition: opacity 0s;
+		border: 0px;
+		background-color: inherit;
+		padding: 5px;
+	}
+	ul::-webkit-scrollbar {
+		width: 10px;
+	}
+	ul::-webkit-scrollbar-button {
+		background: #ebebeb;
+		border-radius: 4px;
+	}
+	ul::-webkit-scrollbar-track-piece {
+		background: #ebebeb;
+	}
+	ul::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background-color: gray;
+		border: 1px solid darkgray;
+	}
+	.w3-table tr:hover td, li:hover {
+		background-color: lightcyan;
+	}
+	[data-theme='dark'] .w3-table tr:hover td {
+		background-color: #638593 !important;
+	}
+	[data-theme='dark'] li:hover {
+		background-color: steelblue !important;
+	}
+	textarea {
+		font-size: 20px;
+		font-family: Monaco, "Ubuntu Mono", "Source Code Pro", Menlo, Consolas, monospace;
+	}
+	input[type="number"] {
+		padding: 8px 0;
+		margin-bottom: 8px;
+		border: none;
+		border-bottom: 1px solid #ccc;
+	}
+	input[type="button"] {
+		margin: 0px auto;
+		margin-top: 20px;
+		border-radius: 5px;
+		width: 90px;
+		padding: 3px 10px;
+	}
+	#pages-a > td {
+		font-size: 1.2em;
+		width: 50px;
+		text-align: center;
+		border: none;
+		cursor: pointer;
+	}
+	#pages-a > td:hover {
+		background-color: #ccc !important;
+	}
+	.w3-table td {
+		padding-top: 0;
+		padding-bottom: 0;
+		padding-left: 2px;
+		padding-right: 2px;
+	}
+	:root {
+		--mhide: block;
+	}
+	.may-hide {
+		display: var(--mhide);
+	}
+	#cattype {
+		width: 100%;
+		list-style-type: none;
+		text-align: center;
+	}
+	#cattype > span {
+		margin: 0px 20px;
+	}
+	.or-and {
+		margin-top: 0px;
+		width: 100%;
+	}
+	#name-search {
+		width: 100%;
+		padding: 6px 20px;
+		border: 3px solid #ddd;
+		border-radius: 7px;
+		outline: none;
+		transition: 0.2s;
+		margin: 0 auto;
+		margin-bottom: 5px;
+	}
+	#name-search:focus {
+		border-color: #bbb;
+	}
+	td.N {
+		background-color: var(--spans) !important;
+	}
+	p {
+		margin-block-start: 5px;
+		margin-block-end: 5px;
+	}
+	</style>
+</head>
 <body>
 	<style>
-body {
-	font-size: 16px;
-	padding: 0;
-	margin: 0;
-	width: 100%;
-}
-#loader {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	z-index: 1;
-	width: 120px;
-	height: 120px;
-	margin: -76px 0 0 -76px;
-	border: 16px solid #f3f3f3;
-	border-radius: 50%;
-	border-top: 16px solid #3498db;
-	-webkit-animation: spin 2s linear infinite;
-	animation: spin 2s linear infinite;
-}
-@keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
-}
-.An {
-	position: relative;
-	display: none;
-	animation-name: An;
-	animation-duration: 0.7s
-}
-@keyframes An { 
-	from { opacity:0; } 
-	to { opacity:1; }
-}
-
-label {margin: 1em;}
-table,
-th,
-td {
-	border: 1px solid #d1d5d5;
-}
-.topnav {
-	background-color: #333 !important;
-	margin-block: 0;
-	display: inline-block;
-	width: 100%;
-	text-align: center;
-	font-size: max(1.5vw, 10px) !important;
-}
-.topnav > a {
-	display: inline-block;
-	color: #f2f2f2 !important;
-	padding: 1vh 2vw;
-	text-decoration: none;
-	cursor: pointer;
-	vertical-align: middle;
-}
-.topnav > a.active {
-	background-color: #4caf50 !important;
-}
-.topnav > a:visited {
-	text-decoration: none;
-}
-.topnav > a:hover {
-	background-color: #009688 !important;
-}
-.topnav svg {
-	background-color: inherit !important;
-	height: 1.3em;
-}
-#site-search {
-	display: none;
-	width: 175px;
-	padding: 0.1em 0.2em;
-}
-#search-btn {
-	all: unset;
-	vertical-align: middle;
-	cursor: pointer;
-	background-color: transparent !important;
-}
-#search-btn svg {
-	width: 12px;
-	height: 12px;
-	fill: white;
-}
-@media (min-width: 800px) {
-	#site-search {
+	.topnav {
+		background-color: #333 !important;
+		margin-block: 0;
 		display: inline-block;
-		width: 20vw;
+		width: 100%;
+		text-align: center;
+		font-size: max(1.5vw, 10px) !important;
+	}
+	.topnav > a {
+		display: inline-block;
+		color: #f2f2f2 !important;
+		padding: 1vh 2vw;
+		text-decoration: none;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	.topnav > a.active {
+		background-color: #4caf50 !important;
+	}
+	.topnav > a:visited {
+		text-decoration: none;
+	}
+	.topnav > a:hover {
+		background-color: #009688 !important;
+	}
+	.topnav svg {
+		background-color: inherit !important;
+		height: 1.3em;
+	}
+	#site-search {
+		display: none;
+		width: 175px;
+		padding: 0.1em 0.2em;
 	}
 	#search-btn {
-		position: relative;
-		top: 3px;
-		right: 30px;
+		all: unset;
+		vertical-align: middle;
+		cursor: pointer;
+		background-color: transparent !important;
 	}
 	#search-btn svg {
-		height: 22px;
-		width: 22px;
-		fill: black;
+		width: 12px;
+		height: 12px;
+		fill: white;
 	}
-}
-#site-s-result {
-	background-color: white !important;
-	display: none;
-	position: absolute;
-	z-index: 10;
-	left: 0;
-	top: 0;
-}
-#site-s-result > * {
-	width: 100%;
-	padding: 0.7em 2em;
-	color: black !important;
-	background-color: transparent !important;
-}
-#site-s-result > *:hover {
-	background-color: #e7e7e7 !important;
-	color: black !important;
-}
-
-.w3-centered td {
-	vertical-align: middle;
-}
-.w3-ul li {
-	padding: 0px;
-	cursor: default;
-	border-radius: 1px;
-}
-li img {
-	vertical-align: bottom;
-}
-.type-btn {
-	text-align: center;
-	display: inline-block;
-	width: 100px;
-	border-radius: 5px;
-	background-color: #7777774a;
-	padding: 10px;
-	user-select: none;
-}
-li.o-selected {
-	box-shadow: 0 0 2px black;
-	background-color: #7fdbff !important;
-}
-.w3-ul {
-	border-radius: 3px;
-	border: 1.5px solid #818181;
-	margin-bottom: 4px;
-	margin-left: 2px;
-	margin-top: 4px;
-}
-button {
-	display: block;
-	text-align: left;
-	width: 100%;
-	cursor: default;
-	transition: opacity 0s;
-	border: 0px;
-	background-color: inherit;
-	padding: 5px;
-}
-ul::-webkit-scrollbar {
-	width: 10px;
-}
-ul::-webkit-scrollbar-button {
-	background: #ebebeb;
-	border-radius: 4px;
-}
-ul::-webkit-scrollbar-track-piece {
-	background: #ebebeb;
-}
-ul::-webkit-scrollbar-thumb {
-	border-radius: 3px;
-	background-color: gray;
-	border: 1px solid darkgray;
-}
-.w3-table tr:hover td, li:hover {
-	background-color: lightcyan;
-}
-[data-theme='dark'] .w3-table tr:hover td {
-	background-color: #638593 !important;
-}
-[data-theme='dark'] li:hover {
-	background-color: steelblue !important;
-}
-textarea {
-	font-size: 20px;
-	font-family: Monaco, "Ubuntu Mono", "Source Code Pro", Menlo, Consolas, monospace;
-}
-input[type="number"] {
-	padding: 8px 0;
-	margin-bottom: 8px;
-	border: none;
-	border-bottom: 1px solid #ccc;
-}
-input[type="button"] {
-	margin: 0px auto;
-	margin-top: 20px;
-	border-radius: 5px;
-	width: 90px;
-	padding: 3px 10px;
-}
-#pages-a > td {
-	font-size: 1.2em;
-	width: 50px;
-	text-align: center;
-	border: none;
-	cursor: pointer;
-}
-#pages-a > td:hover {
-	background-color: #ccc !important;
-}
-.w3-table td {
-	padding-top: 0;
-	padding-bottom: 0;
-	padding-left: 2px;
-	padding-right: 2px;
-}
-:root {
-	--mhide: block;
-}
-.may-hide {
-	display: var(--mhide);
-}
-#cattype {
-	width: 100%;
-	list-style-type: none;
-	text-align: center;
-}
-#cattype > span {
-	margin: 0px 20px;
-}
-.or-and {
-	margin-top: 0px;
-	width: 100%;
-}
-#name-search {
-	width: 100%;
-	padding: 6px 20px;
-	border: 3px solid #ddd;
-	border-radius: 7px;
-	outline: none;
-	transition: 0.2s;
-	margin: 0 auto;
-	margin-bottom: 5px;
-}
-#name-search:focus {
-	border-color: #bbb;
-}
-td.N {
-	background-color: var(--spans) !important;
-}
-p {
-	margin-block-start: 5px;
-	margin-block-end: 5px;
-}
+	@media (min-width: 800px) {
+		#site-search {
+			display: inline-block;
+			width: 20vw;
+		}
+		#search-btn {
+			position: relative;
+			top: 3px;
+			right: 30px;
+		}
+		#search-btn svg {
+			height: 22px;
+			width: 22px;
+			fill: black;
+		}
+	}
+	#site-s-result {
+		background-color: white !important;
+		display: none;
+		position: absolute;
+		z-index: 10;
+		left: 0;
+		top: 0;
+	}
+	#site-s-result > * {
+		width: 100%;
+		padding: 0.7em 2em;
+		color: black !important;
+		background-color: transparent !important;
+	}
+	#site-s-result > *:hover {
+		background-color: #e7e7e7 !important;
+		color: black !important;
+	}
 	</style>
-	<div id="loader"></div>
-	<script src="levelcurve.js"></script>
-	<script src="cat.js"></script>
 	<div class="topnav">
 <a href="/index.html">主頁</a>
 <a href="/search.html" class="active">貓咪</a>
@@ -288,7 +286,11 @@ p {
 <a style="position:relative;float:right;">
 <form style="display:inline;background-color:transparent;">
 	<input autocomplete="off" id="site-search" type="text" name="search" style="font-size: 17px;border: 1px solid rgba(0, 0, 0, 0.25) !important;border-radius: 25px;font-style: italic;background-color: white !important;color: black !important;" placeholder="Search..." aria-label="search">
-</form><button id="search-btn" onclick="site_search()"><svg viewBox="0 0 50 50" width="50px" height="50px"><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" /></svg></button><div style="position: relative;" class="w3-card"><div id="site-s-result"><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div><script src="/dracula.js"></script>
+</form><button id="search-btn" onclick="site_search()"><svg viewBox="0 0 50 50" width="50px" height="50px"><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" /></svg></button><div style="position: relative;" class="w3-card"><div id="site-s-result"><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div>
+	<script src="/dracula.js"></script>
+	<div id="loader"></div>
+	<script src="levelcurve.js"></script>
+	<script src="cat.js"></script>
 	<div id="main" class="An">
 		<div>
 			<ul class="w3-ul may-hide" style="width: 150px;height: 575px;overflow: auto;" id="trait-s">
@@ -607,5 +609,4 @@ p {
 		<script src="search.js"></script>
 	</div>
 </body>
-
 </html>

@@ -1,197 +1,197 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>偏好設定</title>
+	<meta property="og:site_name" content="battlecatsinfo.github.io">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel=stylesheet type=text/css href="/dracula.css">
-	<link rel="stylesheet" type="text/css" href="w3.css">
+	<link rel=stylesheet type=text/css href="/dracula.css">
+	<link rel="stylesheet" type="text/css" href="/w3.css">
+	<style>
+	body {font-size: max(1.2vw, 10px);padding: 0;}
+	.form {
+		padding: 1em 1.5em;
+		margin: 1em;
+		margin-right: 0.3em;
+		border-radius: 0.5em;
+		background-color: #93939300 !important;
+	}
+	.form * {
+		background-color: #93939300 !important;
+	}
+	.w3-section {
+		margin: 2em 1em !important;
+		margin-right: 0 !important;
+		padding: 1em;
+		padding-right: 0;
+		border-left: 0.7em #ffb86c solid;
+	}
+	.odds {
+		border-left: 0.7em #00bcd4 solid;
+	}
+	#s-trea .w3-section {
+		border-left: 0.7em #673ab7 solid;
+	}
+	h3 {
+		color: #3f51b5 !important;
+		background-color: transparent !important;
+		padding-left: 1vw;
+	}
+	[data-theme='dark'] h3 {
+		color: cyan !important;
+	}
+	label {
+		padding-left: 1vw;
+	}
+	.w3-sidebar > .w3-bar-item {
+		color: var(--color) !important;
+		background-color: transparent;
+		padding: 2vh 1vw !important;
+		padding-right: 0 !important;
+	}
+	.fucus {
+		background-color: #ababab4f !important;
+	}
+	.w3-table td {
+		vertical-align: middle;
+	}
+	.treasure {
+		display: none;
+	}
+	.w3-section {
+		box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.12);
+		background-color: #9393931c !important;
+		border-radius: 0.4em;
+		padding: 0.5em;
+		margin-bottom: 4em;
+	}
+	#s-trea .w3-section > * {
+		background-color: transparent !important;
+	}
+	h3 {
+		font-size: 1.3em !important;
+	}
+	#s-trea h3 {
+		padding-left: 0.4vw;
+	}
+	#s-trea h4 {
+		padding-left: 0.6vw;
+	}
+	[data-theme="dark"] h2 {
+		color: #8bc34a !important;
+	}
+	[data-theme="dark"] h1 {
+		color: #00bcd4 !important;
+	}
+	.atab {
+		background-color: #9191919c !important;
+	}
+	[data-theme="dark"] .atab {
+		color: var(--ahover) !important;
+	}
+	.w3-input {
+		margin-left: 1em;
+		width: 7em;
+		margin-bottom: 1em;
+	}
+	.w3-input:invalid {
+		background-color: pink !important;
+	}
+	.w3-section p {
+		text-align: left;
+		padding-left: 1vw;
+	}
+	input[type='radio'] {
+		width: 1.2em;
+		height: 1.2em;
+		position:relative;
+		top:0.25em;
+	}
+	</style>
 </head>
-
 <body>
 	<style>
-.topnav {
-	background-color: #333 !important;
-	margin-block: 0;
-	display: inline-block;
-	width: 100%;
-	text-align: center;
-	font-size: max(1.5vw, 10px) !important;
-}
-.topnav > a {
-	display: inline-block;
-	color: #f2f2f2 !important;
-	padding: 1vh 2vw;
-	text-decoration: none;
-	cursor: pointer;
-	vertical-align: middle;
-}
-.topnav > a.active {
-	background-color: #4caf50 !important;
-}
-.topnav > a:visited {
-	text-decoration: none;
-}
-.topnav > a:hover {
-	background-color: #009688 !important;
-}
-.topnav svg {
-	background-color: inherit !important;
-	height: 1.3em;
-}
-#site-search {
-	display: none;
-	width: 175px;
-	padding: 0.1em 0.2em;
-}
-#search-btn {
-	all: unset;
-	vertical-align: middle;
-	cursor: pointer;
-	background-color: transparent !important;
-}
-#search-btn svg {
-	width: 12px;
-	height: 12px;
-	fill: white;
-}
-@media (min-width: 800px) {
-	#site-search {
+	.topnav {
+		background-color: #333 !important;
+		margin-block: 0;
 		display: inline-block;
-		width: 20vw;
+		width: 100%;
+		text-align: center;
+		font-size: max(1.5vw, 10px) !important;
+	}
+	.topnav > a {
+		display: inline-block;
+		color: #f2f2f2 !important;
+		padding: 1vh 2vw;
+		text-decoration: none;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	.topnav > a.active {
+		background-color: #4caf50 !important;
+	}
+	.topnav > a:visited {
+		text-decoration: none;
+	}
+	.topnav > a:hover {
+		background-color: #009688 !important;
+	}
+	.topnav svg {
+		background-color: inherit !important;
+		height: 1.3em;
+	}
+	#site-search {
+		display: none;
+		width: 175px;
+		padding: 0.1em 0.2em;
 	}
 	#search-btn {
-		position: relative;
-		top: 3px;
-		right: 30px;
+		all: unset;
+		vertical-align: middle;
+		cursor: pointer;
+		background-color: transparent !important;
 	}
 	#search-btn svg {
-		height: 22px;
-		width: 22px;
-		fill: black;
+		width: 12px;
+		height: 12px;
+		fill: white;
 	}
-}
-#site-s-result {
-	background-color: white !important;
-	display: none;
-	position: absolute;
-	z-index: 10;
-	left: 0;
-	top: 0;
-}
-#site-s-result > * {
-	width: 100%;
-	padding: 0.7em 2em;
-	color: black !important;
-	background-color: transparent !important;
-}
-#site-s-result > *:hover {
-	background-color: #e7e7e7 !important;
-	color: black !important;
-}
-
-body {font-size: max(1.2vw, 10px);padding: 0;}
-.form {
-	padding: 1em 1.5em;
-	margin: 1em;
-	margin-right: 0.3em;
-	border-radius: 0.5em;
-	background-color: #93939300 !important;
-}
-.form * {
-	background-color: #93939300 !important;
-}
-.w3-section {
-	margin: 2em 1em !important;
-	margin-right: 0 !important;
-	padding: 1em;
-	padding-right: 0;
-	border-left: 0.7em #ffb86c solid;
-}
-.odds {
-	border-left: 0.7em #00bcd4 solid;
-}
-#s-trea .w3-section {
-	border-left: 0.7em #673ab7 solid;
-}
-h3 {
-	color: #3f51b5 !important;
-	background-color: transparent !important;
-	padding-left: 1vw;
-}
-[data-theme='dark'] h3 {
-	color: cyan !important;
-}
-label {
-	padding-left: 1vw;
-}
-.w3-sidebar > .w3-bar-item {
-	color: var(--color) !important;
-	background-color: transparent;
-	padding: 2vh 1vw !important;
-	padding-right: 0 !important;
-}
-.fucus {
-	background-color: #ababab4f !important;
-}
-.w3-table td {
-	vertical-align: middle;
-}
-.treasure {
-	display: none;
-}
-.w3-section {
-	box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.12);
-	background-color: #9393931c !important;
-	border-radius: 0.4em;
-	padding: 0.5em;
-	margin-bottom: 4em;
-}
-#s-trea .w3-section > * {
-	background-color: transparent !important;
-}
-h3 {
-	font-size: 1.3em !important;
-}
-#s-trea h3 {
-	padding-left: 0.4vw;
-}
-#s-trea h4 {
-	padding-left: 0.6vw;
-}
-[data-theme="dark"] h2 {
-	color: #8bc34a !important;
-}
-[data-theme="dark"] h1 {
-	color: #00bcd4 !important;
-}
-.atab {
-	background-color: #9191919c !important;
-}
-[data-theme="dark"] .atab {
-	color: var(--ahover) !important;
-}
-.w3-input {
-	margin-left: 1em;
-	width: 7em;
-	margin-bottom: 1em;
-}
-.w3-input:invalid {
-	background-color: pink !important;
-}
-.w3-section p {
-	text-align: left;
-	padding-left: 1vw;
-}
-input[type='radio'] {
-	width: 1.2em;
-	height: 1.2em;
-	position:relative;
-	top:0.25em;
-}
+	@media (min-width: 800px) {
+		#site-search {
+			display: inline-block;
+			width: 20vw;
+		}
+		#search-btn {
+			position: relative;
+			top: 3px;
+			right: 30px;
+		}
+		#search-btn svg {
+			height: 22px;
+			width: 22px;
+			fill: black;
+		}
+	}
+	#site-s-result {
+		background-color: white !important;
+		display: none;
+		position: absolute;
+		z-index: 10;
+		left: 0;
+		top: 0;
+	}
+	#site-s-result > * {
+		width: 100%;
+		padding: 0.7em 2em;
+		color: black !important;
+		background-color: transparent !important;
+	}
+	#site-s-result > *:hover {
+		background-color: #e7e7e7 !important;
+		color: black !important;
+	}
 	</style>
 	<div class="topnav">
 <a href="/index.html">主頁</a>
@@ -204,7 +204,8 @@ input[type='radio'] {
 <a style="position:relative;float:right;">
 <form style="display:inline;background-color:transparent;">
 	<input autocomplete="off" id="site-search" type="text" name="search" style="font-size: 17px;border: 1px solid rgba(0, 0, 0, 0.25) !important;border-radius: 25px;font-style: italic;background-color: white !important;color: black !important;" placeholder="Search..." aria-label="search">
-</form><button id="search-btn" onclick="site_search()"><svg viewBox="0 0 50 50" width="50px" height="50px"><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" /></svg></button><div style="position: relative;" class="w3-card"><div id="site-s-result"><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div><script src="/dracula.js"></script>
+</form><button id="search-btn" onclick="site_search()"><svg viewBox="0 0 50 50" width="50px" height="50px"><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" /></svg></button><div style="position: relative;" class="w3-card"><div id="site-s-result"><div onclick="_s_open('/search.html?q=')">搜尋貓咪</div><div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div><div onclick="_s_open('/stage.html?q=')">搜尋關卡</div></div></div></a></div>
+	<script src="/dracula.js"></script>
 	<div class="w3-sidebar w3-bar-block w3-card" style="width: max(6em,10vw);background-color: #8080803d !important;">
 		<p class="w3-bar-item" style="background-color: transparent !important;">
 			<svg viewBox="0 0 24 24" style="width: 80%;background-color: transparent !important;">
@@ -714,5 +715,4 @@ input[type='radio'] {
 
 	<script src="settings.js"></script>
 </body>
-
 </html>
