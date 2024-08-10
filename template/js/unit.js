@@ -2500,7 +2500,7 @@ function renderCombos() {
 				const td = document.createElement('td');
 				const p = document.createElement('p');
 				const p2 = document.createElement('p');
-				const p3 = document.createElement('p3');
+				const p3 = document.createElement('p');
 				p3.style.fontSize = 'smaller';
 				td.appendChild(p);
 				td.appendChild(p2);
