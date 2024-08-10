@@ -44,7 +44,7 @@ ${[...modules].map(x => `    ${x}`).join('\n')}
 Options:
     --help | -h      Display usage help.
     --force | -f     Skip update check and rebuild all requested parts.
-    --minify | -m    Minify HTML/CSS/JS files.
+    --minify | -m    Minify HTML/CSS/JS files. [experimental]
 `;
 	process.stdout.write(usage);
 	process.exit(0);
