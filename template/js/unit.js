@@ -29,10 +29,9 @@ const unit_content = document.getElementById('unit-content');
 const tooltip = document.getElementsByClassName('tooltip')[0];
 
 function getTraitNames(trait) {
-	let i = 0;
-	var idxs = [];
-	for (let x = 1; x <= TB_DEMON; x <<= 1) trait & x && idxs.push(i), i++;
-	return 1 == idxs.length ? '（' + units_scheme.traits.names[idxs[0]] + '）' : '（' + get_trait_short_names(trait) + '）敵人';
+	const idxs = [];
+	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && idxs.push(i);
+	return 1 == idxs.length ? `（${units_scheme.traits.names[idxs[0]]}）` : `（${get_trait_short_names(trait)}）敵人`;
 }
 
 function createAbIcons(form, p1, p2, tbody) {
@@ -2295,54 +2294,43 @@ function renderCombos() {
 		const C = combos[j];
 		const units = C[3];
 		for (let i = 0; i < units.length; i += 2) {
-			if (my_id == units[i]) {
-				const tr = document.createElement('tr');
-				const [name, type, lv, , req] = C;
-				const td = document.createElement('td');
-				const p = document.createElement('p');
-				const p2 = document.createElement('p');
-				const p3 = document.createElement('p');
+			if (my_id !== units[i]) { continue; }
+			const [name, type, lv, , req] = C;
+			const tr = table.appendChild(document.createElement('tr'));
+			const td = tr.appendChild(document.createElement('td'));
+			const p = td.appendChild(document.createElement('p'));
+			const a = p.appendChild(document.createElement('a'));
+			a.href = '/combos.html#' + name;
+			a.textContent = name;
+			a.style.textDecoration = 'none';
+			const p2 = td.appendChild(document.createElement('p'));
+			p2.textContent = (() => {
+				const effect = combos_scheme.effectNames[type];
+				const sign = combos_scheme.effectSigns[type];
+				const value = combos_scheme.effectValues[type][lv];
+				const unit = combos_scheme.effectUnits[type];
+				const level = combos_scheme.levels[lv];
+				return `${effect} ${sign}${value} ${unit}【${level}】`;
+			})();
+			if (req > 1) {
+				const p3 = td.appendChild(document.createElement('p'));
 				p3.style.fontSize = 'smaller';
-				td.appendChild(p);
-				td.appendChild(p2);
-				const a = document.createElement('a');
-				a.href = '/combos.html#' + C[0];
-				a.textContent = C[0];
-				a.style.textDecoration = 'none';
-				p.appendChild(a);
-				p2.textContent = (() => {
-					const effect = combos_scheme.effectNames[type];
-					const sign = combos_scheme.effectSigns[type];
-					const value = combos_scheme.effectValues[type][lv];
-					const unit = combos_scheme.effectUnits[type];
-					const level = combos_scheme.levels[lv];
-					return `${effect} ${sign}${value} ${unit}【${level}】`;
-				})();
-				tr.appendChild(td);
-				if (req > 1) {
-					p3.textContent = combos_scheme.requirements[req];
-					td.appendChild(p3);
-				}
-				for (let c = 0; c < units.length; c += 2) {
-					const td = document.createElement('td');
-					const img = new Image(104, 79);
-					const a = document.createElement('a');
-					a.href = './unit.html?id=' + units[c].toString();
-					img.src = `/img/u/${units[c]}/${units[c + 1]}.png`;
-					a.appendChild(img);
-					td.appendChild(a);
-					tr.appendChild(td);
-				}
-				table.appendChild(tr);
-				break;
+				p3.textContent = combos_scheme.requirements[req];
 			}
+			for (let c = 0; c < units.length; c += 2) {
+				const td = tr.appendChild(document.createElement('td'));
+				const a = td.appendChild(document.createElement('a'));
+				a.href = './unit.html?id=' + units[c].toString();
+				const img = a.appendChild(new Image(104, 79));
+				img.src = `/img/u/${units[c]}/${units[c + 1]}.png`;
+			}
+			break;
 		}
 	}
 	if (table.children.length) {
 		table.classList.add('w3-table', 'w3-centered', 'combo');
-		const p = document.createElement('p');
+		const p = unit_content.appendChild(document.createElement('p'));
 		p.textContent = '聯組資訊';
-		unit_content.appendChild(p);
 		unit_content.appendChild(table);
 	}
 }

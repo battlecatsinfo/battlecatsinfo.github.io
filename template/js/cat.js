@@ -202,9 +202,7 @@ function getCoverUnit(unit, chance, duration) {
 
 function get_trait_short_names(trait) {
 	var s = "";
-	let i = 0;
-	for (let x = 1; x <= TB_DEMON; x <<= 1) trait & x && (s += units_scheme.traits.short_names[i]),
-		i++;
+	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && (s += units_scheme.traits.short_names[i]);
 	return s;
 }
 
@@ -1570,65 +1568,38 @@ async function loadAllCats() {
 }
 
 function createTraitIcons(trait, parent) {
-	if (trait) {
-		var e, E = document.createElement('div');
-		let i = 0;
-		for (let x = 1; x <= TB_DEMON; x <<= 1) {
-			if (trait & x) {
-				e = new Image(40, 40);
-				e.src = 'https://i.imgur.com/' + units_scheme.traits.icons[i] + '.png';
-				E.appendChild(e);
-			}
-			++i;
-		}
-		parent.appendChild(E);
+	if (!trait) { return; }
+	const E = document.createElement('div');
+	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
+		if (!(trait & x)) { continue; }
+		const e = E.appendChild(new Image(40, 40));
+		e.src = 'https://i.imgur.com/' + units_scheme.traits.icons[i] + '.png';
 	}
+	parent.appendChild(E);
 }
 
 function createImuIcons(imu, parent) {
-	if (imu) {
-		var e;
-		let i = 0;
-		let c = 0;
-		for (let x = 1; x <= 512; x <<= 1, ++i) {
-			if (imu & x) {
-				if (++c == 2) {
-					const p = document.createElement('div');
-					parent.removeChild(parent.lastElementChild);
-					const texts = [];
-					for (x = 1, i = 0; x <= 512; x <<= 1, ++i) {
-						if (imu & x) {
-							e = new Image(40, 40);
-							e.src = 'https://i.imgur.com/' + units_scheme.immunes.icons[i] + '.png';
-							p.appendChild(e);
-							texts.push(units_scheme.immunes.names[i]);
-						}
-					}
-					p.append('無效（' + texts.join('、') + '）');
-					parent.appendChild(p);
-					return;
-				}
-				const p = document.createElement('div');
-				e = new Image(40, 40);
-				e.src = 'https://i.imgur.com/' + units_scheme.immunes.icons[i] + '.png';
-				p.appendChild(e);
-				p.append(units_scheme.immunes.names[i] + '無效');
-				parent.appendChild(p);
-			}
-		}
+	if (!imu) { return; }
+	const p = document.createElement('div');
+	const names = [];
+	for (let x = 1, i = 0; x <= 512; x <<= 1, ++i) {
+		if (!(imu & x)) { continue; }
+		const e = p.appendChild(new Image(40, 40));
+		e.src = 'https://i.imgur.com/' + units_scheme.immunes.icons[i] + '.png';
+		names.push(units_scheme.immunes.names[i]);
 	}
+	const text = (names.length === 1) ? `${names.join('')}無效` : `無效（${names.join('、')}）`;
+	p.append(text);
+	parent.appendChild(p);
 }
 
 function createResIcons(res, p) {
-	var e, c;
 	for (let [k, v] of Object.entries(res)) {
-		k = parseInt(k);
-		c = document.createElement('div');
-		e = new Image(40, 40);
+		k = parseInt(k, 10);
+		const c = p.appendChild(document.createElement('div'));
+		const e = c.appendChild(new Image(40, 40));
 		e.src = 'https://i.imgur.com/' + units_scheme.resists.icons[k] + '.png';
-		c.appendChild(e);
 		c.append(units_scheme.resists.descs[k].replace('$', v));
-		p.appendChild(c);
 	}
 }
 

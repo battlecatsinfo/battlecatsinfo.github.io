@@ -546,9 +546,8 @@ function addCat(id, I, FC = 0) {
 				D.style.setProperty('color', TH === 'dark' ? '#ff6363' : '#c10002', 'important');
 				FL = 2;
 			}
-			const I = new Image(40, 40);
+			const I = D.appendChild(new Image(40, 40));
 			I.src = 'https://i.imgur.com/' + units_scheme.talents.icons[G[i]] + '.png';
-			D.appendChild(I);
 			D.append(units_scheme.talents.names[G[i]]);
 			M.appendChild(D);
 		}
