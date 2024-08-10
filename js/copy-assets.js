@@ -61,7 +61,6 @@ const sources = [
 	'svg.js',
 	'dpsgraph.js',
 	'ototo.js',
-	'cat.js',
 	'gif.js',
 	'imgcut.js',
 	'anim.min.js',

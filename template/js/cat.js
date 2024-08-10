@@ -1,5 +1,7 @@
 const C_VER = {{{cat-ver}}};
 
+const units_scheme = {{{toJSON units_scheme}}};
+
 var def_lv, plus_lv, my_curve, _info, unit_orbs, orb_massive = 0,
 	orb_resist = 1,
 	orb_good_atk = 0,
@@ -199,10 +201,9 @@ function getCoverUnit(unit, chance, duration) {
 }
 
 function get_trait_short_names(trait) {
-	const trait_short_names = ["紅", "浮", "黑", "鐵", "天", "星", "死", "古", "無", "使徒", "魔女", "惡"];
 	var s = "";
 	let i = 0;
-	for (let x = 1; x <= TB_DEMON; x <<= 1) trait & x && (s += trait_short_names[i]),
+	for (let x = 1; x <= TB_DEMON; x <<= 1) trait & x && (s += units_scheme.traits.short_names[i]),
 		i++;
 	return s;
 }
@@ -1570,26 +1571,12 @@ async function loadAllCats() {
 
 function createTraitIcons(trait, parent) {
 	if (trait) {
-		var e, E = document.createElement('div'),
-			names = [
-				"BUxdmA6", // red
-				"GlcKsa6", // float
-				"XbBWQIp", //black
-				"fVfHaCQ", // metal
-				"kxvTRTQ", // angel
-				"PPpWAPy", // alien
-				"oqVjofz", // zombie
-				"caSziI9", // relic
-				"qOEibJt", // white
-				"", // eva
-				"", // witch
-				"hp6EvG6" // demon
-			];
+		var e, E = document.createElement('div');
 		let i = 0;
 		for (let x = 1; x <= TB_DEMON; x <<= 1) {
 			if (trait & x) {
 				e = new Image(40, 40);
-				e.src = 'https://i.imgur.com/' + names[i] + '.png';
+				e.src = 'https://i.imgur.com/' + units_scheme.traits.icons[i] + '.png';
 				E.appendChild(e);
 			}
 			++i;
@@ -1599,8 +1586,6 @@ function createTraitIcons(trait, parent) {
 }
 
 function createImuIcons(imu, parent) {
-	const names = ["波動傷害", "使動作停止", "使動作變慢", "打飛敵人", "烈波傷害", "攻擊力下降", "傳送", "古代的詛咒", "毒擊傷害", "魔王震波"];
-	const icon_names = ["MacWKW6", "OSjMN62", "rPx4aA2", "5CYatS4", "Uadt9Fa", "aN6I67V", "T7BXYAw", "27mAxhl", "5zleNqO", "4uYsoCg"];
 	if (imu) {
 		var e;
 		let i = 0;
@@ -1614,9 +1599,9 @@ function createImuIcons(imu, parent) {
 					for (x = 1, i = 0; x <= 512; x <<= 1, ++i) {
 						if (imu & x) {
 							e = new Image(40, 40);
-							e.src = 'https://i.imgur.com/' + icon_names[i] + '.png';
+							e.src = 'https://i.imgur.com/' + units_scheme.immunes.icons[i] + '.png';
 							p.appendChild(e);
-							texts.push(names[i]);
+							texts.push(units_scheme.immunes.names[i]);
 						}
 					}
 					p.append('無效（' + texts.join('、') + '）');
@@ -1625,9 +1610,9 @@ function createImuIcons(imu, parent) {
 				}
 				const p = document.createElement('div');
 				e = new Image(40, 40);
-				e.src = 'https://i.imgur.com/' + icon_names[i] + '.png';
+				e.src = 'https://i.imgur.com/' + units_scheme.immunes.icons[i] + '.png';
 				p.appendChild(e);
-				p.append(names[i] + '無效');
+				p.append(units_scheme.immunes.names[i] + '無效');
 				parent.appendChild(p);
 			}
 		}
@@ -1636,27 +1621,13 @@ function createImuIcons(imu, parent) {
 
 function createResIcons(res, p) {
 	var e, c;
-	var res_icon_names = ["BGbyVaK", "Sd55VTg", "1PHovzw", "kwmOdX3", "WTIjQQE", "kLJHD5E", "1s7WKyX", "sROk995", "1TkV1IQ"];
-	var res_descs =
-
-		[
-			"抗擊耐性（時間減少 $ %）",
-			"動止耐性（時間減少 $ %）",
-			"動慢耐性（時間減少 $ %）",
-			"抗飛耐性（距離減少 $ %）",
-			"抗波耐性（傷害減少 $ %）",
-			"抗烈波耐性（傷害減少 $ %）",
-			"抗古代詛咒耐性（時間減少 $ %）",
-			"抗毒耐性（傷害減少 $ %）",
-			"抗傳耐性"
-		];
 	for (let [k, v] of Object.entries(res)) {
 		k = parseInt(k);
 		c = document.createElement('div');
 		e = new Image(40, 40);
-		e.src = 'https://i.imgur.com/' + res_icon_names[k] + '.png';
+		e.src = 'https://i.imgur.com/' + units_scheme.resists.icons[k] + '.png';
 		c.appendChild(e);
-		c.append(res_descs[k].replace('$', v));
+		c.append(units_scheme.resists.descs[k].replace('$', v));
 		p.appendChild(c);
 	}
 }

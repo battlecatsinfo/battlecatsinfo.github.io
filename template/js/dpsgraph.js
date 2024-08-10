@@ -353,21 +353,10 @@ class FormDPS {
 				};
 		}
 
-		const talent_map = {
-			10: "攻擊力上升",
-			13: "會心一擊",
-			17: "波動",
-			31: "基本攻擊力上升",
-			50: "渾身一擊",
-			56: "烈波攻擊",
-			61: "攻擊間隔縮短",
-			62: "小波動",
-			65: "小烈波",
-		};
 		if (this.F.lvc >= 2 && this.info[10]) {
 			for (let i = 1; i < 113; i += 14) {
 				if (!this.info[10][i]) break;
-				obj = talent_map[this.info[10][i]];
+				obj = units_scheme.talents.names[this.info[10][i]];
 				if (obj) {
 					const div = document.createElement('p');
 					let p = document.createElement('label');

@@ -1,5 +1,6 @@
 module.exports = class extends require('./base.js') {
 	run() {
+		const units_scheme = JSON.parse(this.load('units_scheme.json'));
 		const combos_scheme = JSON.parse(this.load('combos_scheme.json'));
 		const combos = JSON.parse(this.load('combos.json'));
 
@@ -10,6 +11,8 @@ module.exports = class extends require('./base.js') {
 		this.write_template('js/combos.js', 'combo.js', {combos});
 
 		this.write_template('js/unit.js', 'unit.js', {combos_scheme});
+
+		this.write_template('js/cat.js', 'cat.js', {units_scheme});
 
 		// generate combosFormatted
 		const combosFormatted = {};

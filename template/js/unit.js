@@ -28,98 +28,11 @@ if (isNaN(my_id))
 const unit_content = document.getElementById('unit-content');
 const tooltip = document.getElementsByClassName('tooltip')[0];
 
-const skill_costs = [
-	[25, 5, 5, 5, 5, 10, 10, 10, 10, 10],
-	[5, 5, 5, 5, 5, 10, 10, 10, 10, 10],
-	[50],
-	[50, 10, 10, 10, 10, 15, 15, 15, 15, 15],
-	[10, 10, 10, 10, 10, 15, 15, 15, 15, 15],
-	[75],
-	[75, 15, 15, 15, 15, 20, 20, 20, 20, 20],
-	[15, 15, 15, 15, 15, 20, 20, 20, 20, 20],
-	[100],
-	[150],
-	[250],
-	[100, 15, 15, 15, 15, 25, 25, 25, 25, 25],
-	[75, 10, 10, 10, 10, 20, 20, 20, 20, 20],
-	[20, 20, 20, 20, 20, 25, 25, 25, 25, 25],
-];
-
-const talent_d = [
-	'',
-	"攻擊力下降",
-	"使動作停止",
-	"使動作變慢",
-	"只能攻擊",
-	"善於攻擊",
-	"很耐打",
-	"超大傷害",
-	"打飛敵人",
-	"傳送",
-	"攻擊力上升",
-	"死前存活",
-	"善於攻城",
-	"會心一擊",
-	"終結不死",
-	"破壞護盾",
-	"得到很多金錢",
-	"波動",
-	"抗擊耐性",
-	"動止耐性",
-	"動慢耐性",
-	"抗飛耐性",
-	"抗波耐性",
-	"波動滅止",
-	"抗傳耐性",
-	"成本減少",
-	"生產加快",
-	"移動加快",
-	"增加擊退",
-	"古代詛咒無效",
-	"抗古代詛咒耐性",
-	"基本攻擊力上升",
-	"基本體力上升",
-	"屬性 紅色敵人",
-	"屬性 飄浮敵人",
-	"屬性 黑色敵人",
-	"屬性 鋼鐵敵人",
-	"屬性 天使敵人",
-	"屬性 異星戰士",
-	"屬性 不死生物",
-	"屬性 古代種",
-	"無屬性敵人",
-	"魔女",
-	"使徒",
-	"攻擊力下降無效",
-	"使動作停止無效",
-	"使動作變慢無效",
-	"打飛敵人無效",
-	"波動傷害無效",
-	"傳送無效",
-	"渾身一擊",
-	"攻擊無效",
-	"抗毒擊耐性",
-	"毒擊傷害無效",
-	"抗烈波耐性",
-	"烈波傷害無效",
-	"烈波攻擊",
-	"屬性 惡魔",
-	"破壞惡魔盾",
-	"靈魂攻擊",
-	"詛咒",
-	"攻擊間隔縮短",
-	"小波動",
-	"超生命體特效",
-	"超獸特效",
-	"小烈波",
-	"超賢者特効"
-];
-
 function getTraitNames(trait) {
 	let i = 0;
 	var idxs = [];
 	for (let x = 1; x <= TB_DEMON; x <<= 1) trait & x && idxs.push(i), i++;
-	return 1 == idxs.length ? '（' + ["紅色敵人", "飄浮敵人", "黑色敵人", "鋼鐵敵人", "天使敵人", "異星戰士", "不死生物", "古代種", "無屬性敵人", "使徒", "魔女", "惡魔"][idxs[0]] + '）' : '（' + get_trait_short_names(trait) + '）敵人';
+	return 1 == idxs.length ? '（' + units_scheme.traits.names[idxs[0]] + '）' : '（' + get_trait_short_names(trait) + '）敵人';
 }
 
 function createAbIcons(form, p1, p2, tbody) {
@@ -1175,7 +1088,7 @@ function handleBlur() {
 		}
 	}
 	this.textContent = 'Lv' + this.L;
-	const arr = skill_costs[this.C];
+	const arr = units_scheme.talents.costs[this.C];
 	let total = 0;
 	for (let i = 0; i < this.L; ++i)
 		total += arr[i];
@@ -1454,7 +1367,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 					super_talent = true;
 					continue;
 				}
-				N = talent_d[T[i]];
+				N = units_scheme.talents.names[T[i]];
 				tr = document.createElement('tr');
 				td = document.createElement('td');
 				td.classList.add('F');
@@ -1504,7 +1417,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 						continue;
 					if (!T[i + 13])
 						continue;
-					N = talent_d[T[i]];
+					N = units_scheme.talents.names[T[i]];
 					tr = document.createElement('tr');
 					td = document.createElement('td');
 					td.classList.add('F');
@@ -2194,7 +2107,7 @@ function rednerTalentInfos(talents, _super = false) {
 		if (!talents[i]) break;
 		if (_super != (talents[i + 13] == 1)) continue;
 		const info = getTalentInfo(talents.subarray(i, i + 14));
-		const name = talent_d[talents[i]];
+		const name = units_scheme.talents.names[talents[i]];
 		infos.push(name);
 		const tr = document.createElement('tr');
 		if (info != undefined) {
@@ -2337,7 +2250,7 @@ function renderTalentCosts(talent_names, talents, _super = false) {
 		tr.appendChild(td0);
 		for (let j = 0; j < names.length; ++j) {
 			const td = document.createElement('td');
-			const tbl = skill_costs[costs[j]];
+			const tbl = units_scheme.talents.costs[costs[j]];
 			if (i & 1)
 				td.classList.add('F');
 			td.textContent = i > maxLvs[j] ? '-' : tbl[i - 1];
@@ -2358,7 +2271,7 @@ function renderTalentCosts(talent_names, talents, _super = false) {
 		const td = document.createElement('td');
 		let s = 0;
 		for (let j = 0; j < maxLvs[i]; ++j)
-			s += skill_costs[costs[i]][j];
+			s += units_scheme.talents.costs[costs[i]][j];
 		td.textContent = s.toString();
 		total += s;
 		td.classList.add('F');
