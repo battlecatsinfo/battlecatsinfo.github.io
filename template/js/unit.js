@@ -113,68 +113,11 @@ const talent_d = [
 	"超賢者特効"
 ];
 
-function createResIcons(res, p) {
-	var e, c;
-	var res_icon_names = ["BGbyVaK", "Sd55VTg", "1PHovzw", "kwmOdX3", "WTIjQQE", "kLJHD5E", "1s7WKyX", "sROk995", "1TkV1IQ"];
-	var res_descs =
-
-		[
-			"抗擊耐性（時間減少 $ %）",
-			"動止耐性（時間減少 $ %）",
-			"動慢耐性（時間減少 $ %）",
-			"抗飛耐性（距離減少 $ %）",
-			"抗波耐性（傷害減少 $ %）",
-			"抗烈波耐性（傷害減少 $ %）",
-			"抗古代詛咒耐性（時間減少 $ %）",
-			"抗毒耐性（傷害減少 $ %）",
-			"抗傳耐性"
-		];
-	for (let [k, v] of Object.entries(res)) {
-		k = parseInt(k);
-		c = document.createElement('div');
-		e = new Image(40, 40);
-		e.src = 'https://i.imgur.com/' + res_icon_names[k] + '.png';
-		c.appendChild(e);
-		c.append(res_descs[k].replace('$', v));
-		p.appendChild(c);
-	}
-}
-
 function getTraitNames(trait) {
 	let i = 0;
 	var idxs = [];
 	for (let x = 1; x <= TB_DEMON; x <<= 1) trait & x && idxs.push(i), i++;
 	return 1 == idxs.length ? '（' + ["紅色敵人", "飄浮敵人", "黑色敵人", "鋼鐵敵人", "天使敵人", "異星戰士", "不死生物", "古代種", "無屬性敵人", "使徒", "魔女", "惡魔"][idxs[0]] + '）' : '（' + get_trait_short_names(trait) + '）敵人';
-}
-
-function createTraitIcons(trait, parent) {
-	if (trait) {
-		var e, E = document.createElement('div'),
-			names = [
-				"BUxdmA6", // red
-				"GlcKsa6", // float
-				"XbBWQIp", //black
-				"fVfHaCQ", // metal
-				"kxvTRTQ", // angel
-				"PPpWAPy", // alien
-				"oqVjofz", // zombie
-				"caSziI9", // relic
-				"qOEibJt", // white
-				"", // eva
-				"", // witch
-				"hp6EvG6" // demon
-			];
-		let i = 0;
-		for (let x = 1; x <= TB_DEMON; x <<= 1) {
-			if (trait & x) {
-				e = new Image(40, 40);
-				e.src = 'https://i.imgur.com/' + names[i] + '.png';
-				E.appendChild(e);
-			}
-			++i;
-		}
-		parent.appendChild(E);
-	}
 }
 
 function createAbIcons(form, p1, p2, tbody) {

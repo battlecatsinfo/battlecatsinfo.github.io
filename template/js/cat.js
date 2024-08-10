@@ -1568,6 +1568,36 @@ async function loadAllCats() {
 	});
 }
 
+function createTraitIcons(trait, parent) {
+	if (trait) {
+		var e, E = document.createElement('div'),
+			names = [
+				"BUxdmA6", // red
+				"GlcKsa6", // float
+				"XbBWQIp", //black
+				"fVfHaCQ", // metal
+				"kxvTRTQ", // angel
+				"PPpWAPy", // alien
+				"oqVjofz", // zombie
+				"caSziI9", // relic
+				"qOEibJt", // white
+				"", // eva
+				"", // witch
+				"hp6EvG6" // demon
+			];
+		let i = 0;
+		for (let x = 1; x <= TB_DEMON; x <<= 1) {
+			if (trait & x) {
+				e = new Image(40, 40);
+				e.src = 'https://i.imgur.com/' + names[i] + '.png';
+				E.appendChild(e);
+			}
+			++i;
+		}
+		parent.appendChild(E);
+	}
+}
+
 function createImuIcons(imu, parent) {
 	const names = ["波動傷害", "使動作停止", "使動作變慢", "打飛敵人", "烈波傷害", "攻擊力下降", "傳送", "古代的詛咒", "毒擊傷害", "魔王震波"];
 	const icon_names = ["MacWKW6", "OSjMN62", "rPx4aA2", "5CYatS4", "Uadt9Fa", "aN6I67V", "T7BXYAw", "27mAxhl", "5zleNqO", "4uYsoCg"];
@@ -1601,6 +1631,33 @@ function createImuIcons(imu, parent) {
 				parent.appendChild(p);
 			}
 		}
+	}
+}
+
+function createResIcons(res, p) {
+	var e, c;
+	var res_icon_names = ["BGbyVaK", "Sd55VTg", "1PHovzw", "kwmOdX3", "WTIjQQE", "kLJHD5E", "1s7WKyX", "sROk995", "1TkV1IQ"];
+	var res_descs =
+
+		[
+			"抗擊耐性（時間減少 $ %）",
+			"動止耐性（時間減少 $ %）",
+			"動慢耐性（時間減少 $ %）",
+			"抗飛耐性（距離減少 $ %）",
+			"抗波耐性（傷害減少 $ %）",
+			"抗烈波耐性（傷害減少 $ %）",
+			"抗古代詛咒耐性（時間減少 $ %）",
+			"抗毒耐性（傷害減少 $ %）",
+			"抗傳耐性"
+		];
+	for (let [k, v] of Object.entries(res)) {
+		k = parseInt(k);
+		c = document.createElement('div');
+		e = new Image(40, 40);
+		e.src = 'https://i.imgur.com/' + res_icon_names[k] + '.png';
+		c.appendChild(e);
+		c.append(res_descs[k].replace('$', v));
+		p.appendChild(c);
 	}
 }
 
