@@ -105,4 +105,17 @@ module.exports = class {
 			resolve(__dirname, '../data/', in_f)
 		);
 	}
+	parse_tsv(s, has_header = true) {
+		const rows = s.split('\n').filter(x => x).map(row => row.split('\t'));
+		if (has_header) {
+			const fields = rows.shift();
+			for (const i in rows) {
+				rows[i] = rows[i].reduce((rv, v, i) => {
+					rv[fields[i]] = v;
+					return rv;
+				}, {});
+			}
+		}
+		return rows;
+	}
 };
