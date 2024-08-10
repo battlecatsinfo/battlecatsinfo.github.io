@@ -34,7 +34,16 @@
 					<th>圖示</th>
 				</tr>
 			</thead>
-			<tbody id="rank">{{{rank}}}</tbody>
+			<tbody id="rank">
+			{{#each ranks as |rank|}}
+			<tr>
+				<td>{{rank.rank}}</td>
+				<td>{{{rank.message}}}</td>
+				<td>{{{rank.reward}}}</td>
+				<td>{{#if rank.image}}<img width="128" height="128" loading="lazy" src="{{rank.image}}">{{/if}}</td>
+			</tr>
+			{{/each}}
+			</tbody>
 		</table>
 	</div>
 {{/inline}}

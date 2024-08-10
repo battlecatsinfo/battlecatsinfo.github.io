@@ -61,7 +61,19 @@
 {{/inline}}
 
 {{#*inline "content"}}
-	<div class="w3-row-padding w3-margin-top">{{{medals}}}</div>
+	<div class="w3-row-padding w3-margin-top">
+		{{#each medals as |medal|}}
+		<div class="M">
+			<img width="112" height="112" src="{{medal.image}}" onclick="F(event)">
+			<div class="O">
+				<div class="I">
+					{{medal.title}}<br>
+					{{{medal.description}}}
+				</div>
+			</div>
+		</div>
+		{{/each}}
+	</div>
 	<script>
 	var G;
 	function F(event) {
