@@ -1,3 +1,5 @@
+const combos_scheme = {{{toJSON combos_scheme}}};
+
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
 const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINIVOLC, AB_VOLC, AB_ATKBASE, AB_SAGE]);
@@ -2375,62 +2377,6 @@ function renderTalentCosts(talent_names, talents, _super = false) {
 }
 
 function renderCombos() {
-	const limits = ['世界篇第一章', '世界篇第二章', '世界篇第三章', '未來篇第一章', '未來篇第二章', '未來篇第三章', '宇宙篇第一章', '宇宙篇第二章', '宇宙篇第三章'];
-	const
-		combo_f = [
-			"角色攻擊力 +$ %",
-			"角色體力 +$ %",
-			"角色移動速度 +$ %",
-			"初期貓咪砲能量值 +$ 格",
-			"初期工作狂貓等級 +$",
-			"初期所持金額 $ 元",
-			"貓咪砲攻擊力 +$ %",
-			"貓咪砲充電速度加快 $f",
-			"工作狂貓的工作效率 +$ %",
-			"工作狂貓錢包 +$ %",
-			"城堡耐久力 +$ %",
-			"研究力 -$ %（10 % = 26.4 F）",
-			"會計能力 +$ %",
-			"學習力 +$ %",
-			"「善於攻擊」的效果 +$ %",
-			"「超大傷害」的效果 +$ %",
-			"「很耐打」的效果 +$ %",
-			"「打飛敵人」的效果 +$ %",
-			"「使動作變慢」的效果 +$ %",
-			"「使動作停止」的效果 +$ %",
-			"「攻擊力下降」的效果 +$ %",
-			"「攻擊力上升」的效果 +$ %",
-			"「終結魔女」的效果 +$ %",
-			"「終結使徒」的效果 +$ %",
-			"「會心一擊」的發動率 +$ %"
-		],
-		combo_params = [
-			[10, 15, 20, 30], // 1. 角色攻擊力
-			[10, 20, 30, 50], // 2. 角色體力
-			[10, 15, 20, 30], // 3. 角色移動速度
-			[2, 4, 6, 10], // 4. 初期貓咪砲能量值
-			[1, 2, 3, 4], // 5. 初期工作狂貓等級
-			[300, 500, 1000, 2000], // 6. 初期所持金額
-			[20, 50, 100, 200], // 7. 貓咪砲攻擊力
-			[20, 30, 40, 50], // 8. 貓咪砲充電速度加快
-			[10, 20, 30, 50], // 9. 工作狂貓的工作效率
-			[10, 20, 30, 50], // 10. 工作狂貓錢包
-			[20, 50, 100, 200], // 11. 城堡耐久力
-			[10, 20, 30, 40, 50], // 12. 研究力
-			[10, 20, 30, 50], // 13. 會計能力
-			[10, 15, 20, 30], // 14. 學習力
-			[10, 20, 30, 50], // 15. 「善於攻擊」的效果
-			[10, 20, 30, 50], // 16. 「超大傷害」的效果
-			[10, 20, 30, 50], // 17. 「很耐打」的效果
-			[10, 20, 30, 50], // 18. 「打飛敵人」的效果
-			[10, 20, 30, 50], // 19. 「使動作變慢」的效果
-			[10, 20, 30, 50], // 20. 「使動作停止」的效果
-			[10, 20, 30, 50], // 21. 「攻擊力下降」的效果
-			[20, 30, 50, 100], // 22. 「攻擊力上升」的效果
-			[400, 400, 400, 400, 400], // 23. 「終結魔女」的效果
-			[400, 400, 400, 400, 400], // 24. 「終結使徒」的效果
-			[1, 2, 3, 4] // 25. 「會心一擊」的發動率
-		];
 	const table = document.createElement('table');
 	for (let j = 0; j < combos.length; ++j) {
 		const C = combos[j];
@@ -2438,8 +2384,7 @@ function renderCombos() {
 		for (let i = 0; i < units.length; i += 2) {
 			if (my_id == units[i]) {
 				const tr = document.createElement('tr');
-				const type = C[1];
-				const lv = C[2];
+				const [name, type, lv, , req] = C;
 				const td = document.createElement('td');
 				const p = document.createElement('p');
 				const p2 = document.createElement('p');
@@ -2452,13 +2397,17 @@ function renderCombos() {
 				a.textContent = C[0];
 				a.style.textDecoration = 'none';
 				p.appendChild(a);
-				p2.textContent = combo_f[type].replace('$', combo_params[type][lv]) + '【' + ['小', '中', '大', '究極'][lv] + '】';
+				p2.textContent = (() => {
+					const effect = combos_scheme.effectNames[type];
+					const sign = combos_scheme.effectSigns[type];
+					const value = combos_scheme.effectValues[type][lv];
+					const unit = combos_scheme.effectUnits[type];
+					const level = combos_scheme.levels[lv];
+					return `${effect} ${sign}${value} ${unit}【${level}】`;
+				})();
 				tr.appendChild(td);
-				if (C[4] > 10000) {
-					p3.textContent = `等排${[2700, 1450, 2150][C[4] - 10001]}`;
-					td.appendChild(p3);
-				} else if (C[4] > 1) {
-					p3.textContent = `${limits[C[4] - 1]}`;
+				if (req > 1) {
+					p3.textContent = combos_scheme.requirements[req];
 					td.appendChild(p3);
 				}
 				for (let c = 0; c < units.length; c += 2) {

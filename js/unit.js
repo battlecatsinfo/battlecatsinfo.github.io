@@ -3,6 +3,14 @@ module.exports = class extends require('./base.js') {
 		const combos_scheme = JSON.parse(this.load('combos_scheme.json'));
 		const combos = JSON.parse(this.load('combos.json'));
 
+		this.write_template('html/unit.html', 'unit.html', {});
+		this.write_template('css/unit.css', 'unit.css', {});
+
+		// @TODO: remove this file
+		this.write_template('js/combos.js', 'combo.js', {combos});
+
+		this.write_template('js/unit.js', 'unit.js', {combos_scheme});
+
 		// generate combosFormatted
 		const combosFormatted = {};
 		for (const effect of combos_scheme.effectNames) {
@@ -41,7 +49,5 @@ module.exports = class extends require('./base.js') {
 		}
 
 		this.write_template('html/combos.html', 'combos.html', {combos: combosFormatted});
-
-		this.write_template('js/combos.js', 'combo.js', {combos});
 	}
 };

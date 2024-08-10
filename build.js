@@ -3,8 +3,8 @@ const fs = require('node:fs');
 const resolve = require('node:path').resolve;
 
 const modules = new Set([
+	'unit',
 	'collab',
-	'combo', 
 	'copy-assets', 
 	'copy-data', 
 	'crown', 
