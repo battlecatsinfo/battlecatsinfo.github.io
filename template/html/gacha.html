@@ -27,9 +27,6 @@
 		text-align: center;
 		font-size: min(2vw, 18px);
 	}
-	.B {
-		display: block;
-	}
 	table {
 		margin: 0 auto;
 	}
@@ -46,9 +43,9 @@
 	details {
 		margin-bottom: 1em;
 	}
-	.R td {
-		padding: 0;
-		padding-bottom: 1em;
+	summary {
+		cursor: pointer;
+		user-select: none;
 	}
 	.rate th {
 		border: 1px solid #b9b9b9;
@@ -58,12 +55,26 @@
 		padding: 0.3em 3em !important;
 		border: 1px solid #b9b9b9;
 	}
+	.B {
+		display: block;
+	}
+	.R td {
+		padding: 0;
+		padding-bottom: 1em;
+	}
 	.N th {
 		border: 1px solid #a9a9a9;
 	}
 	.N td {
 		padding: 0 2em !important;
 		border: 1px solid #a9a9a9;
+	}
+	.N img {
+		width: 5em;
+		height: auto;
+	}
+	.N a {
+		text-decoration: none;
 	}
 	.N td:first-child {
 		padding: 0 !important;
@@ -94,17 +105,6 @@
 	}
 	.Y td:nth-child(6) {
 		background-color: #c9daf8;
-	}
-	.N img {
-		width: 5em;
-		height: auto;
-	}
-	.N a {
-		text-decoration: none;
-	}
-	summary {
-		cursor: pointer;
-		user-select: none;
 	}
 	</style>
 {{/inline}}
