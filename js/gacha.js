@@ -136,29 +136,30 @@ module.exports = class extends require('./base.js') {
 		}
 
 		const gacha_template = this.load_a('html/gacha.html');
-		let size, width, height, path, contents, gachas = [];
+		let size, width, height, path, data, gachas = [];
 
 		this.fmt = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 5 });
 		this.load_unit();
 
 		for (const pool of JSON.parse(this.load('pools.json'))) {
 			size = pool['size'];
-			[width, height] = size ? size.split('x') : ['860', '240'];
+			[width, height] = size ? size.split('x') : [860, 240];
 
 			switch (pool['type']) {
 			case 'category':
-				contents = this.write_category(pool);
+				data = this.get_category(pool);
 				break;
 			case 'rare':
-				contents = this.write_rare(pool);
+				data = this.get_rare(pool);
 				break;
 			case 'normal':
-				contents = this.write_normal(pool);
+				data = this.get_normal(pool);
 				break;
 			case 'event':
-				contents = this.write_event(pool);
+				data = this.get_event(pool);
 				break;
 			default:
+				data = null;
 				console.assert(false);
 			}
 
@@ -171,7 +172,7 @@ module.exports = class extends require('./base.js') {
 					pool,
 					width,
 					height,
-					contents,
+					data,
 				},
 			));
 			gachas.push({
@@ -191,7 +192,7 @@ module.exports = class extends require('./base.js') {
 	uimg(u) {
 		return this.egg_set.has(u) ? `/img/u/${u}/2.png` : `/img/u/${u}/0.png`;
 	}
-	write_rare(O) {
+	get_rare(O) {
 		const
 			self = this,
 			units = O['units'],
@@ -204,9 +205,13 @@ module.exports = class extends require('./base.js') {
 				"P.S. 傳說稀有貓於Lv60後成長幅度減半，於Lv80後成長幅度再次減半"
 			],
 			colors = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'];
-		let S = '<div style="font-size:0.8em">';
-		S += Array.from(new Set(units.map(x => rarity_desc[self.unit_rarity[x]]))).join('<br>');
-		S += '</div><table class="w3-table w3-border w3-centered w3-center rate" style="width:auto;margin-bottom:1.5em;margin-top:1.5em;"><thead><tr class="w3-black"><th colSpan=4>轉蛋詳細</th></tr><tr class="w3-light-gray"><th>稀有度</th><th>機率</th><th>分母</th><th>單隻</th></tr></thead><tbody>';
+		let S = {
+			rarity_descs: Array.from(new Set(units.map(x => rarity_desc[self.unit_rarity[x]]))),
+			summary: [],
+			item_free: null,
+			item_groups: [],
+			item_minor: [],
+		};
 		for (let rarity = 5;rarity >= 2;--rarity) {
 			let c = 0;
 
@@ -220,19 +225,21 @@ module.exports = class extends require('./base.js') {
 			if (rate) {
 				let color = colors[x];
 				let name = ['稀有', '激稀有', '超激稀有', '傳說稀有'][x];
-				S += `<tr style="background-color:${colors[x]}"><td>${name}</td><td>${rate / 100}%</td><td>${c}</td><td>${this.fmt.format(rate / (100 * c))}%</td></tr>`;
+				S.summary.push({
+					bgColor: colors[x],
+					name,
+					rate: `${rate / 100}%`,
+					total: c,
+					rateEach: `${this.fmt.format(rate / (100 * c))}%`,
+				});
 			}
 		}
-		S += '</tbody></table>';
 		if (O['free']) {
-			S += `<details open>
-<summary class="w3-tag w3-padding w3-round-large">11連自動出現在倉庫</summary>
-<p class="w3-center">
-	<a class="B" href="/unit.html?id=${O['free']}">
-		<img src="${this.uimg(O['free'])}" width="104" height="79" loading="lazy">
-	</a>${this.unit_desc[O['free']].replaceAll('|', '<br>')}
-</p>
-</details>`;
+			S.item_free = {
+				id: O['free'],
+				img: this.uimg(O['free']),
+				descs: this.unit_desc[O['free']].split('|'),
+			};
 		}
 		let MUL = {};
 		for (let rarity = 5;rarity >= 0;--rarity) {
@@ -264,26 +271,34 @@ module.exports = class extends require('./base.js') {
 			delete out['0'];
 
 			if (v.length) {
-				const bg = ['', '', '#795548', '#93254b', '#9C27B0', '#673AB7'][rarity];
-				S += `<details open>
-<summary class="w3-tag w3-padding w3-round-large" style="background-color:${bg} !important">${['基本', 'EX', '稀有', '激稀有', '超激稀有', '傳說稀有'][rarity]}</summary>
-<table class="w3-table w3-centered R" style="width:95%;margin:0 auto"><tbody>`;
+				S.item_groups.push({
+					bgColor: ['', '', '#795548', '#93254b', '#9C27B0', '#673AB7'][rarity],
+					name: ['基本', 'EX', '稀有', '激稀有', '超激稀有', '傳說稀有'][rarity],
+					rows: [],
+				});
 				let i = 0;
 				v.sort((a, b) => a - b);
 				while (i < (v.length - 1)) {
-					S += `<tr>${this.gen1(v[i], MUL[v[i]])}${this.gen1(v[i + 1], MUL[v[i + 1]])}</tr>`;
+					S.item_groups.at(-1).rows.push([
+						this.get1(v[i], MUL[v[i]]),
+						this.get1(v[i + 1], MUL[v[i + 1]]),
+					]);
 					i += 2;
 				}
 
 				if (v.length & 1) {
 					let u = v[v.length - 1];
-					S += `<tr>${this.gen1(u, MUL[u])}</tr>`;
+					S.item_groups.at(-1).rows.push([
+						this.get1(u, MUL[u]),
+					]);
 				}
-				S += '</tbody></table></details>';
 			}
 
 			for (const [k, v] of Object.entries(out))
-				S += `<details><summary class="w3-tag w3-padding w3-round-large">${k}</summary><div style="width:max(60%,400px);margin:.7em auto;padding:.3em .8em;border:1px solid #ccc;text-align:left">${v.sort((a, b) => a - b).map(x => self.unit_name[x]).join('、')}</div></details>`;
+				S.item_minor.push({
+					name: k,
+					text: v.sort((a, b) => a - b).map(x => self.unit_name[x]).join('、'),
+				});
 		}
 		return S;
 	}
@@ -296,8 +311,8 @@ module.exports = class extends require('./base.js') {
 
 		return c;
 	}
-	write_normal(O) {
-		let I, S = '';
+	get_normal(O) {
+		let I, S = [];
 		const
 			units = O['units'],
 			result = [],
@@ -378,7 +393,10 @@ module.exports = class extends require('./base.js') {
 				++count;
 			} else {
 				e_type = v[0];
-				result[last_i][5] = `<td rowSpan="${count}">${this.fmt.format(rate.valueOf() / 100)}%</td>`;
+				result[last_i][5] = {
+					count,
+					value: `${this.fmt.format(rate.valueOf() / 100)}%`,
+				};
 				count = 1;
 				rate = v[4];
 				v[4] = v[4].valueOf() / 100;
@@ -388,20 +406,35 @@ module.exports = class extends require('./base.js') {
 			v[1] = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'][color];
 		}
 
-		result[last_i][5] = `<td rowSpan="${count}">${this.fmt.format(rate.valueOf() / 100)}%</td>`;
-		S += '<table class="w3-table N" style="width:auto;margin-top:3em;"><thead><tr class="w3-black"><th colSpan=4>轉蛋詳細</th></tr><tr class="w3-light-gray"><th>圖示</th><th>項目</th><th>機率</th><th>總和</th></tr></thead><tbody>';
-		S += result.map(x => `<tr style="background-color:${x[1]}"><td><img ${x[8]}src="${x[2]}" width="${x[6]}" height="${x[7]}"></td><td>${x[3]}</td><td>${this.fmt.format(x[4])}%</td>${x[5]}</tr>`).join('');
-		S += '</tbody></table>'
+		result[last_i][5] = {
+			count,
+			value: `${this.fmt.format(rate.valueOf() / 100)}%`,
+		};
+		for (const x of result) {
+			S.push({
+				bgColor: x[1],
+				imgStyle: x[8],
+				imgSrc: x[2],
+				imgWidth: x[6],
+				imgHeight: x[7],
+				name: x[3],
+				rate: `${this.fmt.format(x[4])}%`,
+				rateSum: x[5],
+			});
+		}
 		return S;
 	}
-	write_event(O) {
+	get_event(O) {
 		const
 			units = O['units'],
 			d_rate = O['rate'] || [0,0,0,0,0,0,0,0,0,0],
 			result = [];
 		let
 			I,
-			S = '',
+			S = {
+				must_drop_rate: null,
+				items: [],
+			},
 			must_drop_group = 0,
 			must_drop_rate = 0;
 
@@ -424,7 +457,7 @@ module.exports = class extends require('./base.js') {
 						this.uimg(I),
 						`<a target="_blank" href="/unit.html?id=${I}">${this.unit_name[I]}</a>${must}`,
 						r,
-						'',
+						null,
 						rate,
 						'104',
 						'79',
@@ -438,7 +471,7 @@ module.exports = class extends require('./base.js') {
 						`/img/r/${x}.png`,
 						reward_names[x],
 						r,
-						'',
+						null,
 						rate,
 						'128',
 						'128',
@@ -463,7 +496,10 @@ module.exports = class extends require('./base.js') {
 				++count;
 			} else {
 				e_type = v[0];
-				result[last_i][5] = `<td rowSpan="${count}">${rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A'}</td>`;
+				result[last_i][5] = {
+					count,
+					value: rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A',
+				};
 				count = 1;
 				rate = v[4];
 				last_i = i;
@@ -471,13 +507,10 @@ module.exports = class extends require('./base.js') {
 			}
 			v[1] = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'][color];
 		}
-		result[last_i][5] = `<td rowSpan="${count}">${rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A'}</td>`;
-		S += `<p>使用道具：${O['ticket'][0]}</p><img src="${O['ticket'][1]}" width="128" height="128"><br>`;
-		S += '<table class="w3-table N" style="position: relative;width:auto;margin-top:3em;"><thead><tr class="w3-black"><th colSpan=';
-		if (must_drop_rate)
-			S += '5>轉蛋詳細</th></tr><tr class="w3-light-gray"><th>圖示</th><th>項目</th><th>機率</th><th>總和</th><th>實際機率</th></tr></thead><tbody>';
-		else
-			S += '4>轉蛋詳細</th></tr><tr class="w3-light-gray"><th>圖示</th><th>項目</th><th>機率</th><th>總和</th></tr></thead><tbody>';
+		result[last_i][5] = {
+			count,
+			value: rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A',
+		};
 		for (const v of result) {
 			const r = v[4].n ? this.fmt.format(v[4].valueOf() / 100) + '%' : 'N/A';
 			if (must_drop_rate) {
@@ -486,46 +519,63 @@ module.exports = class extends require('./base.js') {
 					a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
 				else 
 					a = v[4].mul(must_drop_rate).valueOf() / 1000000;
-				S += `<tr style="background-color:${v[1]}"><td><img ${v[9]}src="${v[2]}" width="${v[7]}" height="${v[8]}"></td><td>${v[3]}</td><td>${r}</td>${v[5]}<td>${a ? this.fmt.format(a) + '%' : 'N/A'}</td></tr>`;
+				S.items.push({
+					bgColor: v[1],
+					imgStyle: v[9],
+					imgSrc: v[2],
+					imgWidth: v[7],
+					imgHeight: v[8],
+					name: v[3],
+					rate: r,
+					rateSum: v[5],
+					rateActual: a ? this.fmt.format(a) + '%' : 'N/A',
+				});
 			} else {
-				S += `<tr style="background-color:${v[1]}"><td><img ${v[9]}src="${v[2]}" width="${v[7]}" height="${v[8]}"></td><td>${v[3]}</td><td>${r}</td>${v[5]}</tr>`;
+				S.items.push({
+					bgColor: v[1],
+					imgStyle: v[9],
+					imgSrc: v[2],
+					imgWidth: v[7],
+					imgHeight: v[8],
+					name: v[3],
+					rate: r,
+					rateSum: v[5],
+				});
 			}
 		}
-		S += '</tbody></table><small>有*標示為每十抽必定可獲得的限定角色</small>';
-		if (O['stage'])
-			S += `<p style="margin-top:2em;"><a href="${O['stage'][0]}">${O['stage'][1]}</a></p>`;
-		if (O['farm'])
-			S += `<table class="w3-table Y" style="width:auto">${O['farm']}</table>`;
-		if (O['max'])
-			S += `<p style="margin-top:2em;">角色加值上限</p><table class="w3-table Y" style="width:auto">${O['max']}</table>`;
+
+		S.must_drop_rate = must_drop_rate;
 
 		return S;
 	}
-	write_category(O) {
+	get_category(O) {
 		const iter = Array.from(category_set[O['category']]).sort((a, b) => a - b)[Symbol.iterator]();
 		let
 			f,
 			c = 0, 
-			S = '<table class="w3-table w3-centered w3-striped" style="width:95%;margin:0 auto">\n\t<tbody>';
+			S = [];
 
 		for (let u of iter) {
 			c++;
 			if (c & 1) 
 				f = u;
 			else 
-				S += `\t\t<tr>${this.gen1(f)}${this.gen1(u)}</tr>\n`;
+				S.push([this.get1(f), this.get1(u)]);
 		}
 
 		if (c & 1)
-			S += `\t\t<tr>${this.gen1(f)}</tr>\n`; // need <td></td>?
+			S.push([this.get1(f)]);
 
-		S += '\t</tbody>\n</table>';
 		return S;
 	}
-	gen1(u, C = 1) {
-		return C == 1 ?
-			`<td><div style="font-weight:bold">${this.unit_name[u]}</div><a class="B" href="/unit.html?id=${u}"><img src="${this.uimg(u)}" width="104" height="79" loading="lazy"></a><div style="font-size:0.8em">${this.unit_desc[u].replaceAll('|', '<br>')}</div></td>` :
-			`<td><div style="font-weight:bold" style="margin-block-start:1em;margin-block-end:1em">${this.unit_name[u]}<div style="color:red !important;font-size:0.8em">出現機率×${C}</div></div><a class="B" href="/unit.html?id=${u}"><img src="${this.uimg(u)}" width="104" height="79" loading="lazy"></a><div style="font-size:0.8em">${this.unit_desc[u].replaceAll('|', '<br>')}</div></td>`;
+	get1(u, C = 1) {
+		return {
+			id: u,
+			name: this.unit_name[u],
+			descs: this.unit_desc[u].split('|'),
+			img: this.uimg(u),
+			rate: C !== 1 ? C : undefined,
+		}
 	}
 	load_unit() {
 		let line, data = this.load('cat.tsv').split('\n'), id = '';

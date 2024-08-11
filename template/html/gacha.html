@@ -141,8 +141,189 @@
 	{{/if}}
 
 	<img style="display: block;margin: 0 auto;width:min(95%, 860px);height:auto;" src="{{pool.img}}" width="{{width}}" height="{{height}}">
-	{{{contents}}}
 
+	{{#ifCond pool.type "===" "category"}}
+	<table class="w3-table w3-centered w3-striped" style="width:95%;margin:0 auto">
+		<tbody>
+			{{#each data as |row|}}
+			<tr>
+				{{#each row as |cat|}}
+				<td>
+					<div style="font-weight:bold">{{#if cat.rate}}
+						{{cat.name}}
+						<div style="color:red !important;font-size:0.8em">出現機率×{{cat.rate}}</div>
+					{{else}}{{cat.name}}{{/if}}</div>
+					<a class="B" href="/unit.html?id={{cat.id}}"><img src="{{cat.img}}" width="104" height="79" loading="lazy"></a>
+					<div style="font-size:0.8em">
+						{{#each cat.descs as |desc|}}
+						{{desc}}<br>
+						{{/each}}
+					</div>
+				</td>
+				{{/each}}
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+
+	{{/ifCond}}
+	{{#ifCond pool.type "===" "normal"}}
+	<table class="w3-table N" style="width:auto;margin-top:3em;">
+		<thead>
+			<tr class="w3-black">
+				<th colSpan=4>轉蛋詳細</th>
+			</tr>
+			<tr class="w3-light-gray">
+				<th>圖示</th>
+				<th>項目</th>
+				<th>機率</th>
+				<th>總和</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#each data as |item|}}
+		<tr style="background-color:{{item.bgColor}}">
+			<td><img {{{item.imgStyle}}}src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
+			<td>{{{item.name}}}</td>
+			<td>{{item.rate}}</td>
+			{{#if item.rateSum}}
+			{{#with item.rateSum as |info|}}
+			<td rowSpan="{{info.count}}">{{info.value}}</td>
+			{{/with}}
+			{{/if}}
+		</tr>
+		{{/each}}
+		</tbody>
+	</table>
+
+	{{/ifCond}}
+	{{#ifCond pool.type "===" "rare"}}
+	<div style="font-size:0.8em">
+		{{#each data.rarity_descs as |desc|}}
+		{{desc}}<br>
+		{{/each}}
+	</div>
+	<table class="w3-table w3-border w3-centered w3-center rate" style="width:auto;margin-bottom:1.5em;margin-top:1.5em;">
+		<thead>
+			<tr class="w3-black">
+				<th colSpan=4>轉蛋詳細</th>
+			</tr>
+			<tr class="w3-light-gray">
+				<th>稀有度</th>
+				<th>機率</th>
+				<th>分母</th>
+				<th>單隻</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each data.summary as |entry|}}
+			<tr style="background-color:{{entry.bgColor}}">
+				<td>{{entry.name}}</td>
+				<td>{{entry.rate}}</td>
+				<td>{{entry.total}}</td>
+				<td>{{entry.rateEach}}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	{{#if data.item_free}}
+	{{#with data.item_free as |item|}}
+	<details open>
+		<summary class="w3-tag w3-padding w3-round-large">11連自動出現在倉庫</summary>
+		<p class="w3-center">
+			<a class="B" href="/unit.html?id={{item.id}}">
+				<img src="{{item.img}}" width="104" height="79" loading="lazy">
+			</a>
+			{{#each item.descs as |desc|}}
+			{{desc}}<br>
+			{{/each}}
+		</p>
+	</details>
+	{{/with}}
+	{{/if}}
+	{{#each data.item_groups as |group|}}
+	<details open>
+		<summary class="w3-tag w3-padding w3-round-large" style="background-color:{{group.bgColor}} !important">{{group.name}}</summary>
+		<table class="w3-table w3-centered R" style="width:95%;margin:0 auto">
+			<tbody>
+			{{#each group.rows as |row|}}
+			<tr>
+				{{#each row as |cat|}}
+				<td>
+					<div style="font-weight:bold">{{#if cat.rate}}
+						{{cat.name}}
+						<div style="color:red !important;font-size:0.8em">出現機率×{{cat.rate}}</div>
+					{{else}}{{cat.name}}{{/if}}</div>
+					<a class="B" href="/unit.html?id={{cat.id}}"><img src="{{cat.img}}" width="104" height="79" loading="lazy"></a>
+					<div style="font-size:0.8em">
+						{{#each cat.descs as |desc|}}
+						{{desc}}<br>
+						{{/each}}
+					</div>
+				</td>
+				{{/each}}
+			</tr>
+			{{/each}}
+			</tbody>
+		</table>
+	</details>
+	{{/each}}
+	{{#each data.item_minor as |entry|}}
+	<details>
+		<summary class="w3-tag w3-padding w3-round-large">{{entry.name}}</summary>
+		<div style="width:max(60%,400px);margin:.7em auto;padding:.3em .8em;border:1px solid #ccc;text-align:left">{{entry.text}}</div>
+	</details>
+	{{/each}}
+
+	{{/ifCond}}
+	{{#ifCond pool.type "===" "event"}}
+	<p>使用道具：{{pool.ticket.[0]}}</p><img src="{{pool.ticket.[1]}}" width="128" height="128"><br>
+	<table class="w3-table N" style="position: relative;width:auto;margin-top:3em;">
+		<thead>
+			<tr class="w3-black">
+				<th colSpan="{{#if data.must_drop_rate}}5{{else}}4{{/if}}">轉蛋詳細</th>
+			</tr>
+			<tr class="w3-light-gray">
+				<th>圖示</th>
+				<th>項目</th>
+				<th>機率</th>
+				<th>總和</th>
+				<th>實際機率</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#with data as |data|}}
+		{{#each data.items as |item|}}
+		<tr style="background-color:{{item.bgColor}}">
+			<td><img {{{item.imgStyle}}}src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
+			<td>{{{item.name}}}</td>
+			<td>{{item.rate}}</td>
+			{{#if item.rateSum}}
+			{{#with item.rateSum as |info|}}
+			<td rowSpan="{{info.count}}">{{info.value}}</td>
+			{{/with}}
+			{{/if}}
+			{{#if data.must_drop_rate}}
+			<td>{{item.rateActual}}</td>
+			{{/if}}
+		</tr>
+		{{/each}}
+		{{/with}}
+		</tbody>
+	</table>
+	<small>有*標示為每十抽必定可獲得的限定角色</small>
+	{{#if pool.stage}}
+	<p style="margin-top:2em;"><a href="{{pool.stage.[0]}}">{{pool.stage.[1]}}</a></p>
+	{{/if}}
+	{{#if pool.farm}}
+	<table class="w3-table Y" style="width:auto">{{{pool.farm}}}</table>
+	{{/if}}
+	{{#if pool.max}}
+	<p style="margin-top:2em;">角色加值上限</p>
+	<table class="w3-table Y" style="width:auto">{{{pool.max}}}</table>
+	{{/if}}
+
+	{{/ifCond}}
 	{{#if pool.history}}
 	<p style="margin-block-end:0;font-size:.8em;">
 		轉蛋歷史：<br>
