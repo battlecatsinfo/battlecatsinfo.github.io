@@ -183,8 +183,15 @@
 		<tbody>
 		{{#each data as |item|}}
 		<tr style="background-color:{{item.bgColor}}">
-			<td><img {{{item.imgStyle}}}src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
-			<td>{{{item.name}}}</td>
+			<td><img {{#if item.imgStyle}}style="{{item.imgStyle}}" {{/if~}}
+			src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
+			<td>
+				{{~#with item.info as |info|~}}
+				{{~#if info.id includeZero=true}}<a target="_blank" href="/unit.html?id={{info.id}}">{{/if~}}
+				{{~info.name~}}
+				{{~#if info.id includeZero=true}}</a>{{/if~}}
+				{{~/with~}}
+			</td>
 			<td>{{item.rate}}</td>
 			{{#if item.rateSum}}
 			{{#with item.rateSum as |info|}}
@@ -271,7 +278,12 @@
 	{{#each data.item_minor as |entry|}}
 	<details>
 		<summary class="w3-tag w3-padding w3-round-large">{{entry.name}}</summary>
-		<div style="width:max(60%,400px);margin:.7em auto;padding:.3em .8em;border:1px solid #ccc;text-align:left">{{entry.text}}</div>
+		<div style="width:max(60%,400px);margin:.7em auto;padding:.3em .8em;border:1px solid #ccc;text-align:left">
+			{{~#each entry.cats as |cat|~}}
+			{{cat.name}}
+			{{~#unless @last}}、{{/unless~}}
+			{{~/each~}}
+		</div>
 	</details>
 	{{/each}}
 
@@ -295,8 +307,16 @@
 		{{#with data as |data|}}
 		{{#each data.items as |item|}}
 		<tr style="background-color:{{item.bgColor}}">
-			<td><img {{{item.imgStyle}}}src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
-			<td>{{{item.name}}}</td>
+			<td><img {{#if item.imgStyle}}style="{{item.imgStyle}}" {{/if~}}
+			src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
+			<td>
+				{{~#with item.info as |info|~}}
+				{{~#if info.id includeZero=true}}<a target="_blank" href="/unit.html?id={{info.id}}">{{/if~}}
+				{{~info.name~}}
+				{{~#if info.id includeZero=true}}</a>{{/if~}}
+				{{~info.must~}}
+				{{~/with~}}
+			</td>
 			<td>{{item.rate}}</td>
 			{{#if item.rateSum}}
 			{{#with item.rateSum as |info|}}
