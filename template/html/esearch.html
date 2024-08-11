@@ -390,7 +390,16 @@
 				</li>
 			</ul>
 			<ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="kind-s">
-				{{{species}}}
+				{{#each species as |sp|}}
+				<li data-expr="(
+					{{~#each sp.ids as |id|~}}
+					id=={{id}}
+					{{~#unless @last}}||{{/unless~}}
+					{{~/each~}}
+				)">
+					<button>{{sp.name}}</button>
+				</li>
+				{{/each}}
 			</ul>
 			<div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
 				<div class="may-hide">

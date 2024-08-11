@@ -1,11 +1,13 @@
 module.exports = class extends require('./base.js') {
 	run() {
+		const species = this.parse_tsv(this.load('species.tsv'), false);
+		const speciesFormatted = species.map(([name, ...ids]) => ({
+			name,
+			ids: ids.filter(x => x),
+		})).filter(x => x.name && x.ids.length);
 		this.write_template('html/esearch.html', 'esearch.html', {
 			'nav-bar-active': 'enemy',
-			'species': this.load('species.tsv').split('\n').map(line => {
-				line = line.split(/\t+/);
-				return line.length >= 2 ? `<li data-expr="(${line.slice(1).map(x => 'id==' + x).join('||')})"><button>${line[0]}</button></li>` : '';
-			}).join('\n')
+			'species': speciesFormatted,
 		});
 	}
 };
