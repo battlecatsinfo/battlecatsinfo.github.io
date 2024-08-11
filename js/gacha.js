@@ -135,32 +135,15 @@ module.exports = class extends require('./base.js') {
 				throw e;
 		}
 
-		function index(i) {
-			i = i.toString();
-			return i.length == 1 ? ' ' + i : i;
-		}
-
 		const gacha_template = this.load_a('html/gacha.html');
-		let size, width, height, collab, path, history, contents, urls, gacha_menu = '', gacha_list = '', idx = 0;
+		let size, width, height, path, contents, gachas = [];
 
 		this.fmt = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 5 });
 		this.load_unit();
 
 		for (const pool of JSON.parse(this.load('pools.json'))) {
-			idx += 1;
 			size = pool['size'];
-			if (size) {
-				[width, height] = size.split('x');
-			} else {
-				width = '860';
-				height = '240';
-			}
-
-			collab = pool['collab'];
-			if (collab)
-				collab = `<p><a href="${collab[1]}">${collab[0]}合作活動</a></p>`
-			else 
-				collab = '';			
+			[width, height] = size ? size.split('x') : ['860', '240'];
 
 			switch (pool['type']) {
 			case 'category':
@@ -179,48 +162,30 @@ module.exports = class extends require('./base.js') {
 				console.assert(false);
 			}
 
-			history = pool['history'];
-			if (history)
-				history = `<p style="margin-block-end:0;font-size:.8em;">轉蛋歷史：<br>${history.join('<br>')}</p>`;
-
-			urls = '';
-			size = pool['tw-url'];
-			if (size)
-				urls += `<a href="${size}">繁中版官方介紹</a><br>`;
-			size = pool['jp-url'];
-			if (size)
-				urls += `<a href="${size}">日文版官方介紹</a><br>`;
-
 			path = 'gacha/' + to_path(pool['en-name']) + '.html';
 
 			this.write_string(path, this.template(
 				gacha_template,
 				{
 					'nav-bar-active': 'gacha',
-					'title': pool['tw-name'],
-					'img': pool['img'],
-					'h1': [pool['tw-name'], pool['jp-name'], pool['en-name']].filter(x => x).join('<br>'),
-					'width': width,
-					'height': height,
-					'collab': collab,
-					'history': history,
-					'contents': contents,
-					'urls': urls
+					pool,
+					width,
+					height,
+					contents,
 				},
 			));
-			gacha_menu += `<a href="#${idx}">${index(idx)}. ${pool['tw-name']}</a>\n`;
-			gacha_list += `<h2 id="${idx}">
-	<a class="B" href="${path}" target="_blank">${pool['tw-name']}</a>
-</h2>
-<a class="B" href="${path}">
-	<img class="A" src="${pool['img']}" loading="lazy" width="${width}" height="${height}">
-</a>\n<br>\n`;
+			gachas.push({
+				path,
+				name: pool['tw-name'],
+				img: pool['img'],
+				width,
+				height,
+			});
 		}
 
 		this.write_template('html/gachas.html', 'gachas.html', {
 			'nav-bar-active': 'gacha',
-			'nav-menu': gacha_menu,
-			'content': gacha_list
+			'gachas': gachas,
 		});
 	}
 	uimg(u) {

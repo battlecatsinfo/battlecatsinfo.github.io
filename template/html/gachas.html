@@ -56,10 +56,20 @@
 	<h1 style="text-align:center;padding-top:0.5em;">轉蛋一覽</h1>
 
 	<div id="nav" style="margin: 5vh auto;background-color: #cfcfcf59 !important;width: max(40vw,200px);border-radius:0.6vw;padding: 0.7em;list-style-type:none;">
-		{{{nav-menu}}}
+		{{#each gachas as |gacha|}}
+		<a href="#{{sum @index 1}}">{{sum @index 1}}. {{gacha.name}}</a>
+		{{/each}}
 	</div>
 
-	{{{content}}}
+	{{#each gachas as |gacha|}}
+	<h2 id="{{sum @index 1}}">
+		<a class="B" href="{{gacha.path}}" target="_blank">{{gacha.name}}</a>
+	</h2>
+	<a class="B" href="{{gacha.path}}">
+		<img class="A" src="{{gacha.img}}" loading="lazy" width="{{gacha.width}}" height="{{gacha.height}}">
+	</a>
+	<br>
+	{{/each}}
 {{/inline}}
 
 {{/base.html}}

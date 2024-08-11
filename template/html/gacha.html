@@ -1,15 +1,15 @@
 {{#> base.html}}
 
-{{#*inline "title"}}{{{title}}}{{/inline}}
+{{#*inline "title"}}{{pool.tw-name}}{{/inline}}
 
 {{#*inline "description"}}
-	<meta name="description" content="{{{title}}} | 貓咪大戰爭中文資訊網站">
+	<meta name="description" content="{{pool.tw-name}} | 貓咪大戰爭中文資訊網站">
 {{/inline}}
 
 {{#*inline "og"}}
-	<meta property="og:title" content="{{{title}}} | 貓咪大戰爭中文資訊網站">
-	<meta property="og:description" content="{{{title}}}轉蛋詳細資訊">
-	<meta property="og:image" content="{{{img}}}">
+	<meta property="og:title" content="{{pool.tw-name}} | 貓咪大戰爭中文資訊網站">
+	<meta property="og:description" content="{{pool.tw-name}}轉蛋詳細資訊">
+	<meta property="og:image" content="{{pool.img}}">
 {{/inline}}
 
 {{#*inline "styles"}}
@@ -115,12 +115,50 @@
 {{/inline}}
 
 {{#*inline "content"}}
-	<h1 style="font-size:max(12px,2.2vw);">{{{h1}}}</h1> {{{collab}}}
+	<h1 style="font-size:max(12px,2.2vw);">
+		{{#with pool as |pool|}}
+		{{#if pool.tw-name}}
+		{{pool.tw-name}}<br>
+		{{/if}}
+		{{#if pool.jp-name}}
+		{{#ifCond pool.jp-name '!==' pool.tw-name}}
+		{{pool.jp-name}}<br>
+		{{/ifCond}}
+		{{/if}}
+		{{#if pool.en-name}}
+		{{#ifCond pool.en-name '!==' pool.tw-name}}
+		{{#ifCond pool.en-name '!==' pool.jp-name}}
+		{{pool.en-name}}<br>
+		{{/ifCond}}
+		{{/ifCond}}
+		{{/if}}
+		{{/with}}
+	</h1>
+	{{#if pool.collab}}
+	{{#with pool.collab as |collab|}}
+	<p><a href="{{collab.[1]}}">{{collab.[0]}}合作活動</a></p>
+	{{/with}}
+	{{/if}}
 
-	<img style="display: block;margin: 0 auto;width:min(95%, 860px);height:auto;" src="{{{img}}}" width="{{{width}}}" height="{{{height}}}"> {{{contents}}} {{{history}}}
+	<img style="display: block;margin: 0 auto;width:min(95%, 860px);height:auto;" src="{{pool.img}}" width="{{width}}" height="{{height}}">
+	{{{contents}}}
 
+	{{#if pool.history}}
+	<p style="margin-block-end:0;font-size:.8em;">
+		轉蛋歷史：<br>
+		{{#each pool.history as |hx|}}
+		{{hx}}<br>
+		{{/each}}
+	</p>
+
+	{{/if}}
 	<p style="font-size:.8em">
-		{{{urls}}}
+		{{#if pool.tw-url}}
+		<a href="{{pool.tw-url}}">繁中版官方介紹</a><br>
+		{{/if}}
+		{{#if pool.jp-url}}
+		<a href="{{pool.jp-url}}">日文版官方介紹</a><br>
+		{{/if}}
 		（連結可能失效）
 	</p>
 
