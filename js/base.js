@@ -42,6 +42,11 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 	}
 });
 
+Handlebars.registerHelper('sum', function (...args) {
+	const options = args.pop();
+	return args.reduce((sum, n) => sum + parseInt(n, 10));
+});
+
 const gEnv = JSON.parse(fs.readFileSync(resolve(__dirname, '../data/config.json'), 'utf-8'));
 
 for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])

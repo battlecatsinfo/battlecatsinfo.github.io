@@ -54,8 +54,8 @@
 {{#*inline "content"}}
 	<h1 style="text-align:center;">合作一覽</h1>
 	<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59 !important;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
-		{{#each nav-menu}}
-		<a href="{{this.path}}">{{this.index}}. {{this.name}}</a>
+		{{#each nav-menu as |menu|}}
+		<a href="{{menu.path}}">{{sum @index 1}}. {{menu.name}}</a>
 		{{/each}}
 	</div>
 	<div style="margin: 0 auto;text-align: center;width: 100%;padding: 2vw 2vw;font-size: min(2.5vw, 18px);">

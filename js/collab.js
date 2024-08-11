@@ -30,22 +30,15 @@ module.exports = class extends require('./base.js') {
 		});
 	}
 	write_collabs() {
-		function index(i) {
-			i = (i + 1).toString();
-			return i.length == 1 ? ' ' + i : i;
-		}
-		const
-			collab_template = this.load_a('html/collab.html'),
-			data = JSON.parse(this.load('collab.json')),
-			collabs = data['collabs'];
+		const collab_template = this.load_a('html/collab.html');
+		const data = JSON.parse(this.load('collab.json'));
+		const collabs = data['collabs'];
 		const nav_menu = [];
 		for (let i = 0; i < collabs.length; i++) {
-			const
-				collab = collabs[i],
-				fn = 'collab/' + to_path(collab['en-name']) + '.html';
+			const collab = collabs[i];
+			const fn = 'collab/' + to_path(collab['en-name']) + '.html';
 			nav_menu.push({
 				path: fn,
-				index: index(i),
 				name: collab['tw-name'],
 			});
 			const pools = (collab['pools'] || []).reduce((pools, p) => {
@@ -61,10 +54,9 @@ module.exports = class extends require('./base.js') {
 				return pools;
 			}, []);
 			const stages = (collab['stages'] || []).map(s => {
-				const
-					dup_u = new Set(),
-					dup_t = new Set(),
-					dup_r = new Set();
+				const dup_u = new Set();
+				const dup_t = new Set();
+				const dup_r = new Set();
 				const [A, B] = s.split('-');
 				const m = parseInt(A, 10) * 1000 + parseInt(B, 10);
 				const name = this.map_names[m];
@@ -126,7 +118,6 @@ module.exports = class extends require('./base.js') {
 			'japan-collab-history': Object.entries(data['jp-history']).sort(),
 			'taiwan-collab-history': Object.entries(data['tw-history']).sort(),
 		});
-
 	}
 	async load_map() {
 		const rl = readline.createInterface({
