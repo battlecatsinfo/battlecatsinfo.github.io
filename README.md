@@ -9,6 +9,16 @@ $ git clone "https://github.com/battlecatsinfo/battlecatsinfo.github.io.git"
 $ npm install
 ```
 
+### Build
+
+Use Node.js to run the build script.
+
+```sh
+$ node build.js
+```
+
+Files will be generated under `_out`. See `node build.js -h` for more details.
+
 ### Running the local server
 
 ```bash
@@ -17,14 +27,6 @@ $ node server.js --verbose
 ```
 
 Note: To display images successfully, you may need to clone https://github.com/battlecatsinfo/img to `img/`.
-
-### Build
-
-Use Node.js to run the build script.
-
-```sh
-$ node build.js
-```
 
 ### Coding style
 
