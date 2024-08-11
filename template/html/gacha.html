@@ -106,6 +106,13 @@
 	.Y td:nth-child(6) {
 		background-color: #c9daf8;
 	}
+	.M {
+		width: max(60%, 400px);
+		margin: .7em auto;
+		padding: .3em .8em;
+		border: 1px solid #ccc;
+		text-align: left;
+	}
 	</style>
 {{/inline}}
 
@@ -278,7 +285,7 @@
 	{{#each data.item_minor as |entry|}}
 	<details>
 		<summary class="w3-tag w3-padding w3-round-large">{{entry.name}}</summary>
-		<div style="width:max(60%,400px);margin:.7em auto;padding:.3em .8em;border:1px solid #ccc;text-align:left">
+		<div class="M">
 			{{~#each entry.cats as |cat|~}}
 			{{cat.name}}
 			{{~#unless @last}}、{{/unless~}}
