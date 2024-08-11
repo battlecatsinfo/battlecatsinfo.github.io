@@ -115,6 +115,9 @@
 		border: 1px solid #ccc;
 		text-align: left;
 	}
+	.M a {
+		text-decoration: none;
+	}
 	</style>
 {{/inline}}
 
@@ -289,7 +292,7 @@
 		<summary class="w3-tag w3-padding w3-round-large">{{entry.name}}</summary>
 		<div class="M">
 			{{~#each entry.cats as |cat|~}}
-			{{cat.name}}
+			<a href="/unit.html?id={{cat.id}}">{{cat.name}}</a>
 			{{~#unless @last}}、{{/unless~}}
 			{{~/each~}}
 		</div>
