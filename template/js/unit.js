@@ -2783,7 +2783,6 @@ function drawgraph(T) {
 		new CanvasJS.Chart(canvas, {
 			'animationEnabled': true,
 			'responsive': true,
-			'theme': "light2",
 			'axisY': {
 				'title': "成長百分比",
 				'suffix': "%",
@@ -2793,7 +2792,7 @@ function drawgraph(T) {
 				'title': '等級',
 				'prefix': "Lv"
 			},
-			'theme': document.documentElement.getAttribute('data-theme') == 'dark' ? 'dark1' : 'light1',
+			'theme': utils.getTheme() === 'dark' ? 'dark1' : 'light1',
 			'title': {
 				'text': "成長曲線"
 			},
@@ -2864,7 +2863,7 @@ function drawgraph(T) {
 					'title': '等級',
 					'prefix': "Lv"
 				},
-				'theme': document.documentElement.getAttribute('data-theme') == 'dark' ? 'dark1' : 'light1',
+				'theme': utils.getTheme() === 'dark' ? 'dark1' : 'light1',
 				'title': {
 					'text': '成長曲線'
 				},
@@ -2927,7 +2926,7 @@ function xpgraph() {
 		}
 	}
 	costs[0] = 0;
-	const light = document.documentElement.getAttribute('theme') != 'dark';
+	const light = utils.getTheme() !== 'dark';
 	for (let i = 1; i <= 10; ++i) {
 		tr = document.createElement('tr');
 		var sum = 0;

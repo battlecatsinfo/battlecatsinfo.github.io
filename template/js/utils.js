@@ -1,14 +1,30 @@
-var _th = localStorage.getItem('theme');
-if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
-	document.documentElement.setAttribute("data-theme", "dark");
+(function (global, factory) {
+	global = typeof globalThis !== "undefined" ? globalThis : global || self;
+	global.utils = factory();
+}(this, function () {
+	'use strict';
 
-function toggleTheme() {
-	const x = localStorage.getItem('theme');
-	if (x == 'dark') {
-		document.documentElement.setAttribute("data-theme", "light");
-		localStorage.setItem('theme', 'light');
-	} else {
-		document.documentElement.setAttribute("data-theme", "dark");
-		localStorage.setItem('theme', 'dark');
+	function getTheme() {
+		let value = localStorage.getItem('theme');
+		if (!value) {
+			value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+		}
+		return value;
 	}
-}
+
+	function toggleTheme(newValue) {
+		if (!newValue) {
+			newValue = (getTheme() === 'dark') ? 'light' : 'dark';
+		}
+		document.documentElement.dataset.theme = newValue;
+		localStorage.setItem('theme', newValue);
+	}
+
+	toggleTheme(getTheme());
+
+	return {
+		getTheme,
+		toggleTheme,
+	};
+
+}));
