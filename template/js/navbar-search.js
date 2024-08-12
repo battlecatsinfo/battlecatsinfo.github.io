@@ -4,8 +4,8 @@
 }(this, function () {
 	'use strict';
 
-	const siteSearchInput = document.getElementById('site-search');
-	const siteSearchForm = siteSearchInput.parentNode;
+	const siteSearchForm = document.getElementById('site-search');
+	const siteSearchInput = siteSearchForm.querySelector('input');
 	const siteSearchResult = document.getElementById('site-s-result');
 
 	siteSearchForm.addEventListener('submit', onFormSubmit);
