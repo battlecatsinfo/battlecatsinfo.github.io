@@ -2,52 +2,10 @@
 
 {{#*inline "title"}}鋼鐵殺手計算{{/inline}}
 
-{{#*inline "styles"}}
-	<link rel="stylesheet" href="/w3.css">
-{{/inline}}
-
 {{#*inline "scripts"}}
+	{{~> @partial-block}}
 	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 {{/inline}}
-
-{{#*inline "styles-inline"}}
-	<style>
-	input[type="number"] {
-		padding-left: 1em;
-		background-color: aliceblue !important;
-	}
-	:root {
-		--a: #fff;
-		--b: #000;
-		--c: #f1f1f1;
-		--d: #0027ff;
-	}
-	[data-Q="dark1"] {
-		--a: #2a2a2a;
-		--b: #fff;
-		--c: #2a2a2a;
-		--d: #2196f3;
-	}
-	[data-Q="dark2"] {
-		--a: #32373a;
-		--b: #fff;
-		--c: #32373a;
-		--d: #2196f3;
-	}
-	body {
-		color: var(--b);
-		background-color: var(--a) !important;
-	}
-	</style>
-{{/inline}}
-
-{{#*inline "nav-bar-styles-search"}}{{/inline}}
-
-{{#*inline "nav-bar-content-search"}}{{/inline}}
-
-{{#*inline "nav-bar-content-theme"}}{{/inline}}
-
-{{#*inline "nav-bar-scripts"}}{{/inline}}
 
 {{#*inline "content"}}
 	<div style="position:absolute;top:10vh;right: 1vw;">
@@ -59,7 +17,6 @@
 			<option value="dark2">深色2</option>
 		</select>
 	</div>
-	<h1 style="text-align: center;" style="margin: 1em 0 auto;">鋼鐵殺手</h1>
 	<form action="#" style="padding: 2em;">
 		<p>
 			<label for="kill">扣敵方體力百分比<span style="float: right;">Metal killer percentage</span></label>

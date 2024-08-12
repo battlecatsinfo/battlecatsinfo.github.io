@@ -15,29 +15,17 @@
 {{/inline}}
 
 {{#*inline "styles-inline"}}
+	{{~> @partial-block}}
 	<style>
-	:root {
-		--bg: #fff;
-		--color: black;
+	th img {
+		width: 22px;
+		height: auto;
+		vertical-align: middle;
 	}
-	:root.dark {
-		--bg: rgba(40, 42, 54, 1);
-		--color: rgba(248, 248, 242, 1);
-	}
-	body {
-		color: var(--color);
-		background-color: var(--bg);
-		padding: 0;
-		margin: 0;
-		font-family:'Noto Sans TC',微軟正黑體,'Microsoft JhengHei',system-ui;
-	}
-	th img {width: 22px;height:auto;vertical-align:middle;}
 	</style>
 {{/inline}}
 
 {{#*inline "content"}}
-	<h1 style="text-align:center;margin:1.5em 0;">城堡素材掉落率<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>
-
 	<div style="width:92vw;margin: 0 auto;">
 		<h2>傳奇關卡</h2>
 		<table id="SOL" class="display">

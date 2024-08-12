@@ -12,12 +12,15 @@
 {{#*inline "scripts"}}
 	{{~> @partial-block}}
 	<script src="levelcurve.js"></script>
+	<script src="cat.js"></script>
 {{/inline}}
 
 {{#*inline "styles-inline"}}
 	<style>
 	body {
 		font-size: max(20px, 1vw);
+		overflow: scroll;
+		position: relative;
 	}
 	.bold-large {
 		font-size: 1.2em;
@@ -122,11 +125,8 @@
 	</style>
 {{/inline}}
 
-{{#*inline "body-attrs"}} style="overflow: scroll;position: relative;"{{/inline}}
-
 {{#*inline "content"}}
 	<div id="loader"></div>
-	<script src="cat.js"></script>
 	<div id="modal" class="w3-modal">
 		<div class="w3-modal-content">
 			<span onclick="document.getElementById('modal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 1">&times;</span>

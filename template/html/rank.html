@@ -2,11 +2,8 @@
 
 {{#*inline "title"}}等級排行獎勵{{/inline}}
 
-{{#*inline "styles"}}
-	<link rel="stylesheet" href="gh.css">
-{{/inline}}
-
 {{#*inline "styles-inline"}}
+	{{~> @partial-block}}
 	<style>
 	td img {
 		width: 3em;
@@ -18,11 +15,7 @@
 	</style>
 {{/inline}}
 
-{{#*inline "nav-bar"}}{{/inline}}
-
 {{#*inline "content"}}
-	<h1 style="text-align:center;">等級排行獎勵<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>
-
 	<p style="text-align:center;">※解放「？？稀有角色」是指「傳說稀有」※</p>
 	<div style="display:flex;justify-content:center;">
 		<table>

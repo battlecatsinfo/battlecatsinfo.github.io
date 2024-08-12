@@ -118,7 +118,7 @@ body {
 }
 @media (max-width: 767px) {
 	body {
-	padding: 15px;
+		padding: 15px;
 	}
 }
 .octicon {
@@ -169,6 +169,7 @@ dfn {
 	font-style: italic;
 }
 h1 {
+	text-align: center;
 	margin: 0.67em 0;
 	font-weight: 600;
 	padding-bottom: 0.3em;

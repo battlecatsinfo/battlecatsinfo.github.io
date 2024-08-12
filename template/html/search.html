@@ -11,6 +11,13 @@
 	<meta property="og:image" content="https://i.imgur.com/cnYnN81.png">
 {{/inline}}
 
+{{#*inline "scripts"}}
+	<script src="levelcurve.js"></script>
+	<script src="cat.js"></script>
+	<script src="constants.js"></script>
+	<script src="parser.js"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
@@ -195,8 +202,6 @@
 
 {{#*inline "content"}}
 	<div id="loader"></div>
-	<script src="levelcurve.js"></script>
-	<script src="cat.js"></script>
 	<div id="main" class="An">
 		<div>
 			<ul class="w3-ul may-hide" style="width: 150px;height: 575px;overflow: auto;" id="trait-s">
@@ -510,10 +515,8 @@
 				</table>
 			</div>
 		</div>
-		<script src="constants.js"></script>
-		<script src="parser.js"></script>
-		<script src="search.js"></script>
 	</div>
+	<script src="search.js"></script>
 {{/inline}}
 
 {{/common.html}}

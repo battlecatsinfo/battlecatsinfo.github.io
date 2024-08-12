@@ -1,12 +1,10 @@
-{{#> base.html}}
+{{#> blank.html}}
 
 {{#*inline "viewport"}}
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 {{/inline}}
 
 {{#*inline "title"}}角色動畫{{/inline}}
-
-{{#*inline "styles"}}{{/inline}}
 
 {{#*inline "scripts"}}
 	<script src="gif.js"></script>
@@ -95,8 +93,6 @@
 	}
 	</style>
 {{/inline}}
-
-{{#*inline "nav-bar"}}{{/inline}}
 
 {{#*inline "content"}}
 	<canvas id="canvas" style="width: 100vw;height: 100vh;margin: 0;padding: 0;"></canvas>
@@ -402,4 +398,4 @@ const eggs={{{eggs}}};
 	<script type="module" src="/anim.min.js"></script>
 {{/inline}}
 
-{{/base.html}}
+{{/blank.html}}

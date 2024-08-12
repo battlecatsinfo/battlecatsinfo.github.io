@@ -4,7 +4,6 @@ const resolve = require('node:path').resolve;
 const sources = [
 	'w3.css',
 	'dracula.css',
-	'dracula2.css',
 	'gh.css',
 
 	'index.html',
@@ -30,7 +29,6 @@ const sources = [
 	'rewards.html',
 	'imgcut.html',
 	'anim.html',
-	'blockly.html',
 
 	'uni.png',
 	'favicon.ico',
@@ -55,7 +53,6 @@ const sources = [
 	'cat_dict.js',
 	'settings.js',
 	'dom-to-image.min.js',
-	'CCC.js',
 	'compare.js',
 	'png.js',
 	'svg.js',
@@ -68,8 +65,7 @@ const sources = [
 	'stage2.js',
 	'stage3.js',
 	'anim.min.js',
-	'imgcut.js',
-	'blockly.min.js'
+	'imgcut.js'
 ];
 const active_map = {
 	'index.html': 'index',

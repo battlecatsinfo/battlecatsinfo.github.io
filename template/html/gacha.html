@@ -9,11 +9,6 @@
 	<meta property="og:image" content="{{pool.img}}">
 {{/inline}}
 
-{{#*inline "styles"}}
-	<link rel="stylesheet" type="text/css" href="/dracula2.css">
-	<link rel="stylesheet" type="text/css" href="/w3.css">
-{{/inline}}
-
 {{#*inline "scripts"}}
 	{{~> @partial-block}}
 	<script src="/gacha.js"></script>
@@ -112,13 +107,21 @@
 		box-sizing: border-box;
 		width: max(60%, 400px);
 		max-width: 100%;
-		margin: .7em auto;
-		padding: .3em .8em;
+		margin: 0.7em auto;
+		padding: 0.3em 0.8em;
 		border: 1px solid #ccc;
 		text-align: left;
 	}
 	.M a {
 		text-decoration: none;
+		color: var(--color) !important;
+	}
+	.M a:hover {
+		color: var(--acolor) !important;
+		text-decoration: underline;
+	}
+	.dark td {
+		background-color: var(--bg) !important;
 	}
 	</style>
 {{/inline}}

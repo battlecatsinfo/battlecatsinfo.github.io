@@ -9,12 +9,18 @@
 	<link rel="stylesheet" type="text/css" href="unit.css">
 {{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="cat.js"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
 		padding: 0;
 		margin: 0;
 		font-size: 18px;
+		overflow: scroll;
 	}
 	.bold-large {
 		font-size: 18px;
@@ -85,8 +91,6 @@
 	</style>
 {{/inline}}
 
-{{#*inline "body-attrs"}} style="overflow: scroll;"{{/inline}}
-
 {{#*inline "content"}}
 	<div id="loader"></div>
 	<div id="modal" class="w3-modal">
@@ -98,7 +102,6 @@
 	<script>
 		var curveData0, curveData1, curveData2, curveData3, curveData4, curveData5;
 	</script>
-	<script src="cat.js"></script>
 	<div id="main" class="w3-container An">
 		<table class="w3-table w3-centered" style="margin-top: 100px;">
 			<thead>
