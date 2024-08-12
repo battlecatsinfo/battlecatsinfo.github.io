@@ -5,13 +5,10 @@ const sources = [
 	'unit.css',
 	'w3.css',
 	'dracula.css',
-	'dracula2.css',
 	'gh.css',
 
 	'index.html',
 	'stage.html',
-	'stage2.html',
-	'stage3.html',
 	'unit.html',
 	'enemy.html',
 	'treasure_list.html',
@@ -32,7 +29,6 @@ const sources = [
 	'rewards.html',
 	'imgcut.html',
 	'anim.html',
-	'blockly.html',
 
 	'uni.png',
 	'favicon.ico',
@@ -56,7 +52,6 @@ const sources = [
 	'cat_dict.js',
 	'settings.js',
 	'dom-to-image.min.js',
-	'CCC.js',
 	'compare.js',
 	'png.js',
 	'svg.js',
@@ -71,11 +66,10 @@ const sources = [
 	'stage2.js',
 	'stage3.js',
 	'anim.min.js',
-	'imgcut.js',
-	'blockly.min.js'
+	'imgcut.js'
 ];
 const active_map = {
-	'index.html': 'index',
+	'index.html': 'home',
 	'search.html': 'cat',
 	'stage.html': 'stage',
 	'stage2.html': 'stage',
@@ -136,7 +130,7 @@ module.exports = class extends require('./base.js') {
 					}
 				} else if (file.endsWith('.html')) {
 					last_mods[file] = last;
-					contents = this.template(contents, {}, active_map[file]);
+					contents = this.template(contents, { 'nav-bar-active': active_map[file] });
 					if (htmlmin) {
 						contents = htmlmin.minify(contents, {
 							collapseBooleanAttributes: true,

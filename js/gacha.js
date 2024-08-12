@@ -141,7 +141,7 @@ module.exports = class extends require('./base.js') {
 		}
 
 		const gacha_template = this.load_a('html/gacha.html');
-		let size, width, height, collab, path, history, contents, urls, gacha_menu = '', gacha_list = '', idx = 0;
+		let size, width, height, collab, path, history, contents, urls, gacha_menu = [], gacha_list = '', idx = 0;
 
 		this.fmt = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 5 });
 		this.load_unit();
@@ -198,17 +198,17 @@ module.exports = class extends require('./base.js') {
 				{
 					'title': pool['tw-name'],
 					'img': pool['img'],
-					'h1': [pool['tw-name'], pool['jp-name'], pool['en-name']].filter(x => x).join('<br>'),
+					'names': [pool['tw-name'], pool['jp-name'], pool['en-name']].filter(x => x).join('<br>'),
 					'width': width,
 					'height': height,
 					'collab': collab,
 					'history': history,
 					'contents': contents,
-					'urls': urls
-				},
-				'gacha'
+					'urls': urls,
+					'nav-bar-active': 'gacha'
+				}
 			));
-			gacha_menu += `<a href="#${idx}">${index(idx)}. ${pool['tw-name']}</a>\n`;
+			gacha_menu.push({'idx': idx, 'name': index(idx) + '. ' + pool['tw-name']});
 			gacha_list += `<h2 id="${idx}">
 	<a class="B" href="${path}" target="_blank">${pool['tw-name']}</a>
 </h2>
@@ -219,8 +219,9 @@ module.exports = class extends require('./base.js') {
 
 		this.write_template('html/gachas.html', 'gachas.html', {
 			'nav-menu': gacha_menu,
-			'content': gacha_list
-		}, 'gacha');
+			'content': gacha_list,
+			'nav-bar-active': 'gacha'
+		});
 	}
 	uimg(u) {
 		return this.egg_set.has(u) ? `/img/u/${u}/2.png` : `/img/u/${u}/0.png`;

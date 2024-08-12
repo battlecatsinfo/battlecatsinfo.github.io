@@ -38,12 +38,15 @@ module.exports = class extends require('./base.js') {
 			collab_template = this.load_a('html/collab.html'),
 			data = JSON.parse(this.load('collab.json')),
 			collabs = data['collabs'];
-		let nav_menu = '';
+		const nav_menu = [];
 		for (let i = 0; i < collabs.length; i++) {
 			const
 				C = collabs[i],
 				fn = 'collab/' + to_path(C['en-name']) + '.html';
-			nav_menu += `<a href="${fn}">${index(i)}. ${C['tw-name']}</a>`;
+			nav_menu.push({
+				'name': `${index(i)}. ${C['tw-name']}`,
+				'href': fn
+			});
 			const S = [];
 			let O = C['pools'];
 			if (O)
@@ -66,18 +69,12 @@ module.exports = class extends require('./base.js') {
 			O = C['links']
 			if (O)
 				S.push(this.write_links(O));
-			let img1 = '', img2 = '';
-			O = C['img'];
-			if (O) {
-				img1 = '<meta property="og:image" content="' + O + '">';
-				img2 = '<img style="display: block;margin: 0 auto;max-width: 100%;" src="' + O + '">';
-			}
+
 			this.write_string(fn, this.template(collab_template, {
-				'img1': img1,
-				'img2': img2,
-				'C': S.join('\n'),
-				'name': C['tw-name'],
-				'name-br': Array.from(new Set([C['tw-name'], C['jp-name'], C['en-name']].filter(x => x))).join('<br>')
+				'title': C['tw-name'] + '合作活動',
+				'img': C['img'],
+				'contents': S.join('\n'),
+				'name-br': Array.from(new Set([C['tw-name'], C['jp-name'], C['en-name']].filter(x => x)))
 			}));
 		}
 		this.write_menu(data['tw-history'], data['jp-history'], nav_menu);
