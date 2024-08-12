@@ -43,7 +43,6 @@ const sources = [
 
 	'html2canvas.min.js',
 	'dracula.js',
-	'dracula2.js',
 	"enemy.js",
 	"constants.js",
 	"parser.js",
@@ -150,7 +149,24 @@ module.exports = class extends require('./base.js') {
 					last_mods[file] = last;
 					contents = this.template(contents, {});
 					if (UglifyJS) {
-						const r = UglifyJS.minify(contents, {'mangle': {}});
+						let r;
+						switch (file) {
+						case 'svg.js':
+						case 'png.js':
+						case 'dracula.js':
+						case 'constants.js':
+						case 'cat.js':
+						case 'parser.js':
+							r = UglifyJS.minify(contents, {'mangle': true, 'compress': true});
+							break;
+						default:
+							r = UglifyJS.minify(contents, {
+								'mangle': true,
+								'compress': true,
+								'toplevel': true,
+							});
+							break;
+						}
 						if (r.error) {
 							console.error('Error on minifying JS:', file, r.error);
 							continue;
