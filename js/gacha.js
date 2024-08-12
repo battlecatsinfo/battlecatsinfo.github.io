@@ -2,8 +2,7 @@ const Fraction = require('fraction.js');
 const fs = require('node:fs');
 const resolve = require('node:path').resolve;
 
-const
-category_set = {
+const category_set = {
 	'常駐稀有貓': new Set([37, 38, 41, 46, 47, 48, 49, 50, 51, 52, 55, 56, 58, 145, 146, 147, 148, 149, 197, 198, 308, 325, 376, 495, 523]),
 	'常駐激稀有貓': new Set([30, 31, 32, 33, 35, 36, 39, 40, 61, 150, 151, 152, 153, 199, 307, 377, 522]),
 	'超激烈爆彈':new Set([42, 43, 44, 57, 59, 143, 427, 519, 617, 668, 763]),
@@ -30,8 +29,9 @@ category_set = {
 	"降臨和漩渦關卡掉落": new Set([60, 78, 88, 126, 154, 201, 324, 379, 382, 442, 452, 507, 521, 527, 528, 531, 539, 545, 553, 581, 621, 623, 630, 260, 267, 284, 287, 273, 708, 718]),
 	"遠古的蛋": new Set([656, 658, 659, 663, 664, 665, 669, 670, 675, 676, 685, 691, 697, 700, 706, 707, 713, 716, 717, 720, 724, 730]),
 	"月份貓": new Set([79, 80, 81, 100, 104, 109, 122, 128, 132, 63, 70, 74])
-},
-reward_order = {
+};
+
+const reward_order = {
 	0: 0,
 	1: 1,
 	2: 2,
@@ -75,8 +75,9 @@ reward_order = {
 	78: 362,
 	159: 358,
 	197: 365
-},
-reward_names = {
+};
+
+const reward_names = {
 	0: '加速',
 	1: '寶物雷達',
 	2: '土豪貓',
@@ -198,7 +199,7 @@ module.exports = class extends require('./base.js') {
 				{
 					'title': pool['tw-name'],
 					'img': pool['img'],
-					'names': [pool['tw-name'], pool['jp-name'], pool['en-name']].filter(x => x).join('<br>'),
+					'names': Array.from(new Set([pool['tw-name'], pool['jp-name'] || '', pool['en-name']])).filter(x => x).join('<br>'),
 					'width': width,
 					'height': height,
 					'collab': collab,
@@ -245,10 +246,9 @@ module.exports = class extends require('./base.js') {
 		for (let rarity = 5;rarity >= 2;--rarity) {
 			let c = 0;
 
-			for (const u of units) {
+			for (const u of units)
 				if (this.unit_rarity[u] == rarity)
 					++c;
-			}
 
 			let x = rarity - 2;
 			let rate = O['rate'][x];
@@ -269,7 +269,7 @@ module.exports = class extends require('./base.js') {
 </p>
 </details>`;
 		}
-		let MUL = {};
+		const MUL = {};
 		for (let rarity = 5;rarity >= 0;--rarity) {
 			let out = {'0': []};
 			outer: for (const u of units) {
@@ -318,7 +318,7 @@ module.exports = class extends require('./base.js') {
 			}
 
 			for (const [k, v] of Object.entries(out))
-				S += `<details><summary class="w3-tag w3-padding w3-round-large">${k}</summary><div style="width:max(60%,400px);margin:.7em auto;padding:.3em .8em;border:1px solid #ccc;text-align:left">${v.sort((a, b) => a - b).map(x => self.unit_name[x]).join('、')}</div></details>`;
+				S += `<details><summary class="w3-tag w3-padding w3-round-large">${k}</summary><div class="M">${v.sort((a, b) => a - b).map(x => `<a href="/unit.html?id=${x}">${self.unit_name[x]}</a>`).join('\n')}</div></details>`;
 		}
 		return S;
 	}
@@ -537,13 +537,13 @@ module.exports = class extends require('./base.js') {
 		return S;
 	}
 	write_category(O) {
-		const iter = Array.from(category_set[O['category']]).sort((a, b) => a - b)[Symbol.iterator]();
+		const ids = Array.from(category_set[O['category']]).sort((a, b) => a - b);
 		let
 			f,
 			c = 0, 
 			S = '<table class="w3-table w3-centered w3-striped" style="width:95%;margin:0 auto">\n\t<tbody>';
 
-		for (let u of iter) {
+		for (let u of ids) {
 			c++;
 			if (c & 1) 
 				f = u;
@@ -557,10 +557,10 @@ module.exports = class extends require('./base.js') {
 		S += '\t</tbody>\n</table>';
 		return S;
 	}
-	gen1(u, C = 1) {
-		return C == 1 ?
+	gen1(u, count = 1) {
+		return count == 1 ?
 			`<td><div style="font-weight:bold">${this.unit_name[u]}</div><a class="B" href="/unit.html?id=${u}"><img src="${this.uimg(u)}" width="104" height="79" loading="lazy"></a><div style="font-size:0.8em">${this.unit_desc[u].replaceAll('|', '<br>')}</div></td>` :
-			`<td><div style="font-weight:bold" style="margin-block-start:1em;margin-block-end:1em">${this.unit_name[u]}<div style="color:red !important;font-size:0.8em">出現機率×${C}</div></div><a class="B" href="/unit.html?id=${u}"><img src="${this.uimg(u)}" width="104" height="79" loading="lazy"></a><div style="font-size:0.8em">${this.unit_desc[u].replaceAll('|', '<br>')}</div></td>`;
+			`<td><div style="font-weight:bold" style="margin-block-start:1em;margin-block-end:1em">${this.unit_name[u]}<div style="color:red !important;font-size:0.8em">出現機率×${count}</div></div><a class="B" href="/unit.html?id=${u}"><img src="${this.uimg(u)}" width="104" height="79" loading="lazy"></a><div style="font-size:0.8em">${this.unit_desc[u].replaceAll('|', '<br>')}</div></td>`;
 	}
 	load_unit() {
 		let line, data = this.load('cat.tsv').split('\n'), id = '';
