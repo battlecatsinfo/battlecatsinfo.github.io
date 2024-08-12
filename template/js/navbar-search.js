@@ -1,30 +1,48 @@
-const _sis = document.getElementById('site-search');
-const _s_r = document.getElementById('site-s-result');
+(function (global, factory) {
+	global = typeof globalThis !== "undefined" ? globalThis : global || self;
+	Object.assign(global, factory());
+}(this, function () {
+	'use strict';
 
-document.getElementById('search-btn').onclick = function(event) {
-	event.preventDefault();
-	event.currentTarget.previousElementSibling.style.display = 'inline-block';
-}
-_sis.oninput = _sis.onfocus = _sis.onkeydown = function() {
-	_s_r.style.display = 'block';
-}
-_sis.onblur = function() {
-	setTimeout(function() {
-		_s_r.style.display = 'none';
-	}, 500);
-}
+	const siteSearchInput = document.getElementById('site-search');
+	const siteSearchForm = siteSearchInput.parentNode;
+	const siteSearchResult = document.getElementById('site-s-result');
 
-function _s_open(w) {
-	location.href = w + _sis.value;
-}
-_sis.parentNode.onsubmit = function(e) {
-	if (!_sis.value)
-		return false;
-	if (location.href.includes('enemy') || location.href.includes('esearch'))
-		location.href = '/esearch.html?q=' + _sis.value;
-	else if (location.href.includes('stage'))
-		location.href = '/stage.html?q=' + _sis.value;
-	else
-		location.href = '/search.html?q=' + _sis.value;
-	return false;
-}
+	siteSearchForm.addEventListener('submit', onFormSubmit);
+	siteSearchInput.addEventListener('focus', onInputFocus);
+	siteSearchInput.addEventListener('blur', onInputBlur);
+	for (const elem of siteSearchResult.querySelectorAll('[data-search]')) {
+		elem.addEventListener('click', onResultClick);
+	}
+
+	function onInputFocus(event) {
+		siteSearchResult.hidden = false;
+	}
+
+	function onInputBlur(event) {
+		setTimeout(function() {
+			siteSearchResult.hidden = true;
+		}, 500);
+	}
+
+	function onResultClick(event) {
+		const elem = event.currentTarget;
+		const url = elem.dataset.search + '?q=' + encodeURIComponent(siteSearchInput.value);
+		location.assign(url);
+	}
+
+	function onFormSubmit(event) {
+		event.preventDefault();
+		let value = siteSearchInput.value;
+		if (!value)
+			return false;
+		if (location.pathname.startsWith('/enemy') || location.pathname.startsWith('/esearch'))
+			value = '/esearch.html?q=' + encodeURIComponent(value);
+		else if (location.pathname.startsWith('/stage'))
+			value = '/stage.html?q=' + encodeURIComponent(value);
+		else
+			value = '/search.html?q=' + encodeURIComponent(value);
+		location.assign(value);
+	}
+
+}));
