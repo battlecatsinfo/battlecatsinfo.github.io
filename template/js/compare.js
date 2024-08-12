@@ -500,11 +500,10 @@ loadAllCats().then(s => {
 });
 
 function newTab() {
-	let t;
-	let i = 0;
-	for (const tr of tby) {
-		t = document.createElement('td');
-		if (++i > 2)
+	for (let i = 0, I = tby.length; i < I; i++) {
+		const tr = tby[i];
+		const t = document.createElement('td');
+		if (1 < i && i < I - 1)
 			t.contentEditable = true;
 		tr.appendChild(t);
 	}

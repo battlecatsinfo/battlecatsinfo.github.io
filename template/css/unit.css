@@ -65,9 +65,9 @@ pre {
 .fruit td {
 	background-color: #f5f5f5 !important;
 }
-[data-theme="dark"] .fruit tr,
-[data-theme="dark"] .fruit,
-[data-theme="dark"] .fruit td {
+.dark .fruit tr,
+.dark .fruit,
+.dark .fruit td {
 	background-color: inherit !important;
 }
 .fruit img {

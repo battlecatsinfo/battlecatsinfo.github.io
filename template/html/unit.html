@@ -1,19 +1,18 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+---
+layout: common
+title: 貓咪資訊
+styles:
+  - "unit.css"
+scripts:
+  - "levelcurve.js"
+  - "cat.js"
+---
 
-<head>
-	<meta charset="utf-8">
-	<title>貓咪資訊</title>
-	{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-	<link rel="stylesheet" type="text/css" href="unit.css">
-	<script src="levelcurve.js"></script>
-</head>
-
-<body style="overflow: scroll;position: relative;">
-	<style>
+<style>
 body {
 	font-size: max(20px, 1vw);
+	overflow: scroll;
+	position: relative;
 }
 .bold-large {
 	font-size: 1.2em;
@@ -36,10 +35,10 @@ body {
 #abar {
 	border: 1vw solid #ededed;
 }
-[data-theme="dark"] .w3-bar-item {
+.dark .w3-bar-item {
 	background-color: #2f2f2f;
 }
-[data-theme="dark"] #abar {
+.dark #abar {
 	background-color: #2f2f2f;
 	border: 1vw solid #2f2f2f;
 }
@@ -89,10 +88,10 @@ td select {
 .F {
 	background-color: #efefef;
 }
-[data-theme="dark"] .F {
+.dark .F {
 	background-color: #31343f;
 }
-[data-theme="dark"] .f {
+.dark .f {
 	background-color: #3c3f4b;
 }
 .o-selected {
@@ -115,55 +114,53 @@ select {
 	padding: 0.2em 0.4em;
 	min-width: initial;
 }
-{{{nav-style}}}
-	</style>
-	{{{nav-bar}}}
-	<div id="loader"></div>
-	<script src="cat.js"></script>
-	<div id="modal" class="w3-modal">
-		<div class="w3-modal-content">
-			<span onclick="document.getElementById('modal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 1">&times;</span>
-			<div id="modal-c"></div>
+</style>
+
+<div id="loader"></div>
+
+<div id="modal" class="w3-modal">
+	<div class="w3-modal-content">
+		<span onclick="document.getElementById('modal').style.display='none'" class="w3-button w3-display-topright" style="z-index: 1">&times;</span>
+		<div id="modal-c"></div>
+	</div>
+</div>
+
+<div id="main" style="position: relative;" class="An">
+	<div style="position: fixed;z-index: 2;top: 50px;right: 40px;background-color: transparent !important;" class="w3-dropdown-hover">
+		<button class="w3-button" style="border: none;margin: 0;padding: 0;text-indent: 0;background-color: transparent !important;">
+			<img style="background-color: transparent !important;" src="https://i.imgur.com/3nps1i5.png" onmouseenter="this.src='https://i.imgur.com/ZM0T6qo.png'" onmouseleave="this.src='https://i.imgur.com/3nps1i5.png'"></button>
+		<div id="abar" class="w3-bar-block w3-dropdown-content" style="right: 5px;border-radius: .5vw;">
+			<a class="w3-bar-item" style="cursor:pointer;" onclick="navigator.clipboard.writeText(location.href);">複製連結</a>
+			<a class="w3-bar-item" rel="noreferrer" target="_blank">開啟超絕</a>
+			<a class="w3-bar-item">等級—能力曲線</a>
+			<a class="w3-bar-item">等級—體力曲線</a>
+			<a class="w3-bar-item">等級—攻擊曲線</a>
+			<a class="w3-bar-item">等級—DPS 曲線</a>
+			<a class="w3-bar-item">升級所費 XP</a>
+			<a class="w3-bar-item">加入我的最愛</a>
+			<a href="/settings.html" class="w3-bar-item" target="_blank">設定</a>
 		</div>
 	</div>
-	<div id="main" style="position: relative;" class="An">
-		<div style="position: fixed;z-index: 2;top: 50px;right: 40px;background-color: transparent !important;" class="w3-dropdown-hover">
-			<button class="w3-button" style="border: none;margin: 0;padding: 0;text-indent: 0;background-color: transparent !important;">
-				<img style="background-color: transparent !important;" src="https://i.imgur.com/3nps1i5.png" onmouseenter="this.src='https://i.imgur.com/ZM0T6qo.png'" onmouseleave="this.src='https://i.imgur.com/3nps1i5.png'"></button>
-			<div id="abar" class="w3-bar-block w3-dropdown-content" style="right: 5px;border-radius: .5vw;">
-				<a class="w3-bar-item" style="cursor:pointer;" onclick="navigator.clipboard.writeText(location.href);">複製連結</a>
-				<a class="w3-bar-item" rel="noreferrer" target="_blank">開啟超絕</a>
-				<a class="w3-bar-item">等級—能力曲線</a>
-				<a class="w3-bar-item">等級—體力曲線</a>
-				<a class="w3-bar-item">等級—攻擊曲線</a>
-				<a class="w3-bar-item">等級—DPS 曲線</a>
-				<a class="w3-bar-item">升級所費 XP</a>
-				<a class="w3-bar-item">加入我的最愛</a>
-				<a href="/settings.html" class="w3-bar-item" target="_blank">設定</a>
-			</div>
+	<div class="w3-main">
+		<div id="unit-content" style="margin: 0 auto;width: 100%;margin-top: 70px;">
+			<p id="ch_name" class="bold-large"></p>
+			<p id="jp_name" class="bold-large"></p>
+			<div align="center" id="cat-icons" style="margin-top: 35px;margin-bottom: 50px;"></div>
 		</div>
-		<div class="w3-main">
-			<div id="unit-content" style="margin: 0 auto;width: 100%;margin-top: 70px;">
-				<p id="ch_name" class="bold-large"></p>
-				<p id="jp_name" class="bold-large"></p>
-				<div align="center" id="cat-icons" style="margin-top: 35px;margin-bottom: 50px;"></div>
-			</div>
-		</div>
-		<div style="display: none;" class="tooltip">
-
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-				<path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z"/>
-			</svg>
-
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-				<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"
-				/>
-			</svg>
-
-		</div>
-		<script src="combo.js"></script>
-		<script src="unit.js"></script>
 	</div>
-</body>
+	<div style="display: none;" class="tooltip">
 
-</html>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+			<path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z"
+			/>
+		</svg>
+
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+			<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"
+			/>
+		</svg>
+
+	</div>
+	<script src="combo.js"></script>
+	<script src="unit.js"></script>
+</div>

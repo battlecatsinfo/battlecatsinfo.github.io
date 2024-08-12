@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="zh-Hant" dir="ltr">
+---
+layout: common
+title: 敵人資訊
+styles:
+  - "unit.css"
+---
 
-<head>
-	<meta charset="utf-8">
-	<title>敵人資訊</title>
-	{{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-	<link rel="stylesheet" type="text/css" href="unit.css">
-</head>
 
-<body style="overflow: scroll;">
-	<style>
+<style>
 body {
 	padding: 0;
 	margin: 0;
 	font-size: 18px;
+	overflow: scroll;
 }
 .bold-large {
 	font-size: 18px;
@@ -57,7 +54,7 @@ body {
 	border: 1vw solid #ededed !important;
 	background-color: #ededed !important;
 }
-[data-theme="dark"] #abar {
+.dark #abar {
 	border: 1vw solid #2f2f2f !important;
 	background-color: #2f2f2f !important;
 }
@@ -76,91 +73,88 @@ body {
 .F {
 	background-color: #f1f1f1 !important;
 }
-[data-theme="dark"] .F {
+.dark .F {
 	background-color: #2b2f3d !important;
 }
 td img {
 	vertical-align: bottom !important;
 }
-{{{nav-style}}}
-	</style>
-	{{{nav-bar}}}
-	<div id="loader"></div>
-	<div id="modal" class="w3-modal">
-		<div class="w3-modal-content" style="padding: 1em;">
-			<span onclick="document.getElementById('modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-			<div id="modal-c"></div>
-		</div>
-	</div>
-	<script>
-		var curveData0, curveData1, curveData2, curveData3, curveData4, curveData5;
-	</script>
-	<script src="cat.js"></script>
-	<div id="main" class="w3-container An">
-		<table class="w3-table w3-centered" style="margin-top: 100px;">
-			<thead>
-				<tr>
-					<th colspan="6" id="e-id"></th>
-					<th id="st-mag" style="white-space: nowrap;" contenteditable inputmode="numeric">
-						<th id="mult-atk" contenteditable style="white-space: nowrap;" inputmode="numeric"></th>
-						<th id="mult" style="white-space: nowrap;" contenteditable inputmode="numeric"></th>
-				</tr>
-			</thead>
-			<tbody id="stats">
-				<tr>
-					<td class="F" rowspan="3"><img width="64" height="64"></td>
-					<td class="F">HP</td>
-					<td></td>
-					<td class="F">攻擊力</td>
-					<td></td>
-					<td class="F">速度</td>
-					<td></td>
-					<td class="F">屬性</td>
-					<td colspan="2"></td>
-				</tr>
-				<tr>
-					<td class="F">KB</td>
-					<td></td>
-					<td class="F">DPS</td>
-					<td></td>
-					<td class="F">射程</td>
-					<td></td>
-					<td class="F">獎金</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="F">出招時間</td>
-					<td></td>
-					<td class="F">收招時間</td>
-					<td></td>
-					<td class="F">攻擊間隔</td>
-					<td></td>
-					<td class="F">攻擊頻率</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="F">其他</td>
-					<td colspan="8" class="left"></td>
-				</tr>
-				<tr>
-					<td class="F">描述</td>
-					<td class="left" colspan="8"></td>
-				</tr>
-			</tbody>
-		</table>
-		<div style="position: fixed;bottom: 30px;left: 30px;">
-			<button class="w3-button" style="border: none;margin: 0;padding: 0;text-indent: 0;"><img src="https://i.imgur.com/DJ5SH7t.png" onmouseenter="this.src='https://i.imgur.com/NqaJ3Cu.png'" onmouseleave="this.src='https://i.imgur.com/DJ5SH7t.png'"></button>
-			<div id="abar" class="w3-dropdown-content w3-bar-block" style="bottom: 50px;right: -120px;font-size: larger;">
-				<a class="w3-bar-item" style="cursor:pointer;" onclick="navigator.clipboard.writeTe×t(location.href);">複製連結</a>
-				<a class="w3-bar-item" id="open-db" rel="noreferrer" target="_blank">超絕</a>
-				<a class="w3-bar-item" id="fandom" target="_blank">Fandom</a>
-				<a class="w3-bar-item" id="search-appear">搜尋出現關卡</a>
-				<a class="w3-bar-item" id="open-anim">檢視動畫</a>
-				<a class="w3-bar-item" href="/treasure_settings.html" target="_blank">金寶科技設定</a>
-			</div>
-		</div>
-	</div>
-	<script src="enemy.js"></script>
-</body>
+</style>
 
-</html>
+<div id="loader"></div>
+<div id="modal" class="w3-modal">
+	<div class="w3-modal-content" style="padding: 1em;">
+		<span onclick="document.getElementById('modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+		<div id="modal-c"></div>
+	</div>
+</div>
+<script>
+	var curveData0, curveData1, curveData2, curveData3, curveData4, curveData5;
+</script>
+<script src="cat.js"></script>
+<div id="main" class="w3-container An">
+	<table class="w3-table w3-centered" style="margin-top: 100px;">
+		<thead>
+			<tr>
+				<th colspan="6" id="e-id"></th>
+				<th id="st-mag" style="white-space: nowrap;" contenteditable inputmode="numeric">
+					<th id="mult-atk" contenteditable style="white-space: nowrap;" inputmode="numeric"></th>
+					<th id="mult" style="white-space: nowrap;" contenteditable inputmode="numeric"></th>
+			</tr>
+		</thead>
+		<tbody id="stats">
+			<tr>
+				<td class="F" rowspan="3"><img width="64" height="64"></td>
+				<td class="F">HP</td>
+				<td></td>
+				<td class="F">攻擊力</td>
+				<td></td>
+				<td class="F">速度</td>
+				<td></td>
+				<td class="F">屬性</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td class="F">KB</td>
+				<td></td>
+				<td class="F">DPS</td>
+				<td></td>
+				<td class="F">射程</td>
+				<td></td>
+				<td class="F">獎金</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="F">出招時間</td>
+				<td></td>
+				<td class="F">收招時間</td>
+				<td></td>
+				<td class="F">攻擊間隔</td>
+				<td></td>
+				<td class="F">攻擊頻率</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="F">其他</td>
+				<td colspan="8" class="left"></td>
+			</tr>
+			<tr>
+				<td class="F">描述</td>
+				<td class="left" colspan="8"></td>
+			</tr>
+		</tbody>
+	</table>
+	<div style="position: fixed;bottom: 30px;left: 30px;">
+		<button class="w3-button" style="border: none;margin: 0;padding: 0;text-indent: 0;"><img src="https://i.imgur.com/DJ5SH7t.png" onmouseenter="this.src='https://i.imgur.com/NqaJ3Cu.png'" onmouseleave="this.src='https://i.imgur.com/DJ5SH7t.png'"></button>
+		<div id="abar" class="w3-dropdown-content w3-bar-block" style="bottom: 50px;right: -120px;font-size: larger;">
+			<a class="w3-bar-item" style="cursor:pointer;" onclick="navigator.clipboard.writeTe×t(location.href);">複製連結</a>
+			<a class="w3-bar-item" id="open-db" rel="noreferrer" target="_blank">超絕</a>
+			<a class="w3-bar-item" id="fandom" target="_blank">Fandom</a>
+			<a class="w3-bar-item" id="search-appear">搜尋出現關卡</a>
+			<a class="w3-bar-item" id="open-anim">檢視動畫</a>
+			<a class="w3-bar-item" href="/treasure_settings.html" target="_blank">金寶科技設定</a>
+		</div>
+	</div>
+</div>
+<script src="enemy.js"></script>
+

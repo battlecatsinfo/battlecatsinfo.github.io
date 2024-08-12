@@ -13,13 +13,12 @@
 	--spans: #7fdbff;
 	--liselect: #7fdbff;
 	--strip: #f1f1f1;
-	--bd: hsla(210, 18%, 87%, 1);
 }
 a,
 textarea {
 	appearance: none;
 }
-[data-theme="dark"] {
+:root.dark {
 	color-scheme: dark;
 	--vbg: #282a36;
 	--bg: #282a36;
@@ -35,7 +34,6 @@ textarea {
 	--spans: #797270;
 	--liselect: #638593;
 	--strip: #323541;
-	--bd: #21262d;
 }
 body {
 	color: var(--color);
@@ -46,7 +44,6 @@ h1 {
 	font-weight: 600;
 	padding-bottom: 0.3em;
 	font-size: 2em;
-	border-bottom: 1px solid var(--bd);
 }
 h1,
 h2,
@@ -60,7 +57,6 @@ h2 {
 	font-weight: 600;
 	padding-bottom: 0.3em;
 	font-size: 1.5em;
-	border-bottom: 1px solid var(--bd);
 }
 h3 {
 	font-weight: 600;

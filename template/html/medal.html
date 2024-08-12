@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="zh-Hant" dir="ltr">
+---
+layout: common
+title: 喵咪獎章
+---
 
-<head>
-	<meta charset="utf-8">
-	<title>喵咪獎章</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="喵咪獎章一覽 | 貓咪大戰爭中文資訊網站"> {{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-</head>
 
-<body>
-	<style>
+<style>
 body {
 	text-align: center;
 	width: 100%;
@@ -60,11 +54,13 @@ body {
 	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.4) !important;
 }
-{{{nav-style}}}
-	</style>
-	{{{nav-bar}}}
-	<div class="w3-row-padding w3-margin-top">{{{medals}}}</div>
-	<script>
+</style>
+	
+<div class="w3-row-padding w3-margin-top">
+	{{{medals}}}
+</div>
+
+<script>
 var G;
 function F(event) {
 	if (!G) {
@@ -81,7 +77,4 @@ document.ontouchstart = function() {
 	G && (G.style.display = 'none', G = null);
 	event.stopPropagation();
 };
-	</script>
-</body>
-
-</html>
+</script>

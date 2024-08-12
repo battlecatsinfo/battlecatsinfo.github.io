@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>{{{title}}}</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:site_name" content="battlecatsinfo.github.io">
+	<meta property="og:title" content="{{{title}}}">
+
+	{{#if description}}
+	<meta property="og:description" content="{{{description}}} | 貓咪大戰爭中文資訊網站">
+	<meta name="description" content="{{{description}}} | 貓咪大戰爭中文資訊網站">
+	{{/if}}
+
+	<link rel="stylesheet" href="/gh.css">
+
+	{{#each styles}}
+	<link rel="stylesheet" type="text/css" href="{{this}}">
+	{{/each}}
+
+	{{#each scripts}}
+	<script type="text/javascript" src="{{this}}"></script>
+	{{/each}}
+
+</head>
+
+	<body>
+
+	<script type="text/javascript">
+function toggleTheme(){
+	let e = localStorage.getItem("theme");
+	if (e == "dark") {
+		document.documentElement.classList.remove("dark");
+		localStorage.setItem("theme","light");
+	} else {
+		document.documentElement.classList.add("dark");
+		localStorage.setItem("theme","dark")
+	}
+}
+var _th = localStorage.getItem("theme");
+if (_th == 'dark' || !_th && window.matchMedia("(prefers-color-scheme: dark)").matches)
+	document.documentElement.classList.add("dark");
+	</script>
+
+	<h1 id="title"><a class="anchor" href="#title"><span class="octicon octicon-link"></span></a>{{{title}}}</h1>
+
+	${contents}$
+
+	</body>
+
+</html>

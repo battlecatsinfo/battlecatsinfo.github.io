@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="zh-Hant" dir="ltr">
+---
+layout: static1
+title: 等級排行獎勵
+show-version: true
+---
 
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="UTF-8">
-	<title>等級排行獎勵</title>
-	<meta name="color-scheme" content="light dark">
-	<link rel="stylesheet" href="gh.css">
-</head>
-
-<body>
-
-<style type="text/css">
+<style>
 td img {
 	width: 3em;
 	height: auto;
@@ -21,39 +14,18 @@ td:nth-child(4) {
 }
 </style>
 
-<script type="text/javascript">
-var _th = localStorage.getItem('theme');
-if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
-	document.documentElement.setAttribute("data-theme", "dark");
-function toggleTheme() {
-	const x = localStorage.getItem('theme');
-	if (x == 'dark') {
-		document.documentElement.setAttribute("data-theme", "light");
-		localStorage.setItem('theme', 'light');
-	} else {
-		document.documentElement.setAttribute("data-theme", "dark");
-		localStorage.setItem('theme', 'dark');
-	}
-}
-</script>
+<p style="text-align:center;">※解放「？？稀有角色」是指「傳說稀有」※</p>
 
-	<h1 style="text-align:center;">等級排行獎勵<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>
-
-	<p style="text-align:center;">※解放「？？稀有角色」是指「傳說稀有」※</p>
-	<div style="display:flex;justify-content:center;">
-		<table>
-			<thead>
-				<tr>
-					<th>等排</th>
-					<th>說明</th>
-					<th>報酬</th>
-					<th>圖示</th>
-				</tr>
-			</thead>
-			<tbody id="rank">{{{rank}}}</tbody>
-		</table>
-	</div>
-
-</body>
-
-</html>
+<div style="display:flex;justify-content:center;">
+	<table>
+		<thead>
+			<tr>
+				<th>等排</th>
+				<th>說明</th>
+				<th>報酬</th>
+				<th>圖示</th>
+			</tr>
+		</thead>
+		<tbody id="rank">{{{rank}}}</tbody>
+	</table>
+</div>

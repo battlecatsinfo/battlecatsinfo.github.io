@@ -1,100 +1,51 @@
-<!DOCTYPE html>
-<html lang="zh-Hant" dir="ltr">
+---
+layout: common
+title: DPS 曲線
+scripts:
+  - "levelcurve.js"
+  - "https://cdn.jsdelivr.net/npm/d3@7"
+---
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>DPS曲線</title>
-	<link rel="stylesheet" href="/w3.css">
-	<script src="/levelcurve.js"></script>
-</head>
+<style>
+.dark .w3-light-grey {
+	color: white !important;
+	background: var(--bg) !important;
+}
+</style>
 
-<body>
-	<style>
-:root {
-	--a: #fff;
-	--b: #000;
-	--c: #f1f1f1;
-}
-[data-Q="dark1"] {
-	--a: #2a2a2a;
-	--b: #fff;
-	--c: #2a2a2a;
-}
-[data-Q="dark2"] {
-	--a: #32373a;
-	--b: #fff;
-	--c: #32373a;
-}
-body {
-	color: var(--b);
-	background-color: var(--a) !important;
-}
-.w3-light-grey {
-	background-color: var(--c) !important;
-	color: var(--b) !important;
-}
-.w3-modal-content {
-	color: var(--b);
-	background-color: var(--a) !important;
-}
-.topnav { background-color: #333 !important;margin-block:0; display: inline-block;width: 100%;text-align:center;font-size: max(1.5vw, 10px) !important; }
-.topnav > a { display: inline-block;color: #f2f2f2 !important; padding: 1vh 2vw; text-decoration: none;cursor: pointer;vertical-align: middle; }
-.topnav > a.active { background-color: #4caf50 !important; }
-.topnav > a:visited { text-decoration: none; }
-.topnav > a:hover { background-color: #009688 !important; }
-.topnav svg { background-color: inherit !important;height: 1.3em; }
-	</style>
-	<div class="topnav">
-		<a href="/index.html">主頁</a>
-		<a href="/search.html">貓咪</a>
-		<a href="/esearch.html">敵人</a>
-		<a href="/gachas.html">轉蛋</a>
-		<a href="/stage.html">關卡</a>
-		<a title="設定" href="/settings.html" style="float: right;">
-			<svg viewBox="0 0 24 24">
-				<path d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z"
-				fill="white" />
-			</svg>
-		</a>
-	</div>
-	<div id="loader"></div>
-	<div style="margin: 0 auto;width: 100%;margin-top: 0.8em;text-align: center;">
-		<datalist id="CL"></datalist>
-		<input type="text" id="cat-name" list="CL" name="add-cat">
-		<select id="CF" style="width:6.2em;padding:2px;margin:0px 10px;">
-			<option>第一型態</option>
-			<option>第二型態</option>
-			<option>第三型態</option>
-			<option>第四型態</option>
-			<option selected>最高型態</option>
-		</select>
-		<button id="ok" class="w3-button w3-round w3-black" style="margin-left: 0.5em;">OK</button>
-	</div>
-	<div id="id01" class="w3-modal">
-		<div class="w3-modal-content">
-			<div class="w3-container">
-				<span onclick="id01.style.display='none'" class="w3-button w3-hover-red w3-display-topright">&times;</span>
-				<p>選取要新增的貓咪</p>
-				<input type="text" id="cat-name2" list="CL" name="add-cat2">
-				<select id="CF2" style="width:6.2em;padding:2px;margin:0px 10px;">
-					<option>第一型態</option>
-					<option>第二型態</option>
-					<option>第三型態</option>
-					<option>第四型態</option>
-					<option selected>最高型態</option>
-				</select>
-				<p>
-					<button class="w3-button w3-round w3-purple" id="add">新增至圖表</button>
-				</p>
-			</div>
+<div id="loader"></div>
+<div style="margin: 0 auto;width: 100%;margin-top: 0.8em;text-align: center;">
+	<datalist id="CL"></datalist>
+	<input type="text" id="cat-name" list="CL" name="add-cat">
+	<select id="CF" style="width:6.2em;padding:2px;margin:0px 10px;">
+		<option>第一型態</option>
+		<option>第二型態</option>
+		<option>第三型態</option>
+		<option>第四型態</option>
+		<option selected>最高型態</option>
+	</select>
+	<button id="ok" class="w3-button w3-round w3-blue" style="margin-left: 0.5em;">OK</button>
+</div>
+<div id="id01" class="w3-modal">
+	<div class="w3-modal-content">
+		<div class="w3-container">
+			<span onclick="id01.style.display='none'" class="w3-button w3-hover-red w3-display-topright">&times;</span>
+			<p>選取要新增的貓咪</p>
+			<input type="text" id="cat-name2" list="CL" name="add-cat2">
+			<select id="CF2" style="width:6.2em;padding:2px;margin:0px 10px;">
+				<option>第一型態</option>
+				<option>第二型態</option>
+				<option>第三型態</option>
+				<option>第四型態</option>
+				<option selected>最高型態</option>
+			</select>
+			<p>
+				<button class="w3-button w3-round w3-purple" id="add">新增至圖表</button>
+			</p>
 		</div>
 	</div>
-	<a style="position: fixed;bottom: 1vh;right: 1vw;color: #0027ff !important;" href="dpsgraph_png.html">切換至點陣圖模式</a>
-	<script src="/cat.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-	<script src="svg.js"></script>
-	<script src="dpsgraph.js"></script>
-</body>
-
-</html>
+</div>
+<a style="position: fixed;bottom: 1vh;right: 1vw;color: #0027ff !important;" href="dpsgraph_png.html">切換至點陣圖模式</a>
+<script src="/cat.js"></script>
+<script src="svg.js"></script>
+<script src="dpsgraph.js"></script>
