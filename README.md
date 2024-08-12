@@ -30,27 +30,27 @@ Note: To display images successfully, you may need to clone https://github.com/b
 
 ### Coding style
 
-* Always indent using tabs(except for `package.json`, `package-lock.json`, `.github/workflows/pages.yml`)
+* Always indent using tabs(except for YAML files and `package.json`, `package-lock.json`)
 * Always use LF line ending
 * Use `require` instead of `import` in JavaScript files
 
 ## Layouts
 
-* common: use [W3.CSS](https://www.w3schools.com/w3css/default.asp) + [Dracula Theme](https://draculatheme.com/).
-* gh: Texts are rendered left to right, based on [github-markdown-css](https://github.com/sindresorhus/github-markdown-css), Good for displaying large tables.
-* static1: Texts are centered.Good for writing articles.
+* `common`: use [W3.CSS](https://www.w3schools.com/w3css/default.asp) + [Dracula Theme](https://draculatheme.com/).
+* `gh`: Texts and tables are rendered left to right, based on [github-markdown-css](https://github.com/sindresorhus/github-markdown-css), good for displaying complex or large tables.
+* `static1`: Document is centered, good for writing articles.
 
 ### Resources
 
-* Cat obtain/involve: https://docs.google.com/spreadsheets/d/1AOId2OhHT59WgpVtgvUylh_9_l-mf2qWvUqyB2cbm0g/edit?usp=sharing
-* Enemy Species: https://docs.google.com/spreadsheets/d/1pVSY0EkiBolHCtoj15JW_T0ih9prya6q_9HCmJ5Jo0k/edit?usp=sharing
-* Gacha history: https://home.gamer.com.tw/artwork.php?sn=5349275
-* Collab History(Taiwan): https://forum.gamer.com.tw/C.php?bsn=23772&snA=19806
-* Collab History(Japan): https://forum.gamer.com.tw/C.php?bsn=23772&snA=20642
-* Stage schedule(Taiwan): https://forum.gamer.com.tw/C.php?bsn=23772&snA=20534
+* [Cat obtain/involve](https://docs.google.com/spreadsheets/d/1AOId2OhHT59WgpVtgvUylh_9_l-mf2qWvUqyB2cbm0g/edit?usp=sharing)
+* [Enemy Species](https://docs.google.com/spreadsheets/d/1pVSY0EkiBolHCtoj15JW_T0ih9prya6q_9HCmJ5Jo0k/edit?usp=sharing)
+* [Gacha history](https://home.gamer.com.tw/artwork.php?sn=5349275)
+* [Collab History(Taiwan)](https://forum.gamer.com.tw/C.php?bsn=23772&snA=19806)
+* [Collab History(Japan)](https://forum.gamer.com.tw/C.php?bsn=23772&snA=20642)
+* [Stage schedule(Taiwan)](https://forum.gamer.com.tw/C.php?bsn=23772&snA=20534)
 
 ※All resources are reproduced with the permission of the author
 
 ### Discord Server
 
-https://discord.gg/A9gZeDu2mv
+[![](https://dcbadge.limes.pink/api/server/https://discord.gg/A9gZeDu2mv)](https://discord.gg/A9gZeDu2mv)
