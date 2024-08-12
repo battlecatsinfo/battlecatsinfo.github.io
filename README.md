@@ -34,6 +34,12 @@ Note: To display images successfully, you may need to clone https://github.com/b
 * Always use LF line ending
 * Use `require` instead of `import` in JavaScript files
 
+## Layouts
+
+* common: use [W3.CSS](https://www.w3schools.com/w3css/default.asp) + [Dracula Theme](https://draculatheme.com/).
+* gh: Texts are rendered left to right, based on [github-markdown-css](https://github.com/sindresorhus/github-markdown-css), Good for displaying large tables.
+* static1: Texts are centered.Good for writing articles.
+
 ### Resources
 
 * Cat obtain/involve: https://docs.google.com/spreadsheets/d/1AOId2OhHT59WgpVtgvUylh_9_l-mf2qWvUqyB2cbm0g/edit?usp=sharing
