@@ -47,4 +47,4 @@ Note: To display images successfully, you may need to clone https://github.com/b
 
 ### Discord Server
 
-https://discord.gg/A9gZeDu2mv
+[![](https://dcbadge.limes.pink/api/server/https://discord.gg/A9gZeDu2mv)](https://discord.gg/A9gZeDu2mv)
