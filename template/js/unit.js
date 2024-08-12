@@ -281,7 +281,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('很耐打', '4em8Hzg');
 					break;
 				}
-				w2(`很耐打（受到傷害減少1/4 ~ 1/5）`, "4em8Hzg");
+				w2(`很耐打（受到傷害減少 1/4 ~ 1/5）`, "4em8Hzg");
 				break;
 
 			case 27:
@@ -289,7 +289,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('超耐打', 'ck2nA1D');
 					break;
 				}
-				w2(`超耐打（受到傷害減少1/6 ~ 1/7）`, "ck2nA1D");
+				w2(`超耐打（受到傷害減少 1/6 ~ 1/7）`, "ck2nA1D");
 				break;
 
 			case 28:
@@ -297,7 +297,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3(`超大傷害`, "RbqsryO");
 					break;
 				}
-				w2(`超大傷害（3 ~ 4倍傷害）`, "RbqsryO");
+				w2(`超大傷害（3 ~ 4 倍傷害）`, "RbqsryO");
 				break;
 
 			case 29:
@@ -305,7 +305,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('極度傷害', 'whTrzG1');
 					break;
 				}
-				w2(`極度傷害（5 ~ 6倍傷害）`, "whTrzG1");
+				w2(`極度傷害（5 ~ 6 倍傷害）`, "whTrzG1");
 				break;
 
 			case 30:
