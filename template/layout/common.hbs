@@ -65,8 +65,17 @@
 }
 #site-search {
 	display: none;
-	width: 175px;
+	background-color: transparent;
+}
+#site-search input {
+	border: 1px solid rgba(0, 0, 0, 0.25) !important;
+	border-radius: 25px;
 	padding: 0.1em 0.2em;
+	width: 175px;
+	font-size: 17px;
+	font-style: italic;
+	color: black !important;
+	background-color: white !important;
 }
 #search-btn {
 	all: unset;
@@ -81,6 +90,9 @@
 }
 @media (min-width: 800px) {
 	#site-search {
+		display: inline;
+	}
+	#site-search input {
 		display: inline-block;
 		width: 20vw;
 	}
@@ -97,7 +109,6 @@
 }
 #site-s-result {
 	background-color: white !important;
-	display: none;
 	position: absolute;
 	z-index: 10;
 	left: 0;
@@ -133,21 +144,19 @@
 			</svg>
 		</a>
 		<a style="position:relative;float:right;">
-			<form style="display:inline;background-color:transparent;">
-				<input autocomplete="off" id="site-search" type="text" name="search" style="font-size: 17px;border: 1px solid rgba(0, 0, 0, 0.25) !important;border-radius: 25px;font-style: italic;background-color: white !important;color: black !important;" placeholder="Search..."
-			aria-label="search">
+			<form id="site-search">
+				<input autocomplete="off" type="text" placeholder="Search..." aria-label="search">
+				<button type="submit" id="search-btn">
+					<svg viewBox="0 0 50 50" width="50px" height="50px">
+						<path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" />
+					</svg>
+				</button>
 			</form>
-			<button id="search-btn" onclick="site_search()">
-				<svg viewBox="0 0 50 50" width="50px" height="50px">
-					<path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"
-				/>
-				</svg>
-			</button>
 			<div style="position: relative;" class="w3-card">
-				<div id="site-s-result">
-					<div onclick="_s_open('/search.html?q=')">搜尋貓咪</div>
-					<div onclick="_s_open('/esearch.html?q=')">搜尋敵人</div>
-					<div onclick="_s_open('/stage.html?q=')">搜尋關卡</div>
+				<div id="site-s-result" hidden>
+					<div data-search="/search.html">搜尋貓咪</div>
+					<div data-search="/esearch.html">搜尋敵人</div>
+					<div data-search="/stage.html">搜尋關卡</div>
 				</div>
 			</div>
 		</a>

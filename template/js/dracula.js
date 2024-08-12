@@ -8,37 +8,44 @@ function toggleTheme(){
 		localStorage.setItem("theme","dark")
 	}
 }
-var _th = localStorage.getItem("theme");
-if (_th == 'dark' || !_th && window.matchMedia("(prefers-color-scheme: dark)").matches)
-	document.documentElement.classList.add("dark");
 
-const _sis = document.getElementById('site-search');
-const _s_r = document.getElementById('site-s-result');
+(function () {
+	var _th = localStorage.getItem("theme");
+	if (_th == 'dark' || !_th && window.matchMedia("(prefers-color-scheme: dark)").matches)
+		document.documentElement.classList.add("dark");
 
-document.getElementById('search-btn').onclick = function(event) {
-	event.preventDefault();
-	event.currentTarget.previousElementSibling.style.display = 'inline-block';
-}
-_sis.oninput = _sis.onfocus = _sis.onkeydown = function() {
-	_s_r.style.display = 'block';
-}
-_sis.onblur = function() {
-	setTimeout(function() {
-		_s_r.style.display = 'none';
-	}, 500);
-}
+	const siteSearchForm = document.getElementById('site-search');
+	const siteSearchInput = siteSearchForm.firstElementChild;
+	const siteSearchResult = siteSearchForm.nextElementSibling.firstElementChild;
 
-function _s_open(w) {
-	location.href = w + _sis.value;
-}
-_sis.parentNode.onsubmit = function(e) {
-	if (!_sis.value)
-		return false;
-	if (location.href.includes('enemy') || location.href.includes('esearch'))
-		location.href = '/esearch.html?q=' + _sis.value;
-	else if (location.href.includes('stage'))
-		location.href = '/stage.html?q=' + _sis.value;
-	else
-		location.href = '/search.html?q=' + _sis.value;
-	return false;
-}
+	siteSearchForm.addEventListener('submit', function (event) {
+		event.preventDefault();
+		let value = siteSearchInput.value.trim();
+		if (!value)
+			return false;
+		if (location.pathname.startsWith('/enemy') || location.pathname.startsWith('/esearch'))
+			value = '/esearch.html?q=' + encodeURIComponent(value);
+		else if (location.pathname.startsWith('/stage'))
+			value = '/stage.html?q=' + encodeURIComponent(value);
+		else
+			value = '/search.html?q=' + encodeURIComponent(value);
+		location.assign(value);
+	});
+
+	siteSearchInput.addEventListener('focus', function (event) {
+		siteSearchResult.hidden = false;
+	});
+
+	siteSearchInput.addEventListener('blur', function (event) {
+		setTimeout(function() {
+			siteSearchResult.hidden = true;
+		}, 500);
+	});
+
+	for (const elem of siteSearchResult.children) {
+		elem.addEventListener('click', function () {
+			location.assign(this.dataset.search + '?q=' + encodeURIComponent(siteSearchInput.value));
+		});
+	}
+
+})();
