@@ -3,9 +3,17 @@ function toggleTheme(){
 	if (e == "dark") {
 		document.documentElement.classList.remove("dark");
 		localStorage.setItem("theme","light");
-	} else {
+	} else if (e == "light") {
 		document.documentElement.classList.add("dark");
-		localStorage.setItem("theme","dark")
+		localStorage.setItem("theme","dark");
+	} else {
+		if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+			document.documentElement.classList.remove("dark");
+			localStorage.setItem("theme","light");
+		} else {
+			document.documentElement.classList.add("dark");
+			localStorage.setItem("theme","dark");
+		}
 	}
 }
 
