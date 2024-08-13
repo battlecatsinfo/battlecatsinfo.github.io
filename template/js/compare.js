@@ -690,7 +690,7 @@ function addCat(id, I, FC = 0) {
 	}
 }
 
-function tab() {
+document.getElementById('tab').onclick = function() {
 	const X = CL.options;
 	const Y = cat_name.value;
 	for (let i = 0; i < X.length; ++i) {
@@ -754,7 +754,7 @@ function drawPNG() {
 	});
 }
 
-function camera() {
+document.getElementById('camera').onclick = function() {
 	if (window.domtoimage != undefined) return drawPNG();
 	const script = document.createElement('script');
 	script.onload = drawPNG;
@@ -762,7 +762,7 @@ function camera() {
 	document.head.appendChild(script);
 }
 
-function download() {
+document.getElementById('download').onclick = function() {
 	if (window.domtoimage != undefined) return savePNG();
 	const script = document.createElement('script');
 	script.onload = savePNG;
@@ -770,7 +770,7 @@ function download() {
 	document.head.appendChild(script);
 }
 
-function cls() {
+document.getElementById('clear').onclick = function() {
 	let x, y;
 	history.pushState({}, "", '/compare.html');
 	targets.clear();
