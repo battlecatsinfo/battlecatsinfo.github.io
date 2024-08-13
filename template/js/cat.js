@@ -1,5 +1,3 @@
-const C_VER = {{{cat-ver}}};
-
 const units_scheme = {{{toJSON units_scheme}}};
 
 var def_lv, plus_lv, my_curve, _info, unit_orbs;
@@ -1443,7 +1441,7 @@ function onupgradeneeded(e) {
 }
 async function loadCat(id) {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", C_VER);
+		var req = indexedDB.open("db", {{{cat-ver}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
 			db.transaction(["cats"]).objectStore("cats").get(id).onsuccess = function(e) {
@@ -1473,7 +1471,7 @@ async function loadCat(id) {
 
 async function loadEnemy(id) {
 	return new Promise((resolve, reject) => {
-		var req = indexedDB.open("db", C_VER);
+		var req = indexedDB.open("db", {{{cat-ver}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
 			db.transaction(["enemy"]).objectStore("enemy").get(id).onsuccess = function(e) {
@@ -1499,10 +1497,10 @@ async function loadEnemy(id) {
 
 async function loadAllEnemies() {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", C_VER);
+		var req = indexedDB.open("db", {{{cat-ver}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
-			db.transaction(["enemy"]).objectStore("enemy").get(651).onsuccess = function(e) {
+			db.transaction(["enemy"]).objectStore("enemy").get({{{num-enemies}}} - 1).onsuccess = function(e) {
 				if (e.target.result) {
 					let es = new Array({{{num-enemies}}});
 					db.transaction(["enemy"]).objectStore("enemy").openCursor().onsuccess = function(e) {
@@ -1531,10 +1529,10 @@ async function loadAllEnemies() {
 
 async function loadAllCats() {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", C_VER);
+		var req = indexedDB.open("db", {{{cat-ver}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
-			db.transaction(["cats"]).objectStore("cats").get(717).onsuccess = function(e) {
+			db.transaction(["cats"]).objectStore("cats").get({{{num-cats}}} - 1).onsuccess = function(e) {
 				if (e.target.result) {
 					let cats = new Array({{{num-cats}}});
 					db.transaction(["cats"]).objectStore("cats").openCursor().onsuccess = function(e) {

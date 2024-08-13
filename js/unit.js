@@ -16,17 +16,13 @@ module.exports = class extends require('./base.js') {
 
 		// generate combosFormatted
 		const combosFormatted = {};
-		for (const effect of combos_scheme.effectNames) {
-			combosFormatted[effect] = [];
-		}
-		for (const [name, _effect, _level, _units, _requirement] of combos) {
-			const effect = combos_scheme.effectNames[_effect];
-			const sign = combos_scheme.effectSigns[_effect];
-			const value = combos_scheme.effectValues[_effect][_level];
-			const unit = combos_scheme.effectUnits[_effect];
-			const level = combos_scheme.levels[_level];
-			const desc = `${sign}${value}${unit}【${level}】`;
-			const requirement = _requirement > 1 ? combos_scheme.requirements[_requirement] : null;
+
+		for (const name of combos_scheme.names)
+			combosFormatted[name] = [];
+
+		for (const [name, type, level, _units, req] of combos) {
+			const desc = `${combos_scheme.descriptions[type].replace('#', combos_scheme.values[type][level])} 【${combos_scheme.levels[level]}】`;
+			const requirement = req > 1 ? combos_scheme.requirements[req] : null;
 
 			// fill dummy units until 5
 			const units = [];
@@ -38,18 +34,16 @@ module.exports = class extends require('./base.js') {
 				units.push([_units[i], _units[i + 1]]);
 			}
 
-			const combo = {
+			combosFormatted[combos_scheme.names[type]].push({
 				name,
 				desc,
 				requirement,
 				units,
-			};
+			});
+		}
 
-			combosFormatted[effect].push(combo);
-		}
-		for (const effect in combosFormatted) {
-			combosFormatted[effect].sort((a, b) => (a.units.filter(x => x).length - b.units.filter(x => x).length));
-		}
+		for (const type in combosFormatted)
+			combosFormatted[type].sort((a, b) => (a.units.filter(x => x).length - b.units.filter(x => x).length));
 
 		this.write_template('html/combos.html', 'combos.html', {combos: combosFormatted});
 	}

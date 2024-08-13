@@ -2539,14 +2539,8 @@ function renderCombos() {
 			a.textContent = name;
 			a.style.textDecoration = 'none';
 			const p2 = td.appendChild(document.createElement('p'));
-			p2.textContent = (() => {
-				const effect = combos_scheme.effectNames[type];
-				const sign = combos_scheme.effectSigns[type];
-				const value = combos_scheme.effectValues[type][lv];
-				const unit = combos_scheme.effectUnits[type];
-				const level = combos_scheme.levels[lv];
-				return `${effect} ${sign}${value} ${unit}【${level}】`;
-			})();
+			const desc = combos_scheme.descriptions[type].replace('#', combos_scheme.values[type][lv]);
+			p2.textContent = `${combos_scheme.names[type]} ${desc} 【${combos_scheme.levels[lv]}】`;
 			if (req > 1) {
 				const p3 = td.appendChild(document.createElement('p'));
 				p3.style.fontSize = 'smaller';
