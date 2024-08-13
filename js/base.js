@@ -46,7 +46,7 @@ Handlebars.registerHelper('toJSON', function (obj) {
 });
 
 module.exports = class {
-	template(s, env) {
+	template(s, env, minify) {
 		if (s.startsWith('---')) {
 			const idx = s.indexOf('---', 4);
 			const doc = yaml.load(s.slice(4, idx));
@@ -69,14 +69,33 @@ module.exports = class {
 		}
 
 		Object.assign(env, gEnv);
-		return Handlebars.compile(s)(env);
+		let code = Handlebars.compile(s)(env);
+		if (minify)
+			code = require('html-minifier').minify(code, {
+				collapseBooleanAttributes: true,
+				collapseWhitespace: true,
+				conservativeCollapse: true,
+				removeAttributeQuotes: true,
+				decodeEntities: true,
+				minifyCSS: true,
+				minifyJS: true,
+				removeComments: true,
+			});
+		return code;
 	}
-	write_template(in_f, out_f, env) {
-		fs.writeFileSync(
-			resolve(__dirname, '../_out/', out_f),
-			this.template(fs.readFileSync(resolve(__dirname, '../template/', in_f), 'utf8'), env),
-			'utf8'
-		);
+	write_template(in_f, out_f, env, minify) {
+		if (minify instanceof Function)
+			fs.writeFileSync(
+				resolve(__dirname, '../_out/', out_f),
+				minify(this.template(fs.readFileSync(resolve(__dirname, '../template/', in_f), 'utf8'), env)),
+				'utf8'
+			);
+		else
+			fs.writeFileSync(
+				resolve(__dirname, '../_out/', out_f),
+				this.template(fs.readFileSync(resolve(__dirname, '../template/', in_f), 'utf8'), env, minify),
+				'utf8'
+			);
 	}
 	write_string(out_f, s) {
 		return fs.writeFileSync(
@@ -107,5 +126,18 @@ module.exports = class {
 		return fs.createReadStream(
 			resolve(__dirname, '../data/', in_f)
 		);
+	}
+	parse_tsv(s, has_header = true) {
+		const rows = s.split('\n').filter(x => x).map(row => row.split('\t'));
+		if (has_header) {
+			const fields = rows.shift();
+			for (const i in rows) {
+				rows[i] = rows[i].reduce((rv, v, i) => {
+					rv[fields[i]] = v;
+					return rv;
+				}, {});
+			}
+		}
+		return rows;
 	}
 };

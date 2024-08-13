@@ -128,7 +128,7 @@ function to_path(s) {
 }
 
 module.exports = class extends require('./base.js') {
-	run() {
+	run({minify = false}) {
 		try {
 			fs.mkdirSync(resolve(__dirname, '../_out/gacha'));
 		} catch (e) {
@@ -207,7 +207,8 @@ module.exports = class extends require('./base.js') {
 					'contents': contents,
 					'urls': urls,
 					'nav-bar-active': 'gacha'
-				}
+				},
+				minify
 			));
 			gacha_menu.push({'idx': idx, 'name': index(idx) + '. ' + pool['tw-name']});
 			gacha_list += `<h2 id="${idx}">
@@ -222,7 +223,7 @@ module.exports = class extends require('./base.js') {
 			'nav-menu': gacha_menu,
 			'content': gacha_list,
 			'nav-bar-active': 'gacha'
-		});
+		}, minify);
 	}
 	uimg(u) {
 		return this.egg_set.has(u) ? `/img/u/${u}/2.png` : `/img/u/${u}/0.png`;

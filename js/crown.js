@@ -5,7 +5,7 @@ function convert(o) {
 	return o;
 }
 module.exports = class extends require('./base.js') {
-	run() {
-		this.write_template('js/crown.js', 'crown.js', convert(JSON.parse(this.load('crown.json'))));
+	run({minify = false}) {
+		this.write_template('js/crown.js', 'crown.js', convert(JSON.parse(this.load('crown.json'))), minify);
 	}
 };

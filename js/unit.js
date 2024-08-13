@@ -1,15 +1,44 @@
 module.exports = class extends require('./base.js') {
-	run() {
+	run({minify = false}) {
 		const units_scheme = JSON.parse(this.load('units_scheme.json'));
 		const combos_scheme = JSON.parse(this.load('combos_scheme.json'));
 		const combos = JSON.parse(this.load('combos.json'));
 
-		this.write_template('html/unit.html', 'unit.html', {});
-		this.write_template('css/unit.css', 'unit.css', {});
+		if (minify) {
+			const UglifyJS = require("uglify-js");
+			this.write_template('js/unit.js', 'unit.js', {combos_scheme, combos}, function (code) {
+				const r = UglifyJS.minify(code, {
+					'mangle': true,
+					'compress': true,
+					'toplevel': true
+				});
 
-		this.write_template('js/unit.js', 'unit.js', {combos_scheme, combos});
+				if (r.error)
+					console.error('Error on minifying JS:', file, r.error);
 
-		this.write_template('js/cat.js', 'cat.js', {units_scheme});
+				if (r.warnings)
+					console.warn('Warning on minifying JS:', file, r.warnings);
+
+				return r.code;
+			});
+			this.write_template('js/cat.js', 'cat.js', {units_scheme}, function (code) {
+				const r = UglifyJS.minify(code, {
+					'mangle': true,
+					'compress': true
+				});
+
+				if (r.error)
+					console.error('Error on minifying JS:', file, r.error);
+
+				if (r.warnings)
+					console.warn('Warning on minifying JS:', file, r.warnings);
+
+				return r.code;
+			});
+		} else {
+			this.write_template('js/unit.js', 'unit.js', {combos_scheme, combos});
+			this.write_template('js/cat.js', 'cat.js', {units_scheme});
+		}
 
 		// generate combosFormatted
 		const combosFormatted = {};
@@ -40,6 +69,6 @@ module.exports = class extends require('./base.js') {
 		for (const type in combosFormatted)
 			combosFormatted[type].sort((a, b) => (a.units.filter(x => x).length - b.units.filter(x => x).length));
 
-		this.write_template('html/combos.html', 'combos.html', {combos: combosFormatted});
+		this.write_template('html/combos.html', 'combos.html', {combos: combosFormatted}, minify);
 	}
 };

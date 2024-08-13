@@ -2,14 +2,14 @@ const fs = require('node:fs');
 const resolve = require('node:path').resolve;
 
 const sources = [
-	'unit.css',
 	'w3.css',
 	'dracula.css',
 	'gh.css',
 
 	'index.html',
 	'stage.html',
-	'unit.html',
+	'stage2.html',
+	'stage3.html',
 	'enemy.html',
 	'treasure_list.html',
 	'help.html',
@@ -55,7 +55,6 @@ const sources = [
 	'png.js',
 	'svg.js',
 	'dpsgraph.js',
-	'unit.js',
 	'gif.js',
 	'imgcut.js',
 	'anim.min.js',
@@ -75,7 +74,7 @@ const active_map = {
 
 module.exports = class extends require('./base.js') {
 	run({force = false, minify = false}) {		
-		let UglifyJS, CleanCSS, htmlmin, last_mods = {};
+		let UglifyJS, CleanCSS, last_mods = {};
 
 		const last_mods_path = resolve(__dirname, '../last_mods.json');
 		if (!force) {
@@ -89,7 +88,6 @@ module.exports = class extends require('./base.js') {
 		if (minify) {
 			UglifyJS = require("uglify-js");
 			CleanCSS = require('clean-css');
-			htmlmin = require('html-minifier');
 		}
 		for (const file of sources) {
 			let base = 'raw';
@@ -129,20 +127,9 @@ module.exports = class extends require('./base.js') {
 					last_mods[file] = last;
 					contents = this.template(contents, {
 						'nav-bar-active': active_map[file],
-						'filename': file
+						'filename': file,
+						minify
 					});
-					if (htmlmin) {
-						contents = htmlmin.minify(contents, {
-							collapseBooleanAttributes: true,
-							collapseWhitespace: true,
-							conservativeCollapse: true,
-							removeAttributeQuotes: true,
-							decodeEntities: true,
-							minifyCSS: true,
-							minifyJS: true,
-							removeComments: true,
-						});
-					}
 				} else if (file.endsWith('.min.js')) {
 					// nothing todo
 					last_mods[file] = last;
@@ -156,8 +143,9 @@ module.exports = class extends require('./base.js') {
 						case 'png.js':
 						case 'dracula.js':
 						case 'constants.js':
-						case 'cat.js':
 						case 'parser.js':
+						case 'imgcut.js':
+						case 'cat_dict.js':
 							r = UglifyJS.minify(contents, {'mangle': true, 'compress': true});
 							break;
 						default:

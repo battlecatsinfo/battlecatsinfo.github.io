@@ -3,14 +3,12 @@ const fs = require('node:fs');
 const resolve = require('node:path').resolve;
 
 const modules = new Set([
-	'collab',
-	'combo', 
+	'collab', 
 	'copy-assets', 
 	'copy-data', 
 	'crown', 
 	'esearch', 
 	'gacha', 
-	'gamatoto', 
 	'material', 
 	'medal', 
 	'rank',

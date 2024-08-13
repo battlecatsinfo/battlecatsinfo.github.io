@@ -7,14 +7,14 @@ function to_path(s) {
 }
 
 module.exports = class extends require('./base.js') {
-	run() {
+	run({minify = false}) {
 		try {
 			fs.mkdirSync(resolve(__dirname, '../_out/collab'));
 		} catch (e) {
 			if (e.errno != -4075) 
 				throw e;
 		}
-
+		this.minify = minify;
 		this.stage_rewards = {};
 		this.gacha_pools = {};
 		this.map_stars = {};
@@ -75,7 +75,7 @@ module.exports = class extends require('./base.js') {
 				'img': C['img'],
 				'contents': S.join('\n'),
 				'name-br': Array.from(new Set([C['tw-name'], C['jp-name'], C['en-name']].filter(x => x)))
-			}));
+			}), this.minify);
 		}
 		this.write_menu(data['tw-history'], data['jp-history'], nav_menu);
 	}
@@ -100,7 +100,7 @@ module.exports = class extends require('./base.js') {
 			'nav-menu': menu,
 			'japan-collab-history': japan,
 			'taiwan-collab-history': taiwan,
-		});
+		}, {}, this.minify);
 	}
 	write_enemies(O) {
 		let S = '<h2>敵人</h2><div style="margin-left:1em;">';
