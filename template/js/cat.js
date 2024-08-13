@@ -1619,7 +1619,3 @@ for (let i = 0; i < 31; ++i) {
 
 const atk_t = 300 == treasures[0] ? 2.5 : 1 + .005 * treasures[0],
 	hp_t = 300 == treasures[1] ? 2.5 : 1 + .005 * treasures[1];
-
-function getRes(cd) {
-	return Math.max(60, cd - 6 * (treasures[17] - 1) - .3 * treasures[2]);
-}

@@ -738,9 +738,7 @@ function addCat(id, I, FC = 0) {
 				D.style.setProperty('color', TH == 'dark' ? '#ff6363' : '#c10002', 'important');
 				FL = 2;
 			}
-			const I = new Image(40, 40);
-			I.src = 'https://i.imgur.com/' + PU[G[i]] + '.png';
-			D.appendChild(I);
+			D.appendChild(new Image(40, 40)).src = 'https://i.imgur.com/' + PU[G[i]] + '.png';
 			D.append(UD[G[i]]);
 			M.appendChild(D);
 		}

@@ -3,16 +3,19 @@
 
 <head>
 	<meta charset="utf-8">
-
 	<title>{{{title}}}</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta property="og:site_name" content="battlecatsinfo.github.io">
 	<meta property="og:title" content="{{{title}}}">
+	<meta property="og:url" content="https://battlecatsinfo.github.io/{{{filename}}}">
 
 	{{#if description}}
-	<meta property="og:description" content="{{{description}}} | 貓咪大戰爭中文資訊網站">
-	<meta name="description" content="{{{description}}} | 貓咪大戰爭中文資訊網站">
+	<meta property="og:description" content="{{{description}}}">
+	<meta property="description" content="{{{description}}}">
+	{{else}}
+	<meta property="og:description" content="{{{title}}}">
+	<meta name="description" content="{{{title}}}">
 	{{/if}}
 
 	<link rel="stylesheet" href="/gh.css">

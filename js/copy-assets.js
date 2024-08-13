@@ -55,7 +55,6 @@ const sources = [
 	'png.js',
 	'svg.js',
 	'dpsgraph.js',
-	'ototo.js',
 	'cat.js',
 	'unit.js',
 	'gif.js',
@@ -129,7 +128,10 @@ module.exports = class extends require('./base.js') {
 					}
 				} else if (file.endsWith('.html')) {
 					last_mods[file] = last;
-					contents = this.template(contents, { 'nav-bar-active': active_map[file] });
+					contents = this.template(contents, {
+						'nav-bar-active': active_map[file],
+						'filename': file
+					});
 					if (htmlmin) {
 						contents = htmlmin.minify(contents, {
 							collapseBooleanAttributes: true,

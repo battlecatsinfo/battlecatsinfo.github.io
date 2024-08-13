@@ -11,10 +11,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	{{/if}}
 
-	<meta name="description" content="{{{title}}} | 貓咪大戰爭中文資訊網站">
 	<meta property="og:site_name" content="battlecatsinfo.github.io">
 	<meta property="og:title" content="{{{title}}} | 貓咪大戰爭中文資訊網站">
+	<meta property="og:url" content="https://battlecatsinfo.github.io/{{{filename}}}">
+
+	{{#if description}}
+	<meta property="og:description" content="{{{description}}}">
+	<meta property="description" content="{{{description}}}">
+	{{else}}
 	<meta property="og:description" content="{{{title}}}">
+	<meta name="description" content="{{{title}}}">
+	{{/if}}
 
 	{{#if img}}
 	<meta property="og:image" content="{{{img}}}">
