@@ -1,14 +1,9 @@
-{{#> base.html}}
+{{#> common.html}}
 
 {{#*inline "title"}}{{collab.tw-name}}合作活動{{/inline}}
 
-{{#*inline "description"}}
-	<meta name="description" content="{{collab.tw-name}}合作活動 | 貓咪大戰爭中文資訊網站">
-{{/inline}}
-
 {{#*inline "og"}}
-	<meta property="og:title" content="{{collab.tw-name}}合作活動">
-	<meta property="og:description" content="{{collab.tw-name}}合作活動 | 貓咪大戰爭中文資訊網站">
+	{{~> @partial-block}}
 	{{#if collab.img}}
 	<meta property="og:image" content="{{collab.img}}">
 	{{/if}}
@@ -175,4 +170,4 @@
 	</div>
 {{/inline}}
 
-{{/base.html}}
+{{/common.html}}
