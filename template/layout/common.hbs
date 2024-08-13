@@ -5,7 +5,12 @@
 	<meta charset="utf-8">
 	<title>{{{title}}}</title>
 
+	{{#if viewport}}
+	{{{viewport}}}
+	{{else}}
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{{/if}}
+
 	<meta name="description" content="{{{title}}} | 貓咪大戰爭中文資訊網站">
 	<meta property="og:site_name" content="battlecatsinfo.github.io">
 	<meta property="og:title" content="{{{title}}} | 貓咪大戰爭中文資訊網站">
