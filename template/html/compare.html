@@ -4,6 +4,11 @@
 
 {{#*inline "title"}}貓咪比較{{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="levelcurve.js"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
@@ -61,11 +66,6 @@
 		cursor: pointer;
 	}
 	</style>
-{{/inline}}
-
-{{#*inline "scripts"}}
-	{{~> @partial-block}}
-	<script src="levelcurve.js"></script>
 {{/inline}}
 
 {{#*inline "content"}}

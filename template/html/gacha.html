@@ -17,6 +17,11 @@
 	<link rel="stylesheet" type="text/css" href="/w3.css">
 {{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="/gacha.js"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
@@ -119,11 +124,6 @@
 		text-decoration: none;
 	}
 	</style>
-{{/inline}}
-
-{{#*inline "scripts"}}
-	{{~> @partial-block}}
-	<script src="/gacha.js"></script>
 {{/inline}}
 
 {{#*inline "content"}}

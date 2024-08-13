@@ -9,6 +9,11 @@
 	<link rel="stylesheet" type="text/css" href="unit.css">
 {{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="levelcurve.js"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
@@ -115,11 +120,6 @@
 		min-width: initial;
 	}
 	</style>
-{{/inline}}
-
-{{#*inline "scripts"}}
-	{{~> @partial-block}}
-	<script src="levelcurve.js"></script>
 {{/inline}}
 
 {{#*inline "body-attrs"}} style="overflow: scroll;position: relative;"{{/inline}}
