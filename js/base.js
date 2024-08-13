@@ -47,8 +47,8 @@ Handlebars.registerHelper('sum', function (...args) {
 	return args.reduce((sum, n) => sum + parseInt(n, 10));
 });
 
-Handlebars.registerHelper('toJSON', function (obj) {
-	return JSON.stringify(obj);
+Handlebars.registerHelper('toJSON', function (obj, space) {
+	return JSON.stringify(obj, null, space);
 });
 
 const gEnv = JSON.parse(fs.readFileSync(resolve(__dirname, '../data/config.json'), 'utf-8'));
