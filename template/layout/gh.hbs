@@ -25,14 +25,14 @@
 	{{/each}}
 
 	{{#each scripts}}
-	<script type="text/javascript" src="{{this}}"></script>
+	<script src="{{this}}"></script>
 	{{/each}}
 
 </head>
 
 	<body>
 
-	<script type="text/javascript">
+	<script>
 function toggleTheme(){
 	let e = localStorage.getItem("theme");
 	if (e == "dark") {
