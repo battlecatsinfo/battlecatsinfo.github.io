@@ -1,30 +1,29 @@
-var
-	cats,
-	cats_old,
-	hide_seach = false,
-	last_forms, form_s = 5,
-	per_page = 10;
+var cats;
+var cats_old;
+var hide_seach = false;
+var last_forms;
+var form_s = 5;
+var per_page = 10;
 
-const
-	ori_expr = document.getElementById('ori-expr'),
-	filter_expr = document.getElementById("filter-expr"),
-	sort_expr = document.getElementById("sort-expr"),
-	search_result = document.getElementById("search-result"),
-	tbody = document.getElementById("tbody"),
-	pages_a = document.getElementById("pages-a"),
-	tables = document.getElementById("tables"),
-	toggle_s = document.getElementById("toggle-s"),
-	only_my_fav = document.getElementById("only-my-fav"),
-	def_lv_e = document.getElementById("def-lv"),
-	plus_lv_e = document.getElementById("plus-lv"),
-	cattype_e = document.getElementById("cattype"),
-	trait_s = document.getElementById("trait-s"),
-	atk_s = document.getElementById("atk-s"),
-	ab_s = document.getElementById("ab-s"),
-	atkBtn = atk_s.firstElementChild.firstElementChild,
-	traitBtn = trait_s.firstElementChild.firstElementChild,
-	abBtn = ab_s.firstElementChild.firstElementChild,
-	name_search = document.getElementById("name-search");
+const ori_expr = document.getElementById('ori-expr');
+const filter_expr = document.getElementById("filter-expr");
+const sort_expr = document.getElementById("sort-expr");
+const search_result = document.getElementById("search-result");
+const tbody = document.getElementById("tbody");
+const pages_a = document.getElementById("pages-a");
+const tables = document.getElementById("tables");
+const toggle_s = document.getElementById("toggle-s");
+const only_my_fav = document.getElementById("only-my-fav");
+const def_lv_e = document.getElementById("def-lv");
+const plus_lv_e = document.getElementById("plus-lv");
+const cattype_e = document.getElementById("cattype");
+const trait_s = document.getElementById("trait-s");
+const atk_s = document.getElementById("atk-s");
+const ab_s = document.getElementById("ab-s");
+const atkBtn = atk_s.firstElementChild.firstElementChild;
+const traitBtn = trait_s.firstElementChild.firstElementChild;
+const abBtn = ab_s.firstElementChild.firstElementChild;
+const name_search = document.getElementById("name-search");
 
 function rerender(event) {
 	const id = event.currentTarget._i;

@@ -2,110 +2,110 @@ const C_VER = {{{cat-ver}}};
 
 const units_scheme = {{{toJSON units_scheme}}};
 
-var def_lv, plus_lv, my_curve, _info, unit_orbs, orb_massive = 0,
-	orb_resist = 1,
-	orb_good_atk = 0,
-	orb_good_hp = 1;
+var def_lv, plus_lv, my_curve, _info, unit_orbs;
+var orb_massive = 0;
+var orb_resist = 1;
+var orb_good_atk = 0;
+var orb_good_hp = 1;
 
-const
-	// attack types
-	ATK_SINGLE = 1,      // 單體攻擊
-	ATK_RANGE = 2,       // 範圍攻擊
-	ATK_LD = 4,          // 遠距攻擊
-	ATK_OMNI = 8,        // 全方位攻擊
-	ATK_KB_REVENGE = 16, // 擊退反擊(非官方)
+// attack types
+const ATK_SINGLE = 1;      // 單體攻擊
+const ATK_RANGE = 2;       // 範圍攻擊
+const ATK_LD = 4;          // 遠距攻擊
+const ATK_OMNI = 8;        // 全方位攻擊
+const ATK_KB_REVENGE = 16; // 擊退反擊(非官方)
 
-	// traits
-	TB_RED = 1,          // 紅色敵人
-	TB_FLOAT = 2,        // 飄浮敵人
-	TB_BLACK = 4,        // 黑色敵人
-	TB_METAL = 8,        // 鋼鐵敵人
-	TB_ANGEL = 16,       // 天使敵人
-	TB_ALIEN = 32,       // 異星戰士
-	TB_ZOMBIE = 64,      // 不死生物
-	TB_RELIC = 128,      // 古代種
-	TB_WHITE = 256,      // 無屬性敵人
-	TB_EVA = 512,        // 使徒
-	TB_WITCH = 1024,     // 魔女
-	TB_DEMON = 2048,     // 惡魔
-	TB_INFN = 4096,      // 道場塔
-	TB_BEAST = 8192,     // 超獸
-	TB_BARON = 16384,    // 超生命體
-	TB_SAGE = 32768,     // 超賢者
+// traits
+const TB_RED = 1;          // 紅色敵人
+const TB_FLOAT = 2;        // 飄浮敵人
+const TB_BLACK = 4;        // 黑色敵人
+const TB_METAL = 8;        // 鋼鐵敵人
+const TB_ANGEL = 16;       // 天使敵人
+const TB_ALIEN = 32;       // 異星戰士
+const TB_ZOMBIE = 64;      // 不死生物
+const TB_RELIC = 128;      // 古代種
+const TB_WHITE = 256;      // 無屬性敵人
+const TB_EVA = 512;        // 使徒
+const TB_WITCH = 1024;     // 魔女
+const TB_DEMON = 2048;     // 惡魔
+const TB_INFN = 4096;      // 道場塔
+const TB_BEAST = 8192;     // 超獸
+const TB_BARON = 16384;    // 超生命體
+const TB_SAGE = 32768;     // 超賢者
 
-	// immunities
-	IMU_WAVE = 1,
-	IMU_STOP = 2,
-	IMU_SLOW = 4,
-	IMU_KB = 8,
-	IMU_VOLC = 16,
-	IMU_WEAK = 32,
-	IMU_WARP = 64,
-	IMU_CURSE = 128,
-	IMU_POIATK = 256,
-	IMU_BOSSWAVE = 512,
+// immunities
+const IMU_WAVE = 1;
+const IMU_STOP = 2;
+const IMU_SLOW = 4;
+const IMU_KB = 8;
+const IMU_VOLC = 16;
+const IMU_WEAK = 32;
+const IMU_WARP = 64;
+const IMU_CURSE = 128;
+const IMU_POIATK = 256;
+const IMU_BOSSWAVE = 512;
 
-	// abilities
-	AB_STRONG = 1,
-	AB_LETHAL = 2,
-	AB_ATKBASE = 3,
-	AB_CRIT = 4,
-	AB_ZKILL = 5,
-	AB_CKILL = 6,
-	AB_BREAK = 7,
-	AB_SHIELDBREAK = 8,
-	AB_S = 9,
-	AB_BOUNTY = 10,
-	AB_METALIC = 11,
-	AB_MINIWAVE = 12,
-	AB_WAVE = 13,
-	AB_MINIVOLC = 14,
-	AB_VOLC = 15,
-	AB_WAVES = 16,
-	AB_BAIL = 17,
-	AB_BSTHUNT = 18,
-	AB_WKILL = 19,
-	AB_EKILL = 20,
-	AB_WEAK = 21,
-	AB_STOP = 22,
-	AB_SLOW = 23,
-	AB_ONLY = 24,
-	AB_GOOD = 25,
-	AB_RESIST = 26,
-	AB_RESISTS = 27,
-	AB_MASSIVE = 28,
-	AB_MASSIVES = 29,
-	AB_KB = 30,
-	AB_WARP = 31,
-	AB_IMUATK = 32,
-	AB_CURSE = 33,
-	AB_BURROW = 34,
-	AB_REVIVE = 35,
-	AB_POIATK = 36,
-	AB_GLASS = 37,
-	AB_SHIELD = 38,
-	AB_DSHIELD = 39,
-	AB_COUNTER = 40,
-	AB_AFTERMATH = 41,
-	AB_SAGE = 42,
-	AB_SUMMON = 43,
-	AB_MK = 44,
+// abilities
+const AB_STRONG = 1;
+const AB_LETHAL = 2;
+const AB_ATKBASE = 3;
+const AB_CRIT = 4;
+const AB_ZKILL = 5;
+const AB_CKILL = 6;
+const AB_BREAK = 7;
+const AB_SHIELDBREAK = 8;
+const AB_S = 9;
+const AB_BOUNTY = 10;
+const AB_METALIC = 11;
+const AB_MINIWAVE = 12;
+const AB_WAVE = 13;
+const AB_MINIVOLC = 14;
+const AB_VOLC = 15;
+const AB_WAVES = 16;
+const AB_BAIL = 17;
+const AB_BSTHUNT = 18;
+const AB_WKILL = 19;
+const AB_EKILL = 20;
+const AB_WEAK = 21;
+const AB_STOP = 22;
+const AB_SLOW = 23;
+const AB_ONLY = 24;
+const AB_GOOD = 25;
+const AB_RESIST = 26;
+const AB_RESISTS = 27;
+const AB_MASSIVE = 28;
+const AB_MASSIVES = 29;
+const AB_KB = 30;
+const AB_WARP = 31;
+const AB_IMUATK = 32;
+const AB_CURSE = 33;
+const AB_BURROW = 34;
+const AB_REVIVE = 35;
+const AB_POIATK = 36;
+const AB_GLASS = 37;
+const AB_SHIELD = 38;
+const AB_DSHIELD = 39;
+const AB_COUNTER = 40;
+const AB_AFTERMATH = 41;
+const AB_SAGE = 42;
+const AB_SUMMON = 43;
+const AB_MK = 44;
 
-	// resits
-	RES_WEAK = 0,
-	RES_STOP = 1,
-	RES_SLOW = 2,
-	RES_KB = 3,
-	RES_WAVE = 4,
-	RES_SURGE = 5,
-	RES_CURSE = 6,
-	RES_TOXIC = 7,
-	RES_WARP = 8,
+// resists
+const RES_WEAK = 0;
+const RES_STOP = 1;
+const RES_SLOW = 2;
+const RES_KB = 3;
+const RES_WAVE = 4;
+const RES_SURGE = 5;
+const RES_CURSE = 6;
+const RES_TOXIC = 7;
+const RES_WARP = 8;
 
-	trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC,
-	trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL,
+const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
+const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 
-	_l_unit = localStorage.getItem("unit");
+const _l_unit = localStorage.getItem("unit");
 
 let _l_f = localStorage.getItem('prec');
 
