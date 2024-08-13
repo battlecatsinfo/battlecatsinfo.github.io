@@ -55,7 +55,6 @@ const sources = [
 	'png.js',
 	'svg.js',
 	'dpsgraph.js',
-	'cat.js',
 	'unit.js',
 	'gif.js',
 	'imgcut.js',

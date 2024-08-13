@@ -1,4 +1,6 @@
+const combos_scheme = {{{toJSON combos_scheme}}};
 const my_params = new URLSearchParams(location.search);
+const combos = {{{toJSON combos}}};
 let my_id = parseInt(my_params.get('id'));
 const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINIVOLC, AB_VOLC, AB_ATKBASE, AB_SAGE]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
@@ -149,41 +151,9 @@ function createResIcons(res, p) {
 }
 
 function getTraitNames(trait) {
-	let i = 0;
-	var idxs = [];
-	for (let x = 1; x <= TB_DEMON; x <<= 1) trait & x && idxs.push(i), i++;
-	return 1 == idxs.length ? '（' + ["紅色敵人", "飄浮敵人", "黑色敵人", "鋼鐵敵人", "天使敵人", "異星戰士", "不死生物", "古代種", "無屬性敵人", "使徒", "魔女", "惡魔"][idxs[0]] + '）' : '（' + get_trait_short_names(trait) + '）敵人';
-}
-
-function createTraitIcons(trait, parent) {
-	if (trait) {
-		var e, E = document.createElement('div'),
-			names = [
-				"BUxdmA6", // red
-				"GlcKsa6", // float
-				"XbBWQIp", //black
-				"fVfHaCQ", // metal
-				"kxvTRTQ", // angel
-				"PPpWAPy", // alien
-				"oqVjofz", // zombie
-				"caSziI9", // relic
-				"qOEibJt", // white
-				"", // eva
-				"", // witch
-				"hp6EvG6" // demon
-			];
-		let i = 0;
-		for (let x = 1; x <= TB_DEMON; x <<= 1) {
-			if (trait & x) {
-				e = new Image(40, 40);
-				e.src = 'https://i.imgur.com/' + names[i] + '.png';
-				E.appendChild(e);
-			}
-			++i;
-		}
-		E.id = 'trait';
-		parent.appendChild(E);
-	}
+	const idxs = [];
+	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && idxs.push(i);
+	return 1 == idxs.length ? `（${units_scheme.traits.names[idxs[0]]}）` : `（${get_trait_short_names(trait)}）敵人`;
 }
 
 function createAbIcons(form, p1, p2, tbody) {
@@ -1323,7 +1293,7 @@ function handleBlur() {
 		}
 	}
 	this.textContent = 'Lv' + this.L;
-	const arr = skill_costs[this.C];
+	const arr = units_scheme.talents.costs[this.C];
 	let total = 0;
 	for (let i = 0; i < this.L; ++i)
 		total += arr[i];
@@ -1606,7 +1576,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 					super_talent = true;
 					continue;
 				}
-				N = talent_d[T[i]];
+				N = units_scheme.talents.names[T[i]];
 				tr = document.createElement('tr');
 				td = document.createElement('td');
 				td.classList.add('F');
@@ -1656,7 +1626,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 						continue;
 					if (!T[i + 13])
 						continue;
-					N = talent_d[T[i]];
+					N = units_scheme.talents.names[T[i]];
 					tr = document.createElement('tr');
 					td = document.createElement('td');
 					td.classList.add('F');
@@ -2485,7 +2455,7 @@ function rednerTalentInfos(talents, _super = false) {
 		if (!talents[i]) break;
 		if (_super != (talents[i + 13] == 1)) continue;
 		const info = getTalentInfo(talents.subarray(i, i + 14));
-		const name = talent_d[talents[i]];
+		const name = units_scheme.talents.names[talents[i]];
 		infos.push(name);
 		const tr = document.createElement('tr');
 		if (info != undefined) {
@@ -2628,7 +2598,7 @@ function renderTalentCosts(talent_names, talents, _super = false) {
 		tr.appendChild(td0);
 		for (let j = 0; j < names.length; ++j) {
 			const td = document.createElement('td');
-			const tbl = skill_costs[costs[j]];
+			const tbl = units_scheme.talents.costs[costs[j]];
 			if (i & 1)
 				td.classList.add('F');
 			td.textContent = i > maxLvs[j] ? '-' : tbl[i - 1];
@@ -2649,7 +2619,7 @@ function renderTalentCosts(talent_names, talents, _super = false) {
 		const td = document.createElement('td');
 		let s = 0;
 		for (let j = 0; j < maxLvs[i]; ++j)
-			s += skill_costs[costs[i]][j];
+			s += units_scheme.talents.costs[costs[i]][j];
 		td.textContent = s.toString();
 		total += s;
 		td.classList.add('F');
@@ -2668,110 +2638,41 @@ function renderTalentCosts(talent_names, talents, _super = false) {
 }
 
 function renderCombos() {
-	const limits = ['世界篇第一章', '世界篇第二章', '世界篇第三章', '未來篇第一章', '未來篇第二章', '未來篇第三章', '宇宙篇第一章', '宇宙篇第二章', '宇宙篇第三章'];
-	const
-		combo_f = [
-			"角色攻擊力 +$ %",
-			"角色體力 +$ %",
-			"角色移動速度 +$ %",
-			"初期貓咪砲能量值 +$ 格",
-			"初期工作狂貓等級 +$",
-			"初期所持金額 $ 元",
-			"貓咪砲攻擊力 +$ %",
-			"貓咪砲充電速度加快 $f",
-			"工作狂貓的工作效率 +$ %",
-			"工作狂貓錢包 +$ %",
-			"城堡耐久力 +$ %",
-			"研究力 -$ %（10 % = 26.4 F）",
-			"會計能力 +$ %",
-			"學習力 +$ %",
-			"「善於攻擊」的效果 +$ %",
-			"「超大傷害」的效果 +$ %",
-			"「很耐打」的效果 +$ %",
-			"「打飛敵人」的效果 +$ %",
-			"「使動作變慢」的效果 +$ %",
-			"「使動作停止」的效果 +$ %",
-			"「攻擊力下降」的效果 +$ %",
-			"「攻擊力上升」的效果 +$ %",
-			"「終結魔女」的效果 +$ %",
-			"「終結使徒」的效果 +$ %",
-			"「會心一擊」的發動率 +$ %"
-		],
-		combo_params = [
-			[10, 15, 20, 30], // 1. 角色攻擊力
-			[10, 20, 30, 50], // 2. 角色體力
-			[10, 15, 20, 30], // 3. 角色移動速度
-			[2, 4, 6, 10], // 4. 初期貓咪砲能量值
-			[1, 2, 3, 4], // 5. 初期工作狂貓等級
-			[300, 500, 1000, 2000], // 6. 初期所持金額
-			[20, 50, 100, 200], // 7. 貓咪砲攻擊力
-			[20, 30, 40, 50], // 8. 貓咪砲充電速度加快
-			[10, 20, 30, 50], // 9. 工作狂貓的工作效率
-			[10, 20, 30, 50], // 10. 工作狂貓錢包
-			[20, 50, 100, 200], // 11. 城堡耐久力
-			[10, 20, 30, 40, 50], // 12. 研究力
-			[10, 20, 30, 50], // 13. 會計能力 
-			[10, 15, 20, 30], // 14. 學習力
-			[10, 20, 30, 50], // 15. 「善於攻擊」的效果
-			[10, 20, 30, 50], // 16. 「超大傷害」的效果
-			[10, 20, 30, 50], // 17. 「很耐打」的效果
-			[10, 20, 30, 50], // 18. 「打飛敵人」的效果
-			[10, 20, 30, 50], // 19. 「使動作變慢」的效果
-			[10, 20, 30, 50], // 20. 「使動作停止」的效果
-			[10, 20, 30, 50], // 21. 「攻擊力下降」的效果
-			[20, 30, 50, 100], // 22. 「攻擊力上升」的效果
-			[400, 400, 400, 400, 400], // 23. 「終結魔女」的效果
-			[400, 400, 400, 400, 400], // 24. 「終結使徒」的效果
-			[1, 2, 3, 4] // 25. 「會心一擊」的發動率
-		];
 	const table = document.createElement('table');
 	for (let j = 0; j < combos.length; ++j) {
 		const C = combos[j];
 		const units = C[3];
 		for (let i = 0; i < units.length; i += 2) {
-			if (my_id == units[i]) {
-				const tr = document.createElement('tr');
-				const type = C[1];
-				const lv = C[2];
-				const td = document.createElement('td');
-				const p = document.createElement('p');
-				const p2 = document.createElement('p');
-				const p3 = document.createElement('p');
+			if (my_id !== units[i]) { continue; }
+			const [name, type, lv, , req] = C;
+			const tr = table.appendChild(document.createElement('tr'));
+			const td = tr.appendChild(document.createElement('td'));
+			const p = td.appendChild(document.createElement('p'));
+			const a = p.appendChild(document.createElement('a'));
+			a.href = '/combos.html#' + name;
+			a.textContent = name;
+			a.style.textDecoration = 'none';
+			const p2 = td.appendChild(document.createElement('p'));
+			const desc = combos_scheme.descriptions[type].replace('#', combos_scheme.values[type][lv]);
+			p2.textContent = `${combos_scheme.names[type]} ${desc} 【${combos_scheme.levels[lv]}】`;
+			if (req > 1) {
+				const p3 = td.appendChild(document.createElement('p'));
 				p3.style.fontSize = 'smaller';
-				td.appendChild(p);
-				td.appendChild(p2);
-				const a = document.createElement('a');
-				a.href = '/combos.html#' + C[0];
-				a.textContent = C[0];
-				a.style.textDecoration = 'none';
-				p.appendChild(a);
-				p2.textContent = combo_f[type].replace('$', combo_params[type][lv]) + '【' + ['小', '中', '大', '究極'][lv] + '】';
-				tr.appendChild(td);
-				if (C[4] > 10000) {
-					p3.textContent = `等排${[2700, 1450, 2150][C[4] - 10001]}`;
-					td.appendChild(p3);
-				} else if (C[4] > 1) {
-					p3.textContent = `${limits[C[4] - 1]}`;
-					td.appendChild(p3);
-				}
-				for (let c = 0; c < units.length; c += 2) {
-					const td = document.createElement('td');
-					const img = new Image(104, 79);
-					const a = document.createElement('a');
-					a.href = './unit.html?id=' + units[c].toString();
-					img.src = `/img/u/${units[c]}/${units[c + 1]}.png`;
-					a.appendChild(img);
-					td.appendChild(a);
-					tr.appendChild(td);
-				}
-				table.appendChild(tr);
-				break;
+				p3.textContent = combos_scheme.requirements[req];
 			}
+			for (let c = 0; c < units.length; c += 2) {
+				const td = tr.appendChild(document.createElement('td'));
+				const a = td.appendChild(document.createElement('a'));
+				a.href = './unit.html?id=' + units[c].toString();
+				a.appendChild(new Image(104, 79)).src = `/img/u/${units[c]}/${units[c + 1]}.png`;
+			}
+			break;
 		}
 	}
 	if (table.children.length) {
 		table.classList.add('w3-table', 'w3-centered', 'combo');
-		unit_content.appendChild(document.createElement('p')).textContent = '聯組資訊';
+		const p = unit_content.appendChild(document.createElement('p'));
+		p.textContent = '聯組資訊';
 		unit_content.appendChild(table);
 	}
 }

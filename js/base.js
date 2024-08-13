@@ -36,6 +36,15 @@ Handlebars.registerHelper('ifCond', function (v1, op, v2, options) {
 	}
 });
 
+Handlebars.registerHelper('sum', function (...args) {
+	const options = args.pop();
+	return args.reduce((sum, n) => sum + parseInt(n, 10));
+});
+
+Handlebars.registerHelper('toJSON', function (obj) {
+	return JSON.stringify(obj);
+});
+
 module.exports = class {
 	template(s, env) {
 		if (s.startsWith('---')) {
