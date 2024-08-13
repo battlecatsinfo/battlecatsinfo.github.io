@@ -24,6 +24,7 @@
 	<link rel="stylesheet" type="text/css" href="{{this}}">
 	{{/each}}
 
+	<script src="/dracula.js"></script>
 	{{#each scripts}}
 	<script src="{{this}}"></script>
 	{{/each}}
@@ -31,22 +32,6 @@
 </head>
 
 	<body>
-
-	<script>
-function toggleTheme(){
-	let e = localStorage.getItem("theme");
-	if (e == "dark") {
-		document.documentElement.classList.remove("dark");
-		localStorage.setItem("theme","light");
-	} else {
-		document.documentElement.classList.add("dark");
-		localStorage.setItem("theme","dark")
-	}
-}
-var _th = localStorage.getItem("theme");
-if (_th == 'dark' || !_th && window.matchMedia("(prefers-color-scheme: dark)").matches)
-	document.documentElement.classList.add("dark");
-	</script>
 
 	<h1 id="title"><a class="anchor" href="#title"><span class="octicon octicon-link"></span></a>{{{title}}}</h1>
 

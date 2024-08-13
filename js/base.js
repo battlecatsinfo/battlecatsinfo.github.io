@@ -62,10 +62,11 @@ module.exports = class {
 						layout + '.hbs'
 					), 
 					'utf8'
-				);
+				).split('${contents}$');
 
 			Object.assign(env, doc);
-			s = templ.replace('${contents}$', s.slice(idx + 3));
+
+			s = templ.join(s.slice(idx + 3));
 		}
 
 		Object.assign(env, gEnv);
