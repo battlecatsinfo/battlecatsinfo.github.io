@@ -8,13 +8,8 @@ const modules = new Set([
 	'collab',
 	'copy-assets', 
 	'copy-data', 
-	'crown', 
 	'esearch', 
 	'gacha', 
-	'gamatoto', 
-	'material', 
-	'medal', 
-	'rank',
 ]);
 
 const args = parseArgs({

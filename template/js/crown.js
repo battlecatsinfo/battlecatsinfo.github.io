@@ -1,4 +1,4 @@
-{{#each data as |value key|}}
+{{#each (loadJSON "crown.json") as |value key|}}
 const {{{key}}} = {{{toJSON value}}};
 {{/each}}
 const MONTHY = [

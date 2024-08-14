@@ -181,6 +181,14 @@ Handlebars.registerHelper('toJSON', function (obj, space) {
 	return JSON.stringify(obj, null, space);
 });
 
+Handlebars.registerHelper('loadTSV', function (filename, options) {
+	return SiteGenerator.parse_tsv(SiteGenerator.load(filename));
+});
+
+Handlebars.registerHelper('loadJSON', function (filename, options) {
+	return JSON.parse(SiteGenerator.load(filename));
+});
+
 const gEnv = JSON.parse(fs.readFileSync(resolve(DATA_DIR, 'config.json'), 'utf-8'));
 
 class SiteGenerator {

@@ -52,7 +52,7 @@
 				<td>來自梅露可物語的加碼多多探險隊臨時魔寵隊員</td>
 				<td>活動期間中，獲得獎勵數量增加<br>※貓罐頭除外</td>
 			</tr>
-			{{#each members as |member|}}
+			{{#each (loadTSV "gamatoto.tsv") as |member|}}
 			<tr>
 				<td>{{member.name}}</td>
 				<td><img src="/img/g/g{{member.level}}.png"></td>

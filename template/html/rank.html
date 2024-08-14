@@ -28,7 +28,7 @@
 				</tr>
 			</thead>
 			<tbody id="rank">
-			{{#each ranks as |rank|}}
+			{{#each (loadTSV "rank.tsv") as |rank|}}
 			<tr>
 				<td>{{rank.rank}}</td>
 				<td>{{{rank.message}}}</td>
