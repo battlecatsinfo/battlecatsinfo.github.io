@@ -129,11 +129,11 @@
 	{{/nav-bar-styles}}
 	{{#> nav-bar-content}}
 	<div class="topnav">
-		<a href="/index.html"{{#ifCond nav-bar-active "===" "index" }} class="active"{{/ifCond}}>主頁</a>
-		<a href="/search.html"{{#ifCond nav-bar-active "===" "cat" }} class="active"{{/ifCond}}>貓咪</a>
-		<a href="/esearch.html"{{#ifCond nav-bar-active "===" "enemy" }} class="active"{{/ifCond}}>敵人</a>
-		<a href="/gachas.html"{{#ifCond nav-bar-active "===" "gacha" }} class="active"{{/ifCond}}>轉蛋</a>
-		<a href="/stage.html"{{#ifCond nav-bar-active "===" "stage" }} class="active"{{/ifCond}}>關卡</a>
+		<a href="/index.html"{{#if (op nav-bar-active "===" "index")}} class="active"{{/if}}>主頁</a>
+		<a href="/search.html"{{#if (op nav-bar-active "===" "cat")}} class="active"{{/if}}>貓咪</a>
+		<a href="/esearch.html"{{#if (op nav-bar-active "===" "enemy")}} class="active"{{/if}}>敵人</a>
+		<a href="/gachas.html"{{#if (op nav-bar-active "===" "gacha")}} class="active"{{/if}}>轉蛋</a>
+		<a href="/stage.html"{{#if (op nav-bar-active "===" "stage")}} class="active"{{/if}}>關卡</a>
 		{{#> nav-bar-content-settings}}
 		<a title="設定" href="/settings.html" style="float:right;">
 			<svg viewBox="0 0 24 24">

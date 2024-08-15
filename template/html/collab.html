@@ -65,17 +65,11 @@
 		{{#if collab.tw-name}}
 		{{collab.tw-name}}<br>
 		{{/if}}
-		{{#if collab.jp-name}}
-		{{#ifCond collab.jp-name '!==' collab.tw-name}}
+		{{#if (and collab.jp-name (op collab.jp-name '!==' collab.tw-name))}}
 		{{collab.jp-name}}<br>
-		{{/ifCond}}
 		{{/if}}
-		{{#if collab.en-name}}
-		{{#ifCond collab.en-name '!==' collab.tw-name}}
-		{{#ifCond collab.en-name '!==' collab.jp-name}}
+		{{#if (and collab.en-name (op collab.en-name '!==' collab.tw-name) (op collab.en-name '!==' collab.jp-name))}}
 		{{collab.en-name}}<br>
-		{{/ifCond}}
-		{{/ifCond}}
 		{{/if}}
 		{{/with}}
 	</h1>
@@ -143,15 +137,15 @@
 					<td>{{stage.stars.[3]}}</td>
 					<td>
 					{{~#each stage.rewards as |reward|~}}
-					{{~#ifCond reward.type '==' 'u'~}}
+					{{~#if (op reward.type '==' 'u')~}}
 					<a href="/unit.html?id={{reward.id}}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/{{reward.id}}/0.png"></a>
-					{{~/ifCond~}}
-					{{~#ifCond reward.type '==' 't'~}}
+					{{~/if~}}
+					{{~#if (op reward.type '==' 't')~}}
 					<a href="/unit.html?id={{reward.id}}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/{{reward.id}}/2.png"></a>
-					{{~/ifCond~}}
-					{{~#ifCond reward.type '==' 'r'~}}
+					{{~/if~}}
+					{{~#if (op reward.type '==' 'r')~}}
 					<img class="R" width="128" height="128" loading="lazy" src="/img/r/{{reward.id}}.png">
-					{{~/ifCond~}}
+					{{~/if~}}
 					{{~/each~}}
 					</td>
 				</tr>

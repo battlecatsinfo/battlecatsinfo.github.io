@@ -128,17 +128,11 @@
 		{{#if pool.tw-name}}
 		{{pool.tw-name}}<br>
 		{{/if}}
-		{{#if pool.jp-name}}
-		{{#ifCond pool.jp-name '!==' pool.tw-name}}
+		{{#if (and pool.jp-name (op pool.jp-name '!==' pool.tw-name))}}
 		{{pool.jp-name}}<br>
-		{{/ifCond}}
 		{{/if}}
-		{{#if pool.en-name}}
-		{{#ifCond pool.en-name '!==' pool.tw-name}}
-		{{#ifCond pool.en-name '!==' pool.jp-name}}
+		{{#if (and pool.en-name (op pool.en-name '!==' pool.tw-name) (op pool.en-name '!==' pool.jp-name))}}
 		{{pool.en-name}}<br>
-		{{/ifCond}}
-		{{/ifCond}}
 		{{/if}}
 		{{/with}}
 	</h1>
@@ -150,7 +144,7 @@
 
 	<img style="display: block;margin: 0 auto;width:min(95%, 860px);height:auto;" src="{{pool.img}}" width="{{width}}" height="{{height}}">
 
-	{{#ifCond pool.type "===" "category"}}
+	{{#if (op pool.type "===" "category")}}
 	<table class="w3-table w3-centered w3-striped" style="width:95%;margin:0 auto">
 		<tbody>
 			{{#each data as |row|}}
@@ -174,8 +168,8 @@
 		</tbody>
 	</table>
 
-	{{/ifCond}}
-	{{#ifCond pool.type "===" "normal"}}
+	{{/if}}
+	{{#if (op pool.type "===" "normal")}}
 	<table class="w3-table N" style="width:auto;margin-top:3em;">
 		<thead>
 			<tr class="w3-black">
@@ -211,8 +205,8 @@
 		</tbody>
 	</table>
 
-	{{/ifCond}}
-	{{#ifCond pool.type "===" "rare"}}
+	{{/if}}
+	{{#if (op pool.type "===" "rare")}}
 	<div style="font-size:0.8em">
 		{{#each data.rarity_descs as |desc|}}
 		{{desc}}<br>
@@ -295,8 +289,8 @@
 	</details>
 	{{/each}}
 
-	{{/ifCond}}
-	{{#ifCond pool.type "===" "event"}}
+	{{/if}}
+	{{#if (op pool.type "===" "event")}}
 	<p>使用道具：{{pool.ticket.[0]}}</p><img src="{{pool.ticket.[1]}}" width="128" height="128"><br>
 	<table class="w3-table N" style="position: relative;width:auto;margin-top:3em;">
 		<thead>
@@ -351,7 +345,7 @@
 	<table class="w3-table Y" style="width:auto">{{{pool.max}}}</table>
 	{{/if}}
 
-	{{/ifCond}}
+	{{/if}}
 	{{#if pool.history}}
 	<p style="margin-block-end:0;font-size:.8em;">
 		轉蛋歷史：<br>
@@ -361,7 +355,7 @@
 	</p>
 
 	{{/if}}
-	{{#ifCond pool.tw-url "||" pool.jp-url}}
+	{{#if (op pool.tw-url "||" pool.jp-url)}}
 	<p style="font-size:.8em">
 		{{#if pool.tw-url}}
 		<a href="{{pool.tw-url}}">繁中版官方介紹</a><br>
@@ -372,7 +366,7 @@
 		（連結可能失效）
 	</p>
 
-	{{/ifCond}}
+	{{/if}}
 	<div style="display: none;" class="tooltip">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 			<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
