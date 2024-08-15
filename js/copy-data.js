@@ -3,6 +3,7 @@ const resolve = require('node:path').resolve;
 
 const sources = [
 	'cat.tsv',
+	'combo.js',
 	'stage.tsv',
 	'map.tsv',
 	'group.json',

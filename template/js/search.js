@@ -1,18 +1,18 @@
-var
-	cats,
-	cats_old,
-	hide_seach = false,
-	last_forms, form_s = 5,
-	per_page = 10;
+var used_variables, cats, cats_old;
 
-const
-	ori_expr = document.getElementById('ori-expr'),
+const ori_expr = document.getElementById('ori-expr'),
 	filter_expr = document.getElementById("filter-expr"),
 	sort_expr = document.getElementById("sort-expr"),
 	search_result = document.getElementById("search-result"),
 	tbody = document.getElementById("tbody"),
-	pages_a = document.getElementById("pages-a"),
-	tables = document.getElementById("tables"),
+	pages_a = document.getElementById("pages-a");
+
+var hide_seach = !1,
+	last_forms, form_s = 5;
+
+var per_page = 10;
+
+const tables = document.getElementById("tables"),
 	toggle_s = document.getElementById("toggle-s"),
 	only_my_fav = document.getElementById("only-my-fav"),
 	def_lv_e = document.getElementById("def-lv"),

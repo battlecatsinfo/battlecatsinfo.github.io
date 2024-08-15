@@ -1,9 +1,30 @@
-{{#> static.html}}
+<html>
 
-{{#*inline "title"}}貓咪聯組效果{{/inline}}
+<head>
+	<title>貓咪聯組效果</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<meta name="color-scheme" content="light dark">
+	<link rel="stylesheet" href="gh.css">
+</head>
 
-{{#*inline "content"}}
-<div class="E">
+<body>
+
+<script type="text/javascript">
+var _th = localStorage.getItem('theme');
+if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
+	document.documentElement.setAttribute("data-theme", "dark");
+function toggleTheme() {
+	const x = localStorage.getItem('theme');
+	if (x == 'dark') {
+		document.documentElement.setAttribute("data-theme", "light");
+		localStorage.setItem('theme', 'light');
+	} else {
+		document.documentElement.setAttribute("data-theme", "dark");
+		localStorage.setItem('theme', 'dark');
+	}
+}
+</script>
 
 <h1>貓咪聯組</h1>
 <h2>介紹</h2>
@@ -280,7 +301,6 @@
 	<li>「終結魔女」的效果與「終結使徒」的效果聯組分別只能用在有「終結魔女」與「終結使徒」能力的貓咪上。原終結魔女的效果是體力 10 倍，攻擊力 5 倍，加上聯組後，體力 50 倍，攻擊力 25 倍。原終結使徒的效果是體力與攻擊力 5 倍，加上聯組後，體力與攻擊力皆 25 倍。</li>
 </ul>
 
-</div>
-{{/inline}}
+</body>
 
-{{/static.html}}
+</html>

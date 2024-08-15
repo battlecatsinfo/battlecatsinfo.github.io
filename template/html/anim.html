@@ -1,102 +1,95 @@
-{{#> base.html}}
+<!DOCTYPE html>
+<html>
 
-{{#*inline "viewport"}}
+<head>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-{{/inline}}
-
-{{#*inline "title"}}角色動畫{{/inline}}
-
-{{#*inline "scripts"}}
+	<title>角色動畫</title>
 	<script src="gif.js"></script>
-{{/inline}}
+</head>
 
-{{#*inline "styles-inline"}}
+<body>
 	<style>
-	body { width: 100%;height: 100%;padding: 0;margin: 0;overflow:hidden;user-select: none; }
-	input, select { font-size: max(2vh, 12px);outline:none; }
-	.v-ctl {
-		width: max(min(3.5vw,3.5vh), 17px);
-		height: auto;
-		stroke: #007AFF;
-		fill: #007AFF;
-	}
-	.P {
-		width: max(min(4.2vw,4.2vh), 20px);
-	}
-	.C {
-		display: flex;
-		align-items: center;
-	}
-	#icons img {
-		float: left;
-		width: min(max(9vw,9vh), 128px);
-		height: auto;
-		padding: 5px;
-	}
-	#icons img.active {
-		background-color: #ffffff36 !important;
-	}
-	.dropdown {
-		display: none;
-		position: absolute;
-		bottom: 35px;
-		left: 0px;
-		white-space: nowrap;
-		background-color: gainsboro;
-		border-radius: 0.5em;
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-	.dropdown input {
-		padding-right: 0.7vw;
-		float: right;
-	}
-	.dropdown p {
-		vertical-align: middle;
-		padding-right: 0.5vw;
-		width: min(40vw, 200px);
-		padding-left: 0.5vw;
-		margin-block-start: 0;
-		margin-block-end: 0;
-		padding-top: 0.5em;
-		padding-bottom: 0.5vh;
-	}
-	.dropdown svg {
-		float: right;
-		padding-right: 2px;
-	}
-	.dropdown p:hover {
-		background-color: #cbcbcb;
-		border-radius: 0.4em;
-	}
-	.side-ctl {
-		cursor: pointer;
-		position: fixed;
-		top: 50%;
-		transform: translateY(-50%);
-		color: white;
-		cursor: pointer;
-	}
-	input.range {
-		-webkit-appearance: none;
-		height: max(0.5vw, 5px);
-		border: none;
-		color: #fecb2e !important;
-		background-color: #595959 !important;
-		display: block;
-		width: 95%;
-		margin: 0 auto;
-		padding: 0;
-		margin-top: 1vh;
-		margin-bottom: 1vh;
-	}
+body { width: 100%;height: 100%;padding: 0;margin: 0;overflow:hidden;user-select: none; }
+input, select { font-size: max(2vh, 12px);outline:none; }
+.v-ctl {
+	width: max(min(3.5vw,3.5vh), 17px);
+	height: auto;
+	stroke: #007AFF;
+	fill: #007AFF;
+}
+.P {
+	width: max(min(4.2vw,4.2vh), 20px);
+}
+.C {
+	display: flex;
+	align-items: center;
+}
+#icons img {
+	float: left;
+	width: min(max(9vw,9vh), 128px);
+	height: auto;
+	padding: 5px;
+}
+#icons img.active {
+	background-color: #ffffff36 !important;
+}
+.dropdown {
+	display: none;
+	position: absolute;
+	bottom: 35px;
+	left: 0px;
+	white-space: nowrap;
+	background-color: gainsboro;
+	border-radius: 0.5em;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.dropdown input {
+	padding-right: 0.7vw;
+	float: right;
+}
+.dropdown p {
+	vertical-align: middle;
+	padding-right: 0.5vw;
+	width: min(40vw, 200px);
+	padding-left: 0.5vw;
+	margin-block-start: 0;
+	margin-block-end: 0;
+	padding-top: 0.5em;
+	padding-bottom: 0.5vh;
+}
+.dropdown svg {
+	float: right;
+	padding-right: 2px;
+}
+.dropdown p:hover {
+	background-color: #cbcbcb;
+	border-radius: 0.4em;
+}
+.side-ctl {
+	cursor: pointer;
+	position: fixed;
+	top: 50%;
+	transform: translateY(-50%);
+	color: white;
+	cursor: pointer;
+}
+input.range {
+	-webkit-appearance: none;
+	height: max(0.5vw, 5px);
+	border: none;
+	color: #fecb2e !important;
+	background-color: #595959 !important;
+	display: block;
+	width: 95%;
+	margin: 0 auto;
+	padding: 0;
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+}
 	</style>
-{{/inline}}
-
-{{#*inline "nav-bar"}}{{/inline}}
-
-{{#*inline "content"}}
 	<canvas id="canvas" style="width: 100vw;height: 100vh;margin: 0;padding: 0;"></canvas>
 	<div style="position: absolute;z-index: 1;top: 1vh;right: 0px;" id="icons">
 		<img data-i="0">
@@ -398,6 +391,6 @@ if (window.OffscreenCanvas == undefined || window.OffscreenCanvas.prototype.conv
 const eggs={{{eggs}}};
 	</script>
 	<script type="module" src="/anim.min.js"></script>
-{{/inline}}
+</body>
 
-{{/base.html}}
+</html>

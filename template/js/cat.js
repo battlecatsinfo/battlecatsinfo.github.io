@@ -1,4 +1,4 @@
-const units_scheme = {{{toJSON units_scheme}}};
+const C_VER = {{{cat-ver}}};
 
 var def_lv, plus_lv, my_curve, _info, unit_orbs, orb_massive = 0,
 	orb_resist = 1,
@@ -199,8 +199,11 @@ function getCoverUnit(unit, chance, duration) {
 }
 
 function get_trait_short_names(trait) {
+	const trait_short_names = ["紅", "浮", "黑", "鐵", "天", "星", "死", "古", "無", "使徒", "魔女", "惡"];
 	var s = "";
-	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && (s += units_scheme.traits.short_names[i]);
+	let i = 0;
+	for (let x = 1; x <= TB_DEMON; x <<= 1) trait & x && (s += trait_short_names[i]),
+		i++;
 	return s;
 }
 
@@ -1441,7 +1444,7 @@ function onupgradeneeded(e) {
 }
 async function loadCat(id) {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", {{{cat-ver}}});
+		var req = indexedDB.open("db", C_VER);
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
 			db.transaction(["cats"]).objectStore("cats").get(id).onsuccess = function(e) {
@@ -1471,7 +1474,7 @@ async function loadCat(id) {
 
 async function loadEnemy(id) {
 	return new Promise((resolve, reject) => {
-		var req = indexedDB.open("db", {{{cat-ver}}});
+		var req = indexedDB.open("db", C_VER);
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
 			db.transaction(["enemy"]).objectStore("enemy").get(id).onsuccess = function(e) {
@@ -1497,10 +1500,10 @@ async function loadEnemy(id) {
 
 async function loadAllEnemies() {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", {{{cat-ver}}});
+		var req = indexedDB.open("db", C_VER);
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
-			db.transaction(["enemy"]).objectStore("enemy").get({{{num-enemies}}} - 1).onsuccess = function(e) {
+			db.transaction(["enemy"]).objectStore("enemy").get(651).onsuccess = function(e) {
 				if (e.target.result) {
 					let es = new Array({{{num-enemies}}});
 					db.transaction(["enemy"]).objectStore("enemy").openCursor().onsuccess = function(e) {
@@ -1529,10 +1532,10 @@ async function loadAllEnemies() {
 
 async function loadAllCats() {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", {{{cat-ver}}});
+		var req = indexedDB.open("db", C_VER);
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
-			db.transaction(["cats"]).objectStore("cats").get({{{num-cats}}} - 1).onsuccess = function(e) {
+			db.transaction(["cats"]).objectStore("cats").get(717).onsuccess = function(e) {
 				if (e.target.result) {
 					let cats = new Array({{{num-cats}}});
 					db.transaction(["cats"]).objectStore("cats").openCursor().onsuccess = function(e) {
@@ -1565,42 +1568,41 @@ async function loadAllCats() {
 	});
 }
 
-function createTraitIcons(trait, parent) {
-	if (!trait) { return; }
-	const E = document.createElement('div');
-	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
-		if (!(trait & x)) { continue; }
-		const e = E.appendChild(new Image(40, 40));
-		e.src = 'https://i.imgur.com/' + units_scheme.traits.icons[i] + '.png';
-	}
-	parent.appendChild(E);
-}
-
 function createImuIcons(imu, parent) {
-	if (!imu) { return; }
-	const p = document.createElement('div');
-	const names = [];
-	for (let x = 1, i = 0; x <= 512; x <<= 1, ++i) {
-		if (!(imu & x)) { continue; }
-		const e = p.appendChild(new Image(40, 40));
-		e.src = 'https://i.imgur.com/' + units_scheme.immunes.icons[i] + '.png';
-		names.push(units_scheme.immunes.names[i]);
+	const names = ["波動傷害", "使動作停止", "使動作變慢", "打飛敵人", "烈波傷害", "攻擊力下降", "傳送", "古代的詛咒", "毒擊傷害", "魔王震波"];
+	const icon_names = ["MacWKW6", "OSjMN62", "rPx4aA2", "5CYatS4", "Uadt9Fa", "aN6I67V", "T7BXYAw", "27mAxhl", "5zleNqO", "4uYsoCg"];
+	if (imu) {
+		var e;
+		let i = 0;
+		let c = 0;
+		for (let x = 1; x <= 512; x <<= 1, ++i) {
+			if (imu & x) {
+				if (++c == 2) {
+					const p = document.createElement('div');
+					parent.removeChild(parent.lastElementChild);
+					const texts = [];
+					for (x = 1, i = 0; x <= 512; x <<= 1, ++i) {
+						if (imu & x) {
+							e = new Image(40, 40);
+							e.src = 'https://i.imgur.com/' + icon_names[i] + '.png';
+							p.appendChild(e);
+							texts.push(names[i]);
+						}
+					}
+					p.append('無效（' + texts.join('、') + '）');
+					parent.appendChild(p);
+					return;
+				}
+				const p = document.createElement('div');
+				e = new Image(40, 40);
+				e.src = 'https://i.imgur.com/' + icon_names[i] + '.png';
+				p.appendChild(e);
+				p.append(names[i] + '無效');
+				parent.appendChild(p);
+			}
+		}
 	}
-	const text = (names.length === 1) ? `${names.join('')}無效` : `無效（${names.join('、')}）`;
-	p.append(text);
-	parent.appendChild(p);
 }
-
-function createResIcons(res, p) {
-	for (let [k, v] of Object.entries(res)) {
-		k = parseInt(k, 10);
-		const c = p.appendChild(document.createElement('div'));
-		const e = c.appendChild(new Image(40, 40));
-		e.src = 'https://i.imgur.com/' + units_scheme.resists.icons[k] + '.png';
-		c.append(units_scheme.resists.descs[k].replace('$', v));
-	}
-}
-
 
 function getAbiString(abi) {
 	var strs;
@@ -1617,3 +1619,7 @@ for (let i = 0; i < 31; ++i) {
 
 const atk_t = 300 == treasures[0] ? 2.5 : 1 + .005 * treasures[0],
 	hp_t = 300 == treasures[1] ? 2.5 : 1 + .005 * treasures[1];
+
+function getRes(cd) {
+	return Math.max(60, cd - 6 * (treasures[17] - 1) - .3 * treasures[2]);
+}

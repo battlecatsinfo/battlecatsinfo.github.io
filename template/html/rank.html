@@ -1,22 +1,41 @@
-{{#> static.html}}
+<!DOCTYPE html>
+<html lang="zh-Hant">
 
-{{#*inline "title"}}等級排行獎勵{{/inline}}
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<title>等級排行獎勵</title>
+	<meta name="color-scheme" content="light dark">
+	<link rel="stylesheet" href="gh.css">
+</head>
 
-{{#*inline "styles-inline"}}
-	{{~> @partial-block}}
-	<style>
-	td img {
-		width: 3em;
-		height: auto;
+<body>
+
+<style type="text/css">
+td img {
+	width: 3em;
+	height: auto;
+}
+td:nth-child(4) {
+	padding: 0 !important;
+}
+</style>
+
+<script type="text/javascript">
+var _th = localStorage.getItem('theme');
+if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
+	document.documentElement.setAttribute("data-theme", "dark");
+function toggleTheme() {
+	const x = localStorage.getItem('theme');
+	if (x == 'dark') {
+		document.documentElement.setAttribute("data-theme", "light");
+		localStorage.setItem('theme', 'light');
+	} else {
+		document.documentElement.setAttribute("data-theme", "dark");
+		localStorage.setItem('theme', 'dark');
 	}
-	td:nth-child(4) {
-		padding: 0 !important;
-	}
-	</style>
-{{/inline}}
-
-{{#*inline "content"}}
-	<div class="E">
+}
+</script>
 
 	<h1 style="text-align:center;">等級排行獎勵<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>
 
@@ -31,20 +50,10 @@
 					<th>圖示</th>
 				</tr>
 			</thead>
-			<tbody id="rank">
-			{{#each ranks as |rank|}}
-			<tr>
-				<td>{{rank.rank}}</td>
-				<td>{{{rank.message}}}</td>
-				<td>{{{rank.reward}}}</td>
-				<td>{{#if rank.image}}<img width="128" height="128" loading="lazy" src="{{rank.image}}">{{/if}}</td>
-			</tr>
-			{{/each}}
-			</tbody>
+			<tbody id="rank">{{{rank}}}</tbody>
 		</table>
 	</div>
-	
-	</div>
-{{/inline}}
 
-{{/static.html}}
+</body>
+
+</html>

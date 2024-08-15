@@ -3,17 +3,17 @@ const fs = require('node:fs');
 const resolve = require('node:path').resolve;
 
 const modules = new Set([
-	'collab', 
+	'collab',
+	'combo', 
 	'copy-assets', 
 	'copy-data', 
 	'crown', 
 	'esearch', 
 	'gacha', 
+	'gamatoto', 
 	'material', 
 	'medal', 
 	'rank',
-	'unit',
-	'gamatoto'
 ]);
 
 const args = parseArgs({

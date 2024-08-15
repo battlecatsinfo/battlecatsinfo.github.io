@@ -1,8 +1,31 @@
-{{#> gh.html}}
+<html lang="zh-Hant">
 
-{{#*inline "title"}}貓咪大戰爭 關卡表{{/inline}}
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<title>貓咪大戰爭 關卡表</title>
+	<meta name="color-scheme" content="light dark">
+	<link rel="stylesheet" href="gh.css">
+</head>
 
-{{#*inline "content"}}
+<body>
+
+<script type="text/javascript">
+var _th = localStorage.getItem('theme');
+if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
+	document.documentElement.setAttribute("data-theme", "dark");
+function toggleTheme() {
+	const x = localStorage.getItem('theme');
+	if (x == 'dark') {
+		document.documentElement.setAttribute("data-theme", "light");
+		localStorage.setItem('theme', 'light');
+	} else {
+		document.documentElement.setAttribute("data-theme", "dark");
+		localStorage.setItem('theme', 'dark');
+	}
+}
+</script>
+
 	<h1> 貓咪大戰爭 關卡表</h1>
 	<h3>參考資料：<a href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=20534">【情報】貓咪大戰爭本家常駐&非常駐活動日程</a></h3>
 	<h2>月份關卡</h2>
@@ -1265,6 +1288,7 @@
 		<li><a href="stage.html?s=13-17">強襲！頭子・四乃森蒼紫</a></li>
 		<li><a href="stage.html?s=7-27">明治剣客浪漫大会</a></li>
 	</ul>
-{{/inline}}
 
-{{/gh.html}}
+</body>
+
+</html>

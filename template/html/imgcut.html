@@ -1,49 +1,50 @@
-{{#> common.html}}
+<!DOCTYPE html>
+<html lang="zh-Hant">
 
-{{#*inline "title"}}ImgCut{{/inline}}
-
-{{#*inline "description"}}
+<head>
+	<meta charset="utf-8">
+	<title>ImgCut</title>
 	<meta name="description" content="編輯ImgCut檔案 | 貓咪大戰爭中文資訊網站">
-{{/inline}}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{{{favicon}}}
+	<link rel="stylesheet" type="text/css" href="/w3.css">
+</head>
 
-{{#*inline "og"}}{{/inline}}
-
-{{#*inline "styles-inline"}}
+<body>
 	<style>
-	body {
-		width: 100%;
-		padding: 0;
-		margin: 0;
-	}
-	canvas {
-		background-color: white !important;
-	}
+body {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+canvas {
+	background-color: white !important;
+}
+#imgcut {
+	margin: 1vw;
+	background-size: 14px 14px;
+	background-image: linear-gradient(to right, grey 1px, transparent 1px),
+	linear-gradient(to bottom, grey 1px, transparent 1px);
+}
+@media (min-width: 500px) {
 	#imgcut {
-		margin: 1vw;
-		background-size: 14px 14px;
-		background-image: linear-gradient(to right, grey 1px, transparent 1px),
-		linear-gradient(to bottom, grey 1px, transparent 1px);
+	min-height: 40vh;
 	}
-	@media (min-width: 500px) {
-		#imgcut {
-		min-height: 40vh;
-		}
-	}
-	.ihover {
-		background-color: #ccc !important;
-	}
-	.dark .ihover td {
-		background-color: #4b4b4b !important;
-	}
-	td,
-	th {
-		padding: 7px 30px;
-		border: #cfcfcf 1px solid;
-	}
+}
+.ihover {
+	background-color: #ccc !important;
+}
+[data-theme="dark"] .ihover td {
+	background-color: #4b4b4b !important;
+}
+td,
+th {
+	padding: 7px 30px;
+	border: #cfcfcf 1px solid;
+}
+{{{nav-style}}}
 	</style>
-{{/inline}}
-
-{{#*inline "content"}}
+	{{{nav-bar}}}
 	<canvas id="imgcut" style="border: 1px solid;border-color: var(--color);"></canvas>
 	<canvas id="preview" style="display: none;"></canvas>
 	<br>
@@ -89,6 +90,6 @@
 		</table>
 	</div>
 	<script src="/imgcut.js"></script>
-{{/inline}}
+</body>
 
-{{/common.html}}
+</html>

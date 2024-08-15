@@ -1,173 +1,71 @@
-{{#> common.html}}
+<!DOCTYPE html>
+<html lang="zh-Hant">
 
-{{#*inline "title"}}{{collab.tw-name}}合作活動{{/inline}}
-
-{{#*inline "og"}}
-	{{~> @partial-block }}
-	{{#if collab.img}}
-	<meta property="og:image" content="{{collab.img}}">
-	{{/if}}
-{{/inline}}
-
-{{#*inline "styles-inline"}}
-	<style>
-	body {
-		width: 100%;
-		margin: 0;
-		padding: 0;
-		font-size: min(2vw, 18px);
-	}
-	table {
-		border-collapse: collapse;
-		margin-top: 50px;
-		box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-	}
+<head>
+	<meta charset="utf-8">
+	<title>{{{name}}}合作活動</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="{{{name}}}合作活動 | 貓咪大戰爭中文資訊網站">
+	<meta property="og:site_name" content="battlecatsinfo.github.io">
+	<meta property="og:title" content="{{{name}}}合作活動">
+	<meta property="og:description" content="{{{name}}}合作活動 | 貓咪大戰爭中文資訊網站"> {{{img1}}} {{{favicon}}}
+	<link rel="stylesheet" type="text/css" href="/w3.css">
+</head>
+<style>
+body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-size: min(2vw, 18px);
+}
+table {
+	border-collapse: collapse;
+	margin-top: 50px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.MC {
+	margin: 0 auto;
+	padding: 45px;
+}
+.w3-table-all td {
+	padding: 0;
+	vertical-align: middle;
+}
+th {
+	white-space: nowrap;
+}
+.w3-table-all td:nth-child(7) {
+	text-align: left !important;
+}
+.R {
+	max-width: 4em;
+	height: auto;
+}
+@media (max-width: 767px) {
 	.MC {
-		margin: 0 auto;
-		padding: 45px;
+	padding: 15px;
 	}
-	.w3-table-all td {
-		padding: 0;
-		vertical-align: middle;
-	}
-	th {
-		white-space: nowrap;
-	}
-	.w3-table-all td:nth-child(7) {
-		text-align: left !important;
-	}
-	.R {
-		max-width: 4em;
-		height: auto;
-	}
-	@media (max-width: 767px) {
-		.MC {
-		padding: 15px;
-		}
-	}
-	a {
-		text-decoration: none;
-	}
-	a:hover {
-		text-decoration: underline;
-	}
-	.I {
-		display: block;
-		max-width: 100%;
-		margin: 0 auto;
-	}
-	</style>
-{{/inline}}
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+.I {
+	display: block;
+	max-width: 100%;
+	margin: 0 auto;
+}
+{{{nav-style}}}
+</style>
 
-{{#*inline "content"}}
-	<h1 style="font-size:1.5em;text-align:center;margin: 1em;">
-		{{#with collab as |collab|}}
-		{{#if collab.tw-name}}
-		{{collab.tw-name}}<br>
-		{{/if}}
-		{{#if collab.jp-name}}
-		{{#ifCond collab.jp-name '!==' collab.tw-name}}
-		{{collab.jp-name}}<br>
-		{{/ifCond}}
-		{{/if}}
-		{{#if collab.en-name}}
-		{{#ifCond collab.en-name '!==' collab.tw-name}}
-		{{#ifCond collab.en-name '!==' collab.jp-name}}
-		{{collab.en-name}}<br>
-		{{/ifCond}}
-		{{/ifCond}}
-		{{/if}}
-		{{/with}}
-	</h1>
-	{{#if collab.img}}
-	<img style="display: block;margin: 0 auto;max-width: 100%;" src="{{collab.img}}">
-	{{/if}}
+<body>
+	{{{nav-bar}}}
+	<h1 style="font-size:1.5em;text-align:center;margin: 1em;">{{{name-br}}}</h1> {{{img2}}}
 	<div class="MC">
-		{{#if collab.pools}}
-		<h2>合作限定轉蛋</h2>
-		{{#each pools as |pool|}}
-		<a target="_blank" style="display:block;text-align:center;" href="/gacha/{{pool.path}}.html">
-			{{pool.tw-name}}
-			<img class="I" src="{{pool.img}}" width="{{pool.width}}" height="{{pool.height}}" loading="lazy">
-		</a>
-		{{/each}}
-		{{/if}}
-		{{#if collab.stamp}}
-		<h2>登入獎章</h2>
-		{{#each collab.stamp as |id|}}
-		<a style="margin-left:1em;" href="/unit.html?id={{id}}"><img width="104" height="79" loading="lazy" src="/img/u/{{id}}/0.png"></a>
-		{{/each}}
-		{{/if}}
-		{{#if collab.buy}}
-		<h2>課金購買貓咪</h2>
-		{{#each collab.buy as |id|}}
-		<a style="margin-left:1em;" href="/unit.html?id={{id}}"><img width="104" height="79" loading="lazy" src="/img/u/{{id}}/0.png"></a>
-		{{/each}}
-		{{/if}}
-		{{#if collab.other}}
-		<h2>其他獲取方式的貓咪</h2>
-		{{#each collab.other as |id|}}
-		<a style="margin-left:1em;" href="/unit.html?id={{id}}"><img width="104" height="79" loading="lazy" src="/img/u/{{id}}/0.png"></a>
-		{{/each}}
-		{{/if}}
-		{{#if collab.enemies}}
-		<h2>敵人</h2>
-		<div style="margin-left:1em;">
-		{{#each collab.enemies as |id|}}
-			<a href="/enemy.html?id={{id}}"><img src="/img/e/{{id}}/0.png" width="64" height="64" loading="lazy"></a>
-		{{/each}}
-		</div>
-		{{/if}}
-		{{#if collab.stages}}
-		<h2>關卡</h2>
-		<table style="margin-left:1em;" class="w3-table-all w3-centered">
-			<thead>
-				<tr>
-					<th>名稱</th>
-					<th>小關數</th>
-					<th>1冠</th>
-					<th>2冠</th>
-					<th>3冠</th>
-					<th>4冠</th>
-					<th>獎勵</th>
-				</tr>
-			</thead>
-			<tbody>
-			{{#each stages as |stage|}}
-				<tr>
-					<td><a href="/stage.html?s={{stage.stage}}" target="_blank">{{stage.name}}</a></td>
-					<td>{{stage.len}}</td>
-					<td>{{stage.stars.[0]}}</td>
-					<td>{{stage.stars.[1]}}</td>
-					<td>{{stage.stars.[2]}}</td>
-					<td>{{stage.stars.[3]}}</td>
-					<td>
-					{{~#each stage.rewards as |reward|~}}
-					{{~#ifCond reward.type '==' 'u'~}}
-					<a href="/unit.html?id={{reward.id}}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/{{reward.id}}/0.png"></a>
-					{{~/ifCond~}}
-					{{~#ifCond reward.type '==' 't'~}}
-					<a href="/unit.html?id={{reward.id}}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/{{reward.id}}/2.png"></a>
-					{{~/ifCond~}}
-					{{~#ifCond reward.type '==' 'r'~}}
-					<img class="R" width="128" height="128" loading="lazy" src="/img/r/{{reward.id}}.png">
-					{{~/ifCond~}}
-					{{~/each~}}
-					</td>
-				</tr>
-			{{/each}}
-			</tbody>
-		</table>
-		{{/if}}
-		{{#if collab.links}}
-		<h2>外部鏈結</h2>
-		<ul style="margin-left:1em;">
-		{{#each collab.links as |url title|}}
-			<li><a target="_blank" href="{{url}}">{{title}}</a></li>
-		{{/each}}
-		</ul>
-		{{/if}}
+		{{{C}}}
 	</div>
-{{/inline}}
+</body>
 
-{{/common.html}}
+</html>

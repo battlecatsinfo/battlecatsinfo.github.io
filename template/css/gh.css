@@ -50,7 +50,7 @@
 	--color-done-fg: #8250df;
 	--color-done-emphasis: #8250df;
 }
-:root.dark {
+[data-theme="dark"] {
 	color-scheme: dark;
 	--color-prettylights-syntax-comment: #8b949e;
 	--color-prettylights-syntax-constant: #79c0ff;
@@ -118,7 +118,7 @@ body {
 }
 @media (max-width: 767px) {
 	body {
-		padding: 15px;
+	padding: 15px;
 	}
 }
 .octicon {
@@ -169,7 +169,6 @@ dfn {
 	font-style: italic;
 }
 h1 {
-	text-align: center;
 	margin: 0.67em 0;
 	font-weight: 600;
 	padding-bottom: 0.3em;

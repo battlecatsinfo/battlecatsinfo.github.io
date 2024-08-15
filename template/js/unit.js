@@ -1,6 +1,4 @@
-const combos_scheme = {{{toJSON combos_scheme}}};
 const my_params = new URLSearchParams(location.search);
-const combos = {{{toJSON combos}}};
 let my_id = parseInt(my_params.get('id'));
 const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINIVOLC, AB_VOLC, AB_ATKBASE, AB_SAGE]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
@@ -20,8 +18,6 @@ var orb_eff;
 var orb_gradle;
 var add_atk = 0;
 var orb_hp = 1;
-var other_def = {};
-var table_to_values = new Map();
 const tables = [];
 const modal_content = document.getElementById('modal-c');
 const modal = document.getElementById('modal');
@@ -117,12 +113,6 @@ const talent_d = [
 	"超賢者特効"
 ];
 
-function getRes(cd) {
-	if (other_def[5])
-		return Math.max(60, cd - 264 - floor(other_def[5] / 10));
-	return Math.max(60, cd - 264);
-}
-
 function createResIcons(res, p) {
 	var e, c;
 	var res_icon_names = ["BGbyVaK", "Sd55VTg", "1PHovzw", "kwmOdX3", "WTIjQQE", "kLJHD5E", "1s7WKyX", "sROk995", "1TkV1IQ"];
@@ -151,9 +141,40 @@ function createResIcons(res, p) {
 }
 
 function getTraitNames(trait) {
-	const idxs = [];
-	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && idxs.push(i);
-	return 1 == idxs.length ? `（${units_scheme.traits.names[idxs[0]]}）` : `（${get_trait_short_names(trait)}）敵人`;
+	let i = 0;
+	var idxs = [];
+	for (let x = 1; x <= TB_DEMON; x <<= 1) trait & x && idxs.push(i), i++;
+	return 1 == idxs.length ? '（' + ["紅色敵人", "飄浮敵人", "黑色敵人", "鋼鐵敵人", "天使敵人", "異星戰士", "不死生物", "古代種", "無屬性敵人", "使徒", "魔女", "惡魔"][idxs[0]] + '）' : '（' + get_trait_short_names(trait) + '）敵人';
+}
+
+function createTraitIcons(trait, parent) {
+	if (trait) {
+		var e, E = document.createElement('div'),
+			names = [
+				"BUxdmA6", // red
+				"GlcKsa6", // float
+				"XbBWQIp", //black
+				"fVfHaCQ", // metal
+				"kxvTRTQ", // angel
+				"PPpWAPy", // alien
+				"oqVjofz", // zombie
+				"caSziI9", // relic
+				"qOEibJt", // white
+				"", // eva
+				"", // witch
+				"hp6EvG6" // demon
+			];
+		let i = 0;
+		for (let x = 1; x <= TB_DEMON; x <<= 1) {
+			if (trait & x) {
+				e = new Image(40, 40);
+				e.src = 'https://i.imgur.com/' + names[i] + '.png';
+				E.appendChild(e);
+			}
+			++i;
+		}
+		parent.appendChild(E);
+	}
 }
 
 function createAbIcons(form, p1, p2, tbody) {
@@ -181,12 +202,7 @@ function createAbIcons(form, p1, p2, tbody) {
 		const p = document.createElement('div');
 		p.style.cursor = 'pointer';
 		p._i = i;
-		if (tbody._s.has(i)) {
-			p.style.setProperty('background-color', '#5cabd273', 'important');
-			p.s = true;
-		} else {
-			p.s = false;
-		}
+		p.s = false;
 		p.onclick = function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -209,7 +225,6 @@ function createAbIcons(form, p1, p2, tbody) {
 	}
 	form.trait && (tn = getTraitNames(form.trait), treasure = form.trait & trait_treasure);
 	const U = form.pre1 ? '*' : '';
-	let tmp;
 	for ([i, v] of Object.entries(form.ab)) {
 		i = parseInt(i);
 		switch (i) {
@@ -217,7 +232,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout == '2')
 					func = w3;
-				func(`體力 ${v[0]} % 以下攻擊力上升至 ${100 + v[1] + (other_def[13] || 0)} %`, "IE6ihRp");
+				func(`體力 ${v[0]} % 以下攻擊力上升至 ${100 + v[1]} %`, "IE6ihRp");
 				break;
 
 			case 2:
@@ -235,9 +250,6 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout == '2')
 					func = w3;
-				tmp = other_def[6];
-				if (tmp)
-					v += tmp;
 				func(`${v} % 會心一擊${U}`, "FV6We1L");
 				break;
 
@@ -333,21 +345,18 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 21:
-				tmp = v[2];
-				if (other_def[12])
-					tmp = floor(tmp * (1 + other_def[12]));
 				if (treasure) {
-					du = floor(tmp * 1.2);
+					du = ~~(v[2] * 1.2);
 					if (form.trait & trait_no_treasure) {
-						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
-						du = `${numStrT(tmp)}（${numStrT(du)}）`;
+						cv = `${getCoverUnit(form, v[0], v[2])} %（${getCoverUnit(form, v[0], du)} %）`;
+						du = `${numStrT(v[2])}（${numStrT(du)}）`;
 					} else {
 						cv = getCoverUnit(form, v[0], du) + ' %';
 						du = numStrT(du);
 					}
 				} else {
-					du = numStrT(tmp);
-					cv = getCoverUnit(form, v[0], tmp) + ' %';
+					du = numStrT(v[2]);
+					cv = getCoverUnit(form, v[0], v[2]) + ' %';
 				}
 				if (layout == '2') {
 					w2(`${v[0]} % 使攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`, 'yRkhAHL');
@@ -357,21 +366,18 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 22:
-				tmp = v[1];
-				if (other_def[11])
-					tmp = floor(tmp * (1 + other_def[11]));
 				if (treasure) {
-					du = floor(tmp * 1.2);
+					du = ~~(v[1] * 1.2);
 					if (form.trait & trait_no_treasure) {
-						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
-						du = `${numStrT(tmp)}（${numStrT(du)}）`;
+						cv = `${getCoverUnit(form, v[0], v[1])} %（${getCoverUnit(form, v[0], du)} %）`;
+						du = `${numStrT(v[1])}（${numStrT(du)}）`;
 					} else {
 						cv = getCoverUnit(form, v[0], du) + ' %';
 						du = numStrT(du);
 					}
 				} else {
-					du = numStrT(tmp);
-					cv = getCoverUnit(form, v[0], tmp) + ' %';
+					du = numStrT(v[1]);
+					cv = getCoverUnit(form, v[0], v[1]) + ' %';
 				}
 				if (layout == '2') {
 					w2(`${v[0]} % 使動作停止持續 ${du} ${U}，覆蓋率 ${cv}`, 'i1pP3Mi');
@@ -381,21 +387,18 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 23:
-				tmp = v[1];
-				if (other_def[10])
-					tmp = floor(tmp * (1 + other_def[10]));
 				if (treasure) {
-					du = floor(tmp * 1.2);
+					du = ~~(v[1] * 1.2);
 					if (form.trait & trait_no_treasure) {
-						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
-						du = `${numStrT(tmp)}（${numStrT(du)}）`;
+						cv = `${getCoverUnit(form, v[0], v[1])} %（${getCoverUnit(form, v[0], du)} %）`;
+						du = `${numStrT(v[1])}（${numStrT(du)}）`;
 					} else {
 						cv = getCoverUnit(form, v[0], du) + ' %';
 						du = numStrT(du);
 					}
 				} else {
-					du = numStrT(tmp);
-					cv = getCoverUnit(form, v[0], tmp) + ' %';
+					du = numStrT(v[1]);
+					cv = getCoverUnit(form, v[0], v[1]) + ' %';
 				}
 				if (layout == '2') {
 					w2(`${v[0]} % 使動作變慢${U}持續 ${du}，覆蓋率 ${cv}`, 'MyoCUMu');
@@ -413,7 +416,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('善於攻擊', 'dlZ8xNU');
 					break;
 				}
-				w2('善於攻擊（傷害 1.5 ~ 1.8 倍，受到傷害減少至 1/2 ~ 2/5）', "dlZ8xNU");
+				w2(`對${tn}傷害 ${treasure ? numStr(orb_good_atk + 1.5 + (treasure ? treasures[23] / 1e3 : 0)) : "1.5"} 倍，受到傷害減少 ` + numStr(1 / orb_good_hp * (.5 + (treasure ? treasures[23] / 3e3 : 0))), "dlZ8xNU");
 				break;
 
 			case 26:
@@ -421,7 +424,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('很耐打', '4em8Hzg');
 					break;
 				}
-				w2(`很耐打（受到傷害減少 1/4 ~ 1/5）`, "4em8Hzg");
+				w2(`很耐打（受到傷害減少1/4 ~ 1/5）`, "4em8Hzg");
 				break;
 
 			case 27:
@@ -429,7 +432,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('超耐打', 'ck2nA1D');
 					break;
 				}
-				w2(`超耐打（受到傷害減少至 1/6 ~ 1/7）`, "ck2nA1D");
+				w2(`超耐打（受到傷害減少1/6 ~ 1/7）`, "ck2nA1D");
 				break;
 
 			case 28:
@@ -437,7 +440,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3(`超大傷害`, "RbqsryO");
 					break;
 				}
-				w2(`超大傷害（3 ~ 4 倍傷害）`, "RbqsryO");
+				w2(`超大傷害（3 ~ 4倍傷害）`, "RbqsryO");
 				break;
 
 			case 29:
@@ -445,7 +448,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('極度傷害', 'whTrzG1');
 					break;
 				}
-				w2(`極度傷害（5 ~ 6 倍傷害）`, "whTrzG1");
+				w2(`極度傷害（5 ~ 6倍傷害）`, "whTrzG1");
 				break;
 
 			case 30:
@@ -467,9 +470,9 @@ function createAbIcons(form, p1, p2, tbody) {
 			case 32:
 				if (treasure) {
 					if (form.trait & trait_no_treasure) {
-						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+						du = `${numStrT(~~(v[1]))}（${numStrT(~~(v[1] * 1.2))}）`;
 					} else {
-						du = numStrT(floor(v[1] * 1.2));
+						du = numStrT(~~(v[1] * 1.2));
 					}
 				} else {
 					du = numStrT(v[1]);
@@ -478,20 +481,18 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 33:
-				tmp = v[1];
-				// no curse combo now!
 				if (treasure) {
-					du = floor(tmp * 1.2);
+					du = ~~(v[1] * 1.2);
 					if (form.trait & trait_no_treasure) {
-						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
-						du = `${numStrT(tmp)}（${numStrT(du)}）`;
+						cv = `${getCoverUnit(form, v[0], v[1])} %（${getCoverUnit(form, v[0], du)} %）`;
+						du = `${numStrT(v[1])}（${numStrT(du)}）`;
 					} else {
 						cv = getCoverUnit(form, v[0], du) + ' %';
 						du = numStrT(du);
 					}
 				} else {
-					du = numStrT(tmp);
-					cv = getCoverUnit(form, v[0], tmp) + ' %';
+					du = numStrT(v[1]);
+					cv = getCoverUnit(form, v[0], v[1]) + ' %';
 				}
 				if (layout == '2') {
 					w2(`${v[0]} % 詛咒${U}持續 ${du}，覆蓋率 ${cv}`, "0Rraywl");
@@ -593,22 +594,19 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 			case AB_GOOD:
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
-				if (other_def[7])
-					mul(theATK,  (1 + other_def[7]) * (1.5  + (treasure ? treasures[23] / 1000 : 0)) + (lvc >= 2 ? orb_good_atk : 0));
-				else
-					mul(theATK,  1.5  + (treasure ? treasures[23] / 1000 : 0) + (lvc >= 2 ? orb_good_atk : 0));
+				mul(theATK, 1.5 + (lvc >= 2 ? orb_good_atk : 0) + (treasure ? treasures[23] / 1000 : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
 			case AB_CRIT:
 				if (attackS != undefined)
-					mul(theATK, 1 + (ab[1] + (other_def[6] || 0)) / 100, false);
+					mul(theATK, 1 + ab[1] / 100, false);
 				else
 					mul(theATK, 2, false);
 				lines.push('爆');
 				break;
 			case AB_STRONG:
-				mul(theATK, 1 + (ab[2] + (other_def[13] || 0)) / 100);
+				mul(theATK, 1 + ab[2] / 100);
 				lines.push('增攻');
 				break;
 			case AB_S:
@@ -625,7 +623,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 			case AB_MASSIVE:
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, (1 + (other_def[8] || 0)) * (treasure ? (treasures[23] == 300 ? 4 : (3 + treasures[23] / 300)) : 3) + (lvc >= 2 ? orb_massive : 0));
+				mul(theATK, (treasure ? (treasures[23] == 300 ? 4 : (3 + treasures[23] / 300)) : 3) + (lvc >= 2 ? orb_massive : 0));
 				lines.push('大傷');
 				t_ef = true;
 				break;
@@ -638,17 +636,11 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 				break;
 			case AB_EKILL:
 				lines.push('使徒');
-				if (other_def[15])
-					mul(theATK, 25);
-				else
-					mul(theATK, 5);
+				mul(theATK, 5);
 				eva_ef = true;
 				break;
 			case AB_WKILL:
-				if (other_def[14])
-					mul(theATK, 25);
-				else
-					mul(theATK, 5);
+				mul(theATK, 5);
 				lines.push('魔女');
 				eva_ef = true;
 				break;
@@ -684,12 +676,12 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 	if (attackS != undefined) {
 		let t = 0;
 		for (let x of theATK)
-			t += floor(x);
-		atkstr += numStr(floor(t / attackS));
+			t += ~~x;
+		atkstr += numStr(~~(t / attackS));
 	} else {
 		const end = theATK.length;
 		for (let _a = 0; _a < end; ++_a) {
-			atkstr += numStr(floor(theATK[_a]));
+			atkstr += numStr(~~theATK[_a]);
 			if (_a != (end - 1))
 				atkstr += '/';
 		}
@@ -715,7 +707,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 }
 
 function getAtkString(form, atks, Cs, level, parent, plus, attackS) {
-	atks = atks.map(x => floor(floor(floor(Math.round(x * getLevelMulti(level)) * atk_t) * (1 + (other_def[2] || 0))) * form.atkM));
+	atks = atks.map(x => ~~((~~(Math.round(x * getLevelMulti(level)) * atk_t)) * form.atkM));
 	parent.textContent = '';
 	let first;
 	let m1 = new Float64Array(atks);
@@ -727,13 +719,13 @@ function getAtkString(form, atks, Cs, level, parent, plus, attackS) {
 	if (attackS != undefined) {
 		let t = 0;
 		for (let x of m1)
-			t += floor(x);
-		first = numStr(floor(t / attackS));
+			t += ~~x;
+		first = numStr(~~(t / attackS));
 	} else {
 		first = '';
 		const end = m1.length;
 		for (let _a = 0; _a < end; ++_a) {
-			first += numStr(floor(m1[_a]));
+			first += numStr(~~m1[_a]);
 			if (_a != (end - 1))
 				first += '/';
 		}
@@ -757,20 +749,14 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 			case AB_GOOD:
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
-				if (other_def[7])
-					theHP /= (lvc >= 2 ? orb_good_hp : 1) * (1 - other_def[7]) * (0.5 - (treasure ? treasures[23] / 3000 : 0));
-				else
-					theHP /= (lvc >= 2 ? orb_good_hp : 1) * (0.5 - (treasure ? treasures[23] / 3000 : 0));
+				theHP /= (lvc >= 2 ? orb_good_hp : 1) * (0.5 - (treasure ? treasures[23] / 3000 : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
 			case AB_RESIST:
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
-				if (other_def[9])
-					theHP *= (treasure ? 4 + treasures[23] / 300 : 4) / ((lvc >= 2 ? orb_resist : 1) * (1 - other_def[9]));
-				else
-					theHP *= (treasure ? 4 + treasures[23] / 300 : 4) / (lvc >= 2 ? orb_resist : 1);
+				theHP *= (treasure ? 4 + treasures[23] / 300 : 4) / (lvc >= 2 ? orb_resist : 1);
 				lines.push('耐打');
 				t_ef = true;
 				break;
@@ -783,17 +769,11 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 				break;
 			case AB_EKILL:
 				lines.push('使徒');
-				if (other_def[15])
-					theHP *= 25;
-				else
-					theHP *= 5;
+				theHP *= 5;
 				eva_ef = true;
 				break;
 			case AB_WKILL:
-				if (other_def[14])
-					theHP *= 50;
-				else
-					theHP *= 10;
+				theHP *= 10;
 				lines.push('魔女');
 				eva_ef = true;
 				break;
@@ -816,11 +796,9 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 	if (t_ef && eva_ef) return false;
 	let s = lines.join('・');
 	s += ':';
-	if (other_def[1])
-		theHP /= 0.85;
 	if (lvc >= 2 && orb_hp != 1)
 		theHP /= orb_hp;
-	theHP = numStr(floor(theHP / KB));
+	theHP = numStr(~~(theHP / KB));
 	const hps = plus ? '+' + theHP : theHP;
 	s += hps;
 	if (spec) {
@@ -844,21 +822,17 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 
 function getHpString(form, Cs, trait, level, parent, plus, KB) {
 	parent.textContent = '';
-	const hp = floor(floor(floor(Math.round(form.hp * getLevelMulti(level)) * hp_t) * (1 + (other_def[3] || 0))) * form.hpM);
+	const hp = ~~((~~(Math.round(form.hp * getLevelMulti(level)) * hp_t)) * form.hpM);
 	let theHP = hp;
-	if (other_def[1])
-		theHP /= 0.85;
 	if (form.lvc >= 2 && orb_hp != 1)
 		theHP /= orb_hp;
-	const s = numStr(floor(theHP / KB));
+	const s = numStr(~~(theHP / KB));
 	parent.appendChild(document.createTextNode(plus ? '+' + s : s));
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)
 		getHp(form.lvc, line, hp, parent, true, trait, plus, KB) && getHp(form.lvc, line, hp, parent, false, trait, plus, KB);
 }
-function floor(x) {
-	return ~~x;
-}
+
 function getHP0(form, m, S, W) {
 	W.textContent = '';
 	let flag = false,
@@ -869,11 +843,12 @@ function getHP0(form, m, S, W) {
 		flag = true;
 		++FG;
 	}
-	let hp_o, tmp = other_def[3];
-	if (tmp)
-		hp_o = floor(floor(floor(Math.round(form.hp * m) * hp_t) * (1 + tmp)) * form.hpM);
-	else
-		hp_o = floor(floor(Math.round(form.hp * m) * hp_t) * form.hpM);
+	let hp_o = ~~(
+		(
+			~~(Math.round(form.hp * m) * hp_t)
+		) * form.hpM);
+	if (form.lvc >= 2 && orb_hp != 1)
+		hp_o /= orb_hp;
 	do {
 		if (flag) {
 			t = (FG == 2);
@@ -884,33 +859,19 @@ function getHP0(form, m, S, W) {
 		for (let k of S) {
 			switch (k) {
 				case AB_GOOD:
-					tmp = other_def[7];
-					if (tmp)
-						hp /= (form.lvc >= 2 ? orb_good_hp : 1) * (1 - tmp) * (0.5 - (t ? treasures[23] / 3000 : 0));
-					else
-						hp /= (form.lvc >= 2 ? orb_good_hp : 1) * (0.5 - (t ? treasures[23] / 3000 : 0));
+					hp /= (form.lvc >= 2 ? orb_good_hp : 1) * (0.5 - (t ? treasures[23] / 3000 : 0));;
 					break;
 				case AB_RESIST:
-					tmp = other_def[9];
-					if (tmp)
-						hp *= (t ? 4 + treasures[23] / 300 : 4) / ((form.lvc >= 2 ? orb_resist : 1) * (1 - tmp));
-					else
-						hp *= (t ? 4 + treasures[23] / 300 : 4) / (form.lvc >= 2 ? orb_resist : 1);
+					hp *= (t ? 4 + treasures[23] / 300 : 4) / (form.lvc >= 2 ? orb_resist : 1);
 					break;
 				case AB_RESISTS:
 					hp *= (t ? 6 + treasures[23] / 300 : 6);
 					break;
 				case AB_EKILL:
-					if (other_def[15])
-						hp *= 25;
-					else
-						hp *= 5;
+					hp *= 5;
 					break;
 				case AB_WKILL:
-					if (other_def[14])
-						hp *= 50;
-					else
-						hp *= 10;
+					hp *= 10;
 					break;
 				case AB_BSTHUNT:
 					hp /= 0.6;
@@ -923,11 +884,7 @@ function getHP0(form, m, S, W) {
 					break;
 			}
 		}
-		if (other_def[1])
-			hp /= 0.85;
-		if (form.lvc >= 2 && orb_hp != 1)
-			hp /= orb_hp;
-		hp = numStr(floor(hp));
+		hp = numStr(~~hp);
 		if (flag && FG == 1) {
 			if (hp_x == hp) return;
 			W.appendChild(document.createElement('br'));
@@ -948,7 +905,6 @@ function getATK0(form, m, S, W1, W2) {
 		FG = 1;
 	let atk_s;
 	let dps_s;
-	let tmp;
 	let t = form.trait & trait_treasure;
 	if (t && (form.trait & trait_no_treasure)) {
 		flag = true;
@@ -966,15 +922,11 @@ function getATK0(form, m, S, W1, W2) {
 		if (form.atk2)
 			atks.push(form.atk2);
 
-		tmp = other_def[2];
-		if (tmp) {
-			const atk_m = 1 + tmp;
-			for (let i = 0; i < atks.length; ++i)
-				atks[i] = floor(floor(floor(Math.round(atks[i] * m) * atk_t) * atk_m) * form.atkM);
-		} else {
-			for (let i = 0; i < atks.length; ++i)
-				atks[i] = floor(floor(Math.round(atks[i] * m) * atk_t) * form.atkM);
-		}
+		for (let i = 0; i < atks.length; ++i)
+			atks[i] = ~~(
+				(
+					~~(Math.round(atks[i] * m) * atk_t)
+				) * form.atkM);
 
 		let dps = new Float64Array(atks);
 
@@ -1003,19 +955,16 @@ function getATK0(form, m, S, W1, W2) {
 					mul(atks, 1 + v[4] * 0.2, false);
 					break;
 				case AB_GOOD:
-					if (other_def[7])
-						a = (1 + other_def[7]) * (1.5 + (t ? treasures[23] / 1000 : 0)) + (form.lvc >= 2 ? orb_good_atk : 0);
-					else
-						a = 1.5 + (form.lvc >= 2 ? orb_good_atk : 0) + (t ? treasures[23] / 1000 : 0);
+					a = 1.5 + (form.lvc >= 2 ? orb_good_atk : 0) + (t ? treasures[23] / 1000 : 0);
 					mul(atks, a);
 					mul(dps, a);
 					break;
 				case AB_CRIT:
-					mul(dps, 1 + ((other_def[6] || 0) + v) / 100, false);
+					mul(dps, 1 + v / 100, false);
 					mul(atks, 2, false);
 					break;
 				case AB_STRONG:
-					a = 1 + (v[1] + (other_def[13] || 0)) / 100;
+					a = 1 + v[1] / 100;
 					mul(atks, a);
 					mul(dps, a);
 					break;
@@ -1029,7 +978,7 @@ function getATK0(form, m, S, W1, W2) {
 					mul(dps, a);
 					break;
 				case AB_MASSIVE:
-					a = (1 + (other_def[8] || 0)) * (t ? (treasures[23] == 300 ? 4 : (3 + treasures[23] / 300)) : 3) + (form.lvc >= 2 ? orb_massive : 0);
+					a = (t ? (treasures[23] == 300 ? 4 : (3 + treasures[23] / 300)) : 3) + (form.lvc >= 2 ? orb_massive : 0);
 					mul(atks, a);
 					mul(dps, a);
 					break;
@@ -1039,22 +988,12 @@ function getATK0(form, m, S, W1, W2) {
 					mul(dps, a);
 					break;
 				case AB_EKILL:
-					if (other_def[15]) {
-						mul(atks, 25);
-						mul(dps, 25);
-					} else {
-						mul(atks, 5);
-						mul(dps, 5);
-					}
+					mul(atks, 5);
+					mul(dps, 5);
 					break;
 				case AB_WKILL:
-					if (other_def[14]) {
-						mul(atks, 25);
-						mul(dps, 25);
-					} else {
-						mul(atks, 5);
-						mul(dps, 5);
-					}
+					mul(atks, 5);
+					mul(dps, 5);
 					break;
 				case AB_BSTHUNT:
 					mul(atks, 2.5);
@@ -1073,7 +1012,7 @@ function getATK0(form, m, S, W1, W2) {
 		if (form.lvc >= 2 && add_atk) {
 			const a = [my_cat.forms[2].atk, my_cat.forms[2].atk1, my_cat.forms[2].atk2];
 			for (let i = 0; i < atks.length; ++i) {
-				const x = floor(add_atk * a[i]);
+				const x = ~~(add_atk * a[i]);
 				atks[i] += x;
 				dps[i] += x;
 			}
@@ -1081,10 +1020,10 @@ function getATK0(form, m, S, W1, W2) {
 
 		let s = 0;
 		for (let a of dps)
-			s += floor(a);
-		dps = numStr(floor(30 * s / form.attackF));
+			s += ~~a;
+		dps = numStr(~~((30 * s) / form.attackF));
 		for (let i = 0; i < atks.length; ++i)
-			atks[i] = numStr(floor(atks[i]));
+			atks[i] = numStr(~~atks[i]);
 		atks = atks.join('/');
 
 		if (flag && FG == 1) {
@@ -1112,7 +1051,6 @@ function getATK0(form, m, S, W1, W2) {
 
 function updateValues(form, tbl) {
 	const chs = tbl.children;
-	table_to_values.set(tbl, form);
 	if (layout == '2') {
 		let tr = chs[2].children;
 		const m = getLevelMulti(chs[1].children[1]._v);
@@ -1121,8 +1059,8 @@ function updateValues(form, tbl) {
 		tr[5].textContent = numStrT(form.attackF);
 		tr = chs[3].children;
 		getATK0(form, m, tbl._s, tr[1], chs[4].children[1]);
-		let t = other_def[4];
-		tr[3].textContent = t ? floor((1 + t) * form.speed) : form.speed;
+		let t;
+		tr[3].textContent = form.speed;
 		if (_l_unit == 'F') {
 			t = numStr(form.pre);
 			if (form.pre1)
@@ -1154,14 +1092,13 @@ function updateValues(form, tbl) {
 	let PRs = chs[8].children;
 	let CD = chs[7].children[5];
 	let KB = chs[7].children[1];
-	let i;
-	i = other_def[4];
-	chs[7].children[3].textContent = i ? floor((1 + i) * form.speed) : form.speed;
+	chs[7].children[3].textContent = form.speed.toString();
 	PRs[2].textContent = form.price;
 	PRs[4].textContent = numStr(form.price * 1.5);
 	PRs[6].textContent = form.price * 2;
 	let levels = new Array(5);
 	let lvE = chs[0].children[1];
+	let i;
 	const attackS = form.attackF / 30;
 	for (i = 0; i < lvMax; ++i) {
 		levels[i] = parseInt(lvE.textContent.slice(2));
@@ -1293,7 +1230,7 @@ function handleBlur() {
 		}
 	}
 	this.textContent = 'Lv' + this.L;
-	const arr = units_scheme.talents.costs[this.C];
+	const arr = skill_costs[this.C];
 	let total = 0;
 	for (let i = 0; i < this.L; ++i)
 		total += arr[i];
@@ -1308,24 +1245,17 @@ function handleBlur() {
 	form.applyTalents(my_cat.info[10], custom_talents);
 	if (super_talent)
 		form.applySuperTalents(my_cat.info[10], custom_super_talents);
-
-	for (const x of tbody._s)
-		if (!form.ab.hasOwnProperty(x))
-			tbody._s.delete(x);
-
+	tbody._s = new Set();
 	let td = tbody.children[7].children[1];
 	td.textContent = '';
-	
 	createImuIcons(form.imu, td);
+	createAbIcons(form, td, td, tbody);
 	if (form.res)
 		createResIcons(form.res, td);
-	createAbIcons(form, td, td, tbody);
 	updateValues(form, tbody);
 	td = tbody.querySelector('#trait');
-	if (td) {
-		td.textContent = '';
-		createTraitIcons(form.trait, td);
-	}
+	td.textContent = '';
+	createTraitIcons(form.trait, td);
 }
 
 function mkTool(tbl) {
@@ -1364,6 +1294,9 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		tbl.style.maxWidth = 'min(80%, 1500px)';
 		const icon = new Image(104, 79);
 		icon.src = form.icon;
+		//icon.style.position = 'absolute';
+		//icon.style.left = '-6px';
+		//icon.style.top = '-21px';
 		icon.style.setProperty('background-color', '#0000', 'important');
 		let tr = document.createElement('tr');
 		tbody.appendChild(tr);
@@ -1576,7 +1509,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 					super_talent = true;
 					continue;
 				}
-				N = units_scheme.talents.names[T[i]];
+				N = talent_d[T[i]];
 				tr = document.createElement('tr');
 				td = document.createElement('td');
 				td.classList.add('F');
@@ -1626,7 +1559,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 						continue;
 					if (!T[i + 13])
 						continue;
-					N = units_scheme.talents.names[T[i]];
+					N = talent_d[T[i]];
 					tr = document.createElement('tr');
 					td = document.createElement('td');
 					td.classList.add('F');
@@ -2039,145 +1972,6 @@ async function applyOrb() {
 		}
 	}
 }
-function def_add_button(table) {
-	const tr = document.createElement('tr');
-	const td = document.createElement('td');
-	td.colSpan = 2;
-	const btn = document.createElement('button');
-	btn.classList.add('plus-btn');
-	btn.onclick = function() {
-		table.removeChild(table.lastElementChild);
-		def_add_options(table);
-		def_add_button(table);
-	}
-	btn.textContent = '+';
-	td.appendChild(btn);
-	tr.appendChild(td);
-	table.appendChild(tr);
-}
-const def_options = [
-	['-', '-'],
-	["基座", "LvMax: 減輕 15% 傷害"],
-	["角色攻擊力", ["【小】: +10%", "【中】: +15%"]],
-	["角色體力", ["【小】: +10%", "【中】: +20%"]],
-	["角色移動速度", ["【小】: +10%", "【中】: +15%"]],
-	["研究力", ["【小】: -26.4F", "【中】: -52.8F", "【大】: -79.2F"]],
-	['「會心一擊」的發動率', ["【小】: +1%", "【中】: +2%"]],
-	["「善於攻擊」的效果", ["【小】: +10%", "【中】: +20%"]],
-	['「超大傷害」的效果', ["【小】: +10%", "【中】: +20%"]],
-	['「很耐打」的效果', ["【小】: +10%", "【中】: +20%", '【大】: +30%']],
-	['「使動作變慢」的效果', ["【小】: +10%", "【中】: +20%", '【大】: +30%']],
-	['「使動作停止」的效果', ["【小】: +10%", "【中】: +20%"]],
-	['「攻擊力下降」的效果', ["【小】: +10%", "【中】: +20%", '【大】: +30%']],
-	['「攻擊力上升」的效果', ["【小】: +20%", "【中】: +30%"]],
-	['「終結魔女」的效果', '【究極】: +400%'],
-	['「終結使徒」的效果', '【究極】: +400%']
-];
-const def_options_eff = [
-	1,                // 0: None
-	1,                // 1: Base
-	[0.1, 0.15],      // 2: Atk
-	[0.1, 0.2],       // 3: HP
-	[0.1, 0.15],      // 4: Speed
-	[264, 528, 792],  // 5: Reseach
-	[1, 2],           // 6: Crit
-	[1, 2],           // 7: Good
-	[0.1, 0.2],       // 8: Massive
-	[0.1, 0.2, 0.3],  // 9: Resist
-	[0.1, 0.2, 0.3],  // 10: Slow
-	[0.1, 0.2],       // 11: Stop
-	[0.1, 0.2, 0.3],  // 12: Weak
-	[20, 30],         // 13: Strong
-	1,                // 14: Witch
-	1                 // 15: EVA
-];
-function calc_def(table) {
-	other_def = {};
-	for (const tr of table.children) {
-		if (tr.children.length == 2) {
-			const idx = tr.firstElementChild.firstElementChild.selectedIndex;
-			const eff = def_options_eff[idx];
-			if (eff instanceof Array)
-				other_def[idx] = (other_def[idx] || 0) + eff[tr.lastElementChild.firstElementChild.selectedIndex];
-			else
-				other_def[idx] = eff;
-		}
-	}
-	if (layout == '2') {
-		for (const [tbody, form] of table_to_values) {
-			let td = tbody.children[7].children[1];
-			td.textContent = '';
-			updateValues(form, tbody);
-			createAbIcons(form, td, td, tbody);
-		}
-	} else {
-		for (const [tbl, form] of table_to_values) {
-			updateValues(form, tbl);
-			let td1 = tbl.children[11].children[1];
-			let td2 = tbl.children[12].children[1];
-			td1.textContent = '';
-			td2.textContent = '';
-			createAbIcons(form, td1, td2);
-		}
-	}
-}
-function def_add_options(table) {
-	const tr = document.createElement('tr');
-	const select = document.createElement('select');
-	const select2 = document.createElement('select');
-	let td = document.createElement('td');
-
-	td.appendChild(select);
-	tr.appendChild(td);
-
-	for (const o of def_options) {
-		const option = document.createElement('option');
-		option.textContent = o[0];
-		select.appendChild(option);
-	}
-
-	select.onchange = function() {
-		const o = def_options[this.selectedIndex];
-		select2.textContent = '';
-		if (o[1] instanceof Array) {
-			for (let s of o[1]) {
-				const option = document.createElement('option');
-				option.textContent = s;
-				select2.appendChild(option);
-			}
-		} else {
-			const option = document.createElement('option');
-			option.textContent = o[1];
-			select2.appendChild(option);
-		}
-		calc_def(table);
-	}
-	select2.onchange = function() {
-		calc_def(table);
-	}
-	const option = document.createElement('option');
-	option.textContent = '-';
-	select2.appendChild(option);
-	td = document.createElement('td');
-	td.appendChild(select2);
-	tr.appendChild(td);
-	table.appendChild(tr);
-}
-
-function renderDef() {
-	const table = document.createElement('table');
-	const tr = document.createElement('tr');
-	const th = document.createElement('td');
-	th.colSpan = 2;
-	th.textContent = '其他加成';
-	th.classList.add('f');
-	tr.appendChild(th);
-	table.appendChild(tr);
-	def_add_options(table);
-	def_add_button(table);
-	table.classList.add('w3-table', 'w3-centered', 'tcost', 'orb');
-	unit_content.appendChild(table);
-}
 
 function renderOrbs() {
 	const table = document.createElement('table');
@@ -2311,8 +2105,8 @@ function renderExtras() {
 		const div = document.createElement('div');
 		let x = my_cat.info[11];
 		let y = x % 100;
-		let z = floor(x / 10000);
-		div.textContent = `Ver ${z}.${floor((x - z * 10000) / 100)}.${y} 新增`;
+		let z = ~~(x / 10000);
+		div.textContent = `Ver ${z}.${~~((x - z * 10000) / 100)}.${y} 新增`;
 		div.classList.add('r-ribbon');
 		document.body.appendChild(div);
 	}
@@ -2455,7 +2249,7 @@ function rednerTalentInfos(talents, _super = false) {
 		if (!talents[i]) break;
 		if (_super != (talents[i + 13] == 1)) continue;
 		const info = getTalentInfo(talents.subarray(i, i + 14));
-		const name = units_scheme.talents.names[talents[i]];
+		const name = talent_d[talents[i]];
 		infos.push(name);
 		const tr = document.createElement('tr');
 		if (info != undefined) {
@@ -2518,7 +2312,7 @@ function calcCost(event) {
 	let costs = new Uint16Array(e.children.length - 1);
 	let selectMap = new Uint8Array(costs.length);
 	for (;;) {
-		let chs = e.children;
+		let chs = e.children;;
 		const c = chs[0].textContent;
 		if (c != '無' && c.indexOf('Lv') == -1) break;
 		for (let j = 1; j <= costs.length; ++j) {
@@ -2598,7 +2392,7 @@ function renderTalentCosts(talent_names, talents, _super = false) {
 		tr.appendChild(td0);
 		for (let j = 0; j < names.length; ++j) {
 			const td = document.createElement('td');
-			const tbl = units_scheme.talents.costs[costs[j]];
+			const tbl = skill_costs[costs[j]];
 			if (i & 1)
 				td.classList.add('F');
 			td.textContent = i > maxLvs[j] ? '-' : tbl[i - 1];
@@ -2619,7 +2413,7 @@ function renderTalentCosts(talent_names, talents, _super = false) {
 		const td = document.createElement('td');
 		let s = 0;
 		for (let j = 0; j < maxLvs[i]; ++j)
-			s += units_scheme.talents.costs[costs[i]][j];
+			s += skill_costs[costs[i]][j];
 		td.textContent = s.toString();
 		total += s;
 		td.classList.add('F');
@@ -2638,41 +2432,112 @@ function renderTalentCosts(talent_names, talents, _super = false) {
 }
 
 function renderCombos() {
+	const limits = ['世界篇第一章', '世界篇第二章', '世界篇第三章', '未來篇第一章', '未來篇第二章', '未來篇第三章', '宇宙篇第一章', '宇宙篇第二章', '宇宙篇第三章'];
+	const
+		combo_f = [
+			"角色攻擊力 +$ %",
+			"角色體力 +$ %",
+			"角色移動速度 +$ %",
+			"初期貓咪砲能量值 +$ 格",
+			"初期工作狂貓等級 +$",
+			"初期所持金額 $ 元",
+			"貓咪砲攻擊力 +$ %",
+			"貓咪砲充電速度加快 $f",
+			"工作狂貓的工作效率 +$ %",
+			"工作狂貓錢包 +$ %",
+			"城堡耐久力 +$ %",
+			"研究力 -$ %（10 % = 26.4 F）",
+			"會計能力 +$ %",
+			"學習力 +$ %",
+			"「善於攻擊」的效果 +$ %",
+			"「超大傷害」的效果 +$ %",
+			"「很耐打」的效果 +$ %",
+			"「打飛敵人」的效果 +$ %",
+			"「使動作變慢」的效果 +$ %",
+			"「使動作停止」的效果 +$ %",
+			"「攻擊力下降」的效果 +$ %",
+			"「攻擊力上升」的效果 +$ %",
+			"「終結魔女」的效果 +$ %",
+			"「終結使徒」的效果 +$ %",
+			"「會心一擊」的發動率 +$ %"
+		],
+		combo_params = [
+			[10, 15, 20, 30], // 1. 角色攻擊力
+			[10, 20, 30, 50], // 2. 角色體力
+			[10, 15, 20, 30], // 3. 角色移動速度
+			[2, 4, 6, 10], // 4. 初期貓咪砲能量值
+			[1, 2, 3, 4], // 5. 初期工作狂貓等級
+			[300, 500, 1000, 2000], // 6. 初期所持金額
+			[20, 50, 100, 200], // 7. 貓咪砲攻擊力
+			[20, 30, 40, 50], // 8. 貓咪砲充電速度加快
+			[10, 20, 30, 50], // 9. 工作狂貓的工作效率
+			[10, 20, 30, 50], // 10. 工作狂貓錢包
+			[20, 50, 100, 200], // 11. 城堡耐久力
+			[10, 20, 30, 40, 50], // 12. 研究力
+			[10, 20, 30, 50], // 13. 會計能力 
+			[10, 15, 20, 30], // 14. 學習力
+			[10, 20, 30, 50], // 15. 「善於攻擊」的效果
+			[10, 20, 30, 50], // 16. 「超大傷害」的效果
+			[10, 20, 30, 50], // 17. 「很耐打」的效果
+			[10, 20, 30, 50], // 18. 「打飛敵人」的效果
+			[10, 20, 30, 50], // 19. 「使動作變慢」的效果
+			[10, 20, 30, 50], // 20. 「使動作停止」的效果
+			[10, 20, 30, 50], // 21. 「攻擊力下降」的效果
+			[20, 30, 50, 100], // 22. 「攻擊力上升」的效果
+			[400, 400, 400, 400, 400], // 23. 「終結魔女」的效果
+			[400, 400, 400, 400, 400], // 24. 「終結使徒」的效果
+			[1, 2, 3, 4] // 25. 「會心一擊」的發動率
+		];
 	const table = document.createElement('table');
 	for (let j = 0; j < combos.length; ++j) {
 		const C = combos[j];
 		const units = C[3];
 		for (let i = 0; i < units.length; i += 2) {
-			if (my_id !== units[i]) { continue; }
-			const [name, type, lv, , req] = C;
-			const tr = table.appendChild(document.createElement('tr'));
-			const td = tr.appendChild(document.createElement('td'));
-			const p = td.appendChild(document.createElement('p'));
-			const a = p.appendChild(document.createElement('a'));
-			a.href = '/combos.html#' + name;
-			a.textContent = name;
-			a.style.textDecoration = 'none';
-			const p2 = td.appendChild(document.createElement('p'));
-			const desc = combos_scheme.descriptions[type].replace('#', combos_scheme.values[type][lv]);
-			p2.textContent = `${combos_scheme.names[type]} ${desc} 【${combos_scheme.levels[lv]}】`;
-			if (req > 1) {
-				const p3 = td.appendChild(document.createElement('p'));
+			if (my_id == units[i]) {
+				const tr = document.createElement('tr');
+				const type = C[1];
+				const lv = C[2];
+				const td = document.createElement('td');
+				const p = document.createElement('p');
+				const p2 = document.createElement('p');
+				const p3 = document.createElement('p3');
 				p3.style.fontSize = 'smaller';
-				p3.textContent = combos_scheme.requirements[req];
+				td.appendChild(p);
+				td.appendChild(p2);
+				const a = document.createElement('a');
+				a.href = '/combos.html#' + C[0];
+				a.textContent = C[0];
+				a.style.textDecoration = 'none';
+				p.appendChild(a);
+				p2.textContent = combo_f[type].replace('$', combo_params[type][lv]) + '【' + ['小', '中', '大', '究極'][lv] + '】';
+				tr.appendChild(td);
+				if (C[4] > 10000) {
+					p3.textContent = `等排${[2700, 1450, 2150][C[4] - 10001]}`;
+					td.appendChild(p3);
+				} else if (C[4] > 1) {
+					p3.textContent = `${limits[C[4] - 1]}`;
+					td.appendChild(p3);
+				}
+				for (let c = 0; c < units.length; c += 2) {
+					const td = document.createElement('td');
+					const img = new Image(104, 79);
+					const a = document.createElement('a');
+					a.href = './unit.html?id=' + units[c].toString();
+					img.src = `/img/u/${units[c]}/${units[c + 1]}.png`;
+					a.appendChild(img);
+					td.appendChild(a);
+					tr.appendChild(td);
+				}
+				table.appendChild(tr);
+				break;
 			}
-			for (let c = 0; c < units.length; c += 2) {
-				const td = tr.appendChild(document.createElement('td'));
-				const a = td.appendChild(document.createElement('a'));
-				a.href = './unit.html?id=' + units[c].toString();
-				a.appendChild(new Image(104, 79)).src = `/img/u/${units[c]}/${units[c + 1]}.png`;
-			}
-			break;
 		}
 	}
 	if (table.children.length) {
 		table.classList.add('w3-table', 'w3-centered', 'combo');
-		const p = unit_content.appendChild(document.createElement('p'));
+		const p = document.createElement('p');
 		p.textContent = '聯組資訊';
+		unit_content.appendChild(p);
 		unit_content.appendChild(table);
 	}
 }
@@ -2765,7 +2630,6 @@ function renderUintPage() {
 			]);
 			mkTool(tbl);
 		}
-		renderDef();
 		if (my_cat.info[12])
 			renderOrbs();
 		renderExtras();
@@ -2812,7 +2676,6 @@ function renderUintPage() {
 			mkTool(tf4_tbl);
 		}
 	}
-	renderDef();
 	if (my_cat.info[12])
 		renderOrbs();
 	renderExtras();
@@ -2911,7 +2774,7 @@ function drawgraph(T) {
 	if (!T) {
 		const line = _curves[my_cat.curve];
 		const data = [];
-		for (let i = 0; i <= floor(lvs / 10); ++i)
+		for (let i = 0; i <= ~~(lvs / 10); ++i)
 			data.push({
 				y: line[i],
 				x: (i * 10) || 1
@@ -2930,7 +2793,7 @@ function drawgraph(T) {
 				'title': '等級',
 				'prefix': "Lv"
 			},
-			'theme': document.documentElement.classList.contains('dark') ? 'dark1' : 'light1',
+			'theme': document.documentElement.getAttribute('data-theme') == 'dark' ? 'dark1' : 'light1',
 			'title': {
 				'text': "成長曲線"
 			},
@@ -2958,7 +2821,7 @@ function drawgraph(T) {
 			switch (T) {
 				case 1:
 					for (let level = 0; level <= lvs; level += 5) {
-						const hp = floor(2.5 * Math.round(my_cat.forms[select.selectedIndex].hp * getLevelMulti(level ? level : 1)));
+						const hp = ~~(2.5 * Math.round(my_cat.forms[select.selectedIndex].hp * getLevelMulti(level ? level : 1)));
 						datas.push({
 							x: level ? level : 1,
 							y: hp
@@ -2968,7 +2831,7 @@ function drawgraph(T) {
 				case 2:
 					for (let level = 0; level <= lvs; level += 5) {
 						let t = my_cat.forms[select.selectedIndex];
-						const atk = floor(2.5 * Math.round((t.atk + t.atk1 + t.atk2) * getLevelMulti(level ? level : 1)));
+						const atk = ~~(2.5 * Math.round((t.atk + t.atk1 + t.atk2) * getLevelMulti(level ? level : 1)));
 						datas.push({
 							x: level ? level : 1,
 							y: atk
@@ -2978,7 +2841,7 @@ function drawgraph(T) {
 				case 3:
 					for (let level = 0; level <= lvs; level += 5) {
 						let t = my_cat.forms[select.selectedIndex];
-						const atk = floor(2.5 * Math.round((t.atk + t.atk1 + t.atk2) * getLevelMulti(level ? level : 1)));
+						const atk = ~~(2.5 * Math.round((t.atk + t.atk1 + t.atk2) * getLevelMulti(level ? level : 1)));
 						datas.push({
 							x: level ? level : 1,
 							y: atk * 30 / t.attackF
@@ -3001,7 +2864,7 @@ function drawgraph(T) {
 					'title': '等級',
 					'prefix': "Lv"
 				},
-				'theme': document.documentElement.classList.contains('dark') == 'dark' ? 'dark1' : 'light1',
+				'theme': document.documentElement.getAttribute('data-theme') == 'dark' ? 'dark1' : 'light1',
 				'title': {
 					'text': '成長曲線'
 				},
