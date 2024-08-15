@@ -128,6 +128,26 @@ for (const file of fs.readdirSync(layoutDir)) {
 	});
 }
 
+Handlebars.registerHelper('var', function (name, ...args) {
+	const options = args.pop();
+	// {{#var "myvar"}}<b>value</b>{{/var}}
+	if (options.fn) {
+		this[name] = options.fn(this);
+	}
+	// {{var "myvar" a=1 b=2 c=3}}
+	else if (args.length === 0) {
+		this[name] = options.hash;
+	}
+	// {{var "myvar" "value"}}
+	else if (args.length === 1) {
+		this[name] = args[0];
+	}
+	// {{var "myvar" "value1" "value2"}}
+	else {
+		this[name] = args;
+	}
+});
+
 Handlebars.registerHelper('toJSON', function (obj, space) {
 	return JSON.stringify(obj, null, space);
 });
