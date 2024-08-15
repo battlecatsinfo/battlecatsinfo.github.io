@@ -1,8 +1,7 @@
 const
-	SOL = {{{SOL}}},
-	UL = {{{UL}}},
-	ZL = {{{ZL}}},
-	COLLAB = {{{COLLAB}}},
+	{{#each data as |value key|}}
+	{{{key}}} = {{{toJSON value}}},
+	{{/each}}
 	MONTHY = [
 		[1, '新年快樂？', '新年、あけました！おめっ…', 10, 15, 20, 30],
 		[2, '被召喚的福！', '召喚された福！', 10, 15, 20, 25],
@@ -116,3 +115,4 @@ $('#COLLAB').DataTable({
 		'dataSrc': 0
 	}
 });
+

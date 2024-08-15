@@ -1,32 +1,37 @@
----
-layout: static1
-title: 等級排行獎勵
-show-version: true
----
+{{#> static.html}}
 
-<style>
-td img {
-	width: 3em;
-	height: auto;
-}
-td:nth-child(4) {
-	padding: 0 !important;
-}
-</style>
+{{#*inline "title"}}等級排行獎勵{{/inline}}
 
-<p style="text-align:center;">※解放「？？稀有角色」是指「傳說稀有」※</p>
+{{#*inline "styles-inline"}}
+	{{~> @partial-block}}
+	<style>
+	td img {
+		width: 3em;
+		height: auto;
+	}
+	td:nth-child(4) {
+		padding: 0 !important;
+	}
+	</style>
+{{/inline}}
 
-<div style="display:flex;justify-content:center;">
-	<table>
-		<thead>
-			<tr>
-				<th>等排</th>
-				<th>說明</th>
-				<th>報酬</th>
-				<th>圖示</th>
-			</tr>
-		</thead>
-		<tbody>
+{{#*inline "content"}}
+	<div class="E">
+
+	<h1 style="text-align:center;">等級排行獎勵<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>
+
+	<p style="text-align:center;">※解放「？？稀有角色」是指「傳說稀有」※</p>
+	<div style="display:flex;justify-content:center;">
+		<table>
+			<thead>
+				<tr>
+					<th>等排</th>
+					<th>說明</th>
+					<th>報酬</th>
+					<th>圖示</th>
+				</tr>
+			</thead>
+			<tbody id="rank">
 			{{#each ranks as |rank|}}
 			<tr>
 				<td>{{rank.rank}}</td>
@@ -35,6 +40,11 @@ td:nth-child(4) {
 				<td>{{#if rank.image}}<img width="128" height="128" loading="lazy" src="{{rank.image}}">{{/if}}</td>
 			</tr>
 			{{/each}}
-		</tbody>
-	</table>
-</div>
+			</tbody>
+		</table>
+	</div>
+	
+	</div>
+{{/inline}}
+
+{{/static.html}}

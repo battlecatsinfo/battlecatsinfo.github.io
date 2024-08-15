@@ -12,7 +12,8 @@ const modules = new Set([
 	'material', 
 	'medal', 
 	'rank',
-	'unit'
+	'unit',
+	'gamatoto'
 ]);
 
 const args = parseArgs({

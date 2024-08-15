@@ -1,17 +1,30 @@
----
-layout: stage
-title: 關卡資訊(官方分類)
-stagejs: "stage2.js"
-filter: false
-M1:
-  - 未分類
-  - 角色
-  - 進化權利
-  - 貓罐頭
-  - 道具
-  - XP
-  - 進化素材
-  - 本能珠珠
-  - 貓咪券
-  - 活動券
----
+{{#> stage.html}}
+
+  {{#*inline "description"}}
+  <meta name="description" content="關卡資訊(官方分類) | 貓咪大戰爭中文資訊網站">
+  {{/inline}}
+
+  {{#*inline "og-title"}}
+  <meta property="og:title" content="關卡資訊(官方分類)">
+  {{/inline}}
+
+  {{#*inline "content-selector"}}
+      <select id="M1">
+        <option>未分類</option>
+        <option>角色</option>
+        <option>進化權利</option>
+        <option>貓罐頭</option>
+        <option>道具</option>
+        <option>XP</option>
+        <option>進化素材</option>
+        <option>本能珠珠</option>
+        <option>貓咪券</option>
+        <option>活動券</option>
+      </select>
+  {{/inline}}
+
+  {{#*inline "content-scripts"}}
+  <script src="stage2.js"></script>
+  {{/inline}}
+
+{{/stage.html}}

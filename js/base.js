@@ -1,16 +1,22 @@
-const yaml = require('js-yaml');
 const Handlebars = require('handlebars');
 const fs = require('node:fs');
-const resolve = require('node:path').resolve;
-const gEnv = JSON.parse(fs.readFileSync(resolve(__dirname, '../data/config.json'), 'utf-8'));
-const template_cache = {};
+const {resolve, extname} = require('node:path');
 
-for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])
-	gEnv[key] = JSON.stringify(gEnv[key]);
+// register partials for template/layouts/*.hbs
+const layoutDir = resolve(__dirname, '../template/layouts');
+for (const file of fs.readdirSync(layoutDir)) {
+	const ext = extname(file);
+	if (ext.toLowerCase() !== '.hbs') {
+		continue;
+	}
+	Handlebars.registerPartial(
+		file.slice(0, -ext.length),
+		fs.readFileSync(resolve(layoutDir, file), 'utf-8')
+	);
+}
 
-Handlebars.registerHelper('ifCond', function (v1, op, v2, options) {
-
-	switch (op) {
+Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+	switch (operator) {
 		case '==':
 			return (v1 == v2) ? options.fn(this) : options.inverse(this);
 		case '===':
@@ -45,58 +51,61 @@ Handlebars.registerHelper('toJSON', function (obj) {
 	return JSON.stringify(obj);
 });
 
+const gEnv = JSON.parse(fs.readFileSync(resolve(__dirname, '../data/config.json'), 'utf-8'));
+
+for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])
+	gEnv[key] = JSON.stringify(gEnv[key]);
+
 module.exports = class {
 	template(s, env, minify) {
-		if (s.startsWith('---')) {
-			const idx = s.indexOf('---', 4);
-			const doc = yaml.load(s.slice(4, idx));
-			const layout = doc['layout'];
+		Object.assign(env, gEnv);
 
-			let templ = template_cache[layout];
+		let r = Handlebars.compile(s)(env);
 
-			if (!templ)
-				template_cache[layout] = templ = fs.readFileSync(
-					resolve(
-						__dirname, 
-						'../template/layout/', 
-						layout + '.hbs'
-					), 
-					'utf8'
-				).split('${contents}$');
+		// default minify options
+		switch (minify) {
+			case 'html':
+				r = require('html-minifier').minify(r, {
+					collapseBooleanAttributes: true,
+					collapseWhitespace: true,
+					conservativeCollapse: true,
+					removeAttributeQuotes: true,
+					decodeEntities: true,
+					minifyCSS: true,
+					minifyJS: true,
+					removeComments: true,
+				});
+				break;
+			case 'js':
+				r = require("uglify-js").minify(r, {
+					'mangle': true,
+					'compress': true,
+					'toplevel': true,
+				});
 
-			Object.assign(env, doc);
+				if (r.error)
+					console.error('Error on minifying JS:', file, r.error);
 
-			s = templ.join(s.slice(idx + 3));
+				if (r.warnings)
+					console.warn('Warning on minifying JS:', file, r.warnings);
+
+				r = r.code;
+				break;
 		}
 
-		Object.assign(env, gEnv);
-		let code = Handlebars.compile(s)(env);
-		if (minify)
-			code = require('html-minifier').minify(code, {
-				collapseBooleanAttributes: true,
-				collapseWhitespace: true,
-				conservativeCollapse: true,
-				removeAttributeQuotes: true,
-				decodeEntities: true,
-				minifyCSS: true,
-				minifyJS: true,
-				removeComments: true,
-			});
-		return code;
+		return r;
 	}
-	write_template(in_f, out_f, env, minify) {
-		if (minify instanceof Function)
-			fs.writeFileSync(
-				resolve(__dirname, '../_out/', out_f),
-				minify(this.template(fs.readFileSync(resolve(__dirname, '../template/', in_f), 'utf8'), env)),
-				'utf8'
-			);
-		else
-			fs.writeFileSync(
-				resolve(__dirname, '../_out/', out_f),
-				this.template(fs.readFileSync(resolve(__dirname, '../template/', in_f), 'utf8'), env, minify),
-				'utf8'
-			);
+	write_template(in_f, out_f, env = {}, minify) {
+		env['filename'] = out_f;
+		fs.writeFileSync(
+			resolve(__dirname, '../_out/', out_f),
+			this.template(
+				fs.readFileSync(resolve(__dirname, '../template/', in_f), 'utf8'), 
+				env,
+				minify ? (in_f.endsWith('html') ? 'html' : 'js') : ''
+			),
+			'utf8'
+		);
 	}
 	write_string(out_f, s) {
 		return fs.writeFileSync(

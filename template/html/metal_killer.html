@@ -1,77 +1,85 @@
----
-layout: common
-title: 鋼鐵殺手
-scripts:
-  - "https://cdn.canvasjs.com/canvasjs.min.js"
----
+{{#> static.html}}
 
-<div style="position:absolute;top:10vh;right: 1vw;">
-	主題
-	<select id="S">
-		<option value="light1" selected>淺色1</option>
-		<option value="light2">淺色2</option>
-		<option value="dark1">深色1</option>
-		<option value="dark2">深色2</option>
-	</select>
-</div>
+{{#*inline "title"}}鋼鐵殺手計算{{/inline}}
 
-<form action="#" style="padding: 2em;">
-	<p>
-		<label for="kill">扣敵方體力百分比<span style="float: right;">Metal killer percentage</span></label>
-		<input class="w3-input" type="number" id="kill" value="12" min="1" max="99">
-	</p>
-	<p>
-		<label for="hp">敵方體力<span style="float: right;">Enemy's health point</span></label>
-		<input class="w3-input" type="number" id="hp" value="77777" min="1">
-	</p>
-</form>
+{{#*inline "description"}}{{/inline}}
 
-<div id="canvas"></div>
+{{#*inline "og"}}{{/inline}}
 
-<script>
-const kill = document.getElementById('kill');
-const HP = document.getElementById('hp');
-const S = document.getElementById('S');
-let chart;
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+{{/inline}}
 
-(S.onclick = HP.oninput = kill.oninput = function () {
-	let hp = Math.max(parseInt(HP.value), 1);
-	let Ys = [{y: hp}];
-	let m = parseInt(kill.value) / 100;
-	while (true) {
-		hp -= 1 + Math.max(~~(hp * m), 1);
-		if (hp <= 0) {
-			Ys.push({y: 0});
-			break;
+{{#*inline "content"}}
+	<div style="position:absolute;top:10vh;right: 1vw;">
+		主題
+		<select id="S">
+			<option value="light1" selected>淺色1</option>
+			<option value="light2">淺色2</option>
+			<option value="dark1">深色1</option>
+			<option value="dark2">深色2</option>
+		</select>
+	</div>
+	<h1 style="text-align: center;" style="margin: 1em 0 auto;">鋼鐵殺手</h1>
+	<form action="#" style="padding: 2em;">
+		<p>
+			<label for="kill">扣敵方體力百分比<span style="float: right;">Metal killer percentage</span></label>
+			<input class="w3-input" type="number" id="kill" value="12" min="1" max="99">
+		</p>
+		<p>
+			<label for="hp">敵方體力<span style="float: right;">Enemy's health point</span></label>
+			<input class="w3-input" type="number" id="hp" value="77777" min="1">
+		</p>
+	</form>
+	<div id="canvas"></div>
+	<script>
+	const kill = document.getElementById('kill');
+	const HP = document.getElementById('hp');
+	const S = document.getElementById('S');
+	let chart;
+
+	(S.onclick = HP.oninput = kill.oninput = function () {
+		let hp = Math.max(parseInt(HP.value), 1);
+		let Ys = [{y: hp}];
+		let m = parseInt(kill.value) / 100;
+		while (true) {
+			hp -= 1 + Math.max(~~(hp * m), 1);
+			if (hp <= 0) {
+				Ys.push({y: 0});
+				break;
+			}
+			Ys.push({y: hp});
 		}
-		Ys.push({y: hp});
-	}
-	if (!chart) {
-		chart = new CanvasJS.Chart('canvas', {
-			'animationEnabled': true,
-			'responsive':true,
-			'exportEnabled': true,
-			'theme': "light2",
-			'axisY': {
-				'title': "Enemy HP"
-			},
-			'axisX': {
-				'title': 'Nth attack'
-			},
-			'theme': S.value,
-			'title': { 'text': "Metal Killer" },
-			'data': [{
-				'xValueFormatString': '0th attack',
-				'yValueFormatString': '#,##0 HP remaining',
-				'type': 'line',
-				'dataPoints': Ys
-			}]
-		});
-		chart.render();
-	} else {
-		chart.options.data[0].dataPoints = Ys;
-		document.documentElement.setAttribute("data-Q", chart.options.theme = S.value);
-		chart.render();
-	}
-})();
-</script>
+		if (!chart) {
+			chart = new CanvasJS.Chart('canvas', {
+				'animationEnabled': true,
+				'responsive':true,
+				'exportEnabled': true,
+				'theme': "light2",
+				'axisY': {
+					'title': "Enemy HP"
+				},
+				'axisX': {
+					'title': 'Nth attack'
+				},
+				'theme': S.value,
+				'title': { 'text': "Metal Killer" },
+				'data': [{
+					'xValueFormatString': '0th attack',
+					'yValueFormatString': '#,##0 HP remaining',
+					'type': 'line',
+					'dataPoints': Ys
+				}]
+			});
+			chart.render();
+		} else {
+			chart.options.data[0].dataPoints = Ys;
+			chart.options.theme = S.value;
+			chart.render();
+		}
+	})();
+	</script>
+{{/inline}}
+
+{{/static.html}}

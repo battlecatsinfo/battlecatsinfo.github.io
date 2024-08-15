@@ -1,111 +1,117 @@
----
-layout: static1
-title: 城堡素材掉落率
-show-version: true
-scripts: 
-  - "https://code.jquery.com/jquery-3.7.0.min.js"
-  - "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"
-  - "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"
-  - "https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.js"
-styles:
-  - "https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.css"
----
+{{#> static.html}}
 
+{{#*inline "title"}}城堡素材掉落率{{/inline}}
 
-<style>
-th img {
-	width: 22px;
-	height: auto;
-	vertical-align: middle;
-}
-</style>
+{{#*inline "styles"}}
+	<link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.css" rel="stylesheet">
+{{/inline}}
 
-<div style="width:92vw;margin: 0 auto;">
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
+{{/inline}}
 
-<h2>傳奇關卡</h2>
+{{#*inline "styles-inline"}}
+	{{~> @partial-block}}
+	<style>
+	th img {
+		width: 22px;
+		height: auto;
+		vertical-align: middle;
+	}
+	</style>
+{{/inline}}
 
-<table id="SOL" class="display">
-	<thead>
-		<tr>
-			<th>章節</th>
-			<th>中文</th>
-			<th>日文</th>
-			<th>統率力</th>
-			<th>紅磚<img src="/img/r/85.png"></th>
-			<th>羽毛<img src="/img/r/86.png"></th>
-			<th>備長炭<img src="/img/r/87.png"></th>
-			<th>齒輪<img src="/img/r/88.png"></th>
-			<th>黃金<img src="/img/r/89.png"></th>
-			<th>宇宙石<img src="/img/r/90.png"></th>
-			<th>迷之骨<img src="/img/r/91.png"></th>
-			<th>未調落</th>
-			<th>冠1</th>
-			<th>冠2</th>
-			<th>冠3</th>
-			<th>冠4</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
+{{#*inline "content"}}
+	<div style="width:92vw;margin: 0 auto;">
 
-<br>
+	<h1 style="text-align:center;margin:1.5em 0;">城堡素材掉落率<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>
 
-<h2>真傳奇關卡</h2>
+	<div style="width:92vw;margin: 0 auto;">
+		<h2>傳奇關卡</h2>
+		<table id="SOL" class="display">
+			<thead>
+				<tr>
+					<th>章節</th>
+					<th>中文</th>
+					<th>日文</th>
+					<th>統率力</th>
+					<th>紅磚<img src="/img/r/85.png"></th>
+					<th>羽毛<img src="/img/r/86.png"></th>
+					<th>備長炭<img src="/img/r/87.png"></th>
+					<th>齒輪<img src="/img/r/88.png"></th>
+					<th>黃金<img src="/img/r/89.png"></th>
+					<th>宇宙石<img src="/img/r/90.png"></th>
+					<th>迷之骨<img src="/img/r/91.png"></th>
+					<th>未調落</th>
+					<th>冠1</th>
+					<th>冠2</th>
+					<th>冠3</th>
+					<th>冠4</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<br>
+		<h2>真傳奇關卡</h2>
+		<table id="UL" class="display">
+			<thead>
+				<tr>
+					<th>章節</th>
+					<th>中文</th>
+					<th>日文</th>
+					<th>統率力</th>
+					<th>紅磚<img src="/img/r/85.png"></th>
+					<th>羽毛<img src="/img/r/86.png"></th>
+					<th>備長炭<img src="/img/r/87.png"></th>
+					<th>齒輪<img src="/img/r/88.png"></th>
+					<th>黃金<img src="/img/r/89.png"></th>
+					<th>宇宙石<img src="/img/r/90.png"></th>
+					<th>迷之骨<img src="/img/r/91.png"></th>
+					<th>菊石<img src="/img/r/140.png"></th>
+					<th>未調落</th>
+					<th>冠1</th>
+					<th>冠2</th>
+					<th>冠3</th>
+					<th>冠4</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<br>
+		<h2>傳奇故事0</h2>
+		<table id="ZL" class="display">
+			<thead>
+				<tr>
+					<th>章節</th>
+					<th>中文</th>
+					<th>日文</th>
+					<th>統率力</th>
+					<th>紅磚Z<img src="/img/r/187.png"></th>
+					<th>羽毛Z<img src="/img/r/188.png"></th>
+					<th>備長炭Z<img src="/img/r/189.png"></th>
+					<th>齒輪Z<img src="/img/r/190.png"></th>
+					<th>黃金Z<img src="/img/r/191.png"></th>
+					<th>宇宙石Z<img src="/img/r/192.png"></th>
+					<th>迷之骨Z<img src="/img/r/193.png"></th>
+					<th>菊石Z<img src="/img/r/194.png"></th>
+					<th>未調落</th>
+					<th>冠1</th>
+					<th>冠2</th>
+					<th>冠3</th>
+					<th>冠4</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<br>
+	</div>
+	<script src="materials.js"></script>
 
-<table id="UL" class="display">
-	<thead>
-		<tr>
-			<th>章節</th>
-			<th>中文</th>
-			<th>日文</th>
-			<th>統率力</th>
-			<th>紅磚<img src="/img/r/85.png"></th>
-			<th>羽毛<img src="/img/r/86.png"></th>
-			<th>備長炭<img src="/img/r/87.png"></th>
-			<th>齒輪<img src="/img/r/88.png"></th>
-			<th>黃金<img src="/img/r/89.png"></th>
-			<th>宇宙石<img src="/img/r/90.png"></th>
-			<th>迷之骨<img src="/img/r/91.png"></th>
-			<th>菊石<img src="/img/r/140.png"></th>
-			<th>未調落</th>
-			<th>冠1</th>
-			<th>冠2</th>
-			<th>冠3</th>
-			<th>冠4</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
+	</div>
+{{/inline}}
 
-<br>
-
-<h2>傳奇故事0</h2>
-
-<table id="ZL" class="display">
-	<thead>
-		<tr>
-			<th>章節</th>
-			<th>中文</th>
-			<th>日文</th>
-			<th>統率力</th>
-			<th>紅磚Z<img src="/img/r/187.png"></th>
-			<th>羽毛Z<img src="/img/r/188.png"></th>
-			<th>備長炭Z<img src="/img/r/189.png"></th>
-			<th>齒輪Z<img src="/img/r/190.png"></th>
-			<th>黃金Z<img src="/img/r/191.png"></th>
-			<th>宇宙石Z<img src="/img/r/192.png"></th>
-			<th>迷之骨Z<img src="/img/r/193.png"></th>
-			<th>菊石Z<img src="/img/r/194.png"></th>
-			<th>未調落</th>
-			<th>冠1</th>
-			<th>冠2</th>
-			<th>冠3</th>
-			<th>冠4</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
-
-</div>
-
-<script src="materials.js"></script>
+{{/static.html}}

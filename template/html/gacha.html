@@ -1,169 +1,417 @@
----
-layout: common
----
+{{#> common.html}}
 
+{{#*inline "title"}}{{pool.tw-name}}{{/inline}}
 
-<style>
-body {
-	width: 100%;
-	margin: 0 auto;
-	padding: 0;
-	padding-bottom: 4vh;
-	text-align: center;
-	font-size: min(2vw, 18px);
-}
-table {
-	margin: 0 auto;
-}
-tbody > a {
-	display: block;
-}
-.tooltip svg {
-	margin-right: 0.6em;
-	fill: black;
-	width: 1.5em;
-	height: 1.5em;
-	cursor: pointer;
-}
-details {
-	margin-bottom: 1em;
-}
-summary {
-	cursor: pointer;
-	user-select: none;
-}
-.rate th {
-	border: 1px solid #b9b9b9;
-}
-.rate td,
-.rate th {
-	padding: 0.3em 3em !important;
-	border: 1px solid #b9b9b9;
-}
-.B {
-	display: block;
-}
-.R td {
-	padding: 0;
-	padding-bottom: 1em;
-}
-.N th {
-	border: 1px solid #a9a9a9;
-}
-.N td {
-	padding: 0 2em !important;
-	border: 1px solid #a9a9a9;
-}
-.N img {
-	width: 5em;
-	height: auto;
-}
-.N a {
-	text-decoration: none;
-}
-.N td:first-child {
-	padding: 0 !important;
-}
-.Y th {
-	font-size: smaller;
-	border: 1px solid #999999;
-}
-.Y td {
-	font-size: smaller;
-	padding: 0.1em 2em !important;
-	border: 1px solid #999999;
-}
-.Y td:first-child {
-	background-color: #f3f3f3;
-}
-.Y td:nth-child(2) {
-	background-color: #d9d2e9;
-}
-.Y td:nth-child(3) {
-	background-color: #d9ead3;
-}
-.Y td:nth-child(4) {
-	background-color: #ead1dc;
-}
-.Y td:nth-child(5) {
-	background-color: #fce5cd;
-}
-.Y td:nth-child(6) {
-	background-color: #c9daf8;
-}
-.M {
-	box-sizing: border-box;
-	width: max(60%, 400px);
-	max-width: 100%;
-	margin: 0.7em auto;
-	padding: 0.3em 0.8em;
-	border: 1px solid #ccc;
-	text-align: left;
-}
-.M a {
-	text-decoration: none;
-	color: var(--color) !important;
-}
-.M a:hover {
-	color: var(--acolor) !important;
-	text-decoration: underline;
-}
-.dark td {
-	background-color: var(--bg) !important;
-}
-</style>
+{{#*inline "og"}}
+	<meta property="og:title" content="{{pool.tw-name}} | 貓咪大戰爭中文資訊網站">
+	<meta property="og:description" content="{{pool.tw-name}}轉蛋詳細資訊">
+	<meta property="og:image" content="{{pool.img}}">
+{{/inline}}
 
+{{#*inline "styles-inline"}}
+	<style>
+	body {
+		width: 100%;
+		margin: 0 auto;
+		padding: 0;
+		padding-bottom: 4vh;
+		text-align: center;
+		font-size: min(2vw, 18px);
+	}
+	table {
+		margin: 0 auto;
+	}
+	tbody > a {
+		display: block;
+	}
+	.tooltip svg {
+		margin-right: 0.6em;
+		fill: black;
+		width: 1.5em;
+		height: 1.5em;
+		cursor: pointer;
+	}
+	details {
+		margin-bottom: 1em;
+	}
+	summary {
+		cursor: pointer;
+		user-select: none;
+	}
+	.rate th {
+		border: 1px solid #b9b9b9;
+	}
+	.rate td,
+	.rate th {
+		padding: 0.3em 3em !important;
+		border: 1px solid #b9b9b9;
+	}
+	.B {
+		display: block;
+	}
+	.R td {
+		padding: 0;
+		padding-bottom: 1em;
+	}
+	.N th {
+		border: 1px solid #a9a9a9;
+	}
+	.N td {
+		padding: 0 2em !important;
+		border: 1px solid #a9a9a9;
+	}
+	.N img {
+		width: 5em;
+		height: auto;
+	}
+	.N a {
+		text-decoration: none;
+	}
+	.N td:first-child {
+		padding: 0 !important;
+	}
+	.Y th {
+		font-size: smaller;
+		border: 1px solid #999999;
+	}
+	.Y td {
+		font-size: smaller;
+		padding: 0.1em 2em !important;
+		border: 1px solid #999999;
+	}
+	.Y td:first-child {
+		background-color: #f3f3f3;
+	}
+	.Y td:nth-child(2) {
+		background-color: #d9d2e9;
+	}
+	.Y td:nth-child(3) {
+		background-color: #d9ead3;
+	}
+	.Y td:nth-child(4) {
+		background-color: #ead1dc;
+	}
+	.Y td:nth-child(5) {
+		background-color: #fce5cd;
+	}
+	.Y td:nth-child(6) {
+		background-color: #c9daf8;
+	}
+	.M {
+		box-sizing: border-box;
+		width: max(60%, 400px);
+		max-width: 100%;
+		margin: 0.7em auto;
+		padding: 0.3em 0.8em;
+		border: 1px solid #ccc;
+		text-align: left;
+	}
+	.M a {
+		text-decoration: none;
+		color: var(--color) !important;
+	}
+	.M a:hover {
+		color: var(--acolor) !important;
+		text-decoration: underline;
+	}
+	.dark td {
+		background-color: var(--bg) !important;
+	}
+	</style>
+{{/inline}}
 
-<h1>{{{names}}}</h1>
+{{#*inline "content"}}
+	<h1 style="font-size:max(12px,2.2vw);">
+		{{#with pool as |pool|}}
+		{{#if pool.tw-name}}
+		{{pool.tw-name}}<br>
+		{{/if}}
+		{{#if pool.jp-name}}
+		{{#ifCond pool.jp-name '!==' pool.tw-name}}
+		{{pool.jp-name}}<br>
+		{{/ifCond}}
+		{{/if}}
+		{{#if pool.en-name}}
+		{{#ifCond pool.en-name '!==' pool.tw-name}}
+		{{#ifCond pool.en-name '!==' pool.jp-name}}
+		{{pool.en-name}}<br>
+		{{/ifCond}}
+		{{/ifCond}}
+		{{/if}}
+		{{/with}}
+	</h1>
+	{{#if pool.collab}}
+	{{#with pool.collab as |collab|}}
+	<p><a href="{{collab.[1]}}">{{collab.[0]}}合作活動</a></p>
+	{{/with}}
+	{{/if}}
 
-{{{collab}}}
+	<img style="display: block;margin: 0 auto;width:min(95%, 860px);height:auto;" src="{{pool.img}}" width="{{width}}" height="{{height}}">
 
-<img style="display: block;margin: 0 auto;width:min(95%, 860px);height:auto;" src="{{{img}}}" width="{{{width}}}" height="{{{height}}}"> {{{contents}}} {{{history}}}
+	{{#ifCond pool.type "===" "category"}}
+	<table class="w3-table w3-centered w3-striped" style="width:95%;margin:0 auto">
+		<tbody>
+			{{#each data as |row|}}
+			<tr>
+				{{#each row as |cat|}}
+				<td>
+					<div style="font-weight:bold">{{#if cat.rate}}
+						{{cat.name}}
+						<div style="color:red !important;font-size:0.8em">出現機率×{{cat.rate}}</div>
+					{{else}}{{cat.name}}{{/if}}</div>
+					<a class="B" href="/unit.html?id={{cat.id}}"><img src="{{cat.img}}" width="104" height="79" loading="lazy"></a>
+					<div style="font-size:0.8em">
+						{{#each cat.descs as |desc|}}
+						{{desc}}<br>
+						{{/each}}
+					</div>
+				</td>
+				{{/each}}
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
 
-<p style="font-size:.8em">
-	{{{urls}}}
-	（連結可能失效）
-</p>
+	{{/ifCond}}
+	{{#ifCond pool.type "===" "normal"}}
+	<table class="w3-table N" style="width:auto;margin-top:3em;">
+		<thead>
+			<tr class="w3-black">
+				<th colSpan=4>轉蛋詳細</th>
+			</tr>
+			<tr class="w3-light-gray">
+				<th>圖示</th>
+				<th>項目</th>
+				<th>機率</th>
+				<th>總和</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#each data as |item|}}
+		<tr style="background-color:{{item.bgColor}}">
+			<td><img {{#if item.imgStyle}}style="{{item.imgStyle}}" {{/if~}}
+			src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
+			<td>
+				{{~#with item.info as |info|~}}
+				{{~#if info.id includeZero=true}}<a target="_blank" href="/unit.html?id={{info.id}}">{{/if~}}
+				{{~info.name~}}
+				{{~#if info.id includeZero=true}}</a>{{/if~}}
+				{{~/with~}}
+			</td>
+			<td>{{item.rate}}</td>
+			{{#if item.rateSum}}
+			{{#with item.rateSum as |info|}}
+			<td rowSpan="{{info.count}}">{{info.value}}</td>
+			{{/with}}
+			{{/if}}
+		</tr>
+		{{/each}}
+		</tbody>
+	</table>
 
-<div style="display: none;" class="tooltip">
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-		<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"
-			/>
-	</svg>
-</div>
+	{{/ifCond}}
+	{{#ifCond pool.type "===" "rare"}}
+	<div style="font-size:0.8em">
+		{{#each data.rarity_descs as |desc|}}
+		{{desc}}<br>
+		{{/each}}
+	</div>
+	<table class="w3-table w3-border w3-centered w3-center rate" style="width:auto;margin-bottom:1.5em;margin-top:1.5em;">
+		<thead>
+			<tr class="w3-black">
+				<th colSpan=4>轉蛋詳細</th>
+			</tr>
+			<tr class="w3-light-gray">
+				<th>稀有度</th>
+				<th>機率</th>
+				<th>分母</th>
+				<th>單隻</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each data.summary as |entry|}}
+			<tr style="background-color:{{entry.bgColor}}">
+				<td>{{entry.name}}</td>
+				<td>{{entry.rate}}</td>
+				<td>{{entry.total}}</td>
+				<td>{{entry.rateEach}}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	{{#if data.item_free}}
+	{{#with data.item_free as |item|}}
+	<details open>
+		<summary class="w3-tag w3-padding w3-round-large">11連自動出現在倉庫</summary>
+		<p class="w3-center">
+			<a class="B" href="/unit.html?id={{item.id}}">
+				<img src="{{item.img}}" width="104" height="79" loading="lazy">
+			</a>
+			{{#each item.descs as |desc|}}
+			{{desc}}<br>
+			{{/each}}
+		</p>
+	</details>
+	{{/with}}
+	{{/if}}
+	{{#each data.item_groups as |group|}}
+	<details open>
+		<summary class="w3-tag w3-padding w3-round-large" style="background-color:{{group.bgColor}} !important">{{group.name}}</summary>
+		<table class="w3-table w3-centered R" style="width:95%;margin:0 auto">
+			<tbody>
+			{{#each group.rows as |row|}}
+			<tr>
+				{{#each row as |cat|}}
+				<td>
+					<div style="font-weight:bold">{{#if cat.rate}}
+						{{cat.name}}
+						<div style="color:red !important;font-size:0.8em">出現機率×{{cat.rate}}</div>
+					{{else}}{{cat.name}}{{/if}}</div>
+					<a class="B" href="/unit.html?id={{cat.id}}"><img src="{{cat.img}}" width="104" height="79" loading="lazy"></a>
+					<div style="font-size:0.8em">
+						{{#each cat.descs as |desc|}}
+						{{desc}}<br>
+						{{/each}}
+					</div>
+				</td>
+				{{/each}}
+			</tr>
+			{{/each}}
+			</tbody>
+		</table>
+	</details>
+	{{/each}}
+	{{#each data.item_minor as |entry|}}
+	<details>
+		<summary class="w3-tag w3-padding w3-round-large">{{entry.name}}</summary>
+		<div class="M">
+			{{~#each entry.cats as |cat|~}}
+			<a href="/unit.html?id={{cat.id}}">{{cat.name}}</a>
+			{{~#unless @last}}、{{/unless~}}
+			{{~/each~}}
+		</div>
+	</details>
+	{{/each}}
 
-<script>
-function savePNG(tbl) {
-	tbl.style.margin = '0';
-	html2canvas(tbl).then(function(canvas) {
-		const a = document.createElement('a');
-		a.href = canvas.toDataURL();
-		a.download = 'screenshot.png';
-		a.click();
-		tbl.style.margin = '';
-	});
-}
-onload = function() {
-	const tooltip = document.getElementsByClassName('tooltip')[0];
-	for (const cls of ['rate', 'N', 'Y']) {
-		for (const N of document.getElementsByClassName(cls)) {
-			N.style.position = 'relative';
-			const node = tooltip.cloneNode(true);
-			node.style.position = 'absolute';
-			node.style.right = '-0';
-			node.style.top = '-2em';
-			node.style.display = 'block';
-			node._t = N;
-			node.firstElementChild.onclick = function(e) { // Camera
-				const t = e.currentTarget.parentNode._t;
-				if (window.domtoimage != undefined) return savePNG(t);
-				const script = document.createElement('script');
-				script.onload = () => savePNG(t);
-				script.src = '/html2canvas.min.js';
-				document.head.appendChild(script);
+	{{/ifCond}}
+	{{#ifCond pool.type "===" "event"}}
+	<p>使用道具：{{pool.ticket.[0]}}</p><img src="{{pool.ticket.[1]}}" width="128" height="128"><br>
+	<table class="w3-table N" style="position: relative;width:auto;margin-top:3em;">
+		<thead>
+			<tr class="w3-black">
+				<th colSpan="{{#if data.must_drop_rate}}5{{else}}4{{/if}}">轉蛋詳細</th>
+			</tr>
+			<tr class="w3-light-gray">
+				<th>圖示</th>
+				<th>項目</th>
+				<th>機率</th>
+				<th>總和</th>
+				<th>實際機率</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#with data as |data|}}
+		{{#each data.items as |item|}}
+		<tr style="background-color:{{item.bgColor}}">
+			<td><img {{#if item.imgStyle}}style="{{item.imgStyle}}" {{/if~}}
+			src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
+			<td>
+				{{~#with item.info as |info|~}}
+				{{~#if info.id includeZero=true}}<a target="_blank" href="/unit.html?id={{info.id}}">{{/if~}}
+				{{~info.name~}}
+				{{~#if info.id includeZero=true}}</a>{{/if~}}
+				{{~info.must~}}
+				{{~/with~}}
+			</td>
+			<td>{{item.rate}}</td>
+			{{#if item.rateSum}}
+			{{#with item.rateSum as |info|}}
+			<td rowSpan="{{info.count}}">{{info.value}}</td>
+			{{/with}}
+			{{/if}}
+			{{#if data.must_drop_rate}}
+			<td>{{item.rateActual}}</td>
+			{{/if}}
+		</tr>
+		{{/each}}
+		{{/with}}
+		</tbody>
+	</table>
+	<small>有*標示為每十抽必定可獲得的限定角色</small>
+	{{#if pool.stage}}
+	<p style="margin-top:2em;"><a href="{{pool.stage.[0]}}">{{pool.stage.[1]}}</a></p>
+	{{/if}}
+	{{#if pool.farm}}
+	<table class="w3-table Y" style="width:auto">{{{pool.farm}}}</table>
+	{{/if}}
+	{{#if pool.max}}
+	<p style="margin-top:2em;">角色加值上限</p>
+	<table class="w3-table Y" style="width:auto">{{{pool.max}}}</table>
+	{{/if}}
+
+	{{/ifCond}}
+	{{#if pool.history}}
+	<p style="margin-block-end:0;font-size:.8em;">
+		轉蛋歷史：<br>
+		{{#each pool.history as |hx|}}
+		{{hx}}<br>
+		{{/each}}
+	</p>
+
+	{{/if}}
+	{{#ifCond pool.tw-url "||" pool.jp-url}}
+	<p style="font-size:.8em">
+		{{#if pool.tw-url}}
+		<a href="{{pool.tw-url}}">繁中版官方介紹</a><br>
+		{{/if}}
+		{{#if pool.jp-url}}
+		<a href="{{pool.jp-url}}">日文版官方介紹</a><br>
+		{{/if}}
+		（連結可能失效）
+	</p>
+
+	{{/ifCond}}
+	<div style="display: none;" class="tooltip">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+			<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
+		</svg>
+	</div>
+
+	<script>
+	function savePNG(tbl) {
+		tbl.style.margin = '0';
+		html2canvas(tbl).then(function(canvas) {
+			const a = document.createElement('a');
+			a.href = canvas.toDataURL();
+			a.download = 'screenshot.png';
+			a.click();
+			tbl.style.margin = '';
+		});
+	}
+	onload = function() {
+		const tooltip = document.getElementsByClassName('tooltip')[0];
+		for (const cls of ['rate', 'N', 'Y']) {
+			for (const N of document.getElementsByClassName(cls)) {
+				N.style.position = 'relative';
+				const node = tooltip.cloneNode(true);
+				node.style.position = 'absolute';
+				node.style.right = '-0';
+				node.style.top = '-2em';
+				node.style.display = 'block';
+				node._t = N;
+				node.firstElementChild.onclick = function(e) { // Camera
+					const t = e.currentTarget.parentNode._t;
+					if (window.domtoimage != undefined) return savePNG(t);
+					const script = document.createElement('script');
+					script.onload = () => savePNG(t);
+					script.src = '/html2canvas.min.js';
+					document.head.appendChild(script);
+				}
+				N.appendChild(node);
 			}
-			N.appendChild(node);
 		}
 	}
-}
-</script>
+	</script>
+{{/inline}}
+
+{{/common.html}}

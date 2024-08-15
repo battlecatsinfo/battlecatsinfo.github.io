@@ -5,6 +5,7 @@ const sources = [
 	'w3.css',
 	'dracula.css',
 	'gh.css',
+	'unit.css',
 
 	'index.html',
 	'stage.html',
@@ -29,6 +30,7 @@ const sources = [
 	'rewards.html',
 	'imgcut.html',
 	'anim.html',
+	'unit.html',
 
 	'uni.png',
 	'favicon.ico',
@@ -42,7 +44,8 @@ const sources = [
 	'fav.png',
 
 	'html2canvas.min.js',
-	'dracula.js',
+	'theme.js',
+	'navbar-search.js',
 	"enemy.js",
 	"constants.js",
 	"parser.js",
@@ -51,6 +54,7 @@ const sources = [
 	'cat_dict.js',
 	'settings.js',
 	'dom-to-image.min.js',
+	'CCC.js',
 	'compare.js',
 	'png.js',
 	'svg.js',
@@ -62,10 +66,11 @@ const sources = [
 	'stage2.js',
 	'stage3.js',
 	'anim.min.js',
-	'imgcut.js'
+	'imgcut.js',
+	'blockly.min.js'
 ];
 const active_map = {
-	'index.html': 'home',
+	'index.html': 'index',
 	'search.html': 'cat',
 	'stage.html': 'stage',
 	'stage2.html': 'stage',
@@ -115,54 +120,61 @@ module.exports = class extends require('./base.js') {
 					last_mods[file] = last;
 					if (CleanCSS) {
 						const r = new CleanCSS().minify(contents);
+
 						if (r.errors.length) {
 							console.error('Error on minifying CSS:', file, r.errors);
 							continue;
 						}
+
 						if (r.warnings.length)
 							console.warn('Warning on minifying CSS:', file, r.warnings);
+
 						contents = r.styles;
 					}
 				} else if (file.endsWith('.html')) {
 					last_mods[file] = last;
 					contents = this.template(contents, {
 						'nav-bar-active': active_map[file],
-						'filename': file,
-						minify
-					});
+						'filename': file
+					}, minify ? 'html' : '');
 				} else if (file.endsWith('.min.js')) {
 					// nothing todo
 					last_mods[file] = last;
 				} else if (file.endsWith('.js')) {
 					last_mods[file] = last;
-					contents = this.template(contents, {});
 					if (UglifyJS) {
-						let r;
 						switch (file) {
 						case 'svg.js':
 						case 'png.js':
-						case 'dracula.js':
 						case 'constants.js':
 						case 'parser.js':
 						case 'imgcut.js':
 						case 'cat_dict.js':
-							r = UglifyJS.minify(contents, {'mangle': true, 'compress': true});
+							// default mangling
+							contents = this.template(contents, {}, 'js');
 							break;
 						default:
-							r = UglifyJS.minify(contents, {
+							// enable top-level mangling
+							contents = this.template(contents, {});
+
+							let r = UglifyJS.minify(contents, {
 								'mangle': true,
 								'compress': true,
 								'toplevel': true,
 							});
-							break;
+
+							if (r.error) {
+								console.error('Error on minifying JS:', file, r.error);
+								continue;
+							}
+
+							if (r.warnings)
+								console.warn('Warning on minifying JS:', file, r.warnings);
+
+							contents = r.code;
 						}
-						if (r.error) {
-							console.error('Error on minifying JS:', file, r.error);
-							continue;
-						}
-						if (r.warnings)
-							console.warn('Warning on minifying JS:', file, r.warnings);
-						contents = r.code;
+					} else {
+						contents = this.template(contents, {});
 					}
 				} else {
 					last_mods[file] = last;

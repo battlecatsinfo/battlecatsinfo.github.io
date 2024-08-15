@@ -1,54 +1,71 @@
----
-layout: common
-title: 轉蛋一覽
----
+{{#> common.html}}
 
-<style type="text/css">
-body {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	font-size: min(2vw, 18px);
-}
-h2 {
-	font-size: min(28px, 3vw);
-}
-.B {
-	text-align: center;
-	text-decoration: none;
-	display: block;
-	width: 100%;
-}
-.A {
-	display: block;
-	margin: 0 auto;
-	max-width: min(100%, 860px);
-	height: auto;
-}
+{{#*inline "title"}}轉蛋一覽{{/inline}}
 
-.E {
-	font-weight: bold;
-	font-size: larger;
-}
-tr:hover {
-	background-color: #ccc !important;
-}
-#nav a {
-	text-decoration: none;
-	display: block;
-	text-align: left;
-	padding: 0.2em 0.6em;
-	font-size: larger;
-}
-{{{nav-style}}}
-</style>
+{{#*inline "og"}}
+	<meta property="og:title" content="轉蛋一覽">
+	<meta property="og:description" content="貓咪大戰爭的各種合作和非合作轉蛋">
+{{/inline}}
 
-<h1 style="text-align:center;padding-top:0.5em;">轉蛋一覽</h1>
+{{#*inline "styles-inline"}}
+	<style>
+	body {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		font-size: min(2vw, 18px);
+	}
+	h2 {
+		font-size: min(28px, 3vw);
+	}
+	.B {
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		width: 100%;
+	}
+	.A {
+		display: block;
+		margin: 0 auto;
+		max-width: min(100%, 860px);
+		height: auto;
+	}
 
-<div id="nav" style="margin: 5vh auto;background-color: #cfcfcf59 !important;width: max(40vw,200px);border-radius:0.6vw;padding: 0.7em;list-style-type:none;">
-	{{#each nav-menu}}
-	<a href="#{{{this.idx}}}">{{this.name}}</a>
+	.E {
+		font-weight: bold;
+		font-size: larger;
+	}
+	tr:hover {
+		background-color: #ccc !important;
+	}
+	#nav a {
+		text-decoration: none;
+		display: block;
+		text-align: left;
+		padding: 0.2em 0.6em;
+		font-size: larger;
+	}
+	</style>
+{{/inline}}
+
+{{#*inline "content"}}
+	<h1 style="text-align:center;padding-top:0.5em;">轉蛋一覽</h1>
+
+	<div id="nav" style="margin: 5vh auto;background-color: #cfcfcf59 !important;width: max(40vw,200px);border-radius:0.6vw;padding: 0.7em;list-style-type:none;">
+		{{#each gachas as |gacha|}}
+		<a href="#{{sum @index 1}}">{{sum @index 1}}. {{gacha.name}}</a>
+		{{/each}}
+	</div>
+
+	{{#each gachas as |gacha|}}
+	<h2 id="{{sum @index 1}}">
+		<a class="B" href="{{gacha.path}}" target="_blank">{{gacha.name}}</a>
+	</h2>
+	<a class="B" href="{{gacha.path}}">
+		<img class="A" src="{{gacha.img}}" loading="lazy" width="{{gacha.width}}" height="{{gacha.height}}">
+	</a>
+	<br>
 	{{/each}}
-</div>
+{{/inline}}
 
-{{{content}}}
+{{/common.html}}

@@ -1,22 +1,35 @@
----
-layout: stage
-title: 關卡資訊(特製分類)
-stagejs: "stage3.js"
-filter: false
-M1:
-  - 月份貓
-  - 月間強襲
-  - G券
-  - 招福轉蛋券
-  - 戰鬥道具
-  - 進化素材
-  - 漩渦
-  - 極難/超極難/神難
-  - 狂亂/大狂亂/小小貓/洗腦
-  - EX貓開眼
-  - 經驗值
-  - 超生命體強襲
-  - 超獸討伐
-  - 本能玉地圖
-  - 獸石地圖
----
+{{#> stage.html}}
+
+  {{#*inline "description"}}
+  <meta name="description" content="關卡資訊(特製分類) | 貓咪大戰爭中文資訊網站">
+  {{/inline}}
+
+  {{#*inline "og-title"}}
+  <meta property="og:title" content="關卡資訊(特製分類)">
+  {{/inline}}
+
+  {{#*inline "content-selector"}}
+      <select id="M1">
+        <option>月份貓</option>
+        <option>月間強襲</option>
+        <option>G券</option>
+        <option>招福轉蛋券</option>
+        <option>戰鬥道具</option>
+        <option>進化素材</option>
+        <option>漩渦</option>
+        <option>極難/超極難/神難</option>
+        <option>狂亂/大狂亂/小小貓/洗腦</option>
+        <option>EX貓開眼</option>
+        <option>經驗值</option>
+        <option>超生命體強襲</option>
+        <option>超獸討伐</option>
+        <option>本能玉地圖</option>
+        <option>獸石地圖</option>
+      </select>
+  {{/inline}}
+
+  {{#*inline "content-scripts"}}
+  <script src="stage3.js"></script>
+  {{/inline}}
+
+{{/stage.html}}

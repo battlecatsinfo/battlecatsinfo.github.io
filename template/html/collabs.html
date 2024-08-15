@@ -1,80 +1,102 @@
----
-layout: common
-title: 合作一覽
----
+{{#> common.html}}
 
+{{#*inline "title"}}合作一覽{{/inline}}
 
-<style>
-body {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	font-size: min(2vw, 18px);
-}
-h2 {
-	font-size: min(28px, 3vw);
-}
-.B {
-	text-align: center;
-	text-decoration: none;
-	display: block;
-	width: 100%;
-}
-.A {
-	display: block;
-	margin: 0 auto;
-	width: min(100%, 512px);
-	height: auto;
-}
-.E {
-	font-weight: bold;
-	font-size: larger;
-}
-tr:hover {
-	background-color: #ccc !important;
-}
-#nav a {
-	text-decoration: none;
-	display: block;
-	text-align: left;
-	padding: 0.2em 0.6em;
-	font-size: larger;
-}
-</style>
+{{#*inline "og"}}
+	<meta property="og:title" content="合作一覽">
+	<meta property="og:description" content="貓咪大戰爭合作活動一覽">
+{{/inline}}
 
-<h1 style="text-align:center;">合作一覽</h1>
-<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59 !important;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
-	{{#each nav-menu}}
-	<a href="{{{this.href}}}">{{this.name}}</a>
-	{{/each}}
-</div>
+{{#*inline "styles-inline"}}
+	<style>
+	body {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		font-size: min(2vw, 18px);
+	}
+	h2 {
+		font-size: min(28px, 3vw);
+	}
+	.B {
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		width: 100%;
+	}
+	.A {
+		display: block;
+		margin: 0 auto;
+		width: min(100%, 512px);
+		height: auto;
+	}
+	.E {
+		font-weight: bold;
+		font-size: larger;
+	}
+	tr:hover {
+		background-color: #ccc !important;
+	}
+	#nav a {
+		text-decoration: none;
+		display: block;
+		text-align: left;
+		padding: 0.2em 0.6em;
+		font-size: larger;
+	}
+	</style>
+{{/inline}}
 
-<div style="margin: 0 auto;text-align: center;width: 100%;padding: 2vw 2vw;font-size: min(2.5vw, 18px);">
-	<h2>合作活動史</h2>
-	<p>資料取自 <a href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=20642">【情報】日版歷年合作活動史</a>及 <a href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=19806">【情報】台版歷年合作活動史</a></p>
-	<h3>台版歷年合作活動史</h3>
-	
-	<table class="w3-table-all w3-centered">
-		<thead>
-			<tr>
-				<th>年份</th><th>日期</th><th>合作</th><th>次數</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{{taiwan-collab-history}}}
-		</tbody>
-	</table>
+{{#*inline "content"}}
+	<h1 style="text-align:center;">合作一覽</h1>
+	<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59 !important;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
+		{{#each nav-menu as |menu|}}
+		<a href="{{menu.path}}">{{sum @index 1}}. {{menu.name}}</a>
+		{{/each}}
+	</div>
+	<div style="margin: 0 auto;text-align: center;width: 100%;padding: 2vw 2vw;font-size: min(2.5vw, 18px);">
+		<h2>合作活動史</h2>
+		<p>資料取自 <a href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=20642">【情報】日版歷年合作活動史</a>及 <a href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=19806">【情報】台版歷年合作活動史</a>
+		</p>
+		<h3>台版歷年合作活動史</h3>
+		<table class="w3-table-all w3-centered">
+			<thead>
+				<tr>
+					<th>年份</th>
+					<th>日期</th>
+					<th>合作</th>
+					<th>次數</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each taiwan-collab-history as |hx|}}
+				<tr><td colspan="4" class="E">{{hx.[0]}}年</td></tr>
+				{{#each hx.[1] as |dur|}}
+				<tr><td>{{hx.[0]}}</td><td>{{dur.[0]}}</td><td>{{dur.[1]}}</td><td>{{dur.[2]}}</td></tr>
+				{{/each}}
+				{{/each}}
+			</tbody>
+		</table>
+		<h3>日版歷年合作活動史</h3>
+		<table class="w3-table-all w3-centered">
+			<thead>
+				<tr>
+					<th>年份</th>
+					<th>日期</th>
+					<th>合象</th>
+					<th>次數</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each japan-collab-history as |hx|}}
+				<tr><td colspan="4" class="E">{{hx.[0]}}年</td></tr>
+				{{#each hx.[1] as |dur|}}
+				<tr><td>{{hx.[0]}}</td><td>{{dur.[0]}}</td><td>{{dur.[1]}}</td><td>{{dur.[2]}}</td></tr>
+				{{/each}}
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+{{/inline}}
 
-	<h3>日版歷年合作活動史</h3>
-	<table class="w3-table-all w3-centered">
-		<thead>
-			<tr>
-				<th>年份</th><th>日期</th><th>合象</th><th>次數</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{{japan-collab-history}}}
-		</tbody>
-	</table>
-
-</div>
+{{/common.html}}

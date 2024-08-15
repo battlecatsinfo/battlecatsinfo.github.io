@@ -1,134 +1,131 @@
----
-layout: static1
-title: 關卡倍率一覽
-show-version: true
-scripts:
-  - "https://code.jquery.com/jquery-3.7.0.min.js"
-  - "https://code.jquery.com/jquery-3.7.0.min.js"
-  - "https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/rg-1.5.0/datatables.min.js"
-styles:
-  - "https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/rg-1.5.0/datatables.min.css"
----
+{{#> static.html}}
 
+{{#*inline "title"}}關卡倍率一覽{{/inline}}
 
-<style>
-th img {
-	width: 22px;
-	height: auto;
-	vertical-align: middle;
-}
-</style>
+{{#*inline "styles"}}
+	<link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/rg-1.5.0/datatables.min.css" rel="stylesheet">
+{{/inline}}
 
-<div style="width:92vw;margin: 0 auto;">
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/rg-1.5.0/datatables.min.js"></script>
+{{/inline}}
 
-<h2>傳奇關卡</h2>
-<table id="SOL" class="display">
-	<thead>
-		<tr>
-			<th>章節</th>
-			<th>中文</th>
-			<th>日文</th>
-			<th>1♛</th>
-			<th>2♛</th>
-			<th>3♛</th>
-			<th>4♛</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
+{{#*inline "styles-inline"}}
+	{{~> @partial-block}}
+	<style>
+	th img {
+		width: 22px;
+		height: auto;
+		vertical-align: middle;
+	}
+	</style>
+{{/inline}}
 
-<br>
+{{#*inline "content"}}
+	<div style="width:92vw;margin: 0 auto;">
 
-<h2>真傳奇關卡</h2>
-<table id="UL" class="display">
-	<thead>
-		<tr>
-			<th>章節</th>
-			<th>中文</th>
-			<th>日文</th>
-			<th>1♛</th>
-			<th>2♛</th>
-			<th>3♛</th>
-			<th>4♛</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
+	<h1 style="text-align:center;margin:1.5em 0;">關卡倍率一覽<br><div style="font-size:0.6em;">Ver {{{japan}}}</div></h1>
 
-<br>
+	<div style="width:92vw;margin: 0 auto;">
+		<h2>傳奇關卡</h2>
+		<table id="SOL" class="display">
+			<thead>
+				<tr>
+					<th>章節</th>
+					<th>中文</th>
+					<th>日文</th>
+					<th>1♛</th>
+					<th>2♛</th>
+					<th>3♛</th>
+					<th>4♛</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<br>
+		<h2>真傳奇關卡</h2>
+		<table id="UL" class="display">
+			<thead>
+				<tr>
+					<th>章節</th>
+					<th>中文</th>
+					<th>日文</th>
+					<th>1♛</th>
+					<th>2♛</th>
+					<th>3♛</th>
+					<th>4♛</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<br>
+		<h2>傳奇故事0</h2>
+		<table id="ZL" class="display">
+			<thead>
+				<tr>
+					<th>章節</th>
+					<th>中文</th>
+					<th>日文</th>
+					<th>1♛</th>
+					<th>2♛</th>
+					<th>3♛</th>
+					<th>4♛</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<br>
+		<h2>月間關卡</h2>
+		<table id="MONTHY" class="display">
+			<thead>
+				<tr>
+					<th>月份</th>
+					<th>中文</th>
+					<th>日文</th>
+					<th>1♛</th>
+					<th>2♛</th>
+					<th>3♛</th>
+					<th>4♛</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<br>
+		<h2>全明星系列</h2>
+		<table id="STAR" class="display">
+			<thead>
+				<tr>
+					<th>中文</th>
+					<th>1♛</th>
+					<th>2♛</th>
+					<th>3♛</th>
+					<th>4♛</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<br>
+		<h2>合作活動</h2>
+		<table id="COLLAB" class="display">
+			<thead>
+				<tr>
+					<th>合作</th>
+					<th>中文</th>
+					<th>日文</th>
+					<th>1♛</th>
+					<th>2♛</th>
+					<th>3♛</th>
+					<th>4♛</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+	<script src="crown.js"></script>
 
-<h2>傳奇故事0</h2>
+	</div>
+{{/inline}}
 
-<table id="ZL" class="display">
-	<thead>
-		<tr>
-			<th>章節</th>
-			<th>中文</th>
-			<th>日文</th>
-			<th>1♛</th>
-			<th>2♛</th>
-			<th>3♛</th>
-			<th>4♛</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
-
-<br>
-
-<h2>月間關卡</h2>
-
-<table id="MONTHY" class="display">
-	<thead>
-		<tr>
-			<th>月份</th>
-			<th>中文</th>
-			<th>日文</th>
-			<th>1♛</th>
-			<th>2♛</th>
-			<th>3♛</th>
-			<th>4♛</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
-
-<br>
-
-<h2>全明星系列</h2>
-
-<table id="STAR" class="display">
-	<thead>
-		<tr>
-			<th>中文</th>
-			<th>1♛</th>
-			<th>2♛</th>
-			<th>3♛</th>
-			<th>4♛</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
-
-<br>
-
-<h2>合作活動</h2>
-
-<table id="COLLAB" class="display">
-	<thead>
-		<tr>
-			<th>合作</th>
-			<th>中文</th>
-			<th>日文</th>
-			<th>1♛</th>
-			<th>2♛</th>
-			<th>3♛</th>
-			<th>4♛</th>
-		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
-
-</div>
-
-<script src="crown.js"></script>
+{{/static.html}}

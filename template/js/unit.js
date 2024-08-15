@@ -2930,7 +2930,7 @@ function drawgraph(T) {
 				'title': '等級',
 				'prefix': "Lv"
 			},
-			'theme': document.documentElement.getAttribute('data-theme') == 'dark' ? 'dark1' : 'light1',
+			'theme': document.documentElement.classList.contains('dark') ? 'dark1' : 'light1',
 			'title': {
 				'text': "成長曲線"
 			},
@@ -3001,7 +3001,7 @@ function drawgraph(T) {
 					'title': '等級',
 					'prefix': "Lv"
 				},
-				'theme': document.documentElement.getAttribute('data-theme') == 'dark' ? 'dark1' : 'light1',
+				'theme': document.documentElement.classList.contains('dark') == 'dark' ? 'dark1' : 'light1',
 				'title': {
 					'text': '成長曲線'
 				},

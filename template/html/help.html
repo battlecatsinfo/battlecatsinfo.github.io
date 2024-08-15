@@ -1,1194 +1,1196 @@
----
-layout: common
-title: 使用說明
----
+{{#> gh.html}}
+
+{{#*inline "title"}}使用說明{{/inline}}
 
 
-<h2>篩選表達式、排序表達式</h2>
-<p>如<code>1 + 1</code>、<code>2 * 3</code>等，是用來篩選和排序貓咪的運算式，類似數學的表達式，在程式語言裡通常稱做 <i>expression</i>。</p>
-<ul>
-	<li>
-		<p>用在篩選上 篩選表達式將會算出一個結果，如果結果成立(true)，則會將該結果移除；如果是不成立(false)，則結果將會保留
-			<br> 例如 <code>range &gt;= 400</code> 篩選距離大於 400 的貓咪 例如 <code>(dps &gt; 40000) &amp;&amp; (price &lt;= 5000)</code> 篩選 DPS 大於 40000 且價格小於 5000 的貓咪</p>
-	</li>
-	<li>
-		<p>用在排序上 排序表達式將會算出一個數值，會以這個數值將篩選過的結果做由大到小的排序
-			<br> 如果你沒有指定排序表達式，將會以貓咪的ID大小作為預設排序
-			<br> 例如，輸入 <code>dps</code> 將會將dps由大到小排序
-			<br> 例如，
-			<code>dps / cd</code> 就是每秒的 DPS 產量（ADPS）
-			<br> 例如，
-			<code>dps * range</code> 就是 DPS 和距離的乘積
-			<br> 如果看數值最小的排序，可以加上負號，如 <code>-dps</code> 就是從 DPS 最小排到最大</p>
-	</li>
-</ul>
-<h2 id="constants"><a class="anchor" href="#constants"><span class="octicon octicon-link"></span></a>常數</h2>
-<p>有些預先定義的符號，稱為常數</p>
-<p>如 <code>RED</code> 代表紅色敵人</p>
-<p>如 <code>AB_WAVE</code> 代表波動能力</p>
-<p>這些符號不用特別去記憶，點擊篩選按鈕就可以看到</p>
-<h3 id="variables"><a class="anchor" href="#variables"><span class="octicon octicon-link"></span></a>變數</h3>
-<p>在上面的例子中，<code>dps</code>、<code>cd</code>、<code>range</code> 等都稱作變數，代表貓咪的某個資訊</p>
-<p>以下是可以使用的變數清單(變數不分大小寫)</p>
-<table>
-	<thead>
-		<tr>
-			<th>變數</th>
-			<th>解釋</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>id</td>
-			<td>編號</td>
-		</tr>
-		<tr>
-			<td>trait</td>
-			<td>攻擊對象、屬性</td>
-		</tr>
-		<tr>
-			<td>imu</td>
-			<td>抗性</td>
-		</tr>
-		<tr>
-			<td>hp</td>
-			<td>血量</td>
-		</tr>
-		<tr>
-			<td>atk</td>
-			<td>攻擊力總和</td>
-		</tr>
-		<tr>
-			<td>attack</td>
-			<td>同 atk</td>
-		</tr>
-		<tr>
-			<td>range</td>
-			<td>攻擊距離或接觸點(遠方範圍攻擊、全方位攻擊)</td>
-		</tr>
-		<tr>
-			<td>attacks</td>
-			<td>攻擊頻率(單位為秒)</td>
-		</tr>
-		<tr>
-			<td>attackf</td>
-			<td>攻擊頻率（單位為F）</td>
-		</tr>
-		<tr>
-			<td>dps</td>
-			<td>每秒總傷害</td>
-		</tr>
-		<tr>
-			<td>kb</td>
-			<td>擊退數</td>
-		</tr>
-		<tr>
-			<td>cd</td>
-			<td>再生產(單位為秒)</td>
-		</tr>
-		<tr>
-			<td>cdf</td>
-			<td>再生產（單位為F）</td>
-		</tr>
-		<tr>
-			<td>crit</td>
-			<td>會心一擊機率</td>
-		</tr>
-		<td>wavelv</td>
-		<td>波動等級</td>
-		</tr>
-		<td>miniwavelv</td>
-		<td>小波動等級</td>
-		</tr>
-		<td>volclv</td>
-		<td>烈波等級</td>
-		</tr>
-		<td>minivolclv</td>
-		<td>小烈波等級</td>
-		</tr>
-		<tr>
-			<td>atktype</td>
-			<td>攻擊類型</td>
-		</tr>
-		<tr>
-			<td>rarity</td>
-			<td>稀有度</td>
-		</tr>
-		<tr>
-			<td>speed</td>
-			<td>移動速度</td>
-		</tr>
-		<tr>
-			<td>price</td>
-			<td>價格</td>
-		</tr>
-		<tr>
-			<td>cost</td>
-			<td>同price</td>
-		</tr>
-		<tr>
-			<td>thp</td>
-			<td>加上最多可能的能力、效果的血量</td>
-		</tr>
-		<tr>
-			<td>tatk</td>
-			<td>加上最多可能的能力、效果的攻擊力</td>
-		</tr>
-		<tr>
-			<td>tdps</td>
-			<td>加上能力和效果的最大平均 DPS</td>
-		</tr>
-		<tr>
-			<td>tba</td>
-			<td>攻擊間隔</td>
-		</tr>
-		<tr>
-			<td>backswing</td>
-			<td>後搖、收招時間</td>
-		</tr>
-		<tr>
-			<td>pre</td>
-			<td>前搖</td>
-		</tr>
-		<tr>
-			<td>pre1</td>
-			<td>第二個前搖</td>
-		</tr>
-		<tr>
-			<td>pre2</td>
-			<td>第三個前搖</td>
-		</tr>
-		<tr>
-			<td>formc</td>
-			<td>貓咪的型態（最小1-一階，最大3-三階）</td>
-		</tr>
-		<tr>
-			<td>maxformc</td>
-			<td>貓咪的最大型態</td>
-		</tr>
-		<tr>
-
-			<td>slow_time</td>
-			<td>使動作變慢時間（無金寶、單位為F）</td>
-		</tr>
-		<tr>
-			<td>slow_prob</td>
-			<td>使動作變慢機率</td>
-		</tr>
-		<tr>
-
-			<td>stop_time</td>
-			<td>使動作停止時間（無金寶、單位為F）</td>
-		</tr>
-		<tr>
-			<td>stop_prob</td>
-			<td>使動作停止機率</td>
-		</tr>
-
-		<tr>
-			<td>curse_time</td>
-			<td>詛咒時間（無金寶、單位為F）</td>
-		</tr>
-		<tr>
-			<td>curse_prob</td>
-			<td>詛咒機率</td>
-		</tr>
-
-		<tr>
-			<td>weak_time</td>
-			<td>使攻擊力下降時間（無金寶、單位為F）</td>
-		</tr>
-		<tr>
-			<td>weak_prob</td>
-			<td>使攻擊力下降發動機率</td>
-		</tr>
-		<td>weak_extent</td>
-		<td>降低攻擊力幅度</td>
-		</tr>
-
-		<tr>
-			<td>strong_extent</td>
-			<td>攻擊力上升幅度</td>
-		</tr>
-
-		<tr>
-			<td>lethal_prob</td>
-			<td>死前存活機率</td>
-		</tr>
-
-		<tr>
-			<td>savage_extent</td>
-			<td>渾身一擊程度</td>
-		</tr>
-		<tr>
-			<td>savage_prob</td>
-			<td>渾身一擊機率</td>
-		</tr>
-
-		<tr>
-			<td>break_prob</td>
-			<td>破壞護盾（宇宙盾）機率</td>
-		</tr>
-
-		<tr>
-			<td>shield_break_prob</td>
-			<td>破壞惡魔盾機率</td>
-		</tr>
-
-		<tr>
-			<td>mini_wave_prob</td>
-			<td>發射小波動機率</td>
-		</tr>
-
-		<tr>
-			<td>wave_prob</td>
-			<td>發射波動機率</td>
-		</tr>
-
-		<tr>
-			<td>mini_surge_prob</td>
-			<td>發射小烈波機率</td>
-		</tr>
-
-		<tr>
-			<td>surge_prob</td>
-			<td>發射烈波機率</td>
-		</tr>
-
-		<tr>
-			<td>dodge_time</td>
-			<td>攻擊無效化時間（單位為F）</td>
-		</tr>
-
-		<tr>
-			<td>dodge_prob</td>
-			<td>攻擊無效化機率</td>
-		</tr>
-
-		<tr>
-			<td>range_min</td>
-			<td>用於全方位攻擊或遠距攻擊。最小（短、右）的距離。</td>
-		</tr>
-
-		<tr>
-			<td>range_max</td>
-			<td>用於全方位攻擊或遠距攻擊。最大（長、左）的距離。</td>
-		</tr>
-
-		<tr>
-			<td>reach_base</td>
-			<td>觸塔。在塔前停著的距離。</td>
-		</tr>
-
-		<tr>
-			<td>range_interval_max</td>
-			<td>最長的跨距。<code>range_max - range_min</code>（絕對值）</td>
-		</tr>
-
-		<tr>
-			<td>range_interval</td>
-			<td>第一段攻擊的跨距（絕對值）</td>
-		</tr>
-
-		<tr>
-			<td>atkcount</td>
-			<td>攻擊次數</td>
-		</tr>
-
-		<tr>
-			<td>max_base_lv</td>
-			<td>最大基本等級</td>
-		</tr>
-
-		<tr>
-			<td>max_plus_lv</td>
-			<td>最大加值等級</td>
-		</tr>
-
-		<tr>
-			<td>beast_prob</td>
-			<td>超獸特效攻擊無效機率</td>
-		</tr>
-
-		<tr>
-			<td>beast_time</td>
-			<td>超獸特效攻擊無效時間（單位為F）</td>
-		</tr>
-
-		<tr>
-			<td>stop_cover</td>
-			<td>使動作停止的控場覆蓋率</td>
-		</tr>
-
-		<tr>
-			<td>slow_cover</td>
-			<td>使動作變慢的控場覆蓋率</td>
-		</tr>
-
-		<tr>
-			<td>weak_cover</td>
-			<td>攻擊力下降的控場覆蓋率</td>
-		</tr>
-
-		<tr>
-			<td>curse_cover</td>
-			<td>詛咒的控場覆蓋率</td>
-		</tr>
-
-	</tbody>
-</table>
-
-<p>如只要選取最高型態的貓咪，可以用 <code>formc == maxformc</code>，如只想選取有三階進化的貓咪，可以用<code>formc == 3</code></p>
-
-<p>以下是第三型態進化所需的進化素材相關含式，如果是第四型態進化，請將<code>involve_require()</code>改成<code>involve4_require()</code></p>
-<table>
-	<thead>
-		<tr>
-			<th>變數</th>
-			<th>解釋</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-
+{{#*inline "content"}}
+	<h1 id="guide"><a class="anchor" href="#guide"><span class="octicon octicon-link"></span></a>使用說明</h1>
+	<h2>篩選表達式、排序表達式</h2>
+	<p>如<code>1 + 1</code>、<code>2 * 3</code>等，是用來篩選和排序貓咪的運算式，類似數學的表達式，在程式語言裡通常稱做 <i>expression</i>。</p>
+	<ul>
+		<li>
+			<p>用在篩選上 篩選表達式將會算出一個結果，如果結果成立(true)，則會將該結果移除；如果是不成立(false)，則結果將會保留<br>
+			例如 <code>range &gt;= 400</code> 篩選距離大於 400 的貓咪 例如 <code>(dps &gt; 40000) &amp;&amp; (price &lt;= 5000)</code> 篩選 DPS 大於 40000 且價格小於 5000 的貓咪</p>
+		</li>
+		<li>
+			<p>用在排序上 排序表達式將會算出一個數值，會以這個數值將篩選過的結果做由大到小的排序<br>
+			如果你沒有指定排序表達式，將會以貓咪的ID大小作為預設排序<br>
+			例如，輸入 <code>dps</code> 將會將dps由大到小排序<br>
+			例如，<code>dps / cd</code> 就是每秒的 DPS 產量（ADPS）<br>
+			例如，<code>dps * range</code> 就是 DPS 和距離的乘積<br>
+			如果看數值最小的排序，可以加上負號，如 <code>-dps</code> 就是從 DPS 最小排到最大</p>
+		</li>
+	</ul>
+	<h2 id="constants"><a class="anchor" href="#constants"><span class="octicon octicon-link"></span></a>常數</h2>
+	<p>有些預先定義的符號，稱為常數</p>
+	<p>如 <code>RED</code> 代表紅色敵人</p>
+	<p>如 <code>AB_WAVE</code> 代表波動能力</p>
+	<p>這些符號不用特別去記憶，點擊篩選按鈕就可以看到</p>
+	<h3 id="variables"><a class="anchor" href="#variables"><span class="octicon octicon-link"></span></a>變數</h3>
+	<p>在上面的例子中，<code>dps</code>、<code>cd</code>、<code>range</code> 等都稱作變數，代表貓咪的某個資訊</p>
+	<p>以下是可以使用的變數清單(變數不分大小寫)</p>
+	<table>
+		<thead>
 			<tr>
-				<td><code>involve_require(0)</code></td>
-				<td>進化所需的XP</td>
+				<th>變數</th>
+				<th>解釋</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>id</td>
+				<td>編號</td>
+			</tr>
+			<tr>
+				<td>trait</td>
+				<td>攻擊對象、屬性</td>
+			</tr>
+			<tr>
+				<td>imu</td>
+				<td>抗性</td>
+			</tr>
+			<tr>
+				<td>hp</td>
+				<td>血量</td>
+			</tr>
+			<tr>
+				<td>atk</td>
+				<td>攻擊力總和</td>
+			</tr>
+			<tr>
+				<td>attack</td>
+				<td>同 atk</td>
+			</tr>
+			<tr>
+				<td>range</td>
+				<td>攻擊距離或接觸點(遠方範圍攻擊、全方位攻擊)</td>
+			</tr>
+			<tr>
+				<td>attacks</td>
+				<td>攻擊頻率(單位為秒)</td>
+			</tr>
+			<tr>
+				<td>attackf</td>
+				<td>攻擊頻率（單位為F）</td>
+			</tr>
+			<tr>
+				<td>dps</td>
+				<td>每秒總傷害</td>
+			</tr>
+			<tr>
+				<td>kb</td>
+				<td>擊退數</td>
+			</tr>
+			<tr>
+				<td>cd</td>
+				<td>再生產(單位為秒)</td>
+			</tr>
+			<tr>
+				<td>cdf</td>
+				<td>再生產（單位為F）</td>
+			</tr>
+			<tr>
+				<td>crit</td>
+				<td>會心一擊機率</td>
+			</tr>
+			<td>wavelv</td>
+			<td>波動等級</td>
+			</tr>
+			<td>miniwavelv</td>
+			<td>小波動等級</td>
+			</tr>
+			<td>volclv</td>
+			<td>烈波等級</td>
+			</tr>
+			<td>minivolclv</td>
+			<td>小烈波等級</td>
+			</tr>
+			<tr>
+				<td>atktype</td>
+				<td>攻擊類型</td>
+			</tr>
+			<tr>
+				<td>rarity</td>
+				<td>稀有度</td>
+			</tr>
+			<tr>
+				<td>speed</td>
+				<td>移動速度</td>
+			</tr>
+			<tr>
+				<td>price</td>
+				<td>價格</td>
+			</tr>
+			<tr>
+				<td>cost</td>
+				<td>同price</td>
+			</tr>
+			<tr>
+				<td>thp</td>
+				<td>加上最多可能的能力、效果的血量</td>
+			</tr>
+			<tr>
+				<td>tatk</td>
+				<td>加上最多可能的能力、效果的攻擊力</td>
+			</tr>
+			<tr>
+				<td>tdps</td>
+				<td>加上能力和效果的最大平均 DPS</td>
+			</tr>
+			<tr>
+				<td>tba</td>
+				<td>攻擊間隔</td>
+			</tr>
+			<tr>
+				<td>backswing</td>
+				<td>後搖、收招時間</td>
+			</tr>
+			<tr>
+				<td>pre</td>
+				<td>前搖</td>
+			</tr>
+			<tr>
+				<td>pre1</td>
+				<td>第二個前搖</td>
+			</tr>
+			<tr>
+				<td>pre2</td>
+				<td>第三個前搖</td>
+			</tr>
+			<tr>
+				<td>formc</td>
+				<td>貓咪的型態（最小1-一階，最大3-三階）</td>
+			</tr>
+			<tr>
+				<td>maxformc</td>
+				<td>貓咪的最大型態</td>
+			</tr>
+			<tr>
+
+				<td>slow_time</td>
+				<td>使動作變慢時間（無金寶、單位為F）</td>
+			</tr>
+			<tr>
+				<td>slow_prob</td>
+				<td>使動作變慢機率</td>
+			</tr>
+			<tr>
+
+				<td>stop_time</td>
+				<td>使動作停止時間（無金寶、單位為F）</td>
+			</tr>
+			<tr>
+				<td>stop_prob</td>
+				<td>使動作停止機率</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(33)</code></td>
-				<td>綠色貓薄荷種子</td>
+				<td>curse_time</td>
+				<td>詛咒時間（無金寶、單位為F）</td>
+			</tr>
+			<tr>
+				<td>curse_prob</td>
+				<td>詛咒機率</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(38)</code></td>
-				<td>綠色貓薄荷果實</td>
+				<td>weak_time</td>
+				<td>使攻擊力下降時間（無金寶、單位為F）</td>
+			</tr>
+			<tr>
+				<td>weak_prob</td>
+				<td>使攻擊力下降發動機率</td>
+			</tr>
+			<td>weak_extent</td>
+			<td>降低攻擊力幅度</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(30)</code></td>
-				<td>紫色貓薄荷種子</td>
+				<td>strong_extent</td>
+				<td>攻擊力上升幅度</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(35)</code></td>
-				<td>紫色貓薄荷果實</td>
+				<td>lethal_prob</td>
+				<td>死前存活機率</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(31)</code></td>
-				<td>紅色貓薄荷種子</td>
+				<td>savage_extent</td>
+				<td>渾身一擊程度</td>
+			</tr>
+			<tr>
+				<td>savage_prob</td>
+				<td>渾身一擊機率</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(36)</code></td>
-				<td>紅色貓薄荷果實</td>
+				<td>break_prob</td>
+				<td>破壞護盾（宇宙盾）機率</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(32)</code></td>
-				<td>藍色貓薄荷種子</td>
+				<td>shield_break_prob</td>
+				<td>破壞惡魔盾機率</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(37)</code></td>
-				<td>藍色貓薄荷果實</td>
+				<td>mini_wave_prob</td>
+				<td>發射小波動機率</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(34)</code></td>
-				<td>黃色貓薄荷種子</td>
+				<td>wave_prob</td>
+				<td>發射波動機率</td>
 			</tr>
 
 			<tr>
-				<td><code>involve_require(39)</code></td>
-				<td>黃色貓薄荷果實</td>
+				<td>mini_surge_prob</td>
+				<td>發射小烈波機率</td>
 			</tr>
 
+			<tr>
+				<td>surge_prob</td>
+				<td>發射烈波機率</td>
+			</tr>
 
-			<td><code>involve_require(43)</code></td>
-			<td>彩虹貓薄荷種子</td>
-		</tr>
+			<tr>
+				<td>dodge_time</td>
+				<td>攻擊無效化時間（單位為F）</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(40)</code></td>
-			<td>彩虹貓薄荷果實</td>
-		</tr>
+			<tr>
+				<td>dodge_prob</td>
+				<td>攻擊無效化機率</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(41)</code></td>
-			<td>古代貓薄荷種子</td>
-		</tr>
+			<tr>
+				<td>range_min</td>
+				<td>用於全方位攻擊或遠距攻擊。最小（短、右）的距離。</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(42)</code></td>
-			<td>古代貓薄荷果實</td>
-		</tr>
+			<tr>
+				<td>range_max</td>
+				<td>用於全方位攻擊或遠距攻擊。最大（長、左）的距離。</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(160)</code></td>
-			<td>惡貓貓薄荷種子</td>
-		</tr>
+			<tr>
+				<td>reach_base</td>
+				<td>觸塔。在塔前停著的距離。</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(161)</code></td>
-			<td>惡貓貓薄荷果實</td>
-		</tr>
+			<tr>
+				<td>range_interval_max</td>
+				<td>最長的跨距。<code>range_max - range_min</code>（絕對值）</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(164)</code></td>
-			<td>黃金貓薄荷種子</td>
-		</tr>
+			<tr>
+				<td>range_interval</td>
+				<td>第一段攻擊的跨距（絕對值）</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(44)</code></td>
-			<td>黃金貓薄荷果實</td>
-		</tr>
+			<tr>
+				<td>atkcount</td>
+				<td>攻擊次數</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(167)</code></td>
-			<td>紫獸石</td>
-		</tr>
+			<tr>
+				<td>max_base_lv</td>
+				<td>最大基本等級</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(179)</code></td>
-			<td>紫獸石結晶</td>
-		</tr>
+			<tr>
+				<td>max_plus_lv</td>
+				<td>最大加值等級</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(168)</code></td>
-			<td>紅獸石</td>
-		</tr>
+			<tr>
+				<td>beast_prob</td>
+				<td>超獸特效攻擊無效機率</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(180)</code></td>
-			<td>紅獸石結晶</td>
-		</tr>
+			<tr>
+				<td>beast_time</td>
+				<td>超獸特效攻擊無效時間（單位為F）</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(169)</code></td>
-			<td>蒼獸石</td>
-		</tr>
+			<tr>
+				<td>stop_cover</td>
+				<td>使動作停止的控場覆蓋率</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(181)</code></td>
-			<td>蒼獸石結晶</td>
-		</tr>
+			<tr>
+				<td>slow_cover</td>
+				<td>使動作變慢的控場覆蓋率</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(170)</code></td>
-			<td>翠獸石</td>
-		</tr>
+			<tr>
+				<td>weak_cover</td>
+				<td>攻擊力下降的控場覆蓋率</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(182)</code></td>
-			<td>翠獸石結晶</td>
-		</tr>
+			<tr>
+				<td>curse_cover</td>
+				<td>詛咒的控場覆蓋率</td>
+			</tr>
 
-		<tr>
-			<td><code>involve_require(171)</code></td>
-			<td>黄獸石</td>
-		</tr>
+		</tbody>
+	</table>
 
-		<tr>
-			<td><code>involve_require(183)</code></td>
-			<td>黄獸石結晶</td>
-		</tr>
+	<p>如只要選取最高型態的貓咪，可以用 <code>formc == maxformc</code>，如只想選取有三階進化的貓咪，可以用<code>formc == 3</code></p>
 
-		<tr>
-			<td><code>involve_require(184)</code></td>
-			<td>虹獸石</td>
-		</tr>
+	<p>以下是第三型態進化所需的進化素材相關含式，如果是第四型態進化，請將<code>involve_require()</code>改成<code>involve4_require()</code></p>
+	<table>
+		<thead>
+			<tr>
+				<th>變數</th>
+				<th>解釋</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
 
-	</tbody>
-</table>
+				<tr>
+					<td><code>involve_require(0)</code></td>
+					<td>進化所需的XP</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(33)</code></td>
+					<td>綠色貓薄荷種子</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(38)</code></td>
+					<td>綠色貓薄荷果實</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(30)</code></td>
+					<td>紫色貓薄荷種子</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(35)</code></td>
+					<td>紫色貓薄荷果實</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(31)</code></td>
+					<td>紅色貓薄荷種子</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(36)</code></td>
+					<td>紅色貓薄荷果實</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(32)</code></td>
+					<td>藍色貓薄荷種子</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(37)</code></td>
+					<td>藍色貓薄荷果實</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(34)</code></td>
+					<td>黃色貓薄荷種子</td>
+				</tr>
+
+				<tr>
+					<td><code>involve_require(39)</code></td>
+					<td>黃色貓薄荷果實</td>
+				</tr>
 
 
-<h3 id="default-variables"><a class="anchor" href="#default-variables"><span class="octicon octicon-link"></span></a>預設常數</h3>
-<p>以下是預設的常數（不分大小寫），不論在什麼地方，它的數值都一樣</p>
+				<td><code>involve_require(43)</code></td>
+				<td>彩虹貓薄荷種子</td>
+			</tr>
 
-<p>以下是可以和<code>trait</code>（攻擊對象、屬性）變數一起使用的常數，如<code>trait & RED</code>代表貓咪有針對紅色敵人，或敵人是紅色敵人</p>
-<table>
-	<thead>
-		<tr>
-			<th>表達式</th>
-			<th>解釋</th>
-		</tr>
-	</thead>
-	<tbody class="left">
-		<tr>
-			<td><code>trait & RED</code></td>
-			<td>紅色敵人</td>
-		</tr>
-		<tr>
-			<td><code>trait & FLOAT</code></td>
-			<td>飄浮敵人</td>
-		</tr>
-		<tr>
-			<td><code>trait & BLACK</code></td>
-			<td>黑色敵人</td>
-		</tr>
-		<tr>
-			<td><code>trait & METAL</code></td>
-			<td>鋼鐵敵人</td>
-		</tr>
-		<tr>
-			<td><code>trait & ANGEL</code></td>
-			<td>天使敵人</td>
-		</tr>
-		<tr>
-			<td><code>trait & ALIEN</code></td>
-			<td>異星戰士</td>
-		</tr>
-		<tr>
-			<td><code>trait & ZOMBIE</code></td>
-			<td>不死生物</td>
-		</tr>
-		<tr>
-			<td><code>trait & WHITE</code></td>
-			<td>無屬性敵人</td>
-		</tr>
-		<tr>
-			<td><code>trait & RELIC</code></td>
-			<td>古代種</td>
-		</tr>
-		<tr>
-			<td><code>trait & DEMON</code></td>
-			<td>惡魔</td>
-		</tr>
-		<tr>
-			<td><code>trait & BEAST</code></td>
-			<td>超獸</td>
-		</tr>
-		<tr>
-			<td><code>trait & INFN</code></td>
-			<td>道場塔</td>
-		</tr>
-		<tr>
-			<td><code>trait & BARON</code></td>
-			<td>超生命體</td>
-		</tr>
-		<tr>
-			<td><code>trait & EVA</code></td>
-			<td>使徒</td>
-		</tr>
-		<tr>
-			<td><code>trait & WITCH</code></td>
-			<td>魔女</td>
-		</tr>
-		<tr>
-			<td><code>trait & SAGE</code></td>
-			<td>賢者</td>
-		</tr>
-	</tbody>
-</table>
+			<tr>
+				<td><code>involve_require(40)</code></td>
+				<td>彩虹貓薄荷果實</td>
+			</tr>
 
-<h3 id="resistance"><a class="anchor" href="#resistance"><span class="octicon octicon-link"></span></a>耐性</h3>
-<p>以下是可以和<code>hasres</code>含式一起使用的常數，如<code>hasres(RES_WEAK)</code>代表貓咪有降攻耐性</p>
-<table>
-	<thead>
-		<tr>
-			<th>表達式</th>
-			<th>解釋</th>
-		</tr>
-	</thead>
-	<tbody class="left">
-		<tr>
-			<td><code>hasres(RES_WWAK)</code></td>
-			<td>抗擊耐性</td>
-		</tr>
-		<tr>
-			<td><code>hasres(RES_STOP)</code></td>
-			<td>動止耐性</td>
-		</tr>
-		<tr>
-			<td><code>hasres(RES_SLOW)</code></td>
-			<td>動慢耐性</td>
-		</tr>
-		<tr>
-			<td><code>hasres(RES_KB)</code></td>
-			<td>抗飛耐性</td>
-		</tr>
-		<tr>
-			<td><code>hasres(RES_WAVE)</code></td>
-			<td>抗波耐性</td>
-		</tr>
-		<tr>
-			<td><code>hasres(RES_SURGE)</code></td>
-			<td>抗烈波耐性</td>
-		</tr>
-		<tr>
-			<td><code>hasres(RES_CURSE)</code></td>
-			<td>抗古代詛咒耐性</td>
-		</tr>
-		<tr>
-			<td><code>hasres(RES_TOXIC)</code></td>
-			<td>抗毒耐性</td>
-		</tr>
-		<tr>
-			<td><code>hasres(RES_WARP)</code></td>
-			<td>抗傳耐性</td>
-		</tr>
-	</tbody>
-</table>
+			<tr>
+				<td><code>involve_require(41)</code></td>
+				<td>古代貓薄荷種子</td>
+			</tr>
 
-<h3 id="immunity"><a class="anchor" href="#immunity"><span class="octicon octicon-link"></span></a>抗性</h3>
-<p>以下是可以和<code>imu</code>（抗性）變數一起使用的常數，如<code>imu & IMU_WEAK</code>代表貓咪有降功無效</p>
-<table>
-	<thead>
-		<tr>
-			<th>表達式</th>
-			<th>解釋</th>
-		</tr>
-	</thead>
-	<tbody class="left">
-		<tr>
-			<td><code>imu & IMU_WEAK</code></td>
-			<td>攻擊力下降無效</td>
-		</tr>
-		<tr>
-			<td><code>imu & IMU_STOP</code></td>
-			<td>動作停止無效</td>
-		</tr>
-		<tr>
-			<td><code>imu & IMU_SLOW</code></td>
-			<td>動作變慢無效</td>
-		</tr>
-		<tr>
-			<td><code>imu & IMU_KB</code></td>
-			<td>打飛無效</td>
-		</tr>
-		<tr>
-			<td><code>imu & IMU_WAVE</code></td>
-			<td>波動傷害無效</td>
-		</tr>
-		<tr>
-			<td><code>imu & IMU_VOLC</code></td>
-			<td>烈波傷害無效</td>
-		</tr>
-		<tr>
-			<td><code>imu & IMU_WARP</code></td>
-			<td>傳送無效</td>
-		</tr>
-		<tr>
-			<td><code>imu & IMU_CURSE</code></td>
-			<td>古代的詛咒無效</td>
-		</tr>
-		<tr>
-			<td><code>imu & IMU_POIATK</code></td>
-			<td>毒擊傷害無效</td>
-		</tr>
-		<tr>
-			<td><code>imu & IMU_BOSSWAVE</code></td>
-			<td>魔王震波無效</td>
-		</tr>
-	</tbody>
-</table>
+			<tr>
+				<td><code>involve_require(42)</code></td>
+				<td>古代貓薄荷果實</td>
+			</tr>
 
-<h3 id="ability"><a class="anchor" href="#ability"><span class="octicon octicon-link"></span></a>能力、效果</h3>
-<p>以下是可以和<code>hasab</code>（擁有某能力或效果）含式一起使用的常數，如<code>hasab(AB_WEAK)</code>代表貓咪有使敵人攻擊力下降</p>
-<table>
-	<thead>
-		<tr>
-			<th>表達式</th>
-			<th>解釋</th>
-		</tr>
-	</thead>
-	<tbody class="left">
-		<tr>
-			<td><code>hasab(AB_STRONG)</code></td>
-			<td>攻擊力上升</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_LETHAL)</code></td>
-			<td>死前存活</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_ATKBASE)</code></td>
-			<td>善於攻城</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_CRIT)</code></td>
-			<td>會心一擊</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_ZKILL)</code></td>
-			<td>終結不死</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_CKILL)</code></td>
-			<td>靈魂攻擊</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_BREAK)</code></td>
-			<td>破壞護盾(宇宙盾)</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_SHIELDBREAK)</code></td>
-			<td>破壞惡魔盾</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_S)</code></td>
-			<td>渾身一擊</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_BOUNTY)</code></td>
-			<td>得到很多金錢</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_METALIC)</code></td>
-			<td>鋼鐵</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_MINIWAVE)</code></td>
-			<td>小波動</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_WAVE)</code></td>
-			<td>波動</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_MINIVOLC)</code></td>
-			<td>小烈波</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_VOLC)</code></td>
-			<td>烈波</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_WAVES)</code></td>
-			<td>波動滅止</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_BAIL)</code></td>
-			<td>超生命體特效</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_BSTHUNT)</code></td>
-			<td>超獸特效</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_WKILL)</code></td>
-			<td>終結魔女</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_EKILL)</code></td>
-			<td>終結使徒</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_GLASS)</code></td>
-			<td>一次攻擊</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_WEAK)</code></td>
-			<td>攻擊力下降</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_STOP)</code></td>
-			<td>使動作停止</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_SLOW)</code></td>
-			<td>使動作變慢</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_CURSE)</code></td>
-			<td>詛咒</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_ONLY)</code></td>
-			<td>只能攻擊</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_GOOD)</code></td>
-			<td>善於攻擊</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_RESIST)</code></td>
-			<td>很耐打</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_RESISTS)</code></td>
-			<td>超耐打</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_MASSIVE)</code></td>
-			<td>超大傷害</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_MASSIVES)</code></td>
-			<td>極度傷害</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_KB)</code></td>
-			<td>打飛</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_IMUATK)</code></td>
-			<td>攻擊無效</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_POIATK)</code></td>
-			<td>毒擊</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_BURROW)</code></td>
-			<td>鑽地</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_REVIVE)</code></td>
-			<td>復活</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_SHIELD)</code></td>
-			<td>護盾(宇宙盾)</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_DSHIELD)</code></td>
-			<td>惡魔盾</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_AFTERMATH)</code></td>
-			<td>死後烈波</td>
-		</tr>
-		<tr>
-			<td><code>hasab(AB_COUNTER)</code></td>
-			<td>烈波反擊</td>
-		</tr>
-	</tbody>
-</table>
+			<tr>
+				<td><code>involve_require(160)</code></td>
+				<td>惡貓貓薄荷種子</td>
+			</tr>
 
-<h3 id="attack-type"><a class="anchor" href="#attack-type"><span class="octicon octicon-link"></span></a>攻擊方式</h3>
-<p>以下是可以和<code>atktype</code>（攻擊方式）變數一起使用的常數，如<code>atktype & ATK_SINGLE</code>代表貓咪是單體攻擊</p>
-<table>
-	<thead>
-		<tr>
-			<th>表達式</th>
-			<th>解釋</th>
-		</tr>
-	</thead>
-	<tbody class="left">
-		<tr>
-			<td><code>atktype & ATK_SINGLE</code></td>
-			<td>單體攻擊</td>
-		</tr>
-		<tr>
-			<td><code>atktype & ATK_RANGE</code></td>
-			<td>範圍攻擊</td>
-		</tr>
-		<tr>
-			<td><code>atktype & ATK_LD</code></td>
-			<td>遠距(遠方範圍)攻擊</td>
-		</tr>
-		<tr>
-			<td><code>atktype & ATK_OMNI</code></td>
-			<td>全方位攻擊</td>
-		</tr>
-		<tr>
-			<td><code>atktype & ATK_KB_REVENGE</code></td>
-			<td>擊退反擊</td>
-		</tr>
-	</tbody>
-</table>
-<p>小知識： 如果想要知道是否有<img src="https://i.imgur.com/veNQ90x.png" loading="lazy">連續攻擊，可以用<code>pre1</code>(第二個前搖)，如果非零就是有二、三次連續攻擊</p>
+			<tr>
+				<td><code>involve_require(161)</code></td>
+				<td>惡貓貓薄荷果實</td>
+			</tr>
 
-<h3 id="rarity"><a class="anchor" href="#rarity"><span class="octicon octicon-link"></span></a>稀有度</h3>
-<p>以下是可以和<code>rarity</code>（稀有度）變數一起使用的常數，如<code>rarity == 0</code>代表貓咪的稀有度是基本</p>
-<table>
-	<thead>
-		<tr>
-			<th>表達式</th>
-			<th>解釋</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>rarity == 0</code></td>
-			<td>基本</td>
-		</tr>
-		<tr>
-			<td><code>rarity == 1</code></td>
-			<td>EX</td>
-		</tr>
-		<tr>
-			<td><code>rarity == 2</code></td>
-			<td>稀有</td>
-		</tr>
-		<tr>
-			<td><code>rarity == 3</code></td>
-			<td>激稀有</td>
-		</tr>
-		<tr>
-			<td><code>rarity == 4</code></td>
-			<td>超激稀有</td>
-		</tr>
-		<tr>
-			<td><code>rarity == 5</code></td>
-			<td>傳說稀有</td>
-		</tr>
-	</tbody>
-</table>
+			<tr>
+				<td><code>involve_require(164)</code></td>
+				<td>黃金貓薄荷種子</td>
+			</tr>
 
-<h3 id="operators"><a class="anchor" href="#operators"><span class="octicon octicon-link"></span></a>運算子</h3>
-<p>類似數學中的運算式，可以用來作數值的運算和邏輯運算</p>
-<table>
-	<thead>
-		<tr>
-			<th>運算子</th>
-			<th>解釋</th>
-			<th>最先結合順序(最高1)</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>*</code></td>
-			<td>乘法</td>
-			<td>1</td>
-		</tr>
-		<tr>
-			<td><code>/</code></td>
-			<td>除法</td>
-			<td>1</td>
-		</tr>
-		<tr>
-			<td><code>%</code></td>
-			<td>取餘數</td>
-			<td>1</td>
-		</tr>
-		<tr>
-			<td><code>+</code></td>
-			<td>加法</td>
-			<td>2</td>
-		</tr>
-		<tr>
-			<td><code>-</code></td>
-			<td>減法</td>
-			<td>2</td>
-		</tr>
-		<tr>
-			<td><code>&gt;</code></td>
-			<td>大於</td>
-			<td>3</td>
-		</tr>
-		<tr>
-			<td><code>&gt;=</code></td>
-			<td>大於等於</td>
-			<td>3</td>
-		</tr>
-		<tr>
-			<td><code>&lt;</code></td>
-			<td>小於</td>
-			<td>3</td>
-		</tr>
-		<tr>
-			<td><code>&lt;=</code></td>
-			<td>小於等於</td>
-			<td>3</td>
-		</tr>
-		<tr>
-			<td><code>==</code></td>
-			<td>等於</td>
-			<td>4</td>
-		</tr>
-		<tr>
-			<td><code>!=</code></td>
-			<td>不等於</td>
-			<td>4</td>
-		</tr>
-		<tr>
-			<td><code>&amp;</code></td>
-			<td>位元AND</td>
-			<td>4</td>
-		</tr>
-		<tr>
-			<td><code>|</code></td>
-			<td>位元OR</td>
-			<td>4</td>
-		</tr>
-		<tr>
-			<td><code>^</code></td>
-			<td>位元XOR</td>
-			<td>4</td>
-		</tr>
-		<tr>
-			<td><code>&amp;&amp;</code></td>
-			<td>邏輯AND</td>
-			<td>5</td>
-		</tr>
-		<tr>
-			<td><code>||</code></td>
-			<td>邏輯OR</td>
-			<td>5</td>
-		</tr>
-	</tbody>
-</table>
-<p>位元AND、位元OR、位元XOR平常較少用到，如果要用AND功能，請用<code>&amp;&amp;</code>，如果要用OR功能，請用<code>||</code></p>
-<p>另外 <code>(</code> 和 <code>)</code> 可以指定優先運算，如 <code>-(1+2)*3</code> 是 <code>-9</code></p>
+			<tr>
+				<td><code>involve_require(44)</code></td>
+				<td>黃金貓薄荷果實</td>
+			</tr>
 
-<p>另外<code>-atk</code>是負的意思，相當於乘<code>-1</code>，<code>!atk</code>是否(not)的意思，如果atk是0傳回1否則傳回0</p>
+			<tr>
+				<td><code>involve_require(167)</code></td>
+				<td>紫獸石</td>
+			</tr>
 
-<h3 id="special-functions"><a class="anchor" href="#special-functions"><span class="octicon octicon-link"></span></a>特殊含式</h3>
-<p><code>dpsagainst(攻擊對象)</code> 可以用在排序表達式上，用來表示對某攻擊對象的 DPS</p>
-<table>
-	<thead>
-		<tr>
-			<th>表達式</th>
-			<th>意義</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>dpsagainst(RED)</code></td>
-			<td>對紅色敵人 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(FLOAT)</code></td>
-			<td>對飄浮敵人 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(BLACK)</code></td>
-			<td>對黑色敵人 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(METAL)</code></td>
-			<td>對鋼鐵敵人 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(ANGEL)</code></td>
-			<td>對天使敵人 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(ALIEN)</code></td>
-			<td>對異星戰士 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(ZOMBIE)</code></td>
-			<td>對不死生物 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(WHITE)</code></td>
-			<td>對無屬性敵人 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(RELIC)</code></td>
-			<td>對古代種 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(DEMON)</code></td>
-			<td>對惡魔 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(BEAST)</code></td>
-			<td>對超獸 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(INFN)</code></td>
-			<td>對道場塔 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(BARON)</code></td>
-			<td>對超生命體 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(EVA)</code></td>
-			<td>對使徒 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(WITCH)</code></td>
-			<td>對魔女 DPS</td>
-		</tr>
-		<tr>
-			<td><code>dpsagainst(SAGE)</code></td>
-			<td>對超賢者 DPS</td>
-		</tr>
-	</tbody>
-</table>
-<p><code>dpsagainst(METAL)</code> 比較特殊，它是計算對鋼鐵敵人造成的每秒傷害，所以沒有爆擊的機率會以1來計算(所以攻擊頻率高的貓有會有一點)，爆擊機率(含大傷、超傷、善攻)以雙倍計算，dps為兩者之和</p>
-<p><code>hpagainst(攻擊對象)</code> 可以用在排序表達式上，用來表示對某攻擊對象的血量</p>
-<table>
-	<thead>
-		<tr>
-			<th>表達式</th>
-			<th>意義</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>hpagainst(RED)</code></td>
-			<td>對紅色敵人血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(FLOAT)</code></td>
-			<td>對飄浮敵人血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(BLACK)</code></td>
-			<td>對黑色敵人血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(METAL)</code></td>
-			<td>對鋼鐵敵人血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(ANGEL)</code></td>
-			<td>對天使敵人血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(ALIEN)</code></td>
-			<td>對異星戰士血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(ZOMBIE)</code></td>
-			<td>對不死生物血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(WHITE)</code></td>
-			<td>對無屬性敵人血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(RELIC)</code></td>
-			<td>對古代種血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(DEMON)</code></td>
-			<td>對惡魔血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(BEAST)</code></td>
-			<td>對超獸血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(INFN)</code></td>
-			<td>對道場塔血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(BARON)</code></td>
-			<td>對超生命體血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(EVA)</code></td>
-			<td>對使徒血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(WITCH)</code></td>
-			<td>對魔女血量</td>
-		</tr>
-		<tr>
-			<td><code>hpagainst(SAGE)</code></td>
-			<td>對超賢者血量</td>
-		</tr>
-	</tbody>
-</table>
-<ul>
-	<li><code>max</code>: 最大值，如<code>max(1, 2, 3) = 3</code></li>
-	<li><code>min</code>: 最小值，如<code>min(1, 2, 3) = 1</code></li>
-	<li><code>sqrt</code>: 平方根值，如<code>sqrt(81) = 9</code></li>
-	<li><code>pow</code>: <code>pow(2, 4) = 16</code></li>
-	<li><code>round</code>: 四捨五入，如<code>round(0.5) = 1</code></li>
-	<li><code>random</code>: 生成0-1之間的亂數（包含0，不包含1）</li>
-	<li><code>floor</code>: 無條件捨去法，如<code>floor(0.9) = 0</code></li>
-	<li><code>ceil</code>: 無條件進位法，如<code>ceil(0.1) = 1</code></li>
-	<li><code>sign</code>: 如果輸入大於 0，傳回 1，如果輸入小於 0，傳回 -1，否則傳回 0 或 -0</li>
-</ul>
-<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Math">在 MDN 上的數學函數參考</a></p>
+			<tr>
+				<td><code>involve_require(179)</code></td>
+				<td>紫獸石結晶</td>
+			</tr>
+
+			<tr>
+				<td><code>involve_require(168)</code></td>
+				<td>紅獸石</td>
+			</tr>
+
+			<tr>
+				<td><code>involve_require(180)</code></td>
+				<td>紅獸石結晶</td>
+			</tr>
+
+			<tr>
+				<td><code>involve_require(169)</code></td>
+				<td>蒼獸石</td>
+			</tr>
+
+			<tr>
+				<td><code>involve_require(181)</code></td>
+				<td>蒼獸石結晶</td>
+			</tr>
+
+			<tr>
+				<td><code>involve_require(170)</code></td>
+				<td>翠獸石</td>
+			</tr>
+
+			<tr>
+				<td><code>involve_require(182)</code></td>
+				<td>翠獸石結晶</td>
+			</tr>
+
+			<tr>
+				<td><code>involve_require(171)</code></td>
+				<td>黄獸石</td>
+			</tr>
+
+			<tr>
+				<td><code>involve_require(183)</code></td>
+				<td>黄獸石結晶</td>
+			</tr>
+
+			<tr>
+				<td><code>involve_require(184)</code></td>
+				<td>虹獸石</td>
+			</tr>
+
+		</tbody>
+	</table>
+
+
+	<h3 id="default-variables"><a class="anchor" href="#default-variables"><span class="octicon octicon-link"></span></a>預設常數</h3>
+	<p>以下是預設的常數（不分大小寫），不論在什麼地方，它的數值都一樣</p>
+
+	<p>以下是可以和<code>trait</code>（攻擊對象、屬性）變數一起使用的常數，如<code>trait & RED</code>代表貓咪有針對紅色敵人，或敵人是紅色敵人</p>
+	<table>
+		<thead>
+			<tr>
+				<th>表達式</th>
+				<th>解釋</th>
+			</tr>
+		</thead>
+		<tbody class="left">
+			<tr>
+				<td><code>trait & RED</code></td>
+				<td>紅色敵人</td>
+			</tr>
+			<tr>
+				<td><code>trait & FLOAT</code></td>
+				<td>飄浮敵人</td>
+			</tr>
+			<tr>
+				<td><code>trait & BLACK</code></td>
+				<td>黑色敵人</td>
+			</tr>
+			<tr>
+				<td><code>trait & METAL</code></td>
+				<td>鋼鐵敵人</td>
+			</tr>
+			<tr>
+				<td><code>trait & ANGEL</code></td>
+				<td>天使敵人</td>
+			</tr>
+			<tr>
+				<td><code>trait & ALIEN</code></td>
+				<td>異星戰士</td>
+			</tr>
+			<tr>
+				<td><code>trait & ZOMBIE</code></td>
+				<td>不死生物</td>
+			</tr>
+			<tr>
+				<td><code>trait & WHITE</code></td>
+				<td>無屬性敵人</td>
+			</tr>
+			<tr>
+				<td><code>trait & RELIC</code></td>
+				<td>古代種</td>
+			</tr>
+			<tr>
+				<td><code>trait & DEMON</code></td>
+				<td>惡魔</td>
+			</tr>
+			<tr>
+				<td><code>trait & BEAST</code></td>
+				<td>超獸</td>
+			</tr>
+			<tr>
+				<td><code>trait & INFN</code></td>
+				<td>道場塔</td>
+			</tr>
+			<tr>
+				<td><code>trait & BARON</code></td>
+				<td>超生命體</td>
+			</tr>
+			<tr>
+				<td><code>trait & EVA</code></td>
+				<td>使徒</td>
+			</tr>
+			<tr>
+				<td><code>trait & WITCH</code></td>
+				<td>魔女</td>
+			</tr>
+			<tr>
+				<td><code>trait & SAGE</code></td>
+				<td>賢者</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h3 id="resistance"><a class="anchor" href="#resistance"><span class="octicon octicon-link"></span></a>耐性</h3>
+	<p>以下是可以和<code>hasres</code>含式一起使用的常數，如<code>hasres(RES_WEAK)</code>代表貓咪有降攻耐性</p>
+	<table>
+		<thead>
+			<tr>
+				<th>表達式</th>
+				<th>解釋</th>
+			</tr>
+		</thead>
+		<tbody class="left">
+			<tr>
+				<td><code>hasres(RES_WWAK)</code></td>
+				<td>抗擊耐性</td>
+			</tr>
+			<tr>
+				<td><code>hasres(RES_STOP)</code></td>
+				<td>動止耐性</td>
+			</tr>
+			<tr>
+				<td><code>hasres(RES_SLOW)</code></td>
+				<td>動慢耐性</td>
+			</tr>
+			<tr>
+				<td><code>hasres(RES_KB)</code></td>
+				<td>抗飛耐性</td>
+			</tr>
+			<tr>
+				<td><code>hasres(RES_WAVE)</code></td>
+				<td>抗波耐性</td>
+			</tr>
+			<tr>
+				<td><code>hasres(RES_SURGE)</code></td>
+				<td>抗烈波耐性</td>
+			</tr>
+			<tr>
+				<td><code>hasres(RES_CURSE)</code></td>
+				<td>抗古代詛咒耐性</td>
+			</tr>
+			<tr>
+				<td><code>hasres(RES_TOXIC)</code></td>
+				<td>抗毒耐性</td>
+			</tr>
+			<tr>
+				<td><code>hasres(RES_WARP)</code></td>
+				<td>抗傳耐性</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h3 id="immunity"><a class="anchor" href="#immunity"><span class="octicon octicon-link"></span></a>抗性</h3>
+	<p>以下是可以和<code>imu</code>（抗性）變數一起使用的常數，如<code>imu & IMU_WEAK</code>代表貓咪有降功無效</p>
+	<table>
+		<thead>
+			<tr>
+				<th>表達式</th>
+				<th>解釋</th>
+			</tr>
+		</thead>
+		<tbody class="left">
+			<tr>
+				<td><code>imu & IMU_WEAK</code></td>
+				<td>攻擊力下降無效</td>
+			</tr>
+			<tr>
+				<td><code>imu & IMU_STOP</code></td>
+				<td>動作停止無效</td>
+			</tr>
+			<tr>
+				<td><code>imu & IMU_SLOW</code></td>
+				<td>動作變慢無效</td>
+			</tr>
+			<tr>
+				<td><code>imu & IMU_KB</code></td>
+				<td>打飛無效</td>
+			</tr>
+			<tr>
+				<td><code>imu & IMU_WAVE</code></td>
+				<td>波動傷害無效</td>
+			</tr>
+			<tr>
+				<td><code>imu & IMU_VOLC</code></td>
+				<td>烈波傷害無效</td>
+			</tr>
+			<tr>
+				<td><code>imu & IMU_WARP</code></td>
+				<td>傳送無效</td>
+			</tr>
+			<tr>
+				<td><code>imu & IMU_CURSE</code></td>
+				<td>古代的詛咒無效</td>
+			</tr>
+			<tr>
+				<td><code>imu & IMU_POIATK</code></td>
+				<td>毒擊傷害無效</td>
+			</tr>
+			<tr>
+				<td><code>imu & IMU_BOSSWAVE</code></td>
+				<td>魔王震波無效</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h3 id="ability"><a class="anchor" href="#ability"><span class="octicon octicon-link"></span></a>能力、效果</h3>
+	<p>以下是可以和<code>hasab</code>（擁有某能力或效果）含式一起使用的常數，如<code>hasab(AB_WEAK)</code>代表貓咪有使敵人攻擊力下降</p>
+	<table>
+		<thead>
+			<tr>
+				<th>表達式</th>
+				<th>解釋</th>
+			</tr>
+		</thead>
+		<tbody class="left">
+			<tr>
+				<td><code>hasab(AB_STRONG)</code></td>
+				<td>攻擊力上升</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_LETHAL)</code></td>
+				<td>死前存活</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_ATKBASE)</code></td>
+				<td>善於攻城</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_CRIT)</code></td>
+				<td>會心一擊</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_ZKILL)</code></td>
+				<td>終結不死</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_CKILL)</code></td>
+				<td>靈魂攻擊</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_BREAK)</code></td>
+				<td>破壞護盾(宇宙盾)</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_SHIELDBREAK)</code></td>
+				<td>破壞惡魔盾</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_S)</code></td>
+				<td>渾身一擊</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_BOUNTY)</code></td>
+				<td>得到很多金錢</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_METALIC)</code></td>
+				<td>鋼鐵</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_MINIWAVE)</code></td>
+				<td>小波動</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_WAVE)</code></td>
+				<td>波動</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_MINIVOLC)</code></td>
+				<td>小烈波</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_VOLC)</code></td>
+				<td>烈波</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_WAVES)</code></td>
+				<td>波動滅止</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_BAIL)</code></td>
+				<td>超生命體特效</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_BSTHUNT)</code></td>
+				<td>超獸特效</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_WKILL)</code></td>
+				<td>終結魔女</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_EKILL)</code></td>
+				<td>終結使徒</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_GLASS)</code></td>
+				<td>一次攻擊</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_WEAK)</code></td>
+				<td>攻擊力下降</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_STOP)</code></td>
+				<td>使動作停止</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_SLOW)</code></td>
+				<td>使動作變慢</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_CURSE)</code></td>
+				<td>詛咒</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_ONLY)</code></td>
+				<td>只能攻擊</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_GOOD)</code></td>
+				<td>善於攻擊</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_RESIST)</code></td>
+				<td>很耐打</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_RESISTS)</code></td>
+				<td>超耐打</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_MASSIVE)</code></td>
+				<td>超大傷害</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_MASSIVES)</code></td>
+				<td>極度傷害</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_KB)</code></td>
+				<td>打飛</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_IMUATK)</code></td>
+				<td>攻擊無效</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_POIATK)</code></td>
+				<td>毒擊</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_BURROW)</code></td>
+				<td>鑽地</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_REVIVE)</code></td>
+				<td>復活</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_SHIELD)</code></td>
+				<td>護盾(宇宙盾)</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_DSHIELD)</code></td>
+				<td>惡魔盾</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_AFTERMATH)</code></td>
+				<td>死後烈波</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_COUNTER)</code></td>
+				<td>烈波反擊</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h3 id="attack-type"><a class="anchor" href="#attack-type"><span class="octicon octicon-link"></span></a>攻擊方式</h3>
+	<p>以下是可以和<code>atktype</code>（攻擊方式）變數一起使用的常數，如<code>atktype & ATK_SINGLE</code>代表貓咪是單體攻擊</p>
+	<table>
+		<thead>
+			<tr>
+				<th>表達式</th>
+				<th>解釋</th>
+			</tr>
+		</thead>
+		<tbody class="left">
+			<tr>
+				<td><code>atktype & ATK_SINGLE</code></td>
+				<td>單體攻擊</td>
+			</tr>
+			<tr>
+				<td><code>atktype & ATK_RANGE</code></td>
+				<td>範圍攻擊</td>
+			</tr>
+			<tr>
+				<td><code>atktype & ATK_LD</code></td>
+				<td>遠距(遠方範圍)攻擊</td>
+			</tr>
+			<tr>
+				<td><code>atktype & ATK_OMNI</code></td>
+				<td>全方位攻擊</td>
+			</tr>
+			<tr>
+				<td><code>atktype & ATK_KB_REVENGE</code></td>
+				<td>擊退反擊</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>小知識： 如果想要知道是否有<img src="https://i.imgur.com/veNQ90x.png" loading="lazy">連續攻擊，可以用<code>pre1</code>(第二個前搖)，如果非零就是有二、三次連續攻擊</p>
+
+	<h3 id="rarity"><a class="anchor" href="#rarity"><span class="octicon octicon-link"></span></a>稀有度</h3>
+	<p>以下是可以和<code>rarity</code>（稀有度）變數一起使用的常數，如<code>rarity == 0</code>代表貓咪的稀有度是基本</p>
+	<table>
+		<thead>
+			<tr>
+				<th>表達式</th>
+				<th>解釋</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>rarity == 0</code></td>
+				<td>基本</td>
+			</tr>
+			<tr>
+				<td><code>rarity == 1</code></td>
+				<td>EX</td>
+			</tr>
+			<tr>
+				<td><code>rarity == 2</code></td>
+				<td>稀有</td>
+			</tr>
+			<tr>
+				<td><code>rarity == 3</code></td>
+				<td>激稀有</td>
+			</tr>
+			<tr>
+				<td><code>rarity == 4</code></td>
+				<td>超激稀有</td>
+			</tr>
+			<tr>
+				<td><code>rarity == 5</code></td>
+				<td>傳說稀有</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h3 id="operators"><a class="anchor" href="#operators"><span class="octicon octicon-link"></span></a>運算子</h3>
+	<p>類似數學中的運算式，可以用來作數值的運算和邏輯運算</p>
+	<table>
+		<thead>
+			<tr>
+				<th>運算子</th>
+				<th>解釋</th>
+				<th>最先結合順序(最高1)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>*</code></td>
+				<td>乘法</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td><code>/</code></td>
+				<td>除法</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td><code>%</code></td>
+				<td>取餘數</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td><code>+</code></td>
+				<td>加法</td>
+				<td>2</td>
+			</tr>
+			<tr>
+				<td><code>-</code></td>
+				<td>減法</td>
+				<td>2</td>
+			</tr>
+			<tr>
+				<td><code>&gt;</code></td>
+				<td>大於</td>
+				<td>3</td>
+			</tr>
+			<tr>
+				<td><code>&gt;=</code></td>
+				<td>大於等於</td>
+				<td>3</td>
+			</tr>
+			<tr>
+				<td><code>&lt;</code></td>
+				<td>小於</td>
+				<td>3</td>
+			</tr>
+			<tr>
+				<td><code>&lt;=</code></td>
+				<td>小於等於</td>
+				<td>3</td>
+			</tr>
+			<tr>
+				<td><code>==</code></td>
+				<td>等於</td>
+				<td>4</td>
+			</tr>
+			<tr>
+				<td><code>!=</code></td>
+				<td>不等於</td>
+				<td>4</td>
+			</tr>
+			<tr>
+				<td><code>&amp;</code></td>
+				<td>位元AND</td>
+				<td>4</td>
+			</tr>
+			<tr>
+				<td><code>|</code></td>
+				<td>位元OR</td>
+				<td>4</td>
+			</tr>
+			<tr>
+				<td><code>^</code></td>
+				<td>位元XOR</td>
+				<td>4</td>
+			</tr>
+			<tr>
+				<td><code>&amp;&amp;</code></td>
+				<td>邏輯AND</td>
+				<td>5</td>
+			</tr>
+			<tr>
+				<td><code>||</code></td>
+				<td>邏輯OR</td>
+				<td>5</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>位元AND、位元OR、位元XOR平常較少用到，如果要用AND功能，請用<code>&amp;&amp;</code>，如果要用OR功能，請用<code>||</code></p>
+	<p>另外 <code>(</code> 和 <code>)</code> 可以指定優先運算，如 <code>-(1+2)*3</code> 是 <code>-9</code></p>
+
+	<p>另外<code>-atk</code>是負的意思，相當於乘<code>-1</code>，<code>!atk</code>是否(not)的意思，如果atk是0傳回1否則傳回0</p>
+
+	<h3 id="special-functions"><a class="anchor" href="#special-functions"><span class="octicon octicon-link"></span></a>特殊含式</h3>
+	<p><code>dpsagainst(攻擊對象)</code> 可以用在排序表達式上，用來表示對某攻擊對象的 DPS</p>
+	<table>
+		<thead>
+			<tr>
+				<th>表達式</th>
+				<th>意義</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>dpsagainst(RED)</code></td>
+				<td>對紅色敵人 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(FLOAT)</code></td>
+				<td>對飄浮敵人 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(BLACK)</code></td>
+				<td>對黑色敵人 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(METAL)</code></td>
+				<td>對鋼鐵敵人 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(ANGEL)</code></td>
+				<td>對天使敵人 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(ALIEN)</code></td>
+				<td>對異星戰士 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(ZOMBIE)</code></td>
+				<td>對不死生物 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(WHITE)</code></td>
+				<td>對無屬性敵人 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(RELIC)</code></td>
+				<td>對古代種 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(DEMON)</code></td>
+				<td>對惡魔 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(BEAST)</code></td>
+				<td>對超獸 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(INFN)</code></td>
+				<td>對道場塔 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(BARON)</code></td>
+				<td>對超生命體 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(EVA)</code></td>
+				<td>對使徒 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(WITCH)</code></td>
+				<td>對魔女 DPS</td>
+			</tr>
+			<tr>
+				<td><code>dpsagainst(SAGE)</code></td>
+				<td>對超賢者 DPS</td>
+			</tr>
+		</tbody>
+	</table>
+	<p><code>dpsagainst(METAL)</code> 比較特殊，它是計算對鋼鐵敵人造成的每秒傷害，所以沒有爆擊的機率會以1來計算(所以攻擊頻率高的貓有會有一點)，爆擊機率(含大傷、超傷、善攻)以雙倍計算，dps為兩者之和</p>
+	<p><code>hpagainst(攻擊對象)</code> 可以用在排序表達式上，用來表示對某攻擊對象的血量</p>
+	<table>
+		<thead>
+			<tr>
+				<th>表達式</th>
+				<th>意義</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>hpagainst(RED)</code></td>
+				<td>對紅色敵人血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(FLOAT)</code></td>
+				<td>對飄浮敵人血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(BLACK)</code></td>
+				<td>對黑色敵人血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(METAL)</code></td>
+				<td>對鋼鐵敵人血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(ANGEL)</code></td>
+				<td>對天使敵人血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(ALIEN)</code></td>
+				<td>對異星戰士血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(ZOMBIE)</code></td>
+				<td>對不死生物血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(WHITE)</code></td>
+				<td>對無屬性敵人血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(RELIC)</code></td>
+				<td>對古代種血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(DEMON)</code></td>
+				<td>對惡魔血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(BEAST)</code></td>
+				<td>對超獸血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(INFN)</code></td>
+				<td>對道場塔血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(BARON)</code></td>
+				<td>對超生命體血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(EVA)</code></td>
+				<td>對使徒血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(WITCH)</code></td>
+				<td>對魔女血量</td>
+			</tr>
+			<tr>
+				<td><code>hpagainst(SAGE)</code></td>
+				<td>對超賢者血量</td>
+			</tr>
+		</tbody>
+	</table>
+	<ul>
+		<li><code>max</code>: 最大值，如<code>max(1, 2, 3) = 3</code></li>
+		<li><code>min</code>: 最小值，如<code>min(1, 2, 3) = 1</code></li>
+		<li><code>sqrt</code>: 平方根值，如<code>sqrt(81) = 9</code></li>
+		<li><code>pow</code>: <code>pow(2, 4) = 16</code></li>
+		<li><code>round</code>: 四捨五入，如<code>round(0.5) = 1</code></li>
+		<li><code>random</code>: 生成0-1之間的亂數（包含0，不包含1）</li>
+		<li><code>floor</code>: 無條件捨去法，如<code>floor(0.9) = 0</code></li>
+		<li><code>ceil</code>: 無條件進位法，如<code>ceil(0.1) = 1</code></li>
+		<li><code>sign</code>: 如果輸入大於 0，傳回 1，如果輸入小於 0，傳回 -1，否則傳回 0 或 -0</li>
+	</ul>
+	<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Math">在 MDN 上的數學函數參考</a></p>
+{{/inline}}
+
+{{/gh.html}}
