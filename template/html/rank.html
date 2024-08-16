@@ -11,7 +11,7 @@
 {{/inline}}
 
 {{#*inline "styles-inline"}}
-<style type="text/css">
+	<style>
 td img {
 	width: 3em;
 	height: auto;
@@ -23,7 +23,7 @@ td:nth-child(4) {
 {{/inline}}
 
 {{#*inline "scripts"}}
-<script type="text/javascript">
+<script>
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
 	document.documentElement.setAttribute("data-theme", "dark");
