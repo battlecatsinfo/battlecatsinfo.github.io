@@ -30,6 +30,89 @@
 
 <body{{#> body-attrs}}{{/body-attrs}}>
 	{{#> nav-bar}}
+	{{#> nav-bar-styles}}
+	<style>
+.topnav {
+	background-color: #333 !important;
+	margin-block: 0;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	font-size: max(1.5vw, 10px) !important;
+}
+.topnav > a {
+	display: inline-block;
+	color: #f2f2f2 !important;
+	padding: 1vh 2vw;
+	text-decoration: none;
+	cursor: pointer;
+	vertical-align: middle;
+}
+.topnav > a.active {
+	background-color: #4caf50 !important;
+}
+.topnav > a:visited {
+	text-decoration: none;
+}
+.topnav > a:hover {
+	background-color: #009688 !important;
+}
+.topnav svg {
+	background-color: inherit !important;
+	height: 1.3em;
+}
+#site-search {
+	display: none;
+	width: 175px;
+	padding: 0.1em 0.2em;
+}
+#search-btn {
+	all: unset;
+	vertical-align: middle;
+	cursor: pointer;
+	background-color: transparent !important;
+}
+#search-btn svg {
+	width: 12px;
+	height: 12px;
+	fill: white;
+}
+@media (min-width: 800px) {
+	#site-search {
+		display: inline-block;
+		width: 20vw;
+	}
+	#search-btn {
+		position: relative;
+		top: 3px;
+		right: 30px;
+	}
+	#search-btn svg {
+		height: 22px;
+		width: 22px;
+		fill: black;
+	}
+}
+#site-s-result {
+	background-color: white !important;
+	display: none;
+	position: absolute;
+	z-index: 10;
+	left: 0;
+	top: 0;
+}
+#site-s-result > * {
+	width: 100%;
+	padding: 0.7em 2em;
+	color: black !important;
+	background-color: transparent !important;
+}
+#site-s-result > *:hover {
+	background-color: #e7e7e7 !important;
+	color: black !important;
+}
+	</style>
+	{{/nav-bar-styles}}
 	{{#> nav-bar-content}}
 	<div class="topnav">
 <a href="/index.html"{{#ifCond nav-bar-active "===" "index" }} class="active"{{/ifCond}}>主頁</a>
