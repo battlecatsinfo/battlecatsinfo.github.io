@@ -4,10 +4,7 @@
 
 {{#*inline "styles"}}{{/inline}}
 
-{{#*inline "pre-content"}}
-	<script>
-		var _th=localStorage.getItem("theme");function toggleTheme(){let e=localStorage.getItem("theme");"dark"==e?(document.documentElement.classList.remove("dark"),localStorage.setItem("theme","light")):(document.documentElement.classList.add("dark"),localStorage.setItem("theme","dark"))}("dark"==_th||!_th&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.documentElement.classList.add("dark");
-	</script>
+{{#*inline "styles-inline"}}
 	<style>
 ::-webkit-scrollbar {
 	width: 10px;
@@ -260,6 +257,12 @@ th {
 	color: #000 !important;
 }
 	</style>
+{{/inline}}
+
+{{#*inline "scripts"}}
+	<script>
+		var _th=localStorage.getItem("theme");function toggleTheme(){let e=localStorage.getItem("theme");"dark"==e?(document.documentElement.classList.remove("dark"),localStorage.setItem("theme","light")):(document.documentElement.classList.add("dark"),localStorage.setItem("theme","dark"))}("dark"==_th||!_th&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.documentElement.classList.add("dark");
+	</script>
 {{/inline}}
 
 {{#*inline "nav-bar"}}{{/inline}}

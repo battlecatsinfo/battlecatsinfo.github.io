@@ -12,21 +12,7 @@
 	<meta property="og:description" content="查詢關卡資訊、貓咪資訊、敵人資訊、轉蛋、聯組、動畫、金寶等">
 {{/inline}}
 
-{{#*inline "scripts"}}
-	<script>
-function Switch() {
-	let x = localStorage.getItem('unit');
-	if (!x || x == 'S') {
-		localStorage.setItem('unit', 'F');
-		return alert('單位切換成「F」(幀)');
-	}
-	localStorage.setItem('unit', 'S');
-	alert('單位切換成「秒」');
-}
-	</script>
-{{/inline}}
-
-{{#*inline "pre-content"}}
+{{#*inline "styles-inline"}}
 	<style>
 :root {
 	--t: #2e2725;
@@ -76,6 +62,20 @@ a img {
 }
 {{{nav-style}}}
 	</style>
+{{/inline}}
+
+{{#*inline "scripts"}}
+	<script>
+function Switch() {
+	let x = localStorage.getItem('unit');
+	if (!x || x == 'S') {
+		localStorage.setItem('unit', 'F');
+		return alert('單位切換成「F」(幀)');
+	}
+	localStorage.setItem('unit', 'S');
+	alert('單位切換成「秒」');
+}
+	</script>
 {{/inline}}
 
 {{#*inline "content"}}

@@ -3,11 +3,7 @@
 {{#*inline "title"}}城堡素材掉落率{{/inline}}
 
 {{#*inline "styles"}}
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	<link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.css" rel="stylesheet">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-	<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
 {{/inline}}
 
 {{#*inline "styles-inline"}}
@@ -32,11 +28,11 @@ th img {width: 22px;height:auto;vertical-align:middle;}
 	</style>
 {{/inline}}
 
-{{#*inline "nav-bar-content"}}{{/inline}}
-
-{{#*inline "nav-bar-scripts"}}{{/inline}}
-
-{{#*inline "content"}}
+{{#*inline "scripts"}}
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.0.8/b-3.0.2/b-colvis-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
 	<script>
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
@@ -52,6 +48,13 @@ function toggleTheme() {
 	}
 }
 	</script>
+{{/inline}}
+
+{{#*inline "nav-bar-content"}}{{/inline}}
+
+{{#*inline "nav-bar-scripts"}}{{/inline}}
+
+{{#*inline "content"}}
 	<div class="topnav">
 		<a href="/index.html">主頁</a>
 		<a href="/search.html">貓咪</a>

@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="gh.css">
 {{/inline}}
 
-{{#*inline "pre-content"}}
+{{#*inline "styles-inline"}}
 <style type="text/css">
 td img {
 	width: 3em;
@@ -20,6 +20,9 @@ td:nth-child(4) {
 	padding: 0 !important;
 }
 </style>
+{{/inline}}
+
+{{#*inline "scripts"}}
 <script type="text/javascript">
 var _th = localStorage.getItem('theme');
 if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
