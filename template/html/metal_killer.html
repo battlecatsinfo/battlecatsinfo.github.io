@@ -8,61 +8,61 @@
 
 {{#*inline "styles-inline"}}
 	<style>
-input[type="number"] {
-	padding-left: 1em;
-	background-color: aliceblue !important;
-}
-:root {
-	--a: #fff;
-	--b: #000;
-	--c: #f1f1f1;
-	--d: #0027ff;
-}
-[data-Q="dark1"] {
-	--a: #2a2a2a;
-	--b: #fff;
-	--c: #2a2a2a;
-	--d: #2196f3;
-}
-[data-Q="dark2"] {
-	--a: #32373a;
-	--b: #fff;
-	--c: #32373a;
-	--d: #2196f3;
-}
-body {
-	color: var(--b);
-	background-color: var(--a) !important;
-}
-.topnav {
-	background-color: #333 !important;
-	margin-block: 0;
-	display: inline-block;
-	width: 100%;
-	text-align: center;
-	font-size: max(1.5vw, 10px) !important;
-}
-.topnav > a {
-	display: inline-block;
-	color: #f2f2f2 !important;
-	padding: 1vh 2vw;
-	text-decoration: none;
-	cursor: pointer;
-	vertical-align: middle;
-}
-.topnav > a.active {
-	background-color: #4caf50 !important;
-}
-.topnav > a:visited {
-	text-decoration: none;
-}
-.topnav > a:hover {
-	background-color: #009688 !important;
-}
-.topnav svg {
-	background-color: inherit !important;
-	height: 1.3em;
-}
+	input[type="number"] {
+		padding-left: 1em;
+		background-color: aliceblue !important;
+	}
+	:root {
+		--a: #fff;
+		--b: #000;
+		--c: #f1f1f1;
+		--d: #0027ff;
+	}
+	[data-Q="dark1"] {
+		--a: #2a2a2a;
+		--b: #fff;
+		--c: #2a2a2a;
+		--d: #2196f3;
+	}
+	[data-Q="dark2"] {
+		--a: #32373a;
+		--b: #fff;
+		--c: #32373a;
+		--d: #2196f3;
+	}
+	body {
+		color: var(--b);
+		background-color: var(--a) !important;
+	}
+	.topnav {
+		background-color: #333 !important;
+		margin-block: 0;
+		display: inline-block;
+		width: 100%;
+		text-align: center;
+		font-size: max(1.5vw, 10px) !important;
+	}
+	.topnav > a {
+		display: inline-block;
+		color: #f2f2f2 !important;
+		padding: 1vh 2vw;
+		text-decoration: none;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	.topnav > a.active {
+		background-color: #4caf50 !important;
+	}
+	.topnav > a:visited {
+		text-decoration: none;
+	}
+	.topnav > a:hover {
+		background-color: #009688 !important;
+	}
+	.topnav svg {
+		background-color: inherit !important;
+		height: 1.3em;
+	}
 	</style>
 {{/inline}}
 
@@ -108,51 +108,51 @@ body {
 	</form>
 	<div id="canvas"></div>
 	<script>
-const kill = document.getElementById('kill');
-const HP = document.getElementById('hp');
-const S = document.getElementById('S');
-let chart;
+	const kill = document.getElementById('kill');
+	const HP = document.getElementById('hp');
+	const S = document.getElementById('S');
+	let chart;
 
-(S.onclick = HP.oninput = kill.oninput = function () {
-	let hp = Math.max(parseInt(HP.value), 1);
-	let Ys = [{y: hp}];
-	let m = parseInt(kill.value) / 100;
-	while (true) {
-		hp -= 1 + Math.max(~~(hp * m), 1);
-		if (hp <= 0) {
-			Ys.push({y: 0});
-			break;
+	(S.onclick = HP.oninput = kill.oninput = function () {
+		let hp = Math.max(parseInt(HP.value), 1);
+		let Ys = [{y: hp}];
+		let m = parseInt(kill.value) / 100;
+		while (true) {
+			hp -= 1 + Math.max(~~(hp * m), 1);
+			if (hp <= 0) {
+				Ys.push({y: 0});
+				break;
+			}
+			Ys.push({y: hp});
 		}
-		Ys.push({y: hp});
-	}
-	if (!chart) {
-		chart = new CanvasJS.Chart('canvas', {
-			'animationEnabled': true,
-			'responsive':true,
-			'exportEnabled': true,
-			'theme': "light2",
-			'axisY': {
-				'title': "Enemy HP"
-			},
-			'axisX': {
-				'title': 'Nth attack'
-			},
-			'theme': S.value,
-			'title': { 'text': "Metal Killer" },
-			'data': [{
-				'xValueFormatString': '0th attack',
-				'yValueFormatString': '#,##0 HP remaining',
-				'type': 'line',
-				'dataPoints': Ys
-			}]
-		});
-		chart.render();
-	} else {
-		chart.options.data[0].dataPoints = Ys;
-		document.documentElement.setAttribute("data-Q", chart.options.theme = S.value);
-		chart.render();
-	}
-})();
+		if (!chart) {
+			chart = new CanvasJS.Chart('canvas', {
+				'animationEnabled': true,
+				'responsive':true,
+				'exportEnabled': true,
+				'theme': "light2",
+				'axisY': {
+					'title': "Enemy HP"
+				},
+				'axisX': {
+					'title': 'Nth attack'
+				},
+				'theme': S.value,
+				'title': { 'text': "Metal Killer" },
+				'data': [{
+					'xValueFormatString': '0th attack',
+					'yValueFormatString': '#,##0 HP remaining',
+					'type': 'line',
+					'dataPoints': Ys
+				}]
+			});
+			chart.render();
+		} else {
+			chart.options.data[0].dataPoints = Ys;
+			document.documentElement.setAttribute("data-Q", chart.options.theme = S.value);
+			chart.render();
+		}
+	})();
 	</script>
 {{/inline}}
 

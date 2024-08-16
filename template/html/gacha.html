@@ -19,172 +19,172 @@
 
 {{#*inline "styles-inline"}}
 	<style>
-body {
-	width: 100%;
-	margin: 0 auto;
-	padding: 0;
-	padding-bottom: 4vh;
-	text-align: center;
-	font-size: min(2vw, 18px);
-}
-.B {
-	display: block;
-}
-table {
-	margin: 0 auto;
-}
-tbody > a {
-	display: block;
-}
-.topnav {
-	background-color: #333 !important;
-	margin-block: 0;
-	display: inline-block;
-	width: 100%;
-	text-align: center;
-	font-size: max(1.5vw, 10px) !important;
-}
-.topnav > a {
-	display: inline-block;
-	color: #f2f2f2 !important;
-	padding: 1vh 2vw;
-	text-decoration: none;
-	cursor: pointer;
-	vertical-align: middle;
-}
-.topnav > a.active {
-	background-color: #4caf50 !important;
-}
-.topnav > a:visited {
-	text-decoration: none;
-}
-.topnav > a:hover {
-	background-color: #009688 !important;
-}
-.topnav svg {
-	background-color: inherit !important;
-	height: 1.3em;
-}
-#site-search {
-	display: none;
-	width: 175px;
-	padding: 0.1em 0.2em;
-}
-#search-btn {
-	all: unset;
-	vertical-align: middle;
-	cursor: pointer;
-	background-color: transparent !important;
-}
-#search-btn svg {
-	width: 12px;
-	height: 12px;
-	fill: white;
-}
-@media (min-width: 800px) {
-	#site-search {
+	body {
+		width: 100%;
+		margin: 0 auto;
+		padding: 0;
+		padding-bottom: 4vh;
+		text-align: center;
+		font-size: min(2vw, 18px);
+	}
+	.B {
+		display: block;
+	}
+	table {
+		margin: 0 auto;
+	}
+	tbody > a {
+		display: block;
+	}
+	.topnav {
+		background-color: #333 !important;
+		margin-block: 0;
 		display: inline-block;
-		width: 20vw;
+		width: 100%;
+		text-align: center;
+		font-size: max(1.5vw, 10px) !important;
+	}
+	.topnav > a {
+		display: inline-block;
+		color: #f2f2f2 !important;
+		padding: 1vh 2vw;
+		text-decoration: none;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+	.topnav > a.active {
+		background-color: #4caf50 !important;
+	}
+	.topnav > a:visited {
+		text-decoration: none;
+	}
+	.topnav > a:hover {
+		background-color: #009688 !important;
+	}
+	.topnav svg {
+		background-color: inherit !important;
+		height: 1.3em;
+	}
+	#site-search {
+		display: none;
+		width: 175px;
+		padding: 0.1em 0.2em;
 	}
 	#search-btn {
-		position: relative;
-		top: 3px;
-		right: 30px;
+		all: unset;
+		vertical-align: middle;
+		cursor: pointer;
+		background-color: transparent !important;
 	}
 	#search-btn svg {
-		height: 22px;
-		width: 22px;
-		fill: black;
+		width: 12px;
+		height: 12px;
+		fill: white;
 	}
-}
-#site-s-result {
-	background-color: white !important;
-	display: none;
-	position: absolute;
-	z-index: 10;
-	left: 0;
-	top: 0;
-}
-#site-s-result > * {
-	width: 100%;
-	padding: 0.7em 2em;
-	color: black !important;
-	background-color: transparent !important;
-}
-#site-s-result > *:hover {
-	background-color: #e7e7e7 !important;
-	color: black !important;
-}
-.tooltip svg {
-	margin-right: 0.6em;
-	fill: black;
-	width: 1.5em;
-	height: 1.5em;
-	cursor: pointer;
-}
-details {
-	margin-bottom: 1em;
-}
-.R td {
-	padding: 0;
-	padding-bottom: 1em;
-}
-.rate th {
-	border: 1px solid #b9b9b9;
-}
-.rate td,
-.rate th {
-	padding: 0.3em 3em !important;
-	border: 1px solid #b9b9b9;
-}
-.N th {
-	border: 1px solid #a9a9a9;
-}
-.N td {
-	padding: 0 2em !important;
-	border: 1px solid #a9a9a9;
-}
-.N td:first-child {
-	padding: 0 !important;
-}
-.Y th {
-	font-size: smaller;
-	border: 1px solid #999999;
-}
-.Y td {
-	font-size: smaller;
-	padding: 0.1em 2em !important;
-	border: 1px solid #999999;
-}
-.Y td:first-child {
-	background-color: #f3f3f3;
-}
-.Y td:nth-child(2) {
-	background-color: #d9d2e9;
-}
-.Y td:nth-child(3) {
-	background-color: #d9ead3;
-}
-.Y td:nth-child(4) {
-	background-color: #ead1dc;
-}
-.Y td:nth-child(5) {
-	background-color: #fce5cd;
-}
-.Y td:nth-child(6) {
-	background-color: #c9daf8;
-}
-.N img {
-	width: 5em;
-	height: auto;
-}
-.N a {
-	text-decoration: none;
-}
-summary {
-	cursor: pointer;
-	user-select: none;
-}
+	@media (min-width: 800px) {
+		#site-search {
+			display: inline-block;
+			width: 20vw;
+		}
+		#search-btn {
+			position: relative;
+			top: 3px;
+			right: 30px;
+		}
+		#search-btn svg {
+			height: 22px;
+			width: 22px;
+			fill: black;
+		}
+	}
+	#site-s-result {
+		background-color: white !important;
+		display: none;
+		position: absolute;
+		z-index: 10;
+		left: 0;
+		top: 0;
+	}
+	#site-s-result > * {
+		width: 100%;
+		padding: 0.7em 2em;
+		color: black !important;
+		background-color: transparent !important;
+	}
+	#site-s-result > *:hover {
+		background-color: #e7e7e7 !important;
+		color: black !important;
+	}
+	.tooltip svg {
+		margin-right: 0.6em;
+		fill: black;
+		width: 1.5em;
+		height: 1.5em;
+		cursor: pointer;
+	}
+	details {
+		margin-bottom: 1em;
+	}
+	.R td {
+		padding: 0;
+		padding-bottom: 1em;
+	}
+	.rate th {
+		border: 1px solid #b9b9b9;
+	}
+	.rate td,
+	.rate th {
+		padding: 0.3em 3em !important;
+		border: 1px solid #b9b9b9;
+	}
+	.N th {
+		border: 1px solid #a9a9a9;
+	}
+	.N td {
+		padding: 0 2em !important;
+		border: 1px solid #a9a9a9;
+	}
+	.N td:first-child {
+		padding: 0 !important;
+	}
+	.Y th {
+		font-size: smaller;
+		border: 1px solid #999999;
+	}
+	.Y td {
+		font-size: smaller;
+		padding: 0.1em 2em !important;
+		border: 1px solid #999999;
+	}
+	.Y td:first-child {
+		background-color: #f3f3f3;
+	}
+	.Y td:nth-child(2) {
+		background-color: #d9d2e9;
+	}
+	.Y td:nth-child(3) {
+		background-color: #d9ead3;
+	}
+	.Y td:nth-child(4) {
+		background-color: #ead1dc;
+	}
+	.Y td:nth-child(5) {
+		background-color: #fce5cd;
+	}
+	.Y td:nth-child(6) {
+		background-color: #c9daf8;
+	}
+	.N img {
+		width: 5em;
+		height: auto;
+	}
+	.N a {
+		text-decoration: none;
+	}
+	summary {
+		cursor: pointer;
+		user-select: none;
+	}
 	</style>
 {{/inline}}
 
@@ -203,7 +203,7 @@ summary {
 		</a>
 		<a title="佈景主題" onclick="toggleTheme()" style="float:right;">
 			<svg viewBox="0 0 24 24">
-				<path fill="white" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20 L12,4 C16.418278,4 20,7.581722 20,12 C20,16.418278 16.418278,20 12,20 Z"></path>
+				<path fill="white" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20 L12,4 C16.418278,4 20,7.581722 20,12 C20,16.418278 16.418278,20 12,20 Z" />
 			</svg>
 		</a>
 		<a style="position:relative;float:right;">
@@ -213,8 +213,7 @@ summary {
 			</form>
 			<button id="search-btn" onclick="site_search()">
 				<svg viewBox="0 0 50 50" width="50px" height="50px">
-					<path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"
-					/>
+					<path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" />
 				</svg>
 			</button>
 			<div style="position: relative;" class="w3-card">
@@ -241,8 +240,7 @@ summary {
 
 	<div style="display: none;" class="tooltip">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-			<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"
-			/>
+			<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
 		</svg>
 	</div>
 {{/inline}}
