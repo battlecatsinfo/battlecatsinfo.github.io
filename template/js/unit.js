@@ -2772,7 +2772,7 @@ function drawgraph(T) {
 
 	const lvs = my_cat.info[4] + my_cat.info[5];
 	if (!T) {
-		const line = _curves[my_cat.curve];
+		const line = _curves[my_cat.info[16]];
 		const data = [];
 		for (let i = 0; i <= ~~(lvs / 10); ++i)
 			data.push({
