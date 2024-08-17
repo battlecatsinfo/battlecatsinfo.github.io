@@ -2500,7 +2500,7 @@ function renderCombos() {
 				const td = document.createElement('td');
 				const p = document.createElement('p');
 				const p2 = document.createElement('p');
-				const p3 = document.createElement('p3');
+				const p3 = document.createElement('p');
 				p3.style.fontSize = 'smaller';
 				td.appendChild(p);
 				td.appendChild(p2);
@@ -2772,7 +2772,7 @@ function drawgraph(T) {
 
 	const lvs = my_cat.info[4] + my_cat.info[5];
 	if (!T) {
-		const line = _curves[my_cat.curve];
+		const line = _curves[my_cat.info[16]];
 		const data = [];
 		for (let i = 0; i <= ~~(lvs / 10); ++i)
 			data.push({
