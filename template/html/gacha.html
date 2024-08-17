@@ -2,9 +2,10 @@
 
 {{#*inline "title"}}{{pool.tw-name}}{{/inline}}
 
+{{#*inline "description"}}{{pool.tw-name}}轉蛋詳細資訊{{/inline}}
+
 {{#*inline "og"}}
-	<meta property="og:title" content="{{pool.tw-name}} | 貓咪大戰爭中文資訊網站">
-	<meta property="og:description" content="{{pool.tw-name}}轉蛋詳細資訊">
+	{{~> @partial-block}}
 	<meta property="og:image" content="{{pool.img}}">
 {{/inline}}
 

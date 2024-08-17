@@ -1,3 +1,5 @@
+{{#var "title"}}{{#> title}}{{/title}}{{/var~}}
+{{#var "description"}}{{#> description}}{{/description}}{{/var~}}
 <!DOCTYPE html>
 <html{{#> html-attrs}} lang="zh-Hant" dir="ltr"{{/html-attrs}}>
 <head>
@@ -5,11 +7,20 @@
 	{{#> viewport}}
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	{{/viewport}}
-	<title>{{#> title}}貓咪大戰爭中文資訊網站{{/title}}</title>
-	{{#> description}}
-	{{/description}}
+	{{#if title}}
+	<title>{{title}}</title>
+	{{/if}}
+	{{#if description}}
+	<meta name="description" content="{{description}}">
+	{{/if}}
 	<meta property="og:site_name" content="battlecatsinfo.github.io">
 	{{#> og}}
+	{{#if title}}
+	<meta property="og:title" content="{{title}}">
+	{{/if}}
+	{{#if description}}
+	<meta property="og:description" content="{{description}}">
+	{{/if}}
 	{{/og}}
 	{{#> favicon}}
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">

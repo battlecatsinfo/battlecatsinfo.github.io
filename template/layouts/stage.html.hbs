@@ -1,18 +1,15 @@
 {{#> common.html}}
 
-{{#*inline "title"}}關卡資訊{{/inline}}
+{{#*inline "title"}}
+	{{~#> title}}關卡資訊{{/title~}}
+{{/inline}}
 
 {{#*inline "description"}}
-	{{#> description}}
-	<meta name="description" content="關卡資訊 | 貓咪大戰爭中文資訊網站">
-	{{/description}}
+	{{~#> description}}查詢關卡詳細資訊{{/description~}}
 {{/inline}}
 
 {{#*inline "og"}}
-	{{#> og-title}}
-	<meta property="og:title" content="關卡資訊">
-	{{/og-title}}
-	<meta property="og:description" content="查詢關卡詳細資訊">
+	{{~> @partial-block}}
 	<meta property="og:image" content="https://i.imgur.com/uzobngO.png">
 {{/inline}}
 
