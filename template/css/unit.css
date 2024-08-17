@@ -143,12 +143,12 @@ pre {
 .plus-btn:active {
 	background-color: #a9a9a9;
 }
-.dark .plus-btn {
+:root.dark .plus-btn {
 	background-color: #808080;
 }
-.dark .plus-btn:hover {
+:root.dark .plus-btn:hover {
 	background-color: #696969;
 }
-.dark .plus-btn:active {
+:root.dark .plus-btn:active {
 	background-color: #505050;
 }
