@@ -1,60 +1,58 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> common.html}}
 
-<head>
-	<meta charset="utf-8">
-	<title>合作一覽</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="合作一覽 | 貓咪大戰爭中文資訊網站">
-	<meta property="og:site_name" content="battlecatsinfo.github.io">
+{{#*inline "title"}}合作一覽{{/inline}}
+
+{{#*inline "og"}}
 	<meta property="og:title" content="合作一覽">
-	<meta property="og:description" content="貓咪大戰爭合作活動一覽"> {{{favicon}}}
-	<link rel="stylesheet" type="text/css" href="w3.css">
-</head>
+	<meta property="og:description" content="貓咪大戰爭合作活動一覽">
+{{/inline}}
 
-<body>
+{{#*inline "styles-inline"}}
 	<style>
-body {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	font-size: min(2vw, 18px);
-}
-h2 {
-	font-size: min(28px, 3vw);
-}
-.B {
-	text-align: center;
-	text-decoration: none;
-	display: block;
-	width: 100%;
-}
-.A {
-	display: block;
-	margin: 0 auto;
-	width: min(100%, 512px);
-	height: auto;
-}
-.E {
-	font-weight: bold;
-	font-size: larger;
-}
-tr:hover {
-	background-color: #ccc !important;
-}
-#nav a {
-	text-decoration: none;
-	display: block;
-	text-align: left;
-	padding: 0.2em 0.6em;
-	font-size: larger;
-}
-{{{nav-style}}}
+	body {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		font-size: min(2vw, 18px);
+	}
+	h2 {
+		font-size: min(28px, 3vw);
+	}
+	.B {
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		width: 100%;
+	}
+	.A {
+		display: block;
+		margin: 0 auto;
+		width: min(100%, 512px);
+		height: auto;
+	}
+	.E {
+		font-weight: bold;
+		font-size: larger;
+	}
+	tr:hover {
+		background-color: #ccc !important;
+	}
+	#nav a {
+		text-decoration: none;
+		display: block;
+		text-align: left;
+		padding: 0.2em 0.6em;
+		font-size: larger;
+	}
 	</style>
-	{{{nav-bar}}}
+{{/inline}}
+
+{{#*inline "content"}}
 	<h1 style="text-align:center;">合作一覽</h1>
 	<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59 !important;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
-		{{{nav-menu}}}
+		{{#each nav-menu as |menu|}}
+		<a href="{{menu.path}}">{{sum @index 1}}. {{menu.name}}</a>
+		{{/each}}
 	</div>
 	<div style="margin: 0 auto;text-align: center;width: 100%;padding: 2vw 2vw;font-size: min(2.5vw, 18px);">
 		<h2>合作活動史</h2>
@@ -71,7 +69,12 @@ tr:hover {
 				</tr>
 			</thead>
 			<tbody>
-				{{{taiwan-collab-history}}}
+				{{#each taiwan-collab-history as |hx|}}
+				<tr><td colspan="4" class="E">{{hx.[0]}}年</td></tr>
+				{{#each hx.[1] as |dur|}}
+				<tr><td>{{hx.[0]}}</td><td>{{dur.[0]}}</td><td>{{dur.[1]}}</td><td>{{dur.[2]}}</td></tr>
+				{{/each}}
+				{{/each}}
 			</tbody>
 		</table>
 		<h3>日版歷年合作活動史</h3>
@@ -85,10 +88,15 @@ tr:hover {
 				</tr>
 			</thead>
 			<tbody>
-				{{{japan-collab-history}}}
+				{{#each japan-collab-history as |hx|}}
+				<tr><td colspan="4" class="E">{{hx.[0]}}年</td></tr>
+				{{#each hx.[1] as |dur|}}
+				<tr><td>{{hx.[0]}}</td><td>{{dur.[0]}}</td><td>{{dur.[1]}}</td><td>{{dur.[2]}}</td></tr>
+				{{/each}}
+				{{/each}}
 			</tbody>
 		</table>
 	</div>
-</body>
+{{/inline}}
 
-</html>
+{{/common.html}}

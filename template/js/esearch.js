@@ -199,7 +199,6 @@ loadAllEnemies()
 		if (Q) {
 			name_search.value = Q;
 			name_search.oninput();
-			history.pushState({}, "", '/esearch.html');
 			return;
 		}
 

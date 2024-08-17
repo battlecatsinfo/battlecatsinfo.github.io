@@ -1,32 +1,14 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+{{#> static.html}}
 
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="UTF-8">
-	<title>加碼多多隊員一覽</title>
-	<meta name="color-scheme" content="light dark">
+{{#*inline "title"}}加碼多多隊員一覽{{/inline}}
+
+{{#*inline "styles"}}
 	<link rel="stylesheet" href="gh.css">
-</head>
+{{/inline}}
 
-<body>
+{{#*inline "nav-bar"}}{{/inline}}
 
-<script type="text/javascript">
-var _th = localStorage.getItem('theme');
-if (_th == 'dark' || ((!_th) && window.matchMedia('(prefers-color-scheme: dark)').matches))
-	document.documentElement.setAttribute("data-theme", "dark");
-function toggleTheme() {
-	const x = localStorage.getItem('theme');
-	if (x == 'dark') {
-		document.documentElement.setAttribute("data-theme", "light");
-		localStorage.setItem('theme', 'light');
-	} else {
-		document.documentElement.setAttribute("data-theme", "dark");
-		localStorage.setItem('theme', 'dark');
-	}
-}
-</script>
-
+{{#*inline "content"}}
 	<h1>加碼多多隊員一覽</h1>
 	<p>圖片來源： <a href="https://battle-cats.fandom.com/wiki/Gamatoto_Expedition">Battle Cats Wiki - Fandom</a>
 	</p>
@@ -43,58 +25,50 @@ function toggleTheme() {
 		<tbody>
 			<tr>
 				<td>伊奈利(いなり)</td>
-				<td>
-					<img src="/img/g/jinja.png">
-				</td>
+				<td><img src="/img/g/jinja.png"></td>
 				<td>特殊</td>
 				<td>來自神的使者臨時加入加碼多多探險隊的狐狸</td>
-				<td>獲得獎勵限一次數量增加※貓罐頭除外</td>
+				<td>獲得獎勵限一次數量增加<br>※貓罐頭除外</td>
 			</tr>
 			<tr>
 				<td>雪音兔(ラビット・ユキネ)</td>
-				<td>
-					<img src="/img/g/gc3.png">
-				</td>
+				<td><img src="/img/g/gc3.png"></td>
 				<td>特殊</td>
 				<td>加碼多多探險隊中臨時加入的雪未來的寵物兔子</td>
-				<td>將在合作期間中帶來更多量的獎勵。
-					<br>※貓罐頭除外 </td>
+				<td>將在合作期間中帶來更多量的獎勵。<br>※貓罐頭除外</td>
 			</tr>
 			<tr>
 				<td>剛達(ガンダー)</td>
-				<td>
-					<img src="/img/g/gc0.png">
-				</td>
+				<td><img src="/img/g/gc0.png"></td>
 				<td>特殊</td>
 				<td>來自實況野球的加碼多多探險隊臨時隊員</td>
-				<td>合作活動期間中，會讓獲得獎勵的數量增加
-					<br>※貓罐頭除外 </td>
+				<td>合作活動期間中，會讓獲得獎勵的數量增加<br>※貓罐頭除外</td>
 			</tr>
 			<tr>
 				<td>祖克柏(ギーク)</td>
-				<td>
-					<img src="/img/g/gc1.png">
-				</td>
+				<td><img src="/img/g/gc1.png"></td>
 				<td>特殊</td>
 				<td>來自消滅都市的加碼多多探險隊臨時隊員技術者</td>
-				<td>合作活動期間中，獲得獎勵數量增加
-					<br>※貓罐頭除外 </td>
+				<td>合作活動期間中，獲得獎勵數量增加<br>※貓罐頭除外</td>
 			</tr>
 			<tr>
 				<td>圖圖(トト)</td>
-				<td>
-					<img src="/img/g/gc2.png">
-				</td>
+				<td><img src="/img/g/gc2.png"></td>
 				<td>特殊</td>
 				<td>來自梅露可物語的加碼多多探險隊臨時魔寵隊員</td>
-				<td>活動期間中，獲得獎勵數量增加
-					<br>※貓罐頭除外 </td>
+				<td>活動期間中，獲得獎勵數量增加<br>※貓罐頭除外</td>
 			</tr>
-
-			{{{members}}}
-
+			{{#each members as |member|}}
+			<tr>
+				<td>{{member.name}}</td>
+				<td><img src="/img/g/g{{member.level}}.png"></td>
+				<td>{{member.position}}</td>
+				<td>{{member.description}}</td>
+				<td>{{member.efficiency}}</td>
+			</tr>
+			{{/each}}
 		</tbody>
 	</table>
-</body>
+{{/inline}}
 
-</html>
+{{/static.html}}

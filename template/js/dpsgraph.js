@@ -353,58 +353,42 @@ class FormDPS {
 				};
 		}
 
-		const talent_map = {
-			10: "攻擊力上升",
-			13: "會心一擊",
-			17: "波動",
-			31: "基本攻擊力上升",
-			50: "渾身一擊",
-			56: "烈波攻擊",
-			61: "攻擊間隔縮短",
-			62: "小波動",
-			65: "小烈波",
-		};
 		if (this.F.lvc >= 2 && this.info[10]) {
-			for (let i = 1; i < 113; i += 14) {
-				if (!this.info[10][i]) break;
-				obj = talent_map[this.info[10][i]];
-				if (obj) {
-					const div = document.createElement('p');
-					let p = document.createElement('label');
-					p.textContent = '本能 - ' + obj;
-					div.appendChild(p);
-					p = document.createElement('input');
-					p.classList.add('w3-input');
-					p.style.paddingLeft = '0';
-					p.style.paddingRight = '0';
-					p.type = 'range';
-					p.min = 0;
-					p.value = p.max = (this.info[10][i + 1] || 1).toString();
-					p.step = 1;
-					p.oninput = function() {
-						let tal_cnt = 0;
-						let sup_cnt = 0;
-						for (let j = 1;j < 113;j += 14) {
-							if (j == i) {
-								if (self.info[10][j + 13] == 1) {
-									self.s_lv[sup_cnt] = parseInt(this.value);
-								} else {
-									self.t_lv[tal_cnt] = parseInt(this.value);
-								}
-								self.render();
-								return;
+			for (let i = 1; i < 113 && this.info[10][i]; i += 14) {
+				obj = units_scheme.talents.names[this.info[10][i]];
+				if (!obj) continue;
+				const div = document.createElement('p');
+				let p = div.appendChild(document.createElement('label'));
+				p.textContent = '本能 - ' + obj;
+				p = div.appendChild(document.createElement('input'));
+				p.classList.add('w3-input');
+				p.style.paddingLeft = '0';
+				p.style.paddingRight = '0';
+				p.type = 'range';
+				p.min = 0;
+				p.value = p.max = (this.info[10][i + 1] || 1).toString();
+				p.step = 1;
+				p.oninput = function() {
+					let tal_cnt = 0;
+					let sup_cnt = 0;
+					for (let j = 1;j < 113;j += 14) {
+						if (j == i) {
+							if (self.info[10][j + 13] == 1) {
+								self.s_lv[sup_cnt] = parseInt(this.value);
+							} else {
+								self.t_lv[tal_cnt] = parseInt(this.value);
 							}
-							if (self.info[10][j + 13] == 1)
-								++sup_cnt;
-							else
-
-							++tal_cnt;
+							self.render();
+							return;
 						}
-					}
-					div.appendChild(p);
-					this.B.dom.appendChild(div);
-				}
+						if (self.info[10][j + 13] == 1)
+							++sup_cnt;
+						else
 
+						++tal_cnt;
+					}
+				}
+				this.B.dom.appendChild(div);
 			}
 		}
 

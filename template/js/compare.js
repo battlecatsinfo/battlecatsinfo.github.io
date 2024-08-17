@@ -7,175 +7,7 @@ const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_W
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const cat_name = document.getElementById('cat-name');
 const CF = document.getElementById('CF');
-const TH = document.documentElement.getAttribute('data-theme');
-const PU = [
-	'',
-	"yRkhAHL",
-	"i1pP3Mi",
-	"MyoCUMu",
-	"fe5k3Hw",
-	"dlZ8xNU",
-	"4em8Hzg",
-	"RbqsryO",
-	"cLZsanQ",
-	"KkYm2Og",
-	"IE6ihRp",
-	"WcMDxXS",
-	"xIcbDzl",
-	"FV6We1L",
-	"ssOFAtR",
-	"LfRDAkg",
-	"aeG7OM3",
-	"ZbPqGoj",
-	"BGbyVaK",
-	"Sd55VTg",
-	"1PHovzw",
-	"kwmOdX3",
-	"WTIjQQE",
-	"BH3LOrK",
-	"1TkV1IQ",
-	"VQlnE7x",
-	"twyuCGc",
-	"ZHZOZfC",
-	"WmiHggq",
-	"27mAxhl",
-	"1s7WKyX",
-	"AJv8nmM",
-	"YTT0KQU",
-	"BUxdmA6",
-	"GlcKsa6",
-	"XbBWQIp",
-	"fVfHaCQ",
-	"kxvTRTQ",
-	"PPpWAPy",
-	"oqVjofz",
-	"caSziI9",
-	"qOEibJt",
-	"xiMxJwC",
-	"J4DgvdU",
-	"aN6I67V",
-	"OSjMN62",
-	"rPx4aA2",
-	"5CYatS4",
-	"MacWKW6",
-	"T7BXYAw",
-	"KDpH72p",
-	"8Eq6vPV",
-	"sROk995",
-	"5zleNqO",
-	"kLJHD5E",
-	"Uadt9Fa",
-	"at4bW0n",
-	"hp6EvG6",
-	"6wjIaUE",
-	"z3SPEqA",
-	"0Rraywl",
-	"27QF5v4",
-	"W18c1hw",
-	"nGZanly",
-	"yCMsSbc",
-	"AEITK8t",
-	"Qq8vQTs"
-];
-const UD = [
-	'',
-	"攻擊力下降",
-	"使動作停止",
-	"使動作變慢",
-	"只能攻擊",
-	"善於攻擊",
-	"很耐打",
-	"超大傷害",
-	"打飛敵人",
-	"傳送",
-	"攻擊力上升",
-	"死前存活",
-	"善於攻城",
-	"會心一擊",
-	"終結不死",
-	"破壞護盾",
-	"得到很多金錢",
-	"波動",
-	"抗擊耐性",
-	"動止耐性",
-	"動慢耐性",
-	"抗飛耐性",
-	"抗波耐性",
-	"波動滅止",
-	"抗傳耐性",
-	"成本減少",
-	"生產加快",
-	"移動加快",
-	"增加擊退",
-	"古代詛咒無效",
-	"抗古代詛咒耐性",
-	"基本攻擊力上升",
-	"基本體力上升",
-	"屬性 紅色敵人",
-	"屬性 飄浮敵人",
-	"屬性 黑色敵人",
-	"屬性 鋼鐵敵人",
-	"屬性 天使敵人",
-	"屬性 異星戰士",
-	"屬性 不死生物",
-	"屬性 古代種",
-	"無屬性敵人",
-	"魔女",
-	"使徒",
-	"攻擊力下降無效",
-	"使動作停止無效",
-	"使動作變慢無效",
-	"打飛敵人無效",
-	"波動傷害無效",
-	"傳送無效",
-	"渾身一擊",
-	"攻擊無效",
-	"抗毒擊耐性",
-	"毒擊傷害無效",
-	"抗烈波耐性",
-	"烈波傷害無效",
-	"烈波攻擊",
-	"屬性 惡魔",
-	"破壞惡魔盾",
-	"靈魂攻擊",
-	"詛咒",
-	"攻擊間隔縮短",
-	"小波動",
-	"超生命體特效",
-	"超獸特效",
-	"小烈波",
-	"超賢者特効"
-];
-
-function createTraitIcons(trait, parent) {
-	if (trait) {
-		var e, E = document.createElement('div'),
-			names = [
-				"BUxdmA6", // red
-				"GlcKsa6", // float
-				"XbBWQIp", //black
-				"fVfHaCQ", // metal
-				"kxvTRTQ", // angel
-				"PPpWAPy", // alien
-				"oqVjofz", // zombie
-				"caSziI9", // relic
-				"qOEibJt", // white
-				"", // eva
-				"", // witch
-				"hp6EvG6" // demon
-			];
-		let i = 0;
-		for (let x = 1; x <= TB_DEMON; x <<= 1) {
-			if (trait & x) {
-				e = new Image(40, 40);
-				e.src = 'https://i.imgur.com/' + names[i] + '.png';
-				E.appendChild(e);
-			}
-			++i;
-		}
-		parent.appendChild(E);
-	}
-}
+const TH = utils.getTheme();
 
 function getCombinations(arr) {
 	if (!arr.length) return [];
@@ -442,30 +274,6 @@ function getHpString(form, Cs, level, parent) {
 		getHp(form.lvc, line, hp, parent, true, form.trait) && getHp(form.lvc, line, hp, parent, false, form.trait);
 }
 
-function createResIcons(res, p) {
-	var e, c;
-	var res_icon_names = ["BGbyVaK", "Sd55VTg", "1PHovzw", "kwmOdX3", "WTIjQQE", "kLJHD5E", "1s7WKyX", "sROk995", "1TkV1IQ"];
-	var res_descs = [
-		"抗擊耐性（時間減少 $ %）",
-		"動止耐性（時間減少 $ %）",
-		"動慢耐性（時間減少 $ %）",
-		"抗飛耐性（距離減少 $ %）",
-		"抗波耐性（傷害減少 $ %）",
-		"抗烈波耐性（傷害減少 $ %）",
-		"抗古代詛咒耐性（時間減少 $ %）",
-		"抗毒耐性（傷害減少 $ %）",
-		"抗傳耐性"
-	];
-	for (let [k, v] of Object.entries(res)) {
-		k = parseInt(k, 10);
-		c = document.createElement('div');
-		e = new Image(40, 40);
-		e.src = 'https://i.imgur.com/' + res_icon_names[k] + '.png';
-		c.appendChild(e);
-		c.append(res_descs[k].replace('$', v));
-		p.appendChild(c);
-	}
-}
 loadAllCats().then(s => {
 	let o, f;
 	cats = s;
@@ -500,11 +308,10 @@ loadAllCats().then(s => {
 });
 
 function newTab() {
-	let t;
-	let i = 0;
-	for (const tr of tby) {
-		t = document.createElement('td');
-		if (++i > 2)
+	for (let i = 0, I = tby.length; i < I; i++) {
+		const tr = tby[i];
+		const t = document.createElement('td');
+		if (1 < i && i < I - 1)
 			t.contentEditable = true;
 		tr.appendChild(t);
 	}
@@ -736,13 +543,12 @@ function addCat(id, I, FC = 0) {
 		for (let i = 1; i < 113 && G[i]; i += 14) {
 			const D = document.createElement('div');
 			if (G[i + 13] == 1) {
-				D.style.setProperty('color', TH == 'dark' ? '#ff6363' : '#c10002', 'important');
+				D.style.setProperty('color', TH === 'dark' ? '#ff6363' : '#c10002', 'important');
 				FL = 2;
 			}
-			const I = new Image(40, 40);
-			I.src = 'https://i.imgur.com/' + PU[G[i]] + '.png';
-			D.appendChild(I);
-			D.append(UD[G[i]]);
+			const I = D.appendChild(new Image(40, 40));
+			I.src = 'https://i.imgur.com/' + units_scheme.talents.icons[G[i]] + '.png';
+			D.append(units_scheme.talents.names[G[i]]);
 			M.appendChild(D);
 		}
 	}

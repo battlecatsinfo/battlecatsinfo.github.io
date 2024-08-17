@@ -2,7 +2,6 @@ const fs = require('node:fs');
 const resolve = require('node:path').resolve;
 
 const sources = [
-	'unit.css',
 	'w3.css',
 	'dracula.css',
 	'dracula2.css',
@@ -12,7 +11,6 @@ const sources = [
 	'stage.html',
 	'stage2.html',
 	'stage3.html',
-	'unit.html',
 	'enemy.html',
 	'treasure_list.html',
 	'help.html',
@@ -46,8 +44,9 @@ const sources = [
 	'fav.png',
 
 	'html2canvas.min.js',
-	'dracula.js',
-	'dracula2.js',
+	'utils.js',
+	'navbar-search.js',
+	'gacha.js',
 	"enemy.js",
 	"constants.js",
 	"parser.js",
@@ -62,8 +61,6 @@ const sources = [
 	'svg.js',
 	'dpsgraph.js',
 	'ototo.js',
-	'cat.js',
-	'unit.js',
 	'gif.js',
 	'imgcut.js',
 	'anim.min.js',
@@ -136,7 +133,7 @@ module.exports = class extends require('./base.js') {
 					}
 				} else if (file.endsWith('.html')) {
 					last_mods[file] = last;
-					contents = this.template(contents, {}, active_map[file]);
+					contents = this.template(contents, {'nav-bar-active': active_map[file]});
 					if (htmlmin) {
 						contents = htmlmin.minify(contents, {
 							collapseBooleanAttributes: true,

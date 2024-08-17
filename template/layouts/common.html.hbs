@@ -1,0 +1,16 @@
+{{#> base.html}}
+
+{{#*inline "description"}}
+	{{#> description}}
+	<meta name="description" content="{{#> title}}{{/title}} | 貓咪大戰爭中文資訊網站">
+	{{/description}}
+{{/inline}}
+
+{{#*inline "og"}}
+	{{#> og}}
+	<meta property="og:title" content="{{#> title}}{{/title}}">
+	<meta property="og:description" content="{{#> title}}{{/title}} | 貓咪大戰爭中文資訊網站">
+	{{/og}}
+{{/inline}}
+
+{{/base.html}}

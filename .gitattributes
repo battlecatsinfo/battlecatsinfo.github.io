@@ -11,6 +11,7 @@
 *.css text eol=lf
 *.yml text eol=lf
 *.md text eol=lf
+*.hbs text eol=lf
 
 *.png binary
 *.jpg binary
