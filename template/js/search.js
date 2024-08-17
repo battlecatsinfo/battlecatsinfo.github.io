@@ -297,7 +297,6 @@ loadAllCats().then(_cats => {
 		def_lv = 50;
 		name_search.value = Q;
 		name_search.oninput();
-		history.pushState({}, "", '/search.html');
 		return;
 	}
 	const filter = params.get('filter');
