@@ -50,7 +50,7 @@
 	--color-done-fg: #8250df;
 	--color-done-emphasis: #8250df;
 }
-[data-theme="dark"] {
+:root.dark {
 	color-scheme: dark;
 	--color-prettylights-syntax-comment: #8b949e;
 	--color-prettylights-syntax-constant: #79c0ff;

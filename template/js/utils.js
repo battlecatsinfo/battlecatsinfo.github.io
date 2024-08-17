@@ -16,7 +16,7 @@
 		if (!newValue) {
 			newValue = (getTheme() === 'dark') ? 'light' : 'dark';
 		}
-		document.documentElement.dataset.theme = newValue;
+		document.documentElement.classList[newValue === 'dark' ? 'add' : 'remove']('dark');
 		localStorage.setItem('theme', newValue);
 	}
 

@@ -13,7 +13,7 @@
 	--spans: #7fdbff;
 	--liselect: #7fdbff;
 }
-[data-theme="dark"] {
+:root.dark {
 	--vbg: #282a36;
 	--bg: #282a36;
 	--color: #f8f8f2;
@@ -46,6 +46,6 @@ a:visited {
 a:hover {
 	color: var(--ahover);
 }
-[data-theme="dark"] td {
+:root.dark td {
 	background-color: var(--bg) !important;
 }

@@ -19,7 +19,7 @@ a,
 textarea {
 	appearance: none;
 }
-[data-theme="dark"] {
+:root.dark {
 	color-scheme: dark;
 	--vbg: #282a36;
 	--bg: #282a36;
