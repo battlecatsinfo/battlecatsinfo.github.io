@@ -148,6 +148,30 @@ Handlebars.registerHelper('var', function (name, ...args) {
 	}
 });
 
+/**
+ * A ranged integer generator that works like `range()` in Python.
+ *
+ * @example
+ * {{range 5}} => 0 1 2 3 4
+ * {{range 0 10 2}} => 0 2 4 6 8
+ * {{range 0 -5 -1}} => 0 -1 -2 -3 -4
+ */
+Handlebars.registerHelper('range', function* (...args) {
+	const options = args.pop();
+	const [start, stop, step = 1] = (args.length === 1) ? [0, args[0]] : args;
+	for (const v of [start, stop, step]) {
+		if (!Number.isInteger(v)) {
+			throw new Error(`range() arg ${JSON.stringify(v)} is not an integer`);
+		}
+	}
+	if (step === 0) {
+		throw new Error(`range() arg 3 must not be zero`);
+	}
+	for (let i = start; step > 0 ? i < stop : i > stop; i += step) {
+		yield i;
+	}
+});
+
 Handlebars.registerHelper('toJSON', function (obj, space) {
 	return JSON.stringify(obj, null, space);
 });

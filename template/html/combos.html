@@ -83,8 +83,12 @@
 				<p style="font-size:smaller;">{{combo.requirement}}</p>
 				{{/if}}
 			</td>
-			{{#each combo.units as |unit|}}
-			<td><a{{#if unit}} href="/unit.html?id={{unit.[0]}}"{{/if}}><img class="icon" width="104" height="79" loading="lazy" src="{{#if unit}}/img/u/{{unit.[0]}}/{{unit.[1]}}.png{{else}}uni.png{{/if}}"></a></td>
+			{{#each (range 5) as |idx|}}
+				{{#with (lookup combo.units idx) as |unit|}}
+			<td><a href="/unit.html?id={{unit.[0]}}"><img class="icon" width="104" height="79" loading="lazy" src="/img/u/{{unit.[0]}}/{{unit.[1]}}.png"></a></td>
+				{{else}}
+			<td><a><img class="icon" width="104" height="79" loading="lazy" src="uni.png"></a></td>
+				{{/with}}
 			{{/each}}
 		</tr>
 		{{/each}}

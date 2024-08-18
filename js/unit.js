@@ -24,13 +24,8 @@ module.exports = class extends require('./base.js') {
 			const desc = `${combos_scheme.descriptions[type].replace('#', combos_scheme.values[type][level])} 【${combos_scheme.levels[level]}】`;
 			const requirement = req > 1 ? combos_scheme.requirements[req] : null;
 
-			// fill dummy units until 5
 			const units = [];
-			for (let i = 0, I = 5 * 2; i < I; i += 2) {
-				if (typeof _units[i] === 'undefined') {
-					units.push(null);
-					continue;
-				}
+			for (let i = 0, I = _units.length; i < I; i += 2) {
 				units.push([_units[i], _units[i + 1]]);
 			}
 
@@ -43,7 +38,7 @@ module.exports = class extends require('./base.js') {
 		}
 
 		for (const type in combosFormatted)
-			combosFormatted[type].sort((a, b) => (a.units.filter(x => x).length - b.units.filter(x => x).length));
+			combosFormatted[type].sort((a, b) => (a.units.length - b.units.length));
 
 		this.write_template('html/combos.html', 'combos.html', {combos: combosFormatted});
 	}
