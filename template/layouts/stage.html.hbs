@@ -170,16 +170,21 @@
 {{#*inline "content"}}
 	<div>
 		<div style="display:flex;width:100%;">
-			{{#> content-selector}}
-			<select id="M1"></select>
-			{{/content-selector}}
+			<select id="M1">{{#if optionsM1}}
+				{{#each optionsM1 as |option|}}
+				<option>{{option}}</option>
+				{{/each}}
+			{{/if}}</select>
 			<select id="M2"></select>
 			<select id="M3"></select>
 		</div>
 		<form id="form" role="search" style="width: 100%;position: relative;" action>
 			<input type="search" autocomplete="off" name="q" placeholder="搜尋關卡名稱" aria-label="搜尋關卡名稱" class="w3-input" style="margin-left: 1em;margin-top: .1em;padding: 0.4em 1em;width: 92%;border-radius: 4px;font-size: 1.2em;">
-			{{#> content-filter}}
-			{{/content-filter}}
+			{{#if show-filter}}
+			<svg title="篩選" id="fs" style="position: absolute;top: 0.5em;right: 2vw;height: 1.5em;width: 1.5em;fill: var(--color);cursor: pointer;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+				<path d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z" />
+			</svg>
+			{{/if}}
 		</form>
 		<div style="position: absolute;left: calc(50% - 60px);top: 60%;z-index: 2;text-align: center;width: 120px;height: 120px;">載入中...</div>
 		<div id="loader" style="position: absolute;left: 50%;top: 50%;z-index: 1;width: 120px;height: 120px;margin: -76px 0 0 -76px;border: 16px solid #f3f3f3;border-radius: 50%;border-top: 16px solid #3498db;animation: spin 2s linear infinite;"></div>
@@ -192,8 +197,12 @@
 				<path d="M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416V96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4L224 214.3V256v41.7L52.5 440.6zM256 352V256 128 96c0-12.4 7.2-23.7 18.4-29s24.5-3.6 34.1 4.4l192 160c7.3 6.1 11.5 15.1 11.5 24.6s-4.2 18.5-11.5 24.6l-192 160c-9.5 7.9-22.8 9.7-34.1 4.4s-18.4-16.6-18.4-29V352z" />
 			</svg>
 
-			{{#> content-filter-modal}}
-			{{/content-filter-modal}}
+			{{#if show-filter}}
+			<div class="modal" id="filter">
+				<div class="M"></div>
+			</div>
+
+			{{/if}}
 			<table class="w3-table w3-centered Co">
 				<tbody>
 					<tr>
