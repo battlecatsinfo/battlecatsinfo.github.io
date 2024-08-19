@@ -182,10 +182,22 @@ for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])
 	gEnv[key] = JSON.stringify(gEnv[key]);
 
 module.exports = class {
-	template(s, env) {
-		Object.assign(env, gEnv);
-		return Handlebars.compile(s)(env);
+	/**
+	 * A compiled template function generated with Handlebars.compile().
+	 * @typedef {Function} Template
+	 */
+
+	/**
+	 * @param {string|Template} tpl
+	 * @param {Object} env
+	 */
+	template(tpl, env) {
+		if (typeof tpl === 'string') {
+			tpl = Handlebars.compile(tpl);
+		}
+		return tpl(Object.assign(env, gEnv));
 	}
+
 	write_template(in_f, out_f, env) {
 		fs.writeFileSync(
 			resolve(__dirname, '../_out/', out_f),
@@ -220,10 +232,11 @@ module.exports = class {
 		);
 	}
 	load_template(in_f) {
-		return fs.readFileSync(
+		const src = fs.readFileSync(
 			resolve(__dirname, '../template/', in_f),
 			'utf8'
 		);
+		return Handlebars.compile(src);
 	}
 	open(in_f) {
 		return fs.createReadStream(
