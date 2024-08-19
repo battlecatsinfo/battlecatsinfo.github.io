@@ -219,7 +219,7 @@ module.exports = class {
 			'utf8'
 		);
 	}
-	load_a(in_f) {
+	load_template(in_f) {
 		return fs.readFileSync(
 			resolve(__dirname, '../template/', in_f),
 			'utf8'

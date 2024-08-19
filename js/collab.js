@@ -30,7 +30,7 @@ module.exports = class extends require('./base.js') {
 		});
 	}
 	write_collabs() {
-		const collab_template = this.load_a('html/collab.html');
+		const collab_template = this.load_template('html/collab.html');
 		const data = JSON.parse(this.load('collab.json'));
 		const collabs = data['collabs'];
 		const nav_menu = [];

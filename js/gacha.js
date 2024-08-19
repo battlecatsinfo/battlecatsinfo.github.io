@@ -134,7 +134,7 @@ module.exports = class extends require('./base.js') {
 				throw e;
 		}
 
-		const gacha_template = this.load_a('html/gacha.html');
+		const gacha_template = this.load_template('html/gacha.html');
 		const gachas = [];
 
 		this.fmt = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 5 });
