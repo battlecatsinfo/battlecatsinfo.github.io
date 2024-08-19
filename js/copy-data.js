@@ -1,5 +1,5 @@
 const fs = require('node:fs');
-const resolve = require('node:path').resolve;
+const {resolve} = require('node:path');
 
 const sources = [
 	'cat.tsv',

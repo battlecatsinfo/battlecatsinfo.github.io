@@ -1,6 +1,6 @@
 const readline = require('node:readline');
 const fs = require('node:fs');
-const resolve = require('node:path').resolve;
+const {resolve} = require('node:path');
 
 function to_path(s) {
 	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');

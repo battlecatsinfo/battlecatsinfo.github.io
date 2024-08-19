@@ -1,6 +1,6 @@
 const Fraction = require('fraction.js');
 const fs = require('node:fs');
-const resolve = require('node:path').resolve;
+const {resolve} = require('node:path');
 
 const category_set = {
 	'常駐稀有貓': new Set([37, 38, 41, 46, 47, 48, 49, 50, 51, 52, 55, 56, 58, 145, 146, 147, 148, 149, 197, 198, 308, 325, 376, 495, 523]),
