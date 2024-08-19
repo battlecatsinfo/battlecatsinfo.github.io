@@ -1,1 +1,1 @@
-const combos={{{toJSON combos}}};
+const combos={{{toJSON (loadJSON "combos.json")}}};

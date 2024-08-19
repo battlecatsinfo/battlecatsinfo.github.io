@@ -1,4 +1,4 @@
-const combos_scheme = {{{toJSON combos_scheme}}};
+const combos_scheme = {{{toJSON (loadJSON "combos_scheme.json")}}};
 
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));

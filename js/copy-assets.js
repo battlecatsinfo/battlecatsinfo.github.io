@@ -3,6 +3,7 @@ const {resolve} = require('node:path');
 const {TEMPLATE_DIR, OUTPUT_DIR, SiteGenerator} = require('./base.js');
 
 const sources = [
+	'unit.css',
 	'w3.css',
 	'dracula.css',
 	'gh.css',
@@ -11,6 +12,7 @@ const sources = [
 	'stage.html',
 	'stage2.html',
 	'stage3.html',
+	'unit.html',
 	'enemy.html',
 	'treasure_list.html',
 	'help.html',
@@ -63,6 +65,12 @@ const sources = [
 	'dpsgraph.js',
 	'materials.js',
 	'ototo.js',
+	'cat.js',
+	'unit.js',
+
+	// @TODO: Remove this data-only file. Maybe fetch into indexedDB?
+	'combo.js',
+
 	'crown.js',
 	'gif.js',
 	'imgcut.js',

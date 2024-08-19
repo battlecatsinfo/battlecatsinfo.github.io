@@ -1,4 +1,4 @@
-const units_scheme = {{{toJSON units_scheme}}};
+const units_scheme = {{{toJSON (loadJSON "units_scheme.json")}}};
 
 var def_lv, plus_lv, my_curve, _info, unit_orbs;
 var orb_massive = 0;
