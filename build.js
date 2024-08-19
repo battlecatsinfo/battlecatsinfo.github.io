@@ -69,6 +69,11 @@ const parts = ((_parts) => {
 })(args.positionals);
 
 (async () => {
+	if (args.values.force) {
+		console.log(`Force deleting ${OUTPUT_DIR}...`);
+		fs.rmSync(OUTPUT_DIR, {force: true, recursive: true});
+	}
+
 	try {
 		fs.mkdirSync(OUTPUT_DIR);
 	} catch (e) {
@@ -80,7 +85,6 @@ const parts = ((_parts) => {
 		console.log(`Running ${part}.js`);
 		const mod = require(resolve(SCRIPTS_DIR, `${part}.js`));
 		await (new mod).run({
-			force: args.values.force,
 			minify: args.values.minify,
 		});
 	}
