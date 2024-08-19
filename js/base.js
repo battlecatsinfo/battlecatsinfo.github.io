@@ -194,9 +194,9 @@ class SiteGenerator {
 
 	/**
 	 * @param {string|Template} tpl
-	 * @param {Object} env
+	 * @param {Object} [env]
 	 */
-	template(tpl, env) {
+	template(tpl, env = {}) {
 		if (typeof tpl === 'string') {
 			tpl = Handlebars.compile(tpl);
 		}
