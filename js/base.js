@@ -183,9 +183,6 @@ Handlebars.registerHelper('toJSON', function (obj, space) {
 
 const gEnv = JSON.parse(fs.readFileSync(resolve(DATA_DIR, 'config.json'), 'utf-8'));
 
-for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])
-	gEnv[key] = JSON.stringify(gEnv[key]);
-
 class SiteGenerator {
 	/**
 	 * A compiled template function generated with Handlebars.compile().
