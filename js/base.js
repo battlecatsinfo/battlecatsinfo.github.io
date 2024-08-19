@@ -2,8 +2,13 @@ const Handlebars = require('handlebars');
 const fs = require('node:fs');
 const {resolve, extname} = require('node:path');
 
+const SCRIPTS_DIR = __dirname;
+const DATA_DIR = resolve(__dirname, '..', 'data');
+const TEMPLATE_DIR = resolve(__dirname, '..', 'template');
+const OUTPUT_DIR = resolve(__dirname, '..', '_out');
+
 // register partials for template/layouts/*.hbs
-const layoutDir = resolve(__dirname, '../template/layouts');
+const layoutDir = resolve(TEMPLATE_DIR, 'layouts');
 for (const file of fs.readdirSync(layoutDir)) {
 	const ext = extname(file);
 	if (ext.toLowerCase() !== '.hbs') {
@@ -176,7 +181,7 @@ Handlebars.registerHelper('toJSON', function (obj, space) {
 	return JSON.stringify(obj, null, space);
 });
 
-const gEnv = JSON.parse(fs.readFileSync(resolve(__dirname, '../data/config.json'), 'utf-8'));
+const gEnv = JSON.parse(fs.readFileSync(resolve(DATA_DIR, 'config.json'), 'utf-8'));
 
 for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])
 	gEnv[key] = JSON.stringify(gEnv[key]);
@@ -200,47 +205,47 @@ class SiteGenerator {
 
 	write_template(in_f, out_f, env) {
 		fs.writeFileSync(
-			resolve(__dirname, '../_out/', out_f),
+			resolve(OUTPUT_DIR, out_f),
 			this.template(this.load_template(in_f), env),
 			'utf8'
 		);
 	}
 	write_json(out_f, obj) {
 		fs.writeFileSync(
-			resolve(__dirname, '../_out/', out_f),
+			resolve(OUTPUT_DIR, out_f),
 			JSON.stringify(obj),
 			'utf8'
 		)
 	}
 	write_string(out_f, s) {
 		return fs.writeFileSync(
-			resolve(__dirname, '../_out/', out_f),
+			resolve(OUTPUT_DIR, out_f),
 			s,
 			'utf8'
 		);
 	}
 	write_raw(out_f, s) {
 		return fs.writeFileSync(
-			resolve(__dirname, '../_out/', out_f),
+			resolve(OUTPUT_DIR, out_f),
 			s
 		);
 	}
 	load(in_f) {
 		return fs.readFileSync(
-			resolve(__dirname, '../data/', in_f),
+			resolve(DATA_DIR, in_f),
 			'utf8'
 		);
 	}
 	load_template(in_f) {
 		const src = fs.readFileSync(
-			resolve(__dirname, '../template/', in_f),
+			resolve(TEMPLATE_DIR, in_f),
 			'utf8'
 		);
 		return Handlebars.compile(src);
 	}
 	open(in_f) {
 		return fs.createReadStream(
-			resolve(__dirname, '../data/', in_f)
+			resolve(DATA_DIR, in_f)
 		);
 	}
 	parse_tsv(s, has_header = true) {
@@ -259,5 +264,9 @@ class SiteGenerator {
 }
 
 module.exports = {
+	SCRIPTS_DIR,
+	DATA_DIR,
+	TEMPLATE_DIR,
+	OUTPUT_DIR,
 	SiteGenerator,
 };

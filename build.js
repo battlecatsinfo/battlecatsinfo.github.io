@@ -1,6 +1,7 @@
 const {parseArgs} = require('node:util');
 const fs = require('node:fs');
-const resolve = require('node:path').resolve;
+const {resolve} = require('node:path');
+const {SCRIPTS_DIR, OUTPUT_DIR} = require('./js/base.js');
 
 const modules = new Set([
 	'unit',
@@ -69,7 +70,7 @@ const parts = ((_parts) => {
 
 (async () => {
 	try {
-		fs.mkdirSync(resolve(__dirname, '_out'));
+		fs.mkdirSync(OUTPUT_DIR);
 	} catch (e) {
 		if (e.code !== 'EEXIST') 
 			throw e;
@@ -77,7 +78,7 @@ const parts = ((_parts) => {
 
 	for (const part of parts) {
 		console.log(`Running ${part}.js`);
-		const mod = require(`./js/${part}.js`);
+		const mod = require(resolve(SCRIPTS_DIR, `${part}.js`));
 		await (new mod).run({
 			force: args.values.force,
 			minify: args.values.minify,

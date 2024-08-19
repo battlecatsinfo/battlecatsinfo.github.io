@@ -1,7 +1,7 @@
 const Fraction = require('fraction.js');
 const fs = require('node:fs');
 const {resolve} = require('node:path');
-const {SiteGenerator} = require('./base.js');
+const {OUTPUT_DIR, SiteGenerator} = require('./base.js');
 
 const category_set = {
 	'常駐稀有貓': new Set([37, 38, 41, 46, 47, 48, 49, 50, 51, 52, 55, 56, 58, 145, 146, 147, 148, 149, 197, 198, 308, 325, 376, 495, 523]),
@@ -129,7 +129,7 @@ function to_path(s) {
 module.exports = class extends SiteGenerator {
 	run() {
 		try {
-			fs.mkdirSync(resolve(__dirname, '../_out/gacha'));
+			fs.mkdirSync(resolve(OUTPUT_DIR, 'gacha'));
 		} catch (e) {
 			if (e.errno != -4075) 
 				throw e;

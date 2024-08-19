@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const {resolve} = require('node:path');
-const {SiteGenerator} = require('./base.js');
+const {TEMPLATE_DIR, SiteGenerator} = require('./base.js');
 
 const sources = [
 	'w3.css',
@@ -106,7 +106,7 @@ module.exports = class extends SiteGenerator {
 			else if (file.endsWith('.js'))
 				base = 'js';
 
-			const path = resolve(__dirname, `../template/${base}/${file}`);
+			const path = resolve(TEMPLATE_DIR, base, file);
 			const last = fs.statSync(path).mtime.getTime();
 
 			if (last_mods[file] != last) {

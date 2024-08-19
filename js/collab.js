@@ -1,7 +1,7 @@
 const readline = require('node:readline');
 const fs = require('node:fs');
 const {resolve} = require('node:path');
-const {SiteGenerator} = require('./base.js');
+const {OUTPUT_DIR, SiteGenerator} = require('./base.js');
 
 function to_path(s) {
 	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');
@@ -10,7 +10,7 @@ function to_path(s) {
 module.exports = class extends SiteGenerator {
 	run() {
 		try {
-			fs.mkdirSync(resolve(__dirname, '../_out/collab'));
+			fs.mkdirSync(resolve(OUTPUT_DIR, 'collab'));
 		} catch (e) {
 			if (e.errno != -4075) 
 				throw e;

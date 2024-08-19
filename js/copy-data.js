@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const {resolve} = require('node:path');
-const {SiteGenerator} = require('./base.js');
+const {DATA_DIR, OUTPUT_DIR, SiteGenerator} = require('./base.js');
 
 const sources = [
 	'cat.tsv',
@@ -28,12 +28,12 @@ module.exports = class extends SiteGenerator {
 		}
 
 		for (const file of sources) {
-			const src = resolve(__dirname, '../data/', file);
+			const src = resolve(DATA_DIR, file);
 			const last = fs.statSync(src).mtime.getTime();
 			if (last_mods[file] != last || force) {
 				console.log(`updating ${file}...`);
 				last_mods[file] = last;
-				fs.copyFileSync(src, resolve(__dirname, '../_out/', file));
+				fs.copyFileSync(src, resolve(OUTPUT_DIR, file));
 			}
 		}
 	
