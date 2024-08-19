@@ -193,59 +193,83 @@ class SiteGenerator {
 	 * @param {string|Template} tpl
 	 * @param {Object} [env]
 	 */
-	template(tpl, env = {}) {
+	static template(tpl, env = {}) {
 		if (typeof tpl === 'string') {
 			tpl = Handlebars.compile(tpl);
 		}
 		return tpl(Object.assign({}, env, gEnv));
 	}
+	template(...args) {
+		return this.constructor.template.apply(this, args);
+	}
 
-	write_template(in_f, out_f, env) {
+	static write_template(in_f, out_f, env) {
 		fs.writeFileSync(
 			resolve(OUTPUT_DIR, out_f),
 			this.template(this.load_template(in_f), env),
 			'utf8'
 		);
 	}
-	write_json(out_f, obj) {
+	write_template(...args) {
+		return this.constructor.write_template.apply(this, args);
+	}
+	static write_json(out_f, obj) {
 		fs.writeFileSync(
 			resolve(OUTPUT_DIR, out_f),
 			JSON.stringify(obj),
 			'utf8'
 		)
 	}
-	write_string(out_f, s) {
+	write_json(...args) {
+		return this.constructor.write_json.apply(this, args);
+	}
+	static write_string(out_f, s) {
 		return fs.writeFileSync(
 			resolve(OUTPUT_DIR, out_f),
 			s,
 			'utf8'
 		);
 	}
-	write_raw(out_f, s) {
+	write_string(...args) {
+		return this.constructor.write_string.apply(this, args);
+	}
+	static write_raw(out_f, s) {
 		return fs.writeFileSync(
 			resolve(OUTPUT_DIR, out_f),
 			s
 		);
 	}
-	load(in_f) {
+	write_raw(...args) {
+		return this.constructor.write_raw.apply(this, args);
+	}
+	static load(in_f) {
 		return fs.readFileSync(
 			resolve(DATA_DIR, in_f),
 			'utf8'
 		);
 	}
-	load_template(in_f) {
+	load(...args) {
+		return this.constructor.load.apply(this, args);
+	}
+	static load_template(in_f) {
 		const src = fs.readFileSync(
 			resolve(TEMPLATE_DIR, in_f),
 			'utf8'
 		);
 		return Handlebars.compile(src);
 	}
-	open(in_f) {
+	load_template(...args) {
+		return this.constructor.load_template.apply(this, args);
+	}
+	static open(in_f) {
 		return fs.createReadStream(
 			resolve(DATA_DIR, in_f)
 		);
 	}
-	parse_tsv(s, has_header = true) {
+	open(...args) {
+		return this.constructor.open.apply(this, args);
+	}
+	static parse_tsv(s, has_header = true) {
 		const rows = s.split('\n').filter(x => x).map(row => row.split('\t'));
 		if (has_header) {
 			const fields = rows.shift();
@@ -257,6 +281,9 @@ class SiteGenerator {
 			}
 		}
 		return rows;
+	}
+	parse_tsv(...args) {
+		return this.constructor.parse_tsv.apply(this, args);
 	}
 }
 
