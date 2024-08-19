@@ -201,7 +201,7 @@ module.exports = class {
 	write_template(in_f, out_f, env) {
 		fs.writeFileSync(
 			resolve(__dirname, '../_out/', out_f),
-			this.template(fs.readFileSync(resolve(__dirname, '../template/', in_f), 'utf8'), env),
+			this.template(this.load_template(in_f), env),
 			'utf8'
 		);
 	}
