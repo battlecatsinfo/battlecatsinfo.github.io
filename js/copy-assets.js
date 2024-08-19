@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const {resolve} = require('node:path');
+const {SiteGenerator} = require('./base.js');
 
 const sources = [
 	'w3.css',
@@ -75,7 +76,7 @@ const active_map = {
 	'stage3.html': 'stage',
 };
 
-module.exports = class extends require('./base.js') {
+module.exports = class extends SiteGenerator {
 	run({force = false, minify = false}) {		
 		let UglifyJS, CleanCSS, htmlmin, last_mods = {};
 

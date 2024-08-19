@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const {resolve} = require('node:path');
+const {SiteGenerator} = require('./base.js');
 
 const sources = [
 	'cat.tsv',
@@ -14,7 +15,7 @@ const sources = [
 ];
 
 
-module.exports = class extends require('./base.js') {
+module.exports = class extends SiteGenerator {
 	run({force = false}) {
 		const last_mods_path = resolve(__dirname, '../last_mods_data.json');
 		let last_mods;

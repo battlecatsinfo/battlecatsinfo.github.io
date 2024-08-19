@@ -1,4 +1,6 @@
-module.exports = class extends require('./base.js') {
+const {SiteGenerator} = require('./base.js');
+
+module.exports = class extends SiteGenerator {
 	run() {
 		const units_scheme = JSON.parse(this.load('units_scheme.json'));
 		const combos_scheme = JSON.parse(this.load('combos_scheme.json'));

@@ -181,7 +181,7 @@ const gEnv = JSON.parse(fs.readFileSync(resolve(__dirname, '../data/config.json'
 for (const key of ['event-types', 'conditions', 'egg-set', 'eggs'])
 	gEnv[key] = JSON.stringify(gEnv[key]);
 
-module.exports = class {
+class SiteGenerator {
 	/**
 	 * A compiled template function generated with Handlebars.compile().
 	 * @typedef {Function} Template
@@ -256,4 +256,8 @@ module.exports = class {
 		}
 		return rows;
 	}
+}
+
+module.exports = {
+	SiteGenerator,
 };
