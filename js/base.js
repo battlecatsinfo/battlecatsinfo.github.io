@@ -200,7 +200,7 @@ class SiteGenerator {
 		if (typeof tpl === 'string') {
 			tpl = Handlebars.compile(tpl);
 		}
-		return tpl(Object.assign(env, gEnv));
+		return tpl(Object.assign({}, env, gEnv));
 	}
 
 	write_template(in_f, out_f, env) {
