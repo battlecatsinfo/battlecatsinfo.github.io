@@ -389,7 +389,7 @@
 			<ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="kind-s">
 				{{#each species as |sp|}}
 				<li data-expr="(
-					{{~#each sp.ids as |id|~}}
+					{{~#each (split sp.id_list ",") as |id|~}}
 					id=={{id}}
 					{{~#unless @last}}||{{/unless~}}
 					{{~/each~}}
