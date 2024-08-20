@@ -123,7 +123,7 @@ module.exports = class extends SiteGenerator {
 
 			if (base == 'raw')
 				contents = fs.readFileSync(fsrc);
-			else 
+			else
 				contents = fs.readFileSync(fsrc, 'utf8');
 
 			if (file.endsWith('.css')) {

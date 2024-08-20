@@ -12,7 +12,7 @@ module.exports = class extends SiteGenerator {
 		try {
 			fs.mkdirSync(resolve(OUTPUT_DIR, 'collab'));
 		} catch (e) {
-			if (e.errno != -4075) 
+			if (e.errno != -4075)
 				throw e;
 		}
 
@@ -109,8 +109,8 @@ module.exports = class extends SiteGenerator {
 				};
 			});
 			this.write_string(fn, this.template(collab_template, {
-        collab,
-        pools,
+				collab,
+				pools,
 				stages,
 			}));
 		}

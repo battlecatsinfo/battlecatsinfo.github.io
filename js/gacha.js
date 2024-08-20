@@ -131,7 +131,7 @@ module.exports = class extends SiteGenerator {
 		try {
 			fs.mkdirSync(resolve(OUTPUT_DIR, 'gacha'));
 		} catch (e) {
-			if (e.errno != -4075) 
+			if (e.errno != -4075)
 				throw e;
 		}
 
@@ -325,10 +325,10 @@ module.exports = class extends SiteGenerator {
 					I = x[1];
 					result.push([
 						-1,
-						I + 667, 
+						I + 667,
 						this.uimg(I),
 						{id: I, name: this.unit_name[I]},
-						r, 
+						r,
 						'',
 						'104',
 						'79',
@@ -505,7 +505,7 @@ module.exports = class extends SiteGenerator {
 				let a;
 				if (v[3].must)
 					a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
-				else 
+				else
 					a = v[4].mul(must_drop_rate).valueOf() / 1000000;
 				S.items.push({
 					bgColor: v[1],
@@ -544,9 +544,9 @@ module.exports = class extends SiteGenerator {
 
 		for (const u of ids) {
 			c++;
-			if (c & 1) 
+			if (c & 1)
 				f = u;
-			else 
+			else
 				S.push([this.get1(f), this.get1(u)]);
 		}
 
