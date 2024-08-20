@@ -169,7 +169,6 @@ module.exports = class extends SiteGenerator {
 			this.write_string(path, this.template(
 				gacha_template,
 				{
-					nav_bar_active: 'gacha',
 					pool,
 					width,
 					height,
@@ -186,8 +185,7 @@ module.exports = class extends SiteGenerator {
 		}
 
 		this.write_template('html/gachas.html', 'gachas.html', {
-			'nav_bar_active': 'gacha',
-			'gachas': gachas,
+			gachas,
 		});
 	}
 	uimg(u) {
