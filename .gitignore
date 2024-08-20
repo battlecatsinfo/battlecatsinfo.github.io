@@ -1,3 +1,5 @@
 _out/
 img/
 node_modules/
+last_mods.json
+last_mods_data.json
