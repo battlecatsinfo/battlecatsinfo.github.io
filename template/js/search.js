@@ -239,26 +239,6 @@ function addBtns(parent, s) {
 	}
 }
 
-async function loadStats() {
-	return new Promise(resolve => {
-		var req = indexedDB.open("data", 1);
-		req.onupgradeneeded = function(event) {
-			event.target.result.createObjectStore("data", {
-				keyPath: "i"
-			});
-		}, req.onsuccess = function(event) {
-			const db = event.target.result;
-			event = db.transaction(["data"], "readwrite");
-			event.objectStore("data").get(0).onsuccess = function(event) {
-				event = event.target.result;
-				event && resolve(event.data), resolve(null);
-			}, event.oncomplete = function() {
-				db.close();
-			};
-		};
-	});
-}
-
 loadAllCats().then(_cats => {
 	cats_old = cats = _cats;
 
