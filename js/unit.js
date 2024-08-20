@@ -10,7 +10,7 @@ module.exports = class extends SiteGenerator {
 		this.write_template('css/unit.css', 'unit.css', {});
 
 		// @TODO: remove this file
-		this.write_template('js/combos.js', 'combo.js', {combos});
+		this.write_template('js/combo.js', 'combo.js', {combos});
 
 		this.write_template('js/unit.js', 'unit.js', {combos_scheme});
 
