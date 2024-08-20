@@ -164,12 +164,12 @@ module.exports = class extends SiteGenerator {
 				console.assert(false);
 			}
 
-			const path = 'gacha/' + to_path(pool['en_name']) + '.html';
+			const path = 'gacha/' + to_path(pool.en_name) + '.html';
 
 			this.write_string(path, this.template(
 				gacha_template,
 				{
-					'nav_bar_active': 'gacha',
+					nav_bar_active: 'gacha',
 					pool,
 					width,
 					height,
@@ -178,8 +178,8 @@ module.exports = class extends SiteGenerator {
 			));
 			gachas.push({
 				path,
-				name: pool['tw_name'],
-				img: pool['img'],
+				name: pool.tw_name,
+				img: pool.img,
 				width,
 				height,
 			});
