@@ -6,7 +6,6 @@ const sources = [
 	'stage.tsv',
 	'map.tsv',
 	'group.json',
-	'levelcurve.js',
 	'ENAME.txt',
 	'reward.json',
 	'cat.tsv',

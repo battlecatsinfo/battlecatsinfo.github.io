@@ -2796,7 +2796,7 @@ function drawgraph(T) {
 
 	const lvs = my_cat.info[4] + my_cat.info[5];
 	if (!T) {
-		const line = _curves[my_cat.info[16]];
+		const line = units_scheme.levelcurves[my_cat.info[16]];
 		const data = [];
 		for (let i = 0; i <= floor(lvs / 10); ++i)
 			data.push({
@@ -3159,7 +3159,7 @@ function openBBCode() {
 loadCat(my_id)
 	.then(res => {
 		my_cat = res;
-		my_curve = _curves[my_cat.info[16]];
+		my_curve = units_scheme.levelcurves[my_cat.info[16]];
 		const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
 		const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
 		if (layout != '2') {

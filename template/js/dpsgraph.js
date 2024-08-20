@@ -135,7 +135,7 @@ class FormDPS {
 			x = this.lv_c.value = 60;
 		else
 			this.lv_c.value = x = Math.min(this.info[4] + this.info[5], 50);
-		my_curve = _curves[this.info[16]];
+		my_curve = units_scheme.levelcurves[this.info[16]];
 		this.lvm = getLevelMulti(x);
 		this.lv_c.onblur = function() {
 			let num = this.value.match(/\d+/);
@@ -149,7 +149,7 @@ class FormDPS {
 				return;
 			}
 			this.value = num = Math.min(self.info[4] + self.info[5], num);
-			my_curve = _curves[self.info[16]];
+			my_curve = units_scheme.levelcurves[self.info[16]];
 			self.lvm = getLevelMulti(num);
 			self.render();
 		}

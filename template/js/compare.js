@@ -325,7 +325,7 @@ function numStrX(num) {
 }
 
 function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level */ ) {
-	my_curve = _curves[C.info[16]];
+	my_curve = units_scheme.levelcurves[C.info[16]];
 	tby[5].children[I].textContent = `${F.kb} / ${F.speed}`;
 	var T = numStrX(F.pre);
 	if (F.pre1)
