@@ -94,23 +94,28 @@
 				res = await fetch("/ENAME.txt");
 				if (!res.ok) throw '';
 				char_groups['ENAME'] = (await res.text()).split('\n');
-				char_groups['ver'] = {{{stage-ver}}};
 				db.transaction('map', 'readwrite').objectStore('map').put(char_groups, -1).onsuccess = resolve;
 			}
 
-			const req = indexedDB.open('stage_v2');
-			req.onupgradeneeded = function(e) {
-				db = e.target.result;
-				if (!db.objectStoreNames.contains('map'))
-					db.createObjectStore("map");
-				if (!db.objectStoreNames.contains('stage'))
-					db.createObjectStore("stage");
+			const req = indexedDB.open('stage_v2', {{{stage-ver}}});
+			let upgraded = false;
+			req.onupgradeneeded = function (e) {
+				const db = e.target.result;
+				upgraded = true;
+				try {
+					db.deleteObjectStore("map");
+				} catch (ex) {}
+				try {
+					db.deleteObjectStore("stage");
+				} catch (ex) {}
+				db.createObjectStore("map");
+				db.createObjectStore("stage");
 			}
 			req.onsuccess = function(e) {
 				db = e.target.result;
 				db.transaction("map").objectStore("map").get(-1).onsuccess = function(e) {
 					char_groups = e.target.result;
-					if (char_groups && char_groups['ver'] == {{{stage-ver}}})
+					if (char_groups && !upgraded)
 						resolve();
 					else
 						load_all();
