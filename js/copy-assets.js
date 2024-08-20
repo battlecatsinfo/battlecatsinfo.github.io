@@ -14,6 +14,7 @@ const sources = [
 	'stage3.html',
 	'unit.html',
 	'enemy.html',
+	'esearch.html',
 	'treasure_list.html',
 	'help.html',
 	'search.html',
