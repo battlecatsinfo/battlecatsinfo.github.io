@@ -11,8 +11,6 @@ $ npm install
 
 ### Build
 
-Use Node.js to run the build script.
-
 ```sh
 $ node build.js
 ```
@@ -21,16 +19,16 @@ Files will be generated under `_out`. See `node build.js -h` for more details.
 
 ### Running the local server
 
-```bash
-$ node server.js # or npm start
-$ node server.js --verbose
+```sh
+$ node server.js            # or npm start
+$ node server.js --verbose  # log requests
 ```
 
-Note: To display images successfully, you may need to clone https://github.com/battlecatsinfo/img to `img/`.
+Note: Clone https://github.com/battlecatsinfo/img to `img/` to display referenced images.
 
 ### Coding style
 
-* Always indent using tabs(except for YAML files and `package.json`, `package-lock.json`)
+* Always indent using tabs (except for `package.json`, `package-lock.json`, and `**.yml`)
 * Always use LF line ending
 * Use `require` instead of `import` in JavaScript files
 
