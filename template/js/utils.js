@@ -8,100 +8,80 @@
 		let db;
 		let char_groups;
 
-		await new Promise((resolve, reject) => {
-			async function wait(tx) {
-				return await new Promise(function(resolve, reject) {
-					tx.oncomplete = resolve;
-					tx.onerror = reject;
+		function checkResponse(response) {
+			if (!response.ok) {
+				throw new Error(`Unable to fetch "${response.url}": ${response.status} ${response.statusText}`);
+			}
+		}
+
+		async function loadAll(db) {
+			const [mapTable, stageTable, groupData, RWNAME, ENAME] = await Promise.all([
+				(async () => {
+					const response = await fetch('/map.tsv');
+					checkResponse(response);
+					return (await response.text()).split('\n').filter(x => x).map(row => {
+						const cut = row.indexOf('\t');
+						return [parseInt(row.slice(0, cut), 36), row.slice(cut + 1)];
+					});
+				})(),
+				(async () => {
+					const response = await fetch('/stage.tsv');
+					checkResponse(response);
+					return (await response.text()).split('\n').filter(x => x).map(row => {
+						const cut = row.indexOf('\t');
+						return [parseInt(row.slice(0, cut), 36), row.slice(cut + 1)];
+					});
+				})(),
+				(async () => {
+					const response = await fetch('/group.json');
+					checkResponse(response);
+					return await response.json();
+				})(),
+				(async () => {
+					const response = await fetch('/reward.json');
+					checkResponse(response);
+					return await response.json();
+				})(),
+				(async () => {
+					const response = await fetch('/ENAME.txt');
+					checkResponse(response);
+					return (await response.text()).split('\n');
+				})(),
+			]);
+
+			await new Promise((resolve, reject) => {
+				const tx = db.transaction(db.objectStoreNames, 'readwrite');
+				tx.oncomplete = resolve;
+				tx.onerror = reject;
+
+				const mapStore = tx.objectStore('map');
+				const stageStore = tx.objectStore('stage');
+
+				mapStore.clear();
+				stageStore.clear();
+
+				for (const [idx, data] of mapTable) {
+					mapStore.put(data, idx);
+				}
+
+				for (const [idx, data] of stageTable) {
+					stageStore.put(data, idx);
+				}
+
+				char_groups = Object.assign(groupData, {
+					RWNAME,
+					ENAME,
 				});
-			}
+				mapStore.put(char_groups, -1);
+			});
+		}
 
-			async function load_all() {
-				let l, m, i = 0,
-					c = 0;
-				let res = await fetch('/map.tsv');
-				if (!res.ok) throw '';
-				let A = await res.text();
-				let tx = db.transaction('map', 'readwrite');
-				let store = tx.objectStore('map');
-
-				O1:
-					while (true) {
-						while (c < 1000) {
-							l = i;
-							while (A[i] != '\t')
-								++i;
-							m = i;
-
-							while (A[i] != '\n')
-								++i;
-
-							store.put(A.slice(m + 1, i), parseInt(A.slice(l, m), 36));
-
-							if ((++i) >= A.length) {
-								await wait(tx);
-								break O1;
-							}
-
-							++c;
-						}
-						await wait(tx);
-						c = 0;
-						tx = db.transaction('map', 'readwrite');
-						store = tx.objectStore('map');
-					}
-
-				c = 0;
-				i = 0;
-				A = null;
-				res = await fetch('/stage.tsv');
-				if (!res.ok) throw '';
-				A = await res.text();
-				tx = db.transaction('stage', 'readwrite');
-				store = tx.objectStore('stage');
-				O2:
-					while (true) {
-						while (c < 1000) {
-							l = i;
-							while (A[i] != '\t')
-								++i;
-							m = i;
-
-							while (A[i] != '\n')
-								++i;
-
-							store.put(A.slice(m + 1, i), parseInt(A.slice(l, m), 36));
-
-							if ((++i) >= A.length) {
-								await wait(tx);
-								break O2;
-							}
-
-							++c;
-						}
-						await wait(tx);
-						c = 0;
-						tx = db.transaction('stage', 'readwrite');
-						store = tx.objectStore('stage');
-					}
-				A = null;
-				res = await fetch("/group.json");
-				if (!res.ok) throw '';
-				char_groups = await res.json();
-				res = await fetch("/reward.json");
-				if (!res.ok) throw '';
-				char_groups['RWNAME'] = await res.json();
-				res = await fetch("/ENAME.txt");
-				if (!res.ok) throw '';
-				char_groups['ENAME'] = (await res.text()).split('\n');
-				db.transaction('map', 'readwrite').objectStore('map').put(char_groups, -1).onsuccess = resolve;
-			}
-
+		let changed = false;
+		db = await new Promise((resolve, reject) => {
 			const req = indexedDB.open('stage_v2', {{{stage-ver}}});
-			let upgraded = false;
-			req.onupgradeneeded = function (e) {
-				const db = e.target.result;
-				upgraded = true;
+			req.onupgradeneeded = (event) => {
+				const db = event.target.result;
+				changed = true;
 				try {
 					db.deleteObjectStore("map");
 				} catch (ex) {}
@@ -110,18 +90,27 @@
 				} catch (ex) {}
 				db.createObjectStore("map");
 				db.createObjectStore("stage");
-			}
-			req.onsuccess = function(e) {
-				db = e.target.result;
-				db.transaction("map").objectStore("map").get(-1).onsuccess = function(e) {
-					char_groups = e.target.result;
-					if (char_groups && !upgraded)
-						resolve();
-					else
-						load_all();
-				}
-			}
+			};
+			req.onsuccess = (event) => resolve(event.target.result);
+			req.onerror = (event) => reject(new Error(event.target.error));
 		});
+
+		if (!changed) {
+			await new Promise((resolve, reject) => {
+				const tx = db.transaction("map");
+				tx.oncomplete = resolve;
+				tx.onerror = (event) => reject(new Error(event.target.error));
+				tx.objectStore("map").get(-1).onsuccess = (event) => {
+					char_groups = event.target.result;
+				};
+			});
+			if (!char_groups) {
+				changed = true;
+			}
+		}
+		if (changed) {
+			await loadAll(db);
+		}
 
 		return {
 			db,
