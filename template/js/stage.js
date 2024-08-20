@@ -20,7 +20,7 @@ const
 		["傳奇故事0", "レジェンドストーリー0"],
 		["異次元競技場", "異次元コロシアム"]
 	],
-	eggs = new Set({{{toJSON egg-set}}}),
+	eggs = new Set({{{toJSON egg_set}}}),
 	MC_TW_NAME = 0,
 	MC_JP_NAME = 1,
 	MC_GOLDCPU = 2,

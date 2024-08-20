@@ -8,7 +8,7 @@ module.exports = class extends SiteGenerator {
 			ids: ids.filter(x => x),
 		})).filter(x => x.name && x.ids.length);
 		this.write_template('html/esearch.html', 'esearch.html', {
-			'nav-bar-active': 'enemy',
+			'nav_bar_active': 'enemy',
 			'species': speciesFormatted,
 		});
 	}

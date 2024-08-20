@@ -1,6 +1,6 @@
 const
 	loader = document.getElementById('loader'),
-	eggs = new Set({{{toJSON egg-set}}}),
+	eggs = new Set({{{toJSON egg_set}}}),
 
 	stages_top = [
 		"傳奇關卡", "特別關卡", "期間限定合作關卡", "主篇章", "EX關卡", "貓咪道場關卡", "貓咪塔", "排行關卡", "挑戰賽", "真傳奇關卡", "喵力達專用關卡", "強襲關卡", "發掘關卡", "合作強襲", "超獸討伐關卡", "地底迷宮", "傳奇故事0", "異次元競技場"
@@ -38,7 +38,7 @@ const
 	SM_LIMIT = 12,
 
 	QQ = '？？？',
-	event_types = {{{toJSON event-types}}},
+	event_types = {{{toJSON event_types}}},
 	conditions = {{{toJSON conditions}}},
 	M1 = document.getElementById("M1"),
 	M2 = document.getElementById("M2"),

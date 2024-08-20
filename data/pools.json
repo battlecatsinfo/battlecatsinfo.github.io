@@ -1,8 +1,8 @@
 [
 	{
-		"tw-name": "貓咪轉蛋",
-		"jp-name": "にゃんこガチャ",
-		"en-name": "Cat Capsules",
+		"tw_name": "貓咪轉蛋",
+		"jp_name": "にゃんこガチャ",
+		"en_name": "Cat Capsules",
 		"img": "https://i.imgur.com/561Pb57.png",
 		"rate": [
 			10000,
@@ -92,13 +92,13 @@
 			[],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N000.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N000.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N000.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N000.html"
 	},
 	{
-		"tw-name": "貓咪轉蛋+",
-		"jp-name": "にゃんこガチャ+",
-		"en-name": "Cat Capsules+",
+		"tw_name": "貓咪轉蛋+",
+		"jp_name": "にゃんこガチャ+",
+		"en_name": "Cat Capsules+",
 		"img": "https://i.imgur.com/MiQNzJl.png",
 		"rate": [
 			10000,
@@ -192,85 +192,85 @@
 			[],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N064.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N064.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N064.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N064.html"
 	},
 	{
-		"tw-name": "常駐稀有貓",
-		"jp-name": "レアキャラ",
-		"en-name": "Rare Cats",
+		"tw_name": "常駐稀有貓",
+		"jp_name": "レアキャラ",
+		"en_name": "Rare Cats",
 		"category": "常駐稀有貓",
 		"size": "860x535",
 		"img": "https://i.imgur.com/i1mtywM.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "常駐激稀有貓",
-		"jp-name": "激レアキャラ",
-		"en-name": "Super Rare Cats",
+		"tw_name": "常駐激稀有貓",
+		"jp_name": "激レアキャラ",
+		"en_name": "Super Rare Cats",
 		"category": "常駐激稀有貓",
 		"size": "860x324",
 		"img": "https://i.imgur.com/QAYMhmu.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "土龍鑽部隊",
-		"jp-name": "グランドン部隊",
-		"en-name": "Grandon Mining Corps",
+		"tw_name": "土龍鑽部隊",
+		"jp_name": "グランドン部隊",
+		"en_name": "Grandon Mining Corps",
 		"category": "土龍鑽部隊",
 		"size": "860x240",
 		"img": "https://i.imgur.com/qCh8O5f.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "限定激稀有系列",
-		"jp-name": "キャンペーン",
-		"en-name": "Neneko and Gang",
+		"tw_name": "限定激稀有系列",
+		"jp_name": "キャンペーン",
+		"en_name": "Neneko and Gang",
 		"category": "限定激稀有系列",
 		"size": "860x240",
 		"img": "https://i.imgur.com/onevqGI.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "貓咪軍團支援隊",
-		"jp-name": "にゃんこ軍団支援隊",
-		"en-name": "Reinforcements",
+		"tw_name": "貓咪軍團支援隊",
+		"jp_name": "にゃんこ軍団支援隊",
+		"en_name": "Reinforcements",
 		"category": "貓咪軍團支援隊",
 		"size": "860x240",
 		"img": "https://i.imgur.com/pnxB3iR.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "洗腦貓",
-		"jp-name": "洗脳ネコ",
-		"en-name": "Brainwashed Cats",
+		"tw_name": "洗腦貓",
+		"jp_name": "洗脳ネコ",
+		"en_name": "Brainwashed Cats",
 		"category": "洗腦貓",
 		"size": "860x282",
 		"img": "https://i.imgur.com/PleHxPZ.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "狂亂貓",
-		"jp-name": "狂乱のネコ",
-		"en-name": "Crazed Cats",
+		"tw_name": "狂亂貓",
+		"jp_name": "狂乱のネコ",
+		"en_name": "Crazed Cats",
 		"category": "狂亂貓",
 		"size": "860x282",
 		"img": "https://i.imgur.com/SL998IE.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "殺意貓",
-		"jp-name": "殺意のネコ",
-		"en-name": "Killer Cats",
+		"tw_name": "殺意貓",
+		"jp_name": "殺意のネコ",
+		"en_name": "Killer Cats",
 		"size": "860x240",
 		"category": "殺意貓",
 		"img": "https://i.imgur.com/HBAeof6.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "招福轉蛋",
-		"jp-name": "にゃんこ福引",
-		"en-name": "Lucky Capsules",
+		"tw_name": "招福轉蛋",
+		"jp_name": "にゃんこ福引",
+		"en_name": "Lucky Capsules",
 		"img": "https://i.imgur.com/FaX35wb.png",
 		"rate": [
 			0,
@@ -386,13 +386,13 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N062.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N062.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N062.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N062.html"
 	},
 	{
-		"tw-name": "招福轉蛋Ｇ",
-		"jp-name": "にゃんこ福引Ｇ",
-		"en-name": "Lucky Capsule G",
+		"tw_name": "招福轉蛋Ｇ",
+		"jp_name": "にゃんこ福引Ｇ",
+		"en_name": "Lucky Capsule G",
 		"img": "https://i.imgur.com/MOGnEpa.png",
 		"rate": [
 			0,
@@ -468,13 +468,13 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N063.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N063.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N063.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N063.html"
 	},
 	{
-		"tw-name": "貓眼石轉蛋",
-		"jp-name": "キャッツアイ入りアイテムガチャ",
-		"en-name": "Catseye Capsule",
+		"tw_name": "貓眼石轉蛋",
+		"jp_name": "キャッツアイ入りアイテムガチャ",
+		"en_name": "Catseye Capsule",
 		"img": "https://i.imgur.com/NPek7Qd.png",
 		"rate": [
 			500,
@@ -532,13 +532,13 @@
 				]
 			]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N065.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N065.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N065.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N065.html"
 	},
 	{
-		"tw-name": "貓薄荷轉蛋",
-		"jp-name": "マタタビ入りアイテムガチャ",
-		"en-name": "Catfruit Capsule",
+		"tw_name": "貓薄荷轉蛋",
+		"jp_name": "マタタビ入りアイテムガチャ",
+		"en_name": "Catfruit Capsule",
 		"rate": [
 			400,
 			2000,
@@ -655,76 +655,76 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N003.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N003.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N003.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N003.html"
 	},
 	{
-		"tw-name": "EX罐頭購買貓",
-		"jp-name": "ネコカン購入のEXネコ",
-		"en-name": "Purchasable Special Cats",
+		"tw_name": "EX罐頭購買貓",
+		"jp_name": "ネコカン購入のEXネコ",
+		"en_name": "Purchasable Special Cats",
 		"size": "860x320",
 		"category": "EX罐頭購買貓",
 		"img": "https://i.imgur.com/uslm8O3.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "世界/未來/宇宙/魔界掉落貓",
-		"jp-name": "世界/未来/宇宙/魔界ドロップネコ",
-		"en-name": "Main Chapters Unlockable",
+		"tw_name": "世界/未來/宇宙/魔界掉落貓",
+		"jp_name": "世界/未来/宇宙/魔界ドロップネコ",
+		"en_name": "Main Chapters Unlockable",
 		"size": "860x240",
 		"img": "https://i.imgur.com/RKJyQHk.png",
 		"category": "主章節掉落貓",
 		"type": "category"
 	},
 	{
-		"tw-name": "傳說關卡掉落貓",
-		"jp-name": "レジェンドステージドロップネコ",
-		"en-name": "Legend Chapters Unlockable",
+		"tw_name": "傳說關卡掉落貓",
+		"jp_name": "レジェンドステージドロップネコ",
+		"en_name": "Legend Chapters Unlockable",
 		"size": "860x240",
 		"category": "傳說關卡掉落貓",
 		"img": "https://i.imgur.com/AcHg40M.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "風雲貓咪塔掉落貓",
-		"jp-name": "風雲にゃんこ塔ドロップネコ",
-		"en-name": "Heavenly Tower Unlockable",
+		"tw_name": "風雲貓咪塔掉落貓",
+		"jp_name": "風雲にゃんこ塔ドロップネコ",
+		"en_name": "Heavenly Tower Unlockable",
 		"size": "860x240",
 		"img": "https://i.imgur.com/LYxIQDI.png",
 		"category": "風雲貓咪塔掉落貓",
 		"type": "category"
 	},
 	{
-		"tw-name": "降臨和漩渦關卡掉落",
-		"jp-name": "降臨ステージ&サイクロンドロップネコ",
-		"en-name": "Advent and Cyclone Drops",
+		"tw_name": "降臨和漩渦關卡掉落",
+		"jp_name": "降臨ステージ&サイクロンドロップネコ",
+		"en_name": "Advent and Cyclone Drops",
 		"size": "860x650",
 		"img": "https://i.imgur.com/7c1iOlB.png",
 		"category": "降臨和漩渦關卡掉落",
 		"type": "category"
 	},
 	{
-		"tw-name": "遠古的蛋",
-		"jp-name": "古びたタマゴ",
-		"en-name": "Ancient Eggs",
+		"tw_name": "遠古的蛋",
+		"jp_name": "古びたタマゴ",
+		"en_name": "Ancient Eggs",
 		"category": "遠古的蛋",
 		"size": "860x510",
 		"img": "https://i.imgur.com/vqEcus9.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "月份貓",
-		"jp-name": "月間ステージのドロップ",
-		"en-name": "Monthly Event Cats",
+		"tw_name": "月份貓",
+		"jp_name": "月間ステージのドロップ",
+		"en_name": "Monthly Event Cats",
 		"category": "月份貓",
 		"size": "860x240",
 		"img": "https://i.imgur.com/CbRi6y0.png",
 		"type": "category"
 	},
 	{
-		"tw-name": "超級貓咪祭",
-		"jp-name": "超ネコ祭",
-		"en-name": "Uberfest",
+		"tw_name": "超級貓咪祭",
+		"jp_name": "超ネコ祭",
+		"en_name": "Uberfest",
 		"img": "https://i.imgur.com/GHO2qFp.png",
 		"rate": [
 			6470,
@@ -886,13 +886,13 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R909.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R909.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R909.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R909.html"
 	},
 	{
-		"tw-name": "特級貓咪祭",
-		"jp-name": "極ネコ祭",
-		"en-name": "Epicfest",
+		"tw_name": "特級貓咪祭",
+		"jp_name": "極ネコ祭",
+		"en_name": "Epicfest",
 		"img": "https://i.imgur.com/jktoBqr.png",
 		"rate": [
 			6470,
@@ -1054,13 +1054,13 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R910.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R910.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R910.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R910.html"
 	},
 	{
-		"tw-name": "傳說轉蛋",
-		"jp-name": "レジェンドガチャ",
-		"en-name": "Legend Capsules",
+		"tw_name": "傳說轉蛋",
+		"jp_name": "レジェンドガチャ",
+		"en_name": "Legend Capsules",
 		"img": "https://i.imgur.com/MdxnEMn.png",
 		"rate": [
 			0,
@@ -1205,13 +1205,13 @@
 			271,
 			272
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R912.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R912.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R912.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R912.html"
 	},
 	{
-		"tw-name": "白金轉蛋",
-		"jp-name": "プラチナガチャ",
-		"en-name": "Platinum Capsules",
+		"tw_name": "白金轉蛋",
+		"jp_name": "プラチナガチャ",
+		"en_name": "Platinum Capsules",
 		"img": "https://i.imgur.com/kixYMGy.png",
 		"rate": [
 			0,
@@ -1343,13 +1343,13 @@
 			271,
 			272
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R911.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R911.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R911.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R911.html"
 	},
 	{
-		"tw-name": "9000萬下載紀念精選轉蛋",
-		"jp-name": "9000万ダウンロード記念選抜ガチャ",
-		"en-name": "90 Million DL Special Capsules",
+		"tw_name": "9000萬下載紀念精選轉蛋",
+		"jp_name": "9000万ダウンロード記念選抜ガチャ",
+		"en_name": "90 Million DL Special Capsules",
 		"img": "https://i.imgur.com/wCufd44.png",
 		"rate": [
 			6730,
@@ -1447,12 +1447,12 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R866.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R866.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R866.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R866.html"
 	},
 	{
-		"tw-name": "繁中版9周年紀念超級選拔祭",
-		"en-name": "Best of the Best(9th Anniversary)",
+		"tw_name": "繁中版9周年紀念超級選拔祭",
+		"en_name": "Best of the Best(9th Anniversary)",
 		"img": "https://i.imgur.com/V6IuGMR.png",
 		"rate": [
 			7000,
@@ -1460,7 +1460,7 @@
 			500,
 			0
 		],
-		"jp-url": "",
+		"jp_url": "",
 		"type": "rare",
 		"units": [
 			73,
@@ -1520,12 +1520,12 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R889.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R889.html"
 	},
 	{
-		"tw-name": "心動時分貓咪學園活動轉蛋",
-		"jp-name": "トキメキにゃんこ学園イベントガチャ",
-		"en-name": "Heartbeat Catcademy",
+		"tw_name": "心動時分貓咪學園活動轉蛋",
+		"jp_name": "トキメキにゃんこ学園イベントガチャ",
+		"en_name": "Heartbeat Catcademy",
 		"img": "https://i.imgur.com/eTQn1S8.png",
 		"rate": [
 			1000,
@@ -1574,13 +1574,13 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E023.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E023.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E023.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E023.html"
 	},
 	{
-		"tw-name": "春節活動轉蛋（日）",
-		"jp-name": "春節イベントガチャ",
-		"en-name": "Lunar New Year(Japan)",
+		"tw_name": "春節活動轉蛋（日）",
+		"jp_name": "春節イベントガチャ",
+		"en_name": "Lunar New Year(Japan)",
 		"img": "https://i.imgur.com/PqXIYGV.png",
 		"rate": [
 			1000,
@@ -1628,13 +1628,13 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E028.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E028.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E028.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E028.html"
 	},
 	{
-		"tw-name": "春節活動轉蛋（繁中版）",
-		"jp-name": "春節イベントガチャ",
-		"en-name": "Lunar New Year(Chinese)",
+		"tw_name": "春節活動轉蛋（繁中版）",
+		"jp_name": "春節イベントガチャ",
+		"en_name": "Lunar New Year(Chinese)",
 		"img": "https://i.imgur.com/gWOy8vf.png",
 		"rate": [
 			1000,
@@ -1681,13 +1681,13 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E022.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E022.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E022.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E022.html"
 	},
 	{
-		"tw-name": "惡魔的完美新娘活動轉蛋",
-		"jp-name": "悪魔のジューンブライドイベントガチャ",
-		"en-name": "June Bride of the Devil",
+		"tw_name": "惡魔的完美新娘活動轉蛋",
+		"jp_name": "悪魔のジューンブライドイベントガチャ",
+		"en_name": "June Bride of the Devil",
 		"img": "https://i.imgur.com/NjYaOzS.png",
 		"rate": [
 			800,
@@ -1737,13 +1737,13 @@
 				197
 			]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E029.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E029.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E029.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E029.html"
 	},
 	{
-		"tw-name": "貓咪的暑假活動轉蛋",
-		"jp-name": "ねこのなつやすみ",
-		"en-name": "Summer Break Cats",
+		"tw_name": "貓咪的暑假活動轉蛋",
+		"jp_name": "ねこのなつやすみ",
+		"en_name": "Summer Break Cats",
 		"img": "https://i.imgur.com/fq9nxTL.png",
 		"rate": [
 			250,
@@ -1793,15 +1793,15 @@
 				197
 			]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E031.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E031.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E031.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E031.html"
 	},
 	{
-		"tw-name": "魔物獵人大狩獵活動轉蛋",
-		"jp-name": "モンハン大狩猟クエストガチャ",
-		"en-name": "Monster Hunter",
+		"tw_name": "魔物獵人大狩獵活動轉蛋",
+		"jp_name": "モンハン大狩猟クエストガチャ",
+		"en_name": "Monster Hunter",
 		"img": "https://i.imgur.com/E7Z9RpW.png",
-		"tw-url": "",
+		"tw_url": "",
 		"ticket": [
 			"MH大狩猟チケット",
 			"/img/r/24.png"
@@ -1824,14 +1824,14 @@
 			],
 			[]
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E001.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E001.html"
 	},
 	{
-		"tw-name": "貓咪拼圖＆納豆君（暫譯）活動轉蛋",
-		"jp-name": "にゃんパズル＆ねば～る君ガチャ",
-		"en-name": "Nebaaru-kun and Nyanpazuru",
+		"tw_name": "貓咪拼圖＆納豆君（暫譯）活動轉蛋",
+		"jp_name": "にゃんパズル＆ねば～る君ガチャ",
+		"en_name": "Nebaaru-kun and Nyanpazuru",
 		"img": "https://i.imgur.com/k5MIn1E.png",
-		"tw-url": "",
+		"tw_url": "",
 		"ticket": [
 			"まもるよチケット",
 			"/img/r/25.png"
@@ -1862,12 +1862,12 @@
 			],
 			[]
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E002.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E002.html"
 	},
 	{
-		"tw-name": "聖魔大戰活動轉蛋",
-		"jp-name": "ビックリマンイベントガチャ",
-		"en-name": "Bikkuriman Collaboration",
+		"tw_name": "聖魔大戰活動轉蛋",
+		"jp_name": "ビックリマンイベントガチャ",
+		"en_name": "Bikkuriman Collaboration",
 		"img": "https://i.imgur.com/WJkKX2g.png",
 		"rate": [
 			3000,
@@ -1922,13 +1922,13 @@
 				-475
 			]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E033.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E033.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E033.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E033.html"
 	},
 	{
-		"tw-name": "貓咪的暑假 漂流記",
-		"jp-name": "ねこのなつやすみ サバイバル",
-		"en-name": "Summer Break Survival Capsules",
+		"tw_name": "貓咪的暑假 漂流記",
+		"jp_name": "ねこのなつやすみ サバイバル",
+		"en_name": "Summer Break Survival Capsules",
 		"img": "https://i.imgur.com/1UJPng1.png",
 		"stage": [
 			"/stage.html?s=11-67",
@@ -1976,13 +1976,13 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E032.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E032.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E032.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E032.html"
 	},
 	{
-		"tw-name": "G1競馬活動轉蛋",
-		"jp-name": "めざせG1 にゃんこ競馬イベントガチャ",
-		"en-name": "JRA Collaboration",
+		"tw_name": "G1競馬活動轉蛋",
+		"jp_name": "めざせG1 にゃんこ競馬イベントガチャ",
+		"en_name": "JRA Collaboration",
 		"img": "https://i.imgur.com/u6bIt6X.png",
 		"rate": [
 			1000,
@@ -2030,13 +2030,13 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E015.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E015.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E015.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E015.html"
 	},
 	{
-		"tw-name": "日文版10週年紀念活動轉蛋",
-		"jp-name": "10周年メモリアルイベントガチャ",
-		"en-name": "10th Anniversary Memorial",
+		"tw_name": "日文版10週年紀念活動轉蛋",
+		"jp_name": "10周年メモリアルイベントガチャ",
+		"en_name": "10th Anniversary Memorial",
 		"img": "https://i.imgur.com/tcNNnrq.png",
 		"rate": [
 			1000,
@@ -2060,7 +2060,7 @@
 		],
 		"farm": "<tbody><tr><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td></td><td>2012年</td><td>10</td><td>0.25</td><td>2.5</td></tr><tr><td></td><td>2013年 その1</td><td>20</td><td>0.35</td><td>1.75</td></tr><tr><td></td><td>2013年 その2</td><td>30</td><td>0.45</td><td>1.5</td></tr><tr><td></td><td>2014年 その1</td><td>40</td><td>0.55</td><td>1.375</td></tr><tr><td></td><td>2014年 その2</td><td>50</td><td>0.65</td><td>1.3</td></tr><tr><td></td><td>2015年 その1</td><td>60</td><td>0.75</td><td>1.25</td></tr><tr><td></td><td>2015年 その2</td><td>70</td><td>0.8</td><td>1.14</td></tr><tr><td></td><td>2016年 その1</td><td>80</td><td>0.9</td><td>1.125</td></tr><tr><td></td><td>2016年 その2</td><td>90</td><td>1</td><td>1.11</td></tr><tr><td></td><td>2017年 その1</td><td>100</td><td>1.08</td><td>1.08</td></tr><tr><td></td><td>2017年 その2</td><td>110</td><td>1.1</td><td>1</td></tr><tr><td></td><td>2018年 その1</td><td>120</td><td>1.2</td><td>1</td></tr><tr><td></td><td>2018年 その2</td><td>130</td><td>1.35</td><td>1.04</td></tr><tr><td></td><td>2019年 その1</td><td>140</td><td>1.45</td><td>1.04</td></tr><tr><td></td><td>2019年 その2</td><td>150</td><td>1.6</td><td>1.07</td></tr><tr><td></td><td>2020年 その1</td><td>160</td><td>1.7</td><td>1.06</td></tr><tr><td></td><td>2020年 その2</td><td>170</td><td>1.85</td><td>1.09</td></tr><tr><td></td><td>2021年 その1</td><td>180</td><td>2</td><td>1.11</td></tr><tr><td></td><td>2021年 その2</td><td>190</td><td>2.15</td><td>1.13</td></tr><tr><td></td><td>2022年</td><td>200</td><td>2.3</td><td>1.15</td></tr></tbody>",
 		"max": "<tbody><tr><td></td><td>にゃんこバーガー</td><td>招財貓</td><td>紀念幣貓</td><td>一百萬的貓</td><td>石の上にも10年ネコ*</td></tr><tr><td>日文版</td><td>Lv. 50+30</td><td>Lv. 50+35</td><td>Lv. 50+35</td><td>Lv. 50+15</td><td>Lv. 50+15</td></tr></tbody>",
-		"tw-url": "",
+		"tw_url": "",
 		"type": "event",
 		"units": [
 			[
@@ -2087,12 +2087,12 @@
 			],
 			[]
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E021.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E021.html"
 	},
 	{
-		"tw-name": "日文版11週年紀念轉蛋",
-		"jp-name": "わんわんアニバーサリー",
-		"en-name": "11th Anniversary Memorial",
+		"tw_name": "日文版11週年紀念轉蛋",
+		"jp_name": "わんわんアニバーサリー",
+		"en_name": "11th Anniversary Memorial",
 		"img": "https://i.imgur.com/lwRlHnM.png",
 		"rate": [
 			1000,
@@ -2142,13 +2142,13 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E027.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E027.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E027.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E027.html"
 	},
 	{
-		"tw-name": "猜猜我是誰活動轉蛋（繁中9周年）",
-		"jp-name": "箱の中身クイズ",
-		"en-name": "What's in the Box",
+		"tw_name": "猜猜我是誰活動轉蛋（繁中9周年）",
+		"jp_name": "箱の中身クイズ",
+		"en_name": "What's in the Box",
 		"img": "https://i.imgur.com/uxUvGHy.png",
 		"rate": [
 			1000,
@@ -2196,14 +2196,14 @@
 			],
 			[]
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E025.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E025.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E025.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E025.html"
 	},
 	{
 		"tag": "不明貓系列",
-		"tw-name": "傳說中的不明貓一族",
-		"jp-name": "伝説のネコルガ族",
-		"en-name": "Tales of the Nekoluga",
+		"tw_name": "傳說中的不明貓一族",
+		"jp_name": "伝説のネコルガ族",
+		"en_name": "Tales of the Nekoluga",
 		"img": "https://i.imgur.com/ijJn7oA.png",
 		"rate": [
 			6970,
@@ -2372,14 +2372,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R812.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R812.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R812.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R812.html"
 	},
 	{
 		"tag": "超激烈爆彈",
-		"tw-name": "超激烈爆彈",
-		"jp-name": "超激ダイナマイツ",
-		"en-name": "The Dynamites",
+		"tw_name": "超激烈爆彈",
+		"jp_name": "超激ダイナマイツ",
+		"en_name": "The Dynamites",
 		"img": "https://i.imgur.com/0LNCQ0o.png",
 		"rate": [
 			6970,
@@ -2557,14 +2557,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R907.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R907.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R907.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R907.html"
 	},
 	{
 		"tag": "戰國武神",
-		"tw-name": "戰國武神巴薩拉斯",
-		"jp-name": "戦国武神バサラーズ",
-		"en-name": "Sengoku Wargods Vajiras",
+		"tw_name": "戰國武神巴薩拉斯",
+		"jp_name": "戦国武神バサラーズ",
+		"en_name": "Sengoku Wargods Vajiras",
 		"img": "https://i.imgur.com/PDlts9r.png",
 		"rate": [
 			6970,
@@ -2704,14 +2704,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R882.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R882.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R882.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R882.html"
 	},
 	{
 		"tag": "電腦學園",
-		"tw-name": "電腦學園銀河美少女",
-		"jp-name": "電脳学園ギャラクシーギャルズ",
-		"en-name": "Cyber Academy Galaxy Gals",
+		"tw_name": "電腦學園銀河美少女",
+		"jp_name": "電脳学園ギャラクシーギャルズ",
+		"en_name": "Cyber Academy Galaxy Gals",
 		"img": "https://i.imgur.com/Z1Mc8rF.png",
 		"size": "860x240",
 		"rate": [
@@ -2866,14 +2866,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R869.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R869.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R869.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R869.html"
 	},
 	{
 		"tag": "龍族系列",
-		"tw-name": "超破壞大帝龍皇因佩拉斯",
-		"jp-name": "超破壊大帝ドラゴンエンペラーズ",
-		"en-name": "Lords of Destruction Dragon Emperors",
+		"tw_name": "超破壞大帝龍皇因佩拉斯",
+		"jp_name": "超破壊大帝ドラゴンエンペラーズ",
+		"en_name": "Lords of Destruction Dragon Emperors",
 		"img": "https://i.imgur.com/MY2mZpW.png",
 		"rate": [
 			6970,
@@ -3050,14 +3050,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R890.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R890.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R890.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R890.html"
 	},
 	{
 		"tag": "超古代勇者",
-		"tw-name": "超古代勇者超級靈魂勇者",
-		"jp-name": "超古代勇者ウルトラソウルズ",
-		"en-name": "Ancient Heroes Ultra Souls",
+		"tw_name": "超古代勇者超級靈魂勇者",
+		"jp_name": "超古代勇者ウルトラソウルズ",
+		"en_name": "Ancient Heroes Ultra Souls",
 		"img": "https://i.imgur.com/uMybcfm.png",
 		"rate": [
 			6970,
@@ -3227,14 +3227,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R790.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R790.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R790.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R790.html"
 	},
 	{
 		"tag": "黑暗英雄",
-		"tw-name": "逆襲的戰士黑暗英雄",
-		"jp-name": "逆襲の英雄ダークヒーローズ",
-		"en-name": "Justice Strikes Back: Dark Heroes",
+		"tw_name": "逆襲的戰士黑暗英雄",
+		"jp_name": "逆襲の英雄ダークヒーローズ",
+		"en_name": "Justice Strikes Back: Dark Heroes",
 		"img": "https://i.imgur.com/QAi8Lz1.png",
 		"rate": [
 			6970,
@@ -3400,14 +3400,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R799.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R799.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R799.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R799.html"
 	},
 	{
 		"tag": "天神系列",
-		"tw-name": "究極降臨巨神宙斯",
-		"jp-name": "究極降臨ギガントゼウス",
-		"en-name": "The Almighties The Majestic Zeus",
+		"tw_name": "究極降臨巨神宙斯",
+		"jp_name": "究極降臨ギガントゼウス",
+		"en_name": "The Almighties The Majestic Zeus",
 		"img": "https://i.imgur.com/2UHhHg3.png",
 		"rate": [
 			6970,
@@ -3566,14 +3566,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R843.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R843.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R843.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R843.html"
 	},
 	{
 		"tag": "革命軍隊",
-		"tw-name": "革命軍隊鋼鐵戰團",
-		"jp-name": "革命軍隊アイアンウォーズ",
-		"en-name": "Frontline Assault Iron Legion",
+		"tw_name": "革命軍隊鋼鐵戰團",
+		"jp_name": "革命軍隊アイアンウォーズ",
+		"en_name": "Frontline Assault Iron Legion",
 		"img": "https://i.imgur.com/OcBGD94.png",
 		"rate": [
 			6970,
@@ -3717,14 +3717,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R824.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R824.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R824.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R824.html"
 	},
 	{
 		"tag": "元素小精靈",
-		"tw-name": "古靈精怪元素小精靈",
-		"jp-name": "大精霊エレメンタルピクシーズ",
-		"en-name": "Nature's Guardians Elemental Pixies",
+		"tw_name": "古靈精怪元素小精靈",
+		"jp_name": "大精霊エレメンタルピクシーズ",
+		"en_name": "Nature's Guardians Elemental Pixies",
 		"img": "https://i.imgur.com/70eeVra.png",
 		"rate": [
 			6970,
@@ -3815,14 +3815,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R836.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R836.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R836.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R836.html"
 	},
 	{
 		"tag": "絕命美少女",
-		"tw-name": "絕命美少女怪物萌娘隊",
-		"jp-name": "絶命美少女ギャルズモンスターズ",
-		"en-name": "Girls & Monsters: Angels of Terror",
+		"tw_name": "絕命美少女怪物萌娘隊",
+		"jp_name": "絶命美少女ギャルズモンスターズ",
+		"en_name": "Girls & Monsters: Angels of Terror",
 		"img": "https://i.imgur.com/u4KGOMl.png",
 		"rate": [
 			6970,
@@ -3952,14 +3952,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R858.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R858.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R858.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R858.html"
 	},
 	{
 		"tag": "情人節淑女們",
-		"tw-name": "情人節淑女們",
-		"jp-name": "バレンタインギャルズ",
-		"en-name": "Valentine Gals",
+		"tw_name": "情人節淑女們",
+		"jp_name": "バレンタインギャルズ",
+		"en_name": "Valentine Gals",
 		"img": "https://i.imgur.com/TMLzf9o.png",
 		"rate": [
 			7000,
@@ -4029,14 +4029,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R785.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R785.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R785.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R785.html"
 	},
 	{
 		"tag": "白色情人",
-		"tw-name": "白色情人節轉蛋",
-		"jp-name": "ホワイトデーガチャ",
-		"en-name": "White Day",
+		"tw_name": "白色情人節轉蛋",
+		"jp_name": "ホワイトデーガチャ",
+		"en_name": "White Day",
 		"img": "https://i.imgur.com/ndGUagg.png",
 		"rate": [
 			7000,
@@ -4104,14 +4104,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R867.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R867.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R867.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R867.html"
 	},
 	{
 		"tag": "復活節",
-		"tw-name": "復活節嘉年華",
-		"jp-name": "イースターカーニバル",
-		"en-name": "Easter Carnival",
+		"tw_name": "復活節嘉年華",
+		"jp_name": "イースターカーニバル",
+		"en_name": "Easter Carnival",
 		"img": "https://i.imgur.com/XGwm3il.png",
 		"rate": [
 			7000,
@@ -4185,14 +4185,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R875.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R875.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R875.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R875.html"
 	},
 	{
 		"tag": "完美新娘轉蛋",
-		"tw-name": "完美新娘",
-		"jp-name": "ジューンブライド",
-		"en-name": "June Bride",
+		"tw_name": "完美新娘",
+		"jp_name": "ジューンブライド",
+		"en_name": "June Bride",
 		"img": "https://i.imgur.com/w6dXndQ.png",
 		"rate": [
 			7000,
@@ -4259,14 +4259,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R887.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R887.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R887.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R887.html"
 	},
 	{
 		"tag": "夏日1",
-		"tw-name": "夏日美少女團 - 蔚藍海洋",
-		"jp-name": "サマーガールズ - ブルーオーシャン",
-		"en-name": "Gals of Summer - Blue Ocean",
+		"tw_name": "夏日美少女團 - 蔚藍海洋",
+		"jp_name": "サマーガールズ - ブルーオーシャン",
+		"en_name": "Gals of Summer - Blue Ocean",
 		"img": "https://i.imgur.com/3S4c2lZ.png",
 		"rate": [
 			7000,
@@ -4274,7 +4274,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R904.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R904.html",
 		"type": "rare",
 		"units": [
 			759,
@@ -4338,13 +4338,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R897.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R897.html"
 	},
 	{
 		"tag": "夏日2",
-		"tw-name": "夏日美少女團 - 絢爛陽光",
-		"jp-name": "サマーガールズ - サンシャイン",
-		"en-name": "Gals of Summer - Sunshine",
+		"tw_name": "夏日美少女團 - 絢爛陽光",
+		"jp_name": "サマーガールズ - サンシャイン",
+		"en_name": "Gals of Summer - Sunshine",
 		"img": "https://i.imgur.com/AbmBdU9.png",
 		"rate": [
 			7000,
@@ -4352,7 +4352,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R903.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R903.html",
 		"type": "rare",
 		"units": [
 			354,
@@ -4415,13 +4415,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R896.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R896.html"
 	},
 	{
 		"tag": "萬聖節",
-		"tw-name": "萬聖節轉蛋",
-		"jp-name": "ハロウィンガチャ",
-		"en-name": "Halloween Capsules",
+		"tw_name": "萬聖節轉蛋",
+		"jp_name": "ハロウィンガチャ",
+		"en_name": "Halloween Capsules",
 		"img": "https://i.imgur.com/PQ8cC2O.png",
 		"rate": [
 			7000,
@@ -4496,14 +4496,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R762.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R762.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R762.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R762.html"
 	},
 	{
 		"tag": "聖誕",
-		"tw-name": "聖誕美少女",
-		"jp-name": "クリスマスギャルズ",
-		"en-name": "Xmas Gals",
+		"tw_name": "聖誕美少女",
+		"jp_name": "クリスマスギャルズ",
+		"en_name": "Xmas Gals",
 		"img": "https://i.imgur.com/2YSC6YJ.png",
 		"rate": [
 			7000,
@@ -4575,13 +4575,13 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R776.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R776.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R776.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R776.html"
 	},
 	{
-		"tw-name": "破壞者祭",
-		"jp-name": "バスターズ祭",
-		"en-name": "BUSTERFEST",
+		"tw_name": "破壞者祭",
+		"jp_name": "バスターズ祭",
+		"en_name": "BUSTERFEST",
 		"img": "https://i.imgur.com/aihuRfD.png",
 		"rate": [
 			6800,
@@ -4685,14 +4685,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R856.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R856.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R856.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R856.html"
 	},
 	{
 		"tag": "紅色破壞者",
-		"tw-name": "紅色破壞者",
-		"jp-name": "レッドバスターズ",
-		"en-name": "Red Busters",
+		"tw_name": "紅色破壞者",
+		"jp_name": "レッドバスターズ",
+		"en_name": "Red Busters",
 		"img": "https://i.imgur.com/QNb5sLa.png",
 		"rate": [
 			7000,
@@ -4815,14 +4815,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R696.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R696.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R696.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R696.html"
 	},
 	{
 		"tag": "飄浮破壞者",
-		"tw-name": "飄浮破壞者",
-		"jp-name": "エアバスターズ",
-		"en-name": "Air Busters",
+		"tw_name": "飄浮破壞者",
+		"jp_name": "エアバスターズ",
+		"en_name": "Air Busters",
 		"img": "https://i.imgur.com/YFarjIR.png",
 		"rate": [
 			7000,
@@ -4896,14 +4896,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R452.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R452.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R452.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R452.html"
 	},
 	{
 		"tag": "鋼鐵破壞者",
-		"tw-name": "鋼鐵破壞者",
-		"jp-name": "メタルバスターズ",
-		"en-name": "Metal Busters",
+		"tw_name": "鋼鐵破壞者",
+		"jp_name": "メタルバスターズ",
+		"en_name": "Metal Busters",
 		"img": "https://imgur.com/cGGGSMy.png",
 		"rate": [
 			7000,
@@ -5008,14 +5008,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R906.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R906.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R906.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R906.html"
 	},
 	{
 		"tag": "波動破壞者",
-		"tw-name": "波動破壞者",
-		"jp-name": "波動バスターズ",
-		"en-name": "Wave Busters",
+		"tw_name": "波動破壞者",
+		"jp_name": "波動バスターズ",
+		"en_name": "Wave Busters",
 		"img": "https://i.imgur.com/7MESzzI.png",
 		"rate": [
 			7000,
@@ -5093,14 +5093,14 @@
 			495,
 			523
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R523.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R523.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R523.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R523.html"
 	},
 	{
 		"tag": "超生命體破壞者",
-		"tw-name": "超生命體破壞者",
-		"jp-name": "超生命体バスターズ",
-		"en-name": "Colossus Busters",
+		"tw_name": "超生命體破壞者",
+		"jp_name": "超生命体バスターズ",
+		"en_name": "Colossus Busters",
 		"img": "https://i.imgur.com/w1JYffg.png",
 		"rate": [
 			7000,
@@ -5172,14 +5172,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R772.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R772.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R772.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R772.html"
 	},
 	{
 		"tag": "超國王祭",
-		"tw-name": "超國王祭",
-		"jp-name": "超国王祭",
-		"en-name": "Dynasty Fest",
+		"tw_name": "超國王祭",
+		"jp_name": "超国王祭",
+		"en_name": "Dynasty Fest",
 		"img": "https://i.imgur.com/Z6LOBdg.png",
 		"rate": [
 			6770,
@@ -5286,14 +5286,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R898.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R898.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R898.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R898.html"
 	},
 	{
 		"tag": "女王祭",
-		"tw-name": "女王祭",
-		"jp-name": "女王祭",
-		"en-name": "Royal Fest",
+		"tw_name": "女王祭",
+		"jp_name": "女王祭",
+		"en_name": "Royal Fest",
 		"img": "https://i.imgur.com/SnV6dl8.png",
 		"rate": [
 			6940,
@@ -5379,13 +5379,13 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R861.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R861.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R861.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R861.html"
 	},
 	{
-		"tw-name": "神劍闖江湖－明治劍客浪漫譚－",
-		"jp-name": "るろうに剣心 －明治剣客浪漫譚－",
-		"en-name": "Rurouni Kenshin",
+		"tw_name": "神劍闖江湖－明治劍客浪漫譚－",
+		"jp_name": "るろうに剣心 －明治剣客浪漫譚－",
+		"en_name": "Rurouni Kenshin",
 		"img": "https://i.imgur.com/jPny0Ou.png",
 		"rate": [
 			7000,
@@ -5393,7 +5393,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R905.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R905.html",
 		"collab": [
 			"神劍闖江湖－明治劍客浪漫譚－",
 			"/collab/Rurouni_Kenshin__Meiji_Swordsman_Romantic_Story.html"
@@ -5453,11 +5453,11 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R888.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R888.html"
 	},
 	{
-		"tw-name": "神魔之塔",
-		"en-name": "Tower of Saviors",
+		"tw_name": "神魔之塔",
+		"en_name": "Tower of Saviors",
 		"img": "https://i.imgur.com/VXmz8Ce.png",
 		"rate": [
 			7000,
@@ -5517,14 +5517,14 @@
 			495,
 			523
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R879.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R879.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R879.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R879.html"
 	},
 	{
 		"tag": "公主",
-		"tw-name": "公主踢騎士Sweets",
-		"jp-name": "ケリ姫スイーツ",
-		"en-name": "Princess Punt",
+		"tw_name": "公主踢騎士Sweets",
+		"jp_name": "ケリ姫スイーツ",
+		"en_name": "Princess Punt",
 		"img": "https://i.imgur.com/zPlPdwJ.png",
 		"rate": [
 			7000,
@@ -5553,14 +5553,14 @@
 			67,
 			68
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R482.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R482.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R482.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R482.html"
 	},
 	{
 		"tag": "梅露可物語",
-		"tw-name": "梅露可物語",
-		"jp-name": "メルクストーリ",
-		"en-name": "Merc Storia",
+		"tw_name": "梅露可物語",
+		"jp_name": "メルクストーリ",
+		"en_name": "Merc Storia",
 		"img": "https://i.imgur.com/5yvGQZK.png",
 		"rate": [
 			7000,
@@ -5603,14 +5603,14 @@
 			118,
 			119
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R414.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R414.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R414.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R414.html"
 	},
 	{
 		"tag": "悠閒世界樹",
-		"tw-name": "悠閒世界樹",
-		"jp-name": "ゆるドラシル",
-		"en-name": "Yurudrasil",
+		"tw_name": "悠閒世界樹",
+		"jp_name": "ゆるドラシル",
+		"en_name": "Yurudrasil",
 		"img": "https://i.imgur.com/kj4q6uM.png",
 		"rate": [
 			7000,
@@ -5618,7 +5618,7 @@
 			500,
 			0
 		],
-		"tw-url": "",
+		"tw_url": "",
 		"collab": [
 			"悠閒世界樹",
 			"/collab/Yurudrasil.html"
@@ -5631,13 +5631,13 @@
 			233,
 			232
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R049.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R049.html"
 	},
 	{
 		"tag": "曼波魚",
-		"tw-name": "活下去！曼波魚！",
-		"jp-name": "生きろ！マンボウ！",
-		"en-name": "Survive! Mola Mola!",
+		"tw_name": "活下去！曼波魚！",
+		"jp_name": "生きろ！マンボウ！",
+		"en_name": "Survive! Mola Mola!",
 		"img": "https://i.imgur.com/zk0IwbX.png",
 		"rate": [
 			7000,
@@ -5645,7 +5645,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R486.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R486.html",
 		"history": [
 			"2023/8/28(11:00)~9/11(10:59) 活下去曼波魚 5% [9/8(11:00)~9/11(10:59) 5% 必中]",
 			"2022/8/29(11:00)~9/12(10:59) 活下去曼波魚 5% [2022/9/9(11:00)~9/12(10:59) 5% 必中]",
@@ -5713,13 +5713,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R496.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R496.html"
 	},
 	{
 		"tag": "消滅都市",
-		"tw-name": "消滅都市",
-		"jp-name": "消滅都市",
-		"en-name": "Shoumetsu Toshi",
+		"tw_name": "消滅都市",
+		"jp_name": "消滅都市",
+		"en_name": "Shoumetsu Toshi",
 		"img": "https://i.imgur.com/Mqq3Ddb.png",
 		"rate": [
 			7000,
@@ -5727,7 +5727,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R411.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R411.html",
 		"history": [
 			"2022/10/24(11:00)~11/7(10:59) 消滅都市合作轉蛋 5% [碎] [2022/11/4(11:00)~11/7(10:59) 5% 必中]",
 			"2021/10/25(11:00)~2021/11/8(10:59) 消滅都市合作轉蛋 5% [11/5(11:00)~11/8(10:59) 5% 必中]",
@@ -5803,13 +5803,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R505.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R505.html"
 	},
 	{
 		"tag": "越南大戰",
-		"tw-name": "越南大戰DEFENSE",
-		"jp-name": "メタルスラッグディフェンス",
-		"en-name": "Metal Slug Defense",
+		"tw_name": "越南大戰DEFENSE",
+		"jp_name": "メタルスラッグディフェンス",
+		"en_name": "Metal Slug Defense",
 		"img": "https://i.imgur.com/nhRwTmQ.png",
 		"rate": [
 			7000,
@@ -5817,7 +5817,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R045.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R045.html",
 		"history": [
 			"2017/11/1~2017/11/15 越南大戰合作轉蛋 5%(2017/11/10~2017/11/15 4%必中)",
 			"2015/10/6~2015/11/4 越南大戰合作轉蛋(2015/10/6~2015/10/14 必中)"
@@ -5897,13 +5897,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R864.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R864.html"
 	},
 	{
 		"tag": "小圓",
-		"tw-name": "魔法少女小圓",
-		"jp-name": "魔法少女まどか☆マギカ",
-		"en-name": "Puella Magi Madoka Magica",
+		"tw_name": "魔法少女小圓",
+		"jp_name": "魔法少女まどか☆マギカ",
+		"en_name": "Puella Magi Madoka Magica",
 		"img": "https://i.imgur.com/sKOYLIO.png",
 		"rate": [
 			7000,
@@ -6007,14 +6007,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R621.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R621.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R621.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R621.html"
 	},
 	{
 		"tag": "Crash",
-		"tw-name": "Crash Fever",
-		"jp-name": "クラッシュフィーバー",
-		"en-name": "Crash Fever",
+		"tw_name": "Crash Fever",
+		"jp_name": "クラッシュフィーバー",
+		"en_name": "Crash Fever",
 		"img": "https://i.imgur.com/Q5jd2jG.png",
 		"rate": [
 			7000,
@@ -6078,13 +6078,13 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R546.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R546.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R546.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R546.html"
 	},
 	{
 		"tag": "Fate",
-		"tw-name": "Fate/stay night [HF]",
-		"en-name": "Fate/stay night Heaven's Feel",
+		"tw_name": "Fate/stay night [HF]",
+		"en_name": "Fate/stay night Heaven's Feel",
 		"img": "https://i.imgur.com/4dPvKrG.png",
 		"rate": [
 			7000,
@@ -6092,7 +6092,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R805.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R805.html",
 		"history": [
 			"2023/4/10(11:00)~4/24(10:59) Fate/stay night [HF]合作轉蛋 5% [4/21(11:00)~4/24(10:59) 5% 必中]",
 			"2019/2/25~2019/3/11 Fate/stay night [HF]合作轉蛋 5%(2019/3/6~2019/3/11 5%必中)"
@@ -6175,13 +6175,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R788.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R788.html"
 	},
 	{
 		"tag": "實況野球",
-		"tw-name": "實況野球",
-		"jp-name": "実況パワフルプロ野球",
-		"en-name": "Power Pro Baseball",
+		"tw_name": "實況野球",
+		"jp_name": "実況パワフルプロ野球",
+		"en_name": "Power Pro Baseball",
 		"size": "860x241",
 		"img": "https://i.imgur.com/MjGI3aj.png",
 		"rate": [
@@ -6229,14 +6229,14 @@
 			38,
 			37
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R265.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R265.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R265.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R265.html"
 	},
 	{
 		"tag": "福音戰士",
-		"tw-name": "福音戰士合作轉蛋",
-		"jp-name": "エヴァンゲリオンガチャ",
-		"en-name": "Neon Genesis Evangelion",
+		"tw_name": "福音戰士合作轉蛋",
+		"jp_name": "エヴァンゲリオンガチャ",
+		"en_name": "Neon Genesis Evangelion",
 		"img": "https://i.imgur.com/WtY7mH8.png",
 		"rate": [
 			7000,
@@ -6244,7 +6244,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R820.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R820.html",
 		"history": [
 			"2020/8/10~2020/8/17 福音戰士合作轉蛋 5% (2020/8/14~2020/8/17 5% 必中)",
 			"2019/7/18~2019/8/1 福音戰士合作轉蛋 5%(2019/7/21(15:00)~2019/8/1 5%必中)"
@@ -6324,13 +6324,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R818.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R818.html"
 	},
 	{
 		"tag": "福音戰士",
-		"tw-name": "福音戰士合作轉蛋2nd",
-		"jp-name": "エヴァンゲリオンガチャ 2nd",
-		"en-name": "Neon Genesis Evangelion 2nd",
+		"tw_name": "福音戰士合作轉蛋2nd",
+		"jp_name": "エヴァンゲリオンガチャ 2nd",
+		"en_name": "Neon Genesis Evangelion 2nd",
 		"img": "https://i.imgur.com/jtY1Qvd.png",
 		"rate": [
 			7000,
@@ -6338,7 +6338,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R821.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R821.html",
 		"history": [
 			"2020/8/10~2020/8/17 福音戰士合作轉蛋 5% (2020/8/14~2020/8/17 5% 必中)",
 			"2019/7/18~2019/8/1 福音戰士合作轉蛋 5%(2019/7/21(15:00)~2019/8/1 5%必中)"
@@ -6416,13 +6416,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R819.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R819.html"
 	},
 	{
 		"tag": "聖魔大戰",
-		"tw-name": "聖魔大戰",
-		"jp-name": "ビックリマン",
-		"en-name": "Bikkuriman",
+		"tw_name": "聖魔大戰",
+		"jp_name": "ビックリマン",
+		"en_name": "Bikkuriman",
 		"img": "https://i.imgur.com/0Z9ksXk.png",
 		"rate": [
 			6970,
@@ -6497,14 +6497,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R913.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R913.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R913.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R913.html"
 	},
 	{
 		"tag": "BLUE TEAM",
-		"tw-name": "快打旋風V CE合作轉蛋 BLUE TEAM",
-		"jp-name": "ストリートファイターVガチャ BLUE TEAM",
-		"en-name": "Street Fighter V BLUE TEAM",
+		"tw_name": "快打旋風V CE合作轉蛋 BLUE TEAM",
+		"jp_name": "ストリートファイターVガチャ BLUE TEAM",
+		"en_name": "Street Fighter V BLUE TEAM",
 		"img": "https://i.imgur.com/lleQPVM.png",
 		"rate": [
 			6970,
@@ -6513,7 +6513,7 @@
 			30,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R777.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R777.html",
 		"history": [
 			"2022/11/28(11:00)~12/12(10:59) 快打旋風V CE合作轉蛋 BLUE TEAM 5%/0.3% [碎] (新增: 櫻) [2022/11/28(11:00)~12/12(10:59) 5%/0.3% 必中]"
 		],
@@ -6592,13 +6592,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R763.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R763.html"
 	},
 	{
 		"tag": "RED TEAM",
-		"tw-name": "快打旋風V CE合作轉蛋 RED TEAM",
-		"jp-name": "ストリートファイターVガチャ RED TEAM",
-		"en-name": "Street Fighter V RED TEAM",
+		"tw_name": "快打旋風V CE合作轉蛋 RED TEAM",
+		"jp_name": "ストリートファイターVガチャ RED TEAM",
+		"en_name": "Street Fighter V RED TEAM",
 		"img": "https://i.imgur.com/gWWYI7A.png",
 		"rate": [
 			6970,
@@ -6607,7 +6607,7 @@
 			30,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R778.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R778.html",
 		"history": [
 			"2022/11/28(11:00)~12/12(10:59) 快打旋風V CE合作轉蛋 RED TEAM 5%/0.3% [碎] (新增: 路克) [2022/11/28(11:00)~12/12(10:59) 5%/0.3% 必中]"
 		],
@@ -6686,13 +6686,13 @@
 			31,
 			30
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R764.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R764.html"
 	},
 	{
 		"tag": "初音",
-		"tw-name": "初音未來",
-		"jp-name": "初音ミク",
-		"en-name": "Hatsune Miku",
+		"tw_name": "初音未來",
+		"jp_name": "初音ミク",
+		"en_name": "Hatsune Miku",
 		"img": "https://i.imgur.com/mybKLFK.png",
 		"rate": [
 			7000,
@@ -6778,14 +6778,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R850.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R850.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R850.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R850.html"
 	},
 	{
 		"tag": "亂馬",
-		"tw-name": "亂馬1/2",
-		"jp-name": "らんま1/2",
-		"en-name": "Ranma 1/2",
+		"tw_name": "亂馬1/2",
+		"jp_name": "らんま1/2",
+		"en_name": "Ranma 1/2",
 		"img": "https://i.imgur.com/APRMTCx.png",
 		"rate": [
 			7000,
@@ -6793,7 +6793,7 @@
 			500,
 			0
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R757.html",
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R757.html",
 		"history": [
 			"2022/10/10(11:00)~10/24(10:59) 亂馬1/2合作轉蛋 5% [碎] (新增: 早乙女亂馬（體操選手）) [2022/10/19(11:00)~10/24(10:59) 5% 必中]",
 			"2021/5/17~2021/5/31 亂馬1/2合作轉蛋 5% (2021/5/28~2021/5/31 5% 必中)"
@@ -6871,13 +6871,13 @@
 			38,
 			37
 		],
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R748.html"
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R748.html"
 	},
 	{
 		"tag": "大運動會",
-		"tw-name": "熱血！大運動會 紅隊",
-		"jp-name": "熱血！大運動会ガチャ 赤組",
-		"en-name": "River City Clash Red Team",
+		"tw_name": "熱血！大運動會 紅隊",
+		"jp_name": "熱血！大運動会ガチャ 赤組",
+		"en_name": "River City Clash Red Team",
 		"img": "https://i.imgur.com/ICQMhtn.png",
 		"rate": [
 			7000,
@@ -6948,14 +6948,14 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R848.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R848.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R848.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R848.html"
 	},
 	{
 		"tag": "大運動會",
-		"tw-name": "熱血！大運動會 白隊",
-		"jp-name": "熱血！大運動会ガチャ 白組",
-		"en-name": "River City Clash White Team",
+		"tw_name": "熱血！大運動會 白隊",
+		"jp_name": "熱血！大運動会ガチャ 白組",
+		"en_name": "River City Clash White Team",
 		"img": "https://i.imgur.com/r8NOxMy.png",
 		"rate": [
 			7000,
@@ -7026,13 +7026,13 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R849.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R849.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R849.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R849.html"
 	},
 	{
-		"tw-name": "龍族撲克",
-		"jp-name": "ドラゴンポーカーコラボガチャ",
-		"en-name": "Dragon Poker",
+		"tw_name": "龍族撲克",
+		"jp_name": "ドラゴンポーカーコラボガチャ",
+		"en_name": "Dragon Poker",
 		"img": "https://i.imgur.com/4PtV8GA.png",
 		"rate": [
 			7000,
@@ -7079,7 +7079,7 @@
 			31,
 			30
 		],
-		"tw-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R012.html",
-		"jp-url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R012.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R012.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R012.html"
 	}
 ]

@@ -137,7 +137,7 @@ module.exports = class extends SiteGenerator {
 					contents = r.styles;
 				}
 			} else if (file.endsWith('.html')) {
-				contents = this.template(contents, {'nav-bar-active': active_map[file]});
+				contents = this.template(contents, {'nav_bar_active': active_map[file]});
 				if (htmlmin) {
 					contents = htmlmin.minify(contents, {
 						collapseBooleanAttributes: true,

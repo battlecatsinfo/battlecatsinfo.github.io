@@ -20,7 +20,7 @@ module.exports = class extends SiteGenerator {
 		this.gacha_pools = {};
 		this.map_stars = {};
 		for (const p of JSON.parse(this.load('pools.json')))
-			this.gacha_pools[p['tw-name']] = p;
+			this.gacha_pools[p['tw_name']] = p;
 
 		const self = this;
 		return Promise.all([
@@ -37,10 +37,10 @@ module.exports = class extends SiteGenerator {
 		const nav_menu = [];
 		for (let i = 0; i < collabs.length; i++) {
 			const collab = collabs[i];
-			const fn = 'collab/' + to_path(collab['en-name']) + '.html';
+			const fn = 'collab/' + to_path(collab['en_name']) + '.html';
 			nav_menu.push({
 				path: fn,
-				name: collab['tw-name'],
+				name: collab['tw_name'],
 			});
 			const pools = (collab['pools'] || []).reduce((pools, p) => {
 				let pool = this.gacha_pools[p];
@@ -49,7 +49,7 @@ module.exports = class extends SiteGenerator {
 					return pools;
 				}
 				pool = Object.assign({}, pool);
-				pool.path = to_path(pool['en-name']);
+				pool.path = to_path(pool['en_name']);
 				[pool.width, pool.height] = pool.size ? pool.size.split('x') : [860, 240];
 				pools.push(pool);
 				return pools;
@@ -115,9 +115,9 @@ module.exports = class extends SiteGenerator {
 			}));
 		}
 		this.write_template('html/collabs.html', 'collabs.html', {
-			'nav-menu': nav_menu,
-			'japan-collab-history': Object.entries(data['jp-history']).sort(),
-			'taiwan-collab-history': Object.entries(data['tw-history']).sort(),
+			nav_menu,
+			japan_collab_history: Object.entries(data['jp_history']).sort(),
+			taiwan_collab_history: Object.entries(data['tw_history']).sort(),
 		});
 	}
 	async load_map() {

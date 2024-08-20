@@ -164,12 +164,12 @@ module.exports = class extends SiteGenerator {
 				console.assert(false);
 			}
 
-			const path = 'gacha/' + to_path(pool['en-name']) + '.html';
+			const path = 'gacha/' + to_path(pool['en_name']) + '.html';
 
 			this.write_string(path, this.template(
 				gacha_template,
 				{
-					'nav-bar-active': 'gacha',
+					'nav_bar_active': 'gacha',
 					pool,
 					width,
 					height,
@@ -178,7 +178,7 @@ module.exports = class extends SiteGenerator {
 			));
 			gachas.push({
 				path,
-				name: pool['tw-name'],
+				name: pool['tw_name'],
 				img: pool['img'],
 				width,
 				height,
@@ -186,7 +186,7 @@ module.exports = class extends SiteGenerator {
 		}
 
 		this.write_template('html/gachas.html', 'gachas.html', {
-			'nav-bar-active': 'gacha',
+			'nav_bar_active': 'gacha',
 			'gachas': gachas,
 		});
 	}
@@ -250,7 +250,7 @@ module.exports = class extends SiteGenerator {
 				}
 
 				for (const [name, idSet] of Object.entries(category_set)) {
-					if (name !== O['tw-name'] && idSet.has(u)) {
+					if (name !== O['tw_name'] && idSet.has(u)) {
 						if (out[name]) {
 							out[name].push(u);
 						} else {

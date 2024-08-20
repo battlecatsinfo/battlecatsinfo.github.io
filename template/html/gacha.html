@@ -1,8 +1,8 @@
 {{#> common.html}}
 
-{{#*inline "title"}}{{pool.tw-name}}{{/inline}}
+{{#*inline "title"}}{{pool.tw_name}}{{/inline}}
 
-{{#*inline "description"}}{{pool.tw-name}}轉蛋詳細資訊{{/inline}}
+{{#*inline "description"}}{{pool.tw_name}}轉蛋詳細資訊{{/inline}}
 
 {{#*inline "og"}}
 	{{~> @partial-block}}
@@ -129,14 +129,14 @@
 {{#*inline "content"}}
 	<h1 style="font-size:max(12px,2.2vw);">
 		{{#with pool as |pool|}}
-		{{#if pool.tw-name}}
-		{{pool.tw-name}}<br>
+		{{#if pool.tw_name}}
+		{{pool.tw_name}}<br>
 		{{/if}}
-		{{#if (and pool.jp-name (op pool.jp-name '!==' pool.tw-name))}}
-		{{pool.jp-name}}<br>
+		{{#if (and pool.jp_name (op pool.jp_name '!==' pool.tw_name))}}
+		{{pool.jp_name}}<br>
 		{{/if}}
-		{{#if (and pool.en-name (op pool.en-name '!==' pool.tw-name) (op pool.en-name '!==' pool.jp-name))}}
-		{{pool.en-name}}<br>
+		{{#if (and pool.en_name (op pool.en_name '!==' pool.tw_name) (op pool.en_name '!==' pool.jp_name))}}
+		{{pool.en_name}}<br>
 		{{/if}}
 		{{/with}}
 	</h1>
@@ -359,13 +359,13 @@
 	</p>
 
 	{{/if}}
-	{{#if (op pool.tw-url "||" pool.jp-url)}}
+	{{#if (op pool.tw_url "||" pool.jp_url)}}
 	<p style="font-size:.8em">
-		{{#if pool.tw-url}}
-		<a href="{{pool.tw-url}}">繁中版官方介紹</a><br>
+		{{#if pool.tw_url}}
+		<a href="{{pool.tw_url}}">繁中版官方介紹</a><br>
 		{{/if}}
-		{{#if pool.jp-url}}
-		<a href="{{pool.jp-url}}">日文版官方介紹</a><br>
+		{{#if pool.jp_url}}
+		<a href="{{pool.jp_url}}">日文版官方介紹</a><br>
 		{{/if}}
 		（連結可能失效）
 	</p>
