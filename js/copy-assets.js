@@ -71,7 +71,8 @@ const sources = [
 	'combo.js',
 
 	'crown.js',
-	'gif.js',
+	'gif.min.js',
+	'gif.worker.js',
 	'imgcut.js',
 	'anim.min.js',
 	'stage.js',
