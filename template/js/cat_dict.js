@@ -12,7 +12,7 @@ const text_e = document.getElementById('text');
 const not_e = document.getElementById('not-f');
 const fav_only = document.getElementById('fav-only');
 const ex_only = document.getElementById('ex-only');
-const cat_limits = new Set([ /*{{{limited-cat}}}*/ ]);
+const cat_limits = new Set([ /*{{{limited_cat}}}*/ ]);
 let fav_setting = false;
 
 function t3str(x) {

@@ -1,3 +1,4 @@
+{{var "stage_data" (loadJSON "stage.json") ~}}
 const
 	loader = document.getElementById('loader'),
 	stages_top = [
@@ -20,7 +21,7 @@ const
 		["傳奇故事0", "レジェンドストーリー0"],
 		["異次元競技場", "異次元コロシアム"]
 	],
-	eggs = new Set({{{toJSON egg-set}}}),
+	eggs = new Set({{{toJSON (lookup stage_data "egg_set")}}}),
 	MC_TW_NAME = 0,
 	MC_JP_NAME = 1,
 	MC_GOLDCPU = 2,
@@ -56,7 +57,7 @@ const
 	SM_LIMIT = 12,
 
 	QQ = '？？？',
-	conditions = {{{toJSON conditions}}},
+	conditions = {{{toJSON (lookup stage_data "conditions")}}},
 	M1 = document.getElementById("M1"),
 	M2 = document.getElementById("M2"),
 	M3 = document.getElementById("M3"),

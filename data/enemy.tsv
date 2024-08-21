@@ -1,4 +1,4 @@
-id	chinese-name	japanese-name	fandom-name	description	health-point	knockbacks	speed	range	preswing-1	preswing-2	preswing-3	attack-power-1	attack-power-2	attack-power-3	time-between-attacks	backswing	attack-frequency	attack-type	trait	ability-enabled	long-distance-1	long-distance-2	immunity	ability	earn	star
+id	chinese_name	japanese_name	fandom_name	description	health_point	knockbacks	speed	range	preswing_1	preswing_2	preswing_3	attack_power_1	attack_power_2	attack_power_3	time_between_attacks	backswing	attack_frequency	attack_type	trait	ability_enabled	long_distance_1	long_distance_2	immunity	ability	earn	star
 0	狗仔	わんこ	Doge	擅自把貓咪當敵人的柴犬。|雖然也有溫柔的一面，像是每年|都不會忘記送貓咪生日禮物。另外，|其實是每年都挑戰大學學測的考生。	90	3	5	110	8	0	0	8	0	0	40	10	47	1	256	4			0		15	
 1	扭扭蛇	にょろ	Snache	長得像蛇的蛇。紋路是用水彩畫的，|也就是說…很怕水。|但是請注意此小道消息|與本遊戲無關。	100	3	8	110	8	0	0	15	0	0	30	8	37	1	256	4			0		30	
 2	團結筷子幫	例のヤツ	Those_Guys	一人沒膽所以三人一起參戰。|第一人是從網路上報名「貓咪大戰爭」|的挑戰者找來的。|然後三個人都是土豪。	200	1	10	110	10	0	0	20	0	0	20	20	30	1	256	4			0		75	

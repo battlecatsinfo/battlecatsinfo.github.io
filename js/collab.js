@@ -12,7 +12,7 @@ module.exports = class extends SiteGenerator {
 		try {
 			fs.mkdirSync(resolve(OUTPUT_DIR, 'collab'));
 		} catch (e) {
-			if (e.errno != -4075) 
+			if (e.errno != -4075)
 				throw e;
 		}
 
@@ -20,7 +20,7 @@ module.exports = class extends SiteGenerator {
 		this.gacha_pools = {};
 		this.map_stars = {};
 		for (const p of JSON.parse(this.load('pools.json')))
-			this.gacha_pools[p['tw-name']] = p;
+			this.gacha_pools[p.tw_name] = p;
 
 		const self = this;
 		return Promise.all([
@@ -33,28 +33,28 @@ module.exports = class extends SiteGenerator {
 	write_collabs() {
 		const collab_template = this.load_template('html/collab.html');
 		const data = JSON.parse(this.load('collab.json'));
-		const collabs = data['collabs'];
+		const collabs = data.collabs;
 		const nav_menu = [];
 		for (let i = 0; i < collabs.length; i++) {
 			const collab = collabs[i];
-			const fn = 'collab/' + to_path(collab['en-name']) + '.html';
+			const fn = 'collab/' + to_path(collab.en_name) + '.html';
 			nav_menu.push({
 				path: fn,
-				name: collab['tw-name'],
+				name: collab.tw_name,
 			});
-			const pools = (collab['pools'] || []).reduce((pools, p) => {
+			const pools = (collab.pools || []).reduce((pools, p) => {
 				let pool = this.gacha_pools[p];
 				if (!pool) {
 					console.warn('collab.js: pool not found:', p);
 					return pools;
 				}
 				pool = Object.assign({}, pool);
-				pool.path = to_path(pool['en-name']);
+				pool.path = to_path(pool.en_name);
 				[pool.width, pool.height] = pool.size ? pool.size.split('x') : [860, 240];
 				pools.push(pool);
 				return pools;
 			}, []);
-			const stages = (collab['stages'] || []).map(s => {
+			const stages = (collab.stages || []).map(s => {
 				const dup_u = new Set();
 				const dup_t = new Set();
 				const dup_r = new Set();
@@ -109,15 +109,15 @@ module.exports = class extends SiteGenerator {
 				};
 			});
 			this.write_string(fn, this.template(collab_template, {
-        collab,
-        pools,
+				collab,
+				pools,
 				stages,
 			}));
 		}
 		this.write_template('html/collabs.html', 'collabs.html', {
-			'nav-menu': nav_menu,
-			'japan-collab-history': Object.entries(data['jp-history']).sort(),
-			'taiwan-collab-history': Object.entries(data['tw-history']).sort(),
+			nav_menu,
+			japan_collab_history: Object.entries(data.jp_history).sort(),
+			taiwan_collab_history: Object.entries(data.tw_history).sort(),
 		});
 	}
 	async load_map() {

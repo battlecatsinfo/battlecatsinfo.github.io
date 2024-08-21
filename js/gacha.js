@@ -131,7 +131,7 @@ module.exports = class extends SiteGenerator {
 		try {
 			fs.mkdirSync(resolve(OUTPUT_DIR, 'gacha'));
 		} catch (e) {
-			if (e.errno != -4075) 
+			if (e.errno != -4075)
 				throw e;
 		}
 
@@ -164,12 +164,11 @@ module.exports = class extends SiteGenerator {
 				console.assert(false);
 			}
 
-			const path = 'gacha/' + to_path(pool['en-name']) + '.html';
+			const path = 'gacha/' + to_path(pool.en_name) + '.html';
 
 			this.write_string(path, this.template(
 				gacha_template,
 				{
-					'nav-bar-active': 'gacha',
 					pool,
 					width,
 					height,
@@ -178,16 +177,15 @@ module.exports = class extends SiteGenerator {
 			));
 			gachas.push({
 				path,
-				name: pool['tw-name'],
-				img: pool['img'],
+				name: pool.tw_name,
+				img: pool.img,
 				width,
 				height,
 			});
 		}
 
 		this.write_template('html/gachas.html', 'gachas.html', {
-			'nav-bar-active': 'gacha',
-			'gachas': gachas,
+			gachas,
 		});
 	}
 	uimg(u) {
@@ -250,7 +248,7 @@ module.exports = class extends SiteGenerator {
 				}
 
 				for (const [name, idSet] of Object.entries(category_set)) {
-					if (name !== O['tw-name'] && idSet.has(u)) {
+					if (name !== O['tw_name'] && idSet.has(u)) {
 						if (out[name]) {
 							out[name].push(u);
 						} else {
@@ -325,10 +323,10 @@ module.exports = class extends SiteGenerator {
 					I = x[1];
 					result.push([
 						-1,
-						I + 667, 
+						I + 667,
 						this.uimg(I),
 						{id: I, name: this.unit_name[I]},
-						r, 
+						r,
 						'',
 						'104',
 						'79',
@@ -505,7 +503,7 @@ module.exports = class extends SiteGenerator {
 				let a;
 				if (v[3].must)
 					a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
-				else 
+				else
 					a = v[4].mul(must_drop_rate).valueOf() / 1000000;
 				S.items.push({
 					bgColor: v[1],
@@ -544,9 +542,9 @@ module.exports = class extends SiteGenerator {
 
 		for (const u of ids) {
 			c++;
-			if (c & 1) 
+			if (c & 1)
 				f = u;
-			else 
+			else
 				S.push([this.get1(f), this.get1(u)]);
 		}
 
@@ -565,28 +563,27 @@ module.exports = class extends SiteGenerator {
 		}
 	}
 	load_unit() {
-		let line, data = this.load('cat.tsv').split('\n'), id = '';
-
 		this.unit_rarity = [];
 		this.egg_set = new Set();
 		this.unit_name = [];
 		this.unit_desc = [];
 
-		for (let i = 1;i < data.length;++i) {
-			line = data[i].split('\t');
-			this.unit_rarity.push(parseInt(line[0], 10));
-			if (line[6])
-				this.egg_set.add(i - 1);
+		let data = this.parse_tsv(this.load('cat.tsv'));
+		let id = 0;
+		for (const cat of data) {
+			this.unit_rarity.push(parseInt(cat.rarity, 10));
+			if (cat.egg_1)
+				this.egg_set.add(id);
+			id++;
 		}
 
-		data = this.load('catstat.tsv').split('\n');
-
-		for (let i = 1;i < data.length;++i) {
-			line = data[i].split('\t');
-			if (id != line[0]) {
-				id = line[0];
-				this.unit_name.push(line[1]);
-				this.unit_desc.push(line[4]);
+		data = this.parse_tsv(this.load('catstat.tsv'));
+		id = null;
+		for (const cat of data) {
+			if (id !== cat.id) {
+				id = cat.id;
+				this.unit_name.push(cat.chinese_name);
+				this.unit_desc.push(cat.description);
 			}
 		}
 	}

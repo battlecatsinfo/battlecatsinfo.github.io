@@ -8,7 +8,6 @@ const modules = new Set([
 	'collab',
 	'copy-assets', 
 	'copy-data', 
-	'esearch', 
 	'gacha', 
 ]);
 
