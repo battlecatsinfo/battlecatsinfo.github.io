@@ -1,4 +1,5 @@
 const units_scheme = {{{toJSON (loadJSON "units_scheme.json")}}};
+const levelcurves = {{{lookup (loadJSON "cat_extras.json") "level_curve"}}};
 
 var def_lv, plus_lv, my_curve, _info, unit_orbs;
 var orb_massive = 0;
