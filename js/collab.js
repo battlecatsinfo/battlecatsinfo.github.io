@@ -35,6 +35,8 @@ module.exports = class extends SiteGenerator {
 		const data = JSON.parse(this.load('collab.json'));
 		const collabs = data['collabs'];
 		const nav_menu = [];
+		const collab_stages = [];
+
 		for (let i = 0; i < collabs.length; i++) {
 			const collab = collabs[i];
 			const fn = 'collab/' + to_path(collab['en-name']) + '.html';
@@ -42,6 +44,20 @@ module.exports = class extends SiteGenerator {
 				path: fn,
 				name: collab['tw-name'],
 			});
+			if (collab['stages']) {
+				collab_stages.push({
+					'name': collab['tw-name'],
+					'stages': collab['stages'].map(s => {
+						const [A, B] = s.split('-');
+						const m = parseInt(A, 10) * 1000 + parseInt(B, 10);
+
+						return {
+							'name': this.map_names[m],
+							'id': s
+						}
+					})
+				});
+			}
 			const pools = (collab['pools'] || []).reduce((pools, p) => {
 				let pool = this.gacha_pools[p];
 				if (!pool) {
@@ -118,6 +134,9 @@ module.exports = class extends SiteGenerator {
 			'nav-menu': nav_menu,
 			'japan-collab-history': Object.entries(data['jp-history']).sort(),
 			'taiwan-collab-history': Object.entries(data['tw-history']).sort(),
+		});
+		this.write_template('html/schedule.html', 'schedule.html', {
+			collab_stages
 		});
 	}
 	async load_map() {

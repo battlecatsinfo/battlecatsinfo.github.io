@@ -18,7 +18,6 @@ const sources = [
 	'help.html',
 	'search.html',
 	'settings.html',
-	'schedule.html',
 	'compare.html',
 	'metal_killer.html',
 	'dpsgraph_png.html',
