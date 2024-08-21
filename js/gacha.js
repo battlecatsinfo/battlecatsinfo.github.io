@@ -565,28 +565,27 @@ module.exports = class extends SiteGenerator {
 		}
 	}
 	load_unit() {
-		let line, data = this.load('cat.tsv').split('\n'), id = '';
-
 		this.unit_rarity = [];
 		this.egg_set = new Set();
 		this.unit_name = [];
 		this.unit_desc = [];
 
-		for (let i = 1;i < data.length;++i) {
-			line = data[i].split('\t');
-			this.unit_rarity.push(parseInt(line[0], 10));
-			if (line[6])
-				this.egg_set.add(i - 1);
+		let data = this.parse_tsv(this.load('cat.tsv'));
+		let id = 0;
+		for (const cat of data) {
+			this.unit_rarity.push(parseInt(cat.rarity, 10));
+			if (cat.egg_1)
+				this.egg_set.add(id);
+			id++;
 		}
 
-		data = this.load('catstat.tsv').split('\n');
-
-		for (let i = 1;i < data.length;++i) {
-			line = data[i].split('\t');
-			if (id != line[0]) {
-				id = line[0];
-				this.unit_name.push(line[1]);
-				this.unit_desc.push(line[4]);
+		data = this.parse_tsv(this.load('catstat.tsv'));
+		id = null;
+		for (const cat of data) {
+			if (id !== cat.id) {
+				id = cat.id;
+				this.unit_name.push(cat.chinese_name);
+				this.unit_desc.push(cat.description);
 			}
 		}
 	}
