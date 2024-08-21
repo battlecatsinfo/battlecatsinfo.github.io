@@ -12,7 +12,7 @@ const text_e = document.getElementById('text');
 const not_e = document.getElementById('not-f');
 const fav_only = document.getElementById('fav-only');
 const ex_only = document.getElementById('ex-only');
-const cat_limits = new Set([ /*{{{limited-cat}}}*/ ]);
+const limited_cats = new Set([{{lookup (loadJSON "cat_extras.json") "limited_cats"}}]);
 let fav_setting = false;
 
 function t3str(x) {
@@ -110,9 +110,9 @@ loadAllCats().then(_cs => {
 });
 const rarity = document.getElementById('rarity');
 const trait = document.getElementById('trait-f');
+const G0 = document.getElementById('G0');
 const G1 = document.getElementById('G1');
 const G2 = document.getElementById('G2');
-const G3 = document.getElementById('G3');
 
 function ok() {
 	undo.length = 0;
@@ -283,7 +283,7 @@ function ok() {
 	}
 	d = false;
 	const s = new Set();
-	for (i of [G1, G2, G3])
+	for (i of [G0, G1, G2])
 		for (let x of i.getElementsByClassName('selected')) {
 			for (let n of x.value.split(','))
 				s.add(parseInt(n));
@@ -295,7 +295,7 @@ function ok() {
 				results.delete(x);
 	if (!ex_only.classList.contains('selected'))
 		for (x of results)
-			if (cat_limits.has(x))
+			if (limited_cats.has(x))
 				results.delete(x);
 
 	cats_e.textContent = '';

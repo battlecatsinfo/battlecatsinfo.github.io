@@ -138,6 +138,10 @@ module.exports = class extends SiteGenerator {
 		const gacha_template = this.load_template('html/gacha.html');
 		const gachas = [];
 
+		this.categroy_pools = [];
+		this.resident_pools = [];
+		this.collab_pools = [];
+
 		this.fmt = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 5 });
 		this.load_unit();
 
@@ -145,7 +149,7 @@ module.exports = class extends SiteGenerator {
 			const size = pool['size'];
 			const [width, height] = size ? size.split('x') : [860, 240];
 
-			let data;
+			let data, ids;
 			switch (pool['type']) {
 			case 'category':
 				data = this.get_category(pool);
@@ -189,11 +193,28 @@ module.exports = class extends SiteGenerator {
 			'nav-bar-active': 'gacha',
 			'gachas': gachas,
 		});
+		this.write_template('html/cat_dictionary.html', 'cat_dictionary.html', {
+			'categories': [
+				{
+					'name': '特殊',
+					'pools': this.categroy_pools
+				},
+				{
+					'name': '常駐轉蛋池',
+					'pools': this.resident_pools
+				},
+				{
+					'name': '合作轉蛋池',
+					'pools': this.collab_pools
+				}
+			]
+		});
 	}
 	uimg(u) {
 		return this.egg_set.has(u) ? `/img/u/${u}/2.png` : `/img/u/${u}/0.png`;
 	}
 	get_rare(O) {
+		let exclusive_ids = [];
 		const self = this;
 		const units = O['units'];
 		const rarity_desc = [
@@ -272,6 +293,7 @@ module.exports = class extends SiteGenerator {
 					rows: [],
 				});
 				v.sort((a, b) => a - b);
+				exclusive_ids = exclusive_ids.concat(v);
 				for (let i = 0, I = v.length - 1; i < I; i += 2) {
 					S.item_groups.at(-1).rows.push([
 						this.get1(v[i], MUL[v[i]]),
@@ -294,6 +316,12 @@ module.exports = class extends SiteGenerator {
 				});
 			}
 		}
+
+		(O.collab ? this.collab_pools: this.resident_pools).push({
+			'name': O['tw-name'],
+			'units': exclusive_ids.join(',')
+		});
+
 		return S;
 	}
 	count(arr, x) {
@@ -553,7 +581,11 @@ module.exports = class extends SiteGenerator {
 		if (c & 1)
 			S.push([this.get1(f)]);
 
-		return S;
+		this.categroy_pools.push({
+			'name': O['tw-name'],
+			'units': ids.join(',')
+		});
+		return S, ids;
 	}
 	get1(u, rate = 1) {
 		return {

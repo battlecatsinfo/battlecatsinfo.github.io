@@ -471,89 +471,16 @@
 		<button class="btn C">分類</button>
 		<div class="modal">
 			<div class="M">
-				<fieldset id="G1" style="display: flex;flex-wrap: wrap;flex-direction: row;">
-					<legend>特殊</legend>
-					<button value="0,1,2,3,4,5,6,7,8,643">貓咪轉蛋+</button>
-					<button value="37,38,41,46,47,48,49,50,51,52,55,56,58,145,146,147,148,149,197,198,308,325,376,495,523">常駐稀有貓</button>
-					<button value="30,31,32,33,35,36,39,40,61,150,151,152,153,199,307,377,522">常駐激稀有貓</button>
-					<button value="443,444,445,446,447">土龍鑽部隊</button>
-					<button value="129,131,144,200">限定激稀有系列</button>
-					<button value="237,238,239">貓咪軍團支援隊</button>
-					<button value="629,636,645,654,662,667,684,688,694">洗腦貓</button>
-					<button value="91,92,93,94,95,96,97,98,99">狂亂貓</button>
-					<button value="319,695">殺意貓</button>
-					<button value="209,210,211,245,246,247,311,312,313">招福轉蛋</button>
-					<button value="18,21,20,19,14,22,12,13,10,9,23,15,11">EX罐頭購買貓</button>
-					<button value="16,123,24,25,437,462,622">世界/未來/宇宙/魔界掉落貓</button>
-					<button value="130,172,268,323,426,464,532,613,653,691,568">傳說關卡掉落貓</button>
-					<button value="352,383,554">風雲貓咪塔掉落貓</button>
-					<button value="60,78,88,126,154,201,324,379,382,442,452,507,521,527,528,531,539,545,553,581,621,623,630,260,267,284,287,273">降臨和漩渦關卡掉落</button>
-					<button value="656,658,659,663,664,665,669,670,675,676,685,691,697,700,706,707,713,716,717,720,724">遠古的蛋</button>
-					<button value="79,80,81,100,104,109,122,128,132,63,70,74">月份貓</button>
+
+				{{#each categories as |cat|}}
+				<fieldset id="G{{@index}}" style="display: flex;flex-wrap: wrap;flex-direction: row;">
+					<legend>{{cat.name}}</legend>
+					{{#each cat.pools as |pool|}}
+					<button value="{{pool.units}}">{{pool.name}}</button>
+					{{/each}}
 				</fieldset>
-				<fieldset id="G2" style="display: flex;flex-wrap: wrap;flex-direction: row;">
-					<legend>常駐轉蛋池</legend>
-					<button value="269,318,380,529,585,641,690">超級貓咪祭</button>
-					<button value="333,378,441,543,609,657,705">特級貓咪祭</button>
-					<button value="726,213,342,375,635,689">日文版11週年紀念轉蛋</button>
-					<button value="650,651,652,696">心動時分貓咪學園活動轉蛋</button>
-					<button value="202,646">春節活動轉蛋</button>
-					<button value="665,713"> 惡魔的完美新娘活動轉蛋</button>
-					<button value="381,615,616,670">貓咪的暑假活動轉蛋</button>
-					<button value="205,206,207,208,209,210,211,245,246,247,311,312,313">魔物獵人大狩獵活動轉蛋</button>
-					<button value="474,475,476,477,557">聖魔大戰活動轉蛋</button>
-					<button value="626,627,628">G1競馬活動轉蛋</button>
-					<button value="262,263,264,265,266,209,210,211,245,246,247,311,312,313">貓咪拼圖&amp;納豆君(暫譯)活動轉蛋</button>
-					<button value="184,213,342,375">九週年活動轉蛋</button>
-					<button value="461,34,168,169,170,171,240,436,546,625,712">傳說中的不明貓一族</button>
-					<button value="42,43,44,57,59,143,427,455,519,617,668">超激烈爆彈</button>
-					<button value="448,71,72,73,124,125,158,338,496,649,618">戰國武神巴薩拉斯</button>
-					<button value="449,75,76,105,106,107,159,351,502,619,647">電腦學園銀河美少女</button>
-					<button value="450,83,84,85,86,87,177,396,505,620,660">超破壞大帝龍皇因佩拉斯</button>
-					<button value="451,134,135,136,137,138,203,322,525,633,692">超古代勇者超級靈魂勇者</button>
-					<button value="481,194,195,196,212,226,261,431,533,634,698">逆襲的戰士黑暗英雄</button>
-					<button value="493,257,258,259,271,272,316,439,534,642,723">究極降臨巨神宙斯</button>
-					<button value="463,304,305,306,355,417,594,632,674,715">革命軍隊鋼鐵戰團</button>
-					<button value="478,359,360,361,401,569,631,655,719">古靈精怪元素小精靈</button>
-					<button value="544,334,335,336,357,358,607,682,725">絕命美少女怪物萌娘隊</button>
-					<button value="644,588,589,587">情人節淑女們</button>
-					<button value="693,648">白色情人節轉蛋</button>
-					<button value="330,331,595,699,332">復活節嘉年華</button>
-					<button value="661,711">完美新娘</button>
-					<button value="274,275,354,438,494,563,564,614,666,714,276,565,566">夏日美少女團</button>
-					<button value="229,230,302,570,683,228">萬聖節轉蛋</button>
-					<button value="241,242,243,310,526,584,687">聖誕美少女</button>
-					<button value="283,286,397,559,686">破壞者祭</button>
-					<button value="283,620,533,305,212,136,124,105,87,86,76,43,42">紅色破壞者</button>
-					<button value="286,196,143,135,107,106,84,83,75,59">漂浮破壞者</button>
-					<button value="397,316,261,170,138,57">鋼鐵破壞者</button>
-					<button value="559,519,436,258,240,194,72,43">波動破壞者</button>
-					<button value="686,647,649,655,660,668,674,682">超生命體破壞者</button>
-					<button value="586">超國王祭</button>
-					<button value="612">女王祭</button>
-				</fieldset>
-				<fieldset id="G3" style="display: flex;flex-wrap: wrap;flex-direction: row;">
-					<legend>合作轉蛋池</legend>
-					<button value="530,486,485,337,161,160,64,65,66,67,68">公主踢騎士Sweets</button>
-					<button value="506,346,345,344,190,189,188,187,186,185,110,111,112,113,114,115,116,117,118,119">梅露可物語</button>
-					<button value="174,173">活下去！曼波魚！</button>
-					<button value="180,270,341,482,428,429">消滅都市</button>
-					<button value="215,216,217,218,219,220,221,222,223,224,225">越南大戰DEFENSE</button>
-					<button value="288,289,291,290,292,293,440,294,296,297,298,295">魔法少女小圓</button>
-					<button value="326,327">Crash Fever</button>
-					<button value="362,363,364,365,366,367,368,456,460,370,371,372,458,459">劇場版 Fate/stay night</button>
-					<button value="393,394,395,390,391,392">實況野球</button>
-					<button value="412,413,414,487,415,416,488,709,409,410,411,489,490,491,406,407,408,552">福音戰士合作轉蛋</button>
-					<button value="547,548,549,550,551,710,409,410,411,489,490,491,406,407,408,552">福音戰士合作轉蛋2nd</button>
-					<button value="467,468,469,470,471,555,472,556">聖魔大戰</button>
-					<button value="510,512,514,516,517,573,574,680,576,577,578,579,580">快打旋風V CE合作轉蛋 BLUE TEAM</button>
-					<button value="510,511,512,515,571,572,575,681,576,577,578,579,580">快打旋風V CE合作轉蛋 RED TEAM </button>
-					<button value="535,536,537,560,582,583,590,561,591,562,592,593,722">初音未來</button>
-					<button value="596,597,598,599,600,671,605,601,602,603,672">亂馬1/2</button>
-					<button value="249,250,251,252,253,254,255,256,434,567">城與龍</button>
-					<button value="83,105,136,170,194,271,338,359,617,624">熱血！大運動會 紅組</button>
-					<button value="87,107,212,316,401,525,618,625,668,721">熱血！大運動會 白組</button>
-				</fieldset>
+				{{/each}}
+
 				<button class="ok" onclick="ok()">篩選</button>
 				<button onclick="clearAll(event)">清除</button>
 			</div>

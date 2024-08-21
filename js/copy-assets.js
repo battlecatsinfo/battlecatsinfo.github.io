@@ -17,7 +17,6 @@ const sources = [
 	'treasure_list.html',
 	'help.html',
 	'search.html',
-	'cat_dictionary.html',
 	'settings.html',
 	'schedule.html',
 	'compare.html',
