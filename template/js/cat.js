@@ -1197,7 +1197,7 @@ class Form {
 class Enemy {
 	constructor(o) {
 		if (o instanceof Array) {
-			this.i = o[0];
+			this.i = parseInt(o[0], 10);
 			this.name = o[1];
 			this.jp_name = o[2];
 			this.fandom = o[3];
