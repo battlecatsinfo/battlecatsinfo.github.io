@@ -14,6 +14,7 @@ const sources = [
 	'stage3.html',
 	'unit.html',
 	'enemy.html',
+	'esearch.html',
 	'treasure_list.html',
 	'help.html',
 	'search.html',
@@ -79,13 +80,6 @@ const sources = [
 	'anim.min.js',
 	'imgcut.js'
 ];
-const active_map = {
-	'index.html': 'index',
-	'search.html': 'cat',
-	'stage.html': 'stage',
-	'stage2.html': 'stage',
-	'stage3.html': 'stage',
-};
 
 module.exports = class extends SiteGenerator {
 	run({minify = false}) {		
@@ -120,7 +114,7 @@ module.exports = class extends SiteGenerator {
 
 			if (base == 'raw')
 				contents = fs.readFileSync(fsrc);
-			else 
+			else
 				contents = fs.readFileSync(fsrc, 'utf8');
 
 			if (file.endsWith('.css')) {
@@ -135,7 +129,7 @@ module.exports = class extends SiteGenerator {
 					contents = r.styles;
 				}
 			} else if (file.endsWith('.html')) {
-				contents = this.template(contents, {'nav-bar-active': active_map[file]});
+				contents = this.template(contents);
 				if (htmlmin) {
 					contents = htmlmin.minify(contents, {
 						collapseBooleanAttributes: true,

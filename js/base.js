@@ -133,6 +133,12 @@ for (const file of fs.readdirSync(layoutDir)) {
 	});
 }
 
+Handlebars.registerHelper('split', function (...args) {
+	const options = args.pop();
+	const [str, separator, limit] = args;
+	return str.split(separator, limit);
+});
+
 Handlebars.registerHelper('var', function (name, ...args) {
 	const options = args.pop();
 	// {{#var "myvar"}}<b>value</b>{{/var}}

@@ -47,7 +47,7 @@
 {{#*inline "content"}}
 	<h1 style="text-align:center;">合作一覽</h1>
 	<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59 !important;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
-		{{#each nav-menu as |menu|}}
+		{{#each nav_menu as |menu|}}
 		<a href="{{menu.path}}">{{sum @index 1}}. {{menu.name}}</a>
 		{{/each}}
 	</div>
@@ -66,7 +66,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{#each taiwan-collab-history as |hx|}}
+				{{#each taiwan_collab_history as |hx|}}
 				<tr><td colspan="4" class="E">{{hx.[0]}}年</td></tr>
 				{{#each hx.[1] as |dur|}}
 				<tr><td>{{hx.[0]}}</td><td>{{dur.[0]}}</td><td>{{dur.[1]}}</td><td>{{dur.[2]}}</td></tr>
@@ -85,7 +85,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{#each japan-collab-history as |hx|}}
+				{{#each japan_collab_history as |hx|}}
 				<tr><td colspan="4" class="E">{{hx.[0]}}年</td></tr>
 				{{#each hx.[1] as |dur|}}
 				<tr><td>{{hx.[0]}}</td><td>{{dur.[0]}}</td><td>{{dur.[1]}}</td><td>{{dur.[2]}}</td></tr>
