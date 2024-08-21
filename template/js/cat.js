@@ -1377,10 +1377,13 @@ async function getAllEnemies() {
 	res = await res.text();
 	res = res.split('\n');
 
-	const enemies = new Array({{{lookup (loadJSON "cat_extras.json") "num_enemies"}}});
+	const enemies = [];
 
-	for (let i = 1; i <= {{{lookup (loadJSON "cat_extras.json") "num_enemies"}}}; ++i)
-		enemies[i - 1] = new Enemy(res[i].split('\t'));
+	for (let i = 1, end = res.length; i < end; ++i) {
+		const row = res[i];
+		if (!row) { continue; }
+		enemies[i - 1] = new Enemy(row.split('\t'));
+	}
 
 	return enemies;
 }
@@ -1392,10 +1395,13 @@ async function getAllCats() {
 	res = await res.text();
 	res = res.split('\n');
 
-	const cats = new Array({{{lookup (loadJSON "cat_extras.json") "num_cats"}}});
+	const cats = [];
 
-	for (let i = 1; i <= {{{lookup (loadJSON "cat_extras.json") "num_cats"}}}; ++i)
-		cats[i - 1] = new Cat(res[i].split('\t'));
+	for (let i = 1, end = res.length; i < end; ++i) {
+		const row = res[i];
+		if (!row) { continue; }
+		cats[i - 1] = new Cat(row.split('\t'));
+	}
 
 	res = await fetch('/catstat.tsv');
 	if (!res.ok) throw '';
@@ -1407,7 +1413,9 @@ async function getAllCats() {
 		s = '0',
 		end = res.length - 1;
 	for (let i = 1; i < end; ++i) {
-		line = res[i].split('\t');
+		line = res[i];
+		if (!line) { continue; }
+		line = line.split('\t');
 		if (s != line[0]) {
 			s = line[0];
 			lvc = 0;
@@ -1501,9 +1509,9 @@ async function loadAllEnemies() {
 		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
-			db.transaction(["enemy"]).objectStore("enemy").get({{{lookup (loadJSON "cat_extras.json") "num_enemies"}}} - 1).onsuccess = function(e) {
+			db.transaction(["enemy"]).objectStore("enemy").openCursor().onsuccess = function(e) {
 				if (e.target.result) {
-					let es = new Array({{{lookup (loadJSON "cat_extras.json") "num_enemies"}}});
+					const es = [];
 					db.transaction(["enemy"]).objectStore("enemy").openCursor().onsuccess = function(e) {
 						if (e = e.target.result) {
 							es[e.value.i] = new Enemy(e.value);
@@ -1533,9 +1541,9 @@ async function loadAllCats() {
 		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
-			db.transaction(["cats"]).objectStore("cats").get({{{lookup (loadJSON "cat_extras.json") "num_cats"}}} - 1).onsuccess = function(e) {
+			db.transaction(["cats"]).objectStore("cats").openCursor().onsuccess = function(e) {
 				if (e.target.result) {
-					let cats = new Array({{{lookup (loadJSON "cat_extras.json") "num_cats"}}});
+					const cats = [];
 					db.transaction(["cats"]).objectStore("cats").openCursor().onsuccess = function(e) {
 						if (e = e.target.result) {
 							cats[e.value.i] = new Cat(e.value);
