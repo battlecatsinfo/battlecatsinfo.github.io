@@ -46,7 +46,6 @@ const sources = [
 	'and.png',
 	'fav.png',
 
-	'html2canvas.min.js',
 	'utils.js',
 	'navbar-search.js',
 	'gacha.js',
