@@ -78,7 +78,7 @@
 
 		let changed = false;
 		db = await new Promise((resolve, reject) => {
-			const req = indexedDB.open('stage_v2', {{{stage_ver}}});
+			const req = indexedDB.open('stage_v2', {{{lookup (loadJSON "config.json") "stage_ver"}}});
 			req.onupgradeneeded = (event) => {
 				const db = event.target.result;
 				changed = true;

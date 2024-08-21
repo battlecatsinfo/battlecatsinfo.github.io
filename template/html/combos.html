@@ -65,7 +65,7 @@
 		<a class="w3-button w3-teal" style="display: block;color: white !important;" href="https://ponosgames.com/information/appli/battlecats/combo/tw/index.html">官方說明</a>
 		<a class="w3-button w3-deep-purple" style="display: block;color: white !important;" href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=20133">【情報】貓咪大戰爭全聯組統整圖鑑</a>
 	</div>
-	<h1 style="text-align: center;">聯組一覽<br><div style="font-size:0.6em;">Ver {{japan}}</div></h1>
+	<h1 style="text-align: center;">聯組一覽<br><div style="font-size:0.6em;">Ver {{lookup (loadJSON "config.json") "japan"}}</div></h1>
 	<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59 !important;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
 		{{#each combos as |combo type|}}
 		<a href="#{{@index}}">{{sum @index 1}}. {{type}}</a>

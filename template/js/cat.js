@@ -1376,9 +1376,9 @@ async function getAllEnemies() {
 	res = await res.text();
 	res = res.split('\n');
 
-	const enemies = new Array({{{num_enemies}}});
+	const enemies = new Array({{{lookup (loadJSON "cat_extras.json") "num_enemies"}}});
 
-	for (let i = 1; i <= {{{num_enemies}}}; ++i)
+	for (let i = 1; i <= {{{lookup (loadJSON "cat_extras.json") "num_enemies"}}}; ++i)
 		enemies[i - 1] = new Enemy(res[i].split('\t'));
 
 	return enemies;
@@ -1391,9 +1391,9 @@ async function getAllCats() {
 	res = await res.text();
 	res = res.split('\n');
 
-	const cats = new Array({{{num_cats}}});
+	const cats = new Array({{{lookup (loadJSON "cat_extras.json") "num_cats"}}});
 
-	for (let i = 1; i <= {{{num_cats}}}; ++i)
+	for (let i = 1; i <= {{{lookup (loadJSON "cat_extras.json") "num_cats"}}}; ++i)
 		cats[i - 1] = new Cat(res[i].split('\t'));
 
 	res = await fetch('/catstat.tsv');
@@ -1441,7 +1441,7 @@ function onupgradeneeded(e) {
 }
 async function loadCat(id) {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", {{{cat_ver}}});
+		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
 			db.transaction(["cats"]).objectStore("cats").get(id).onsuccess = function(e) {
@@ -1471,7 +1471,7 @@ async function loadCat(id) {
 
 async function loadEnemy(id) {
 	return new Promise((resolve, reject) => {
-		var req = indexedDB.open("db", {{{cat_ver}}});
+		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
 			db.transaction(["enemy"]).objectStore("enemy").get(id).onsuccess = function(e) {
@@ -1497,12 +1497,12 @@ async function loadEnemy(id) {
 
 async function loadAllEnemies() {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", {{{cat_ver}}});
+		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
-			db.transaction(["enemy"]).objectStore("enemy").get({{{num_enemies}}} - 1).onsuccess = function(e) {
+			db.transaction(["enemy"]).objectStore("enemy").get({{{lookup (loadJSON "cat_extras.json") "num_enemies"}}} - 1).onsuccess = function(e) {
 				if (e.target.result) {
-					let es = new Array({{{num_enemies}}});
+					let es = new Array({{{lookup (loadJSON "cat_extras.json") "num_enemies"}}});
 					db.transaction(["enemy"]).objectStore("enemy").openCursor().onsuccess = function(e) {
 						if (e = e.target.result) {
 							es[e.value.i] = new Enemy(e.value);
@@ -1529,12 +1529,12 @@ async function loadAllEnemies() {
 
 async function loadAllCats() {
 	return new Promise(resolve => {
-		var req = indexedDB.open("db", {{{cat_ver}}});
+		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
 		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
 			const db = e.target.result;
-			db.transaction(["cats"]).objectStore("cats").get({{{num_cats}}} - 1).onsuccess = function(e) {
+			db.transaction(["cats"]).objectStore("cats").get({{{lookup (loadJSON "cat_extras.json") "num_cats"}}} - 1).onsuccess = function(e) {
 				if (e.target.result) {
-					let cats = new Array({{{num_cats}}});
+					let cats = new Array({{{lookup (loadJSON "cat_extras.json") "num_cats"}}});
 					db.transaction(["cats"]).objectStore("cats").openCursor().onsuccess = function(e) {
 						if (e = e.target.result) {
 							cats[e.value.i] = new Cat(e.value);

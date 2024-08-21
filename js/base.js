@@ -195,8 +195,6 @@ Handlebars.registerHelper('loadJSON', function (filename, options) {
 	return JSON.parse(SiteGenerator.load(filename));
 });
 
-const gEnv = JSON.parse(fs.readFileSync(resolve(DATA_DIR, 'config.json'), 'utf-8'));
-
 class SiteGenerator {
 	/**
 	 * A compiled template function generated with Handlebars.compile().
@@ -211,7 +209,7 @@ class SiteGenerator {
 		if (typeof tpl === 'string') {
 			tpl = Handlebars.compile(tpl);
 		}
-		return tpl(Object.assign({}, env, gEnv));
+		return tpl(env);
 	}
 	template(...args) {
 		return this.constructor.template.apply(this, args);
