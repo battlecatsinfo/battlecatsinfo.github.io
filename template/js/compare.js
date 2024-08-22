@@ -324,6 +324,10 @@ function numStrX(num) {
 	return _l_f.format(num / 30);
 }
 
+function floor(x) {
+	return ~~x;
+}
+
 function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level */ ) {
 	my_curve = levelcurves[C.info[16]];
 	tby[5].children[I].textContent = `${F.kb} / ${F.speed}`;
@@ -375,6 +379,8 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 		d.append(m);
 		M.appendChild(d);
 	}
+	const has_treasure = F.trait & trait_treasure;
+	let du;
 	for ([i, v] of Object.entries(F.ab)) {
 		switch (parseInt(i, 10)) {
 			case 1:
@@ -438,13 +444,40 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 				W("終結使徒", "y5JJJnJ");
 				break;
 			case 21:
-				W(`${v[0]} % 降攻 ${numStrT(1.2 * v[2])}`, "yRkhAHL");
+				if (has_treasure) {
+					if (F.trait & trait_no_treasure) {
+						du = `${numStrT(floor(v[2]))}（${numStrT(floor(v[2] * 1.2))}）`;
+					} else {
+						du = numStrT(floor(v[2] * 1.2));
+					}
+				} else {
+					du = numStrT(v[2]);
+				}
+				W(`${v[0]} % 降攻 ${du}`, "yRkhAHL");
 				break;
 			case 22:
-				W(`${v[0]} % 暫停 ${numStrT(1.2 * v[1])}`, 'i1pP3Mi');
+				if (has_treasure) {
+					if (F.trait & trait_no_treasure) {
+						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+					} else {
+						du = numStrT(floor(v[1] * 1.2));
+					}
+				} else {
+					du = numStrT(v[1]);
+				}
+				W(`${v[0]} % 暫停 ${du}`, 'i1pP3Mi');
 				break;
 			case 23:
-				W(`${v[0]} % 緩速 ${numStrT(1.2 * v[1])}`, "MyoCUMu");
+				if (has_treasure) {
+					if (F.trait & trait_no_treasure) {
+						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+					} else {
+						du = numStrT(floor(v[1] * 1.2));
+					}
+				} else {
+					du = numStrT(v[1]);
+				}
+				W(`${v[0]} % 緩速 ${du}`, "MyoCUMu");
 				break;
 			case 24:
 				W("只能攻擊", "fe5k3Hw");
@@ -471,10 +504,28 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 				W(v[0] + " % 傳送敵人", "KkYm2Og");
 				break;
 			case 32:
-				W(`${v[0]} % 攻擊無效 ${numStrT(v[1])}`, "8Eq6vPV");
+				if (has_treasure) {
+					if (F.trait & trait_no_treasure) {
+						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+					} else {
+						du = numStrT(floor(v[1] * 1.2));
+					}
+				} else {
+					du = numStrT(v[1]);
+				}
+				W(`${v[0]} % 攻擊無效 ${du}`, "8Eq6vPV");
 				break;
 			case 33:
-				W(`${v[0]} % 詛咒 ${numStrT(1.2 * v[1])}`, "0Rraywl");
+				if (has_treasure) {
+					if (F.trait & trait_no_treasure) {
+						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+					} else {
+						du = numStrT(floor(v[1] * 1.2));
+					}
+				} else {
+					du = numStrT(v[1]);
+				}
+				W(`${v[0]} % 詛咒 ${du}`, "0Rraywl");
 				break;
 			case 37:
 				W("一次攻擊", "VY93npj");
