@@ -216,17 +216,22 @@ function calculate(code = "") {
 		return [isFinite(x) ? x : 0, form];
 	}).sort((a, b) => b[0] - a[0]);
 	renderTable(results);
-	url.searchParams.set("deflv", def_lv);
-	url.searchParams.set("pluslv", plus_lv);
-	sortCode.length && url.searchParams.set("sort", sortCode);
-	const a = "OR" == atkBtn.textContent ? "1" : "0",
-		b = "OR" == traitBtn.textContent ? "1" : "0",
-		c = "OR" == abBtn.textContent ? "1" : "0";
-	url.searchParams.set("ao", a + b + c);
-	if (form_s != 5)
-		url.searchParams.set('form', form_s);
-	if (per_page != 10)
-		url.searchParams.set('per', per_page);
+	if (def_lv != 50) // Lv50 (default)
+		url.searchParams.set("deflv", def_lv); // base level
+	if (plus_lv) // +0 (default)
+		url.searchParams.set("pluslv", plus_lv); // plus level
+	if (sortCode.length && sortCode != '1')
+		url.searchParams.set("sort", sortCode); // sort expression
+	const a = "OR" == atkBtn.textContent ? "1" : "0";
+	const b = "OR" == traitBtn.textContent ? "1" : "0";
+	const c = "OR" == abBtn.textContent ? "1" : "0";
+	const ao = a + b + c;
+	if (ao != '000') // AND/AND/AND (default)
+		url.searchParams.set("ao", ao); // AND/OR switch
+	if (form_s != 5) // highest (default)
+		url.searchParams.set('form', form_s); // all/first form/envolved/true form/highest
+	if (per_page != 10) // 10 result per page (default)
+		url.searchParams.set('per', per_page); // num results per page
 	if (location.href != url.href)
 		history.pushState({}, "", url);
 }

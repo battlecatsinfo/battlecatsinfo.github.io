@@ -167,13 +167,16 @@ function calculate(code = '') {
 		return [isFinite(x) ? x : 0, form];
 	}).sort((a, b) => b[0] - a[0]);
 	renderTable(results);
-	if (sortCode.length)
+	if (sortCode.length && sortCode != '1')
 		url.searchParams.set('sort', sortCode);
 	const a = atkBtn.textContent == 'OR' ? '1' : '0';
 	const b = traitBtn.textContent == 'OR' ? '1' : '0';
 	const c = abBtn.textContent == 'OR' ? '1' : '0';
-	url.searchParams.set('ao', a + b + c);
-	history.pushState({}, "", url);
+	const ao = a + b + c;
+	if (ao != '000') // AND/AND/AND (default)
+		url.searchParams.set('ao', ao);
+	if (location.href != url.href)
+		history.pushState({}, "", url);
 }
 
 function addBtns(parent, s) {
