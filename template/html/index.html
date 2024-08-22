@@ -134,8 +134,10 @@
 			</svg>其他功能</a>
 	</div>
 	<div style="width: 100%;">
-		<p style="color: var(--acolor) !important;">繁中版：{{lookup (loadJSON "config.json") "taiwan"}}
-			<br>日文版：{{lookup (loadJSON "config.json") "japan"}}</p>
+		{{#with (loadJSON "config.json") as |config|}}
+		<p style="color: var(--acolor) !important;">繁中版：{{config.taiwan}}
+			<br>日文版：{{config.japan}}</p>
+		{{/with}}
 
 		<div style="width: 100%;display: flex;flex-direction: row;justify-content: center;gap: 1em;">
 			<a title="Discord" href="https://discord.gg/A9gZeDu2mv">
