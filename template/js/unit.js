@@ -1928,7 +1928,7 @@ async function applyOrb() {
 function def_add_button(table) {
 	const tr = document.createElement('tr');
 	const td = document.createElement('td');
-	td.colSpan = 2;
+	td.colSpan = 3;
 	const btn = document.createElement('button');
 	btn.classList.add('plus-btn');
 	btn.onclick = function() {
@@ -1980,11 +1980,12 @@ const def_options_eff = [
 function calc_def(table) {
 	other_def = {};
 	for (const tr of table.children) {
-		if (tr.children.length == 2) {
-			const idx = tr.firstElementChild.firstElementChild.selectedIndex;
+		const chs = tr.children;
+		if (chs.length == 3) {
+			const idx = chs[0].firstElementChild.selectedIndex;
 			const eff = def_options_eff[idx];
 			if (eff instanceof Array)
-				other_def[idx] = (other_def[idx] || 0) + eff[tr.lastElementChild.firstElementChild.selectedIndex];
+				other_def[idx] = (other_def[idx] || 0) + eff[chs[1].firstElementChild.selectedIndex];
 			else
 				other_def[idx] = eff;
 		}
@@ -2044,8 +2045,22 @@ function def_add_options(table) {
 	const option = document.createElement('option');
 	option.textContent = '-';
 	select2.appendChild(option);
+
 	td = document.createElement('td');
 	td.appendChild(select2);
+	tr.appendChild(td);
+
+	td = document.createElement('td');
+	td.textContent = '移除';
+	td.style.cursor = 'pointer';
+	td.style.color = 'red';
+	td.onclick = function(e) {
+		const tr = e.currentTarget.parentNode;
+		const tbl = tr.parentNode;
+		tbl.removeChild(tr);
+		calc_def(tbl);
+	}
+
 	tr.appendChild(td);
 	table.appendChild(tr);
 }
@@ -2054,12 +2069,12 @@ function renderDef() {
 	const table = document.createElement('table');
 	const tr = document.createElement('tr');
 	const th = document.createElement('td');
-	th.colSpan = 2;
+	th.colSpan = 3;
 	th.textContent = '其他加成';
 	th.classList.add('f');
 	tr.appendChild(th);
 	table.appendChild(tr);
-	def_add_options(table);
+	//def_add_options(table);
 	def_add_button(table);
 	table.classList.add('w3-table', 'w3-centered', 'tcost', 'orb');
 	unit_content.appendChild(table);
