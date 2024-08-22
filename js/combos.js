@@ -8,12 +8,19 @@ module.exports = class extends SiteGenerator {
 		// format combos
 		for (let i = 0, I = combos.length; i < I; i++) {
 			const combo = combos[i];
-			const {name, type, level, units, requirement} = combo;
+			const {name, type, level, units: unitsStr, requirement} = combo;
+
+			const _units = unitsStr.split(',');
+			const units = [];
+			for (let i = 0, I = _units.length; i < I; i += 2) {
+				units.push([parseInt(_units[i], 10), parseInt(_units[i + 1], 10)]);
+			}
+
 			combos[i] = [
 				name,
 				parseInt(type, 10),
 				parseInt(level, 10),
-				units.split(',').map(n => parseInt(n, 10)),
+				units,
 				parseInt(requirement, 10),
 			];
 		}
@@ -27,15 +34,9 @@ module.exports = class extends SiteGenerator {
 		for (const name of combos_scheme.names)
 			combosFormatted[name] = [];
 
-		for (const [name, type, level, _units, req] of combos) {
+		for (const [name, type, level, units, req] of combos) {
 			const desc = `${combos_scheme.descriptions[type].replace('#', combos_scheme.values[type][level])} 【${combos_scheme.levels[level]}】`;
 			const requirement = req > 1 ? combos_scheme.requirements[req] : null;
-
-			const units = [];
-			for (let i = 0, I = _units.length; i < I; i += 2) {
-				units.push([_units[i], _units[i + 1]]);
-			}
-
 			combosFormatted[combos_scheme.names[type]].push({
 				name,
 				desc,
