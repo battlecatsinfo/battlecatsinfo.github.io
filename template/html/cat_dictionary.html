@@ -475,7 +475,10 @@
 				<fieldset id="G{{@index}}" style="display: flex;flex-wrap: wrap;flex-direction: row;">
 					<legend>{{cat.name}}</legend>
 					{{#each cat.pools as |pool|}}
-					<button value="{{pool.units}}">{{pool.name}}</button>
+					<button value="{{#each pool.units as |id|}}
+						{{~id}}
+						{{~#unless @last}},{{/unless}}
+					{{~/each}}">{{pool.name}}</button>
 					{{/each}}
 				</fieldset>
 				{{/each}}

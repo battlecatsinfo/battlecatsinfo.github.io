@@ -317,7 +317,7 @@ module.exports = class extends SiteGenerator {
 
 		(O.collab ? this.collab_pools: this.resident_pools).push({
 			'name': O.tw_name,
-			'units': exclusive_ids.join(',')
+			'units': exclusive_ids,
 		});
 
 		return S;
@@ -581,7 +581,7 @@ module.exports = class extends SiteGenerator {
 
 		this.categroy_pools.push({
 			'name': O.tw_name,
-			'units': ids.join(',')
+			'units': ids,
 		});
 		return S;
 	}
