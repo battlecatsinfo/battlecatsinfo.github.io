@@ -4,10 +4,10 @@ const {resolve} = require('node:path');
 const {SCRIPTS_DIR, OUTPUT_DIR} = require('./js/base.js');
 
 const modules = new Set([
-	'combos',
-	'collab',
 	'copy-assets',
 	'copy-data',
+	'combos',
+	'collab',
 	'gacha',
 ]);
 
