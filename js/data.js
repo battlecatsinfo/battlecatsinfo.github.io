@@ -1,5 +1,5 @@
 const fs = require('node:fs');
-const {resolve} = require('node:path');
+const {resolve, extname} = require('node:path');
 const {DATA_DIR, OUTPUT_DIR, SiteGenerator} = require('./base.js');
 
 const sources = [
@@ -26,7 +26,12 @@ module.exports = class extends SiteGenerator {
 			}
 
 			console.log(`updating ${file}...`);
-			fs.copyFileSync(fsrc, fdst);
+			if (extname(fdst) === '.json') {
+				const data = JSON.parse(this.load(fsrc));
+				this.write_json(fdst, data);
+			} else {
+				fs.copyFileSync(fsrc, fdst);
+			}
 		}
 	}
 };
