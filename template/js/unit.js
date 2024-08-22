@@ -2546,8 +2546,8 @@ function renderCombos() {
 	for (let j = 0; j < combos.length; ++j) {
 		const C = combos[j];
 		const units = C[3];
-		for (let i = 0; i < units.length; i += 2) {
-			if (my_id !== units[i]) { continue; }
+		for (const [id, lvc] of units) {
+			if (my_id !== id) { continue; }
 			const [name, type, lv, , req] = C;
 			const tr = table.appendChild(document.createElement('tr'));
 			const td = tr.appendChild(document.createElement('td'));
@@ -2564,12 +2564,12 @@ function renderCombos() {
 				p3.style.fontSize = 'smaller';
 				p3.textContent = combos_scheme.requirements[req];
 			}
-			for (let c = 0; c < units.length; c += 2) {
+			for (const [id, lvc] of units) {
 				const td = tr.appendChild(document.createElement('td'));
 				const a = td.appendChild(document.createElement('a'));
-				a.href = './unit.html?id=' + units[c].toString();
+				a.href = `./unit.html?id=${id}`;
 				const img = a.appendChild(new Image(104, 79));
-				img.src = `/img/u/${units[c]}/${units[c + 1]}.png`;
+				img.src = `/img/u/${id}/${lvc}.png`;
 			}
 			break;
 		}
