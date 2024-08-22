@@ -450,7 +450,7 @@ loadEnemy(my_id)
 		chs[0].children[8].textContent = traits.join('・');
 		if (E.atk1 || E.atk2) {
 			const atkNum = E.atk2 ? 3 : 2;
-			const atksPre = [E.atk, E.atk1, E.atk2].slice(0, atkNum).map(x => ((x / (E.atk + E.atk1 + E.atk2)) * 100).toFixed(0) + ' %');
+			const atksPre = [E.atk, E.atk1, E.atk2].slice(0, atkNum).map(x => numStr((x / (E.atk + E.atk1 + E.atk2)) * 100) + ' %');
 			specials.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(E.abi));
 			specials.appendChild(document.createElement('br'));
 		}

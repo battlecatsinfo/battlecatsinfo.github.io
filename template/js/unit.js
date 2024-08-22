@@ -1086,7 +1086,7 @@ function updateValues(form, tbl) {
 	specials.textContent = '';
 	if (form.atk1 || form.atk2) {
 		const atkNum = form.atk2 ? 3 : 2;
-		const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => ((x / (form.atk + form.atk1 + form.atk2)) * 100).toFixed(0) + ' %');
+		const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => numStr((x / (form.atk + form.atk1 + form.atk2)) * 100) + ' %');
 		const p = document.createElement('div');
 		const img = new Image(40, 40);
 		img.src = 'https://i.imgur.com/veNQ90x.png';
@@ -1369,7 +1369,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 			i.src = 'https://i.imgur.com/veNQ90x.png';
 			td.appendChild(i);
 			const atkNum = form.atk2 ? 3 : 2;
-			const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => ((x / (form.atk + form.atk1 + form.atk2)) * 100).toFixed(0) + ' %');
+			const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => numStr((x / (form.atk + form.atk1 + form.atk2)) * 100) + ' %');
 			td.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
 			td.appendChild(document.createElement('br'));
 		}
