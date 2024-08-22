@@ -4,8 +4,8 @@ const {resolve} = require('node:path');
 const {SCRIPTS_DIR, OUTPUT_DIR} = require('./js/base.js');
 
 const modules = new Set([
-	'copy-assets',
-	'copy-data',
+	'assets',
+	'data',
 	'combos',
 	'collab',
 	'gacha',
