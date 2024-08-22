@@ -149,7 +149,7 @@ module.exports = class extends SiteGenerator {
 			const size = pool['size'];
 			const [width, height] = size ? size.split('x') : [860, 240];
 
-			let data, ids;
+			let data;
 			switch (pool['type']) {
 			case 'category':
 				data = this.get_category(pool);
@@ -583,7 +583,7 @@ module.exports = class extends SiteGenerator {
 			'name': O.tw_name,
 			'units': ids.join(',')
 		});
-		return S, ids;
+		return S;
 	}
 	get1(u, rate = 1) {
 		return {

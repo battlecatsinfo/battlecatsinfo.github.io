@@ -471,7 +471,6 @@
 		<button class="btn C">分類</button>
 		<div class="modal">
 			<div class="M">
-
 				{{#each categories as |cat|}}
 				<fieldset id="G{{@index}}" style="display: flex;flex-wrap: wrap;flex-direction: row;">
 					<legend>{{cat.name}}</legend>
@@ -480,7 +479,6 @@
 					{{/each}}
 				</fieldset>
 				{{/each}}
-
 				<button class="ok" onclick="ok()">篩選</button>
 				<button onclick="clearAll(event)">清除</button>
 			</div>
