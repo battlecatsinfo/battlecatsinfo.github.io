@@ -1994,6 +1994,9 @@ function calc_def(table) {
 		for (const [tbody, form] of table_to_values) {
 			let td = tbody.children[7].children[1];
 			td.textContent = '';
+			createImuIcons(form.imu, td);
+			if (form.res)
+				createResIcons(form.res, td);
 			updateValues(form, tbody);
 			createAbIcons(form, td, td, tbody);
 		}
