@@ -6,7 +6,7 @@ module.exports = class extends SiteGenerator {
 		const stageTable = this.parse_tsv(this.load('stage.tsv'), false);
 		const groupData = JSON.parse(this.load('group.json'));
 		const rewardData = JSON.parse(this.load('reward.json'));
-		const enemyNames = this.load('ENAME.txt').split('\n');
+		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
 
 		const map = {};
 		const stage = {};
@@ -17,7 +17,7 @@ module.exports = class extends SiteGenerator {
 		}
 		map[-1] = Object.assign(groupData, {
 			RWNAME: rewardData,
-			ENAME: enemyNames,
+			ENAME: enemyTable.map(x => x.chinese_name),
 		});
 
 		for (const entry of stageTable) {
