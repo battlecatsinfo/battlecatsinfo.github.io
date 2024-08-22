@@ -6,9 +6,9 @@ const {SCRIPTS_DIR, OUTPUT_DIR} = require('./js/base.js');
 const modules = new Set([
 	'combos',
 	'collab',
-	'copy-assets', 
-	'copy-data', 
-	'gacha', 
+	'copy-assets',
+	'copy-data',
+	'gacha',
 ]);
 
 const args = parseArgs({
@@ -71,7 +71,7 @@ const parts = ((_parts) => {
 	try {
 		fs.mkdirSync(OUTPUT_DIR);
 	} catch (e) {
-		if (e.code !== 'EEXIST') 
+		if (e.code !== 'EEXIST')
 			throw e;
 	}
 
