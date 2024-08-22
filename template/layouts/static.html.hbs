@@ -183,7 +183,7 @@
 	<h1 style="text-align:center;">
 		{{#> title}}{{/title}}
 		{{#> version}}
-		<div style="font-size:0.6em;">Ver {{japan}}</div>
+		<div style="font-size:0.6em;">Ver {{lookup (loadJSON "config.json") "japan"}}</div>
 		{{/version}}
 	</h1>
 {{#> content}}

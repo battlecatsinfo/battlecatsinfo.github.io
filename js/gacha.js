@@ -149,7 +149,7 @@ module.exports = class extends SiteGenerator {
 			const size = pool['size'];
 			const [width, height] = size ? size.split('x') : [860, 240];
 
-			let data, ids;
+			let data;
 			switch (pool['type']) {
 			case 'category':
 				data = this.get_category(pool);
@@ -317,7 +317,7 @@ module.exports = class extends SiteGenerator {
 
 		(O.collab ? this.collab_pools: this.resident_pools).push({
 			'name': O.tw_name,
-			'units': exclusive_ids.join(',')
+			'units': exclusive_ids,
 		});
 
 		return S;
@@ -581,9 +581,9 @@ module.exports = class extends SiteGenerator {
 
 		this.categroy_pools.push({
 			'name': O.tw_name,
-			'units': ids.join(',')
+			'units': ids,
 		});
-		return S, ids;
+		return S;
 	}
 	get1(u, rate = 1) {
 		return {

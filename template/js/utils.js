@@ -4,15 +4,15 @@
 }(this, function () {
 	'use strict';
 
+	function checkResponse(response) {
+		if (!response.ok) {
+			throw new Error(`Unable to fetch "${response.url}": ${response.status} ${response.statusText}`);
+		}
+	}
+
 	async function loadStages() {
 		let db;
 		let char_groups;
-
-		function checkResponse(response) {
-			if (!response.ok) {
-				throw new Error(`Unable to fetch "${response.url}": ${response.status} ${response.statusText}`);
-			}
-		}
 
 		async function loadAll(db) {
 			const [mapTable, stageTable, groupData, RWNAME, ENAME] = await Promise.all([
@@ -54,34 +54,39 @@
 				tx.oncomplete = resolve;
 				tx.onerror = reject;
 
-				const mapStore = tx.objectStore('map');
-				const stageStore = tx.objectStore('stage');
+				try {
+					const mapStore = tx.objectStore('map');
+					const stageStore = tx.objectStore('stage');
 
-				mapStore.clear();
-				stageStore.clear();
+					mapStore.clear();
+					stageStore.clear();
 
-				for (const [idx, data] of mapTable) {
-					mapStore.put(data, idx);
+					for (const [idx, data] of mapTable) {
+						mapStore.put(data, idx);
+					}
+
+					for (const [idx, data] of stageTable) {
+						stageStore.put(data, idx);
+					}
+
+					char_groups = Object.assign(groupData, {
+						RWNAME,
+						ENAME,
+					});
+					mapStore.put(char_groups, -1);
+				} catch (ex) {
+					reject(ex);
+					tx.abort();
 				}
-
-				for (const [idx, data] of stageTable) {
-					stageStore.put(data, idx);
-				}
-
-				char_groups = Object.assign(groupData, {
-					RWNAME,
-					ENAME,
-				});
-				mapStore.put(char_groups, -1);
 			});
 		}
 
-		let changed = false;
+		let needReload = false;
 		db = await new Promise((resolve, reject) => {
 			const req = indexedDB.open('stage_v2', {{{lookup (loadJSON "config.json") "stage_ver"}}});
 			req.onupgradeneeded = (event) => {
 				const db = event.target.result;
-				changed = true;
+				needReload = true;
 				try {
 					db.deleteObjectStore("map");
 				} catch (ex) {}
@@ -95,7 +100,7 @@
 			req.onerror = (event) => reject(new Error(event.target.error));
 		});
 
-		if (!changed) {
+		if (!needReload) {
 			await new Promise((resolve, reject) => {
 				const tx = db.transaction("map");
 				tx.oncomplete = resolve;
@@ -105,10 +110,10 @@
 				};
 			});
 			if (!char_groups) {
-				changed = true;
+				needReload = true;
 			}
 		}
-		if (changed) {
+		if (needReload) {
 			await loadAll(db);
 		}
 
@@ -137,6 +142,7 @@
 	toggleTheme(getTheme());
 
 	return {
+		checkResponse,
 		loadStages,
 		getTheme,
 		toggleTheme,

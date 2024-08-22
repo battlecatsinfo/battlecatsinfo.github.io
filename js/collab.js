@@ -46,7 +46,7 @@ module.exports = class extends SiteGenerator {
 			});
 			if (collab['stages']) {
 				collab_stages.push({
-					'name': collab['tw-name'],
+					'name': collab['tw_name'],
 					'stages': collab['stages'].map(s => {
 						const [A, B] = s.split('-');
 						const m = parseInt(A, 10) * 1000 + parseInt(B, 10);

@@ -223,7 +223,7 @@ class Form {
 	constructor(o, lvc) {
 		if (o instanceof Array) {
 			this.lvc = lvc;
-			this.id = o[0];
+			this.id = parseInt(o[0], 10);
 			this.name = o[1];
 			this.jp_name = o[2];
 			this.price = o[3];
@@ -1197,7 +1197,7 @@ class Form {
 class Enemy {
 	constructor(o) {
 		if (o instanceof Array) {
-			this.i = o[0];
+			this.i = parseInt(o[0], 10);
 			this.name = o[1];
 			this.jp_name = o[2];
 			this.fandom = o[3];
@@ -1372,199 +1372,259 @@ class Cat {
 
 async function getAllEnemies() {
 	let res = await fetch('/enemy.tsv');
-	if (!res.ok) throw '';
+	utils.checkResponse(res);
 
 	res = await res.text();
 	res = res.split('\n');
 
-	const enemies = new Array({{{lookup (loadJSON "cat_extras.json") "num_enemies"}}});
+	const enemies = [];
 
-	for (let i = 1; i <= {{{lookup (loadJSON "cat_extras.json") "num_enemies"}}}; ++i)
-		enemies[i - 1] = new Enemy(res[i].split('\t'));
+	for (let i = 1, end = res.length; i < end; ++i) {
+		const row = res[i];
+		if (!row) { continue; }
+		enemies[i - 1] = new Enemy(row.split('\t'));
+	}
 
 	return enemies;
 }
 
 async function getAllCats() {
 	let res = await fetch('/cat.tsv');
-	if (!res.ok) throw '';
+	utils.checkResponse(res);
 
 	res = await res.text();
 	res = res.split('\n');
 
-	const cats = new Array({{{lookup (loadJSON "cat_extras.json") "num_cats"}}});
+	const cats = [];
 
-	for (let i = 1; i <= {{{lookup (loadJSON "cat_extras.json") "num_cats"}}}; ++i)
-		cats[i - 1] = new Cat(res[i].split('\t'));
+	for (let i = 1, I = res.length; i < I; ++i) {
+		const row = res[i];
+		if (!row) { continue; }
+		cats[i - 1] = new Cat(row.split('\t'));
+	}
 
 	res = await fetch('/catstat.tsv');
 	if (!res.ok) throw '';
 
 	res = (await res.text()).split('\n');
 
-	let line, lvc = 0,
-		id = 0,
-		s = '0',
-		end = res.length - 1;
-	for (let i = 1; i < end; ++i) {
-		line = res[i].split('\t');
-		if (s != line[0]) {
-			s = line[0];
+	let row, id, lvc = 0;
+	for (let i = 1, I = res.length - 1; i < I; ++i) {
+		row = res[i];
+		if (!row) { continue; }
+		row = row.split('\t');
+		if (id !== row[0]) {
+			id = row[0];
 			lvc = 0;
-			++id;
 		}
-		line[0] = id;
-		cats[id].forms[lvc] = new Form(line, lvc);
+		cats[id].forms[lvc] = new Form(row, lvc);
 		++lvc;
 	}
 
 	return cats;
 }
 
-function onupgradeneeded(e) {
-	e = e.target.result;
+function onupgradeneeded(event) {
+	const db = event.target.result;
 	try {
-		e.deleteObjectStore("cats");
-	} catch (e) {
-
-	}
+		db.deleteObjectStore("cats");
+	} catch (ex) {}
 	try {
-		e.deleteObjectStore("enemy");
-	} catch (e) {
-
-	}
-	e.createObjectStore("cats", {
+		db.deleteObjectStore("enemy");
+	} catch (ex) {}
+	db.createObjectStore("cats", {
 		keyPath: 'i'
 	});
-	e.createObjectStore('enemy', {
+	db.createObjectStore('enemy', {
 		keyPath: 'i'
 	});
 }
+
+/**
+ * @param {number} [id] - ID of the cat to load. Load all cats when omitted.
+ * @return {(Cat|Cat[])}
+ */
 async function loadCat(id) {
-	return new Promise(resolve => {
-		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
-		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
-			const db = e.target.result;
-			db.transaction(["cats"]).objectStore("cats").get(id).onsuccess = function(e) {
-				e = e.target.result;
-				if (e)
-					return resolve(new Cat(e));
+	let db;
+	let cats;
+	let needReload = false;
 
-				getAllCats().then(cats => {
-					var o, tx = db.transaction(["cats"], "readwrite"),
-						store = tx.objectStore("cats");
-					for (let i = 0; i < cats.length; ++i)
-						o = cats[i], store.put({
-							'i': i,
-							'info': o.info,
-							'forms': o.forms
+	try {
+		db = await new Promise((resolve, reject) => {
+			const req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
+			req.onupgradeneeded = (event) => {
+				needReload = true;
+				onupgradeneeded(event);
+			};
+			req.onsuccess = (event) => resolve(event.target.result);
+			req.onerror = (event) => reject(new Error(event.target.error));
+		});
+
+		if (!needReload) {
+			await new Promise((resolve, reject) => {
+				const tx = db.transaction(["cats"]);
+				tx.oncomplete = resolve;
+				tx.onerror = (event) => reject(new Error(event.target.error));
+				tx.objectStore("cats").openCursor().onsuccess = (event) => {
+					if (!event.target.result)
+						needReload = true;
+				};
+			});
+		}
+
+		if (needReload) {
+			cats = await getAllCats();
+			await new Promise((resolve, reject) => {
+				const tx = db.transaction(["cats"], "readwrite");
+				tx.oncomplete = resolve;
+				tx.onerror = (event) => reject(new Error(event.target.error));
+				try {
+					const store = tx.objectStore("cats");
+					store.clear();
+					for (let i = 0, I = cats.length; i < I; ++i) {
+						const cat = cats[i];
+						store.put({
+							i,
+							info: cat.info,
+							forms: cat.forms,
 						});
+					}
+				} catch (ex) {
+					reject(ex);
+					tx.abort();
+				}
+			});
+		}
 
-					tx.oncomplete = function() {
-						db.close();
-						resolve(cats[id]);
-					};
-				});
-			};
-		};
-	});
+		if (cats) {
+			if (typeof id !== 'undefined')
+				return cats[id];
+			else
+				return cats;
+		}
+
+		return await new Promise((resolve, reject) => {
+			let rv;
+			const tx = db.transaction(["cats"]);
+			tx.oncomplete = (event) => resolve(rv);
+			tx.onerror = (event) => reject(new Error(event.target.error));
+
+			const store = tx.objectStore("cats");
+			if (typeof id !== 'undefined') {
+				store.get(id).onsuccess = (event) => {
+					rv = new Cat(event.target.result);
+				};
+			} else {
+				store.getAll().onsuccess = (event) => {
+					rv = event.target.result.reduce((rv, cat) => {
+						rv[cat.i] = new Cat(cat);
+						return rv;
+					}, []);
+				};
+			}
+		});
+	} finally {
+		db && db.close();
+	}
 }
 
-async function loadEnemy(id) {
-	return new Promise((resolve, reject) => {
-		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
-		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
-			const db = e.target.result;
-			db.transaction(["enemy"]).objectStore("enemy").get(id).onsuccess = function(e) {
-				e = e.target.result;
-				if (e) return resolve(new Enemy(e));
-
-				getAllEnemies().then(es => {
-					let tx = db.transaction(["enemy"], "readwrite"),
-						store = tx.objectStore("enemy");
-
-					for (const e of es)
-						store.put(e);
-
-					tx.oncomplete = function() {
-						db.close();
-						resolve(es[id]);
-					};
-				});
-			};
-		};
-	});
-}
-
-async function loadAllEnemies() {
-	return new Promise(resolve => {
-		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
-		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
-			const db = e.target.result;
-			db.transaction(["enemy"]).objectStore("enemy").get({{{lookup (loadJSON "cat_extras.json") "num_enemies"}}} - 1).onsuccess = function(e) {
-				if (e.target.result) {
-					let es = new Array({{{lookup (loadJSON "cat_extras.json") "num_enemies"}}});
-					db.transaction(["enemy"]).objectStore("enemy").openCursor().onsuccess = function(e) {
-						if (e = e.target.result) {
-							es[e.value.i] = new Enemy(e.value);
-							e.continue();
-						} else {
-							db.close();
-							resolve(es);
-						}
-					};
-				} else getAllEnemies().then(es => {
-					let tx = db.transaction(["enemy"], "readwrite"),
-						store = tx.objectStore("enemy");
-					for (const e of es)
-						store.put(e);
-					tx.oncomplete = function() {
-						db.close();
-						resolve(es);
-					};
-				});
-			};
-		};
-	});
-}
-
+/**
+ * Alias for loadCat().
+ */
 async function loadAllCats() {
-	return new Promise(resolve => {
-		var req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
-		req.onupgradeneeded = onupgradeneeded, req.onsuccess = function(e) {
-			const db = e.target.result;
-			db.transaction(["cats"]).objectStore("cats").get({{{lookup (loadJSON "cat_extras.json") "num_cats"}}} - 1).onsuccess = function(e) {
-				if (e.target.result) {
-					let cats = new Array({{{lookup (loadJSON "cat_extras.json") "num_cats"}}});
-					db.transaction(["cats"]).objectStore("cats").openCursor().onsuccess = function(e) {
-						if (e = e.target.result) {
-							cats[e.value.i] = new Cat(e.value);
-							e.continue();
-						} else {
-							db.close();
-							resolve(cats);
-						}
-					};
-				} else getAllCats().then(cats => {
-
-					var o, tx = db.transaction(["cats"], "readwrite"),
-						store = tx.objectStore("cats");
-					for (let i = 0; i < cats.length; ++i)
-						o = cats[i], store.put({
-							'i': i,
-							'info': o.info,
-							'forms': o.forms
-						});
-
-					tx.oncomplete = function() {
-						db.close();
-						resolve(cats);
-					};
-				});
-			};
-		};
-	});
+	return await loadCat();
 }
+
+/**
+ * @param {number} [id] - ID of the enemy to load. Load all enemies when omitted.
+ * @return {(Enemy|Enemy[])}
+ */
+async function loadEnemy(id) {
+	let db;
+	let enemies;
+	let needReload = false;
+
+	try {
+		db = await new Promise((resolve, reject) => {
+			const req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
+			req.onupgradeneeded = (event) => {
+				needReload = true;
+				onupgradeneeded(event);
+			};
+			req.onsuccess = (event) => resolve(event.target.result);
+			req.onerror = (event) => reject(new Error(event.target.error));
+		});
+
+		if (!needReload) {
+			await new Promise((resolve, reject) => {
+				const tx = db.transaction(["enemy"]);
+				tx.oncomplete = resolve;
+				tx.onerror = (event) => reject(new Error(event.target.error));
+				tx.objectStore("enemy").openCursor().onsuccess = (event) => {
+					if (!event.target.result)
+						needReload = true;
+				};
+			});
+		}
+
+		if (needReload) {
+			enemies = await getAllEnemies();
+			await new Promise((resolve, reject) => {
+				const tx = db.transaction(["enemy"], "readwrite");
+				tx.oncomplete = resolve;
+				tx.onerror = (event) => reject(new Error(event.target.error));
+				try {
+					const store = tx.objectStore("enemy");
+					store.clear();
+					for (const enemy of enemies) {
+						store.put(enemy);
+					}
+				} catch (ex) {
+					reject(ex);
+					tx.abort();
+				}
+			});
+		}
+
+		if (enemies) {
+			if (typeof id !== 'undefined')
+				return enemies[id];
+			else
+				return enemies;
+		}
+
+		return await new Promise((resolve, reject) => {
+			let rv;
+			const tx = db.transaction(["enemy"]);
+			tx.oncomplete = (event) => resolve(rv);
+			tx.onerror = (event) => reject(new Error(event.target.error));
+
+			const store = tx.objectStore("enemy");
+			if (typeof id !== 'undefined') {
+				store.get(id).onsuccess = (event) => {
+					rv = new Enemy(event.target.result);
+				};
+			} else {
+				store.getAll().onsuccess = (event) => {
+					rv = event.target.result.reduce((rv, enemy) => {
+						rv[enemy.i] = new Enemy(enemy);
+						return rv;
+					}, []);
+				};
+			}
+		});
+	} finally {
+		db && db.close();
+	}
+}
+
+/**
+ * Alias for loadEnemy().
+ */
+async function loadAllEnemies() {
+	return await loadEnemy();
+}
+
 
 function createTraitIcons(trait, parent) {
 	if (!trait) { return; }
