@@ -66,9 +66,6 @@ const sources = [
 	'cat.js',
 	'unit.js',
 
-	// @TODO: Remove this data-only file. Maybe fetch into indexedDB?
-	'combo.js',
-
 	'crown.js',
 	'gif.min.js',
 	'gif.worker.js',
