@@ -21,7 +21,7 @@ const
 		["傳奇故事0", "レジェンドストーリー0"],
 		["異次元競技場", "異次元コロシアム"]
 	],
-	eggs = new Set({{{toJSON (lookup stage_data "egg_set")}}}),
+	eggs = new Set({{{toJSON stage_data.egg_set}}}),
 	MC_TW_NAME = 0,
 	MC_JP_NAME = 1,
 	MC_GOLDCPU = 2,
@@ -57,7 +57,7 @@ const
 	SM_LIMIT = 12,
 
 	QQ = '？？？',
-	conditions = {{{toJSON (lookup stage_data "conditions")}}},
+	conditions = {{{toJSON stage_data.conditions}}},
 	M1 = document.getElementById("M1"),
 	M2 = document.getElementById("M2"),
 	M3 = document.getElementById("M3"),
