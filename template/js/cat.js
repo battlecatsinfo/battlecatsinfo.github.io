@@ -232,58 +232,8 @@ function toi(x) {
 }
 
 class Form {
-	constructor(o, lvc) {
-		if (o instanceof Array) {
-			this.lvc = lvc;
-			this.id = parseInt(o[0], 10);
-			this.name = o[1];
-			this.jp_name = o[2];
-			this.price = o[3];
-			this.desc = o[4];
-			this.hp = parseInt(o[5], 10);
-			this.kb = parseInt(o[6], 10);
-			this.speed = parseInt(o[7], 10);
-			this.range = parseInt(o[8], 10);
-			this.pre = parseInt(o[9], 10);
-			this.pre1 = parseInt(o[10], 10);
-			this.pre2 = parseInt(o[11], 10);
-			this.atk = parseInt(o[12], 10);
-			this.atk1 = parseInt(o[13], 10);
-			this.atk2 = parseInt(o[14], 10);
-			this.tba = parseInt(o[15], 10);
-			this.backswing = parseInt(o[16], 10);
-			this.attackF = parseInt(o[17], 10);
-			this.atkType = parseInt(o[18], 10);
-			this.trait = parseInt(o[19], 10);
-			this.abi = parseInt(o[20], 10);
-			if (o[21]) {
-				this.lds = o[21].split('|').map(toi);
-				this.ldr = o[22].split('|').map(toi);
-			}
-			this.imu = parseInt(o[23], 10);
-			this.ab = {};
-			if (o[24].length) {
-				for (const x of o[24].split('|')) {
-					let idx = x.indexOf('@');
-					if (idx == -1) {
-						idx = x.indexOf('&');
-						let i = parseInt(x.slice(0, idx), 10);
-						if (x.endsWith('&'))
-							this.ab[i] = null;
-						else
-							this.ab[i] = parseInt(x.slice(idx + 1), 10);
-					} else {
-						this.ab[parseInt(x.slice(0, idx), 10)] = x.slice(idx + 1).split('!').map(toi);
-					}
-				}
-			}
-			this.cd = o[25];
-			this.icon = o[26];
-			this.hpM = 1;
-			this.atkM = 1;
-		} else {
-			Object.assign(this, o);
-		}
+	constructor(o) {
+		Object.assign(this, o);
 	}
 	applyTalent(talent, level) {
 		if (!level) return;
@@ -1162,55 +1112,7 @@ class Form {
 
 class Enemy {
 	constructor(o) {
-		if (o instanceof Array) {
-			this.i = parseInt(o[0], 10);
-			this.name = o[1];
-			this.jp_name = o[2];
-			this.fandom = o[3];
-			this.desc = o[4];
-			this.hp = parseInt(o[5], 10);
-			this.kb = parseInt(o[6], 10);
-			this.speed = parseInt(o[7], 10);
-			this.range = parseInt(o[8], 10);
-			this.pre = parseInt(o[9], 10);
-			this.pre1 = parseInt(o[10], 10);
-			this.pre2 = parseInt(o[11], 10);
-			this.atk = parseInt(o[12], 10);
-			this.atk1 = parseInt(o[13], 10);
-			this.atk2 = parseInt(o[14], 10);
-			this.tba = parseInt(o[15], 10);
-			this.backswing = parseInt(o[16], 10);
-			this.attackF = parseInt(o[17], 10);
-			this.atkType = parseInt(o[18], 10);
-			this.trait = parseInt(o[19], 10);
-			this.abi = parseInt(o[20], 10);
-			if (o[21]) {
-				this.lds = o[21].split('|').map(toi);
-				this.ldr = o[22].split('|').map(toi);
-			}
-			this.imu = parseInt(o[23], 10);
-			this.ab = {};
-			if (o[24].length) {
-				for (const x of o[24].split('|')) {
-					let idx = x.indexOf('@');
-					if (idx == -1) {
-						idx = x.indexOf('&');
-						let i = parseInt(x.slice(0, idx), 10);
-						if (x.endsWith('&'))
-							this.ab[i] = null;
-						else
-							this.ab[i] = parseInt(x.slice(idx + 1), 10);
-					} else {
-						this.ab[parseInt(x.slice(0, idx), 10)] = x.slice(idx + 1).split('!').map(toi);
-					}
-				}
-			}
-			this.earn = parseInt(o[25], 10);
-			if (o[26].length)
-				this.star = parseInt(o[26], 10);
-		} else {
-			Object.assign(this, o);
-		}
+		Object.assign(this, o);
 	}
 	gethp() {
 		return this.hp;
@@ -1297,96 +1199,46 @@ class Enemy {
 
 class Cat {
 	constructor(o) {
-		if (o instanceof Array) {
-			o[0] = parseInt(o[0], 10);
-			o[1] = parseInt(o[1], 10);
-			o[4] = parseInt(o[4], 10);
-			o[5] = parseInt(o[5], 10);
+		this.info = o.info;
+		this.forms = o.forms.map(form => {
+			// format from raw data
+			form.hpM = 1;
+			form.atkM = 1;
 
-			if (!o[6].length)
-				o[6] = o[7] = null;
-
-			if (o[10].length)
-				o[10] = new Int16Array(o[10].split('|'));
-
-			if (o[11].length)
-				o[11] = parseInt(o[11], 10);
-			else
-				o[11] = null;
-
-			if (o[12].length)
-				o[12] = parseInt(o[12], 10);
-			else
-				o[12] = null;
-
-			o[16] = parseInt(o[16], 10);
-
-			if (!o[17].length)
-				o[17] = null;
-
-			if (!o[18].length)
-				o[18] = null;
-
-			this.forms = new Array(o[1]);
-			this.info = o;
-		} else {
-			this.info = o.info;
-			this.forms = o.forms.map(x => new Form(x));
-		}
+			return new Form(form);
+		});
 	}
 }
 
 async function getAllEnemies() {
-	let res = await fetch('/enemy.tsv');
+	let res = await fetch('/enemy.json');
 	utils.checkResponse(res);
-
-	res = await res.text();
-	res = res.split('\n');
+	res = await res.json();
 
 	const enemies = [];
-
-	for (let i = 1, end = res.length; i < end; ++i) {
-		const row = res[i];
-		if (!row) { continue; }
-		enemies[i - 1] = new Enemy(row.split('\t'));
+	for (let i = 0, I = res.length; i < I; ++i) {
+		const data = res[i];
+		enemies[i] = new Enemy(data);
 	}
-
 	return enemies;
 }
 
 async function getAllCats() {
-	let res = await fetch('/cat.tsv');
+	let res = await fetch('/cat.json');
 	utils.checkResponse(res);
-
-	res = await res.text();
-	res = res.split('\n');
+	res = await res.json();
 
 	const cats = [];
+	for (let i = 0, I = res.length; i < I; ++i) {
+		const data = res[i];
 
-	for (let i = 1, I = res.length; i < I; ++i) {
-		const row = res[i];
-		if (!row) { continue; }
-		cats[i - 1] = new Cat(row.split('\t'));
+		// format from raw data
+		const info = data.info;
+		if (info[10])
+			info[10] = new Int16Array(info[10].split('|'));
+
+		cats[i] = new Cat(data);
 	}
-
-	res = await fetch('/catstat.tsv');
-	if (!res.ok) throw '';
-
-	res = (await res.text()).split('\n');
-
-	let row, id, lvc = 0;
-	for (let i = 1, I = res.length - 1; i < I; ++i) {
-		row = res[i];
-		if (!row) { continue; }
-		row = row.split('\t');
-		if (id !== row[0]) {
-			id = row[0];
-			lvc = 0;
-		}
-		cats[id].forms[lvc] = new Form(row, lvc);
-		++lvc;
-	}
-
 	return cats;
 }
 

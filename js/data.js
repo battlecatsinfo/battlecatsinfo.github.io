@@ -3,15 +3,11 @@ const {resolve, extname} = require('node:path');
 const {DATA_DIR, OUTPUT_DIR, SiteGenerator} = require('./base.js');
 
 const sources = [
-	'cat.tsv',
 	'stage.tsv',
 	'map.tsv',
 	'group.json',
 	'ENAME.txt',
 	'reward.json',
-	'cat.tsv',
-	'catstat.tsv',
-	'enemy.tsv'
 ];
 
 
