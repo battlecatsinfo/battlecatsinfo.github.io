@@ -5,9 +5,9 @@ const {SCRIPTS_DIR, OUTPUT_DIR} = require('./js/base.js');
 
 const modules = new Set([
 	'assets',
-	'data',
 	'unit',
 	'combos',
+	'stage',
 	'collab',
 	'gacha',
 ]);
