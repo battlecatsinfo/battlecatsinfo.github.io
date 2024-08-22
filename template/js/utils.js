@@ -15,39 +15,10 @@
 		let char_groups;
 
 		async function loadAll(db) {
-			const [mapTable, stageTable, groupData, RWNAME, ENAME] = await Promise.all([
-				(async () => {
-					const response = await fetch('/map.tsv');
-					checkResponse(response);
-					return (await response.text()).split('\n').filter(x => x).map(row => {
-						const cut = row.indexOf('\t');
-						return [parseInt(row.slice(0, cut), 36), row.slice(cut + 1)];
-					});
-				})(),
-				(async () => {
-					const response = await fetch('/stage.tsv');
-					checkResponse(response);
-					return (await response.text()).split('\n').filter(x => x).map(row => {
-						const cut = row.indexOf('\t');
-						return [parseInt(row.slice(0, cut), 36), row.slice(cut + 1)];
-					});
-				})(),
-				(async () => {
-					const response = await fetch('/group.json');
-					checkResponse(response);
-					return await response.json();
-				})(),
-				(async () => {
-					const response = await fetch('/reward.json');
-					checkResponse(response);
-					return await response.json();
-				})(),
-				(async () => {
-					const response = await fetch('/ENAME.txt');
-					checkResponse(response);
-					return (await response.text()).split('\n');
-				})(),
-			]);
+			const response = await fetch('/stage.json');
+			checkResponse(response);
+			const data =  await response.json();
+			char_groups = data.map[-1];
 
 			await new Promise((resolve, reject) => {
 				const tx = db.transaction(db.objectStoreNames, 'readwrite');
@@ -61,19 +32,13 @@
 					mapStore.clear();
 					stageStore.clear();
 
-					for (const [idx, data] of mapTable) {
-						mapStore.put(data, idx);
+					for (const idx in data.map) {
+						mapStore.put(data.map[idx], parseInt(idx, 10));
 					}
 
-					for (const [idx, data] of stageTable) {
-						stageStore.put(data, idx);
+					for (const idx in data.stage) {
+						stageStore.put(data.stage[idx], parseInt(idx, 10));
 					}
-
-					char_groups = Object.assign(groupData, {
-						RWNAME,
-						ENAME,
-					});
-					mapStore.put(char_groups, -1);
 				} catch (ex) {
 					reject(ex);
 					tx.abort();
