@@ -768,7 +768,7 @@ function render_stage(e) {
 	st2[5].textContent = info3[SI_BG];
 	st2[3].textContent = info3[SI_MIN_SPAWN] + 'F';
 	if (info2[SM_LIMIT]) {
-		const limits = info2[SM_LIMIT].split('|').map(x => Limit);
+		const limits = info2[SM_LIMIT].split('|').map(x => new Limit(x));
 		const theStar = star - 1;
 		var lim = new Limit();
 		for (var _a = 0; _a < limits.length; _a++) {
