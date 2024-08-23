@@ -1,4 +1,3 @@
-{{var "stage_data" (loadJSON "stage.json") ~}}
 const
 	loader = document.getElementById('loader'),
 	stages_top = [
