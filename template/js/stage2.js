@@ -116,13 +116,8 @@ function fromV(s) {
 	}
 }
 
-function namefor(str) {
-	let i = str.indexOf('\t');
-	const s = str.slice(0, i);
-	if (s)
-		return s;
-	i += 1;
-	return str.slice(i, str.indexOf('\t', i)) || QQ;
+function namefor(v) {
+	return v[SI_TW_NAME] || v[SI_JP_NAME] || QQ;
 }
 
 function createReward(tr, v) {
@@ -414,19 +409,18 @@ M2.oninput = (function(event, sts) {
 		e = e.target.result;
 		if (e) {
 			var o = document.createElement('option');
-			const i = e.value.indexOf('\t');
 			if (M3.c == M3.q)
 				M3.v = e.value;
 			if (stageL) {
-				const jp = e.value.slice(i + 1, e.value.indexOf('\t', i + 1));
+				const jp = e.value[SI_JP_NAME];
 				if (stageL == 1)
 					o.textContent = jp || QQ;
 				else
-					o.textContent = [e.value.slice(0, i), jp].filter(x => x).join('/');
+					o.textContent = [e.value[SI_TW_NAME], jp].filter(x => x).join('/');
 			} else {
-				o.textContent = e.value.slice(0, i);
+				o.textContent = e.value[SI_TW_NAME];
 				if (!o.textContent)
-					o.textContent = e.value.slice(i + 1, e.value.indexOf('\t', i + 1)) || QQ;
+					o.textContent = e.value[SI_JP_NAME] || QQ;
 			}
 			M3.appendChild(o);
 			e.continue();
@@ -512,13 +506,13 @@ M3.oninput = function() {
 	const req = db.transaction('stage').objectStore('stage').get(key * 1000 + M3.selectedIndex);
 	req.k = key;
 	req.onsuccess = function(e) {
-		info3 = e.target.result.split('\t');
+		info3 = e.target.result;
 		db.transaction('map').objectStore('map').get(e.target.k).onsuccess = render_stage;
 	}
 }
 
 function render_stage(e) {
-	info2 = e.target.result.split('\t');
+	info2 = e.target.result;
 
 	const flags2 = parseInt(info2[SM_FLAGS] || '0', 36);
 	const flags3 = parseInt(info3[SI_FLAGS] || '0', 36);
@@ -981,13 +975,11 @@ function doSearch(t) {
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			let i = e.value.indexOf('\t');
-			let s = e.value.slice(0, i);
+			let s = e.value[SI_TW_NAME];
 			if (s.includes(v))
 				add_result_stage(e.key, s, v);
 			else {
-				i += 1;
-				s = e.value.slice(i, e.value.indexOf('\t', i));
+				s = e.value[SI_JP_NAME];
 				if (s.includes(v))
 					add_result_stage(e.key, s, v);
 			}
@@ -996,13 +988,11 @@ function doSearch(t) {
 			db.transaction('map').objectStore('map').openCursor(IDBKeyRange.lowerBound(0)).onsuccess = function(e) {
 				e = e.target.result;
 				if (e) {
-					let i = e.value.indexOf('\t');
-					let s = e.value.slice(0, i);
+					let s = e.value[SI_TW_NAME];
 					if (s.includes(v))
 						add_result_map(e.key, s, v);
 					else {
-						i += 1;
-						s = e.value.slice(i, e.value.indexOf('\t', i));
+						s = e.value[SI_JP_NAME];
 						if (s.includes(v))
 							add_result_map(e.key, s, v);
 					}

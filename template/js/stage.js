@@ -133,13 +133,8 @@ function fromV(s) {
 	}
 }
 
-function namefor(str) {
-	let i = str.indexOf('\t');
-	const s = str.slice(0, i);
-	if (s)
-		return s;
-	i += 1;
-	return str.slice(i, str.indexOf('\t', i)) || QQ;
+function namefor(v) {
+	return v[SI_TW_NAME] || v[SI_JP_NAME] || QQ;
 }
 
 function createReward(tr, v) {
@@ -217,7 +212,7 @@ function search_guard() {
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			const v = e.value.split('\t');
+			const v = e.value;
 			if (parseInt(v[SI_FLAGS], 36) & 2) {
 				const tr = document.createElement('tr');
 				let td = document.createElement('td');
@@ -281,7 +276,7 @@ function search_enemy(e) {
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			const v = e.value.split('\t');
+			const v = e.value;
 			if (v[SI_ENEMY_LINES].startsWith(T)) {
 				const tr = document.createElement('tr');
 				let td = document.createElement('td');
@@ -368,7 +363,7 @@ function search_gold() {
 	db.transaction('map').objectStore('map').openCursor(IDBKeyRange.lowerBound(0)).onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			const v = e.value.split('\t');
+			const v = e.value;
 			if (parseInt(v[SM_FLAGS], 36) & 2) {
 				const tr = document.createElement('tr');
 				let td = document.createElement('td');
@@ -435,7 +430,7 @@ function search_reward(e) {
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			const v = e.value.split('\t');
+			const v = e.value;
 			const drop_data = v[SI_DROP];
 			if (drop_data) {
 				for (const drop_line of drop_data.split('|')) {
@@ -811,19 +806,18 @@ M1.oninput = (function(event, sts) {
 		e = e.target.result;
 		if (e) {
 			var o = document.createElement('option');
-			const i = e.value.indexOf('\t');
 			if (M2.c == M2.q)
 				M2.v = e.value;
 			if (stageL) {
-				const jp = e.value.slice(i + 1, e.value.indexOf('\t', i + 1));
+				const jp = e.value[SI_JP_NAME];
 				if (stageL == 1)
 					o.textContent = jp || QQ;
 				else
-					o.textContent = [e.value.slice(0, i), jp].filter(x => x).join('/');
+					o.textContent = [e.value[SI_TW_NAME], jp].filter(x => x).join('/');
 			} else {
-				o.textContent = e.value.slice(0, i);
+				o.textContent = e.value[SI_TW_NAME];
 				if (!o.textContent)
-					o.textContent = e.value.slice(i + 1, e.value.indexOf('\t', i + 1)) || QQ;
+					o.textContent = e.value[SI_JP_NAME] || QQ;
 			}
 			M2.appendChild(o);
 			e.continue();
@@ -842,19 +836,18 @@ function process_2() {
 		e = e.target.result;
 		if (e) {
 			var o = document.createElement('option');
-			const i = e.value.indexOf('\t');
 			if (M3.c == M3.q)
 				M3.v = e.value;
 			if (stageL) {
-				const jp = e.value.slice(i + 1, e.value.indexOf('\t', i + 1));
+				const jp = e.value[SI_JP_NAME];
 				if (stageL == 1)
 					o.textContent = jp || QQ;
 				else
-					o.textContent = [e.value.slice(0, i), jp].filter(x => x).join('/');
+					o.textContent = [e.value[SI_TW_NAME], jp].filter(x => x).join('/');
 			} else {
-				o.textContent = e.value.slice(0, i);
+				o.textContent = e.value[SI_TW_NAME];
 				if (!o.textContent)
-					o.textContent = e.value.slice(i + 1, e.value.indexOf('\t', i + 1)) || QQ;
+					o.textContent = e.value[SI_JP_NAME] || QQ;
 			}
 			M3.appendChild(o);
 			e.continue();
@@ -874,12 +867,12 @@ M2.oninput = (function(event, sts) {
 		M3.q = 0;
 
 	if (M2.v) {
-		info2 = M2.v.split('\t');
+		info2 = M2.v;
 		M2.v = null;
 		process_2();
 	} else {
 		db.transaction('map').objectStore('map').get(M1.selectedIndex * 1000 + M2.selectedIndex).onsuccess = function(e) {
-			info2 = e.target.result.split('\t');
+			info2 = e.target.result;
 			process_2();
 		}
 	}
@@ -957,13 +950,13 @@ function getDropData(drops) {
 }
 M3.oninput = function() {
 	if (M3.v) {
-		info3 = M3.v.split('\t');
+		info3 = M3.v;
 		M3.v = null;
 		render_stage();
 	} else {
 		db.transaction('stage').objectStore('stage').get(M1.selectedIndex * 1000000 + M2.selectedIndex * 1000 + M3.selectedIndex)
 			.onsuccess = function(e) {
-				info3 = e.target.result.split('\t');
+				info3 = e.target.result;
 				render_stage();
 			}
 	}
@@ -1452,13 +1445,11 @@ function doSearch(t) {
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			let i = e.value.indexOf('\t');
-			let s = e.value.slice(0, i);
+			let s = e.value[SI_TW_NAME];
 			if (s.includes(v))
 				add_result_stage(e.key, s, v);
 			else {
-				i += 1;
-				s = e.value.slice(i, e.value.indexOf('\t', i));
+				s = e.value[SI_JP_NAME];
 				if (s.includes(v))
 					add_result_stage(e.key, s, v);
 			}
@@ -1467,13 +1458,11 @@ function doSearch(t) {
 			db.transaction('map').objectStore('map').openCursor(IDBKeyRange.lowerBound(0)).onsuccess = function(e) {
 				e = e.target.result;
 				if (e) {
-					let i = e.value.indexOf('\t');
-					let s = e.value.slice(0, i);
+					let s = e.value[SI_TW_NAME];
 					if (s.includes(v))
 						add_result_map(e.key, s, v);
 					else {
-						i += 1;
-						s = e.value.slice(i, e.value.indexOf('\t', i));
+						s = e.value[SI_JP_NAME];
 						if (s.includes(v))
 							add_result_map(e.key, s, v);
 					}

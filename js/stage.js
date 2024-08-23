@@ -13,7 +13,7 @@ module.exports = class extends SiteGenerator {
 
 		for (const entry of mapTable) {
 			const [idx, ...data] = entry;
-			map[parseInt(idx, 36)] = data.join('\t');
+			map[parseInt(idx, 36)] = data;
 		}
 		map[-1] = Object.assign(groupData, {
 			RWNAME: rewardData,
@@ -22,7 +22,7 @@ module.exports = class extends SiteGenerator {
 
 		for (const entry of stageTable) {
 			const [idx, ...data] = entry;
-			stage[parseInt(idx, 36)] = data.join('\t');
+			stage[parseInt(idx, 36)] = data;
 		}
 
 		this.write_json('stage.json', {

@@ -296,13 +296,8 @@ function search_for() {
 	});
 }
 
-function namefor(str) {
-	let i = str.indexOf('\t');
-	const s = str.slice(0, i);
-	if (s)
-		return s;
-	i += 1;
-	return str.slice(i, str.indexOf('\t', i)) || '？？？';
+function namefor(v) {
+	return v[0] || v[1] || '？？？';
 }
 
 function really_search() {
@@ -329,7 +324,7 @@ function really_search() {
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			const v = e.value.split('\t');
+			const v = e.value;
 			for (const group of v[14].split('|')) {
 				if (group.slice(0, group.indexOf(',')) == target) {
 					const mc = ~~(e.key / 1000000);
