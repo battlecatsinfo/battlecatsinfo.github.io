@@ -146,32 +146,44 @@ function combineChances(count, chance) {
 	return 1 - x;
 }
 
+// https://gist.github.com/battlecatsinfo/7d043065effd6c2397d7d9272c6aba83
 function getChances(freq, pres, chance, duration) {
-	var segments = [];
-	outer: for (let now = 0;; now -= freq)
-		for (let i = pres.length - 1; 0 <= i; --i) {
-			if (0 > now + pres[i] + duration) break outer;
-			var a = now + pres[i],
-				z = Math.min(a + duration, freq);
-			a != z && segments.push([Math.max(a, 0), z]);
+		const segments = [];
+		const steps = new Set();
+		outer: for (let now = 0;;now -= freq) {
+				for (let i = pres.length - 1;i >= 0;--i) {
+					let start = now + pres[i];
+					let end = start + duration;
+
+					if (end < 0)
+						break outer;
+
+					start = Math.max(start, 0);
+					end = Math.min(end, freq);
+
+					if (start != end) {
+						segments.push([start, end]);
+						steps.add(start);
+						steps.add(end);
+					}
+				}
 		}
-	var steps = [];
-	let substeps = [];
-	for (let i = 0; i <= freq; ++i) {
-		for (var x of segments) i != x[0] && i != x[1] || (i == x[0] ? substeps.push(!0) : substeps.push(!1));
-		substeps.length && (steps.push([i, substeps]), substeps = []);
-	}
-	let cover = 0,
-		last = steps[0][0],
-		count = 0;
-	for (let x of steps) {
-		var s, now = x[0];
-		const substeps = x[1];
-		cover += combineChances(count, chance) * (now - last) / freq;
-		for (s of substeps) s ? ++count : --count;
-		last = now;
-	}
-	return 100 * Math.min(cover, 1);
+		let cover = 0;
+		let count = 0;
+		let last_f = 0;
+		for (const f of Array.from(steps).sort((a, b) => a - b)) {
+			if (f != last_f) {
+				cover += combineChances(count, chance) * (f - last_f);
+				last_f = f;
+			}
+			for (const [start, end] of segments) {
+				if (start == f)
+					++count;
+				else if (end == f)
+					--count;
+			}
+		}
+		return 100 * cover / freq;
 }
 
 function getCover(p, durationF, attackF) {
