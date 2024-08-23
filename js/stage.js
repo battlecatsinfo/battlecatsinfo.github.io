@@ -2,6 +2,11 @@ const {SiteGenerator} = require('./base.js');
 
 module.exports = class extends SiteGenerator {
 	run() {
+		this.generate_data_files();
+		this.generate_pages();
+	}
+
+	generate_data_files() {
 		const mapTable = this.parse_tsv(this.load('map.tsv'), false);
 		const stageTable = this.parse_tsv(this.load('stage.tsv'), false);
 		const groupData = JSON.parse(this.load('group.json'));
@@ -29,5 +34,28 @@ module.exports = class extends SiteGenerator {
 			map,
 			stage,
 		});
+	}
+
+	generate_pages() {
+		const catData = this.parse_tsv(this.load('cat.tsv'));
+
+		const eggs = catData.reduce((eggs, cat, id) => {
+			if (cat.egg_1) {
+				eggs[id] = [parseInt(cat.egg_1, 10), parseInt(cat.egg_2, 10)];
+			}
+			return eggs;
+		}, {});
+
+		this.write_template('html/anim.html', 'anim.html', {eggs});
+
+		const stageData = JSON.parse(this.load('stage.json'));
+
+		Object.assign(stageData, {
+			egg_set: Object.keys(eggs).map(x => parseInt(x, 10)),
+		});
+
+		this.write_template('js/stage.js', 'stage.js', {stage_data: stageData});
+		this.write_template('js/stage2.js', 'stage2.js', {stage_data: stageData});
+		this.write_template('js/stage3.js', 'stage3.js', {stage_data: stageData});
 	}
 };

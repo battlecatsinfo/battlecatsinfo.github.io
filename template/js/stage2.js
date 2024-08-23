@@ -1,4 +1,3 @@
-{{var "stage_data" (loadJSON "stage.json") ~}}
 const
 	loader = document.getElementById('loader'),
 	eggs = new Set({{{toJSON stage_data.egg_set}}}),

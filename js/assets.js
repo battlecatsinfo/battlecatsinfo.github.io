@@ -30,7 +30,6 @@ const sources = [
 	'combo_effect.html',
 	'rewards.html',
 	'imgcut.html',
-	'anim.html',
 	'gamatoto.html',
 	'medal.html',
 	'rank.html',
@@ -70,10 +69,6 @@ const sources = [
 	'gif.min.js',
 	'gif.worker.js',
 	'imgcut.js',
-	'anim.min.js',
-	'stage.js',
-	'stage2.js',
-	'stage3.js',
 	'anim.min.js',
 	'imgcut.js'
 ];
