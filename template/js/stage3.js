@@ -76,17 +76,7 @@ const
 	stageL = parseInt(localStorage.getItem('stagel') || '0', 10),
 	materialDrops = [85, 86, 87, 88, 89, 90, 91, 140, 187, 188, 189, 190, 191, 192, 193, 194];
 var
-	db, info2, info3, star, char_groups, stageF, _l_f;
-
-_l_f = localStorage.getItem('prec');
-if (_l_f) {
-	_l_f = parseInt(_l_f);
-} else {
-	_l_f = 2;
-}
-_l_f = new Intl.NumberFormat(undefined, {
-	'maximumFractionDigits': _l_f
-});
+	db, info2, info3, star, char_groups, stageF;
 
 if (localStorage.getItem('stagef') == 's')
 	stageF = new Intl.NumberFormat(undefined, {
@@ -177,7 +167,7 @@ function createReward(tr, v) {
 }
 
 function numStr(num) {
-	return _l_f.format(num);
+	return utils.numStr(num);
 }
 
 function TI(t) {

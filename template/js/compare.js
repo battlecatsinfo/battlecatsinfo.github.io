@@ -319,9 +319,9 @@ function newTab() {
 }
 
 function numStrX(num) {
-	if (_l_unit == 'F')
+	if (utils.durationUnit === 'F')
 		return num.toString();
-	return _l_f.format(num / 30);
+	return utils.numStr(num / 30);
 }
 
 function floor(x) {
@@ -336,14 +336,14 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 		T = '①' + T + '②' + numStrX(F.pre1);
 	if (F.pre2)
 		T += '③' + numStrX(F.pre2);
-	tby[6].children[I].textContent = `${numStrX(F.attackF)} / ${T} ${_l_unit == 'F' ? 'F' : '秒'}`;
+	tby[6].children[I].textContent = `${numStrX(F.attackF)} / ${T} ${utils.durationUnit === 'F' ? 'F' : '秒'}`;
 	T = '';
 	if (F.atkType & ATK_OMNI)
 		T += '全方位';
 	else if (F.atkType & ATK_LD)
 		T += '遠方';
 	T += (F.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
-	tby[7].children[I].textContent = numStrT(getRes(F.cd)) + ' / ' + _l_f.format(F.price * 1.5) + '元';
+	tby[7].children[I].textContent = numStrT(getRes(F.cd)) + ' / ' + utils.numStr(F.price * 1.5) + '元';
 	if (F.lds) {
 		let s = '';
 		for (let i = 0; i < F.lds.length; ++i) {

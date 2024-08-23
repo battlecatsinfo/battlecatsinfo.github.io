@@ -1009,7 +1009,7 @@ function updateValues(form, tbl) {
 		getATK0(form, m, tbl._s, tr[1], chs[4].children[1]);
 		let t = other_def[4];
 		tr[3].textContent = t ? floor((1 + t) * form.speed) : form.speed;
-		if (_l_unit == 'F') {
+		if (utils.durationUnit === 'F') {
 			t = numStr(form.pre);
 			if (form.pre1)
 				t += '/' + numStr(form.pre1);

@@ -11,30 +11,20 @@ const ths = [
 	'菊石'
 ];
 
-let _l_f = localStorage.getItem('prec');
-if (_l_f) {
-	_l_f = parseInt(_l_f);
-} else {
-	_l_f = 2;
-}
-_l_f = new Intl.NumberFormat(undefined, {
-	'maximumFractionDigits': _l_f
-});
-
 function percentage(num) {
-	return _l_f.format(num) + '%';
+	return utils.numStr(num) + '%';
 }
 
 function percentage2(num) {
-	return _l_f.format(num / 10) + '%';
+	return utils.numStr(num / 10) + '%';
 }
 
 function numStr(num) {
-	return _l_f.format(num);
+	return utils.numStr(num);
 }
 
 function numStrT(num) {
-	return `${num}F/${_l_f.format(num / 30)}秒`;
+	return `${num}F/${utils.numStr(num / 30)}秒`;
 }
 
 function numHP(num) {

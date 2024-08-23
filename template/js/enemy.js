@@ -506,7 +506,7 @@ loadEnemy(my_id)
 		document.getElementById('open-db').href = X.href;
 		chs[1].children[5].textContent = E.range;
 		chs[1].children[7].textContent = E.getcost();
-		if (_l_unit == 'F')
+		if (utils.durationUnit === 'F')
 			chs[2].children[1].textContent = [E.pre, E.pre1, E.pre2].filter(x => x).map(numStr).join('/') + ' F';
 		else
 			chs[2].children[1].textContent = [E.pre, E.pre1, E.pre2].filter(x => x).map(x => numStr(x / 30)).join('/') + ' 秒';
