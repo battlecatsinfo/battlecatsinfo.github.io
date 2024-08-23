@@ -9,9 +9,6 @@ const sources = [
 	'gh.css',
 
 	'index.html',
-	'stage.html',
-	'stage2.html',
-	'stage3.html',
 	'unit.html',
 	'enemy.html',
 	'esearch.html',
@@ -48,7 +45,6 @@ const sources = [
 	'utils.js',
 	'navbar-search.js',
 	'gacha.js',
-	"enemy.js",
 	"constants.js",
 	"parser.js",
 	"esearch.js",

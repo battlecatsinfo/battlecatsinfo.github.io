@@ -1,10 +1,8 @@
 const
 	loader = document.getElementById('loader'),
-	eggs = new Set({{{toJSON stage_data.egg_set}}}),
+	eggs = new Set({{{toJSON egg_set}}}),
 
-	stages_top = [
-		"傳奇關卡", "特別關卡", "期間限定合作關卡", "主篇章", "EX關卡", "貓咪道場關卡", "貓咪塔", "排行關卡", "挑戰賽", "真傳奇關卡", "喵力達專用關卡", "強襲關卡", "發掘關卡", "合作強襲", "超獸討伐關卡", "地底迷宮", "傳奇故事0", "異次元競技場"
-	],
+	stages_top = {{{toJSON stages_top}}},
 
 	SI_TW_NAME = 0,
 	SI_JP_NAME = 1,
@@ -38,8 +36,8 @@ const
 	SM_LIMIT = 12,
 
 	QQ = '？？？',
-	event_types = {{{toJSON stage_data.event_types}}},
-	conditions = {{{toJSON stage_data.conditions}}},
+	event_types = {{{toJSON event_types}}},
+	conditions = {{{toJSON conditions}}},
 	M1 = document.getElementById("M1"),
 	M2 = document.getElementById("M2"),
 	M3 = document.getElementById("M3"),
@@ -57,7 +55,7 @@ const
 	mM = document.getElementById("mM"),
 	ex_stages = document.getElementById("ex-stages"),
 	stageL = parseInt(localStorage.getItem('stagel') || '0', 10),
-	materialDrops = [85, 86, 87, 88, 89, 90, 91, 140, 187, 188, 189, 190, 191, 192, 193, 194];
+	materialDrops = {{{toJSON material_drops}}};
 var
 	db, info2, info3, star, char_groups, stageF;
 

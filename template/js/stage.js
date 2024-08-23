@@ -1,26 +1,7 @@
 const
 	loader = document.getElementById('loader'),
-	stages_top = [
-		["傳奇關卡", "レジェンドストーリー"],
-		["特別關卡", "イベントステージ"],
-		["期間限定合作關卡", "コラボステージ"],
-		["主篇章", "日本編"],
-		["EX關卡", "EXステージ"],
-		["貓咪道場關卡", "ネコ道場", true],
-		["貓咪塔", "風雲にゃんこ塔"],
-		["排行關卡", "ネコ道場ランキング", true],
-		["挑戰賽", "チャレンジバトル", true],
-		["真傳奇關卡", "真レジェンドステージ"],
-		["喵力達專用關卡", "ネコビタンステージ"],
-		["強襲關卡", "強襲ステージ"],
-		["發掘關卡", "発掘ステージ"],
-		["合作強襲", "コラボ強襲ステージ"],
-		["超獸討伐關卡", "超獣研究ステージ"],
-		["地底迷宮", "地底迷宮", true],
-		["傳奇故事0", "レジェンドストーリー0"],
-		["異次元競技場", "異次元コロシアム"]
-	],
-	eggs = new Set({{{toJSON stage_data.egg_set}}}),
+	stages_top = {{{toJSON stages_top}}},
+	eggs = new Set({{{toJSON egg_set}}}),
 	MC_TW_NAME = 0,
 	MC_JP_NAME = 1,
 	MC_GOLDCPU = 2,
@@ -56,7 +37,7 @@ const
 	SM_LIMIT = 12,
 
 	QQ = '？？？',
-	conditions = {{{toJSON stage_data.conditions}}},
+	conditions = {{{toJSON conditions}}},
 	M1 = document.getElementById("M1"),
 	M2 = document.getElementById("M2"),
 	M3 = document.getElementById("M3"),
@@ -74,7 +55,7 @@ const
 	mM = document.getElementById("mM"),
 	ex_stages = document.getElementById("ex-stages"),
 	stageL = parseInt(localStorage.getItem('stagel') || '0', 10),
-	materialDrops = [85, 86, 87, 88, 89, 90, 91, 140, 187, 188, 189, 190, 191, 192, 193, 194];
+	materialDrops = {{{toJSON material_drops}}};
 var
 	db, info1, info2, info3, star, char_groups, filter_page, stageF;
 
