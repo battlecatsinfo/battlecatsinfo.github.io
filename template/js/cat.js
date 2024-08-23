@@ -104,19 +104,6 @@ const RES_WARP = 8;
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 
-const _l_unit = localStorage.getItem("unit");
-
-let _l_f = localStorage.getItem('prec');
-
-if (_l_f)
-	_l_f = parseInt(_l_f);
-else
-	_l_f = 2;
-
-_l_f = new Intl.NumberFormat(undefined, {
-	'maximumFractionDigits': _l_f
-});
-
 function t3str(x) {
 	var s = x.toString();
 	switch (s.length) {
@@ -130,12 +117,12 @@ function t3str(x) {
 }
 
 function numStr(num) {
-	return _l_f.format(num);
+	return utils.numStr(num);
 	// return (Math.round(100 * (num + Number.EPSILON)) / 100).toString();
 }
 
 function numStrT(num) {
-	if (_l_unit == 'F')
+	if (utils.durationUnit === 'F')
 		return num.toString() + ' F';
 	return numStr(num / 30) + ' 秒';
 }
