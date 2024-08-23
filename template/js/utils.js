@@ -104,13 +104,15 @@
 		localStorage.setItem('theme', newValue);
 	}
 
-	toggleTheme(getTheme());
-
-	return {
+	const utils = {
 		checkResponse,
 		loadStages,
 		getTheme,
 		toggleTheme,
 	};
+
+	toggleTheme(getTheme());
+
+	return utils;
 
 }));
