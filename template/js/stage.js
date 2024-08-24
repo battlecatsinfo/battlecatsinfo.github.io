@@ -161,6 +161,27 @@ function TI2(t) {
 	return t;
 }
 
+function onStageAnchorClick(event) {
+	const a = event.currentTarget;
+
+	const u = new URL(a.href);
+	if (u.pathname !== location.pathname)
+		return;
+
+	let sts = u.searchParams.get('s');
+	if (!sts)
+		return;
+
+	search_result.style.display = 'none';
+	main_div.style.display = 'block';
+
+	sts = sts.split('-').map(x => parseInt(x, 10));
+	star = fix_star(u.searchParams.get('star'));
+	refresh_1(sts);
+
+	return false;
+}
+
 function search_guard() {
 	filter_page.parentNode.style.display = 'none';
 	main_div.style.display = 'none';
@@ -195,26 +216,14 @@ function search_guard() {
 				const sm = ~~((e.key - mc * 1000000) / 1000);
 				const sts = [mc, sm, st];
 				a.href = `/stage.html?s=${mc}-${sm}`;
+				a.onclick = onStageAnchorClick;
 				td.appendChild(a);
 				tr.appendChild(td);
 				td = document.createElement('td')
 				const a2 = document.createElement('a');
 				a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
 				a2.href = a.href + '-' + st;
-				a2.sts = sts;
-				a.sts = sts;
-				a.onclick = function() {
-					search_result.style.display = 'none';
-					main_div.style.display = 'block';
-					refresh_1(this.sts.slice(0, 2));
-					return false;
-				}
-				a2.onclick = function() {
-					search_result.style.display = 'none';
-					main_div.style.display = 'block';
-					refresh_1(this.sts);
-					return false;
-				}
+				a2.onclick = onStageAnchorClick;
 				td.appendChild(a2);
 				tr.appendChild(td);
 				tbl.appendChild(tr);
@@ -259,26 +268,14 @@ function search_enemy(e) {
 				const sm = ~~((e.key - mc * 1000000) / 1000);
 				const sts = [mc, sm, st];
 				a.href = `/stage.html?s=${mc}-${sm}`;
+				a.onclick = onStageAnchorClick;
 				td.appendChild(a);
 				tr.appendChild(td);
 				td = document.createElement('td')
 				const a2 = document.createElement('a');
 				a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
 				a2.href = a.href + '-' + st;
-				a2.sts = sts;
-				a.sts = sts;
-				a.onclick = function() {
-					search_result.style.display = 'none';
-					main_div.style.display = 'block';
-					refresh_1(this.sts.slice(0, 2));
-					return false;
-				}
-				a2.onclick = function() {
-					search_result.style.display = 'none';
-					main_div.style.display = 'block';
-					refresh_1(this.sts);
-					return false;
-				}
+				a2.onclick = onStageAnchorClick;
 				td.appendChild(a2);
 				tr.appendChild(td);
 				tbl.appendChild(tr);
@@ -314,13 +311,7 @@ function search_gold() {
 			const a = document.createElement('a');
 			a.textContent = stages_top[i][MC_TW_NAME];
 			a.href = '/stage.html?s=' + i;
-			a.onclick = function() {
-				search_result.style.display = 'none';
-				main_div.style.display = 'block';
-				M1.selectedIndex = i;
-				refresh_1();
-				return false;
-			}
+			a.onclick = onStageAnchorClick;
 			td.appendChild(a);
 			tr.appendChild(td);
 			td = document.createElement('td');
@@ -342,27 +333,14 @@ function search_gold() {
 				const sm = e.key % 1000;
 				a.textContent = stages_top[mc][MC_TW_NAME];
 				a.href = `/stage.html?s=${mc}`;
+				a.onclick = onStageAnchorClick;
 				td.appendChild(a);
 				tr.appendChild(td);
 				td = document.createElement('td')
 				const a2 = document.createElement('a');
 				a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
 				a2.href = a.href + '-' + sm;
-				a2.sts = [mc, sm];
-				a.v = mc;
-				a.onclick = function() {
-					search_result.style.display = 'none';
-					main_div.style.display = 'block';
-					M1.selectedIndex = this.v;
-					refresh_1();
-					return false;
-				}
-				a2.onclick = function() {
-					search_result.style.display = 'none';
-					main_div.style.display = 'block';
-					refresh_1(this.sts);
-					return false;
-				}
+				a2.onclick = onStageAnchorClick;
 				td.appendChild(a2);
 				tr.appendChild(td);
 				tbl.appendChild(tr);
@@ -420,13 +398,7 @@ function search_reward(e) {
 						const a2 = document.createElement('a');
 						a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
 						a2.href = `/stage.html?s=${mc}-${sm}-${st}`;
-						a2.sts = [mc, sm, st];
-						a2.onclick = function() {
-							search_result.style.display = 'none';
-							main_div.style.display = 'block';
-							refresh_1(this.sts);
-							return false;
-						}
+						a2.onclick = onStageAnchorClick;
 						td.appendChild(a2);
 						tr.appendChild(td);
 						td = document.createElement('td');
@@ -612,11 +584,7 @@ function getConditionHTML(obj) {
 		}
 		div.append("通過");
 		a.href = `/stage.html?s=${mc}-${sm}`;
-		a.s = [mc, sm];
-		a.onclick = function(event) {
-			refresh_1(this.s);
-			return false;
-		};
+		a.onclick = onStageAnchorClick;
 		div.appendChild(a);
 		return div;
 	} else {
@@ -637,11 +605,7 @@ function getConditionHTML(obj) {
 		const st = obj.stage;
 		a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 		a.n = "第" + (st + 1).toString() + "關";
-		a.s = [mc, sm, st];
-		a.onclick = function(event) {
-			refresh_1(this.s);
-			return false;
-		};
+		a.onclick = onStageAnchorClick;
 		div.appendChild(a);
 		return div;
 	}
@@ -658,11 +622,7 @@ function getConditionHTML(obj) {
 		db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
 			a.textContent = namefor(e.target.result);
 		}
-		a.s = [mc, sm];
-		a.onclick = function(event) {
-			refresh_1(this.s);
-			return false;
-		};
+		a.onclick = onStageAnchorClick;
 		if (i) div.append(Math.sign(y) != Math.sign(last) ? "或" : "及");
 		div.append(ay > 200000 ? "通過" : "玩過");
 		div.appendChild(a);
@@ -1235,10 +1195,7 @@ function render_stage() {
 					const sm = ~~(k / 1000);
 					const si = k - sm * 1000;
 					a.textContent = namefor(e.value);
-					a.onclick = function() {
-						refresh_1([4, sm, si]);
-						return false;
-					}
+					a.onclick = onStageAnchorClick;
 					a.href = `/stage.html?s=4-${sm}-${si}`;
 					td.appendChild(a);
 					ex_stages.appendChild(td);
@@ -1270,11 +1227,8 @@ function render_stage() {
 				const td1 = document.createElement("td");
 				const tr = document.createElement("tr");
 				const a = document.createElement("a");
-				a.href = '/stage.html?s=' + (a.sts = [mc, sm, st]).join('-');
-				a.onclick = function(event) {
-					refresh_1(this.sts);
-					return false;
-				};
+				a.href = `/stage.html?s=${mc}-${sm}-${st}`;
+				a.onclick = onStageAnchorClick;
 				db.transaction('stage').objectStore('stage').get(s).onsuccess = function(e) {
 					a.textContent = namefor(e.target.result);
 				};
@@ -1373,15 +1327,7 @@ function add_result_stage(id, name, search_for) {
 	const sm = ~~((id - mc * 1000000) / 1000);
 	a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 	a.id = id;
-	a.onclick = function() {
-		const mc = ~~(this.id / 1000000);
-		const st = this.id % 1000;
-		const sm = ~~((this.id - mc * 1000000) / 1000);
-		search_result.style.display = 'none';
-		main_div.style.display = 'block';
-		refresh_1([mc, sm, st]);
-		return false;
-	}
+	a.onclick = onStageAnchorClick;
 	search_result.appendChild(a);
 	a.v = stages_top[mc][MC_TW_NAME] + ' - ';
 	a.e = name;
@@ -1399,14 +1345,7 @@ function add_result_map(id, name, search_for) {
 	const mc = ~~(id / 1000);
 	a.href = `/stage.html?s=${mc}-${sm}`;
 	a.id = id;
-	a.onclick = function() {
-		const sm = this.id % 1000;
-		const mc = ~~(this.id / 1000);
-		search_result.style.display = 'none';
-		main_div.style.display = 'block';
-		refresh_1([mc, sm]);
-		return false;
-	}
+	a.onclick = onStageAnchorClick;
 	search_result.appendChild(a);
 	a.innerHTML = stages_top[mc][MC_TW_NAME] + ' - ' + name;
 }
