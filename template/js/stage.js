@@ -206,13 +206,13 @@ function search_guard() {
 				a.onclick = function() {
 					search_result.style.display = 'none';
 					main_div.style.display = 'block';
-					M1.oninput(null, this.sts.slice(0, 2));
+					refresh_1(this.sts.slice(0, 2));
 					return false;
 				}
 				a2.onclick = function() {
 					search_result.style.display = 'none';
 					main_div.style.display = 'block';
-					M1.oninput(null, this.sts);
+					refresh_1(this.sts);
 					return false;
 				}
 				td.appendChild(a2);
@@ -270,13 +270,13 @@ function search_enemy(e) {
 				a.onclick = function() {
 					search_result.style.display = 'none';
 					main_div.style.display = 'block';
-					M1.oninput(null, this.sts.slice(0, 2));
+					refresh_1(this.sts.slice(0, 2));
 					return false;
 				}
 				a2.onclick = function() {
 					search_result.style.display = 'none';
 					main_div.style.display = 'block';
-					M1.oninput(null, this.sts);
+					refresh_1(this.sts);
 					return false;
 				}
 				td.appendChild(a2);
@@ -318,7 +318,7 @@ function search_gold() {
 				search_result.style.display = 'none';
 				main_div.style.display = 'block';
 				M1.selectedIndex = i;
-				M1.oninput(null);
+				refresh_1();
 				return false;
 			}
 			td.appendChild(a);
@@ -354,13 +354,13 @@ function search_gold() {
 					search_result.style.display = 'none';
 					main_div.style.display = 'block';
 					M1.selectedIndex = this.v;
-					M1.oninput(null);
+					refresh_1();
 					return false;
 				}
 				a2.onclick = function() {
 					search_result.style.display = 'none';
 					main_div.style.display = 'block';
-					M1.oninput(null, this.sts);
+					refresh_1(this.sts);
 					return false;
 				}
 				td.appendChild(a2);
@@ -424,7 +424,7 @@ function search_reward(e) {
 						a2.onclick = function() {
 							search_result.style.display = 'none';
 							main_div.style.display = 'block';
-							M1.oninput(null, this.sts);
+							refresh_1(this.sts);
 							return false;
 						}
 						td.appendChild(a2);
@@ -539,10 +539,10 @@ function initUI() {
 	prev.onclick = function() {
 		if (M3.selectedIndex) {
 			M3.selectedIndex -= 1;
-			M3.oninput();
+			refresh_3();
 		} else if (M2.selectedIndex) {
 			M2.selectedIndex -= 1;
-			M2.oninput();
+			refresh_2();
 		} else {
 			alert('沒有上一關了！');
 		}
@@ -550,10 +550,10 @@ function initUI() {
 	prev.nextElementSibling.onclick = function() {
 		if ((M3.selectedIndex + 2) <= M3.options.length) {
 			M3.selectedIndex += 1;
-			M3.oninput();
+			refresh_3();
 		} else if ((M2.selectedIndex + 2) <= M2.options.length) {
 			M2.selectedIndex += 1;
-			M2.oninput();
+			refresh_2();
 		} else {
 			alert('沒有下一關了！');
 		}
@@ -593,7 +593,7 @@ function handle_url() {
 			sts[0] = fromV(sts[0]);
 		}
 	}
-	M1.oninput(null, sts);
+	refresh_1(sts);
 	loader.style.display = 'none';
 	loader.previousElementSibling.style.display = 'none';
 	main_div.style.display = "block";
@@ -614,7 +614,7 @@ function getConditionHTML(obj) {
 		a.href = `/stage.html?s=${mc}-${sm}`;
 		a.s = [mc, sm];
 		a.onclick = function(event) {
-			M1.oninput(null, this.s);
+			refresh_1(this.s);
 			return false;
 		};
 		div.appendChild(a);
@@ -639,7 +639,7 @@ function getConditionHTML(obj) {
 		a.n = "第" + (st + 1).toString() + "關";
 		a.s = [mc, sm, st];
 		a.onclick = function(event) {
-			M1.oninput(null, this.s);
+			refresh_1(this.s);
 			return false;
 		};
 		div.appendChild(a);
@@ -660,7 +660,7 @@ function getConditionHTML(obj) {
 		}
 		a.s = [mc, sm];
 		a.onclick = function(event) {
-			M1.oninput(null, this.s);
+			refresh_1(this.s);
 			return false;
 		};
 		if (i) div.append(Math.sign(y) != Math.sign(last) ? "或" : "及");
@@ -757,7 +757,8 @@ class Limit {
 		}
 	}
 }
-M1.oninput = (function(event, sts) {
+
+function refresh_1(sts) {
 	if (sts && sts.length)
 		M1.selectedIndex = sts[0];
 
@@ -795,10 +796,14 @@ M1.oninput = (function(event, sts) {
 			M2.c += 1;
 		} else {
 			M2.selectedIndex = M2.q;
-			M2.oninput(null, sts);
+			refresh_2(sts);
 		}
 	}
-});
+}
+
+M1.oninput = function (event) {
+	refresh_1();
+};
 
 function process_2() {
 	const start = M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
@@ -825,11 +830,12 @@ function process_2() {
 			M3.c += 1;
 		} else {
 			M3.selectedIndex = M3.q;
-			M3.oninput();
+			refresh_3();
 		}
 	}
 }
-M2.oninput = (function(event, sts) {
+
+function refresh_2(sts) {
 	M3.length = '';
 	M3.c = 0;
 	if (sts && sts.length > 2)
@@ -847,7 +853,11 @@ M2.oninput = (function(event, sts) {
 			process_2();
 		}
 	}
-});
+}
+
+M2.oninput = function (event) {
+	refresh_2();
+};
 
 function makeTd(p, txt) {
 	var td = document.createElement("td");
@@ -919,7 +929,8 @@ function getDropData(drops) {
 	}
 	return res;
 }
-M3.oninput = function() {
+
+function refresh_3() {
 	if (M3.v) {
 		info3 = M3.v;
 		M3.v = null;
@@ -932,6 +943,10 @@ M3.oninput = function() {
 			}
 	}
 }
+
+M3.oninput = function (event) {
+	refresh_3();
+};
 
 function render_stage() {
 	const flags2 = parseInt(info2[SM_FLAGS] || '0', 36);
@@ -983,7 +998,7 @@ function render_stage() {
 			a.i = i;
 			a.onclick = function() {
 				star = this.i + 1;
-				M3.oninput();
+				refresh_3();
 				return false;
 			};
 			if (!star && !i || star - 1 == i)
@@ -1229,7 +1244,7 @@ function render_stage() {
 					const si = k - sm * 1000;
 					a.textContent = namefor(e.value);
 					a.onclick = function() {
-						M1.oninput(null, [4, sm, si]);
+						refresh_1([4, sm, si]);
 						return false;
 					}
 					a.href = `/stage.html?s=4-${sm}-${si}`;
@@ -1265,7 +1280,7 @@ function render_stage() {
 				const a = document.createElement("a");
 				a.href = '/stage.html?s=' + (a.sts = [mc, sm, st]).join('-');
 				a.onclick = function(event) {
-					M1.oninput(null, this.sts);
+					refresh_1(this.sts);
 					return false;
 				};
 				db.transaction('stage').objectStore('stage').get(s).onsuccess = function(e) {
@@ -1372,7 +1387,7 @@ function add_result_stage(id, name, search_for) {
 		const sm = ~~((this.id - mc * 1000000) / 1000);
 		search_result.style.display = 'none';
 		main_div.style.display = 'block';
-		M1.oninput(null, [mc, sm, st]);
+		refresh_1([mc, sm, st]);
 		return false;
 	}
 	search_result.appendChild(a);
@@ -1397,7 +1412,7 @@ function add_result_map(id, name, search_for) {
 		const mc = ~~(this.id / 1000);
 		search_result.style.display = 'none';
 		main_div.style.display = 'block';
-		M1.oninput(null, [mc, sm]);
+		refresh_1([mc, sm]);
 		return false;
 	}
 	search_result.appendChild(a);
