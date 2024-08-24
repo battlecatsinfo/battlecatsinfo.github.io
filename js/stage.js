@@ -48,34 +48,17 @@ module.exports = class extends SiteGenerator {
 
 		const {categories, conditions, material_drops} = JSON.parse(this.load('stage.json'));
 		const egg_set = Object.keys(eggs).map(Number);
-		this.write_template('html/stage.html', 'stage.html');
+		this.write_template('html/stage.html', 'stage.html', {
+			category: categories.default,
+		});
 		this.write_template('html/stage2.html', 'stage2.html', {
-			options: categories.official.map(entry => entry.name),
+			category: categories.official,
 		});
 		this.write_template('html/stage3.html', 'stage3.html', {
-			options: categories.custom.map(entry => entry.name),
+			category: categories.custom,
 		});
 		this.write_template('js/stage.js', 'stage.js', {
-			stages_top: categories.default.map(entry => {
-				const rv = [entry.name, entry.name_jp];
-				if (entry.forbid_gold_cpu)
-					rv.push(true);
-				return rv;
-			}),
-			conditions,
-			material_drops,
-			egg_set,
-		});
-		this.write_template('js/stage2.js', 'stage2.js', {
 			stages_top: categories.default.map(entry => entry.name),
-			event_types: categories.official.map(entry => entry.maps),
-			conditions,
-			material_drops,
-			egg_set,
-		});
-		this.write_template('js/stage3.js', 'stage3.js', {
-			stages_top: categories.default.map(entry => entry.name),
-			event_types: categories.custom.map(entry => entry.maps),
 			conditions,
 			material_drops,
 			egg_set,
