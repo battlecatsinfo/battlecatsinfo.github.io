@@ -43,6 +43,7 @@ const stName = document.getElementById("st-name");
 const stName2 = document.getElementById("st-name2");
 const stLines = document.getElementById("lines");
 const main_div = document.getElementById("main");
+const search_form = document.getElementById("form");
 const search_result = document.getElementById("search-result");
 const m_drops = document.getElementById("drops");
 const rewards = document.getElementById("rewards");
@@ -491,13 +492,13 @@ function fix_star(s) {
 function handle_url() {
 	const url = new URL(location.href);
 	const Q = url.searchParams.get('q');
-	if (Q) {
+	if (Q && !search_form.hidden) {
 		loader.hidden = true;
 		loader.previousElementSibling.hidden = true;
 		doSearch({
 			'value': Q
 		});
-		document.getElementById("form").q.value = Q;
+		search_form.q.value = Q;
 		return;
 	}
 	const stars = url.searchParams.get("star");
@@ -1222,7 +1223,7 @@ function render_stage() {
 		}
 	}
 };
-document.getElementById("form").onsubmit = function(event) {
+search_form.onsubmit = function(event) {
 	event.preventDefault();
 	setTimeout(doSearch, 0, event.currentTarget.q);
 	return false;
