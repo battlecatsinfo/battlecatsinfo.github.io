@@ -2,9 +2,6 @@ const
 	loader = document.getElementById('loader'),
 	stages_top = {{{toJSON stages_top}}},
 	eggs = new Set({{{toJSON egg_set}}}),
-	MC_TW_NAME = 0,
-	MC_JP_NAME = 1,
-	MC_GOLDCPU = 2,
 	SI_TW_NAME = 0,
 	SI_JP_NAME = 1,
 	SI_XP = 2,
@@ -321,12 +318,13 @@ function search_gold() {
 	search_result.appendChild(tbl);
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 
-	for (let i = 0; i < stages_top.length; ++i) {
-		if (stages_top[i][MC_GOLDCPU]) {
+	for (let i = 0, I = M1.children.length; i < I; ++i) {
+		const info1 = M1.children[i];
+		if (info1.dataset.hasOwnProperty('forbidGoldCpu')) {
 			tr = document.createElement('tr');
 			td = document.createElement('td');
 			const a = document.createElement('a');
-			a.textContent = stages_top[i][MC_TW_NAME];
+			a.textContent = info1.textContent;
 			a.href = '/stage.html?s=' + i;
 			a.onclick = onStageAnchorClick;
 			td.appendChild(a);
@@ -348,7 +346,7 @@ function search_gold() {
 				const a = document.createElement('a');
 				const mc = ~~(e.key / 1000);
 				const sm = e.key % 1000;
-				a.textContent = stages_top[mc][MC_TW_NAME];
+				a.textContent = M1.children[mc].textContent;
 				a.href = `/stage.html?s=${mc}`;
 				a.onclick = onStageAnchorClick;
 				td.appendChild(a);
@@ -436,12 +434,6 @@ function search_reward(e) {
 }
 
 function initUI() {
-	var o;
-	for (const x of stages_top) {
-		o = document.createElement('option');
-		o.textContent = x[0];
-		M1.appendChild(o);
-	}
 	document.getElementById('fs').onclick = function(event) {
 		event.preventDefault();
 		event.stopPropagation();
@@ -739,14 +731,25 @@ function refresh_1(sts) {
 	if (sts && sts.length)
 		M1.selectedIndex = sts[0];
 
-	const start = M1.selectedIndex * 1000;
-
 	M2.length = 0;
 
-	info1 = stages_top[M1.selectedIndex];
+	info1 = M1.selectedOptions[0];
 
 	const mapIdx = (sts && sts.length > 1) ? sts[1] : 0;
 
+	if (info1 && info1.dataset.maps) {
+		for (const map_code of info1.dataset.maps.split(',').map(x => parseInt(x))) {
+			const o = M2.appendChild(document.createElement('option'));
+			db.transaction('map').objectStore('map').get(map_code).onsuccess = function (e) {
+				o.textContent = namefor(e.target.result);
+			};
+		}
+		M2.selectedIndex = mapIdx;
+		refresh_2(sts);
+		return;
+	}
+
+	const start = M1.selectedIndex * 1000;
 	let map;
 	let c = 0;
 	db.transaction('map').objectStore('map').openCursor(IDBKeyRange.bound(start, start + 1000, false, true)).onsuccess = function(e) {
@@ -780,7 +783,9 @@ M1.oninput = function (event) {
 };
 
 function process_2(stageIdx) {
-	const start = M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
+	const start = info1.dataset.maps ?
+		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) * 1000 :
+		M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
 
 	let stage;
 	let c = 0;
@@ -818,7 +823,10 @@ function refresh_2(sts, map) {
 		info2 = map;
 		process_2(stageIdx);
 	} else {
-		db.transaction('map').objectStore('map').get(M1.selectedIndex * 1000 + M2.selectedIndex).onsuccess = function(e) {
+		const mapIdx = info1.dataset.maps ?
+			parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) :
+			M1.selectedIndex * 1000 + M2.selectedIndex;
+		db.transaction('map').objectStore('map').get(mapIdx).onsuccess = function(e) {
 			info2 = e.target.result;
 			process_2(stageIdx);
 		}
@@ -905,11 +913,13 @@ function refresh_3(stage) {
 		info3 = stage;
 		render_stage();
 	} else {
-		db.transaction('stage').objectStore('stage').get(M1.selectedIndex * 1000000 + M2.selectedIndex * 1000 + M3.selectedIndex)
-			.onsuccess = function(e) {
+		const base = info1.dataset.maps ?
+			parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) * 1000 :
+			M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
+		db.transaction('stage').objectStore('stage').get(base + M3.selectedIndex).onsuccess = function(e) {
 				info3 = e.target.result;
 				render_stage();
-			}
+		};
 	}
 }
 
@@ -936,8 +946,13 @@ function render_stage() {
 	else
 		history.replaceState({}, "", url);
 
-	stName.textContent = [info1[MC_TW_NAME] || QQ, info2[SM_TW_NAME] || QQ, info3[SI_TW_NAME] || QQ].join(" - ");
-	stName2.textContent = [info1[MC_JP_NAME] || QQ, info2[SM_JP_NAME] || QQ, info3[SI_JP_NAME] || QQ].join(" - ");
+	if (info1.dataset.maps) {
+		stName.textContent = [info2[SM_TW_NAME] || QQ, info3[SI_TW_NAME] || QQ].join(" - ");
+		stName2.textContent = [info2[SM_JP_NAME] || QQ, info3[SI_JP_NAME] || QQ].join(" - ");
+	} else {
+		stName.textContent = [info1.textContent || QQ, info2[SM_TW_NAME] || QQ, info3[SI_TW_NAME] || QQ].join(" - ");
+		stName2.textContent = [info1.dataset.nameJp || QQ, info2[SM_JP_NAME] || QQ, info3[SI_JP_NAME] || QQ].join(" - ");
+	}
 	document.title = (info2[SI_TW_NAME] || info2[SI_JP_NAME] || QQ) + ' - ' + (info3[SI_TW_NAME] || info3[SI_JP_NAME] || QQ);
 
 	var stars_tr = document.getElementById("stars-tr");
@@ -973,7 +988,7 @@ function render_stage() {
 		tr.id = "stars-tr";
 		stName.parentNode.parentNode.appendChild(tr);
 	}
-	if (info3[SI_FLAGS] || info2[SM_RESETMODE] || info1[MC_GOLDCPU] || info2[SM_WAITFORTIMER] || info2[SM_FLAGS] || info2[SM_SPECIALCOND]) {
+	if (info3[SI_FLAGS] || info2[SM_RESETMODE] || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2[SM_WAITFORTIMER] || info2[SM_FLAGS] || info2[SM_SPECIALCOND]) {
 		var s;
 		var tr = document.createElement("tr");
 		var th = document.createElement("th");
@@ -998,7 +1013,7 @@ function render_stage() {
 			span.textContent = "全破後隱藏";
 			th.appendChild(span);
 		}
-		if (info1[MC_GOLDCPU] || flags2 & 2) {
+		if (info1.dataset.hasOwnProperty('forbidGoldCpu') || flags2 & 2) {
 			var span = document.createElement("div");
 			span.classList.add('W');
 			span.textContent = "※掃蕩不可※";
@@ -1341,7 +1356,7 @@ function add_result_stage(id, name, search_for) {
 	a.id = id;
 	a.onclick = onStageAnchorClick;
 	search_result.appendChild(a);
-	a.v = stages_top[mc][MC_TW_NAME] + ' - ';
+	a.v = stages_top[mc] + ' - ';
 	a.e = name;
 	db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
 		e = e.target.result;
@@ -1359,7 +1374,7 @@ function add_result_map(id, name, search_for) {
 	a.id = id;
 	a.onclick = onStageAnchorClick;
 	search_result.appendChild(a);
-	a.innerHTML = stages_top[mc][MC_TW_NAME] + ' - ' + name;
+	a.innerHTML = stages_top[mc] + ' - ' + name;
 }
 
 function doSearch(t) {
