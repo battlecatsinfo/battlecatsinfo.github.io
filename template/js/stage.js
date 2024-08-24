@@ -548,10 +548,10 @@ function initUI() {
 		}
 	};
 	prev.nextElementSibling.onclick = function() {
-		if ((M3.selectedIndex + 2) <= M3.options.length) {
+		if (M3.selectedIndex < M3.options.length - 1) {
 			M3.selectedIndex += 1;
 			refresh_3();
-		} else if ((M2.selectedIndex + 2) <= M2.options.length) {
+		} else if (M2.selectedIndex < M2.options.length - 1) {
 			M2.selectedIndex += 1;
 			refresh_2();
 		} else {
@@ -764,7 +764,7 @@ function refresh_1(sts) {
 
 	const start = M1.selectedIndex * 1000;
 
-	M2.length = "";
+	M2.length = 0;
 
 	info1 = stages_top[M1.selectedIndex];
 
@@ -836,7 +836,7 @@ function process_2() {
 }
 
 function refresh_2(sts) {
-	M3.length = '';
+	M3.length = 0;
 	M3.c = 0;
 	if (sts && sts.length > 2)
 		M3.q = sts[2];
