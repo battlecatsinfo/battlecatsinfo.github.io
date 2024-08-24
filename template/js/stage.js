@@ -561,6 +561,13 @@ function initUI() {
 	handle_url();
 }
 
+function fix_star(s) {
+	s = parseInt(s, 10);
+	if (isNaN(s) || s < 1 || s > 4)
+		s = 1;
+	return s;
+}
+
 function handle_url() {
 	var url = new URL(location.href);
 	var Q = url.searchParams.get('q');
@@ -574,13 +581,7 @@ function handle_url() {
 		return;
 	}
 	var stars = url.searchParams.get("star");
-	if (stars) {
-		star = parseInt(stars, 10);
-		if (isNaN(star) || star <= 0 || star > 4)
-			star = 1;
-	} else {
-		star = 1;
-	}
+	star = fix_star(stars);
 	let sts;
 	let st = url.searchParams.get("s");
 	if (st) {
@@ -936,19 +937,20 @@ function render_stage() {
 	const flags2 = parseInt(info2[SM_FLAGS] || '0', 36);
 	const flags3 = parseInt(info3[SI_FLAGS] || '0', 36);
 	const stars_str = info2[SM_STARS] ? info2[SM_STARS].split(',') : [];
-	const url = x = new URL(location.protocol + '//' + location.host + location.pathname);
+	const url = new URL(location.href);
+	const had_query = url.search !== '';
+	url.search = url.hash = '';
 
-	if (star != 1 || (M2.selectedIndex + M1.selectedIndex + M3.selectedIndex)) {
-		url.searchParams.set("s", [M1.selectedIndex, M2.selectedIndex, M3.selectedIndex].join("-"));
-		if (stars_str.length)
-			star = Math.min(stars_str.length, star);
-		else
-			star = 1;
-		if (star != 1)
-			url.searchParams.set("star", star.toString());
+	url.searchParams.set("s", [M1.selectedIndex, M2.selectedIndex, M3.selectedIndex].join("-"));
+	star = fix_star(star);
+	star = stars_str.length ? Math.min(stars_str.length, star) : star;
+	if (star !== 1)
+		url.searchParams.set("star", star);
+
+	if (had_query)
 		history.pushState({}, "", url);
-	}
-
+	else
+		history.replaceState({}, "", url);
 
 	stName.textContent = [info1[MC_TW_NAME] || QQ, info2[SM_TW_NAME] || QQ, info3[SI_TW_NAME] || QQ].join(" - ");
 	stName2.textContent = [info1[MC_JP_NAME] || QQ, info2[SM_JP_NAME] || QQ, info3[SI_JP_NAME] || QQ].join(" - ");
