@@ -1,59 +1,58 @@
-const
-	loader = document.getElementById('loader'),
-	eggs = new Set({{{toJSON egg_set}}}),
-	SI_TW_NAME = 0,
-	SI_JP_NAME = 1,
-	SI_XP = 2,
-	SI_HEALTH = 3,
-	SI_ENERGY = 4,
-	SI_LEN = 5,
-	SI_RAND = 6,
-	SI_DROP = 7,
-	SI_TIME = 8,
-	SI_MAXMATERIAL = 9,
-	SI_FLAGS = 10,
-	SI_MAX = 11,
-	SI_MIN_SPAWN = 12,
-	SI_BG = 13,
-	SI_ENEMY_LINES = 14,
-	SI_EX_STAGE = 15,
+const loader = document.getElementById('loader');
+const eggs = new Set({{{toJSON egg_set}}});
+const SI_TW_NAME = 0;
+const SI_JP_NAME = 1;
+const SI_XP = 2;
+const SI_HEALTH = 3;
+const SI_ENERGY = 4;
+const SI_LEN = 5;
+const SI_RAND = 6;
+const SI_DROP = 7;
+const SI_TIME = 8;
+const SI_MAXMATERIAL = 9;
+const SI_FLAGS = 10;
+const SI_MAX = 11;
+const SI_MIN_SPAWN = 12;
+const SI_BG = 13;
+const SI_ENEMY_LINES = 14;
+const SI_EX_STAGE = 15;
 
-	SM_TW_NAME = 0,
-	SM_JP_NAME = 1,
-	SM_STARS = 2,
-	SM_MAPCOND = 3,
-	SM_STAGECOND = 4,
-	SM_MATERIALDROP = 5,
-	SM_MULTIPLIER = 6,
-	SM_FLAGS = 7,
-	SM_WAITFORTIMER = 8,
-	SM_RESETMODE = 9,
-	SM_SPECIALCOND = 10,
-	SM_INVALID_COMBO = 11,
-	SM_LIMIT = 12,
+const SM_TW_NAME = 0;
+const SM_JP_NAME = 1;
+const SM_STARS = 2;
+const SM_MAPCOND = 3;
+const SM_STAGECOND = 4;
+const SM_MATERIALDROP = 5;
+const SM_MULTIPLIER = 6;
+const SM_FLAGS = 7;
+const SM_WAITFORTIMER = 8;
+const SM_RESETMODE = 9;
+const SM_SPECIALCOND = 10;
+const SM_INVALID_COMBO = 11;
+const SM_LIMIT = 12;
 
-	QQ = '？？？',
-	conditions = {{{toJSON conditions}}},
-	M1 = document.getElementById("M1"),
-	M2 = document.getElementById("M2"),
-	M3 = document.getElementById("M3"),
-	st1 = document.getElementById("st-1").children,
-	st2 = document.getElementById("st-2").children,
-	st3 = document.getElementById("st-3").children,
-	stName = document.getElementById("st-name"),
-	stName2 = document.getElementById("st-name2"),
-	stLines = document.getElementById("lines"),
-	main_div = document.getElementById("main"),
-	search_result = document.getElementById("search-result"),
-	m_drops = document.getElementById("drops"),
-	rewards = document.getElementById("rewards"),
-	m_times = document.getElementById("times"),
-	mM = document.getElementById("mM"),
-	ex_stages = document.getElementById("ex-stages"),
-	stageL = parseInt(localStorage.getItem('stagel') || '0', 10),
-	materialDrops = {{{toJSON material_drops}}};
-var
-	db, info1, info2, info3, star, char_groups, filter_page, stageF;
+const QQ = '？？？';
+const conditions = {{{toJSON conditions}}};
+const M1 = document.getElementById("M1");
+const M2 = document.getElementById("M2");
+const M3 = document.getElementById("M3");
+const st1 = document.getElementById("st-1").children;
+const st2 = document.getElementById("st-2").children;
+const st3 = document.getElementById("st-3").children;
+const stName = document.getElementById("st-name");
+const stName2 = document.getElementById("st-name2");
+const stLines = document.getElementById("lines");
+const main_div = document.getElementById("main");
+const search_result = document.getElementById("search-result");
+const m_drops = document.getElementById("drops");
+const rewards = document.getElementById("rewards");
+const m_times = document.getElementById("times");
+const mM = document.getElementById("mM");
+const ex_stages = document.getElementById("ex-stages");
+const stageL = parseInt(localStorage.getItem('stagel') || '0', 10);
+const materialDrops = {{{toJSON material_drops}}};
+
+let db, info1, info2, info3, star, char_groups, filter_page, stageF;
 
 if (localStorage.getItem('stagef') == 's')
 	stageF = new Intl.NumberFormat(undefined, {
@@ -104,13 +103,12 @@ function namefor(v) {
 }
 
 function createReward(tr, v) {
-	var td = document.createElement("td");
-	var td1 = document.createElement('td');
+	const td = tr.appendChild(document.createElement("td"));
+	const td1 = tr.appendChild(document.createElement('td'));
 	if (v.length != 3) {
-		var img = new Image(104, 79);
+		const img = td1.appendChild(new Image(104, 79));
 		img.style.maxWidth = "3em";
 		img.style.height = 'auto';
-		td1.appendChild(img);
 		const S = v[4];
 		if (v[3].endsWith("的權利")) {
 			img.src = `/img/u/${S}/2.png`;
@@ -120,27 +118,22 @@ function createReward(tr, v) {
 			else
 				img.src = `/img/u/${S}/0.png`;
 		}
-		var a = document.createElement("a");
+		const a = td.appendChild(document.createElement("a"));
 		a.href = "/unit.html?id=" + S;
 		a.textContent = v[3];
 		a.style.verticalAlign = 'center';
-		td.appendChild(a);
 	} else {
-		var img = new Image(128, 128);
+		const img = td1.appendChild(new Image(128, 128));
 		img.style.maxWidth = "2.7em";
 		img.style.height = 'auto';
-		td1.appendChild(img);
-		var rw = parseInt(v[1], 10);
-		var span = document.createElement('span');
+		let rw = parseInt(v[1], 10);
+		const span = td.appendChild(document.createElement('span'));
 		span.style.verticalAlign = 'center';
-		span.textContent = char_groups['RWNAME'][rw].concat(' ×', v[2] > 1000 ? numStr(v[2]) : v[2]);
+		span.textContent = `${char_groups['RWNAME'][rw]} ×${v[2] > 1000 ? numStr(v[2]) : v[2]}`;
 		if (rw <= 13 && rw >= 11)
 			rw += 9;
 		img.src = `/img/r/${rw}.png`;
-		td.appendChild(span);
 	}
-	tr.appendChild(td);
-	tr.appendChild(td1);
 }
 
 function numStr(num) {
@@ -200,27 +193,22 @@ function search_guard() {
 	main_div.style.display = 'none';
 	search_result.textContent = '';
 	search_result.style.display = 'block';
-	let tbl = document.createElement('table');
+	let tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = document.createElement('tr');
-	tbl.appendChild(tr);
-	let td = document.createElement('td');
+	let tr = tbl.appendChild(document.createElement('tr'));
+	let td = tr.appendChild(document.createElement('td'));
 	td.textContent = '地圖';
-	tr.appendChild(td);
-	td = document.createElement('td');
+	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
-	tr.appendChild(td);
-	search_result.appendChild(tbl);
-	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
 			const v = e.value;
 			if (parseInt(v[SI_FLAGS], 36) & 2) {
-				const tr = document.createElement('tr');
-				let td = document.createElement('td');
-				const a = document.createElement('a');
+				const tr = tbl.appendChild(document.createElement('tr'));
+				let td = tr.appendChild(document.createElement('td'));
+				const a = td.appendChild(document.createElement('a'));
 				db.transaction('map').objectStore('map').get(~~(e.key / 1000)).onsuccess = function(e) {
 					a.textContent = namefor(e.target.result);
 				};
@@ -230,16 +218,11 @@ function search_guard() {
 				const sts = [mc, sm, st];
 				a.href = `/stage.html?s=${mc}-${sm}`;
 				a.onclick = onStageAnchorClick;
-				td.appendChild(a);
-				tr.appendChild(td);
-				td = document.createElement('td')
-				const a2 = document.createElement('a');
+				td = tr.appendChild(document.createElement('td'));
+				const a2 = td.appendChild(document.createElement('a'));
 				a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
 				a2.href = a.href + '-' + st;
 				a2.onclick = onStageAnchorClick;
-				td.appendChild(a2);
-				tr.appendChild(td);
-				tbl.appendChild(tr);
 			}
 			e.continue();
 		}
@@ -252,27 +235,22 @@ function search_enemy(e) {
 	main_div.style.display = 'none';
 	search_result.textContent = '';
 	search_result.style.display = 'block';
-	let tbl = document.createElement('table');
+	let tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = document.createElement('tr');
-	tbl.appendChild(tr);
-	let td = document.createElement('td');
+	let tr = tbl.appendChild(document.createElement('tr'));
+	let td = tr.appendChild(document.createElement('td'));
 	td.textContent = '地圖';
-	tr.appendChild(td);
-	td = document.createElement('td');
+	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
-	tr.appendChild(td);
-	search_result.appendChild(tbl);
-	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
 			const v = e.value;
 			if (v[SI_ENEMY_LINES].startsWith(T)) {
-				const tr = document.createElement('tr');
-				let td = document.createElement('td');
-				const a = document.createElement('a');
+				const tr = tbl.appendChild(document.createElement('tr'));
+				let td = tr.appendChild(document.createElement('td'));
+				const a = td.appendChild(document.createElement('a'));
 				db.transaction('map').objectStore('map').get(~~(e.key / 1000)).onsuccess = function(e) {
 					a.textContent = namefor(e.target.result);
 				};
@@ -282,16 +260,11 @@ function search_enemy(e) {
 				const sts = [mc, sm, st];
 				a.href = `/stage.html?s=${mc}-${sm}`;
 				a.onclick = onStageAnchorClick;
-				td.appendChild(a);
-				tr.appendChild(td);
-				td = document.createElement('td')
-				const a2 = document.createElement('a');
+				td = tr.appendChild(document.createElement('td'));
+				const a2 = td.appendChild(document.createElement('a'));
 				a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
 				a2.href = a.href + '-' + st;
 				a2.onclick = onStageAnchorClick;
-				td.appendChild(a2);
-				tr.appendChild(td);
-				tbl.appendChild(tr);
 			}
 			e.continue();
 		}
@@ -303,35 +276,25 @@ function search_gold() {
 	main_div.style.display = 'none';
 	search_result.textContent = '';
 	search_result.style.display = 'block';
-	let tbl = document.createElement('table');
+	let tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = document.createElement('tr');
-	tbl.appendChild(tr);
-	let td = document.createElement('td');
+	let tr = tbl.appendChild(document.createElement('tr'));
+	let td = tr.appendChild(document.createElement('td'));
 	td.textContent = '分類';
-	tr.appendChild(td);
-	td = document.createElement('td');
-	tr.appendChild(td);
+	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '地圖';
-	tr.appendChild(td);
-	search_result.appendChild(tbl);
-	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 
 	for (let i = 0, I = M1.children.length; i < I; ++i) {
 		const info1 = M1.children[i];
 		if (info1.dataset.hasOwnProperty('forbidGoldCpu')) {
-			tr = document.createElement('tr');
-			td = document.createElement('td');
-			const a = document.createElement('a');
+			tr = tbl.appendChild(document.createElement('tr'));
+			td = tr.appendChild(document.createElement('td'));
+			const a = td.appendChild(document.createElement('a'));
 			a.textContent = info1.textContent;
 			a.href = '/stage.html?s=' + i;
 			a.onclick = onStageAnchorClick;
-			td.appendChild(a);
-			tr.appendChild(td);
-			td = document.createElement('td');
+			td = tr.appendChild(document.createElement('td'));
 			td.textContent = '<全地圖皆不可掃蕩>';
-			tr.appendChild(td);
-			tbl.appendChild(tr);
 		}
 	}
 
@@ -340,24 +303,19 @@ function search_gold() {
 		if (e) {
 			const v = e.value;
 			if (parseInt(v[SM_FLAGS], 36) & 2) {
-				const tr = document.createElement('tr');
-				let td = document.createElement('td');
-				const a = document.createElement('a');
+				const tr = tbl.appendChild(document.createElement('tr'));
+				let td = tr.appendChild(document.createElement('td'));
+				const a = td.appendChild(document.createElement('a'));
 				const mc = ~~(e.key / 1000);
 				const sm = e.key % 1000;
 				a.textContent = M1.children[mc].textContent;
 				a.href = `/stage.html?s=${mc}`;
 				a.onclick = onStageAnchorClick;
-				td.appendChild(a);
-				tr.appendChild(td);
-				td = document.createElement('td')
-				const a2 = document.createElement('a');
+				td = tr.appendChild(document.createElement('td'));
+				const a2 = td.appendChild(document.createElement('a'));
 				a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
 				a2.href = a.href + '-' + sm;
 				a2.onclick = onStageAnchorClick;
-				td.appendChild(a2);
-				tr.appendChild(td);
-				tbl.appendChild(tr);
 			}
 			e.continue();
 		}
@@ -371,24 +329,18 @@ function search_reward(e) {
 	main_div.style.display = 'none';
 	search_result.textContent = '';
 	search_result.style.display = 'block';
-	let tbl = document.createElement('table');
+	let tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = document.createElement('tr');
-	tbl.appendChild(tr);
-	let td = document.createElement('td');
+	let tr = tbl.appendChild(document.createElement('tr'));
+	let td = tr.appendChild(document.createElement('td'));
 	td.textContent = '地圖';
-	tr.appendChild(td);
-	td = document.createElement('td');
+	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
-	tr.appendChild(td);
-	td = document.createElement('td');
+	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '統率力';
-	tr.appendChild(td);
-	td = document.createElement('td');
+	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '掉落';
-	tr.appendChild(td);
-	search_result.appendChild(tbl);
-	tbl.classList.add('w3-table', 'w3-centered', 'Co');
+
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
@@ -399,30 +351,23 @@ function search_reward(e) {
 					const i = drop_line.indexOf(',') + 1;
 					const I = drop_line.indexOf(',', i);
 					if (drop_line.slice(i, I) == T) {
-						const tr = document.createElement('tr');
-						let td0 = document.createElement('td');
+						const tr = tbl.appendChild(document.createElement('tr'));
+						let td0 = tr.appendChild(document.createElement('td'));
 						db.transaction('map').objectStore('map').get(~~(e.key / 1000)).onsuccess = function(e) {
 							td0.textContent = namefor(e.target.result);
 						};
 						const mc = ~~(e.key / 1000000);
 						const st = e.key % 1000;
 						const sm = ~~((e.key - mc * 1000000) / 1000);
-						tr.appendChild(td0);
-						let td = document.createElement('td')
-						const a2 = document.createElement('a');
+						let td = tr.appendChild(document.createElement('td'));
+						const a2 = td.appendChild(document.createElement('a'));
 						a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
 						a2.href = `/stage.html?s=${mc}-${sm}-${st}`;
 						a2.onclick = onStageAnchorClick;
-						td.appendChild(a2);
-						tr.appendChild(td);
-						td = document.createElement('td');
+						td = tr.appendChild(document.createElement('td'));
 						td.textContent = parseInt(v[SI_ENERGY], 36);
-						tr.appendChild(td);
-						tbl.appendChild(tr);
-						td = document.createElement('td');
+						td = tr.appendChild(document.createElement('td'));
 						td.textContent = P + ' ×' + drop_line.slice(I + 1);
-						tr.appendChild(td);
-						tbl.appendChild(tr);
 						break;
 					}
 				}
@@ -442,60 +387,58 @@ function initUI() {
 			main_div.style.display = 'block';
 		if (!filter_page) {
 			filter_page = document.getElementById('filter').firstElementChild;
-			var img, items = [
-					[0, 1, 2, 3, 4, 5, /* 戰鬥道具 */ 55, 56, 57 /*貓力達*/ ],
-					[22, 6, 105, 157, 20, 21, 155, 156], // 罐頭、金券
-					[
-						203, /* 傳說的捕蟲網 */
-						202, /* 傳說的聖水 */
-						185, /* 傳說的金元寶 */
-						200, /* 傳說的情書 */
-						163, /* 9週年 */
-						178, /* 10週年 */
-						198, /* 11週年 */
-						24, /* MH大狩猟チケット */
-						25, /* まもるよチケット */
-						162, /* 伝説のにんじん（傳說中的胡蘿蔔）*/
-						204, /* 傳說中的捕魚網 */
-						205, /* 聖魔大戰巧克力 */
-					], // 活動券
-					[50, 51, 52, 53, 54, 58], // 貓眼石
-					[30, 31, 32, 33, 34, /* 5 種子 */ 41 /* 古種 */ , 43 /* 虹種 */ , 160 /* 惡種 */ , 164 /* 金種 */ ],
-					[35, 36, 37, 38, 39, /* 5果實 */ 42 /* 古實 */ , 40 /* 虹果 */ , 161 /* 惡果 */ , 44 /* 金果 */ ],
-					[167, 168, 169, 170, 171, 184], // 貓薄荷
-					[179, 180, 181, 182, 183], // 5結晶
-					[85, 86, 87, 88, 89, 90, 91, 140], // 城堡素材
-					//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
-				],
-				images = [
-					['4rrfKiE', 66, 65, '速攻不可', search_guard],
-					['JWSKik7', 80, 80, '掃盪不可', search_gold],
-					['Rfuh0jk', 64, 64, '惡魔塔', search_enemy, 'fy'],
-					['BMGIONq', 64, 64, '損毀的波動塔', search_enemy, '8o'],
-					['Z2DvobY', 64, 64, '波動塔', search_enemy, '8r'],
-					['osLQ4tt', 64, 64, '詛咒塔', search_enemy, 'ei'],
-					['aE0Z02o', 64, 64, '烈波塔', search_enemy, 'ek']
-				],
-				div = document.createElement('div');
+			const items = [
+				[0, 1, 2, 3, 4, 5, /* 戰鬥道具 */ 55, 56, 57 /*貓力達*/ ],
+				[22, 6, 105, 157, 20, 21, 155, 156], // 罐頭、金券
+				[
+					203, /* 傳說的捕蟲網 */
+					202, /* 傳說的聖水 */
+					185, /* 傳說的金元寶 */
+					200, /* 傳說的情書 */
+					163, /* 9週年 */
+					178, /* 10週年 */
+					198, /* 11週年 */
+					24, /* MH大狩猟チケット */
+					25, /* まもるよチケット */
+					162, /* 伝説のにんじん（傳說中的胡蘿蔔）*/
+					204, /* 傳說中的捕魚網 */
+					205, /* 聖魔大戰巧克力 */
+				], // 活動券
+				[50, 51, 52, 53, 54, 58], // 貓眼石
+				[30, 31, 32, 33, 34, /* 5 種子 */ 41 /* 古種 */ , 43 /* 虹種 */ , 160 /* 惡種 */ , 164 /* 金種 */ ],
+				[35, 36, 37, 38, 39, /* 5果實 */ 42 /* 古實 */ , 40 /* 虹果 */ , 161 /* 惡果 */ , 44 /* 金果 */ ],
+				[167, 168, 169, 170, 171, 184], // 貓薄荷
+				[179, 180, 181, 182, 183], // 5結晶
+				[85, 86, 87, 88, 89, 90, 91, 140], // 城堡素材
+				//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
+			];
+			const images = [
+				['4rrfKiE', 66, 65, '速攻不可', search_guard],
+				['JWSKik7', 80, 80, '掃盪不可', search_gold],
+				['Rfuh0jk', 64, 64, '惡魔塔', search_enemy, 'fy'],
+				['BMGIONq', 64, 64, '損毀的波動塔', search_enemy, '8o'],
+				['Z2DvobY', 64, 64, '波動塔', search_enemy, '8r'],
+				['osLQ4tt', 64, 64, '詛咒塔', search_enemy, 'ei'],
+				['aE0Z02o', 64, 64, '烈波塔', search_enemy, 'ek']
+			];
+			const div = filter_page.appendChild(document.createElement('div'));
 			div.classList.add('V');
 			for (const i of images) {
-				img = new Image(i[1], i[2]);
+				const img = div.appendChild(new Image(i[1], i[2]));
 				img.loading = 'lazy';
 				img.classList.add('S');
-				img.src = "https://i.imgur.com/".concat(i[0], ".png");
+				img.src = `https://i.imgur.com/${i[0]}.png`;
 				img.title = i[3];
 				img.onclick = i[4];
 				img.i = i[5];
-				div.appendChild(img);
 			}
-			filter_page.appendChild(div);
-			for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
-				var list = items_1[_i];
-				div = document.createElement('div');
+			for (let i = 0, I = items.length; i < I; i++) {
+				const list = items[i];
+				const div = filter_page.appendChild(document.createElement('div'));
 				div.classList.add('V');
-				for (var _a = 0, list_1 = list; _a < list_1.length; _a++) {
-					var n = list_1[_a];
-					img = new Image(128, 128);
+				for (let j = 0, J = list.length; j < J; j++) {
+					const n = list[j];
+					const img = div.appendChild(new Image(128, 128));
 					img.loading = 'lazy';
 					img.classList.add('S');
 					img.src = `/img/r/${n}.png`;
@@ -504,9 +447,7 @@ function initUI() {
 					else
 						img.i = n;
 					img.onclick = search_reward;
-					div.appendChild(img);
 				}
-				filter_page.appendChild(div);
 			}
 		}
 		filter_page.parentNode.style.display = 'block';
@@ -515,7 +456,7 @@ function initUI() {
 		if (filter_page)
 			filter_page.parentNode.style.display = 'none';
 	};
-	var prev = document.getElementById('prev');
+	const prev = document.getElementById('prev');
 	prev.onclick = function() {
 		if (M3.selectedIndex) {
 			M3.selectedIndex -= 1;
@@ -549,18 +490,18 @@ function fix_star(s) {
 }
 
 function handle_url() {
-	var url = new URL(location.href);
-	var Q = url.searchParams.get('q');
+	const url = new URL(location.href);
+	const Q = url.searchParams.get('q');
 	if (Q) {
 		loader.style.display = 'none';
 		loader.previousElementSibling.style.display = 'none';
 		doSearch({
 			'value': Q
 		});
-		document.getElementById("form").firstElementChild.value = Q;
+		document.getElementById("form").q.value = Q;
 		return;
 	}
-	var stars = url.searchParams.get("star");
+	const stars = url.searchParams.get("star");
 	star = fix_star(stars);
 	let sts;
 	let st = url.searchParams.get("s");
@@ -585,15 +526,14 @@ function getConditionHTML(obj) {
 		const x = Math.abs(obj) % 100000;
 		const mc = fromV(~~(x / 1000));
 		const sm = x % 1000;
-		const a = document.createElement("a");
 		const div = document.createElement("div");
+		div.append("通過");
+		const a = div.appendChild(document.createElement("a"));
 		db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
 			a.textContent = namefor(e.target.result);
 		}
-		div.append("通過");
 		a.href = `/stage.html?s=${mc}-${sm}`;
 		a.onclick = onStageAnchorClick;
-		div.appendChild(a);
 		return div;
 	} else {
 		obj = conditions[obj];
@@ -604,9 +544,9 @@ function getConditionHTML(obj) {
 		const x = Math.abs(obj.condition) % 100000;
 		const mc = fromV(~~(x / 1000));
 		const sm = x % 1000;
-		const a = document.createElement("a");
 		const div = document.createElement("div");
 		div.append("通過");
+		const a = div.appendChild(document.createElement("a"));
 		db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
 			a.textContent = namefor(e.target.result) + a.n;
 		}
@@ -614,7 +554,6 @@ function getConditionHTML(obj) {
 		a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 		a.n = "第" + (st + 1).toString() + "關";
 		a.onclick = onStageAnchorClick;
-		div.appendChild(a);
 		return div;
 	}
 	const div = document.createElement("div");
@@ -625,15 +564,14 @@ function getConditionHTML(obj) {
 		const x = ay % 100000;
 		const mc = fromV(~~(x / 1000));
 		const sm = x % 1000;
-		const a = document.createElement("a");
+		if (i) div.append(Math.sign(y) !== Math.sign(last) ? "或" : "及");
+		div.append(ay > 200000 ? "通過" : "玩過");
+		const a = div.appendChild(document.createElement("a"));
 		a.href = `/stage.html?s=${mc}-${sm}`;
 		db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
 			a.textContent = namefor(e.target.result);
 		}
 		a.onclick = onStageAnchorClick;
-		if (i) div.append(Math.sign(y) != Math.sign(last) ? "或" : "及");
-		div.append(ay > 200000 ? "通過" : "玩過");
-		div.appendChild(a);
 		++i;
 		last = y;
 	}
@@ -641,13 +579,13 @@ function getConditionHTML(obj) {
 }
 
 function merge(g1, g2) {
-	var group = [g1[0],
+	const group = [g1[0],
 		[...g1[1]]
 	];
 	if (g1[0] == 0 && g2[0] == 0) {
 		group[1] = [];
-		for (var _i = 0, _a = g1[1]; _i < _a.length; _i++) {
-			var x = _a[_i];
+		for (let _i = 0, _a = g1[1]; _i < _a.length; _i++) {
+			const x = _a[_i];
 			if (g2[1].includes(x))
 				group[1].push(x);
 		}
@@ -657,8 +595,8 @@ function merge(g1, g2) {
 		});
 	} else if (g1[0] == 2 && g2[0] == 0) {
 		group[0] = 0;
-		for (var _b = 0, _c = g2[1]; _b < _c.length; _b++) {
-			var x = _c[_b];
+		for (let _b = 0, _c = g2[1]; _b < _c.length; _b++) {
+			const x = _c[_b];
 			if (!group[1].includes(x))
 				group[1].push(x);
 		}
@@ -666,8 +604,8 @@ function merge(g1, g2) {
 			return g1[1].includes(x);
 		});
 	} else if (g1[0] == 2 && g2[0] == 2) {
-		for (var _d = 0, _e = g2[1]; _d < _e.length; _d++) {
-			var x = _e[_d];
+		for (let _d = 0, _e = g2[1]; _d < _e.length; _d++) {
+			const x = _e[_d];
 			if (!group[1].includes(x))
 				group[1].push(x);
 		}
@@ -754,7 +692,7 @@ function refresh_1(sts) {
 	db.transaction('map').objectStore('map').openCursor(IDBKeyRange.bound(start, start + 1000, false, true)).onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			var o = M2.appendChild(document.createElement('option'));
+			const o = M2.appendChild(document.createElement('option'));
 			if (c === mapIdx)
 				map = e.value;
 			if (stageL) {
@@ -764,9 +702,7 @@ function refresh_1(sts) {
 				else
 					o.textContent = [e.value[SI_TW_NAME], jp].filter(x => x).join('/');
 			} else {
-				o.textContent = e.value[SI_TW_NAME];
-				if (!o.textContent)
-					o.textContent = e.value[SI_JP_NAME] || QQ;
+				o.textContent = e.value[SI_TW_NAME] || e.value[SI_JP_NAME] || QQ;
 			}
 			e.continue();
 			c += 1;
@@ -801,9 +737,7 @@ function process_2(stageIdx) {
 				else
 					o.textContent = [e.value[SI_TW_NAME], jp].filter(x => x).join('/');
 			} else {
-				o.textContent = e.value[SI_TW_NAME];
-				if (!o.textContent)
-					o.textContent = e.value[SI_JP_NAME] || QQ;
+				o.textContent = e.value[SI_TW_NAME] || e.value[SI_JP_NAME] || QQ;
 			}
 			e.continue();
 			c += 1;
@@ -821,15 +755,16 @@ function refresh_2(sts, map) {
 	if (map) {
 		info2 = map;
 		process_2(stageIdx);
-	} else {
-		const mapIdx = info1.dataset.maps ?
-			parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) :
-			M1.selectedIndex * 1000 + M2.selectedIndex;
-		db.transaction('map').objectStore('map').get(mapIdx).onsuccess = function(e) {
-			info2 = e.target.result;
-			process_2(stageIdx);
-		}
+		return;
 	}
+
+	const mapIdx = info1.dataset.maps ?
+		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) :
+		M1.selectedIndex * 1000 + M2.selectedIndex;
+	db.transaction('map').objectStore('map').get(mapIdx).onsuccess = function(e) {
+		info2 = e.target.result;
+		process_2(stageIdx);
+	};
 }
 
 M2.oninput = function (event) {
@@ -837,9 +772,8 @@ M2.oninput = function (event) {
 };
 
 function makeTd(p, txt) {
-	var td = document.createElement("td");
+	const td = p.appendChild(document.createElement("td"));
 	td.textContent = txt;
-	p.appendChild(td);
 }
 
 function parse_drop(D) {
@@ -849,58 +783,58 @@ function parse_drop(D) {
 }
 
 function getDropData(drops) {
-	var res = [];
-	var sum = 0;
-	var ints = [];
-	for (var _i = 0, drops_1 = drops; _i < drops_1.length; _i++) {
-		var d = drops_1[_i];
+	const res = [];
+	let sum = 0;
+	const ints = [];
+	for (let _i = 0, drops_1 = drops; _i < drops_1.length; _i++) {
+		const d = drops_1[_i];
 		ints.push(parseInt(d[0], 10));
 	}
-	for (var _a = 0, ints_1 = ints; _a < ints_1.length; _a++) {
-		var x = ints_1[_a];
+	for (let _a = 0, ints_1 = ints; _a < ints_1.length; _a++) {
+		const x = ints_1[_a];
 		sum += x;
 	}
 	if (sum == 1e3) {
-		for (var _b = 0, ints_2 = ints; _b < ints_2.length; _b++) {
-			var x = ints_2[_b];
+		for (let _b = 0, ints_2 = ints; _b < ints_2.length; _b++) {
+			const x = ints_2[_b];
 			res.push(numStr(x / 10));
 		}
 	} else if (info3[SI_RAND] == '-3') {
-		var c = Math.floor(100 / drops.length).toString();
-		for (var _c = 0, ints_3 = ints; _c < ints_3.length; _c++) {
-			var x = ints_3[_c];
+		const c = Math.floor(100 / drops.length).toString();
+		for (let _c = 0, ints_3 = ints; _c < ints_3.length; _c++) {
+			const x = ints_3[_c];
 			res.push(c);
 		}
 	} else if (sum == 100) {
-		for (var _d = 0, ints_4 = ints; _d < ints_4.length; _d++) {
-			var x = ints_4[_d];
+		for (let _d = 0, ints_4 = ints; _d < ints_4.length; _d++) {
+			const x = ints_4[_d];
 			res.push(x.toString());
 		}
 	} else if (sum > 100 && (info3[SI_RAND] == '0' || info3[SI_RAND] == '1')) {
-		var rest = 100;
+		let rest = 100;
 		if (ints[0] == 100) {
 			res.push("100");
-			for (var i = 1; i < ints.length; ++i) {
-				var filter = rest * ints[i] / 100;
+			for (let i = 1; i < ints.length; ++i) {
+				const filter = rest * ints[i] / 100;
 				rest -= filter;
 				res.push(numStr(filter));
 			}
 		} else {
-			for (var _e = 0, ints_5 = ints; _e < ints_5.length; _e++) {
-				var x = ints_5[_e];
-				var filter = rest * x / 100;
+			for (let _e = 0, ints_5 = ints; _e < ints_5.length; _e++) {
+				const x = ints_5[_e];
+				const filter = rest * x / 100;
 				rest -= filter;
 				res.push(numStr(filter));
 			}
 		}
 	} else if (info3[SI_RAND] == '-4') {
-		for (var _f = 0, ints_6 = ints; _f < ints_6.length; _f++) {
-			var x = ints_6[_f];
+		for (let _f = 0, ints_6 = ints; _f < ints_6.length; _f++) {
+			const x = ints_6[_f];
 			res.push(numStr(x * 100 / sum));
 		}
 	} else {
-		for (var _g = 0, ints_7 = ints; _g < ints_7.length; _g++) {
-			var x = ints_7[_g];
+		for (let _g = 0, ints_7 = ints; _g < ints_7.length; _g++) {
+			const x = ints_7[_g];
 			res.push(x.toString());
 		}
 	}
@@ -911,15 +845,16 @@ function refresh_3(stage) {
 	if (stage) {
 		info3 = stage;
 		render_stage();
-	} else {
-		const base = info1.dataset.maps ?
-			parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) * 1000 :
-			M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
-		db.transaction('stage').objectStore('stage').get(base + M3.selectedIndex).onsuccess = function(e) {
-				info3 = e.target.result;
-				render_stage();
-		};
+		return;
 	}
+
+	const base = info1.dataset.maps ?
+		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) * 1000 :
+		M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
+	db.transaction('stage').objectStore('stage').get(base + M3.selectedIndex).onsuccess = function(e) {
+		info3 = e.target.result;
+		render_stage();
+	};
 }
 
 M3.oninput = function (event) {
@@ -969,11 +904,11 @@ function render_stage() {
 	var mult = 100;
 	if (stars_str.length) {
 		mult = parseInt(stars_str[star - 1], 10);
-		var tr = document.createElement("tr");
-		var th = document.createElement("th");
+		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
+		var th = tr.appendChild(document.createElement("th"));
 		th.colSpan = 6;
 		for (let i = 0; i < stars_str.length; ++i) {
-			var a = document.createElement("span");
+			var a = th.appendChild(document.createElement("span"));
 			a.classList.add("a");
 			a.textContent = (i + 1).toString() + "★: " + stars_str[i] + "%";
 			url.searchParams.set("star", (i + 1).toString());
@@ -981,74 +916,61 @@ function render_stage() {
 			a.onclick = onStarAnchorClick;
 			if (!star && !i || star - 1 == i)
 				a.classList.add('A');
-			th.appendChild(a);
 		}
-		tr.appendChild(th);
 		tr.id = "stars-tr";
-		stName.parentNode.parentNode.appendChild(tr);
 	}
 	if (info3[SI_FLAGS] || info2[SM_RESETMODE] || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2[SM_WAITFORTIMER] || info2[SM_FLAGS] || info2[SM_SPECIALCOND]) {
 		var s;
-		var tr = document.createElement("tr");
-		var th = document.createElement("th");
+		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
+		tr.id = "warn-tr";
 		tr.style.fontSize = "larger";
+		var th = tr.appendChild(document.createElement("th"));
 		th.colSpan = 6;
 		if (info2[SM_RESETMODE]) {
-			var span = document.createElement("div");
+			var span = th.appendChild(document.createElement("div"));
 			span.textContent = ["過關獎勵將會在再次出現時重置", "清除狀況將會在再次出現時重置", "可過關次數將會在再次出現時重置"][info2[SM_RESETMODE].charCodeAt(0) - 48];
 			span.classList.add('I');
-			th.appendChild(span);
 		}
 		if (info2[SM_WAITFORTIMER]) {
-			var span = document.createElement("div");
+			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('W');
 			span.textContent = "成功挑戰冷卻時長：" + info2[SM_WAITFORTIMER];
-			th.appendChild(span);
 		}
 
 		if (flags2 & 1) {
-			var span = document.createElement("div");
+			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('I');
 			span.textContent = "全破後隱藏";
-			th.appendChild(span);
 		}
 		if (info1.dataset.hasOwnProperty('forbidGoldCpu') || flags2 & 2) {
-			var span = document.createElement("div");
+			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('W');
 			span.textContent = "※掃蕩不可※";
-			th.appendChild(span);
 		}
 
 		if (flags3 & 1) {
-			var span = document.createElement("div");
+			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('w');
 			span.textContent = "※接關不可※";
-			th.appendChild(span);
 		}
 		if (flags3 & 2) {
-			var span = document.createElement("div");
+			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('w');
 			span.textContent = "※速攻不可（城堡盾）※";
-			th.appendChild(span);
 		}
 		if (info2[SM_SPECIALCOND]) {
-			var span = document.createElement("div");
+			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('w');
 			span.textContent = info2[SM_SPECIALCOND];
-			th.appendChild(span);
 			if (info2[SM_INVALID_COMBO]) {
-				span = document.createElement("div");
+				span = th.appendChild(document.createElement("div"));
 				span.classList.add('W');
 				span.textContent = info2[SM_INVALID_COMBO];
-				th.appendChild(span);
 			}
 		}
-		tr.appendChild(th);
-		tr.id = "warn-tr";
-		stName.parentNode.parentNode.appendChild(tr);
 	}
 	rewards.textContent = "";
-	if (info3[SI_DROP] && M1.selectedIndex != 3) {
+	if (info3[SI_DROP] && (M1.selectedOptions[0].dataset.map || M1.selectedIndex !== 3)) {
 		var drop_data = parse_drop(info3[SI_DROP]);
 		var chances = getDropData(drop_data);
 		var once = true;
@@ -1056,15 +978,12 @@ function render_stage() {
 			if (!parseInt(chances[i], 10))
 				continue;
 			var v = drop_data[i];
-			var tr = document.createElement("tr");
-			var td1 = document.createElement("td");
-			var td2 = document.createElement("td");
-			td1.appendChild(document.createTextNode(chances[i] + "%" + (i == 0 && v[0] != '100' && info3[SI_RAND] != '-4' ? " （寶雷）" : "")));
-			td2.textContent = i == 0 && (info3[SI_RAND] == '1' || parseInt(drop_data[0][1], 10) >= 1e3 && parseInt(drop_data[0][1], 10) < 3e4) ? "一次" : "無";
+			var tr = rewards.appendChild(document.createElement("tr"));
 			createReward(tr, v);
-			tr.appendChild(td1);
-			tr.appendChild(td2);
-			rewards.appendChild(tr);
+			var td1 = tr.appendChild(document.createElement("td"));
+			td1.appendChild(document.createTextNode(chances[i] + "%" + (i == 0 && v[0] != '100' && info3[SI_RAND] != '-4' ? " （寶雷）" : "")));
+			var td2 = tr.appendChild(document.createElement("td"));
+			td2.textContent = i == 0 && (info3[SI_RAND] == '1' || parseInt(drop_data[0][1], 10) >= 1e3 && parseInt(drop_data[0][1], 10) < 3e4) ? "一次" : "無";
 		}
 	}
 	if (rewards.children.length)
@@ -1077,42 +996,34 @@ function render_stage() {
 		const x = parseInt(material_drop[i], 36);
 		if (x == '0')
 			continue;
-		var img = new Image(128, 128);
 		var rw = materialDrops[i - 1];
+		var tr = m_drops.appendChild(document.createElement("tr"));
+		var td0 = tr.appendChild(document.createElement("td"));
+		td0.textContent = char_groups['RWNAME'][rw];
+		var td2 = tr.appendChild(document.createElement('td'));
+		var img = td2.appendChild(new Image(128, 128));
 		img.style.maxWidth = "2.7em";
 		img.style.height = 'auto';
 		img.src = `/img/r/${rw}.png`;
-		var td2 = document.createElement('td');
-		var tr = document.createElement("tr");
-		var td0 = document.createElement("td");
-		td0.textContent = char_groups['RWNAME'][rw];
-		tr.appendChild(td0);
-		td2.appendChild(img);
-		tr.appendChild(td2);
-		var td1 = document.createElement("td");
+		var td1 = tr.appendChild(document.createElement("td"));
 		td1.textContent = x + '%';
-		tr.appendChild(td1);
-		m_drops.appendChild(tr);
 	}
 	if (m_drops.children.length)
 		m_drops.parentNode.style.display = "table";
 	else
 		m_drops.parentNode.style.display = "none";
-	mM.textContent = "抽選次數：".concat(~~Math.round(parseInt(info3[SI_MAXMATERIAL], 10) * parseFloat(info2[SM_MULTIPLIER].split(',')[star - 1])), "回");
+	mM.textContent = `抽選次數：${~~Math.round(parseInt(info3[SI_MAXMATERIAL], 10) * parseFloat(info2[SM_MULTIPLIER].split(',')[star - 1]))}回`;
 	if (info3[SI_TIME]) {
 		m_times.textContent = "";
 		var drop_data = parse_drop(info3[SI_TIME]);
 		for (var _i = 0, drop_data_1 = drop_data; _i < drop_data_1.length; _i++) {
 			var v = drop_data_1[_i];
-			var tr = document.createElement("tr");
-			var td1 = document.createElement("td");
-			var td2 = document.createElement("td");
-			td1.textContent = v[2];
-			td2.textContent = v[0];
+			var tr = m_times.appendChild(document.createElement("tr"));
 			createReward(tr, v);
-			tr.appendChild(td1);
-			tr.appendChild(td2);
-			m_times.appendChild(tr);
+			var td1 = tr.appendChild(document.createElement("td"));
+			td1.textContent = v[2];
+			var td2 = tr.appendChild(document.createElement("td"));
+			td2.textContent = v[0];
 		}
 		m_times.parentNode.style.display = "table";
 	} else {
@@ -1175,27 +1086,24 @@ function render_stage() {
 		if (lim.num)
 			limits_str.push("最多可出戰角色數量:" + lim.num);
 		if (lim.max && lim.min)
-			limits_str.push("生產成本".concat(lim.min, "元與").concat(lim.max, "元之間"));
+			limits_str.push(`生產成本${lim.min}元與${lim.max}元之間`);
 		else if (lim.max)
-			limits_str.push("生產成本".concat(lim.max, "元以下"));
+			limits_str.push(`生產成本${lim.max}元以下`);
 		else if (lim.min)
-			limits_str.push("生產成本".concat(lim.min, "元以上"));
+			limits_str.push(`生產成本${lim.min}元以上`);
 		if (lim.line)
 			limits_str.push("出陣列表:僅限第1頁");
 		if (lim.group && lim.group[1].length)
 			limits_str.push("可出擊角色的ID: " + lim.group[1].join("/"));
 		if (limits_str.length) {
-			var tr = document.createElement("tr");
-			var th = document.createElement("th");
-			var div = document.createElement("div");
+			var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
+			tr.id = "limit-bt";
+			tr.style.fontSize = "larger";
+			var th = tr.appendChild(document.createElement("th"));
+			th.colSpan = 6;
+			var div = th.appendChild(document.createElement("div"));
 			div.textContent = "※出擊限制※：" + limits_str.join("、");
 			div.classList.add('W');
-			tr.style.fontSize = "larger";
-			th.colSpan = 6;
-			th.appendChild(div);
-			tr.appendChild(th);
-			tr.id = "limit-bt";
-			stName.parentNode.parentNode.appendChild(tr);
 		}
 	}
 	ex_stages.textContent = "";
@@ -1205,43 +1113,36 @@ function render_stage() {
 		ex_stage_data = ex_stage_data.split('$');
 		if (ex_stage_data[0]) {
 			const [exChance, exMapID, exStageIDMin, exStageIDMax] = ex_stage_data[0].split(',');
-			const td = document.createElement("div");
+			const td = ex_stages.appendChild(document.createElement("div"));
 			if (exStageIDMin != exStageIDMax)
 				td.textContent = (exChance == '100' ? "必定出現以下EX關卡：（各EX關卡平分出現機率）" : "EX關卡：（出現機率：" + exChance + "%，各EX關卡平分出現機率）");
 			else
 				td.textContent = (exChance == '100' ? "必定出現以下EX關卡：" : 'EX關卡：' + "（出現機率：" + exChance + "%）");
-			ex_stages.appendChild(td);
 			const start = 4000000 + parseInt(exMapID, 10) * 1000;
 			db.transaction('stage').objectStore('stage').openCursor(IDBKeyRange.bound(start + parseInt(exStageIDMin, 10), start + parseInt(exStageIDMax, 10))).onsuccess = function(e) {
 				e = e.target.result;
 				if (e) {
-					const td = document.createElement("div");
-					const a = document.createElement("a");
+					const td = ex_stages.appendChild(document.createElement("div"));
+					const a = td.appendChild(document.createElement("a"));
 					const k = e.key - 4000000;
 					const sm = ~~(k / 1000);
 					const si = k - sm * 1000;
+					a.href = `/stage.html?s=4-${sm}-${si}`;
 					a.textContent = namefor(e.value);
 					a.onclick = onStageAnchorClick;
-					a.href = `/stage.html?s=4-${sm}-${si}`;
-					td.appendChild(a);
-					ex_stages.appendChild(td);
 					e.continue();
 				}
 			}
 		} else if (ex_stage_data[1]) {
 			let [exStage, exChance] = ex_stage_data[1].split('|');
-			const table = document.createElement("table");
+			const table = ex_stages.appendChild(document.createElement("table"));
 			table.classList.add("w3-table", "w3-centered");
-			const tbody = document.createElement("tbody");
-			const tr = document.createElement("tr");
-			const td0 = document.createElement("td");
-			const td1 = document.createElement("td");
+			const tbody = table.appendChild(document.createElement("tbody"));
+			const tr = tbody.appendChild(document.createElement("tr"));
+			const td0 = tr.appendChild(document.createElement("td"));
 			td0.textContent = "EX關卡";
+			const td1 = tr.appendChild(document.createElement("td"));
 			td1.textContent = "機率";
-			tr.appendChild(td0);
-			tr.appendChild(td1);
-			tbody.appendChild(tr);
-			table.appendChild(tbody);
 			exStage = exStage.split(',');
 			exChance = exChance.split(',');
 			for (let i = 0; i < exStage.length; ++i) {
@@ -1249,35 +1150,33 @@ function render_stage() {
 				const mc = ~~(s / 1000000);
 				const st = s % 1000;
 				const sm = ~~((s - mc * 1000000) / 1000);
-				const td0 = document.createElement("td");
-				const td1 = document.createElement("td");
-				const tr = document.createElement("tr");
-				const a = document.createElement("a");
+				const tr = tbody.appendChild(document.createElement("tr"));
+				const td0 = tr.appendChild(document.createElement("td"));
+				const td1 = tr.appendChild(document.createElement("td"));
+				const a = td0.appendChild(document.createElement("a"));
 				a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 				a.onclick = onStageAnchorClick;
 				db.transaction('stage').objectStore('stage').get(s).onsuccess = function(e) {
 					a.textContent = namefor(e.target.result);
 				};
-				td0.appendChild(a);
 				td1.textContent = exChance[i] + "%";
-				tr.appendChild(td0);
-				tr.appendChild(td1);
-				tbody.appendChild(tr);
 			}
-			ex_stages.appendChild(table);
 		}
 	} else {
 		ex_stages.style.display = 'none';
 	}
 	stLines.textContent = "";
 	for (const line of info3[SI_ENEMY_LINES].split('|')) {
+		const tr = stLines.appendChild(document.createElement("tr"));
+
 		const strs = line.split(',');
-		const tr = document.createElement("tr");
-		const a = document.createElement('a');
 		const enemy = parseInt(strs[0], 36);
-		const img = new Image(64, 64);
+		makeTd(tr, char_groups['ENAME'][enemy] || "?"); // enemy name
+
+		const td = tr.appendChild(document.createElement('td')); // image
+		const a = td.appendChild(document.createElement('a'));
+		const img = a.appendChild(new Image(64, 64));
 		const m = mult / 100;
-		const td = document.createElement('td');
 		let hpM, atkM;
 
 		if (strs[7].includes('+'))
@@ -1286,8 +1185,6 @@ function render_stage() {
 			hpM = atkM = strs[7];
 		hpM = parseInt(hpM || '2s', 36);
 		atkM = parseInt(atkM || '2s', 36);
-
-		makeTd(tr, char_groups['ENAME'][enemy] || "?"); // enemy name
 
 		img.src = `/img/e/${enemy}/0.png`;
 		if (strs[6].length == 2) {
@@ -1299,9 +1196,7 @@ function render_stage() {
 			hpM = ~~(hpM * m).toString() + '%';
 			atkM = ~~(atkM * m).toString() + '%';
 		}
-		a.appendChild(img);
-		td.appendChild(a);
-		tr.appendChild(td); // image
+
 		makeTd(tr, hpM == atkM ? hpM : `HP:${hpM}, ATK:${atkM}`); // mag
 		makeTd(tr, strs[1] || "無限"); // count
 		makeTd(tr, strs[5] + '%'); // tower
@@ -1319,34 +1214,30 @@ function render_stage() {
 		}
 		makeTd(tr, strs[8] || '')
 		if (strs[6].length == 2) {
-			const span = document.createElement("span");
+			const span = tr.firstElementChild.appendChild(document.createElement("span"));
 			span.textContent = "（敵塔）";
 			span.classList.add("boss");
-			tr.firstElementChild.appendChild(span);
 		}
 		if (strs[6][0] == '2') {
-			const span = document.createElement("span");
+			const span = tr.firstElementChild.appendChild(document.createElement("span"));
 			span.textContent = "（BOSS、震波）";
 			span.classList.add("boss");
-			tr.firstElementChild.appendChild(span);
 		} else if (strs[6][0] == '1') {
-			const span = document.createElement("span");
+			const span = tr.firstElementChild.appendChild(document.createElement("span"));
 			span.textContent = "（BOSS）";
 			span.classList.add("boss");
-			tr.firstElementChild.appendChild(span);
 		}
-		stLines.appendChild(tr);
 	}
 };
 document.getElementById("form").onsubmit = function(event) {
 	event.preventDefault();
-	setTimeout(doSearch, 0, event.currentTarget.firstElementChild);
+	setTimeout(doSearch, 0, event.currentTarget.q);
 	return false;
 };
 
 function add_result_stage(id, name, search_for) {
 	name = name.replaceAll(search_for, x => '<span>' + x + '</span>');
-	const a = document.createElement('a');
+	const a = search_result.appendChild(document.createElement('a'));
 	a.classList.add("res");
 	const mc = ~~(id / 1000000);
 	const st = id % 1000;
@@ -1354,25 +1245,22 @@ function add_result_stage(id, name, search_for) {
 	a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 	a.id = id;
 	a.onclick = onStageAnchorClick;
-	search_result.appendChild(a);
-	a.v = M1.children[mc].textContent + ' - ';
-	a.e = name;
+	const groupName = M1.children[mc].textContent;
 	db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
 		e = e.target.result;
-		a.innerHTML = a.v + namefor(e) + ' - ' + a.e;
+		a.innerHTML = groupName + ' - ' + namefor(e) + ' - ' + name;
 	};
 }
 
 function add_result_map(id, name, search_for) {
 	name = name.replaceAll(search_for, x => '<span>' + x + '</span>');
-	const a = document.createElement('a');
+	const a = search_result.appendChild(document.createElement('a'));
 	a.classList.add("res");
 	const sm = id % 1000;
 	const mc = ~~(id / 1000);
 	a.href = `/stage.html?s=${mc}-${sm}`;
 	a.id = id;
 	a.onclick = onStageAnchorClick;
-	search_result.appendChild(a);
 	a.innerHTML = M1.children[mc].textContent + ' - ' + name;
 }
 
