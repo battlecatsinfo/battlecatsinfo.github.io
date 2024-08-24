@@ -768,18 +768,16 @@ function refresh_1(sts) {
 
 	info1 = stages_top[M1.selectedIndex];
 
-	M2.c = 0;
-	if (sts && sts.length > 1)
-		M2.q = sts[1];
-	else
-		M2.q = 0;
+	const mapIdx = (sts && sts.length > 1) ? sts[1] : 0;
 
+	let map;
+	let c = 0;
 	db.transaction('map').objectStore('map').openCursor(IDBKeyRange.bound(start, start + 1000, false, true)).onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			var o = document.createElement('option');
-			if (M2.c == M2.q)
-				M2.v = e.value;
+			var o = M2.appendChild(document.createElement('option'));
+			if (c === mapIdx)
+				map = e.value;
 			if (stageL) {
 				const jp = e.value[SI_JP_NAME];
 				if (stageL == 1)
@@ -791,12 +789,11 @@ function refresh_1(sts) {
 				if (!o.textContent)
 					o.textContent = e.value[SI_JP_NAME] || QQ;
 			}
-			M2.appendChild(o);
 			e.continue();
-			M2.c += 1;
+			c += 1;
 		} else {
-			M2.selectedIndex = M2.q;
-			refresh_2(sts);
+			M2.selectedIndex = mapIdx;
+			refresh_2(sts, map);
 		}
 	}
 }
@@ -836,13 +833,12 @@ function process_2(stageIdx) {
 	}
 }
 
-function refresh_2(sts) {
+function refresh_2(sts, map) {
 	M3.length = 0;
 	const stageIdx = (sts && sts.length > 2) ? sts[2] : 0;
 
-	if (M2.v) {
-		info2 = M2.v;
-		M2.v = null;
+	if (map) {
+		info2 = map;
 		process_2(stageIdx);
 	} else {
 		db.transaction('map').objectStore('map').get(M1.selectedIndex * 1000 + M2.selectedIndex).onsuccess = function(e) {
