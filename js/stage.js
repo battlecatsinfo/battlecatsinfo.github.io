@@ -58,7 +58,6 @@ module.exports = class extends SiteGenerator {
 			category: categories.custom,
 		});
 		this.write_template('js/stage.js', 'stage.js', {
-			stages_top: categories.default.map(entry => entry.name),
 			conditions,
 			material_drops,
 			egg_set,

@@ -1,6 +1,5 @@
 const
 	loader = document.getElementById('loader'),
-	stages_top = {{{toJSON stages_top}}},
 	eggs = new Set({{{toJSON egg_set}}}),
 	SI_TW_NAME = 0,
 	SI_JP_NAME = 1,
@@ -1356,7 +1355,7 @@ function add_result_stage(id, name, search_for) {
 	a.id = id;
 	a.onclick = onStageAnchorClick;
 	search_result.appendChild(a);
-	a.v = stages_top[mc] + ' - ';
+	a.v = M1.children[mc].textContent + ' - ';
 	a.e = name;
 	db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
 		e = e.target.result;
@@ -1374,7 +1373,7 @@ function add_result_map(id, name, search_for) {
 	a.id = id;
 	a.onclick = onStageAnchorClick;
 	search_result.appendChild(a);
-	a.innerHTML = stages_top[mc] + ' - ' + name;
+	a.innerHTML = M1.children[mc].textContent + ' - ' + name;
 }
 
 function doSearch(t) {
