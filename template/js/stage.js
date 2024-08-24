@@ -633,8 +633,8 @@ function getConditionHTML(obj) {
 		db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
 			a.textContent = namefor(e.target.result) + a.n;
 		}
-		a.href = `/stage.html?${mc}-${sm}`;
 		const st = obj.stage;
+		a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 		a.n = "第" + (st + 1).toString() + "關";
 		a.s = [mc, sm, st];
 		a.onclick = function(event) {
@@ -653,7 +653,7 @@ function getConditionHTML(obj) {
 		const mc = fromV(~~(x / 1000));
 		const sm = x % 1000;
 		const a = document.createElement("a");
-		a.href = `/stage.html?v=${mc}-${sm}`;
+		a.href = `/stage.html?s=${mc}-${sm}`;
 		db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
 			a.textContent = namefor(e.target.result);
 		}
@@ -976,7 +976,7 @@ function render_stage() {
 			var a = document.createElement("span");
 			a.classList.add("a");
 			a.textContent = (i + 1).toString() + "★: " + stars_str[i] + "%";
-			url.searchParams.set("a", (i + 1).toString());
+			url.searchParams.set("star", (i + 1).toString());
 			a.href = url.href;
 			a.i = i;
 			a.onclick = function() {
