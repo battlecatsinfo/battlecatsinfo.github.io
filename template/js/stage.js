@@ -161,8 +161,8 @@ function onStageAnchorClick(event) {
 	if (!sts)
 		return;
 
-	search_result.style.display = 'none';
-	main_div.style.display = 'block';
+	search_result.hidden = true;
+	main_div.hidden = false;
 
 	sts = sts.split('-').map(x => parseInt(x, 10));
 	star = fix_star(u.searchParams.get('star'));
@@ -189,10 +189,10 @@ function onStarAnchorClick(event) {
 }
 
 function search_guard() {
-	filter_page.parentNode.style.display = 'none';
-	main_div.style.display = 'none';
+	filter_page.parentNode.hidden = true;
+	main_div.hidden = true;
 	search_result.textContent = '';
-	search_result.style.display = 'block';
+	search_result.hidden = false;
 	let tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 	let tr = tbl.appendChild(document.createElement('tr'));
@@ -231,10 +231,10 @@ function search_guard() {
 
 function search_enemy(e) {
 	const T = e.currentTarget.i;
-	filter_page.parentNode.style.display = 'none';
-	main_div.style.display = 'none';
+	filter_page.parentNode.hidden = true;
+	main_div.hidden = true;
 	search_result.textContent = '';
-	search_result.style.display = 'block';
+	search_result.hidden = false;
 	let tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 	let tr = tbl.appendChild(document.createElement('tr'));
@@ -272,10 +272,10 @@ function search_enemy(e) {
 }
 
 function search_gold() {
-	filter_page.parentNode.style.display = 'none';
-	main_div.style.display = 'none';
+	filter_page.parentNode.hidden = true;
+	main_div.hidden = true;
 	search_result.textContent = '';
-	search_result.style.display = 'block';
+	search_result.hidden = false;
 	let tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 	let tr = tbl.appendChild(document.createElement('tr'));
@@ -325,10 +325,10 @@ function search_gold() {
 function search_reward(e) {
 	const T = e.currentTarget.i.toString();
 	const P = char_groups['RWNAME'][e.currentTarget.i];
-	filter_page.parentNode.style.display = 'none';
-	main_div.style.display = 'none';
+	filter_page.parentNode.hidden = true;
+	main_div.hidden = true;
 	search_result.textContent = '';
-	search_result.style.display = 'block';
+	search_result.hidden = false;
 	let tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 	let tr = tbl.appendChild(document.createElement('tr'));
@@ -381,10 +381,9 @@ function initUI() {
 	document.getElementById('fs').onclick = function(event) {
 		event.preventDefault();
 		event.stopPropagation();
-		search_result.style.display = "none";
+		search_result.hidden = true;
 		search_result.textContent = '';
-		if (main_div.style.display != 'block')
-			main_div.style.display = 'block';
+		main_div.hidden = false;
 		if (!filter_page) {
 			filter_page = document.getElementById('filter').firstElementChild;
 			const items = [
@@ -450,11 +449,11 @@ function initUI() {
 				}
 			}
 		}
-		filter_page.parentNode.style.display = 'block';
+		filter_page.parentNode.hidden = false;
 	};
 	document.onclick = function() {
 		if (filter_page)
-			filter_page.parentNode.style.display = 'none';
+			filter_page.parentNode.hidden = true;
 	};
 	const prev = document.getElementById('prev');
 	prev.onclick = function() {
@@ -493,8 +492,8 @@ function handle_url() {
 	const url = new URL(location.href);
 	const Q = url.searchParams.get('q');
 	if (Q) {
-		loader.style.display = 'none';
-		loader.previousElementSibling.style.display = 'none';
+		loader.hidden = true;
+		loader.previousElementSibling.hidden = true;
 		doSearch({
 			'value': Q
 		});
@@ -515,9 +514,9 @@ function handle_url() {
 		}
 	}
 	refresh_1(sts);
-	loader.style.display = 'none';
-	loader.previousElementSibling.style.display = 'none';
-	main_div.style.display = "block";
+	loader.hidden = true;
+	loader.previousElementSibling.hidden = true;
+	main_div.hidden = false;
 }
 
 function getConditionHTML(obj) {
@@ -986,10 +985,7 @@ function render_stage() {
 			td2.textContent = i == 0 && (info3[SI_RAND] == '1' || parseInt(drop_data[0][1], 10) >= 1e3 && parseInt(drop_data[0][1], 10) < 3e4) ? "一次" : "無";
 		}
 	}
-	if (rewards.children.length)
-		rewards.parentNode.style.display = "table";
-	else
-		rewards.parentNode.style.display = "none";
+	rewards.parentNode.hidden = !rewards.children.length;
 	m_drops.textContent = "";
 	var material_drop = info2[SM_MATERIALDROP].split(',');
 	for (var i = 1; i < material_drop.length; ++i) {
@@ -1008,10 +1004,7 @@ function render_stage() {
 		var td1 = tr.appendChild(document.createElement("td"));
 		td1.textContent = x + '%';
 	}
-	if (m_drops.children.length)
-		m_drops.parentNode.style.display = "table";
-	else
-		m_drops.parentNode.style.display = "none";
+	m_drops.parentNode.hidden = !m_drops.children.length;
 	mM.textContent = `抽選次數：${~~Math.round(parseInt(info3[SI_MAXMATERIAL], 10) * parseFloat(info2[SM_MULTIPLIER].split(',')[star - 1]))}回`;
 	if (info3[SI_TIME]) {
 		m_times.textContent = "";
@@ -1025,9 +1018,9 @@ function render_stage() {
 			var td2 = tr.appendChild(document.createElement("td"));
 			td2.textContent = v[0];
 		}
-		m_times.parentNode.style.display = "table";
+		m_times.parentNode.hidden = false;
 	} else {
-		m_times.parentNode.style.display = "none";
+		m_times.parentNode.hidden = true;
 	}
 	const energy = parseInt(info3[SI_ENERGY], 36);
 	if (M1.selectedIndex == 10) {
@@ -1109,7 +1102,7 @@ function render_stage() {
 	ex_stages.textContent = "";
 	let ex_stage_data = info3[SI_EX_STAGE];
 	if (ex_stage_data) {
-		ex_stages.style.display = 'block';
+		ex_stages.hidden = false;
 		ex_stage_data = ex_stage_data.split('$');
 		if (ex_stage_data[0]) {
 			const [exChance, exMapID, exStageIDMin, exStageIDMax] = ex_stage_data[0].split(',');
@@ -1163,7 +1156,7 @@ function render_stage() {
 			}
 		}
 	} else {
-		ex_stages.style.display = 'none';
+		ex_stages.hidden = true;
 	}
 	stLines.textContent = "";
 	for (const line of info3[SI_ENEMY_LINES].split('|')) {
@@ -1267,12 +1260,12 @@ function add_result_map(id, name, search_for) {
 function doSearch(t) {
 	const v = t.value.trim();
 	if (!v) {
-		search_result.style.display = 'none';
-		main_div.style.display = 'block';
+		search_result.hidden = true;
+		main_div.hidden = false;
 		return;
 	}
-	main_div.style.display = 'none';
-	search_result.style.display = 'block';
+	main_div.hidden = true;
+	search_result.hidden = false;
 	search_result.textContent = '';
 	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
 		e = e.target.result;
