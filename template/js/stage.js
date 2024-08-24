@@ -805,15 +805,17 @@ M1.oninput = function (event) {
 	refresh_1();
 };
 
-function process_2() {
+function process_2(stageIdx) {
 	const start = M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
 
+	let stage;
+	let c = 0;
 	db.transaction('stage').objectStore('stage').openCursor(IDBKeyRange.bound(start, start + 1000, false, true)).onsuccess = function(e) {
 		e = e.target.result;
 		if (e) {
-			var o = document.createElement('option');
-			if (M3.c == M3.q)
-				M3.v = e.value;
+			const o = M3.appendChild(document.createElement('option'));
+			if (c === stageIdx)
+				stage = e.value;
 			if (stageL) {
 				const jp = e.value[SI_JP_NAME];
 				if (stageL == 1)
@@ -825,32 +827,27 @@ function process_2() {
 				if (!o.textContent)
 					o.textContent = e.value[SI_JP_NAME] || QQ;
 			}
-			M3.appendChild(o);
 			e.continue();
-			M3.c += 1;
+			c += 1;
 		} else {
-			M3.selectedIndex = M3.q;
-			refresh_3();
+			M3.selectedIndex = stageIdx;
+			refresh_3(stage);
 		}
 	}
 }
 
 function refresh_2(sts) {
 	M3.length = 0;
-	M3.c = 0;
-	if (sts && sts.length > 2)
-		M3.q = sts[2];
-	else
-		M3.q = 0;
+	const stageIdx = (sts && sts.length > 2) ? sts[2] : 0;
 
 	if (M2.v) {
 		info2 = M2.v;
 		M2.v = null;
-		process_2();
+		process_2(stageIdx);
 	} else {
 		db.transaction('map').objectStore('map').get(M1.selectedIndex * 1000 + M2.selectedIndex).onsuccess = function(e) {
 			info2 = e.target.result;
-			process_2();
+			process_2(stageIdx);
 		}
 	}
 }
@@ -930,10 +927,9 @@ function getDropData(drops) {
 	return res;
 }
 
-function refresh_3() {
-	if (M3.v) {
-		info3 = M3.v;
-		M3.v = null;
+function refresh_3(stage) {
+	if (stage) {
+		info3 = stage;
 		render_stage();
 	} else {
 		db.transaction('stage').objectStore('stage').get(M1.selectedIndex * 1000000 + M2.selectedIndex * 1000 + M3.selectedIndex)
