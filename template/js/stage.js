@@ -182,6 +182,23 @@ function onStageAnchorClick(event) {
 	return false;
 }
 
+function onStarAnchorClick(event) {
+	const a = event.currentTarget;
+
+	const u = new URL(a.href);
+	if (u.pathname !== location.pathname)
+		return;
+
+	let _star = u.searchParams.get('star');
+	if (!_star)
+		return;
+
+	star = fix_star(_star);
+	refresh_3();
+
+	return false;
+}
+
 function search_guard() {
 	filter_page.parentNode.style.display = 'none';
 	main_div.style.display = 'none';
@@ -947,12 +964,7 @@ function render_stage() {
 			a.textContent = (i + 1).toString() + "★: " + stars_str[i] + "%";
 			url.searchParams.set("star", (i + 1).toString());
 			a.href = url.href;
-			a.i = i;
-			a.onclick = function() {
-				star = this.i + 1;
-				refresh_3();
-				return false;
-			};
+			a.onclick = onStarAnchorClick;
 			if (!star && !i || star - 1 == i)
 				a.classList.add('A');
 			th.appendChild(a);
