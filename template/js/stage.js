@@ -578,41 +578,6 @@ function getConditionHTML(obj) {
 	return div;
 }
 
-function merge(g1, g2) {
-	const group = [g1[0],
-		[...g1[1]]
-	];
-	if (g1[0] == 0 && g2[0] == 0) {
-		group[1] = [];
-		for (let _i = 0, _a = g1[1]; _i < _a.length; _i++) {
-			const x = _a[_i];
-			if (g2[1].includes(x))
-				group[1].push(x);
-		}
-	} else if (g1[0] == 0 && g2[0] == 2) {
-		group[1] = group[1].filter(function(x) {
-			return g2[1].includes(x);
-		});
-	} else if (g1[0] == 2 && g2[0] == 0) {
-		group[0] = 0;
-		for (let _b = 0, _c = g2[1]; _b < _c.length; _b++) {
-			const x = _c[_b];
-			if (!group[1].includes(x))
-				group[1].push(x);
-		}
-		group[1] = group[1].filter(function(x) {
-			return g1[1].includes(x);
-		});
-	} else if (g1[0] == 2 && g2[0] == 2) {
-		for (let _d = 0, _e = g2[1]; _d < _e.length; _d++) {
-			const x = _e[_d];
-			if (!group[1].includes(x))
-				group[1].push(x);
-		}
-	}
-	return group;
-}
-
 function getRarityString(rare) {
 	var names = ["基本", "EX", "稀有", "激稀有", "超激稀有", "傳説稀有"];
 	var strs = [];
@@ -656,11 +621,48 @@ class Limit {
 		this.max = this.max > 0 && other.max > 0 ? Math.min(this.max, other.max) : this.max + other.max;
 		if (typeof other.group !== 'undefined') {
 			if (typeof this.group !== 'undefined') {
-				this.group = merge(this.group, other.group);
+				this.group = this.merge(this.group, other.group);
 			} else {
 				this.group = other.group;
 			}
 		}
+	}
+	static merge(g1, g2) {
+		const group = [g1[0],
+			[...g1[1]]
+		];
+		if (g1[0] == 0 && g2[0] == 0) {
+			group[1] = [];
+			for (let _i = 0, _a = g1[1]; _i < _a.length; _i++) {
+				const x = _a[_i];
+				if (g2[1].includes(x))
+					group[1].push(x);
+			}
+		} else if (g1[0] == 0 && g2[0] == 2) {
+			group[1] = group[1].filter(function(x) {
+				return g2[1].includes(x);
+			});
+		} else if (g1[0] == 2 && g2[0] == 0) {
+			group[0] = 0;
+			for (let _b = 0, _c = g2[1]; _b < _c.length; _b++) {
+				const x = _c[_b];
+				if (!group[1].includes(x))
+					group[1].push(x);
+			}
+			group[1] = group[1].filter(function(x) {
+				return g1[1].includes(x);
+			});
+		} else if (g1[0] == 2 && g2[0] == 2) {
+			for (let _d = 0, _e = g2[1]; _d < _e.length; _d++) {
+				const x = _e[_d];
+				if (!group[1].includes(x))
+					group[1].push(x);
+			}
+		}
+		return group;
+	}
+	merge(...args) {
+		return this.constructor.merge.apply(this, args);
 	}
 }
 
