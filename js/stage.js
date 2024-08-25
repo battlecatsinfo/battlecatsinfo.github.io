@@ -70,7 +70,11 @@ module.exports = class extends SiteGenerator {
 
 	generate_crown() {
 		const mapTable = this.parse_tsv(this.load('map.tsv'));
-		const {categories: {default: groups}} = JSON.parse(this.load('stage_scheme.json'));
+		const {categories: {
+			default: groups,
+			custom: customMaps,
+			extra: extraMaps,
+		}} = JSON.parse(this.load('stage_scheme.json'));
 		const {collabs} = JSON.parse(this.load('collab.json'));
 
 		// generate structured data
@@ -117,6 +121,24 @@ module.exports = class extends SiteGenerator {
 			return rv;
 		}, []);
 
+		crownFormatted['MONTHY'] = customMaps.find(x => x.name === '月份貓').maps.reduce((rv, mapId, i) => {
+			if (i % 2 === 0) {
+				const key = i / 2 + 1;
+				const groupIdx = Math.floor(mapId / 1000);
+				const mapIdx = mapId - groupIdx * 1000;
+				const entry = crown[groupIdx][mapIdx];
+				rv.push(this.generate_crown_format_entry(entry, key));
+			}
+			return rv;
+		}, []);
+
+		crownFormatted['STAR'] = extraMaps.find(x => x.name === '全明星系列').maps.map(mapId => {
+			const groupIdx = Math.floor(mapId / 1000);
+			const mapIdx = mapId - groupIdx * 1000;
+			const entry = crown[groupIdx][mapIdx];
+			return this.generate_crown_format_entry2(entry);
+		});
+
 		this.write_template('js/crown.js', 'crown.js', {crown: crownFormatted});
 	}
 
@@ -125,6 +147,13 @@ module.exports = class extends SiteGenerator {
 			overrideKey || entry.index + 1,
 			entry.name_tw,
 			entry.name_jp,
+			...entry.stars.map(x => x * 10).concat(new Array(4 - entry.stars.length).fill(0)),
+		];
+	}
+
+	generate_crown_format_entry2(entry) {
+		return [
+			entry.name_tw,
 			...entry.stars.map(x => x * 10).concat(new Array(4 - entry.stars.length).fill(0)),
 		];
 	}
