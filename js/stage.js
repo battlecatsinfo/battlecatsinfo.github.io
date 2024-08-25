@@ -46,7 +46,7 @@ module.exports = class extends SiteGenerator {
 		}, {});
 		this.write_template('html/anim.html', 'anim.html', {eggs});
 
-		const {categories, conditions, material_drops} = JSON.parse(this.load('stage.json'));
+		const {categories, conditions, material_drops} = JSON.parse(this.load('stage_scheme.json'));
 		const egg_set = Object.keys(eggs).map(Number);
 		this.write_template('html/stage.html', 'stage.html', {
 			category: categories.default,
