@@ -12,13 +12,13 @@
 
 	async function loadStages() {
 		let db;
-		let char_groups;
+		let stage_extra;
 
 		async function loadAll(db) {
 			const response = await fetch('/stage.json');
 			checkResponse(response);
 			const data =  await response.json();
-			char_groups = data.map[-1];
+			stage_extra = data.extra;
 
 			await new Promise((resolve, reject) => {
 				const tx = db.transaction(db.objectStoreNames, 'readwrite');
@@ -28,9 +28,11 @@
 				try {
 					const mapStore = tx.objectStore('map');
 					const stageStore = tx.objectStore('stage');
+					const extraStore = tx.objectStore('extra');
 
 					mapStore.clear();
 					stageStore.clear();
+					extraStore.clear();
 
 					for (const idx in data.map) {
 						mapStore.put(data.map[idx], parseInt(idx, 10));
@@ -38,6 +40,10 @@
 
 					for (const idx in data.stage) {
 						stageStore.put(data.stage[idx], parseInt(idx, 10));
+					}
+
+					for (const key in data.extra) {
+						extraStore.put(data.extra[key], key);
 					}
 				} catch (ex) {
 					reject(ex);
@@ -58,24 +64,39 @@
 				try {
 					db.deleteObjectStore("stage");
 				} catch (ex) {}
+				try {
+					db.deleteObjectStore("extra");
+				} catch (ex) {}
 				db.createObjectStore("map");
 				db.createObjectStore("stage");
+				db.createObjectStore("extra");
 			};
 			req.onsuccess = (event) => resolve(event.target.result);
 			req.onerror = (event) => reject(new Error(event.target.error));
 		});
 
 		if (!needReload) {
+			let stage_extra_keys;
+			let stage_extra_values;
 			await new Promise((resolve, reject) => {
-				const tx = db.transaction("map");
+				const tx = db.transaction("extra");
 				tx.oncomplete = resolve;
 				tx.onerror = (event) => reject(new Error(event.target.error));
-				tx.objectStore("map").get(-1).onsuccess = (event) => {
-					char_groups = event.target.result;
+				tx.objectStore("extra").getAllKeys().onsuccess = (event) => {
+					stage_extra_keys = event.target.result;
+				};
+				tx.objectStore("extra").getAll().onsuccess = (event) => {
+					stage_extra_values = event.target.result;
 				};
 			});
-			if (!char_groups) {
-				needReload = true;
+			if (stage_extra_keys && stage_extra_values) {
+				stage_extra = stage_extra_keys.reduce((rv, key, i) => {
+					rv[key] = stage_extra_values[i];
+					return rv;
+				}, {});
+				if (!stage_extra) {
+					needReload = true;
+				}
 			}
 		}
 		if (needReload) {
@@ -84,7 +105,7 @@
 
 		return {
 			db,
-			char_groups,
+			stage_extra,
 		};
 	}
 

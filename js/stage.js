@@ -23,15 +23,16 @@ module.exports = class extends SiteGenerator {
 			rv[parseInt(idx, 36)] = data;
 			return rv;
 		}, {});
-
-		map[-1] = Object.assign(groupData, {
-			RWNAME: rewardData,
-			ENAME: enemyTable.map(x => x.chinese_name),
-		});
+		const extra = {
+			lmGrp: groupData,
+			eName: enemyTable.map(x => x.chinese_name),
+			rwName: rewardData,
+		};
 
 		this.write_json('stage.json', {
 			map,
 			stage,
+			extra,
 		});
 	}
 
