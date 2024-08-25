@@ -53,7 +53,7 @@ const ex_stages = document.getElementById("ex-stages");
 const stageL = parseInt(localStorage.getItem('stagel') || '0', 10);
 const materialDrops = {{{toJSON material_drops}}};
 
-let db, info1, info2, info3, star, char_groups, filter_page, stageF;
+let db, info1, info2, info3, star, stage_extra, filter_page, stageF;
 
 if (localStorage.getItem('stagef') == 's')
 	stageF = new Intl.NumberFormat(undefined, {
@@ -130,7 +130,7 @@ function createReward(tr, v) {
 		let rw = parseInt(v[1], 10);
 		const span = td.appendChild(document.createElement('span'));
 		span.style.verticalAlign = 'center';
-		span.textContent = `${char_groups['RWNAME'][rw]} ×${v[2] > 1000 ? numStr(v[2]) : v[2]}`;
+		span.textContent = `${stage_extra.rwName[rw]} ×${v[2] > 1000 ? numStr(v[2]) : v[2]}`;
 		if (rw <= 13 && rw >= 11)
 			rw += 9;
 		img.src = `/img/r/${rw}.png`;
@@ -325,7 +325,7 @@ function search_gold() {
 
 function search_reward(e) {
 	const T = e.currentTarget.i.toString();
-	const P = char_groups['RWNAME'][e.currentTarget.i];
+	const P = stage_extra.rwName[e.currentTarget.i];
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
 	search_result.textContent = '';
@@ -600,7 +600,7 @@ class Limit {
 			this.line = parseInt(strs[4], 10);
 			this.min = parseInt(strs[5], 10);
 			this.max = parseInt(strs[6], 10);
-			this.group = char_groups[parseInt(strs[7], 10)];
+			this.group = stage_extra.lmGrp[parseInt(strs[7], 10)];
 		} else {
 			this.star = -1;
 			this.sid = -1;
@@ -998,7 +998,7 @@ function render_stage() {
 		var rw = materialDrops[i - 1];
 		var tr = m_drops.appendChild(document.createElement("tr"));
 		var td0 = tr.appendChild(document.createElement("td"));
-		td0.textContent = char_groups['RWNAME'][rw];
+		td0.textContent = stage_extra.rwName[rw];
 		var td2 = tr.appendChild(document.createElement('td'));
 		var img = td2.appendChild(new Image(128, 128));
 		img.style.maxWidth = "2.7em";
@@ -1167,7 +1167,7 @@ function render_stage() {
 
 		const strs = line.split(',');
 		const enemy = parseInt(strs[0], 36);
-		makeTd(tr, char_groups['ENAME'][enemy] || "?"); // enemy name
+		makeTd(tr, stage_extra.eName[enemy] || "?"); // enemy name
 
 		const td = tr.appendChild(document.createElement('td')); // image
 		const a = td.appendChild(document.createElement('a'));
@@ -1305,6 +1305,6 @@ function doSearch(t) {
 }
 
 utils.loadStages().then(result => {
-	({db, char_groups} = result);
+	({db, stage_extra} = result);
 	initUI();
 });
