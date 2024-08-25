@@ -5,6 +5,7 @@ module.exports = class extends SiteGenerator {
 		this.generate_data_files();
 		this.generate_pages();
 		this.generate_crown();
+		this.generate_materials();
 	}
 
 	generate_data_files() {
@@ -157,5 +158,101 @@ module.exports = class extends SiteGenerator {
 			entry.name_jp,
 			...entry.stars,
 		];
+	}
+
+	generate_materials() {
+		const mapTable = this.parse_tsv(this.load('map.tsv'));
+		const stageMap = this.parse_tsv(this.load('stage.tsv')).reduce((rv, entry) => {
+			const id = parseInt(entry.id, 36);
+			rv.set(id, entry);
+			return rv;
+		}, new Map());
+
+		// generate structured data
+		const materials = mapTable.reduce((rv, entry, i) => {
+			const {
+				id: _id, name_tw, name_jp,
+				materialdrop: _materialdrop, multiplier: _multiplier,
+			} = entry;
+
+			const materialdrop = _materialdrop ? _materialdrop.split(',').map(x => parseInt(x, 36)) : null;
+			if (!materialdrop) { return rv; }
+
+			const mapId = parseInt(_id, 36);
+			const multiplier = _multiplier.split(',').map(x => parseFloat(x));
+
+			const groupIdx = Math.floor(mapId / 1000);
+			const mapIdx = mapId - groupIdx * 1000;
+
+			const stageIdx = groupIdx * 1000000 + mapIdx * 1000;
+			const stages = [];
+			for (let i = stageIdx, I = stageIdx + 1000; i < I; ++i) {
+				const stage = stageMap.get(i);
+				if (!stage) { continue; }
+				let {id, energy, maxmaterial} = stage;
+				id = parseInt(id, 36);
+				energy = parseInt(energy, 36);
+				maxmaterial = parseInt(maxmaterial, 10);
+				stages.push({id, energy, maxmaterial});
+			}
+
+			const bests = multiplier.concat([1]).map(m => {
+				return stages.reduce((rv, stage, i) => {
+					const {id, energy, maxmaterial} = stage;
+					const cp = Math.round(maxmaterial * m) / energy;
+					const cp_rv = Math.round(rv.maxmaterial * m) / rv.energy;
+					return cp > cp_rv ? stage : rv;
+				});
+			});
+			const best = bests.pop();
+
+			bests.forEach((b, i) => {
+				if (b.id !== best.id) {
+					console.warn(`WARNING: Inconsistent best stage for materials: mapId=${mapId.toString(36)}, stageId=${b.id.toString(36)}, star=${i}`);
+				}
+			});
+
+			const {energy, maxmaterial} = best;
+			const times = multiplier.map(m => Math.round(maxmaterial * m));
+			(rv[groupIdx] ??= {})[mapIdx] = {
+				index: mapIdx,
+				name_tw,
+				name_jp,
+				energy,
+				materialdrop,
+				times,
+			};
+
+			return rv;
+		}, {});
+
+		// generate formatted output
+		const materialsFormatted = {};
+		const scheme = [
+			['SOL', 0, [1, 8]],
+			['UL', 9, [1, 9]],
+			['ZL', 16, [9, 17]],
+		];
+
+		for (const [key, groupIdx, fields] of scheme) {
+			materialsFormatted[`sum_${key}`] = Object.values(materials[groupIdx]).map(entry => {
+				const materials = entry.materialdrop.slice(...fields);
+				return materials.reduce((sum, v) => sum + v);
+			});
+		}
+
+		for (const [key, groupIdx, fields] of scheme) {
+			materialsFormatted[`drop_${key}`] = Object.values(materials[groupIdx]).map(entry => [
+				entry.index + 1,
+				entry.name_tw,
+				entry.name_jp,
+				entry.energy,
+				...entry.materialdrop.slice(...fields),
+				entry.materialdrop[0],
+				...entry.times,
+			]);
+		}
+
+		this.write_template('js/materials.js', 'materials.js', {materials: materialsFormatted});
 	}
 };

@@ -1,4 +1,4 @@
-{{#each (loadJSON "materials.json") as |value key|}}
+{{#each materials as |value key|}}
 const {{{key}}} = {{{toJSON value}}};
 {{/each}}
 
