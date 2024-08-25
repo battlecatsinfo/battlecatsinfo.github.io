@@ -27,7 +27,7 @@ module.exports = class extends SiteGenerator {
 		}, {});
 		const extra = {
 			lmGrp: limit_groups,
-			eName: enemyTable.map(x => x.chinese_name),
+			eName: enemyTable.map(x => x.name_tw),
 			rwName: rewardTable.reduce((rv, entry) => {
 				rv[entry.id] = entry.name;
 				return rv;
