@@ -7,20 +7,20 @@ module.exports = class extends SiteGenerator {
 	}
 
 	generate_data_files() {
-		const mapTable = this.parse_tsv(this.load('map.tsv'), false);
-		const stageTable = this.parse_tsv(this.load('stage.tsv'), false);
+		const mapTable = this.parse_tsv(this.load('map.tsv'));
+		const stageTable = this.parse_tsv(this.load('stage.tsv'));
 		const {limit_groups} = JSON.parse(this.load('stage_extras.json'));
 		const rewardData = JSON.parse(this.load('reward.json'));
 		const enemyData = this.parse_tsv(this.load('enemy.tsv'));
 
 		const map = mapTable.reduce((rv, entry, i) => {
-			const [idx, ...data] = entry;
-			rv[parseInt(idx, 36)] = data;
+			const {id, ...data} = entry;
+			rv[parseInt(id, 36)] = Object.values(data);
 			return rv;
 		}, {});
 		const stage = stageTable.reduce((rv, entry, i) => {
-			const [idx, ...data] = entry;
-			rv[parseInt(idx, 36)] = data;
+			const {id, ...data} = entry;
+			rv[parseInt(id, 36)] = Object.values(data);
 			return rv;
 		}, {});
 		const extra = {
