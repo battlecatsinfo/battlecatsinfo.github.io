@@ -1,4 +1,4 @@
-id	chinese_name	japanese_name	price	description	health_point	knockbacks	speed	range	preswing_1	preswing_2	preswing_3	attack_power_1	attack_power_2	attack_power_3	time_between_attacks	backswing	attack_frequency	attack_type	trait	ability_enabled	long_distance_1	long_distance_2	immunity	ability	cd	icon
+id	name_tw	name_jp	price	description	health_point	knockbacks	speed	range	preswing_1	preswing_2	preswing_3	attack_power_1	attack_power_2	attack_power_3	time_between_attacks	backswing	attack_frequency	attack_type	trait	ability_enabled	long_distance_1	long_distance_2	immunity	ability	cd	icon
 0	貓咪	ネコ	50	可以低成本生產的基本角色	100	3	10	140	8	0	0	8	0	0	30	10	37	1	0	4			0		150	img/u/0/0.png
 0	健美貓	ネコビルダー	50	飽經鍛鍊的肌肉是魅力所在的|基本角色	100	3	10	140	8	0	0	8	0	0	30	8	37	1	0	4			0		150	img/u/0/1.png
 0	摩西根貓	ネコモヒカン	50	飽經鍛鍊的肌肉跟很MAN的髮型|是魅力所在的基本角色	200	3	10	140	8	0	0	16	0	0	30	8	37	1	0	4			0		150	img/u/0/2.png

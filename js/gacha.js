@@ -614,7 +614,7 @@ module.exports = class extends SiteGenerator {
 		for (const cat of data) {
 			if (id !== cat.id) {
 				id = cat.id;
-				this.unit_name.push(cat.chinese_name);
+				this.unit_name.push(cat.name_tw);
 				this.unit_desc.push(cat.description);
 			}
 		}

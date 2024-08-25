@@ -32,7 +32,7 @@ module.exports = class extends SiteGenerator {
 				parseInt(cat.level_curve, 10),
 				cat.obtain_stage || null,
 				cat.trueform_stage || null,
-				cat.fandom_name,
+				cat.name_fandom,
 			];
 			return {
 				info,
@@ -44,8 +44,8 @@ module.exports = class extends SiteGenerator {
 			cats[form.id].forms.push({
 				lvc: cats[form.id].forms.length,
 				id: parseInt(form.id, 10),
-				name: form.chinese_name,
-				jp_name: form.japanese_name,
+				name: form.name_tw,
+				jp_name: form.name_jp,
 				price: form.price,
 				desc: form.description,
 				hp: parseInt(form.health_point, 10),
@@ -83,9 +83,9 @@ module.exports = class extends SiteGenerator {
 		const enemies = enemyTable.map(enemy => {
 			return {
 				i: parseInt(enemy.id, 10),
-				name: enemy.chinese_name,
-				jp_name: enemy.japanese_name,
-				fandom: enemy.fandom_name,
+				name: enemy.name_tw,
+				jp_name: enemy.name_jp,
+				fandom: enemy.name_fandom,
 				desc: enemy.description,
 				hp: parseInt(enemy.health_point, 10),
 				kb: parseInt(enemy.knockbacks, 10),
