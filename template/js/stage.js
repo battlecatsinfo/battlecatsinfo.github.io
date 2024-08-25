@@ -654,8 +654,8 @@ class Limit {
 		this.line |= other.line;
 		this.min = Math.max(this.min, other.min);
 		this.max = this.max > 0 && other.max > 0 ? Math.min(this.max, other.max) : this.max + other.max;
-		if (other.hasOwnProperty("group")) {
-			if (this.hasOwnProperty("group")) {
+		if (typeof other.group !== 'undefined') {
+			if (typeof this.group !== 'undefined') {
 				this.group = merge(this.group, other.group);
 			} else {
 				this.group = other.group;
