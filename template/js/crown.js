@@ -32,7 +32,7 @@ const F = new Intl.NumberFormat(undefined, {
 
 function format(num) {
 	if (num)
-		return (num / 10).toString(); //return F.format(num);
+		return num.toString(); //return F.format(num);
 	return '';
 }
 $('#SOL').DataTable({

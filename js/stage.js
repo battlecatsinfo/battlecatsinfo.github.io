@@ -147,14 +147,14 @@ module.exports = class extends SiteGenerator {
 			overrideKey || entry.index + 1,
 			entry.name_tw,
 			entry.name_jp,
-			...entry.stars.map(x => x * 10).concat(new Array(4 - entry.stars.length).fill(0)),
+			...entry.stars,
 		];
 	}
 
 	generate_crown_format_entry2(entry) {
 		return [
 			entry.name_tw,
-			...entry.stars.map(x => x * 10).concat(new Array(4 - entry.stars.length).fill(0)),
+			...entry.stars,
 		];
 	}
 };
