@@ -12,7 +12,7 @@ module.exports = class extends SiteGenerator {
 		const mapTable = this.parse_tsv(this.load('map.tsv'));
 		const stageTable = this.parse_tsv(this.load('stage.tsv'));
 		const {limit_groups} = JSON.parse(this.load('stage_extras.json'));
-		const rewardData = JSON.parse(this.load('reward.json'));
+		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
 		const enemyData = this.parse_tsv(this.load('enemy.tsv'));
 
 		const map = mapTable.reduce((rv, entry, i) => {
@@ -28,7 +28,10 @@ module.exports = class extends SiteGenerator {
 		const extra = {
 			lmGrp: limit_groups,
 			eName: enemyData.map(x => x.chinese_name),
-			rwName: rewardData,
+			rwName: rewardTable.reduce((rv, entry) => {
+				rv[entry.id] = entry.name;
+				return rv;
+			}, {}),
 		};
 
 		this.write_json('stage.json', {
