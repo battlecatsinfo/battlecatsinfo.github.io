@@ -387,7 +387,7 @@
 				</li>
 			</ul>
 			<ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="kind-s">
-				{{#each (loadTSV "species.tsv") as |sp|}}
+				{{#each (loadTSV "enemy_species.tsv") as |sp|}}
 				<li data-expr="(
 					{{~#each (split sp.id_list ",") as |id|~}}
 					id=={{id}}
