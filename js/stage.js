@@ -13,22 +13,21 @@ module.exports = class extends SiteGenerator {
 		const rewardData = JSON.parse(this.load('reward.json'));
 		const enemyData = this.parse_tsv(this.load('enemy.tsv'));
 
-		const map = {};
-		const stage = {};
-
-		for (const entry of mapTable) {
+		const map = mapTable.reduce((rv, entry, i) => {
 			const [idx, ...data] = entry;
-			map[parseInt(idx, 36)] = data;
-		}
+			rv[parseInt(idx, 36)] = data;
+			return rv;
+		}, {});
+		const stage = stageTable.reduce((rv, entry, i) => {
+			const [idx, ...data] = entry;
+			rv[parseInt(idx, 36)] = data;
+			return rv;
+		}, {});
+
 		map[-1] = Object.assign(groupData, {
 			RWNAME: rewardData,
 			ENAME: enemyData.map(x => x.chinese_name),
 		});
-
-		for (const entry of stageTable) {
-			const [idx, ...data] = entry;
-			stage[parseInt(idx, 36)] = data;
-		}
 
 		this.write_json('stage.json', {
 			map,
