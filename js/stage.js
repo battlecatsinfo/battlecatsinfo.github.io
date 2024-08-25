@@ -4,6 +4,7 @@ module.exports = class extends SiteGenerator {
 	run() {
 		this.generate_data_files();
 		this.generate_pages();
+		this.generate_crown();
 	}
 
 	generate_data_files() {
@@ -65,5 +66,66 @@ module.exports = class extends SiteGenerator {
 		this.write_template('js/enemy.js', 'enemy.js', {
 			stages_top: categories.default.map(entry => entry.name),
 		});
+	}
+
+	generate_crown() {
+		const mapTable = this.parse_tsv(this.load('map.tsv'));
+		const {categories: {default: groups}} = JSON.parse(this.load('stage_scheme.json'));
+		const {collabs} = JSON.parse(this.load('collab.json'));
+
+		// generate structured data
+		const crown = mapTable.reduce((rv, entry, i) => {
+			const {id: _id, stars: _stars, name_tw, name_jp} = entry;
+
+			const mapId = parseInt(_id, 36);
+			const stars = _stars ? _stars.split(',').map(x => parseInt(x, 10) / 100) : [1];
+
+			const groupIdx = Math.floor(mapId / 1000);
+			const mapIdx = mapId - groupIdx * 1000;
+
+			(rv[groupIdx] ??= {})[mapIdx] = {
+				index: mapIdx,
+				name_tw,
+				name_jp,
+				stars,
+			};
+
+			return rv;
+		}, {});
+
+		// generate formatted output
+		const crownFormatted = {};
+
+		for (const [key, groupIdx] of [
+			['SOL', 0],
+			['UL', 9],
+			['ZL', 16],
+		]) {
+			crownFormatted[key] = Object.values(crown[groupIdx]).map(entry => {
+				return this.generate_crown_format_entry(entry);
+			});
+		}
+
+		crownFormatted['COLLAB'] = collabs.reduce((rv, collab) => {
+			if (collab.stages) {
+				for (const map of collab.stages) {
+					const [groupIdx, mapIdx] = map.split('-').map(x => parseInt(x));
+					const entry = crown[groupIdx][mapIdx];
+					rv.push(this.generate_crown_format_entry(entry, collab.tw_name));
+				}
+			}
+			return rv;
+		}, []);
+
+		this.write_template('js/crown.js', 'crown.js', {crown: crownFormatted});
+	}
+
+	generate_crown_format_entry(entry, overrideKey) {
+		return [
+			overrideKey || entry.index + 1,
+			entry.name_tw,
+			entry.name_jp,
+			...entry.stars.map(x => x * 10).concat(new Array(4 - entry.stars.length).fill(0)),
+		];
 	}
 };
