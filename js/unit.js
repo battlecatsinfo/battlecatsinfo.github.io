@@ -14,13 +14,13 @@ module.exports = class extends SiteGenerator {
 		const cats = catTable.map(cat => {
 			const info = {
 				rarity: Number(cat.rarity),
-				forms: Number(cat.form_count),
+				// forms: Number(cat.form_count),
 				obtn: cat.obtain || undefined,
 				evol: cat.evol || undefined,
 				maxBaseLv: Number(cat.max_base_level),
 				maxPlusLv: Number(cat.max_plus_level),
-				egg1: cat.egg_1 || undefined,
-				egg2: cat.egg_2 || undefined,
+				// egg1: cat.egg_1 || undefined,
+				// egg2: cat.egg_2 || undefined,
 				evolReq: cat.evol_require || undefined,
 				evol4Req: cat.evol4_require || undefined,
 				talents: cat.talents || undefined,
