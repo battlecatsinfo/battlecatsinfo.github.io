@@ -329,7 +329,7 @@ function floor(x) {
 }
 
 function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level */ ) {
-	my_curve = levelcurves[C.info[16]];
+	my_curve = levelcurves[C.info.lvCurve];
 	tby[5].children[I].textContent = `${F.kb} / ${F.speed}`;
 	var T = numStrX(F.pre);
 	if (F.pre1)
@@ -587,7 +587,7 @@ function addCat(id, I, FC = 0) {
 		C = cats[id],
 		F = C.forms[FC];
 	var FL = 0;
-	if (FC > 1 && (G = C.info[10])) {
+	if (FC > 1 && (G = C.info.talents)) {
 		FL = 1;
 		M = tby[10].children[I];
 		M.style.textAlign = 'left';
@@ -609,7 +609,7 @@ function addCat(id, I, FC = 0) {
 	M.appendChild(G);
 	M.style.border = 'none';
 	const span = document.createElement('span');
-	span.lv = Math.min(C.info[4] + C.info[5],
+	span.lv = Math.min(C.info.maxBaseLv + C.info.maxPlusLv,
 		(FL == 2) ? 60 : ((FC == 3) ? 60 : 50)
 	);
 	span.C = C;
@@ -625,14 +625,14 @@ function addCat(id, I, FC = 0) {
 		if (num) {
 			num = parseInt(num[0], 10);
 			if (num) {
-				num = Math.min(num, this.C.info[4] + this.C.info[5]);
+				num = Math.min(num, this.C.info.maxBaseLv + this.C.info.maxPlusLv);
 				if (num != this.lv) {
 					let J = this.F;
 					if (this.X) {
 						J = new Form(structuredClone(J));
-						const L = this.C.info[10];
+						const L = this.C.info.talents;
 						if (this.X.checked) {
-							J.applyTalents(this.C.info[10], get_t(L));
+							J.applyTalents(this.C.info.talents, get_t(L));
 							if (num < 30)
 								alert('提醒：開放本能升級等級需求至少為 Lv30');
 						}
@@ -656,9 +656,9 @@ function addCat(id, I, FC = 0) {
 	M.appendChild(span);
 	if (FL) {
 		F = new Form(structuredClone(F));
-		F.applyTalents(C.info[10], get_t(C.info[10]));
+		F.applyTalents(C.info.talents, get_t(C.info.talents));
 		if (FL == 2) {
-			F.applySuperTalents(C.info[10], get_s(C.info[10]));
+			F.applySuperTalents(C.info.talents, get_s(C.info.talents));
 		}
 	}
 	setStat(C, F, I, span.lv);
@@ -695,13 +695,13 @@ function addCat(id, I, FC = 0) {
 			if (span.X.checked) {
 				if (span.lv < 30)
 					alert('提醒：開放本能升級等級需求至少為 Lv30');
-				H.applyTalents(span.C.info[10], get_t(span.C.info[10]));
+				H.applyTalents(span.C.info.talents, get_t(span.C.info.talents));
 			}
 			if (span.Y && span.Y.checked) {
 				if (span.lv < 60)
 					alert('提醒：開放超本能等級需求至少為 Lv60');
 				span.textContent = span.lv;
-				H.applySuperTalents(span.C.info[10], get_s(span.C.info[10]));
+				H.applySuperTalents(span.C.info.talents, get_s(span.C.info.talents));
 			}
 			setStat(span.C, H, span.I, span.lv);
 		}
@@ -721,13 +721,13 @@ function addCat(id, I, FC = 0) {
 				if (span.X.checked) {
 					if (span.lv < 30)
 						alert('提醒：開放本能升級等級需求至少為 Lv30');
-					H.applyTalents(span.C.info[10], get_t(span.C.info[10]));
+					H.applyTalents(span.C.info.talents, get_t(span.C.info.talents));
 				}
 				if (span.Y.checked) {
 					if (span.lv < 60)
 						alert('提醒：開放超本能等級需求至少為 Lv60');
 					span.textContent = span.lv;
-					H.applySuperTalents(span.C.info[10], get_s(span.C.info[10]));
+					H.applySuperTalents(span.C.info.talents, get_s(span.C.info.talents));
 				}
 				setStat(span.C, H, span.I, span.lv);
 			}

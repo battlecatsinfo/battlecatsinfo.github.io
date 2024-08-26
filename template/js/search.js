@@ -85,9 +85,9 @@ function renderTable(forms, page = 1) {
 			let tr = document.createElement("tr");
 			let F = display_forms[i][1];
 			_info = cats_old[F.id].info;
-			my_curve = levelcurves[_info[16]];
-			let base = Math.min(def_lv, _info[4]);
-			let plus = Math.min(plus_lv, _info[5]);
+			my_curve = levelcurves[_info.lvCurve];
+			let base = Math.min(def_lv, _info.maxBaseLv);
+			let plus = Math.min(plus_lv, _info.maxPlusLv);
 			let texts = [F.id + "-" + (F.lvc + 1), `Lv ${base} + ` + plus, "", "", ~~F.gethp(), ~~F.getatk(), Math.round(F.getdps() + Number.EPSILON), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(1.5 * F.price), numStr(display_forms[i][0])];
 			for (let j = 0; j < 13; ++j) {
 				var e = document.createElement("td");
@@ -155,14 +155,14 @@ function calculate(code = "") {
 	switch (form_s) {
 		case 0:
 			for (const c of cats) {
-				my_curve = levelcurves[c.info[16]];
+				my_curve = levelcurves[c.info.lvCurve];
 				_info = c.info;
 				for (var form of c.forms) f(form) && results.push(form);
 			}
 			break;
 		case 1:
 			for (const c of cats) {
-				my_curve = levelcurves[c.info[16]];
+				my_curve = levelcurves[c.info.lvCurve];
 				_info = c.info;
 				const F = c.forms[0];
 				f(F) && results.push(F);
@@ -170,7 +170,7 @@ function calculate(code = "") {
 			break;
 		case 2:
 			for (const c of cats) {
-				my_curve = levelcurves[c.info[16]];
+				my_curve = levelcurves[c.info.lvCurve];
 				_info = c.info;
 				const F = c.forms[1];
 				F && f(F) && results.push(F);
@@ -178,7 +178,7 @@ function calculate(code = "") {
 			break;
 		case 3:
 			for (const c of cats) {
-				my_curve = levelcurves[c.info[16]];
+				my_curve = levelcurves[c.info.lvCurve];
 				_info = c.info;
 				const F = c.forms[2];
 				F && f(F) && results.push(F);
@@ -186,7 +186,7 @@ function calculate(code = "") {
 			break;
 		case 4:
 			for (const c of cats) {
-				my_curve = levelcurves[c.info[16]];
+				my_curve = levelcurves[c.info.lvCurve];
 				_info = c.info;
 				const F = c.forms[3];
 				F && f(F) && results.push(F);
@@ -194,7 +194,7 @@ function calculate(code = "") {
 			break;
 		case 5:
 			for (const c of cats) {
-				my_curve = levelcurves[c.info[16]];
+				my_curve = levelcurves[c.info.lvCurve];
 				_info = c.info;
 				const F = c.forms[c.forms.length - 1];
 				f(F) && results.push(F);
@@ -210,7 +210,7 @@ function calculate(code = "") {
 	let fn = eval(`form => (${pcode})`);
 	results = results.map((form, i) => {
 		let c = cats_old[form.id];
-		my_curve = levelcurves[c.info[16]];
+		my_curve = levelcurves[c.info.lvCurve];
 		_info = c.info;
 		var x = fn(form);
 		return [isFinite(x) ? x : 0, form];
@@ -256,7 +256,7 @@ loadAllCats().then(_cats => {
 		let TF = cats_old[i].forms[2];
 		if (TF) {
 			let info = cats_old[i].info;
-			let talents = info[10];
+			let talents = info.talents;
 			if (talents) {
 				TF.trait |= talents[0];
 				TF.res = {};
@@ -265,7 +265,7 @@ loadAllCats().then(_cats => {
 				TF = cats_old[i].forms[3];
 				if (TF) {
 					info = cats_old[i].info;
-					talents = info[10];
+					talents = info.talents;
 
 					TF.trait |= talents[0];
 					TF.res = {};

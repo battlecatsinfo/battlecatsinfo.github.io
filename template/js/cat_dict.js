@@ -98,7 +98,7 @@ loadAllCats().then(_cs => {
 	for (let cat of cats) {
 		const TF = cat.forms[2];
 		if (TF) {
-			const talents = cat.info[10];
+			const talents = cat.info.talents;
 			if (talents) {
 				TF.trait |= talents[0];
 				TF.res = {};
@@ -129,14 +129,14 @@ function ok() {
 			for (let x of chs) {
 				const r = parseInt(x.value);
 				for (i of fav_list)
-					if (cats[i].info[0] == r)
+					if (cats[i].info.rarity == r)
 						results.add(i);
 			}
 		} else {
 			for (let x of chs) {
 				const r = parseInt(x.value);
 				for (i = 0; i < cats.length; ++i)
-					if (cats[i].info[0] == r)
+					if (cats[i].info.rarity == r)
 						results.add(i);
 			}
 		}
@@ -244,19 +244,19 @@ function ok() {
 			switch (i) {
 				case 1: {
 					for (let x of results)
-						if (cats[x].info[10])
+						if (cats[x].info.talents)
 							results.delete(x);
 				}
 				break;
 				case 2: {
 					for (let x of results)
-						if (!cats[x].info[10])
+						if (!cats[x].info.talents)
 							results.delete(x);
 				}
 				break;
 				case 3: {
 					for (let x of results) {
-						const c = cats[x].info[10];
+						const c = cats[x].info.talents;
 						if (!c) {
 							results.delete(x);
 						} else {
@@ -309,7 +309,7 @@ function ok() {
 	for (const x of results)
 		sorted[i++] = cats[x];
 	sorted.sort((x, y) => {
-		x.info[0] - y.info[0]
+		x.info.rarity - y.info.rarity
 	});
 	sorted.forEach(add_unit);
 }

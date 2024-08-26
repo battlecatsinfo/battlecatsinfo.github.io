@@ -66,11 +66,11 @@ class FormDPS {
 
 		this.t_lv = [];
 		this.s_lv = [];
-		if (this.F.lvc >= 2 && C.info[10]) {
+		if (this.F.lvc >= 2 && C.info.talents) {
 			for (let i = 1; i < 113; i += 14) {
-				if (!C.info[10][i]) break;
-				((C.info[10][i + 13] == 1) ? this.s_lv : this.t_lv).push(C.info[10][i + 1] || 1);
-				talent_types.add(C.info[10][i]);
+				if (!C.info.talents[i]) break;
+				((C.info.talents[i + 13] == 1) ? this.s_lv : this.t_lv).push(C.info.talents[i + 1] || 1);
+				talent_types.add(C.info.talents[i]);
 			}
 		}
 		this.is_normal = !((this.F.atkType & ATK_LD) || (this.F.atkType & ATK_OMNI));
@@ -134,8 +134,8 @@ class FormDPS {
 		if (this.s_lv.length || this.F.lvc == 3)
 			x = this.lv_c.value = 60;
 		else
-			this.lv_c.value = x = Math.min(this.info[4] + this.info[5], 50);
-		my_curve = levelcurves[this.info[16]];
+			this.lv_c.value = x = Math.min(this.info.maxBaseLv + this.info.maxPlusLv, 50);
+		my_curve = levelcurves[this.info.lvCurve];
 		this.lvm = getLevelMulti(x);
 		this.lv_c.onblur = function() {
 			let num = this.value.match(/\d+/);
@@ -148,8 +148,8 @@ class FormDPS {
 				this.value = '請輸入正整數！';
 				return;
 			}
-			this.value = num = Math.min(self.info[4] + self.info[5], num);
-			my_curve = levelcurves[self.info[16]];
+			this.value = num = Math.min(self.info.maxBaseLv + self.info.maxPlusLv, num);
+			my_curve = levelcurves[self.info.lvCurve];
 			self.lvm = getLevelMulti(num);
 			self.render();
 		}
@@ -353,9 +353,9 @@ class FormDPS {
 				};
 		}
 
-		if (this.F.lvc >= 2 && this.info[10]) {
-			for (let i = 1; i < 113 && this.info[10][i]; i += 14) {
-				obj = units_scheme.talents.names[this.info[10][i]];
+		if (this.F.lvc >= 2 && this.info.talents) {
+			for (let i = 1; i < 113 && this.info.talents[i]; i += 14) {
+				obj = units_scheme.talents.names[this.info.talents[i]];
 				if (!obj) continue;
 				const div = document.createElement('p');
 				let p = div.appendChild(document.createElement('label'));
@@ -366,14 +366,14 @@ class FormDPS {
 				p.style.paddingRight = '0';
 				p.type = 'range';
 				p.min = 0;
-				p.value = p.max = (this.info[10][i + 1] || 1).toString();
+				p.value = p.max = (this.info.talents[i + 1] || 1).toString();
 				p.step = 1;
 				p.oninput = function() {
 					let tal_cnt = 0;
 					let sup_cnt = 0;
 					for (let j = 1;j < 113;j += 14) {
 						if (j == i) {
-							if (self.info[10][j + 13] == 1) {
+							if (self.info.talents[j + 13] == 1) {
 								self.s_lv[sup_cnt] = parseInt(this.value);
 							} else {
 								self.t_lv[tal_cnt] = parseInt(this.value);
@@ -381,7 +381,7 @@ class FormDPS {
 							self.render();
 							return;
 						}
-						if (self.info[10][j + 13] == 1)
+						if (self.info.talents[j + 13] == 1)
 							++sup_cnt;
 						else
 
@@ -562,8 +562,8 @@ class FormDPS {
 		let x, Xs;
 		this.atks = [F.atk];
 
-		if (this.info[10] && F.lvc >= 2)
-			if (F.applyTalents(this.info[10], this.t_lv)) F.applySuperTalents(this.info[10], this.s_lv);
+		if (this.info.talents && F.lvc >= 2)
+			if (F.applyTalents(this.info.talents, this.t_lv)) F.applySuperTalents(this.info.talents, this.s_lv);
 
 		if (F.atk1) this.atks.push(F.atk1);
 		if (F.atk2) this.atks.push(F.atk2);
