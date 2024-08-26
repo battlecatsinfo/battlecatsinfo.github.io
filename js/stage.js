@@ -136,24 +136,25 @@ module.exports = class extends SiteGenerator {
 			const groupIdx = Math.floor(mapId / 1000);
 			const mapIdx = mapId - groupIdx * 1000;
 			const entry = crown[groupIdx][mapIdx];
-			return this.generate_crown_format_entry2(entry);
+			return this.generate_crown_format_entry(entry, null);
 		});
 
 		this.write_template('js/crown.js', 'crown.js', {crown: crownFormatted});
 	}
 
+	/**
+	 * @param {CrownEntry} entry
+	 * @param {*} [overrideKey] - The alternative key.
+	 *     - undefined to take entry.index based value instead;
+	 *     - null to not include the key;
+	 *     - otherwise, take this value as the key.
+	 */
 	generate_crown_format_entry(entry, overrideKey) {
+		const key = (overrideKey === null) ? [] : [overrideKey ?? entry.index + 1];
 		return [
-			overrideKey || entry.index + 1,
+			...key,
 			entry.name_tw,
 			entry.name_jp,
-			...entry.stars,
-		];
-	}
-
-	generate_crown_format_entry2(entry) {
-		return [
-			entry.name_tw,
 			...entry.stars,
 		];
 	}
