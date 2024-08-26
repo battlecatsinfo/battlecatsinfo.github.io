@@ -570,13 +570,13 @@ class Form {
 		return this.pre2;
 	}
 	getTotalLv() {
-		return Math.min(def_lv, _info[4]) + Math.min(plus_lv, _info[5]);
+		return Math.min(def_lv, _info.maxBaseLv) + Math.min(plus_lv, _info.maxPlusLv);
 	}
 	getmax_base_lv() {
-		return _info[4];
+		return _info.maxBaseLv;
 	}
 	getmax_plus_lv() {
-		return _info[5];
+		return _info.maxPlusLv;
 	}
 	getslow_time() {
 		const t = this.ab[AB_SLOW];
@@ -668,7 +668,7 @@ class Form {
 		return this.kb;
 	}
 	getrarity() {
-		return _info[0];
+		return _info.rarity;
 	}
 	gettrait() {
 		return this.trait;
@@ -919,9 +919,9 @@ class Form {
 		return 0;
 	}
 	evol4_require(x) {
-		if (!_info[9]) return 0;
+		if (!_info.evol4Req) return 0;
 		x = x.toString();
-		for (let r of _info[9].split('|')) {
+		for (let r of _info.evol4Req.split('|')) {
 			r = r.split('!');
 			if (r[1] == x)
 				return parseInt(r[0]);
@@ -929,9 +929,9 @@ class Form {
 		return 0;
 	}
 	evol_require(x) {
-		if (!_info[8]) return 0;
+		if (!_info.evolReq) return 0;
 		x = x.toString();
-		for (let r of _info[8].split('|')) {
+		for (let r of _info.evolReq.split('|')) {
 			r = r.split('!');
 			if (r[1] == x)
 				return parseInt(r[0]);
@@ -1221,8 +1221,8 @@ async function getAllCats() {
 
 		// format from raw data
 		const info = data.info;
-		if (info[10])
-			info[10] = new Int16Array(info[10].split('|'));
+		if (info.talents)
+			info.talents = new Int16Array(info.talents.split('|'));
 
 		cats[i] = new Cat(data);
 	}
