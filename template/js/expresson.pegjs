@@ -133,8 +133,8 @@ Prim
 			case 'hasres':
 			case 'dpsagainst':
 			case 'hpagainst':
-			case 'involve_require':
-			case 'involve4_require':
+			case 'evol_require':
+			case 'evol4_require':
 				return `form.${s}(${args[1]})`;
 			}
 			if (!Math[s])
