@@ -187,25 +187,25 @@
 			</tr>
 		</thead>
 		<tbody>
-		{{#each data as |item|}}
-		<tr style="background-color:{{item.bgColor}}">
-			<td><img {{#if item.imgStyle}}style="{{item.imgStyle}}" {{/if~}}
-			src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
-			<td>
-				{{~#with item.info as |info|~}}
-				{{~#if info.id includeZero=true}}<a target="_blank" href="/unit.html?id={{info.id}}">{{/if~}}
-				{{~info.name~}}
-				{{~#if info.id includeZero=true}}</a>{{/if~}}
-				{{~/with~}}
-			</td>
-			<td>{{item.rate}}</td>
-			{{#if item.rateSum}}
-			{{#with item.rateSum as |info|}}
-			<td rowSpan="{{info.count}}">{{info.value}}</td>
-			{{/with}}
-			{{/if}}
-		</tr>
-		{{/each}}
+			{{#each data as |item|}}
+			<tr style="background-color:{{item.bgColor}}">
+				<td><img {{#if item.imgStyle}}style="{{item.imgStyle}}" {{/if~}}
+				src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
+				<td>
+					{{~#with item.info as |info|~}}
+					{{~#if info.id includeZero=true}}<a target="_blank" href="/unit.html?id={{info.id}}">{{/if~}}
+					{{~info.name~}}
+					{{~#if info.id includeZero=true}}</a>{{/if~}}
+					{{~/with~}}
+				</td>
+				<td>{{item.rate}}</td>
+				{{#if item.rateSum}}
+				{{#with item.rateSum as |info|}}
+				<td rowSpan="{{info.count}}">{{info.value}}</td>
+				{{/with}}
+				{{/if}}
+			</tr>
+			{{/each}}
 		</tbody>
 	</table>
 
@@ -259,24 +259,24 @@
 		<summary class="w3-tag w3-padding w3-round-large" style="background-color:{{group.bgColor}} !important">{{group.name}}</summary>
 		<table class="w3-table w3-centered R" style="width:95%;margin:0 auto">
 			<tbody>
-			{{#each group.rows as |row|}}
-			<tr>
-				{{#each row as |cat|}}
-				<td>
-					<div style="font-weight:bold">{{#if cat.rate}}
-						{{cat.name}}
-						<div style="color:red !important;font-size:0.8em">出現機率×{{cat.rate}}</div>
-					{{else}}{{cat.name}}{{/if}}</div>
-					<a class="B" href="/unit.html?id={{cat.id}}"><img src="{{cat.img}}" width="104" height="79" loading="lazy"></a>
-					<div style="font-size:0.8em">
-						{{#each cat.descs as |desc|}}
-						{{desc}}<br>
-						{{/each}}
-					</div>
-				</td>
+				{{#each group.rows as |row|}}
+				<tr>
+					{{#each row as |cat|}}
+					<td>
+						<div style="font-weight:bold">{{#if cat.rate}}
+							{{cat.name}}
+							<div style="color:red !important;font-size:0.8em">出現機率×{{cat.rate}}</div>
+						{{else}}{{cat.name}}{{/if}}</div>
+						<a class="B" href="/unit.html?id={{cat.id}}"><img src="{{cat.img}}" width="104" height="79" loading="lazy"></a>
+						<div style="font-size:0.8em">
+							{{#each cat.descs as |desc|}}
+							{{desc}}<br>
+							{{/each}}
+						</div>
+					</td>
+					{{/each}}
+				</tr>
 				{{/each}}
-			</tr>
-			{{/each}}
 			</tbody>
 		</table>
 	</details>
@@ -306,35 +306,37 @@
 				<th>項目</th>
 				<th>機率</th>
 				<th>總和</th>
+				{{#if data.must_drop_rate}}
 				<th>實際機率</th>
+				{{/if}}
 			</tr>
 		</thead>
 		<tbody>
-		{{#with data as |data|}}
-		{{#each data.items as |item|}}
-		<tr style="background-color:{{item.bgColor}}">
-			<td><img {{#if item.imgStyle}}style="{{item.imgStyle}}" {{/if~}}
-			src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
-			<td>
-				{{~#with item.info as |info|~}}
-				{{~#if info.id includeZero=true}}<a target="_blank" href="/unit.html?id={{info.id}}">{{/if~}}
-				{{~info.name~}}
-				{{~#if info.id includeZero=true}}</a>{{/if~}}
-				{{~info.must~}}
-				{{~/with~}}
-			</td>
-			<td>{{item.rate}}</td>
-			{{#if item.rateSum}}
-			{{#with item.rateSum as |info|}}
-			<td rowSpan="{{info.count}}">{{info.value}}</td>
+			{{#with data as |data|}}
+			{{#each data.items as |item|}}
+			<tr style="background-color:{{item.bgColor}}">
+				<td><img {{#if item.imgStyle}}style="{{item.imgStyle}}" {{/if~}}
+				src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>
+				<td>
+					{{~#with item.info as |info|~}}
+					{{~#if info.id includeZero=true}}<a target="_blank" href="/unit.html?id={{info.id}}">{{/if~}}
+					{{~info.name~}}
+					{{~#if info.id includeZero=true}}</a>{{/if~}}
+					{{~info.must~}}
+					{{~/with~}}
+				</td>
+				<td>{{item.rate}}</td>
+				{{#if item.rateSum}}
+				{{#with item.rateSum as |info|}}
+				<td rowSpan="{{info.count}}">{{info.value}}</td>
+				{{/with}}
+				{{/if}}
+				{{#if data.must_drop_rate}}
+				<td>{{item.rateActual}}</td>
+				{{/if}}
+			</tr>
+			{{/each}}
 			{{/with}}
-			{{/if}}
-			{{#if data.must_drop_rate}}
-			<td>{{item.rateActual}}</td>
-			{{/if}}
-		</tr>
-		{{/each}}
-		{{/with}}
 		</tbody>
 	</table>
 	<small>有*標示為每十抽必定可獲得的限定角色</small>

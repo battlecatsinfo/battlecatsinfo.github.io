@@ -4,19 +4,19 @@ const {{{key}}} = {{{toJSON value}}};
 
 for (var j = 0; j < drop_SOL.length; ++j) {
 	for (var i = 4; i < 11; ++i) {
-		const rate = 100 - drop_SOL[j][9];
+		const rate = 100 - drop_SOL[j][11];
 		drop_SOL[j][i] = rate * drop_SOL[j][i] / sum_SOL[j];
 	}
 }
 for (var j = 0; j < drop_UL.length; ++j) {
-	const rate = 100 - drop_UL[j][9];
+	const rate = 100 - drop_UL[j][12];
 	for (var i = 4; i < 12; ++i) {
 		drop_UL[j][i] = rate * drop_UL[j][i] / sum_UL[j];
 	}
 }
 
 for (var j = 0; j < drop_ZL.length; ++j) {
-	const rate = 100 - drop_ZL[j][9];
+	const rate = 100 - drop_ZL[j][12];
 	for (var i = 4; i < 12; ++i) {
 		drop_ZL[j][i] = rate * drop_ZL[j][i] / sum_ZL[j];
 	}
