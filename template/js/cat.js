@@ -918,7 +918,7 @@ class Form {
 		}
 		return 0;
 	}
-	involve4_require(x) {
+	evol4_require(x) {
 		if (!_info[9]) return 0;
 		x = x.toString();
 		for (let r of _info[9].split('|')) {
@@ -928,7 +928,7 @@ class Form {
 		}
 		return 0;
 	}
-	involve_require(x) {
+	evol_require(x) {
 		if (!_info[8]) return 0;
 		x = x.toString();
 		for (let r of _info[8].split('|')) {
