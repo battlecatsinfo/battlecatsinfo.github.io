@@ -2943,30 +2943,10 @@ function xpgraph() {
 		tr.appendChild(td);
 	}
 	table.appendChild(tr);
-	let datas = my_cat.info.xpCurve;
-	switch (datas) {
-	case '#':
-		datas = [7800, 9800, 14800, 21800, 42500, 64300, 93200, 118000, 197400, 513500];
-		break;
-	case '$':
-		datas = [6250, 8200, 12400, 17800, 24800, 42400, 64500, 93000, 148000, 298000];
-		break;
-	case '@':
-		datas = [5000, 8000, 12200, 17800, 24800, 33200, 43000, 54200, 66800, 80800];
-		break;
-	default:
-		datas = datas.split('|').map(x => parseInt(x));
+	const costs = new Uint32Array(60);
+	for (let i = 0, I = costs.length; i < I; ++i) {
+		costs[i] = my_cat.getXpCost(i);
 	}
-	const curve = [1, 2, 3, 3.5, 4, 4.5];
-	let costs = new Uint32Array(60);
-	for (let i = 0; i < datas.length; ++i)
-		costs[i] = datas[i];
-	for (let i = 1; i <= 5; ++i) {
-		for (let j = 0; j < 10; ++j) {
-			costs[i * 10 + j] = costs[j] * curve[i];
-		}
-	}
-	costs[0] = 0;
 	const light = utils.getTheme() !== 'dark';
 	for (let i = 1; i <= 10; ++i) {
 		tr = document.createElement('tr');

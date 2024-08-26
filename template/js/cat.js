@@ -1260,6 +1260,18 @@ class Cat {
 		}
 		return multi;
 	}
+	get xpCurve() {
+		const s = this.info.xpCurve;
+		const value = units_scheme.xp_curves[s] || s.split('|').map(Number);
+		Object.defineProperty(this, 'xpCurve', {value});
+		return value;
+	}
+	getXpCost(level) {
+		if (level === 0) { return 0; }
+		const curve = this.xpCurve;
+		const mul = units_scheme.xp_multipliers;
+		return mul[~~(level / 10)] * curve[level % 10];
+	}
 }
 
 async function getAllEnemies() {
