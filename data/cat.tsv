@@ -1,4 +1,4 @@
-rarity	form_count	obtain	involve	max_base_level	max_plus_level	egg_1	egg_2	true_form	ultra_form	talents	version	orb_count	xp_curve	involve_description	ultra_involve_description	level_curve	obtain_stage	trueform_stage	name_fandom
+rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_1	egg_2	evol_require	evol4_require	talents	version	orb_count	xp_curve	evol_description	evol4_description	level_curve	obtain_stage	evol_stage	name_fandom
 0	3	遊戲開始時最初始的貓咪	合計Lv30可進化（Lv. 10 + 20）	20	90								200|400|700|1100|1600|2200|2900|3700|4600|5600			0			Cat_(Normal_Cat)
 0	3	世界篇第1章「台灣」過關後開放	合計Lv30可進化（Lv. 10 + 20）	20	90								400|700|1600|2800|4300|6100|8200|10600|13300|16300			0			Tank_Cat_(Normal_Cat)
 0	3	世界篇第1章「泰國」過關後開放	合計Lv30可進化（Lv. 10 + 20）	20	90								600|900|1800|3000|4500|6300|8400|10800|13500|16500			0			Axe_Cat_(Normal_Cat)
