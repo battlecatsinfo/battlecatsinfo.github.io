@@ -1,7 +1,6 @@
 const units_scheme = {{{toJSON (loadJSON "units_scheme.json")}}};
 const levelcurves = {{{toJSON (lookup (loadJSON "cat_extras.json") "level_curve")}}};
 
-var def_lv, plus_lv, my_curve, unit_orbs;
 var orb_massive = 0;
 var orb_resist = 1;
 var orb_good_atk = 0;
@@ -204,16 +203,6 @@ function get_trait_short_names(trait) {
 	return s;
 }
 
-function getLevelMulti(level) {
-	var c, multi = .8;
-	let n = 0;
-	for (c of my_curve) {
-		if (level <= n) break;
-		multi += Math.min(level - n, 10) * (c / 100), n += 10;
-	}
-	return multi;
-}
-
 function toi(x) {
 	return parseInt(x, 10);
 }
@@ -253,6 +242,9 @@ class CatForm {
 	set level(value) {
 		this.baseLv = value;
 		this.plusLv = value - this.baseLv;
+	}
+	getLevelMulti(level = this.level) {
+		return this.base.getLevelMulti(level);
 	}
 	applyTalent(talent, level) {
 		if (!level) return;
@@ -601,9 +593,6 @@ class CatForm {
 	getpre2() {
 		return this.pre2;
 	}
-	getTotalLv() {
-		return Math.min(def_lv, this.base.info.maxBaseLv) + Math.min(plus_lv, this.base.info.maxPlusLv);
-	}
 	getmax_base_lv() {
 		return this.base.info.maxBaseLv;
 	}
@@ -752,10 +741,10 @@ class CatForm {
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
 	gethp() {
-		return ~~(~~(2.5 * Math.round(this.hp * getLevelMulti(this.getTotalLv()))) * this.hpM);
+		return ~~(~~(2.5 * Math.round(this.hp * this.getLevelMulti())) * this.hpM);
 	}
 	getatk() {
-		const m = getLevelMulti(this.getTotalLv());
+		const m = this.getLevelMulti();
 		let atk = ~~(~~(2.5 * Math.round(this.atk * m)) * this.atkM);
 		if (this.atk1) {
 			atk += ~~(~~(2.5 * Math.round(this.atk1 * m)) * this.atkM);
@@ -1039,7 +1028,7 @@ class CatForm {
 		return atks;
 	}
 	_getatks() {
-		const m = getLevelMulti(this.getTotalLv());
+		const m = this.getLevelMulti();
 		let atks = [this.atk];
 		if (this.atk1)
 			atks.push(this.atk1);
@@ -1181,9 +1170,6 @@ class Enemy {
 	getpre2() {
 		return this.pre2;
 	}
-	getTotalLv() {
-		return 0;
-	}
 	getkb() {
 		return this.kb;
 	}
@@ -1225,6 +1211,20 @@ class Cat {
 		this.forms = o.forms.map(form => {
 			return new CatForm(form, {base: this});
 		});
+	}
+	get lvCurve() {
+		const value = levelcurves[this.info.lvCurve];
+		Object.defineProperty(this, 'lvCurve', {value});
+		return value;
+	}
+	getLevelMulti(level) {
+		var c, multi = .8;
+		let n = 0;
+		for (c of this.lvCurve) {
+			if (level <= n) break;
+			multi += Math.min(level - n, 10) * (c / 100), n += 10;
+		}
+		return multi;
 	}
 }
 
