@@ -696,6 +696,9 @@ class CatForm {
 	getformc() {
 		return this.lvc + 1;
 	}
+	getmaxformc() {
+		return this.base.forms.length;
+	}
 	getkb() {
 		return this.kb;
 	}

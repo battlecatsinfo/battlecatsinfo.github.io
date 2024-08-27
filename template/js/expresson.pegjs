@@ -145,8 +145,6 @@ Prim
 		if (val != undefined)
 			return val.toString();
 		s = s.toLowerCase();
-		if (s == 'maxformc')
-			return '(window.cats_old[form.id].forms.length)';
 		if (!known_identifiers.has(s))
 			throw new Error('未知的變數: ' + s);
 		return 'form.get' + s + '()';
