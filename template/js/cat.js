@@ -946,52 +946,6 @@ class Form {
 		}
 		return atks;
 	}
-	_gettatk() {
-		let atks = this._getatks();
-		if (this.ab.hasOwnProperty(AB_ATKBASE)) {
-			this.mul(atks, 1 + this.ab[AB_ATKBASE][0] / 100);
-			return atks;
-		}
-		if (this.ab.hasOwnProperty(AB_VOLC)) {
-			this.mul(atks, 1 + this.ab[AB_VOLC][4], false);
-		} else if (this.ab.hasOwnProperty(AB_MINIVOLC)) {
-			this.mul(atks, 1 + this.ab[AB_MINIVOLC][4] * 0.2, false);
-		}
-		if (this.ab.hasOwnProperty(AB_WAVE)) {
-			this.mul(atks, 2, false);
-		} else if (this.ab.hasOwnProperty(AB_MINIWAVE)) {
-			this.mul(atks, 1.2, false);
-		}
-		if (this.ab.hasOwnProperty(AB_S)) {
-			this.mul(atks, 1 + this.ab[AB_S][1] / 100, false);
-		}
-		if (this.ab.hasOwnProperty(AB_CRIT)) {
-			this.mul(atks, 2, false);
-		}
-		if (this.ab.hasOwnProperty(AB_STRONG)) {
-			this.mul(atks, 1 + this.ab[AB_STRONG][1] / 100);
-		}
-		if (this.ab.hasOwnProperty(AB_EKILL) || this.ab.hasOwnProperty(AB_WKILL)) {
-			this.mul(atks, 5);
-			return atks;
-		}
-		if (this.ab.hasOwnProperty(AB_MASSIVE)) {
-			this.mul(atks, this.trait & trait_treasure ? 4 : 3);
-		} else if (this.ab.hasOwnProperty(AB_MASSIVES)) {
-			this.mul(atks, this.trait & trait_treasure ? 6 : 5);
-		}
-		if (this.ab.hasOwnProperty(AB_GOOD)) {
-			this.mul(atks, this.trait & trait_treasure ? 1.8 : 1.5);
-		}
-		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
-			this.mul(atks, 2.5);
-		} else if (this.ab.hasOwnProperty(AB_BAIL)) {
-			this.mul(atks, 1.6);
-		} else if (this.ab.hasOwnProperty(AB_SAGE)) {
-			this.mul(atks, 1.2);
-		}
-		return atks;
-	}
 	getrange_min() {
 		if ((this.atkType & ATK_OMNI) || (this.atkType & ATK_LD)) {
 			return Math.max.apply(null, this.lds);;
