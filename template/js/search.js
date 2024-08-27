@@ -82,12 +82,9 @@ function renderTable(forms, page = 1) {
 			}
 		}
 		for (let i = 0; i < display_forms.length; ++i) {
-			let tr = document.createElement("tr");
-			let F = display_forms[i][1];
-			my_curve = levelcurves[F.base.info.lvCurve];
-			let base = Math.min(def_lv, F.base.info.maxBaseLv);
-			let plus = Math.min(plus_lv, F.base.info.maxPlusLv);
-			let texts = [F.id + "-" + (F.lvc + 1), `Lv ${base} + ` + plus, "", "", ~~F.gethp(), ~~F.getatk(), Math.round(F.getdps() + Number.EPSILON), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(1.5 * F.price), numStr(display_forms[i][0])];
+			const tr = tbody.appendChild(document.createElement("tr"));
+			const F = display_forms[i][1];
+			const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", ~~F.gethp(), ~~F.getatk(), Math.round(F.getdps() + Number.EPSILON), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(1.5 * F.price), numStr(display_forms[i][0])];
 			for (let j = 0; j < 13; ++j) {
 				var e = document.createElement("td");
 				3 == j ? (F.name && e.appendChild(document.createTextNode(F.name)),
@@ -95,13 +92,10 @@ function renderTable(forms, page = 1) {
 							e.appendChild(document.createTextNode(F.jp_name)))) : e.textContent = texts[j].toString(),
 					tr.appendChild(e);
 			}
-			base = document.createElement("a");
-			base.href = "./unit.html?id=" + F.id.toString();
-			plus = new Image(104, 79);
-			plus.src = F.icon;
-			base.appendChild(plus);
-			tr.children[2].appendChild(base);
-			tbody.appendChild(tr);
+			const a = tr.children[2].appendChild(document.createElement("a"));
+			a.href = "./unit.html?id=" + F.id.toString();
+			const img = a.appendChild(new Image(104, 79));
+			img.src = F.icon;
 		}
 	}
 }
@@ -154,46 +148,31 @@ function calculate(code = "") {
 	switch (form_s) {
 		case 0:
 			for (const c of cats) {
-				my_curve = levelcurves[c.info.lvCurve];
-				for (var form of c.forms) f(form) && results.push(form);
+				results.push(...c.forms);
 			}
 			break;
 		case 1:
-			for (const c of cats) {
-				my_curve = levelcurves[c.info.lvCurve];
-				const F = c.forms[0];
-				f(F) && results.push(F);
-			}
-			break;
 		case 2:
-			for (const c of cats) {
-				my_curve = levelcurves[c.info.lvCurve];
-				const F = c.forms[1];
-				F && f(F) && results.push(F);
-			}
-			break;
 		case 3:
-			for (const c of cats) {
-				my_curve = levelcurves[c.info.lvCurve];
-				const F = c.forms[2];
-				F && f(F) && results.push(F);
-			}
-			break;
 		case 4:
 			for (const c of cats) {
-				my_curve = levelcurves[c.info.lvCurve];
-				const F = c.forms[3];
-				F && f(F) && results.push(F);
+				const F = c.forms[form_s - 1];
+				F && results.push(F);
 			}
 			break;
 		case 5:
 			for (const c of cats) {
-				my_curve = levelcurves[c.info.lvCurve];
 				const F = c.forms[c.forms.length - 1];
-				f(F) && results.push(F);
+				results.push(F);
 			}
 			break;
 	}
+
+	results = results.filter(form => {
+		form.baseLv = def_lv;
+		form.plusLv = plus_lv;
+		return f(form);
+	});
 
 	try {
 		pcode = pegjs.parse(sortCode || "1");
@@ -203,7 +182,6 @@ function calculate(code = "") {
 	let fn = eval(`form => (${pcode})`);
 	results = results.map((form, i) => {
 		let c = cats_old[form.id];
-		my_curve = levelcurves[c.info.lvCurve];
 		var x = fn(form);
 		return [isFinite(x) ? x : 0, form];
 	}).sort((a, b) => b[0] - a[0]);

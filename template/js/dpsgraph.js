@@ -131,12 +131,9 @@ class FormDPS {
 		this.lv_c.inputMode = 'numeric';
 		x.appendChild(this.lv_c);
 		this.B.dom.appendChild(x);
-		if (this.s_lv.length || this.F.lvc == 3)
-			x = this.lv_c.value = 60;
-		else
-			this.lv_c.value = x = Math.min(this.info.maxBaseLv + this.info.maxPlusLv, 50);
-		my_curve = levelcurves[this.info.lvCurve];
-		this.lvm = getLevelMulti(x);
+		this.F.level = (this.s_lv.length || this.F.lvc == 3) ? 60 : 50;
+		this.lv_c.value = this.F.level;
+		this.lvm = this.F.getLevelMulti();
 		this.lv_c.onblur = function() {
 			let num = this.value.match(/\d+/);
 			if (!num) {
@@ -144,13 +141,9 @@ class FormDPS {
 				return;
 			}
 			num = num[0];
-			if (num < 0) {
-				this.value = '請輸入正整數！';
-				return;
-			}
-			this.value = num = Math.min(self.info.maxBaseLv + self.info.maxPlusLv, num);
-			my_curve = levelcurves[self.info.lvCurve];
-			self.lvm = getLevelMulti(num);
+			self.F.level = num;
+			this.value = self.F.level;
+			self.lvm = self.F.getLevelMulti();
 			self.render();
 		}
 		this.options = {};

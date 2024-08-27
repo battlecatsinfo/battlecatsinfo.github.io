@@ -601,7 +601,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 }
 
 function getAtkString(form, atks, Cs, level, parent, plus, attackS) {
-	atks = atks.map(x => floor(floor(floor(Math.round(x * getLevelMulti(level)) * atk_t) * (1 + (other_def[2] || 0))) * form.atkM));
+	atks = atks.map(x => floor(floor(floor(Math.round(x * form.getLevelMulti(level)) * atk_t) * (1 + (other_def[2] || 0))) * form.atkM));
 	parent.textContent = '';
 	let first;
 	let m1 = new Float64Array(atks);
@@ -730,7 +730,7 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 
 function getHpString(form, Cs, trait, level, parent, plus, KB) {
 	parent.textContent = '';
-	const hp = floor(floor(floor(Math.round(form.hp * getLevelMulti(level)) * hp_t) * (1 + (other_def[3] || 0))) * form.hpM);
+	const hp = floor(floor(floor(Math.round(form.hp * form.getLevelMulti(level)) * hp_t) * (1 + (other_def[3] || 0))) * form.hpM);
 	let theHP = hp;
 	if (other_def[1])
 		theHP /= 0.85;
@@ -1001,7 +1001,7 @@ function updateValues(form, tbl) {
 	table_to_values.set(tbl, form);
 	if (layout == '2') {
 		let tr = chs[2].children;
-		const m = getLevelMulti(chs[1].children[1]._v);
+		const m = form.getLevelMulti(chs[1].children[1]._v);
 		getHP0(form, m, tbl._s, tr[1]);
 		tr[3].textContent = form.kb;
 		tr[5].textContent = numStrT(form.attackF);
@@ -2814,7 +2814,7 @@ function drawgraph(T) {
 
 	const lvs = my_cat.info.maxBaseLv + my_cat.info.maxPlusLv;
 	if (!T) {
-		const line = levelcurves[my_cat.info.lvCurve];
+		const line = my_cat.lvCurve;
 		const data = [];
 		for (let i = 0; i <= floor(lvs / 10); ++i)
 			data.push({
@@ -2859,10 +2859,11 @@ function drawgraph(T) {
 		modal_content.appendChild(canvas);
 		(select.onchange = function() {
 			datas.length = 0;
+			const form = my_cat.forms[select.selectedIndex];
 			switch (T) {
 				case 1:
 					for (let level = 0; level <= lvs; level += 5) {
-						const hp = floor(2.5 * Math.round(my_cat.forms[select.selectedIndex].hp * getLevelMulti(level ? level : 1)));
+						const hp = floor(2.5 * Math.round(form.hp * form.getLevelMulti(level ? level : 1)));
 						datas.push({
 							x: level ? level : 1,
 							y: hp
@@ -2871,8 +2872,7 @@ function drawgraph(T) {
 					break;
 				case 2:
 					for (let level = 0; level <= lvs; level += 5) {
-						let t = my_cat.forms[select.selectedIndex];
-						const atk = floor(2.5 * Math.round((t.atk + t.atk1 + t.atk2) * getLevelMulti(level ? level : 1)));
+						const atk = floor(2.5 * Math.round((form.atk + form.atk1 + form.atk2) * form.getLevelMulti(level ? level : 1)));
 						datas.push({
 							x: level ? level : 1,
 							y: atk
@@ -2881,11 +2881,10 @@ function drawgraph(T) {
 					break;
 				case 3:
 					for (let level = 0; level <= lvs; level += 5) {
-						let t = my_cat.forms[select.selectedIndex];
-						const atk = floor(2.5 * Math.round((t.atk + t.atk1 + t.atk2) * getLevelMulti(level ? level : 1)));
+						const atk = floor(2.5 * Math.round((form.atk + form.atk1 + form.atk2) * form.getLevelMulti(level ? level : 1)));
 						datas.push({
 							x: level ? level : 1,
-							y: atk * 30 / t.attackF
+							y: atk * 30 / form.attackF
 						});
 					}
 					break;
@@ -3177,7 +3176,6 @@ function openBBCode() {
 loadCat(my_id)
 	.then(res => {
 		my_cat = res;
-		my_curve = levelcurves[my_cat.info.lvCurve];
 		const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
 		const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
 		if (layout != '2') {
