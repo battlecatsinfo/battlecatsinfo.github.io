@@ -1,7 +1,7 @@
 const units_scheme = {{{toJSON (loadJSON "units_scheme.json")}}};
 const levelcurves = {{{toJSON (lookup (loadJSON "cat_extras.json") "level_curve")}}};
 
-var def_lv, plus_lv, my_curve, _info, unit_orbs;
+var def_lv, plus_lv, my_curve, unit_orbs;
 var orb_massive = 0;
 var orb_resist = 1;
 var orb_good_atk = 0;
@@ -602,13 +602,13 @@ class CatForm {
 		return this.pre2;
 	}
 	getTotalLv() {
-		return Math.min(def_lv, _info.maxBaseLv) + Math.min(plus_lv, _info.maxPlusLv);
+		return Math.min(def_lv, this.base.info.maxBaseLv) + Math.min(plus_lv, this.base.info.maxPlusLv);
 	}
 	getmax_base_lv() {
-		return _info.maxBaseLv;
+		return this.base.info.maxBaseLv;
 	}
 	getmax_plus_lv() {
-		return _info.maxPlusLv;
+		return this.base.info.maxPlusLv;
 	}
 	getslow_time() {
 		const t = this.ab[AB_SLOW];
@@ -703,7 +703,7 @@ class CatForm {
 		return this.kb;
 	}
 	getrarity() {
-		return _info.rarity;
+		return this.base.info.rarity;
 	}
 	gettrait() {
 		return this.trait;
@@ -954,9 +954,9 @@ class CatForm {
 		return 0;
 	}
 	evol4_require(x) {
-		if (!_info.evol4Req) return 0;
+		if (!this.base.info.evol4Req) return 0;
 		x = x.toString();
-		for (let r of _info.evol4Req.split('|')) {
+		for (let r of this.base.info.evol4Req.split('|')) {
 			r = r.split('!');
 			if (r[1] == x)
 				return parseInt(r[0]);
@@ -964,9 +964,9 @@ class CatForm {
 		return 0;
 	}
 	evol_require(x) {
-		if (!_info.evolReq) return 0;
+		if (!this.base.info.evolReq) return 0;
 		x = x.toString();
-		for (let r of _info.evolReq.split('|')) {
+		for (let r of this.base.info.evolReq.split('|')) {
 			r = r.split('!');
 			if (r[1] == x)
 				return parseInt(r[0]);
