@@ -97,14 +97,8 @@ loadAllCats().then(_cs => {
 	main.style.display = 'block';
 	for (let cat of cats) {
 		const TF = cat.forms[2];
-		if (TF) {
-			const talents = cat.info.talents;
-			if (talents) {
-				TF.trait |= talents[0];
-				TF.res = {};
-				for (let i = 1; i < 113 && talents[i]; i += 14)
-					TF.applyTalent(talents.subarray(i, i + 14), talents[i + 1] || 1);
-			}
+		if (TF?.talents) {
+			TF.applyAllTalents();
 		}
 	}
 });

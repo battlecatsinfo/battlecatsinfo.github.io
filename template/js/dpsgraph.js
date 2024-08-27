@@ -555,8 +555,10 @@ class FormDPS {
 		let x, Xs;
 		this.atks = [F.atk];
 
-		if (this.info.talents && F.lvc >= 2)
-			if (F.applyTalents(this.info.talents, this.t_lv)) F.applySuperTalents(this.info.talents, this.s_lv);
+		if (this.info.talents && F.lvc >= 2) {
+			F.applyTalents(this.t_lv);
+			F.applySuperTalents(this.s_lv);
+		}
 
 		if (F.atk1) this.atks.push(F.atk1);
 		if (F.atk2) this.atks.push(F.atk2);

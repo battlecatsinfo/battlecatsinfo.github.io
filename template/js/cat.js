@@ -246,6 +246,24 @@ class CatForm {
 	getLevelMulti(level = this.level) {
 		return this.base.getLevelMulti(level);
 	}
+
+	get talents() {
+		return this.base.info.talents;
+	}
+
+	/**
+	 * @param {integer} [type] - the type of talents to apply: 0 for talents;
+	 *     1 for super talents; and undefined/null for any type.
+	 */
+	maxTalentLevels(type = null) {
+		const talents = this.talents;
+		const rv = [];
+		for (let i = 1; i < 113 && talents[i]; i += 14)
+			if (type === null || type === talents[i + 13])
+				rv.push(talents[i + 1] || 1);
+		return rv;
+	}
+
 	applyTalent(talent, level) {
 		if (!level) return;
 		var t, x, y, z;
@@ -559,19 +577,35 @@ class CatForm {
 				break;
 		}
 	}
-	applySuperTalents(talents, levels) {
+
+	applyAllTalents(levels) {
+		this._applyTalents(levels);
+	}
+
+	applySuperTalents(levels) {
+		this._applyTalents(levels, 1);
+	}
+
+	applyTalents(levels) {
+		this._applyTalents(levels, 0);
+	}
+
+	/**
+	 * @param {integer[]} [levels] - level of each talent. Omit to set to all max.
+	 * @param {integer} [type] - the type of talents to apply: 0 for talents;
+	 *     1 for super talents; and undefined/null for any type.
+	 */
+	_applyTalents(levels, type = null) {
+		levels ??= this.maxTalentLevels(type);
+		this.res ??= {};
+		const talents = this.talents;
 		let j = 0;
 		for (let i = 1; i < 113 && talents[i]; i += 14) {
-			1 == talents[i + 13] && this.applyTalent(talents.subarray(i, i + 14), levels[j++]);
+			if (type === null || type === talents[i + 13])
+				this.applyTalent(talents.subarray(i, i + 14), levels[j++]);
 		}
 	}
-	applyTalents(talents, levels) {
-		this.trait |= talents[0];
-		let _super = !(this.res = {}),
-			j = 0;
-		for (let i = 1; i < 113 && talents[i]; i += 14) 1 == talents[i + 13] ? _super = !0 : this.applyTalent(talents.subarray(i, i + 14), levels[j++]);
-		return _super;
-	}
+
 	hasres(r) {
 		return this.res && this.res.hasOwnProperty(r);
 	}

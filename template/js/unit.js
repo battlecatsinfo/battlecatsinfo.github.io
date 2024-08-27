@@ -1191,9 +1191,9 @@ function handleBlur() {
 		custom_super_talents[this.I - 100] = this.L;
 	else
 		custom_talents[this.I] = this.L;
-	form.applyTalents(my_cat.info.talents, custom_talents);
+	form.applyTalents(custom_talents);
 	if (super_talent)
-		form.applySuperTalents(my_cat.info.talents, custom_super_talents);
+		form.applySuperTalents(custom_super_talents);
 
 	for (const x of tbody._s)
 		if (!form.ab.hasOwnProperty(x))
@@ -1330,9 +1330,9 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 					this._v = num;
 					if (my_cat.info.talents && this._l >= 2) {
 						form = form.clone();
-						form.applyTalents(my_cat.info.talents, custom_talents);
+						form.applyTalents(custom_talents);
 						if (super_talent)
-							form.applySuperTalents(my_cat.info.talents, custom_super_talents);
+							form.applySuperTalents(custom_super_talents);
 					}
 					updateValues(form, tbl);
 				}
@@ -1541,9 +1541,9 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 				}
 			}
 			form = form.clone();
-			form.applyTalents(my_cat.info.talents, custom_talents);
+			form.applyTalents(custom_talents);
 			if (super_talent)
-				form.applySuperTalents(my_cat.info.talents, custom_super_talents);
+				form.applySuperTalents(custom_super_talents);
 		}
 		tbody._s = new Set();
 		createTraitIcons(form.trait, trD);
@@ -1896,31 +1896,31 @@ async function applyOrb() {
 	if (layout == '2') {
 		const TF = my_cat.forms[2].clone();
 		if (my_cat.info.talents) {
-			TF.applyTalents(my_cat.info.talents, custom_talents);
+			TF.applyTalents(custom_talents);
 			if (super_talent)
-				TF.applySuperTalents(my_cat.info.talents, custom_super_talents);
+				TF.applySuperTalents(custom_super_talents);
 			updateValues(TF, tf_tbl_s.firstChild);
 		}
 		if (tf4_tbl) {
 			const F4 = my_cat.forms[3].clone();
 			if (my_cat.info.talents) {
-				F4.applyTalents(my_cat.info.talents, custom_talents);
+				F4.applyTalents(custom_talents);
 				if (super_talent)
-					F4.applySuperTalents(my_cat.info.talents, custom_super_talents);
+					F4.applySuperTalents(custom_super_talents);
 				updateValues(F4, tf4_tbl.firstChild);
 			}
 		}
 	} else {
 		const TF = my_cat.forms[2].clone();
-		TF.applyTalents(my_cat.info.talents, custom_talents);
+		TF.applyTalents(custom_talents);
 		updateTable(TF, tf_tbl);
 		if (tf_tbl_s) {
-			TF.applySuperTalents(my_cat.info.talents, custom_super_talents);
+			TF.applySuperTalents(custom_super_talents);
 			updateTable(TF, tf_tbl_s);
 		}
 		if (tf4_tbl) {
 			const F4 = my_cat.forms[3].clone();
-			F4.applyTalents(my_cat.info.talents, custom_talents);
+			F4.applyTalents(custom_talents);
 			updateTable(F4, tf4_tbl);
 		}
 	}
@@ -2438,10 +2438,10 @@ function calcCost(event) {
 		cis[j].textContent = costs[j - 1];
 	e.nextElementSibling.firstElementChild.textContent = `共${costs.reduce((a, b) => a + b, 0)}`;
 	const TF = my_cat.forms[2].clone();
-	TF.applyTalents(my_cat.info.talents, custom_talents);
+	TF.applyTalents(custom_talents);
 	updateTable(TF, tf_tbl);
 	if (t._super)
-		TF.applySuperTalents(my_cat.info.talents, custom_super_talents);
+		TF.applySuperTalents(custom_super_talents);
 	tf_tbl_s && updateTable(TF, tf_tbl_s);
 }
 
@@ -2697,21 +2697,21 @@ function renderUintPage() {
 		const TF = my_cat.forms[2].clone();
 		const names = rednerTalentInfos(my_cat.info.talents);
 		renderTalentCosts(names, my_cat.info.talents);
-		const _super = TF.applyTalents(my_cat.info.talents, custom_talents);
+		const _super = TF.applyTalents(custom_talents);
 		tf_tbl = renderForm(TF, '本能完全升滿的數值表格', false, true);
 		tables.push(['三階+本能數值表格', tf_tbl]);
 		mkTool(tf_tbl);
 		if (_super) {
 			const names = rednerTalentInfos(my_cat.info.talents, true, true);
 			renderTalentCosts(names, my_cat.info.talents, true);
-			TF.applySuperTalents(my_cat.info.talents, custom_super_talents);
+			TF.applySuperTalents(custom_super_talents);
 			tf_tbl_s = renderForm(TF, '超本能完全升滿的數值表格', true, true);
 			tables.push(['三階+超本能數值表格', tf_tbl_s]);
 			mkTool(tf_tbl_s);
 		}
 		if (my_cat.forms.length == 4) {
 			const F = my_cat.forms[3].clone();
-			F.applyTalents(my_cat.info.talents, custom_talents);
+			F.applyTalents(custom_talents);
 			tf4_tbl = renderForm(F, '四階：', true);
 			tables.push(['四階+本能數值表格', tf4_tbl]);
 			mkTool(tf4_tbl);
