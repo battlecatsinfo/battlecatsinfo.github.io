@@ -557,7 +557,7 @@ class FormDPS {
 		return ~~(sum * 30 / this.E.attackF);
 	}
 	render() {
-		const F = new Form(structuredClone(this.F));
+		const F = this.F.clone();
 		this.E = F;
 		let x, Xs;
 		this.atks = [F.atk];

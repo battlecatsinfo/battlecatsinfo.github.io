@@ -629,7 +629,7 @@ function addCat(id, I, FC = 0) {
 				if (num != this.lv) {
 					let J = this.F;
 					if (this.X) {
-						J = new Form(structuredClone(J));
+						J = J.clone();
 						const L = this.C.info.talents;
 						if (this.X.checked) {
 							J.applyTalents(this.C.info.talents, get_t(L));
@@ -655,7 +655,7 @@ function addCat(id, I, FC = 0) {
 	M.textContent = (F.name || F.jp_name) + ' Lv';
 	M.appendChild(span);
 	if (FL) {
-		F = new Form(structuredClone(F));
+		F = F.clone();
 		F.applyTalents(C.info.talents, get_t(C.info.talents));
 		if (FL == 2) {
 			F.applySuperTalents(C.info.talents, get_s(C.info.talents));
@@ -691,7 +691,7 @@ function addCat(id, I, FC = 0) {
 		D.appendChild(G);
 		span.X = G;
 		G.onclick = function() {
-			const H = new Form(structuredClone(span.F));
+			const H = span.F.clone();
 			if (span.X.checked) {
 				if (span.lv < 30)
 					alert('提醒：開放本能升級等級需求至少為 Lv30');
@@ -717,7 +717,7 @@ function addCat(id, I, FC = 0) {
 			G.id = 'S' + id + '-' + FC;
 			D.appendChild(G);
 			G.onclick = function() {
-				const H = new Form(structuredClone(span.F));
+				const H = span.F.clone();
 				if (span.X.checked) {
 					if (span.lv < 30)
 						alert('提醒：開放本能升級等級需求至少為 Lv30');
