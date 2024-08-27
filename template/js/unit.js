@@ -1186,7 +1186,7 @@ function handleBlur() {
 	this.N.textContent = total;
 
 	const tbody = this.parentNode.parentNode;
-	const form = new Form(structuredClone(this.F));
+	const form = this.F.clone();
 	if (this.I >= 100)
 		custom_super_talents[this.I - 100] = this.L;
 	else
@@ -1329,7 +1329,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 				if (this._v != num) {
 					this._v = num;
 					if (my_cat.info.talents && this._l >= 2) {
-						form = new Form(structuredClone(form));
+						form = form.clone();
 						form.applyTalents(my_cat.info.talents, custom_talents);
 						if (super_talent)
 							form.applySuperTalents(my_cat.info.talents, custom_super_talents);
@@ -1540,7 +1540,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 					tbody.appendChild(tr);
 				}
 			}
-			form = new Form(structuredClone(form));
+			form = form.clone();
 			form.applyTalents(my_cat.info.talents, custom_talents);
 			if (super_talent)
 				form.applySuperTalents(my_cat.info.talents, custom_super_talents);
@@ -1894,7 +1894,7 @@ async function applyOrb() {
 		}
 	}
 	if (layout == '2') {
-		const TF = new Form(structuredClone(my_cat.forms[2]));
+		const TF = my_cat.forms[2].clone();
 		if (my_cat.info.talents) {
 			TF.applyTalents(my_cat.info.talents, custom_talents);
 			if (super_talent)
@@ -1902,7 +1902,7 @@ async function applyOrb() {
 			updateValues(TF, tf_tbl_s.firstChild);
 		}
 		if (tf4_tbl) {
-			const F4 = new Form(structuredClone(my_cat.forms[3]));
+			const F4 = my_cat.forms[3].clone();
 			if (my_cat.info.talents) {
 				F4.applyTalents(my_cat.info.talents, custom_talents);
 				if (super_talent)
@@ -1911,7 +1911,7 @@ async function applyOrb() {
 			}
 		}
 	} else {
-		const TF = new Form(structuredClone(my_cat.forms[2]));
+		const TF = my_cat.forms[2].clone();
 		TF.applyTalents(my_cat.info.talents, custom_talents);
 		updateTable(TF, tf_tbl);
 		if (tf_tbl_s) {
@@ -1919,7 +1919,7 @@ async function applyOrb() {
 			updateTable(TF, tf_tbl_s);
 		}
 		if (tf4_tbl) {
-			const F4 = new Form(structuredClone(my_cat.forms[3]));
+			const F4 = my_cat.forms[3].clone();
 			F4.applyTalents(my_cat.info.talents, custom_talents);
 			updateTable(F4, tf4_tbl);
 		}
@@ -2437,7 +2437,7 @@ function calcCost(event) {
 	for (let j = 1; j <= costs.length; ++j)
 		cis[j].textContent = costs[j - 1];
 	e.nextElementSibling.firstElementChild.textContent = `共${costs.reduce((a, b) => a + b, 0)}`;
-	const TF = new Form(structuredClone(my_cat.forms[2]));
+	const TF = my_cat.forms[2].clone();
 	TF.applyTalents(my_cat.info.talents, custom_talents);
 	updateTable(TF, tf_tbl);
 	if (t._super)
@@ -2694,7 +2694,7 @@ function renderUintPage() {
 		mkTool(tbl);
 	}
 	if (my_cat.info.talents) {
-		const TF = new Form(structuredClone(my_cat.forms[2]));
+		const TF = my_cat.forms[2].clone();
 		const names = rednerTalentInfos(my_cat.info.talents);
 		renderTalentCosts(names, my_cat.info.talents);
 		const _super = TF.applyTalents(my_cat.info.talents, custom_talents);
@@ -2710,7 +2710,7 @@ function renderUintPage() {
 			mkTool(tf_tbl_s);
 		}
 		if (my_cat.forms.length == 4) {
-			const F = new Form(structuredClone(my_cat.forms[3]));
+			const F = my_cat.forms[3].clone();
 			F.applyTalents(my_cat.info.talents, custom_talents);
 			tf4_tbl = renderForm(F, '四階：', true);
 			tables.push(['四階+本能數值表格', tf4_tbl]);

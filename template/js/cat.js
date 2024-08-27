@@ -218,9 +218,41 @@ function toi(x) {
 	return parseInt(x, 10);
 }
 
-class Form {
-	constructor(o) {
+class CatForm {
+	constructor(o, props = {}) {
 		Object.assign(this, o);
+
+		// make non-structured-cloneable
+		Object.defineProperties(this, {
+			base: {value: props.base},
+			hpM: {value: props.hpM ?? 1, writable: true},
+			atkM: {value: props.atkM ?? 1, writable: true},
+			_baseLv: {value: props._baseLv ?? 1, writable: true},
+			_plusLv: {value: props._plusLv ?? 0, writable: true},
+		});
+	}
+	clone() {
+		const {base, hpM, atkM, _baseLv, _plusLv} = this;
+		return new CatForm(structuredClone(this), {base, hpM, atkM, _baseLv, _plusLv});
+	}
+	get baseLv() {
+		return this._baseLv;
+	}
+	set baseLv(value) {
+		this._baseLv = Math.max(Math.min(value, this.base.info.maxBaseLv), 1);
+	}
+	get plusLv() {
+		return this._plusLv;
+	}
+	set plusLv(value) {
+		this._plusLv = Math.max(Math.min(value, this.base.info.maxPlusLv), 0);
+	}
+	get level() {
+		return this._baseLv + this._plusLv;
+	}
+	set level(value) {
+		this.baseLv = value;
+		this.plusLv = value - this.baseLv;
 	}
 	applyTalent(talent, level) {
 		if (!level) return;
@@ -1188,11 +1220,7 @@ class Cat {
 	constructor(o) {
 		this.info = o.info;
 		this.forms = o.forms.map(form => {
-			// format from raw data
-			form.hpM = 1;
-			form.atkM = 1;
-
-			return new Form(form);
+			return new CatForm(form, {base: this});
 		});
 	}
 }
