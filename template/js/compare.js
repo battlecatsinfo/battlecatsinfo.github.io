@@ -565,22 +565,6 @@ function handleFocus() {
 	s.addRange(r);
 }
 
-function get_t(T) {
-	let a = [];
-	for (let i = 1; i < 113 && T[i]; i += 14)
-		if (T[i + 13] != 1)
-			a.push(T[i + 1] || 1);
-	return a;
-}
-
-function get_s(T) {
-	let a = [];
-	for (let i = 1; i < 113 && T[i]; i += 14)
-		if (T[i + 13] == 1)
-			a.push(T[i + 1] || 1);
-	return a;
-}
-
 function addCat(id, I, FC = 0) {
 	let M, G,
 		C = cats[id],
@@ -629,14 +613,13 @@ function addCat(id, I, FC = 0) {
 					let J = this.F;
 					if (this.X) {
 						J = J.clone();
-						const L = this.C.info.talents;
 						if (this.X.checked) {
-							J.applyTalents(this.C.info.talents, get_t(L));
+							J.applyTalents();
 							if (num < 30)
 								alert('提醒：開放本能升級等級需求至少為 Lv30');
 						}
 						if (this.Y && this.Y.checked) {
-							J.applySuperTalents(L, get_s(L));
+							J.applySuperTalents();
 							if (num < 60)
 								alert('提醒：開放超本能等級需求至少為 Lv60');
 						}
@@ -655,9 +638,9 @@ function addCat(id, I, FC = 0) {
 	M.appendChild(span);
 	if (FL) {
 		F = F.clone();
-		F.applyTalents(C.info.talents, get_t(C.info.talents));
+		F.applyTalents();
 		if (FL == 2) {
-			F.applySuperTalents(C.info.talents, get_s(C.info.talents));
+			F.applySuperTalents();
 		}
 	}
 	setStat(C, F, I, span.lv);
@@ -694,13 +677,13 @@ function addCat(id, I, FC = 0) {
 			if (span.X.checked) {
 				if (span.lv < 30)
 					alert('提醒：開放本能升級等級需求至少為 Lv30');
-				H.applyTalents(span.C.info.talents, get_t(span.C.info.talents));
+				H.applyTalents();
 			}
 			if (span.Y && span.Y.checked) {
 				if (span.lv < 60)
 					alert('提醒：開放超本能等級需求至少為 Lv60');
 				span.textContent = span.lv;
-				H.applySuperTalents(span.C.info.talents, get_s(span.C.info.talents));
+				H.applySuperTalents();
 			}
 			setStat(span.C, H, span.I, span.lv);
 		}
@@ -720,13 +703,13 @@ function addCat(id, I, FC = 0) {
 				if (span.X.checked) {
 					if (span.lv < 30)
 						alert('提醒：開放本能升級等級需求至少為 Lv30');
-					H.applyTalents(span.C.info.talents, get_t(span.C.info.talents));
+					H.applyTalents();
 				}
 				if (span.Y.checked) {
 					if (span.lv < 60)
 						alert('提醒：開放超本能等級需求至少為 Lv60');
 					span.textContent = span.lv;
-					H.applySuperTalents(span.C.info.talents, get_s(span.C.info.talents));
+					H.applySuperTalents();
 				}
 				setStat(span.C, H, span.I, span.lv);
 			}

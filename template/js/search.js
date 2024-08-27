@@ -222,27 +222,12 @@ loadAllCats().then(_cats => {
 	document.getElementById('loader').style.display = 'none';
 	document.getElementById('main').style.display = 'block';
 
-	for (let i = 0; i < cats_old.length; ++i) {
-		let TF = cats_old[i].forms[2];
-		if (TF) {
-			let info = cats_old[i].info;
-			let talents = info.talents;
-			if (talents) {
-				TF.trait |= talents[0];
-				TF.res = {};
-				for (let i = 1; i < 113 && talents[i]; i += 14)
-					TF.applyTalent(talents.subarray(i, i + 14), talents[i + 1] || 1);
-				TF = cats_old[i].forms[3];
-				if (TF) {
-					info = cats_old[i].info;
-					talents = info.talents;
-
-					TF.trait |= talents[0];
-					TF.res = {};
-					for (let i = 1; i < 113 && talents[i]; i += 14)
-						TF.applyTalent(talents.subarray(i, i + 14), talents[i + 1] || 1);
-				}
-			}
+	for (let i = 0, I = cats_old.length; i < I; ++i) {
+		const cat = cats_old[i];
+		for (let j = 2, J = cat.forms.length; j < J; ++j) {
+			const TF = cat.forms[j];
+			if (!TF?.talents) { break; }
+			TF.applyAllTalents();
 		}
 	}
 	let Q = params.get('q')
