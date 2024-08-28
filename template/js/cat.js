@@ -1246,6 +1246,15 @@ class Cat {
 			return new CatForm(form, {base: this});
 		});
 	}
+	get maxBaseLv() {
+		return this.info.maxBaseLv;
+	}
+	get maxPlusLv() {
+		return this.info.maxPlusLv;
+	}
+	get maxLevel() {
+		return this.maxBaseLv + this.maxPlusLv;
+	}
 	get lvCurve() {
 		const value = levelcurves[this.info.lvCurve];
 		Object.defineProperty(this, 'lvCurve', {value});

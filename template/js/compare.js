@@ -592,7 +592,7 @@ function addCat(id, I, FC = 0) {
 	M.appendChild(G);
 	M.style.border = 'none';
 	const span = document.createElement('span');
-	span.lv = Math.min(C.info.maxBaseLv + C.info.maxPlusLv,
+	span.lv = Math.min(C.maxLevel,
 		(FL == 2) ? 60 : ((FC == 3) ? 60 : 50)
 	);
 	span.C = C;
@@ -608,7 +608,7 @@ function addCat(id, I, FC = 0) {
 		if (num) {
 			num = parseInt(num[0], 10);
 			if (num) {
-				num = Math.min(num, this.C.info.maxBaseLv + this.C.info.maxPlusLv);
+				num = Math.min(num, this.C.maxLevel);
 				if (num != this.lv) {
 					let J = this.F;
 					if (this.X) {
