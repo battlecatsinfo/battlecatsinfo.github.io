@@ -2850,7 +2850,7 @@ function drawgraph(T) {
 		select.classList.add('w3-select');
 		for (let i = 0; i < my_cat.forms.length; ++i) {
 			const o = document.createElement('option');
-			o.textContent = ['一階', '二階', '三階'][i];
+			o.textContent = ['一階', '二階', '三階', '四階'][i];
 			select.appendChild(o);
 		}
 		select.selectedIndex = 0;

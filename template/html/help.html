@@ -1,15 +1,8 @@
-{{#> common.html}}
+{{#> gh.html}}
 
 {{#*inline "title"}}使用說明{{/inline}}
 
-{{#*inline "styles"}}
-	<link rel="stylesheet" href="gh.css">
-{{/inline}}
-
-{{#*inline "nav-bar"}}{{/inline}}
-
 {{#*inline "content"}}
-	<h1 id="guide"><a class="anchor" href="#guide"><span class="octicon octicon-link"></span></a>使用說明</h1>
 	<h2>篩選表達式、排序表達式</h2>
 	<p>如<code>1 + 1</code>、<code>2 * 3</code>等，是用來篩選和排序貓咪的運算式，類似數學的表達式，在程式語言裡通常稱做 <i>expression</i>。</p>
 	<ul>
@@ -168,7 +161,7 @@
 			</tr>
 			<tr>
 				<td>formc</td>
-				<td>貓咪的型態（最小1-一階，最大3-三階）</td>
+				<td>貓咪的型態（最小1-一階，最大4-四階）</td>
 			</tr>
 			<tr>
 				<td>maxformc</td>
@@ -348,7 +341,7 @@
 
 	<p>如只要選取最高型態的貓咪，可以用 <code>formc == maxformc</code>，如只想選取有三階進化的貓咪，可以用<code>formc == 3</code></p>
 
-	<p>以下是第三型態進化所需的進化素材相關含式，如果是第四型態進化，請將<code>involve_require()</code>改成<code>involve4_require()</code></p>
+	<p>以下是第三型態進化所需的進化素材相關函式，如果是第四型態進化，請將<code>involve_require()</code>改成<code>involve4_require()</code></p>
 	<table>
 		<thead>
 			<tr>
@@ -593,7 +586,7 @@
 	</table>
 
 	<h3 id="resistance"><a class="anchor" href="#resistance"><span class="octicon octicon-link"></span></a>耐性</h3>
-	<p>以下是可以和<code>hasres</code>含式一起使用的常數，如<code>hasres(RES_WEAK)</code>代表貓咪有降攻耐性</p>
+	<p>以下是可以和<code>hasres</code>函式一起使用的常數，如<code>hasres(RES_WEAK)</code>代表貓咪有降攻耐性</p>
 	<table>
 		<thead>
 			<tr>
@@ -695,7 +688,7 @@
 	</table>
 
 	<h3 id="ability"><a class="anchor" href="#ability"><span class="octicon octicon-link"></span></a>能力、效果</h3>
-	<p>以下是可以和<code>hasab</code>（擁有某能力或效果）含式一起使用的常數，如<code>hasab(AB_WEAK)</code>代表貓咪有使敵人攻擊力下降</p>
+	<p>以下是可以和<code>hasab</code>（擁有某能力或效果）函式一起使用的常數，如<code>hasab(AB_WEAK)</code>代表貓咪有使敵人攻擊力下降</p>
 	<table>
 		<thead>
 			<tr>
@@ -1036,7 +1029,7 @@
 
 	<p>另外<code>-atk</code>是負的意思，相當於乘<code>-1</code>，<code>!atk</code>是否(not)的意思，如果atk是0傳回1否則傳回0</p>
 
-	<h3 id="special-functions"><a class="anchor" href="#special-functions"><span class="octicon octicon-link"></span></a>特殊含式</h3>
+	<h3 id="special-functions"><a class="anchor" href="#special-functions"><span class="octicon octicon-link"></span></a>特殊函式</h3>
 	<p><code>dpsagainst(攻擊對象)</code> 可以用在排序表達式上，用來表示對某攻擊對象的 DPS</p>
 	<table>
 		<thead>
@@ -1202,4 +1195,4 @@
 	<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Math">在 MDN 上的數學函數參考</a></p>
 {{/inline}}
 
-{{/common.html}}
+{{/gh.html}}
