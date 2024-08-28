@@ -1313,7 +1313,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		tr.appendChild(td);
 		td = document.createElement('td');
 		td._l = form.lvc;
-		td._v = Math.min(form.lvc == 3 ? 60 : 50, my_cat.info.maxBaseLv + my_cat.info.maxPlusLv);
+		td._v = Math.min(form.lvc == 3 ? 60 : 50, my_cat.maxLevel);
 		td.textContent = 'Lv' + td._v;
 		td.contentEditable = true;
 		td.inputMode = 'numeric';
@@ -1321,11 +1321,11 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		td.addEventListener('keydown', handleKW);
 		td.addEventListener('blur', function() {
 			const tbl = this.parentNode.parentNode;
-			const M = my_cat.info.maxBaseLv + my_cat.info.maxPlusLv;
 			let num = this.textContent.match(/\d+/);
 			if (num) {
-				num = Math.max(1, Math.min(parseInt(num[0]), M));
 				let form = my_cat.forms[this._l];
+				form.level = parseInt(num[0]);
+				num = form.level;
 				if (this._v != num) {
 					this._v = num;
 					if (my_cat.info.talents && this._l >= 2) {
@@ -1673,10 +1673,10 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 			e.addEventListener('blur', function(event) {
 				const t = event.currentTarget;
 				const tbl = t.parentNode.parentNode;
-				const M = my_cat.info.maxBaseLv + my_cat.info.maxPlusLv;
 				let num = t.textContent.match(/\d+/);
 				if (num) {
-					num = Math.max(1, Math.min(parseInt(num[0]), M));
+					form.level = parseInt(num[0]);
+					num = form.level;
 					t._val = num;
 					t.textContent = `Lv${num}`;
 					updateValues(t._form, tbl);
@@ -2158,11 +2158,11 @@ function renderExtras() {
 	table.appendChild(tr);
 	tr = document.createElement('tr');
 	makeTd(tr, '最大基本等級').classList.add('F');
-	makeTd(tr, my_cat.info.maxBaseLv.toString()).classList.add('F');
+	makeTd(tr, my_cat.maxBaseLv.toString()).classList.add('F');
 	table.appendChild(tr);
 	tr = document.createElement('tr');
 	makeTd(tr, '最大加值等級').classList.add('F');
-	makeTd(tr, '+' + my_cat.info.maxPlusLv.toString());
+	makeTd(tr, '+' + my_cat.maxPlusLv.toString());
 	table.appendChild(tr);
 
 	tr = document.createElement('tr');
@@ -2812,7 +2812,7 @@ function drawgraph(T) {
 	const canvas = document.createElement('div');
 	modal_content.style.overflow = '';
 
-	const lvs = my_cat.info.maxBaseLv + my_cat.info.maxPlusLv;
+	const lvs = my_cat.maxLevel;
 	if (!T) {
 		const line = my_cat.lvCurve;
 		const data = [];
@@ -3162,7 +3162,7 @@ loadCat(my_id)
 			document.getElementById('ch_name').textContent = cat_names;
 			document.getElementById('jp_name').textContent = cat_names_jp;
 		}
-		lvMax = Math.min(my_cat.info.maxBaseLv + my_cat.info.maxPlusLv, 50) / 10;
+		lvMax = Math.min(my_cat.maxLevel, 50) / 10;
 		renderUintPage();
 		document.getElementById('loader').style.display = 'none';
 		document.getElementById('main').style.display = 'block';
