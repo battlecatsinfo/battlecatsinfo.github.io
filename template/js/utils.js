@@ -4,19 +4,12 @@
 }(this, function () {
 	'use strict';
 
-	function checkResponse(response) {
-		if (!response.ok) {
-			throw new Error(`Unable to fetch "${response.url}": ${response.status} ${response.statusText}`);
-		}
-	}
-
 	async function loadStages() {
 		let db;
 		let stage_extra;
 
 		async function loadAll(db) {
-			const response = await fetch('/stage.json');
-			checkResponse(response);
+			const response = await utils.fetch('/stage.json');
 			const data =  await response.json();
 			stage_extra = data.extra;
 
@@ -154,7 +147,16 @@
 			return this.numberFormatter.format(num);
 		},
 
-		checkResponse,
+		async fetch(url, options) {
+			const response = await fetch(url, options).catch(ex => {
+				throw new Error(`Unable to fetch "${url}": ${ex.message}`);
+			});
+			if (!response.ok) {
+				throw new Error(`Bad rsponse when fetching "${url}": ${response.status} ${response.statusText}`, {cause: response});
+			}
+			return response;
+		},
+
 		loadStages,
 		getTheme,
 		toggleTheme,

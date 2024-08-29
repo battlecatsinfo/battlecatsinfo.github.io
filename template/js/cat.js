@@ -1284,8 +1284,7 @@ class Cat {
 }
 
 async function getAllEnemies() {
-	let res = await fetch('/enemy.json');
-	utils.checkResponse(res);
+	let res = await utils.fetch('/enemy.json');
 	res = await res.json();
 
 	const enemies = [];
@@ -1297,8 +1296,7 @@ async function getAllEnemies() {
 }
 
 async function getAllCats() {
-	let res = await fetch('/cat.json');
-	utils.checkResponse(res);
+	let res = await utils.fetch('/cat.json');
 	res = await res.json();
 
 	const cats = [];
