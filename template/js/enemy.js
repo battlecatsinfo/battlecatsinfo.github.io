@@ -271,7 +271,7 @@ function search_for() {
 }
 
 function namefor(v) {
-	return v[0] || v[1] || '？？？';
+	return v.name || v.nameJp || '？？？';
 }
 
 async function _really_search() {
@@ -304,7 +304,7 @@ async function really_search() {
 	modal.appendChild(tbl);
 
 	for await (const [key, v] of utils.forEachStage()) {
-		for (const group of v[14].split('|')) {
+		for (const group of v.enemyLines.split('|')) {
 			if (group.slice(0, group.indexOf(',')) == target) {
 				const mc = ~~(key / 1000000);
 				const st = key % 1000;
@@ -337,7 +337,7 @@ async function really_search() {
 
 				td = document.createElement('td')
 				a = document.createElement('a');
-				a.textContent = v[0] || v[1];
+				a.textContent = v.name || v.nameJp;
 				a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 				a.target = a.target = '_blank';
 				td.appendChild(a);

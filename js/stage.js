@@ -31,13 +31,42 @@ module.exports = class extends SiteGenerator {
 		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
 
 		const map = mapTable.reduce((rv, entry, i) => {
-			const {id, ...data} = entry;
-			rv[parseInt(id, 36)] = Object.values(data);
+			rv[parseInt(entry.id, 36)] = {
+				name: entry.name_tw,
+				nameJp: entry.name_jp,
+				stars: entry.stars,
+				mapCond: entry.mapcond,
+				stageCond: entry.stagecond,
+				matDrops: entry.materialdrop,
+				matMults: entry.multiplier,
+				flags: entry.flags,
+				wait: entry.waitfortimer,
+				resetMode: entry.resetmode,
+				specialCond: entry.specialcond,
+				invalidCombos: entry.invalid_combo,
+				limit: entry.limit,
+			};
 			return rv;
 		}, {});
 		const stage = stageTable.reduce((rv, entry, i) => {
-			const {id, ...data} = entry;
-			rv[parseInt(id, 36)] = Object.values(data);
+			rv[parseInt(entry.id, 36)] = {
+				name: entry.name_tw,
+				nameJp: entry.name_jp,
+				xp: entry.xp,
+				hp: entry.health,
+				energy: entry.energy,
+				len: entry.len,
+				rand: entry.rand,
+				drop: entry.drop,
+				time: entry.time,
+				maxMat: entry.maxmaterial,
+				flags: entry.flags,
+				max: entry.max,
+				minSpawn: entry.min_spawn,
+				bg: entry.bg,
+				enemyLines: entry.enemy_lines,
+				exStage: entry.ex_stage,
+			};
 			return rv;
 		}, {});
 		const extra = {
