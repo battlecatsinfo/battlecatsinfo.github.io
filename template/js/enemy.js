@@ -11,8 +11,7 @@ var mult = document.getElementById('mult'),
 	stageMag = my_params.get('stageMag'),
 	enemy_content = document.getElementById('ctn'),
 	set = new Set(),
-	E, I, dst_g, modal,
-	stages_top = {{{toJSON stages_top}}};
+	E, I, dst_g, modal;
 if (isNaN(my_id))
 	my_id = 0;
 
@@ -277,6 +276,8 @@ function namefor(v) {
 
 async function _really_search() {
 	await utils.loadStageData();
+	const {grpName: groupNames} = await utils.getStageExtra(['grpName']);
+	really_search.groupNames = groupNames;
 	_really_search = really_search;
 	await really_search();
 }
@@ -315,7 +316,7 @@ async function really_search() {
 					previous_td.rowSpan += 1;
 				} else {
 					td = document.createElement('td');
-					td.textContent = stages_top[mc];
+					td.textContent = really_search.groupNames[mc];
 					tr.appendChild(td);
 					previous_td = td;
 					previous_mc = mc;

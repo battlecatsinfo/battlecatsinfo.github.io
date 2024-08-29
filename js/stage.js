@@ -11,6 +11,7 @@ module.exports = class extends SiteGenerator {
 	generate_data_files() {
 		const mapTable = this.parse_tsv(this.load('map.tsv'));
 		const stageTable = this.parse_tsv(this.load('stage.tsv'));
+		const {categories} = JSON.parse(this.load('stage_scheme.json'));
 		const {limit_groups} = JSON.parse(this.load('stage_extras.json'));
 		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
 		const enemyData = this.parse_tsv(this.load('enemy.tsv'));
@@ -27,6 +28,7 @@ module.exports = class extends SiteGenerator {
 		}, {});
 		const extra = {
 			lmGrp: limit_groups,
+			grpName: categories.default.map(entry => entry.name),
 			eName: enemyData.map(x => x.name_tw),
 			rwName: rewardTable.reduce((rv, entry) => {
 				rv[entry.id] = entry.name;
@@ -66,9 +68,6 @@ module.exports = class extends SiteGenerator {
 			conditions,
 			material_drops,
 			egg_set,
-		});
-		this.write_template('js/enemy.js', 'enemy.js', {
-			stages_top: categories.default.map(entry => entry.name),
 		});
 	}
 
