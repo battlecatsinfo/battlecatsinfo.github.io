@@ -11,7 +11,7 @@ var mult = document.getElementById('mult'),
 	stageMag = my_params.get('stageMag'),
 	enemy_content = document.getElementById('ctn'),
 	set = new Set(),
-	E, I, dst_g, modal, db,
+	E, I, dst_g, modal,
 	stages_top = {{{toJSON stages_top}}};
 if (isNaN(my_id))
 	my_id = 0;
@@ -268,20 +268,20 @@ function search_for() {
 	modal = document.getElementById('modal-c');
 	modal.textContent = '載入中...';
 	document.getElementById('modal').style.display = 'block';
-
-	if (db) return really_search();
-
-	utils.loadStages().then(result => {
-		({db} = result);
-		really_search();
-	});
+	_really_search();
 }
 
 function namefor(v) {
 	return v[0] || v[1] || '？？？';
 }
 
-function really_search() {
+async function _really_search() {
+	await utils.loadStageData();
+	_really_search = really_search;
+	await really_search();
+}
+
+async function really_search() {
 	let previous_td, previous_mc, previous_td2, previous_sm;
 	const target = my_id.toString(36);
 	let tbl = document.createElement('table');
@@ -302,55 +302,49 @@ function really_search() {
 	modal.textContent = '';
 	modal.appendChild(tbl);
 
-	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
-		e = e.target.result;
-		if (e) {
-			const v = e.value;
-			for (const group of v[14].split('|')) {
-				if (group.slice(0, group.indexOf(',')) == target) {
-					const mc = ~~(e.key / 1000000);
-					const st = e.key % 1000;
-					const sm = ~~((e.key - mc * 1000000) / 1000);
-					const tr = document.createElement('tr');
-					let td;
+	for await (const [key, v] of utils.forEachStage()) {
+		for (const group of v[14].split('|')) {
+			if (group.slice(0, group.indexOf(',')) == target) {
+				const mc = ~~(key / 1000000);
+				const st = key % 1000;
+				const sm = ~~((key - mc * 1000000) / 1000);
+				const tr = document.createElement('tr');
+				let td;
 
-					if (previous_mc == mc) {
-						previous_td.rowSpan += 1;
-					} else {
-						td = document.createElement('td');
-						td.textContent = stages_top[mc];
-						tr.appendChild(td);
-						previous_td = td;
-						previous_mc = mc;
-						previous_sm = null;
-					}
-
-					if (previous_sm == sm) {
-						previous_td2.rowSpan += 1;
-					} else {
-						const td0 = document.createElement('td');
-						db.transaction('map').objectStore('map').get(~~(e.key / 1000)).onsuccess = function(e) {
-							td0.textContent = namefor(e.target.result);
-						};
-						tr.appendChild(td0);
-						previous_sm = sm;
-						previous_td2 = td0;
-					}
-
-
-					td = document.createElement('td')
-					a = document.createElement('a');
-					a.textContent = v[0] || v[1];
-					a.href = `/stage.html?s=${mc}-${sm}-${st}`;
-					a.target = a.target = '_blank';
-					td.appendChild(a);
+				if (previous_mc == mc) {
+					previous_td.rowSpan += 1;
+				} else {
+					td = document.createElement('td');
+					td.textContent = stages_top[mc];
 					tr.appendChild(td);
-
-					tbl.appendChild(tr);
-					break;
+					previous_td = td;
+					previous_mc = mc;
+					previous_sm = null;
 				}
+
+				if (previous_sm == sm) {
+					previous_td2.rowSpan += 1;
+				} else {
+					const td0 = document.createElement('td');
+					utils.getMap(~~(key / 1000)).then(map => {
+						td0.textContent = namefor(map);
+					});
+					tr.appendChild(td0);
+					previous_sm = sm;
+					previous_td2 = td0;
+				}
+
+				td = document.createElement('td')
+				a = document.createElement('a');
+				a.textContent = v[0] || v[1];
+				a.href = `/stage.html?s=${mc}-${sm}-${st}`;
+				a.target = a.target = '_blank';
+				td.appendChild(a);
+				tr.appendChild(td);
+
+				tbl.appendChild(tr);
+				break;
 			}
-			e.continue();
 		}
 	}
 }
