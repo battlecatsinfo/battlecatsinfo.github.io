@@ -53,7 +53,7 @@ const ex_stages = document.getElementById("ex-stages");
 const stageL = parseInt(localStorage.getItem('stagel') || '0', 10);
 const materialDrops = {{{toJSON material_drops}}};
 
-let db, info1, info2, info3, star, stage_extra, filter_page, stageF;
+let info1, info2, info3, star, stage_extra, filter_page, stageF;
 
 if (localStorage.getItem('stagef') == 's')
 	stageF = new Intl.NumberFormat(undefined, {
@@ -189,7 +189,7 @@ function onStarAnchorClick(event) {
 	return false;
 }
 
-function search_guard() {
+async function search_guard() {
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
 	search_result.textContent = '';
@@ -202,35 +202,30 @@ function search_guard() {
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
 
-	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
-		e = e.target.result;
-		if (e) {
-			const v = e.value;
-			if (parseInt(v[SI_FLAGS], 36) & 2) {
-				const tr = tbl.appendChild(document.createElement('tr'));
-				let td = tr.appendChild(document.createElement('td'));
-				const a = td.appendChild(document.createElement('a'));
-				db.transaction('map').objectStore('map').get(~~(e.key / 1000)).onsuccess = function(e) {
-					a.textContent = namefor(e.target.result);
-				};
-				const mc = ~~(e.key / 1000000);
-				const st = e.key % 1000;
-				const sm = ~~((e.key - mc * 1000000) / 1000);
-				const sts = [mc, sm, st];
-				a.href = `/stage.html?s=${mc}-${sm}`;
-				a.onclick = onStageAnchorClick;
-				td = tr.appendChild(document.createElement('td'));
-				const a2 = td.appendChild(document.createElement('a'));
-				a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
-				a2.href = a.href + '-' + st;
-				a2.onclick = onStageAnchorClick;
-			}
-			e.continue();
+	for await (const [key, v] of utils.forEachStage()) {
+		if (parseInt(v[SI_FLAGS], 36) & 2) {
+			const tr = tbl.appendChild(document.createElement('tr'));
+			let td = tr.appendChild(document.createElement('td'));
+			const a = td.appendChild(document.createElement('a'));
+			utils.getMap(~~(key / 1000)).then(map => {
+				a.textContent = namefor(map);
+			});
+			const mc = ~~(key / 1000000);
+			const st = key % 1000;
+			const sm = ~~((key - mc * 1000000) / 1000);
+			const sts = [mc, sm, st];
+			a.href = `/stage.html?s=${mc}-${sm}`;
+			a.onclick = onStageAnchorClick;
+			td = tr.appendChild(document.createElement('td'));
+			const a2 = td.appendChild(document.createElement('a'));
+			a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
+			a2.href = a.href + '-' + st;
+			a2.onclick = onStageAnchorClick;
 		}
 	}
 }
 
-function search_enemy(e) {
+async function search_enemy(e) {
 	const T = e.currentTarget.i;
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
@@ -244,35 +239,30 @@ function search_enemy(e) {
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
 
-	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
-		e = e.target.result;
-		if (e) {
-			const v = e.value;
-			if (v[SI_ENEMY_LINES].startsWith(T)) {
-				const tr = tbl.appendChild(document.createElement('tr'));
-				let td = tr.appendChild(document.createElement('td'));
-				const a = td.appendChild(document.createElement('a'));
-				db.transaction('map').objectStore('map').get(~~(e.key / 1000)).onsuccess = function(e) {
-					a.textContent = namefor(e.target.result);
-				};
-				const mc = ~~(e.key / 1000000);
-				const st = e.key % 1000;
-				const sm = ~~((e.key - mc * 1000000) / 1000);
-				const sts = [mc, sm, st];
-				a.href = `/stage.html?s=${mc}-${sm}`;
-				a.onclick = onStageAnchorClick;
-				td = tr.appendChild(document.createElement('td'));
-				const a2 = td.appendChild(document.createElement('a'));
-				a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
-				a2.href = a.href + '-' + st;
-				a2.onclick = onStageAnchorClick;
-			}
-			e.continue();
+	for await (const [key, v] of utils.forEachStage()) {
+		if (v[SI_ENEMY_LINES].startsWith(T)) {
+			const tr = tbl.appendChild(document.createElement('tr'));
+			let td = tr.appendChild(document.createElement('td'));
+			const a = td.appendChild(document.createElement('a'));
+			utils.getMap(~~(key / 1000)).then(map => {
+				a.textContent = namefor(map);
+			});
+			const mc = ~~(key / 1000000);
+			const st = key % 1000;
+			const sm = ~~((key - mc * 1000000) / 1000);
+			const sts = [mc, sm, st];
+			a.href = `/stage.html?s=${mc}-${sm}`;
+			a.onclick = onStageAnchorClick;
+			td = tr.appendChild(document.createElement('td'));
+			const a2 = td.appendChild(document.createElement('a'));
+			a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
+			a2.href = a.href + '-' + st;
+			a2.onclick = onStageAnchorClick;
 		}
 	}
 }
 
-function search_gold() {
+async function search_gold() {
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
 	search_result.textContent = '';
@@ -299,31 +289,26 @@ function search_gold() {
 		}
 	}
 
-	db.transaction('map').objectStore('map').openCursor(IDBKeyRange.lowerBound(0)).onsuccess = function(e) {
-		e = e.target.result;
-		if (e) {
-			const v = e.value;
-			if (parseInt(v[SM_FLAGS], 36) & 2) {
-				const tr = tbl.appendChild(document.createElement('tr'));
-				let td = tr.appendChild(document.createElement('td'));
-				const a = td.appendChild(document.createElement('a'));
-				const mc = ~~(e.key / 1000);
-				const sm = e.key % 1000;
-				a.textContent = M1.children[mc].textContent;
-				a.href = `/stage.html?s=${mc}`;
-				a.onclick = onStageAnchorClick;
-				td = tr.appendChild(document.createElement('td'));
-				const a2 = td.appendChild(document.createElement('a'));
-				a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
-				a2.href = a.href + '-' + sm;
-				a2.onclick = onStageAnchorClick;
-			}
-			e.continue();
+	for await (const [key, v] of utils.forEachMap()) {
+		if (parseInt(v[SM_FLAGS], 36) & 2) {
+			const tr = tbl.appendChild(document.createElement('tr'));
+			let td = tr.appendChild(document.createElement('td'));
+			const a = td.appendChild(document.createElement('a'));
+			const mc = ~~(key / 1000);
+			const sm = key % 1000;
+			a.textContent = M1.children[mc].textContent;
+			a.href = `/stage.html?s=${mc}`;
+			a.onclick = onStageAnchorClick;
+			td = tr.appendChild(document.createElement('td'));
+			const a2 = td.appendChild(document.createElement('a'));
+			a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
+			a2.href = a.href + '-' + sm;
+			a2.onclick = onStageAnchorClick;
 		}
 	}
 }
 
-function search_reward(e) {
+async function search_reward(e) {
 	const T = e.currentTarget.i.toString();
 	const P = stage_extra.rwName[e.currentTarget.i];
 	filter_page.parentNode.hidden = true;
@@ -342,38 +327,33 @@ function search_reward(e) {
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '掉落';
 
-	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
-		e = e.target.result;
-		if (e) {
-			const v = e.value;
-			const drop_data = v[SI_DROP];
-			if (drop_data) {
-				for (const drop_line of drop_data.split('|')) {
-					const i = drop_line.indexOf(',') + 1;
-					const I = drop_line.indexOf(',', i);
-					if (drop_line.slice(i, I) == T) {
-						const tr = tbl.appendChild(document.createElement('tr'));
-						let td0 = tr.appendChild(document.createElement('td'));
-						db.transaction('map').objectStore('map').get(~~(e.key / 1000)).onsuccess = function(e) {
-							td0.textContent = namefor(e.target.result);
-						};
-						const mc = ~~(e.key / 1000000);
-						const st = e.key % 1000;
-						const sm = ~~((e.key - mc * 1000000) / 1000);
-						let td = tr.appendChild(document.createElement('td'));
-						const a2 = td.appendChild(document.createElement('a'));
-						a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
-						a2.href = `/stage.html?s=${mc}-${sm}-${st}`;
-						a2.onclick = onStageAnchorClick;
-						td = tr.appendChild(document.createElement('td'));
-						td.textContent = parseInt(v[SI_ENERGY], 36);
-						td = tr.appendChild(document.createElement('td'));
-						td.textContent = P + ' ×' + drop_line.slice(I + 1);
-						break;
-					}
+	for await (const [key, v] of utils.forEachStage()) {
+		const drop_data = v[SI_DROP];
+		if (drop_data) {
+			for (const drop_line of drop_data.split('|')) {
+				const i = drop_line.indexOf(',') + 1;
+				const I = drop_line.indexOf(',', i);
+				if (drop_line.slice(i, I) == T) {
+					const tr = tbl.appendChild(document.createElement('tr'));
+					let td0 = tr.appendChild(document.createElement('td'));
+					utils.getMap(~~(key / 1000)).then(map => {
+						td0.textContent = namefor(map);
+					});
+					const mc = ~~(key / 1000000);
+					const st = key % 1000;
+					const sm = ~~((key - mc * 1000000) / 1000);
+					let td = tr.appendChild(document.createElement('td'));
+					const a2 = td.appendChild(document.createElement('a'));
+					a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
+					a2.href = `/stage.html?s=${mc}-${sm}-${st}`;
+					a2.onclick = onStageAnchorClick;
+					td = tr.appendChild(document.createElement('td'));
+					td.textContent = parseInt(v[SI_ENERGY], 36);
+					td = tr.appendChild(document.createElement('td'));
+					td.textContent = P + ' ×' + drop_line.slice(I + 1);
+					break;
 				}
 			}
-			e.continue();
 		}
 	}
 }
@@ -529,9 +509,9 @@ function getConditionHTML(obj) {
 		const div = document.createElement("div");
 		div.append("通過");
 		const a = div.appendChild(document.createElement("a"));
-		db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
-			a.textContent = namefor(e.target.result);
-		}
+		utils.getMap(mc * 1000 + sm).then(map => {
+			a.textContent = namefor(map);
+		});
 		a.href = `/stage.html?s=${mc}-${sm}`;
 		a.onclick = onStageAnchorClick;
 		return div;
@@ -547,9 +527,9 @@ function getConditionHTML(obj) {
 		const div = document.createElement("div");
 		div.append("通過");
 		const a = div.appendChild(document.createElement("a"));
-		db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
-			a.textContent = namefor(e.target.result) + a.n;
-		}
+		utils.getMap(mc * 1000 + sm).then(map => {
+			a.textContent = namefor(map) + a.n;
+		});
 		const st = obj.stage;
 		a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 		a.n = "第" + (st + 1).toString() + "關";
@@ -568,9 +548,9 @@ function getConditionHTML(obj) {
 		div.append(ay > 200000 ? "通過" : "玩過");
 		const a = div.appendChild(document.createElement("a"));
 		a.href = `/stage.html?s=${mc}-${sm}`;
-		db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
-			a.textContent = namefor(e.target.result);
-		}
+		utils.getMap(mc * 1000 + sm).then(map => {
+			a.textContent = namefor(map);
+		});
 		a.onclick = onStageAnchorClick;
 		++i;
 		last = y;
@@ -666,7 +646,7 @@ class Limit {
 	}
 }
 
-function refresh_1(sts) {
+async function refresh_1(sts) {
 	if (sts && sts.length)
 		M1.selectedIndex = sts[0];
 
@@ -679,94 +659,82 @@ function refresh_1(sts) {
 	if (info1 && info1.dataset.maps) {
 		for (const map_code of info1.dataset.maps.split(',').map(x => parseInt(x))) {
 			const o = M2.appendChild(document.createElement('option'));
-			db.transaction('map').objectStore('map').get(map_code).onsuccess = function (e) {
-				o.textContent = namefor(e.target.result);
-			};
+			utils.getMap(map_code).then(map => {
+				o.textContent = namefor(map);
+			});
 		}
 		M2.selectedIndex = mapIdx;
-		refresh_2(sts);
+		await refresh_2(sts);
 		return;
 	}
 
 	const start = M1.selectedIndex * 1000;
-	let map;
+	let _map;
 	let c = 0;
-	db.transaction('map').objectStore('map').openCursor(IDBKeyRange.bound(start, start + 1000, false, true)).onsuccess = function(e) {
-		e = e.target.result;
-		if (e) {
-			const o = M2.appendChild(document.createElement('option'));
-			if (c === mapIdx)
-				map = e.value;
-			if (stageL) {
-				const jp = e.value[SI_JP_NAME];
-				if (stageL == 1)
-					o.textContent = jp || QQ;
-				else
-					o.textContent = [e.value[SI_TW_NAME], jp].filter(x => x).join('/');
-			} else {
-				o.textContent = e.value[SI_TW_NAME] || e.value[SI_JP_NAME] || QQ;
-			}
-			e.continue();
-			c += 1;
+	for await (const [, map] of utils.forEachMap(IDBKeyRange.bound(start, start + 1000, false, true))) {
+		const o = M2.appendChild(document.createElement('option'));
+		if (c === mapIdx)
+			_map = map;
+		if (stageL) {
+			const jp = map[SI_JP_NAME];
+			if (stageL == 1)
+				o.textContent = jp || QQ;
+			else
+				o.textContent = [map[SI_TW_NAME], jp].filter(x => x).join('/');
 		} else {
-			M2.selectedIndex = mapIdx;
-			refresh_2(sts, map);
+			o.textContent = map[SI_TW_NAME] || map[SI_JP_NAME] || QQ;
 		}
+		c += 1;
 	}
+	M2.selectedIndex = mapIdx;
+	await refresh_2(sts, _map);
 }
 
 M1.oninput = function (event) {
 	refresh_1();
 };
 
-function process_2(stageIdx) {
+async function process_2(stageIdx) {
 	const start = info1.dataset.maps ?
 		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) * 1000 :
 		M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
 
-	let stage;
+	let _stage;
 	let c = 0;
-	db.transaction('stage').objectStore('stage').openCursor(IDBKeyRange.bound(start, start + 1000, false, true)).onsuccess = function(e) {
-		e = e.target.result;
-		if (e) {
-			const o = M3.appendChild(document.createElement('option'));
-			if (c === stageIdx)
-				stage = e.value;
-			if (stageL) {
-				const jp = e.value[SI_JP_NAME];
-				if (stageL == 1)
-					o.textContent = jp || QQ;
-				else
-					o.textContent = [e.value[SI_TW_NAME], jp].filter(x => x).join('/');
-			} else {
-				o.textContent = e.value[SI_TW_NAME] || e.value[SI_JP_NAME] || QQ;
-			}
-			e.continue();
-			c += 1;
+	for await (const [, stage] of utils.forEachStage(IDBKeyRange.bound(start, start + 1000, false, true))) {
+		const o = M3.appendChild(document.createElement('option'));
+		if (c === stageIdx)
+			_stage = stage;
+		if (stageL) {
+			const jp = stage[SI_JP_NAME];
+			if (stageL == 1)
+				o.textContent = jp || QQ;
+			else
+				o.textContent = [stage[SI_TW_NAME], jp].filter(x => x).join('/');
 		} else {
-			M3.selectedIndex = stageIdx;
-			refresh_3(stage);
+			o.textContent = stage[SI_TW_NAME] || stage[SI_JP_NAME] || QQ;
 		}
+		c += 1;
 	}
+	M3.selectedIndex = stageIdx;
+	await refresh_3(_stage);
 }
 
-function refresh_2(sts, map) {
+async function refresh_2(sts, map) {
 	M3.length = 0;
 	const stageIdx = (sts && sts.length > 2) ? sts[2] : 0;
 
 	if (map) {
 		info2 = map;
-		process_2(stageIdx);
+		await process_2(stageIdx);
 		return;
 	}
 
 	const mapIdx = info1.dataset.maps ?
 		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) :
 		M1.selectedIndex * 1000 + M2.selectedIndex;
-	db.transaction('map').objectStore('map').get(mapIdx).onsuccess = function(e) {
-		info2 = e.target.result;
-		process_2(stageIdx);
-	};
+	info2 = await utils.getMap(mapIdx);
+	await process_2(stageIdx);
 }
 
 M2.oninput = function (event) {
@@ -843,27 +811,25 @@ function getDropData(drops) {
 	return res;
 }
 
-function refresh_3(stage) {
+async function refresh_3(stage) {
 	if (stage) {
 		info3 = stage;
-		render_stage();
+		await render_stage();
 		return;
 	}
 
 	const base = info1.dataset.maps ?
 		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) * 1000 :
 		M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
-	db.transaction('stage').objectStore('stage').get(base + M3.selectedIndex).onsuccess = function(e) {
-		info3 = e.target.result;
-		render_stage();
-	};
+	info3 = await utils.getStage(base + M3.selectedIndex);
+	await render_stage();
 }
 
 M3.oninput = function (event) {
 	refresh_3();
 };
 
-function render_stage() {
+async function render_stage() {
 	const flags2 = parseInt(info2[SM_FLAGS] || '0', 36);
 	const flags3 = parseInt(info3[SI_FLAGS] || '0', 36);
 	const stars_str = info2[SM_STARS] ? info2[SM_STARS].split(',') : [];
@@ -1115,19 +1081,17 @@ function render_stage() {
 			else
 				td.textContent = (exChance == '100' ? "必定出現以下EX關卡：" : 'EX關卡：' + "（出現機率：" + exChance + "%）");
 			const start = 4000000 + parseInt(exMapID, 10) * 1000;
-			db.transaction('stage').objectStore('stage').openCursor(IDBKeyRange.bound(start + parseInt(exStageIDMin, 10), start + parseInt(exStageIDMax, 10))).onsuccess = function(e) {
-				e = e.target.result;
-				if (e) {
-					const td = ex_stages.appendChild(document.createElement("div"));
-					const a = td.appendChild(document.createElement("a"));
-					const k = e.key - 4000000;
-					const sm = ~~(k / 1000);
-					const si = k - sm * 1000;
-					a.href = `/stage.html?s=4-${sm}-${si}`;
-					a.textContent = namefor(e.value);
-					a.onclick = onStageAnchorClick;
-					e.continue();
-				}
+			for await (const [key, value] of utils.forEachStage(
+				IDBKeyRange.bound(start + parseInt(exStageIDMin, 10), start + parseInt(exStageIDMax, 10))
+			)) {
+				const td = ex_stages.appendChild(document.createElement("div"));
+				const a = td.appendChild(document.createElement("a"));
+				const k = key - 4000000;
+				const sm = ~~(k / 1000);
+				const si = k - sm * 1000;
+				a.href = `/stage.html?s=4-${sm}-${si}`;
+				a.textContent = namefor(value);
+				a.onclick = onStageAnchorClick;
 			}
 		} else if (ex_stage_data[1]) {
 			let [exStage, exChance] = ex_stage_data[1].split('|');
@@ -1152,9 +1116,9 @@ function render_stage() {
 				const a = td0.appendChild(document.createElement("a"));
 				a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 				a.onclick = onStageAnchorClick;
-				db.transaction('stage').objectStore('stage').get(s).onsuccess = function(e) {
-					a.textContent = namefor(e.target.result);
-				};
+				utils.getStage(s).then(stage => {
+					a.textContent = namefor(stage);
+				});
 				td1.textContent = exChance[i] + "%";
 			}
 		}
@@ -1242,10 +1206,9 @@ function add_result_stage(id, name, search_for) {
 	a.id = id;
 	a.onclick = onStageAnchorClick;
 	const groupName = M1.children[mc].textContent;
-	db.transaction('map').objectStore('map').get(mc * 1000 + sm).onsuccess = function(e) {
-		e = e.target.result;
-		a.innerHTML = groupName + ' - ' + namefor(e) + ' - ' + name;
-	};
+	utils.getMap(mc * 1000 + sm).then(map => {
+		a.innerHTML = groupName + ' - ' + namefor(map) + ' - ' + name;
+	});
 }
 
 function add_result_map(id, name, search_for) {
@@ -1260,7 +1223,7 @@ function add_result_map(id, name, search_for) {
 	a.innerHTML = M1.children[mc].textContent + ' - ' + name;
 }
 
-function doSearch(t) {
+async function doSearch(t) {
 	const v = t.value.trim();
 	if (!v) {
 		search_result.hidden = true;
@@ -1270,41 +1233,32 @@ function doSearch(t) {
 	main_div.hidden = true;
 	search_result.hidden = false;
 	search_result.textContent = '';
-	db.transaction('stage').objectStore('stage').openCursor().onsuccess = function(e) {
-		e = e.target.result;
-		if (e) {
-			let s = e.value[SI_TW_NAME];
+	for await (const [key, stage] of utils.forEachStage()) {
+		let s = stage[SI_TW_NAME];
+		if (s.includes(v))
+			add_result_stage(key, s, v);
+		else {
+			s = stage[SI_JP_NAME];
 			if (s.includes(v))
-				add_result_stage(e.key, s, v);
-			else {
-				s = e.value[SI_JP_NAME];
-				if (s.includes(v))
-					add_result_stage(e.key, s, v);
-			}
-			e.continue();
-		} else {
-			db.transaction('map').objectStore('map').openCursor(IDBKeyRange.lowerBound(0)).onsuccess = function(e) {
-				e = e.target.result;
-				if (e) {
-					let s = e.value[SI_TW_NAME];
-					if (s.includes(v))
-						add_result_map(e.key, s, v);
-					else {
-						s = e.value[SI_JP_NAME];
-						if (s.includes(v))
-							add_result_map(e.key, s, v);
-					}
-					e.continue();
-				} else {
-					if (!search_result.textContent)
-						search_result.textContent = "找不到名稱包含「" + v + "」的關卡";
-				}
-			}
+				add_result_stage(key, s, v);
 		}
 	}
+	for await (const [key, map] of utils.forEachMap()) {
+		let s = map[SI_TW_NAME];
+		if (s.includes(v))
+			add_result_map(key, s, v);
+		else {
+			s = map[SI_JP_NAME];
+			if (s.includes(v))
+				add_result_map(key, s, v);
+		}
+	}
+	if (!search_result.textContent)
+		search_result.textContent = "找不到名稱包含「" + v + "」的關卡";
 }
 
-utils.loadStages().then(result => {
-	({db, stage_extra} = result);
+(async () => {
+	await utils.loadStageData();
+	stage_extra = await utils.getStageExtra();
 	initUI();
-});
+})();
