@@ -1,34 +1,4 @@
 const loader = document.getElementById('loader');
-const SI_TW_NAME = 0;
-const SI_JP_NAME = 1;
-const SI_XP = 2;
-const SI_HEALTH = 3;
-const SI_ENERGY = 4;
-const SI_LEN = 5;
-const SI_RAND = 6;
-const SI_DROP = 7;
-const SI_TIME = 8;
-const SI_MAXMATERIAL = 9;
-const SI_FLAGS = 10;
-const SI_MAX = 11;
-const SI_MIN_SPAWN = 12;
-const SI_BG = 13;
-const SI_ENEMY_LINES = 14;
-const SI_EX_STAGE = 15;
-
-const SM_TW_NAME = 0;
-const SM_JP_NAME = 1;
-const SM_STARS = 2;
-const SM_MAPCOND = 3;
-const SM_STAGECOND = 4;
-const SM_MATERIALDROP = 5;
-const SM_MULTIPLIER = 6;
-const SM_FLAGS = 7;
-const SM_WAITFORTIMER = 8;
-const SM_RESETMODE = 9;
-const SM_SPECIALCOND = 10;
-const SM_INVALID_COMBO = 11;
-const SM_LIMIT = 12;
 
 const QQ = '？？？';
 const M1 = document.getElementById("M1");
@@ -97,7 +67,7 @@ function fromV(s) {
 }
 
 function namefor(v) {
-	return v[SI_TW_NAME] || v[SI_JP_NAME] || QQ;
+	return v.name || v.nameJp || QQ;
 }
 
 function createReward(tr, v) {
@@ -194,7 +164,7 @@ async function search_guard() {
 	td.textContent = '關卡';
 
 	for await (const [key, v] of utils.forEachStage()) {
-		if (parseInt(v[SI_FLAGS], 36) & 2) {
+		if (parseInt(v.flags, 36) & 2) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
@@ -209,7 +179,7 @@ async function search_guard() {
 			a.onclick = onStageAnchorClick;
 			td = tr.appendChild(document.createElement('td'));
 			const a2 = td.appendChild(document.createElement('a'));
-			a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
+			a2.textContent = v.name || v.nameJp;
 			a2.href = a.href + '-' + st;
 			a2.onclick = onStageAnchorClick;
 		}
@@ -231,7 +201,7 @@ async function search_enemy(e) {
 	td.textContent = '關卡';
 
 	for await (const [key, v] of utils.forEachStage()) {
-		if (v[SI_ENEMY_LINES].startsWith(T)) {
+		if (v.enemyLines.startsWith(T)) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
@@ -246,7 +216,7 @@ async function search_enemy(e) {
 			a.onclick = onStageAnchorClick;
 			td = tr.appendChild(document.createElement('td'));
 			const a2 = td.appendChild(document.createElement('a'));
-			a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
+			a2.textContent = v.name || v.nameJp;
 			a2.href = a.href + '-' + st;
 			a2.onclick = onStageAnchorClick;
 		}
@@ -281,7 +251,7 @@ async function search_gold() {
 	}
 
 	for await (const [key, v] of utils.forEachMap()) {
-		if (parseInt(v[SM_FLAGS], 36) & 2) {
+		if (parseInt(v.flags, 36) & 2) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
@@ -292,7 +262,7 @@ async function search_gold() {
 			a.onclick = onStageAnchorClick;
 			td = tr.appendChild(document.createElement('td'));
 			const a2 = td.appendChild(document.createElement('a'));
-			a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
+			a2.textContent = v.name || v.nameJp;
 			a2.href = a.href + '-' + sm;
 			a2.onclick = onStageAnchorClick;
 		}
@@ -319,7 +289,7 @@ async function search_reward(e) {
 	td.textContent = '掉落';
 
 	for await (const [key, v] of utils.forEachStage()) {
-		const drop_data = v[SI_DROP];
+		const drop_data = v.drop;
 		if (drop_data) {
 			for (const drop_line of drop_data.split('|')) {
 				const i = drop_line.indexOf(',') + 1;
@@ -335,11 +305,11 @@ async function search_reward(e) {
 					const sm = ~~((key - mc * 1000000) / 1000);
 					let td = tr.appendChild(document.createElement('td'));
 					const a2 = td.appendChild(document.createElement('a'));
-					a2.textContent = v[SI_TW_NAME] || v[SI_JP_NAME];
+					a2.textContent = v.name || v.nameJp;
 					a2.href = `/stage.html?s=${mc}-${sm}-${st}`;
 					a2.onclick = onStageAnchorClick;
 					td = tr.appendChild(document.createElement('td'));
-					td.textContent = parseInt(v[SI_ENERGY], 36);
+					td.textContent = parseInt(v.energy, 36);
 					td = tr.appendChild(document.createElement('td'));
 					td.textContent = P + ' ×' + drop_line.slice(I + 1);
 					break;
@@ -666,13 +636,13 @@ async function refresh_1(sts) {
 		if (c === mapIdx)
 			_map = map;
 		if (stageL) {
-			const jp = map[SI_JP_NAME];
+			const jp = map.nameJp;
 			if (stageL == 1)
 				o.textContent = jp || QQ;
 			else
-				o.textContent = [map[SI_TW_NAME], jp].filter(x => x).join('/');
+				o.textContent = [map.name, jp].filter(x => x).join('/');
 		} else {
-			o.textContent = map[SI_TW_NAME] || map[SI_JP_NAME] || QQ;
+			o.textContent = map.name || map.nameJp || QQ;
 		}
 		c += 1;
 	}
@@ -696,13 +666,13 @@ async function process_2(stageIdx) {
 		if (c === stageIdx)
 			_stage = stage;
 		if (stageL) {
-			const jp = stage[SI_JP_NAME];
+			const jp = stage.nameJp;
 			if (stageL == 1)
 				o.textContent = jp || QQ;
 			else
-				o.textContent = [stage[SI_TW_NAME], jp].filter(x => x).join('/');
+				o.textContent = [stage.name, jp].filter(x => x).join('/');
 		} else {
-			o.textContent = stage[SI_TW_NAME] || stage[SI_JP_NAME] || QQ;
+			o.textContent = stage.name || stage.nameJp || QQ;
 		}
 		c += 1;
 	}
@@ -759,7 +729,7 @@ function getDropData(drops) {
 			const x = ints_2[_b];
 			res.push(numStr(x / 10));
 		}
-	} else if (info3[SI_RAND] == '-3') {
+	} else if (info3.rand == '-3') {
 		const c = Math.floor(100 / drops.length).toString();
 		for (let _c = 0, ints_3 = ints; _c < ints_3.length; _c++) {
 			const x = ints_3[_c];
@@ -770,7 +740,7 @@ function getDropData(drops) {
 			const x = ints_4[_d];
 			res.push(x.toString());
 		}
-	} else if (sum > 100 && (info3[SI_RAND] == '0' || info3[SI_RAND] == '1')) {
+	} else if (sum > 100 && (info3.rand == '0' || info3.rand == '1')) {
 		let rest = 100;
 		if (ints[0] == 100) {
 			res.push("100");
@@ -787,7 +757,7 @@ function getDropData(drops) {
 				res.push(numStr(filter));
 			}
 		}
-	} else if (info3[SI_RAND] == '-4') {
+	} else if (info3.rand == '-4') {
 		for (let _f = 0, ints_6 = ints; _f < ints_6.length; _f++) {
 			const x = ints_6[_f];
 			res.push(numStr(x * 100 / sum));
@@ -820,9 +790,9 @@ M3.oninput = function (event) {
 };
 
 async function render_stage() {
-	const flags2 = parseInt(info2[SM_FLAGS] || '0', 36);
-	const flags3 = parseInt(info3[SI_FLAGS] || '0', 36);
-	const stars_str = info2[SM_STARS] ? info2[SM_STARS].split(',') : [];
+	const flags2 = parseInt(info2.flags || '0', 36);
+	const flags3 = parseInt(info3.flags || '0', 36);
+	const stars_str = info2.stars ? info2.stars.split(',') : [];
 	const url = new URL(location.href);
 	const had_query = url.search !== '';
 	url.search = url.hash = '';
@@ -839,13 +809,13 @@ async function render_stage() {
 		history.replaceState({}, "", url);
 
 	if (info1.dataset.maps) {
-		stName.textContent = [info2[SM_TW_NAME] || QQ, info3[SI_TW_NAME] || QQ].join(" - ");
-		stName2.textContent = [info2[SM_JP_NAME] || QQ, info3[SI_JP_NAME] || QQ].join(" - ");
+		stName.textContent = [info2.name || QQ, info3.name || QQ].join(" - ");
+		stName2.textContent = [info2.nameJp || QQ, info3.nameJp || QQ].join(" - ");
 	} else {
-		stName.textContent = [info1.textContent || QQ, info2[SM_TW_NAME] || QQ, info3[SI_TW_NAME] || QQ].join(" - ");
-		stName2.textContent = [info1.dataset.nameJp || QQ, info2[SM_JP_NAME] || QQ, info3[SI_JP_NAME] || QQ].join(" - ");
+		stName.textContent = [info1.textContent || QQ, info2.name || QQ, info3.name || QQ].join(" - ");
+		stName2.textContent = [info1.dataset.nameJp || QQ, info2.nameJp || QQ, info3.nameJp || QQ].join(" - ");
 	}
-	document.title = (info2[SI_TW_NAME] || info2[SI_JP_NAME] || QQ) + ' - ' + (info3[SI_TW_NAME] || info3[SI_JP_NAME] || QQ);
+	document.title = (info2.name || info2.nameJp || QQ) + ' - ' + (info3.name || info3.nameJp || QQ);
 
 	var stars_tr = document.getElementById("stars-tr");
 	if (stars_tr)
@@ -877,22 +847,22 @@ async function render_stage() {
 		}
 		tr.id = "stars-tr";
 	}
-	if (info3[SI_FLAGS] || info2[SM_RESETMODE] || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2[SM_WAITFORTIMER] || info2[SM_FLAGS] || info2[SM_SPECIALCOND]) {
+	if (info3.flags || info2.resetMode || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond) {
 		var s;
 		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 		tr.id = "warn-tr";
 		tr.style.fontSize = "larger";
 		var th = tr.appendChild(document.createElement("th"));
 		th.colSpan = 6;
-		if (info2[SM_RESETMODE]) {
+		if (info2.resetMode) {
 			var span = th.appendChild(document.createElement("div"));
-			span.textContent = stage_extra.resetModes[info2[SM_RESETMODE].charCodeAt(0) - 48];
+			span.textContent = stage_extra.resetModes[info2.resetMode.charCodeAt(0) - 48];
 			span.classList.add('I');
 		}
-		if (info2[SM_WAITFORTIMER]) {
+		if (info2.wait) {
 			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('W');
-			span.textContent = "成功挑戰冷卻時長：" + info2[SM_WAITFORTIMER];
+			span.textContent = "成功挑戰冷卻時長：" + info2.wait;
 		}
 
 		if (flags2 & 1) {
@@ -916,20 +886,20 @@ async function render_stage() {
 			span.classList.add('w');
 			span.textContent = "※速攻不可（城堡盾）※";
 		}
-		if (info2[SM_SPECIALCOND]) {
+		if (info2.specialCond) {
 			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('w');
-			span.textContent = info2[SM_SPECIALCOND];
-			if (info2[SM_INVALID_COMBO]) {
+			span.textContent = info2.specialCond;
+			if (info2.invalidCombos) {
 				span = th.appendChild(document.createElement("div"));
 				span.classList.add('W');
-				span.textContent = info2[SM_INVALID_COMBO];
+				span.textContent = info2.invalidCombos;
 			}
 		}
 	}
 	rewards.textContent = "";
-	if (info3[SI_DROP] && (M1.selectedOptions[0].dataset.map || M1.selectedIndex !== 3)) {
-		var drop_data = parse_drop(info3[SI_DROP]);
+	if (info3.drop && (M1.selectedOptions[0].dataset.map || M1.selectedIndex !== 3)) {
+		var drop_data = parse_drop(info3.drop);
 		var chances = getDropData(drop_data);
 		var once = true;
 		for (var i = 0; i < drop_data.length; ++i) {
@@ -939,14 +909,14 @@ async function render_stage() {
 			var tr = rewards.appendChild(document.createElement("tr"));
 			createReward(tr, v);
 			var td1 = tr.appendChild(document.createElement("td"));
-			td1.appendChild(document.createTextNode(chances[i] + "%" + (i == 0 && v[0] != '100' && info3[SI_RAND] != '-4' ? " （寶雷）" : "")));
+			td1.appendChild(document.createTextNode(chances[i] + "%" + (i == 0 && v[0] != '100' && info3.rand != '-4' ? " （寶雷）" : "")));
 			var td2 = tr.appendChild(document.createElement("td"));
-			td2.textContent = i == 0 && (info3[SI_RAND] == '1' || parseInt(drop_data[0][1], 10) >= 1e3 && parseInt(drop_data[0][1], 10) < 3e4) ? "一次" : "無";
+			td2.textContent = i == 0 && (info3.rand == '1' || parseInt(drop_data[0][1], 10) >= 1e3 && parseInt(drop_data[0][1], 10) < 3e4) ? "一次" : "無";
 		}
 	}
 	rewards.parentNode.hidden = !rewards.children.length;
 	m_drops.textContent = "";
-	var material_drop = info2[SM_MATERIALDROP].split(',');
+	var material_drop = info2.matDrops.split(',');
 	for (var i = 1; i < material_drop.length; ++i) {
 		const x = parseInt(material_drop[i], 36);
 		if (x == '0')
@@ -964,10 +934,10 @@ async function render_stage() {
 		td1.textContent = x + '%';
 	}
 	m_drops.parentNode.hidden = !m_drops.children.length;
-	mM.textContent = `抽選次數：${~~Math.round(parseInt(info3[SI_MAXMATERIAL], 10) * parseFloat(info2[SM_MULTIPLIER].split(',')[star - 1]))}回`;
-	if (info3[SI_TIME]) {
+	mM.textContent = `抽選次數：${~~Math.round(parseInt(info3.maxMat, 10) * parseFloat(info2.matMults.split(',')[star - 1]))}回`;
+	if (info3.time) {
 		m_times.textContent = "";
-		var drop_data = parse_drop(info3[SI_TIME]);
+		var drop_data = parse_drop(info3.time);
 		for (var _i = 0, drop_data_1 = drop_data; _i < drop_data_1.length; _i++) {
 			var v = drop_data_1[_i];
 			var tr = m_times.appendChild(document.createElement("tr"));
@@ -981,32 +951,32 @@ async function render_stage() {
 	} else {
 		m_times.parentNode.hidden = true;
 	}
-	const energy = parseInt(info3[SI_ENERGY], 36);
+	const energy = parseInt(info3.energy, 36);
 	if (M1.selectedIndex == 10) {
 		st1[1].textContent = `喵力達${String.fromCharCode(65 + energy / 1000)} × ${energy % 1e3}`;
 	} else {
 		st1[1].textContent = energy > 1000 ? numStr(energy) : energy;
 	}
-	st1[3].textContent = info3[SI_MAX];
-	st1[5].textContent = info3[SI_LEN];
-	if (info2[SM_MAPCOND]) {
+	st1[3].textContent = info3.max;
+	st1[5].textContent = info3.len;
+	if (info2.mapCond) {
 		st3[3].textContent = "";
-		st3[3].appendChild(getConditionHTML(info2[SM_MAPCOND]));
+		st3[3].appendChild(getConditionHTML(info2.mapCond));
 	} else {
 		st3[3].textContent = "無限制";
 	}
 	if (flags3 & 8) {
-		st2[1].textContent = numStr(~~((parseInt(info3[SI_HEALTH], 10) * mult) / 100));
+		st2[1].textContent = numStr(~~((parseInt(info3.hp, 10) * mult) / 100));
 	} else {
-		st2[1].textContent = numStr(parseInt(info3[SI_HEALTH], 10));
+		st2[1].textContent = numStr(parseInt(info3.hp, 10));
 	}
-	if (info2[SM_STAGECOND]) {
+	if (info2.stageCond) {
 		st3[5].textContent = "";
-		st3[5].appendChild(getConditionHTML(info2[SM_STAGECOND]));
+		st3[5].appendChild(getConditionHTML(info2.stageCond));
 	} else {
 		st3[5].textContent = "無限制";
 	}
-	var xp = parseInt(info3[SI_XP], 36);
+	var xp = parseInt(info3.xp, 36);
 	switch (M1.selectedIndex) {
 		case 3:
 			st3[1].textContent = 1000 + Math.min(M3.selectedIndex, 47) * 300;
@@ -1020,10 +990,10 @@ async function render_stage() {
 			st3[1].textContent = numStr(~~(xp * 4.7));
 	}
 
-	st2[5].textContent = info3[SI_BG];
-	st2[3].textContent = info3[SI_MIN_SPAWN] + 'F';
-	if (info2[SM_LIMIT]) {
-		const limits = info2[SM_LIMIT].split('|').map(x => new Limit(x));
+	st2[5].textContent = info3.bg;
+	st2[3].textContent = info3.minSpawn + 'F';
+	if (info2.limit) {
+		const limits = info2.limit.split('|').map(x => new Limit(x));
 		const theStar = star - 1;
 		var lim = new Limit();
 		for (var _a = 0; _a < limits.length; _a++) {
@@ -1059,7 +1029,7 @@ async function render_stage() {
 		}
 	}
 	ex_stages.textContent = "";
-	let ex_stage_data = info3[SI_EX_STAGE];
+	let ex_stage_data = info3.exStage;
 	if (ex_stage_data) {
 		ex_stages.hidden = false;
 		ex_stage_data = ex_stage_data.split('$');
@@ -1116,7 +1086,7 @@ async function render_stage() {
 		ex_stages.hidden = true;
 	}
 	stLines.textContent = "";
-	for (const line of info3[SI_ENEMY_LINES].split('|')) {
+	for (const line of info3.enemyLines.split('|')) {
 		const tr = stLines.appendChild(document.createElement("tr"));
 
 		const strs = line.split(',');
@@ -1224,21 +1194,21 @@ async function doSearch(t) {
 	search_result.hidden = false;
 	search_result.textContent = '';
 	for await (const [key, stage] of utils.forEachStage()) {
-		let s = stage[SI_TW_NAME];
+		let s = stage.name;
 		if (s.includes(v))
 			add_result_stage(key, s, v);
 		else {
-			s = stage[SI_JP_NAME];
+			s = stage.nameJp;
 			if (s.includes(v))
 				add_result_stage(key, s, v);
 		}
 	}
 	for await (const [key, map] of utils.forEachMap()) {
-		let s = map[SI_TW_NAME];
+		let s = map.name;
 		if (s.includes(v))
 			add_result_map(key, s, v);
 		else {
-			s = map[SI_JP_NAME];
+			s = map.nameJp;
 			if (s.includes(v))
 				add_result_map(key, s, v);
 		}
