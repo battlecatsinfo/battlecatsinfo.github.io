@@ -2,17 +2,21 @@ const {SiteGenerator} = require('./base.js');
 
 module.exports = class extends SiteGenerator {
 	run() {
-		this.generate_data_files();
-		this.generate_pages();
-		this.generate_crown();
-		this.generate_materials();
-	}
-
-	generate_data_files() {
 		const mapTable = this.parse_tsv(this.load('map.tsv'));
 		const stageTable = this.parse_tsv(this.load('stage.tsv'));
-		const {categories} = JSON.parse(this.load('stage_scheme.json'));
-		const {limit_groups} = JSON.parse(this.load('stage_extras.json'));
+
+		const stageScheme = JSON.parse(this.load('stage_scheme.json'));
+		const stageExtras = JSON.parse(this.load('stage_extras.json'));
+
+		this.generate_data_files({mapTable, stageTable, stageScheme, stageExtras});
+		this.generate_pages({stageScheme});
+		this.generate_crown({mapTable, stageScheme});
+		this.generate_materials({mapTable, stageTable});
+	}
+
+	generate_data_files({mapTable, stageTable, stageScheme, stageExtras}) {
+		const {categories} = stageScheme;
+		const {limit_groups} = stageExtras;
 		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
 		const enemyData = this.parse_tsv(this.load('enemy.tsv'));
 
@@ -43,7 +47,7 @@ module.exports = class extends SiteGenerator {
 		});
 	}
 
-	generate_pages() {
+	generate_pages({stageScheme}) {
 		const catData = this.parse_tsv(this.load('cat.tsv'));
 		const eggs = catData.reduce((eggs, cat, id) => {
 			if (cat.egg_1) {
@@ -53,7 +57,7 @@ module.exports = class extends SiteGenerator {
 		}, {});
 		this.write_template('html/anim.html', 'anim.html', {eggs});
 
-		const {categories, conditions, material_drops} = JSON.parse(this.load('stage_scheme.json'));
+		const {categories, conditions, material_drops} = stageScheme;
 		const egg_set = Object.keys(eggs).map(x => parseInt(x, 10));
 		this.write_template('html/stage.html', 'stage.html', {
 			category: categories.default,
@@ -71,13 +75,12 @@ module.exports = class extends SiteGenerator {
 		});
 	}
 
-	generate_crown() {
-		const mapTable = this.parse_tsv(this.load('map.tsv'));
+	generate_crown({mapTable, stageScheme}) {
 		const {categories: {
 			default: groups,
 			custom: customMaps,
 			extra: extraMaps,
-		}} = JSON.parse(this.load('stage_scheme.json'));
+		}} = stageScheme;
 		const {collabs} = JSON.parse(this.load('collab.json'));
 
 		// generate structured data
@@ -162,9 +165,8 @@ module.exports = class extends SiteGenerator {
 		];
 	}
 
-	generate_materials() {
-		const mapTable = this.parse_tsv(this.load('map.tsv'));
-		const stageMap = this.parse_tsv(this.load('stage.tsv')).reduce((rv, entry) => {
+	generate_materials({mapTable, stageTable}) {
+		const stageMap = stageTable.reduce((rv, entry) => {
 			const id = parseInt(entry.id, 36);
 			rv.set(id, entry);
 			return rv;
