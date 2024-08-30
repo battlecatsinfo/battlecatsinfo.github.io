@@ -101,37 +101,31 @@ function namefor(v) {
 }
 
 function createReward(tr, v) {
+	const reward = stage_extra.rewards[v[1]];
 	const td = tr.appendChild(document.createElement("td"));
 	const td1 = tr.appendChild(document.createElement('td'));
-	if (v.length != 3) {
+
+	if (typeof reward?.cid !== 'undefined') {
 		const img = td1.appendChild(new Image(104, 79));
 		img.style.maxWidth = "3em";
 		img.style.height = 'auto';
-		const S = v[4];
-		if (v[3].endsWith("的權利")) {
-			img.src = `/img/u/${S}/2.png`;
-		} else {
-			if (stage_extra.eggSet.has(parseInt(S)))
-				img.src = '/img/s/0/0.png';
-			else
-				img.src = `/img/u/${S}/0.png`;
-		}
+		img.src = stage_extra.eggSet.has(reward.cid) ?
+			'/img/s/0/0.png' :
+			reward.icon || `/img/u/${reward.cid}/${reward.clv ?? 0}.png`;
 		const a = td.appendChild(document.createElement("a"));
-		a.href = "/unit.html?id=" + S;
-		a.textContent = v[3];
+		a.href = "/unit.html?id=" + reward.cid;
+		a.textContent = reward.name;
 		a.style.verticalAlign = 'center';
-	} else {
-		const img = td1.appendChild(new Image(128, 128));
-		img.style.maxWidth = "2.7em";
-		img.style.height = 'auto';
-		let rw = parseInt(v[1], 10);
-		const span = td.appendChild(document.createElement('span'));
-		span.style.verticalAlign = 'center';
-		span.textContent = `${stage_extra.rwName[rw]} ×${v[2] > 1000 ? numStr(v[2]) : v[2]}`;
-		if (rw <= 13 && rw >= 11)
-			rw += 9;
-		img.src = `/img/r/${rw}.png`;
+		return;
 	}
+
+	const img = td1.appendChild(new Image(128, 128));
+	img.style.maxWidth = "2.7em";
+	img.style.height = 'auto';
+	const span = td.appendChild(document.createElement('span'));
+	span.style.verticalAlign = 'center';
+	span.textContent = `${reward?.name} ×${numStr(v[2])}`;
+	img.src = reward.icon || `/img/r/${v[1]}.png`;
 }
 
 function numStr(num) {
@@ -307,7 +301,7 @@ async function search_gold() {
 
 async function search_reward(e) {
 	const T = e.currentTarget.i.toString();
-	const P = stage_extra.rwName[e.currentTarget.i];
+	const P = stage_extra.rewards[e.currentTarget.i]?.name;
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
 	search_result.textContent = '';
@@ -960,7 +954,7 @@ async function render_stage() {
 		var rw = stage_extra.matDrops[i - 1];
 		var tr = m_drops.appendChild(document.createElement("tr"));
 		var td0 = tr.appendChild(document.createElement("td"));
-		td0.textContent = stage_extra.rwName[rw];
+		td0.textContent = stage_extra.rewards[rw]?.name;
 		var td2 = tr.appendChild(document.createElement('td'));
 		var img = td2.appendChild(new Image(128, 128));
 		img.style.maxWidth = "2.7em";
