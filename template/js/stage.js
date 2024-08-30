@@ -164,7 +164,7 @@ async function search_guard() {
 	td.textContent = '關卡';
 
 	for await (const v of utils.forEachStage()) {
-		if (parseInt(v.flags, 36) & 2) {
+		if (v.flags & 2) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
@@ -251,7 +251,7 @@ async function search_gold() {
 	}
 
 	for await (const v of utils.forEachMap()) {
-		if (parseInt(v.flags, 36) & 2) {
+		if (v.flags & 2) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
@@ -291,10 +291,8 @@ async function search_reward(e) {
 	for await (const v of utils.forEachStage()) {
 		const drop_data = v.drop;
 		if (drop_data) {
-			for (const drop_line of drop_data.split('|')) {
-				const i = drop_line.indexOf(',') + 1;
-				const I = drop_line.indexOf(',', i);
-				if (drop_line.slice(i, I) == T) {
+			for (const [, id, num] of drop_data) {
+				if (id == T) {
 					const tr = tbl.appendChild(document.createElement('tr'));
 					let td0 = tr.appendChild(document.createElement('td'));
 					utils.getMap(~~(v.id / 1000)).then(map => {
@@ -309,9 +307,9 @@ async function search_reward(e) {
 					a2.href = `/stage.html?s=${mc}-${sm}-${st}`;
 					a2.onclick = onStageAnchorClick;
 					td = tr.appendChild(document.createElement('td'));
-					td.textContent = parseInt(v.energy, 36);
+					td.textContent = v.energy;
 					td = tr.appendChild(document.createElement('td'));
-					td.textContent = P + ' ×' + drop_line.slice(I + 1);
+					td.textContent = P + ' ×' + num;
 					break;
 				}
 			}
@@ -462,7 +460,6 @@ function handle_url() {
 }
 
 function getConditionHTML(obj) {
-	obj = parseInt(obj, 36);
 	if (obj > 100000) {
 		const x = Math.abs(obj) % 100000;
 		const mc = fromV(~~(x / 1000));
@@ -531,16 +528,15 @@ function getRarityString(rare) {
 }
 class Limit {
 	constructor(x) {
-		if (x != undefined) {
-			let strs = x.split(',');
-			this.star = parseInt(strs[0], 10);
-			this.sid = parseInt(strs[1], 10);
-			this.rare = parseInt(strs[2], 10);
-			this.num = parseInt(strs[3], 10);
-			this.line = parseInt(strs[4], 10);
-			this.min = parseInt(strs[5], 10);
-			this.max = parseInt(strs[6], 10);
-			this.group = stage_extra.lmGrp[parseInt(strs[7], 10)];
+		if (x !== undefined) {
+			this.star = x[0];
+			this.sid = x[1];
+			this.rare = x[2];
+			this.num = x[3];
+			this.line = x[4];
+			this.min = x[5];
+			this.max = x[6];
+			this.group = stage_extra.lmGrp[x[7]];
 		} else {
 			this.star = -1;
 			this.sid = -1;
@@ -706,19 +702,13 @@ function makeTd(p, txt) {
 	td.textContent = txt;
 }
 
-function parse_drop(D) {
-	return D.split('|').map(function(x) {
-		return x.split(',');
-	});
-}
-
 function getDropData(drops) {
 	const res = [];
 	let sum = 0;
 	const ints = [];
 	for (let _i = 0, drops_1 = drops; _i < drops_1.length; _i++) {
 		const d = drops_1[_i];
-		ints.push(parseInt(d[0], 10));
+		ints.push(d[0]);
 	}
 	for (let _a = 0, ints_1 = ints; _a < ints_1.length; _a++) {
 		const x = ints_1[_a];
@@ -729,7 +719,7 @@ function getDropData(drops) {
 			const x = ints_2[_b];
 			res.push(numStr(x / 10));
 		}
-	} else if (info3.rand == '-3') {
+	} else if (info3.rand === -3) {
 		const c = Math.floor(100 / drops.length).toString();
 		for (let _c = 0, ints_3 = ints; _c < ints_3.length; _c++) {
 			const x = ints_3[_c];
@@ -740,7 +730,7 @@ function getDropData(drops) {
 			const x = ints_4[_d];
 			res.push(x.toString());
 		}
-	} else if (sum > 100 && (info3.rand == '0' || info3.rand == '1')) {
+	} else if (sum > 100 && (info3.rand === 0 || info3.rand === 1)) {
 		let rest = 100;
 		if (ints[0] == 100) {
 			res.push("100");
@@ -757,7 +747,7 @@ function getDropData(drops) {
 				res.push(numStr(filter));
 			}
 		}
-	} else if (info3.rand == '-4') {
+	} else if (info3.rand === -4) {
 		for (let _f = 0, ints_6 = ints; _f < ints_6.length; _f++) {
 			const x = ints_6[_f];
 			res.push(numStr(x * 100 / sum));
@@ -790,16 +780,16 @@ M3.oninput = function (event) {
 };
 
 async function render_stage() {
-	const flags2 = parseInt(info2.flags || '0', 36);
-	const flags3 = parseInt(info3.flags || '0', 36);
-	const stars_str = info2.stars ? info2.stars.split(',') : [];
+	const flags2 = info2.flags;
+	const flags3 = info3.flags;
+	const mults = info2.stars || [];
 	const url = new URL(location.href);
 	const had_query = url.search !== '';
 	url.search = url.hash = '';
 
 	url.searchParams.set("s", [M1.selectedIndex, M2.selectedIndex, M3.selectedIndex].join("-"));
 	star = fix_star(star);
-	star = stars_str.length ? Math.min(stars_str.length, star) : star;
+	star = mults.length ? Math.min(mults.length, star) : star;
 	if (star !== 1)
 		url.searchParams.set("star", star);
 
@@ -830,15 +820,15 @@ async function render_stage() {
 		limit_bt.parentNode.removeChild(limit_bt);
 
 	var mult = 100;
-	if (stars_str.length) {
-		mult = parseInt(stars_str[star - 1], 10);
+	if (mults.length) {
+		mult = mults[star - 1];
 		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 		var th = tr.appendChild(document.createElement("th"));
 		th.colSpan = 6;
-		for (let i = 0; i < stars_str.length; ++i) {
+		for (let i = 0; i < mults.length; ++i) {
 			var a = th.appendChild(document.createElement("span"));
 			a.classList.add("a");
-			a.textContent = (i + 1).toString() + "★: " + stars_str[i] + "%";
+			a.textContent = (i + 1).toString() + "★: " + mults[i] + "%";
 			url.searchParams.set("star", (i + 1).toString());
 			a.href = url.href;
 			a.onclick = onStarAnchorClick;
@@ -847,16 +837,16 @@ async function render_stage() {
 		}
 		tr.id = "stars-tr";
 	}
-	if (info3.flags || info2.resetMode || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond) {
+	if (info3.flags || info2.resetMode >= 0 || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond) {
 		var s;
 		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 		tr.id = "warn-tr";
 		tr.style.fontSize = "larger";
 		var th = tr.appendChild(document.createElement("th"));
 		th.colSpan = 6;
-		if (info2.resetMode) {
+		if (info2.resetMode >= 0) {
 			var span = th.appendChild(document.createElement("div"));
-			span.textContent = stage_extra.resetModes[info2.resetMode.charCodeAt(0) - 48];
+			span.textContent = stage_extra.resetModes[info2.resetMode];
 			span.classList.add('I');
 		}
 		if (info2.wait) {
@@ -899,7 +889,7 @@ async function render_stage() {
 	}
 	rewards.textContent = "";
 	if (info3.drop && (M1.selectedOptions[0].dataset.map || M1.selectedIndex !== 3)) {
-		var drop_data = parse_drop(info3.drop);
+		var drop_data = info3.drop;
 		var chances = getDropData(drop_data);
 		var once = true;
 		for (var i = 0; i < drop_data.length; ++i) {
@@ -909,17 +899,17 @@ async function render_stage() {
 			var tr = rewards.appendChild(document.createElement("tr"));
 			createReward(tr, v);
 			var td1 = tr.appendChild(document.createElement("td"));
-			td1.appendChild(document.createTextNode(chances[i] + "%" + (i == 0 && v[0] != '100' && info3.rand != '-4' ? " （寶雷）" : "")));
+			td1.appendChild(document.createTextNode(chances[i] + "%" + (i == 0 && v[0] !== 100 && info3.rand !== -4 ? " （寶雷）" : "")));
 			var td2 = tr.appendChild(document.createElement("td"));
-			td2.textContent = i == 0 && (info3.rand == '1' || parseInt(drop_data[0][1], 10) >= 1e3 && parseInt(drop_data[0][1], 10) < 3e4) ? "一次" : "無";
+			td2.textContent = i == 0 && (info3.rand === 1 || v[1] >= 1e3 && v[1] < 3e4) ? "一次" : "無";
 		}
 	}
 	rewards.parentNode.hidden = !rewards.children.length;
 	m_drops.textContent = "";
-	var material_drop = (info2.matDrops || "").split(',');
+	var material_drop = info2.matDrops || [];
 	for (var i = 1; i < material_drop.length; ++i) {
-		const x = parseInt(material_drop[i], 36);
-		if (x == '0')
+		const x = material_drop[i];
+		if (!x)
 			continue;
 		var rw = stage_extra.matDrops[i - 1];
 		var tr = m_drops.appendChild(document.createElement("tr"));
@@ -934,10 +924,10 @@ async function render_stage() {
 		td1.textContent = x + '%';
 	}
 	m_drops.parentNode.hidden = !m_drops.children.length;
-	mM.textContent = `抽選次數：${~~Math.round(parseInt(info3.maxMat, 10) * parseFloat((info2.matMults || "").split(',')[star - 1]))}回`;
+	mM.textContent = `抽選次數：${~~Math.round(info3.maxMat * info2.matMults?.[star - 1])}回`;
 	if (info3.time) {
 		m_times.textContent = "";
-		var drop_data = parse_drop(info3.time);
+		var drop_data = info3.time;
 		for (var _i = 0, drop_data_1 = drop_data; _i < drop_data_1.length; _i++) {
 			var v = drop_data_1[_i];
 			var tr = m_times.appendChild(document.createElement("tr"));
@@ -951,7 +941,7 @@ async function render_stage() {
 	} else {
 		m_times.parentNode.hidden = true;
 	}
-	const energy = parseInt(info3.energy, 36);
+	const energy = info3.energy;
 	if (M1.selectedIndex == 10) {
 		st1[1].textContent = `喵力達${String.fromCharCode(65 + energy / 1000)} × ${energy % 1e3}`;
 	} else {
@@ -966,9 +956,9 @@ async function render_stage() {
 		st3[3].textContent = "無限制";
 	}
 	if (flags3 & 8) {
-		st2[1].textContent = numStr(~~((parseInt(info3.hp, 10) * mult) / 100));
+		st2[1].textContent = numStr(~~((info3.hp * mult) / 100));
 	} else {
-		st2[1].textContent = numStr(parseInt(info3.hp, 10));
+		st2[1].textContent = numStr(info3.hp);
 	}
 	if (info2.stageCond) {
 		st3[5].textContent = "";
@@ -976,7 +966,7 @@ async function render_stage() {
 	} else {
 		st3[5].textContent = "無限制";
 	}
-	var xp = parseInt(info3.xp, 36);
+	var xp = info3.xp;
 	switch (M1.selectedIndex) {
 		case 3:
 			st3[1].textContent = 1000 + Math.min(M3.selectedIndex, 47) * 300;
@@ -993,7 +983,7 @@ async function render_stage() {
 	st2[5].textContent = info3.bg;
 	st2[3].textContent = info3.minSpawn + 'F';
 	if (info2.limit) {
-		const limits = info2.limit.split('|').map(x => new Limit(x));
+		const limits = info2.limit.map(x => new Limit(x));
 		const theStar = star - 1;
 		var lim = new Limit();
 		for (var _a = 0; _a < limits.length; _a++) {
