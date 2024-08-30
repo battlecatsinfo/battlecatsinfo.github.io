@@ -1069,15 +1069,15 @@
 		"en_name": "Bikkuriman Collaboration",
 		"img": "https://i.imgur.com/WJkKX2g.png",
 		"rate": [
-			3000,
+			800,
 			0,
-			2500,
+			4000,
 			0,
-			1300,
+			2000,
 			0,
-			2500,
+			2000,
 			1,
-			700,
+			1200,
 			1
 		],
 		"stage": [
@@ -6083,7 +6083,7 @@
 	},
 	{
 		"tag": "Fate",
-		"tw_name": "Fate/stay night [HF]",
+		"tw_name": "劇場版 Fate/stay night",
 		"en_name": "Fate/Stay Night: Heaven's Feel",
 		"img": "https://i.imgur.com/4dPvKrG.png",
 		"rate": [
