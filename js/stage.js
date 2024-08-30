@@ -8,14 +8,23 @@ module.exports = class extends SiteGenerator {
 		const stageScheme = JSON.parse(this.load('stage_scheme.json'));
 		const stageExtras = JSON.parse(this.load('stage_extras.json'));
 
-		this.generate_data_files({mapTable, stageTable, stageScheme, stageExtras});
-		this.generate_pages({stageScheme});
+		const catData = this.parse_tsv(this.load('cat.tsv'));
+		const eggs = catData.reduce((eggs, cat, id) => {
+			if (cat.egg_1) {
+				eggs[id] = [parseInt(cat.egg_1, 10), parseInt(cat.egg_2, 10)];
+			}
+			return eggs;
+		}, {});
+		const eggSet = Object.keys(eggs).map(Number);
+
+		this.generate_data_files({mapTable, stageTable, stageScheme, stageExtras, eggSet});
+		this.generate_pages({stageScheme, eggs});
 		this.generate_crown({mapTable, stageScheme});
 		this.generate_materials({mapTable, stageTable});
 	}
 
-	generate_data_files({mapTable, stageTable, stageScheme, stageExtras}) {
-		const {categories} = stageScheme;
+	generate_data_files({mapTable, stageTable, stageScheme, stageExtras, eggSet}) {
+		const {categories, conditions, material_drops} = stageScheme;
 		const {limit_groups} = stageExtras;
 		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
 		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
@@ -33,6 +42,9 @@ module.exports = class extends SiteGenerator {
 		const extra = {
 			lmGrp: limit_groups,
 			grpName: categories.default.map(x => x.name),
+			conditions,
+			matDrops: material_drops,
+			eggs: eggSet,
 			eName: enemyTable.map(x => x.name_tw),
 			rwName: rewardTable.reduce((rv, entry) => {
 				rv[entry.id] = entry.name;
@@ -47,18 +59,10 @@ module.exports = class extends SiteGenerator {
 		});
 	}
 
-	generate_pages({stageScheme}) {
-		const catData = this.parse_tsv(this.load('cat.tsv'));
-		const eggs = catData.reduce((eggs, cat, id) => {
-			if (cat.egg_1) {
-				eggs[id] = [parseInt(cat.egg_1, 10), parseInt(cat.egg_2, 10)];
-			}
-			return eggs;
-		}, {});
+	generate_pages({stageScheme, eggs}) {
 		this.write_template('html/anim.html', 'anim.html', {eggs});
 
-		const {categories, conditions, material_drops} = stageScheme;
-		const egg_set = Object.keys(eggs).map(Number);
+		const {categories} = stageScheme;
 		this.write_template('html/stage.html', 'stage.html', {
 			category: categories.default,
 		});
@@ -67,11 +71,6 @@ module.exports = class extends SiteGenerator {
 		});
 		this.write_template('html/stage3.html', 'stage3.html', {
 			category: categories.custom,
-		});
-		this.write_template('js/stage.js', 'stage.js', {
-			conditions,
-			material_drops,
-			egg_set,
 		});
 	}
 

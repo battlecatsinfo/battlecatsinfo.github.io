@@ -64,6 +64,7 @@ const sources = [
 	'gif.min.js',
 	'gif.worker.js',
 	'imgcut.js',
+	'stage.js',
 	'anim.min.js',
 	'imgcut.js'
 ];

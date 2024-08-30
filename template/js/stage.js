@@ -1,5 +1,4 @@
 const loader = document.getElementById('loader');
-const eggs = new Set({{{toJSON egg_set}}});
 const SI_TW_NAME = 0;
 const SI_JP_NAME = 1;
 const SI_XP = 2;
@@ -32,7 +31,6 @@ const SM_INVALID_COMBO = 11;
 const SM_LIMIT = 12;
 
 const QQ = '？？？';
-const conditions = {{{toJSON conditions}}};
 const M1 = document.getElementById("M1");
 const M2 = document.getElementById("M2");
 const M3 = document.getElementById("M3");
@@ -51,7 +49,6 @@ const m_times = document.getElementById("times");
 const mM = document.getElementById("mM");
 const ex_stages = document.getElementById("ex-stages");
 const stageL = parseInt(localStorage.getItem('stagel') || '0', 10);
-const materialDrops = {{{toJSON material_drops}}};
 
 let info1, info2, info3, star, stage_extra, filter_page, stageF;
 
@@ -114,7 +111,7 @@ function createReward(tr, v) {
 		if (v[3].endsWith("的權利")) {
 			img.src = `/img/u/${S}/2.png`;
 		} else {
-			if (eggs.has(parseInt(S)))
+			if (stage_extra.eggSet.has(parseInt(S)))
 				img.src = '/img/s/0/0.png';
 			else
 				img.src = `/img/u/${S}/0.png`;
@@ -516,7 +513,7 @@ function getConditionHTML(obj) {
 		a.onclick = onStageAnchorClick;
 		return div;
 	} else {
-		obj = conditions[obj];
+		obj = stage_extra.conditions[obj];
 		if (!obj) return document.createTextNode(QQ);
 	}
 	if (typeof obj == "string") return document.createTextNode(obj);
@@ -961,7 +958,7 @@ async function render_stage() {
 		const x = parseInt(material_drop[i], 36);
 		if (x == '0')
 			continue;
-		var rw = materialDrops[i - 1];
+		var rw = stage_extra.matDrops[i - 1];
 		var tr = m_drops.appendChild(document.createElement("tr"));
 		var td0 = tr.appendChild(document.createElement("td"));
 		td0.textContent = stage_extra.rwName[rw];
@@ -1260,5 +1257,6 @@ async function doSearch(t) {
 (async () => {
 	await utils.loadStageData();
 	stage_extra = await utils.getStageExtra();
+	stage_extra.eggSet = new Set(stage_extra.eggs);
 	initUI();
 })();
