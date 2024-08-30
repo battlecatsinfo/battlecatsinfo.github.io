@@ -556,12 +556,11 @@ function getConditionHTML(obj) {
 }
 
 function getRarityString(rare) {
-	var names = ["基本", "EX", "稀有", "激稀有", "超激稀有", "傳説稀有"];
 	var strs = [];
 	var y = 0;
 	for (var i = 1; i < 64; i <<= 1) {
 		if (rare & i)
-			strs.push(names[y]);
+			strs.push(stage_extra.rars[y]);
 		++y;
 	}
 	return strs.join("，");
