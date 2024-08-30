@@ -1,4 +1,3 @@
-const readline = require('node:readline');
 const fs = require('node:fs');
 const {resolve} = require('node:path');
 const {OUTPUT_DIR, SiteGenerator} = require('./base.js');
@@ -16,19 +15,37 @@ module.exports = class extends SiteGenerator {
 				throw e;
 		}
 
-		this.stage_rewards = {};
-		this.gacha_pools = {};
-		this.map_stars = {};
-		for (const p of JSON.parse(this.load('pools.json')))
-			this.gacha_pools[p.tw_name] = p;
+		const mapTable = this.parse_tsv(this.load('map.tsv'));
+		const stageTable = this.parse_tsv(this.load('stage.tsv'));
 
-		const self = this;
-		return Promise.all([
-			this.load_map(),
-			this.load_stage()
-		]).then(() => {
-			self.write_collabs();
-		});
+		this.map_names = mapTable.reduce((rv, entry, i) => {
+			let {id, name_tw, name_jp} = entry;
+			id = parseInt(id, 36);
+			rv[id] = name_tw || name_jp || '？？？';
+			return rv;
+		}, {});
+
+		this.map_stars = mapTable.reduce((rv, entry, i) => {
+			let {id, stars} = entry;
+			id = parseInt(id, 36);
+			if (stars)
+				rv[id] = stars;
+			return rv;
+		}, {});
+
+		this.stage_rewards = stageTable.reduce((rv, entry, i) => {
+			let {id, drop, time} = entry;
+			id = parseInt(id, 36);
+			rv[id] = drop || time || false;
+			return rv;
+		}, {});
+
+		this.gacha_pools = JSON.parse(this.load('pools.json')).reduce((rv, p) => {
+			rv[p.tw_name] = p;
+			return rv;
+		}, {});
+
+		this.write_collabs();
 	}
 	write_collabs() {
 		const collab_template = this.load_template('html/collab.html');
@@ -82,26 +99,24 @@ module.exports = class extends SiteGenerator {
 						[];
 				const rewards = [];
 				let len = 0, st = m * 1000, r;
-				do {
+				while (true) {
 					r = this.stage_rewards[st + len];
 					if (!r) break;
-				
-					if (r) {
-						for (const t of r.split('|')) {
-							const v = t.split(',');
-							if (v.length != 3) {
-								if (v[3].endsWith('的權利'))
-									dup_t.add(v[4]);
-								else
-									dup_u.add(v[4]);
-							} else {
-								if (v[1] < 1000) // ensure reward is valid
-									dup_r.add(v[1]);
-							}
+
+					for (const t of r.split('|')) {
+						const v = t.split(',');
+						if (v.length != 3) {
+							if (v[3].endsWith('的權利'))
+								dup_t.add(v[4]);
+							else
+								dup_u.add(v[4]);
+						} else {
+							if (v[1] < 1000) // ensure reward is valid
+								dup_r.add(v[1]);
 						}
 					}
 					len += 1;
-				} while (true);
+				}
 				for (const u of dup_u)
 					rewards.push({id: u, type: 'u'});
 				dup_u.clear();
@@ -138,37 +153,5 @@ module.exports = class extends SiteGenerator {
 		this.write_template('html/schedule.html', 'schedule.html', {
 			collab_stages
 		});
-	}
-	async load_map() {
-		const rl = readline.createInterface({
-			input: this.open('map.tsv'),
-			crlfDelay: Infinity,
-		});
-		let s, id, names = {};
-		for await (const line of rl) {
-			s = line.split('\t');
-			id = parseInt(s[0], 36);
-			names[id] = s[1] || s[2] || '？？？';
-			if (s[3])
-				this.map_stars[id] = s[3];
-		}
-		this.map_names = names;
-	}
-	async load_stage() {
-		const rl = readline.createInterface({
-			input: this.open('stage.tsv'),
-			crlfDelay: Infinity,
-		});
-		let s, id;
-		for await (const line of rl) {
-			s = line.split('\t');
-			id = parseInt(s[0], 36);
-			if (s[8])
-				this.stage_rewards[id] = s[8];
-			else if (s[9])
-				this.stage_rewards[id] = s[9];
-			else
-				this.stage_rewards[id] = false;
-		}
 	}
 };
