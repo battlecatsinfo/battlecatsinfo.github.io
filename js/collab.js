@@ -12,7 +12,7 @@ module.exports = class extends SiteGenerator {
 		try {
 			fs.mkdirSync(resolve(OUTPUT_DIR, 'collab'));
 		} catch (e) {
-			if (e.errno != -4075)
+			if (e.code != 'EEXIST')
 				throw e;
 		}
 
