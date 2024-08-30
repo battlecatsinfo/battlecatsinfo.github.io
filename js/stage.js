@@ -24,7 +24,7 @@ module.exports = class extends SiteGenerator {
 	}
 
 	generate_data_files({mapTable, stageTable, stageScheme, stageExtras, eggSet}) {
-		const {categories, conditions, material_drops} = stageScheme;
+		const {categories, conditions, material_drops, reset_modes} = stageScheme;
 		const {limit_groups} = stageExtras;
 		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
 		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
@@ -44,6 +44,7 @@ module.exports = class extends SiteGenerator {
 			grpName: categories.default.map(x => x.name),
 			conditions,
 			matDrops: material_drops,
+			resetModes: reset_modes,
 			eggs: eggSet,
 			eName: enemyTable.map(x => x.name_tw),
 			rwName: rewardTable.reduce((rv, entry) => {

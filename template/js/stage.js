@@ -893,7 +893,7 @@ async function render_stage() {
 		th.colSpan = 6;
 		if (info2[SM_RESETMODE]) {
 			var span = th.appendChild(document.createElement("div"));
-			span.textContent = ["過關獎勵將會在再次出現時重置", "清除狀況將會在再次出現時重置", "可過關次數將會在再次出現時重置"][info2[SM_RESETMODE].charCodeAt(0) - 48];
+			span.textContent = stage_extra.resetModes[info2[SM_RESETMODE].charCodeAt(0) - 48];
 			span.classList.add('I');
 		}
 		if (info2[SM_WAITFORTIMER]) {
