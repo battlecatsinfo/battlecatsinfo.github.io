@@ -17,8 +17,8 @@
 		try {
 			db.deleteObjectStore("extra");
 		} catch (ex) {}
-		db.createObjectStore("map");
-		db.createObjectStore("stage");
+		db.createObjectStore("map", {keyPath: "id"});
+		db.createObjectStore("stage", {keyPath: "id"});
 		db.createObjectStore("extra");
 	}
 
@@ -41,11 +41,11 @@
 				extraStore.clear();
 
 				for (const idx in data.map) {
-					mapStore.put(data.map[idx], parseInt(idx, 10));
+					mapStore.put(data.map[idx]);
 				}
 
 				for (const idx in data.stage) {
-					stageStore.put(data.stage[idx], parseInt(idx, 10));
+					stageStore.put(data.stage[idx]);
 				}
 
 				for (const key in data.extra) {
@@ -234,11 +234,11 @@
 	}
 
 	async function* forEachMap(query, direction) {
-		yield* forEachEntry('map', query, direction);
+		yield* forEachValue('map', query, direction);
 	}
 
 	async function* forEachStage(query, direction) {
-		yield* forEachEntry('stage', query, direction);
+		yield* forEachValue('stage', query, direction);
 	}
 
 	function getTheme() {

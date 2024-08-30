@@ -163,17 +163,17 @@ async function search_guard() {
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
 
-	for await (const [key, v] of utils.forEachStage()) {
+	for await (const v of utils.forEachStage()) {
 		if (parseInt(v.flags, 36) & 2) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
-			utils.getMap(~~(key / 1000)).then(map => {
+			utils.getMap(~~(v.id / 1000)).then(map => {
 				a.textContent = namefor(map);
 			});
-			const mc = ~~(key / 1000000);
-			const st = key % 1000;
-			const sm = ~~((key - mc * 1000000) / 1000);
+			const mc = ~~(v.id / 1000000);
+			const st = v.id % 1000;
+			const sm = ~~((v.id - mc * 1000000) / 1000);
 			const sts = [mc, sm, st];
 			a.href = `/stage.html?s=${mc}-${sm}`;
 			a.onclick = onStageAnchorClick;
@@ -200,17 +200,17 @@ async function search_enemy(e) {
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
 
-	for await (const [key, v] of utils.forEachStage()) {
+	for await (const v of utils.forEachStage()) {
 		if (v.enemyLines.startsWith(T)) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
-			utils.getMap(~~(key / 1000)).then(map => {
+			utils.getMap(~~(v.id / 1000)).then(map => {
 				a.textContent = namefor(map);
 			});
-			const mc = ~~(key / 1000000);
-			const st = key % 1000;
-			const sm = ~~((key - mc * 1000000) / 1000);
+			const mc = ~~(v.id / 1000000);
+			const st = v.id % 1000;
+			const sm = ~~((v.id - mc * 1000000) / 1000);
 			const sts = [mc, sm, st];
 			a.href = `/stage.html?s=${mc}-${sm}`;
 			a.onclick = onStageAnchorClick;
@@ -250,13 +250,13 @@ async function search_gold() {
 		}
 	}
 
-	for await (const [key, v] of utils.forEachMap()) {
+	for await (const v of utils.forEachMap()) {
 		if (parseInt(v.flags, 36) & 2) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
-			const mc = ~~(key / 1000);
-			const sm = key % 1000;
+			const mc = ~~(v.id / 1000);
+			const sm = v.id % 1000;
 			a.textContent = M1.children[mc].textContent;
 			a.href = `/stage.html?s=${mc}`;
 			a.onclick = onStageAnchorClick;
@@ -288,7 +288,7 @@ async function search_reward(e) {
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '掉落';
 
-	for await (const [key, v] of utils.forEachStage()) {
+	for await (const v of utils.forEachStage()) {
 		const drop_data = v.drop;
 		if (drop_data) {
 			for (const drop_line of drop_data.split('|')) {
@@ -297,12 +297,12 @@ async function search_reward(e) {
 				if (drop_line.slice(i, I) == T) {
 					const tr = tbl.appendChild(document.createElement('tr'));
 					let td0 = tr.appendChild(document.createElement('td'));
-					utils.getMap(~~(key / 1000)).then(map => {
+					utils.getMap(~~(v.id / 1000)).then(map => {
 						td0.textContent = namefor(map);
 					});
-					const mc = ~~(key / 1000000);
-					const st = key % 1000;
-					const sm = ~~((key - mc * 1000000) / 1000);
+					const mc = ~~(v.id / 1000000);
+					const st = v.id % 1000;
+					const sm = ~~((v.id - mc * 1000000) / 1000);
 					let td = tr.appendChild(document.createElement('td'));
 					const a2 = td.appendChild(document.createElement('a'));
 					a2.textContent = v.name || v.nameJp;
@@ -631,7 +631,7 @@ async function refresh_1(sts) {
 	const start = M1.selectedIndex * 1000;
 	let _map;
 	let c = 0;
-	for await (const [, map] of utils.forEachMap(IDBKeyRange.bound(start, start + 1000, false, true))) {
+	for await (const map of utils.forEachMap(IDBKeyRange.bound(start, start + 1000, false, true))) {
 		const o = M2.appendChild(document.createElement('option'));
 		if (c === mapIdx)
 			_map = map;
@@ -661,7 +661,7 @@ async function process_2(stageIdx) {
 
 	let _stage;
 	let c = 0;
-	for await (const [, stage] of utils.forEachStage(IDBKeyRange.bound(start, start + 1000, false, true))) {
+	for await (const stage of utils.forEachStage(IDBKeyRange.bound(start, start + 1000, false, true))) {
 		const o = M3.appendChild(document.createElement('option'));
 		if (c === stageIdx)
 			_stage = stage;
@@ -1041,16 +1041,16 @@ async function render_stage() {
 			else
 				td.textContent = (exChance == '100' ? "必定出現以下EX關卡：" : 'EX關卡：' + "（出現機率：" + exChance + "%）");
 			const start = 4000000 + parseInt(exMapID, 10) * 1000;
-			for await (const [key, value] of utils.forEachStage(
+			for await (const stage of utils.forEachStage(
 				IDBKeyRange.bound(start + parseInt(exStageIDMin, 10), start + parseInt(exStageIDMax, 10))
 			)) {
 				const td = ex_stages.appendChild(document.createElement("div"));
 				const a = td.appendChild(document.createElement("a"));
-				const k = key - 4000000;
+				const k = stage.id - 4000000;
 				const sm = ~~(k / 1000);
 				const si = k - sm * 1000;
 				a.href = `/stage.html?s=4-${sm}-${si}`;
-				a.textContent = namefor(value);
+				a.textContent = namefor(stage);
 				a.onclick = onStageAnchorClick;
 			}
 		} else if (ex_stage_data[1]) {
@@ -1193,24 +1193,24 @@ async function doSearch(t) {
 	main_div.hidden = true;
 	search_result.hidden = false;
 	search_result.textContent = '';
-	for await (const [key, stage] of utils.forEachStage()) {
+	for await (const stage of utils.forEachStage()) {
 		let s = stage.name;
 		if (s.includes(v))
-			add_result_stage(key, s, v);
+			add_result_stage(stage.id, s, v);
 		else {
 			s = stage.nameJp;
 			if (s.includes(v))
-				add_result_stage(key, s, v);
+				add_result_stage(stage.id, s, v);
 		}
 	}
-	for await (const [key, map] of utils.forEachMap()) {
+	for await (const map of utils.forEachMap()) {
 		let s = map.name;
 		if (s.includes(v))
-			add_result_map(key, s, v);
+			add_result_map(map.id, s, v);
 		else {
 			s = map.nameJp;
 			if (s.includes(v))
-				add_result_map(key, s, v);
+				add_result_map(map.id, s, v);
 		}
 	}
 	if (!search_result.textContent)
