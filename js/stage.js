@@ -34,19 +34,19 @@ module.exports = class extends SiteGenerator {
 			const id = parseInt(entry.id, 36);
 			rv[id] = {
 				id,
-				name: entry.name_tw,
-				nameJp: entry.name_jp,
-				stars: entry.stars,
-				mapCond: entry.mapcond,
-				stageCond: entry.stagecond,
-				matDrops: entry.materialdrop,
-				matMults: entry.multiplier,
+				name: entry.name_tw || undefined,
+				nameJp: entry.name_jp || undefined,
+				stars: entry.stars || undefined,
+				mapCond: entry.mapcond || undefined,
+				stageCond: entry.stagecond || undefined,
+				matDrops: entry.materialdrop || undefined,
+				matMults: entry.multiplier || undefined,
 				flags: entry.flags,
-				wait: entry.waitfortimer,
+				wait: entry.waitfortimer || undefined,
 				resetMode: entry.resetmode,
-				specialCond: entry.specialcond,
-				invalidCombos: entry.invalid_combo,
-				limit: entry.limit,
+				specialCond: entry.specialcond || undefined,
+				invalidCombos: entry.invalid_combo || undefined,
+				limit: entry.limit || undefined,
 			};
 			return rv;
 		}, {});
@@ -54,22 +54,22 @@ module.exports = class extends SiteGenerator {
 			const id = parseInt(entry.id, 36);
 			rv[id] = {
 				id,
-				name: entry.name_tw,
-				nameJp: entry.name_jp,
+				name: entry.name_tw || undefined,
+				nameJp: entry.name_jp || undefined,
 				xp: entry.xp,
 				hp: entry.health,
 				energy: entry.energy,
 				len: entry.len,
 				rand: entry.rand,
-				drop: entry.drop,
-				time: entry.time,
-				maxMat: entry.maxmaterial,
+				drop: entry.drop || undefined,
+				time: entry.time || undefined,
+				maxMat: entry.maxmaterial || undefined,
 				flags: entry.flags,
 				max: entry.max,
 				minSpawn: entry.min_spawn,
 				bg: entry.bg,
 				enemyLines: entry.enemy_lines,
-				exStage: entry.ex_stage,
+				exStage: entry.ex_stage || undefined,
 			};
 			return rv;
 		}, {});
