@@ -916,7 +916,7 @@ async function render_stage() {
 	}
 	rewards.parentNode.hidden = !rewards.children.length;
 	m_drops.textContent = "";
-	var material_drop = info2.matDrops.split(',');
+	var material_drop = (info2.matDrops || "").split(',');
 	for (var i = 1; i < material_drop.length; ++i) {
 		const x = parseInt(material_drop[i], 36);
 		if (x == '0')
@@ -934,7 +934,7 @@ async function render_stage() {
 		td1.textContent = x + '%';
 	}
 	m_drops.parentNode.hidden = !m_drops.children.length;
-	mM.textContent = `抽選次數：${~~Math.round(parseInt(info3.maxMat, 10) * parseFloat(info2.matMults.split(',')[star - 1]))}回`;
+	mM.textContent = `抽選次數：${~~Math.round(parseInt(info3.maxMat, 10) * parseFloat((info2.matMults || "").split(',')[star - 1]))}回`;
 	if (info3.time) {
 		m_times.textContent = "";
 		var drop_data = parse_drop(info3.time);
@@ -1195,21 +1195,21 @@ async function doSearch(t) {
 	search_result.textContent = '';
 	for await (const stage of utils.forEachStage()) {
 		let s = stage.name;
-		if (s.includes(v))
+		if (s?.includes(v))
 			add_result_stage(stage.id, s, v);
 		else {
 			s = stage.nameJp;
-			if (s.includes(v))
+			if (s?.includes(v))
 				add_result_stage(stage.id, s, v);
 		}
 	}
 	for await (const map of utils.forEachMap()) {
 		let s = map.name;
-		if (s.includes(v))
+		if (s?.includes(v))
 			add_result_map(map.id, s, v);
 		else {
 			s = map.nameJp;
-			if (s.includes(v))
+			if (s?.includes(v))
 				add_result_map(map.id, s, v);
 		}
 	}
