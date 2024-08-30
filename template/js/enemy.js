@@ -303,12 +303,12 @@ async function really_search() {
 	modal.textContent = '';
 	modal.appendChild(tbl);
 
-	for await (const [key, v] of utils.forEachStage()) {
+	for await (const v of utils.forEachStage()) {
 		for (const group of v.enemyLines.split('|')) {
 			if (group.slice(0, group.indexOf(',')) == target) {
-				const mc = ~~(key / 1000000);
-				const st = key % 1000;
-				const sm = ~~((key - mc * 1000000) / 1000);
+				const mc = ~~(v.id / 1000000);
+				const st = v.id % 1000;
+				const sm = ~~((v.id - mc * 1000000) / 1000);
 				const tr = document.createElement('tr');
 				let td;
 
@@ -327,7 +327,7 @@ async function really_search() {
 					previous_td2.rowSpan += 1;
 				} else {
 					const td0 = document.createElement('td');
-					utils.getMap(~~(key / 1000)).then(map => {
+					utils.getMap(~~(v.id / 1000)).then(map => {
 						td0.textContent = namefor(map);
 					});
 					tr.appendChild(td0);

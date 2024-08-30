@@ -31,7 +31,9 @@ module.exports = class extends SiteGenerator {
 		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
 
 		const map = mapTable.reduce((rv, entry, i) => {
-			rv[parseInt(entry.id, 36)] = {
+			const id = parseInt(entry.id, 36);
+			rv[id] = {
+				id,
 				name: entry.name_tw,
 				nameJp: entry.name_jp,
 				stars: entry.stars,
@@ -49,7 +51,9 @@ module.exports = class extends SiteGenerator {
 			return rv;
 		}, {});
 		const stage = stageTable.reduce((rv, entry, i) => {
-			rv[parseInt(entry.id, 36)] = {
+			const id = parseInt(entry.id, 36);
+			rv[id] = {
+				id,
 				name: entry.name_tw,
 				nameJp: entry.name_jp,
 				xp: entry.xp,
