@@ -17,6 +17,7 @@ module.exports = class extends SiteGenerator {
 
 		const mapTable = this.parse_tsv(this.load('map.tsv'));
 		const stageTable = this.parse_tsv(this.load('stage.tsv'));
+		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
 
 		this.map_names = mapTable.reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp} = entry;
@@ -40,6 +41,12 @@ module.exports = class extends SiteGenerator {
 			return rv;
 		}, {});
 
+		this.rewards = rewardTable.reduce((rv, entry, i) => {
+			let {id, name, cat_id, cat_lv, icon} = entry;
+			rv[id] = {id, name, cat_id, cat_lv, icon};
+			return rv;
+		}, {});
+
 		this.gacha_pools = JSON.parse(this.load('pools.json')).reduce((rv, p) => {
 			rv[p.tw_name] = p;
 			return rv;
@@ -53,6 +60,18 @@ module.exports = class extends SiteGenerator {
 		const collabs = data.collabs;
 		const nav_menu = [];
 		const collab_stages = [];
+
+		function reward_sort_key(r) {
+			if (r.cat_id == 0)
+				return 2;
+			if (r.cat_id == 2)
+				return 1;
+			return 0;
+		}
+
+		function reward_sorter(a, b) {
+			return reward_sort_key(a) - reward_sort_key(b);
+		}
 
 		for (let i = 0; i < collabs.length; i++) {
 			const collab = collabs[i];
@@ -88,48 +107,34 @@ module.exports = class extends SiteGenerator {
 				return pools;
 			}, []);
 			const stages = (collab.stages || []).map(s => {
-				const dup_u = new Set();
-				const dup_t = new Set();
-				const dup_r = new Set();
 				const [A, B] = s.split('-');
 				const m = parseInt(A, 10) * 1000 + parseInt(B, 10);
 				const name = this.map_names[m];
 				const stars = this.map_stars[m] ?
 						(this.map_stars[m]).split(',').map(x => parseInt(x, 10) / 100) :
 						[];
-				const rewards = [];
-				let len = 0, st = m * 1000, r;
+
+				let rewards = {};
+				let len = 0, st = m * 1000;
 				while (true) {
-					r = this.stage_rewards[st + len];
+					const r = this.stage_rewards[st + len];
 					if (!r) break;
 
 					for (const t of r.split('|')) {
 						const v = t.split(',');
-						if (v.length != 3) {
-							if (v[3].endsWith('的權利'))
-								dup_t.add(v[4]);
-							else
-								dup_u.add(v[4]);
-						} else {
-							if (v[1] < 1000) // ensure reward is valid
-								dup_r.add(v[1]);
-						}
+						const r = this.rewards[v[1]];
+
+						// ensure reward is valid
+						if (!r.cat_id && r.id > 1000)
+							continue;
+
+						// don't use pure number key to preserve the insertion order
+						rewards['r' + r.id] = r;
 					}
 					len += 1;
 				}
-				for (const u of dup_u)
-					rewards.push({id: u, type: 'u'});
-				dup_u.clear();
-				for (const t of dup_t)
-					rewards.push({id: t, type: 't'});
-				dup_t.clear();
-				for (let r of dup_r) {
-					r = parseInt(r, 10);
-					if (r >= 11 && r <= 13)
-						r += 9;
-					rewards.push({id: r, type: 'r'});
-				}
-				dup_r.clear();
+
+				rewards = Object.values(rewards).sort(reward_sorter);
 
 				return {
 					stage: s,

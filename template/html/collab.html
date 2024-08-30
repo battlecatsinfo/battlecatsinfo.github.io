@@ -137,15 +137,17 @@
 					<td>{{stage.stars.[3]}}</td>
 					<td>
 					{{~#each stage.rewards as |reward|~}}
-					{{~#if (op reward.type '==' 'u')~}}
-					<a href="/unit.html?id={{reward.id}}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/{{reward.id}}/0.png"></a>
-					{{~/if~}}
-					{{~#if (op reward.type '==' 't')~}}
-					<a href="/unit.html?id={{reward.id}}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/{{reward.id}}/2.png"></a>
-					{{~/if~}}
-					{{~#if (op reward.type '==' 'r')~}}
-					<img class="R" width="128" height="128" loading="lazy" src="/img/r/{{reward.id}}.png">
-					{{~/if~}}
+					{{~#if reward.cat_lv~}}
+					<a href="/unit.html?id={{reward.cat_id}}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/{{reward.cat_id}}/{{reward.cat_lv}}.png"></a>
+					{{~else~}}
+					<img class="R" width="128" height="128" loading="lazy" src="
+						{{~#if reward.icon~}}
+							{{reward.icon}}
+						{{~else~}}
+							/img/r/{{reward.id}}.png
+						{{~/if~}}
+					">
+					{{~/if}}
 					{{~/each~}}
 					</td>
 				</tr>

@@ -49,8 +49,14 @@ module.exports = class extends SiteGenerator {
 			rars: rarities,
 			eggs: eggSet,
 			eName: enemyTable.map(x => x.name_tw),
-			rwName: rewardTable.reduce((rv, entry) => {
-				rv[entry.id] = entry.name;
+			rewards: rewardTable.reduce((rv, entry) => {
+				const {id, name, cat_id, cat_lv, icon} = entry;
+				rv[entry.id] = {
+					name: name || undefined,
+					cid: cat_id ? parseInt(cat_id, 10) : undefined,
+					clv: cat_lv ? parseInt(cat_lv, 10) : undefined,
+					icon: icon || undefined,
+				};
 				return rv;
 			}, {}),
 		};
