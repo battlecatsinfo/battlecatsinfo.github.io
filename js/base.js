@@ -225,10 +225,10 @@ class SiteGenerator {
 	write_template(...args) {
 		return this.constructor.write_template.apply(this, args);
 	}
-	static write_json(out_f, obj) {
+	static write_json(out_f, obj, replace, space) {
 		fs.writeFileSync(
 			resolve(OUTPUT_DIR, out_f),
-			JSON.stringify(obj),
+			JSON.stringify(obj, replace, space),
 			'utf8'
 		)
 	}
