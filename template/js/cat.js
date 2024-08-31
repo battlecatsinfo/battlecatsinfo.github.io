@@ -1286,33 +1286,22 @@ class Cat {
 }
 
 async function getAllEnemies() {
-	let res = await utils.fetch('/enemy.json');
-	res = await res.json();
-
-	const enemies = [];
-	for (let i = 0, I = res.length; i < I; ++i) {
-		const data = res[i];
-		enemies[i] = new Enemy(data);
-	}
-	return enemies;
+	const res = await utils.fetch('/enemy.json');
+	const data = await res.json();
+	return data.map(enemy => new Enemy(enemy));
 }
 
 async function getAllCats() {
-	let res = await utils.fetch('/cat.json');
-	res = await res.json();
-
-	const cats = [];
-	for (let i = 0, I = res.length; i < I; ++i) {
-		const data = res[i];
-
-		// format from raw data
-		const info = data.info;
+	const res = await utils.fetch('/cat.json');
+	const data = await res.json();
+	return data.map(cat => {
+		// slightly tweak data before storage
+		const info = cat.info;
 		if (info.talents)
 			info.talents = new Int16Array(info.talents.split('|'));
 
-		cats[i] = new Cat(data);
-	}
-	return cats;
+		return new Cat(cat);
+	});
 }
 
 function onupgradeneeded(event) {
@@ -1407,10 +1396,7 @@ async function loadCat(id) {
 				};
 			} else {
 				store.getAll().onsuccess = (event) => {
-					rv = event.target.result.reduce((rv, cat) => {
-						rv[cat.i] = new Cat(cat);
-						return rv;
-					}, []);
+					rv = event.target.result.map(e => new Cat(e));
 				};
 			}
 		});
@@ -1497,10 +1483,7 @@ async function loadEnemy(id) {
 				};
 			} else {
 				store.getAll().onsuccess = (event) => {
-					rv = event.target.result.reduce((rv, enemy) => {
-						rv[enemy.i] = new Enemy(enemy);
-						return rv;
-					}, []);
+					rv = event.target.result.map(e => new Enemy(e));
 				};
 			}
 		});
