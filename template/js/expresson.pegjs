@@ -1,5 +1,10 @@
 // Visit https://pegjs.org/online, paste this file contents
 // Parser variable should set to "const pegjs"
+// 
+// or using command line
+// npm install -g pegjs
+// pegjs --format umd --output parser.js --export-var pegjs expresson.pegjs
+//
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence
 {
 const known_identifiers = new Set([
