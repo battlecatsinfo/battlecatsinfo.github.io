@@ -69,7 +69,7 @@ module.exports = class extends SiteGenerator {
 				imu: parseInt(form.immunity, 10),
 				ab: this.parse_abilities(form.ability),
 				cd: parseInt(form.cd, 10),
-				icon: form.icon,
+				icon: form.icon || undefined,
 			});
 		}
 
