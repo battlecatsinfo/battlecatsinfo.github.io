@@ -10,8 +10,8 @@ module.exports = class extends SiteGenerator {
 
 		const catData = this.parse_tsv(this.load('cat.tsv'));
 		const eggs = catData.reduce((eggs, cat, id) => {
-			if (cat.egg_1) {
-				eggs[id] = [parseInt(cat.egg_1, 10), parseInt(cat.egg_2, 10)];
+			if (cat.egg_id) {
+				eggs[id] = cat.egg_id.split(',').map(Number);
 			}
 			return eggs;
 		}, {});

@@ -604,7 +604,7 @@ module.exports = class extends SiteGenerator {
 		let id = 0;
 		for (const cat of data) {
 			this.unit_rarity.push(parseInt(cat.rarity, 10));
-			if (cat.egg_1)
+			if (cat.egg_id)
 				this.egg_set.add(id);
 			id++;
 		}
