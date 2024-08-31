@@ -11,7 +11,7 @@ module.exports = class extends SiteGenerator {
 		const catstatTable = this.parse_tsv(this.load('catstat.tsv'));
 
 		// format cats
-		const cats = catTable.map(cat => {
+		const cats = catTable.map((cat, i) => {
 			const info = {
 				rarity: Number(cat.rarity),
 				// forms: Number(cat.form_count),
@@ -35,6 +35,7 @@ module.exports = class extends SiteGenerator {
 				fandom: cat.name_fandom || undefined,
 			};
 			return {
+				i,
 				info,
 				forms: [],
 			};
@@ -43,7 +44,6 @@ module.exports = class extends SiteGenerator {
 		for (const form of catstatTable) {
 			cats[form.id].forms.push({
 				lvc: cats[form.id].forms.length,
-				id: Number(form.id),
 				name: form.name_tw,
 				jp_name: form.name_jp,
 				price: form.price,
