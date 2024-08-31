@@ -230,7 +230,10 @@ class CatForm {
 		return this.base.id;
 	}
 	get icon() {
-		return this._icon || `img/u/${this.id}/${this.lvc}.png`;
+		const eggId = this.base.info.eid?.[this.lvc];
+		return (typeof eggId !== 'undefined') ?
+			`/img/s/${eggId}/${this.lvc}.png` :
+			`/img/u/${this.id}/${this.lvc}.png`;
 	}
 	get baseLv() {
 		return this._baseLv;
@@ -1315,13 +1318,6 @@ async function getAllCats() {
 		const info = cat.info;
 		if (info.talents)
 			info.talents = new Int16Array(info.talents.split('|'));
-
-		for (const form of cat.forms) {
-			if (form.icon) {
-				form._icon = form.icon;
-				delete form.icon;
-			}
-		}
 
 		return new Cat(cat);
 	});
