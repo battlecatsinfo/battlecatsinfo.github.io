@@ -1,6 +1,6 @@
 var cats;
 var cats_old;
-var hide_seach = false;
+var hide_search = false;
 var last_forms;
 var form_s = 5;
 var per_page = 10;
@@ -53,32 +53,38 @@ function rerender(event) {
 
 function setRange(e) {
 	per_page = parseInt(e.currentTarget.value);
+	const url = new URL(location.href);
 	if (per_page != 10) {
-		const url = new URL(location.href);
 		url.searchParams.set('per', per_page);
-		history.pushState({}, '', url);
 	} else {
-		const url = new URL(location.href);
 		url.searchParams.delete('per');
-		history.pushState({}, '', url);
 	}
+	history.pushState({}, '', url);
 	renderTable(last_forms);
 }
 
 function renderTable(forms, page = 1) {
+	last_forms = forms;
 	var H = per_page * page;
 	display_forms = forms.slice(H - per_page, H);
 	tbody.textContent = "";
 	search_result.textContent = `顯示第${H - per_page + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
-	if (0 == (last_forms = forms).length)
+	if (0 == forms.length)
 		tbody.innerHTML = '<tr><td colSpan="13">沒有符合條件的貓咪！</td></tr>';
 	else {
 		if (!pages_a.children.length) {
 			let c = 1;
 			for (let i = 0; i < forms.length; i += per_page) {
-				var td = document.createElement("td");
-				if (td.textContent = c.toString(), td.onclick = rerender, page == (td._i = c) && (td.classList.add("N"),
-						td.onclick = null), pages_a.appendChild(td), 10 <= c++) break;
+				var td = pages_a.appendChild(document.createElement("td"));
+				td.textContent = c.toString();
+				td._i = c;
+				if (page == c) {
+					td.classList.add("N");
+				} else {
+					td.onclick = rerender;
+				}
+				if (c++ >= 10)
+					break;
 			}
 		}
 		for (let i = 0; i < display_forms.length; ++i) {
@@ -86,11 +92,17 @@ function renderTable(forms, page = 1) {
 			const F = display_forms[i][1];
 			const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", ~~F.gethp(), ~~F.getatk(), Math.round(F.getdps() + Number.EPSILON), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(1.5 * F.price), numStr(display_forms[i][0])];
 			for (let j = 0; j < 13; ++j) {
-				var e = document.createElement("td");
-				3 == j ? (F.name && e.appendChild(document.createTextNode(F.name)),
-						F.jp_name && (e.appendChild(document.createElement("br")),
-							e.appendChild(document.createTextNode(F.jp_name)))) : e.textContent = texts[j].toString(),
-					tr.appendChild(e);
+				var e = tr.appendChild(document.createElement("td"));
+				if (j == 3) {
+					if (F.name)
+						e.appendChild(document.createTextNode(F.name));
+					if (F.jp_name) {
+						e.appendChild(document.createElement("br"));
+						e.appendChild(document.createTextNode(F.jp_name));
+					}
+				} else {
+					e.textContent = texts[j].toString();
+				}
 			}
 			const a = tr.children[2].appendChild(document.createElement("a"));
 			a.href = "./unit.html?id=" + F.id.toString();
@@ -106,10 +118,12 @@ function simplify(code) {
 
 function calculate(code = "") {
 	pages_a.textContent = "";
-	const sortCode = simplify(sort_expr.value),
-		url = (def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60),
-			plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90), def_lv_e.value = def_lv,
-			plus_lv_e.value = plus_lv, new URL(location.pathname, location.href));
+	const sortCode = simplify(sort_expr.value);
+	def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60);
+	plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90);
+	def_lv_e.value = def_lv;
+	plus_lv_e.value = plus_lv;
+	const url = new URL(location.pathname, location.href);
 	if (code.length) {
 		url.searchParams.set("filter", code);
 	} else {
@@ -282,28 +296,46 @@ loadAllCats().then(_cats => {
 			});
 		}
 	}
-}), document.querySelectorAll("button").forEach(elem => {
-	elem.state = "0", elem.addEventListener("click", function(event) {
-		event = event.currentTarget;
-		"0" == event.state ? (event.parentNode.classList.add("o-selected"), event.state = "1") : (event.parentNode.classList.remove("o-selected"),
-			event.state = "0"), calculate();
+});
+
+document.querySelectorAll("button").forEach(elem => {
+	elem.state = "0";
+	elem.addEventListener("click", function(event) {
+		const elem = event.currentTarget;
+		if ("0" == elem.state) {
+			elem.parentNode.classList.add("o-selected");
+			elem.state = "1"
+		} else {
+			elem.parentNode.classList.remove("o-selected");
+			elem.state = "0";
+		}
+		calculate();
 	});
-}), document.querySelectorAll(".or-and").forEach(e => {
+});
+document.querySelectorAll(".or-and").forEach(e => {
 	e.onclick = function(event) {
-		event = event.currentTarget;
-		"OR" == event.textContent ? event.textContent = "AND" : event.textContent = "OR",
-			calculate();
+		const elem = event.currentTarget;
+		elem.textContent = ("OR" == elem.textContent) ? "AND" : "OR";
+		calculate();
 	};
-}), document.getElementById("filter-go").onclick = function() {
+});
+document.getElementById("filter-go").onclick = function() {
 	calculate(simplify(filter_expr.value));
-}, document.getElementById("filter-clear").onclick = function() {
+};
+document.getElementById("filter-clear").onclick = function() {
 	function fn(x) {
 		x.classList.remove("o-selected");
 	}
-	cattype_e.querySelectorAll(".o-selected").forEach(fn), trait_s.querySelectorAll(".o-selected").forEach(fn),
-		atk_s.querySelectorAll(".o-selected").forEach(fn), ab_s.querySelectorAll(".o-selected").forEach(fn),
-		ori_expr.value = "", filter_expr.value = "", sort_expr.value = "", calculate();
-}, only_my_fav.onchange = function() {
+	cattype_e.querySelectorAll(".o-selected").forEach(fn);
+	trait_s.querySelectorAll(".o-selected").forEach(fn);
+	atk_s.querySelectorAll(".o-selected").forEach(fn);
+	ab_s.querySelectorAll(".o-selected").forEach(fn);
+	ori_expr.value = "";
+	filter_expr.value = "";
+	sort_expr.value = "";
+	calculate();
+};
+only_my_fav.onchange = function() {
 	let favs;
 	if (only_my_fav.checked) {
 		favs = localStorage.getItem("star-cats");
@@ -313,12 +345,22 @@ loadAllCats().then(_cats => {
 	}
 	cats = only_my_fav.checked ? favs : cats_old;
 	calculate(simplify(ori_expr.value));
-}, toggle_s.onclick = function() {
-	hide_seach ? (tables.style.left = "390px", tables.style.width = "calc(100% - 400px)",
-			document.documentElement.style.setProperty("--mhide", "block"), toggle_s.textContent = "隱藏搜尋器") : (document.documentElement.style.setProperty("--mhide", "none"),
-			tables.style.left = "0px", tables.style.width = "100%", toggle_s.textContent = "顯示搜尋器"),
-		hide_seach = !hide_seach;
-}, name_search.oninput = function() {
+};
+toggle_s.onclick = function() {
+	if (hide_search) {
+		tables.style.left = "390px";
+		tables.style.width = "calc(100% - 400px)";
+		document.documentElement.style.setProperty("--mhide", "block");
+		toggle_s.textContent = "隱藏搜尋器";
+	} else {
+		document.documentElement.style.setProperty("--mhide", "none");
+		tables.style.left = "0px";
+		tables.style.width = "100%";
+		toggle_s.textContent = "顯示搜尋器";
+	}
+	hide_search = !hide_search;
+};
+name_search.oninput = function() {
 	var c, search = name_search.value.trim();
 	if (!search) return calculate(simplify(ori_expr.value));
 	let digit = 1 <= search.length;
@@ -344,7 +386,7 @@ loadAllCats().then(_cats => {
 document.getElementById('form-s').onchange = function() {
 	form_s = this.selectedIndex;
 	calculate(simplify(ori_expr.value));
-}
+};
 const th = document.getElementById('th');
 for (let n of th.children) {
 	if (n.title) {
