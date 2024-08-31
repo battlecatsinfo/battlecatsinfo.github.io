@@ -19,7 +19,7 @@ module.exports = class extends SiteGenerator {
 				evol: cat.evol || undefined,
 				maxBaseLv: parseInt(cat.max_base_level, 10),
 				maxPlusLv: parseInt(cat.max_plus_level, 10),
-				// eid: cat.egg_id ? cat.egg_id.split(',').map(Number) : undefined,
+				eid: cat.egg_id ? cat.egg_id.split(',').map(Number) : undefined,
 				evolReq: cat.evol_require || undefined,
 				evol4Req: cat.evol4_require || undefined,
 				talents: cat.talents || undefined,
@@ -68,7 +68,6 @@ module.exports = class extends SiteGenerator {
 				imu: parseInt(form.immunity, 10),
 				ab: this.parse_abilities(form.ability),
 				cd: parseInt(form.cd, 10),
-				icon: form.icon || undefined,
 			});
 		}
 
