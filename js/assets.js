@@ -46,7 +46,6 @@ const sources = [
 	'navbar-search.js',
 	'gacha.js',
 	"enemy.js",
-	"constants.js",
 	"parser.js",
 	"esearch.js",
 	"search.js",
