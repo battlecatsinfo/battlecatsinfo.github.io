@@ -226,6 +226,9 @@ class CatForm {
 		const {base, hpM, atkM, _baseLv, _plusLv} = this;
 		return new CatForm(structuredClone(this), {base, hpM, atkM, _baseLv, _plusLv});
 	}
+	get id() {
+		return this.base.id;
+	}
 	get baseLv() {
 		return this._baseLv;
 	}
@@ -1243,10 +1246,14 @@ class Enemy {
 
 class Cat {
 	constructor(o) {
+		this.i = o.i;
 		this.info = o.info;
 		this.forms = o.forms.map(form => {
 			return new CatForm(form, {base: this});
 		});
+	}
+	get id() {
+		return this.i;
 	}
 	get maxBaseLv() {
 		return this.info.maxBaseLv;
@@ -1361,13 +1368,8 @@ async function loadCat(id) {
 				try {
 					const store = tx.objectStore("cats");
 					store.clear();
-					for (let i = 0, I = cats.length; i < I; ++i) {
-						const cat = cats[i];
-						store.put({
-							i,
-							info: cat.info,
-							forms: cat.forms,
-						});
+					for (const cat of cats) {
+						store.put(cat);
 					}
 				} catch (ex) {
 					reject(ex);
