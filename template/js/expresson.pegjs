@@ -7,6 +7,14 @@
 //
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence
 {
+const known_methods = new Set([
+	"hasab",
+	"hasres",
+	"dpsagainst",
+	"hpagainst",
+	"evol_require",
+	"evol4_require",
+]);
 const constants = {
 	red: 1,
 	float: 2,
@@ -218,15 +226,8 @@ Prim
 	/ id:Identifier _ args:('(' ArgList ')')? { 
 		var s = id;
 		if (args) {
-			switch (s) {
-			case 'hasab':
-			case 'hasres':
-			case 'dpsagainst':
-			case 'hpagainst':
-			case 'evol_require':
-			case 'evol4_require':
+			if (known_methods.has(s))
 				return `form.${s}(${args[1]})`;
-			}
 			if (!Math[s])
 				throw Error("未知的函數: " + s);
 			return `Math.${s}(${args[1]})`;
