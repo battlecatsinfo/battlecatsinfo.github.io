@@ -473,7 +473,7 @@ loadEnemy(my_id)
 		specials.append(X);
 		specials.appendChild(document.createElement('br'));
 		X = chs[0].children[0].children[0];
-		X.src = `/img/e/${E.i}/0.png`;
+		X.src = E.icon;
 		chs[2].children[3].textContent = numStrT(E.backswing);
 		chs[2].children[5].textContent = numStrT(E.tba);
 		chs[2].children[7].textContent = numStrT(E.attackF);
