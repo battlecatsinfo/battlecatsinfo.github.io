@@ -108,10 +108,12 @@ function simplify(code) {
 
 function calculate(code = "") {
 	pages_a.textContent = "";
-	const sortCode = simplify(sort_expr.value),
-		url = (def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60),
-			plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90), def_lv_e.value = def_lv,
-			plus_lv_e.value = plus_lv, new URL(location.pathname, location.href));
+	const sortCode = simplify(sort_expr.value);
+	def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60);
+	plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90);
+	def_lv_e.value = def_lv;
+	plus_lv_e.value = plus_lv;
+	const url = new URL(location.pathname, location.href);
 	if (code.length) {
 		url.searchParams.set("filter", code);
 	} else {

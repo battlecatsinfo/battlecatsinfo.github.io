@@ -1,17 +1,17 @@
-var mult = document.getElementById('mult'),
-	mult_atk = document.getElementById('mult-atk'),
-	st_mag = document.getElementById('st-mag'),
-	my_params = new URLSearchParams(location.search),
-	my_id = parseInt(my_params.get('id')),
-	stats = document.getElementById('stats'),
-	chs = stats.children,
-	specials = chs[3].children[1],
-	my_mult = my_params.get('mult') || my_params.get('mag'),
-	atk_mag = my_params.get('atkMag'),
-	stageMag = my_params.get('stageMag'),
-	enemy_content = document.getElementById('ctn'),
-	set = new Set(),
-	E, I, dst_g, modal;
+var mult = document.getElementById('mult');
+var mult_atk = document.getElementById('mult-atk');
+var st_mag = document.getElementById('st-mag');
+var my_params = new URLSearchParams(location.search);
+var my_id = parseInt(my_params.get('id'));
+var stats = document.getElementById('stats');
+var chs = stats.children;
+var specials = chs[3].children[1];
+var my_mult = my_params.get('mult') || my_params.get('mag');
+var atk_mag = my_params.get('atkMag');
+var stageMag = my_params.get('stageMag');
+var enemy_content = document.getElementById('ctn');
+var set = new Set();
+var E, I, dst_g, modal;
 if (isNaN(my_id))
 	my_id = 0;
 
