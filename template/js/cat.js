@@ -1,3 +1,5 @@
+const DB_NAME = 'db';
+const DB_VERSION = {{{lookup (loadJSON "config.json") "cat_ver"}}};
 const units_scheme = {{{toJSON (loadJSON "units_scheme.json")}}};
 const levelcurves = {{{toJSON (lookup (loadJSON "cat_extras.json") "level_curve")}}};
 
@@ -1340,7 +1342,7 @@ async function loadCat(id) {
 
 	try {
 		db = await new Promise((resolve, reject) => {
-			const req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
+			const req = indexedDB.open(DB_NAME, DB_VERSION);
 			req.onupgradeneeded = (event) => {
 				needReload = true;
 				onupgradeneeded(event);
@@ -1435,7 +1437,7 @@ async function loadEnemy(id) {
 
 	try {
 		db = await new Promise((resolve, reject) => {
-			const req = indexedDB.open("db", {{{lookup (loadJSON "config.json") "cat_ver"}}});
+			const req = indexedDB.open(DB_NAME, DB_VERSION);
 			req.onupgradeneeded = (event) => {
 				needReload = true;
 				onupgradeneeded(event);
