@@ -229,6 +229,9 @@ class CatForm {
 	get id() {
 		return this.base.id;
 	}
+	get icon() {
+		return `img/u/{this.id}/{this.lvc}.png`;
+	}
 	get baseLv() {
 		return this._baseLv;
 	}
