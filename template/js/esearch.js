@@ -75,7 +75,7 @@ function renderTable(forms, page = 1) {
 	for (let i = 0; i < display_forms.length; ++i) {
 		const tr = document.createElement('tr');
 		const F = display_forms[i][1];
-		const texts = [F.i, '', F.name || F.jp_name || '?', ~~F.gethp(), ~~F.getatk(),
+		const texts = [F.id, '', F.name || F.jp_name || '?', ~~F.gethp(), ~~F.getatk(),
 			~~F.getdps(), F.kb, F.range, numStrT(F.attackF).replace('秒', '秒/下'), F.speed, F.earn, numStr(display_forms[i][0])
 		];
 		for (let j = 0; j < texts.length; ++j) {
@@ -85,8 +85,8 @@ function renderTable(forms, page = 1) {
 		}
 		const a = document.createElement('a');
 		const img = new Image(64, 64);
-		img.src = `/img/e/${F.i}/0.png`;
-		a.href = './enemy.html?id=' + F.i;
+		img.src = F.icon;
+		a.href = './enemy.html?id=' + F.id;
 		a.appendChild(img);
 		tr.children[1].appendChild(a);
 		tbody.appendChild(tr);

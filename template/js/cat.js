@@ -1164,6 +1164,12 @@ class Enemy {
 	constructor(o) {
 		Object.assign(this, o);
 	}
+	get id() {
+		return this.i;
+	}
+	get icon() {
+		return `/img/e/${this.id}/0.png`;
+	}
 	gethp() {
 		return this.hp;
 	}
@@ -1192,7 +1198,7 @@ class Enemy {
 		return this.ab.hasOwnProperty(i);
 	}
 	getid() {
-		return this.i;
+		return this.id;
 	}
 	hasres() {
 		return 0;
