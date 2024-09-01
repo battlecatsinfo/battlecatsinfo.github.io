@@ -2,7 +2,7 @@ import {
 	numStr,
 	numStrT,
 	loadAllCats,
-} from './cat.js';
+} from './unit.mjs';
 
 var cats;
 var cats_old;

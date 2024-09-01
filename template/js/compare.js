@@ -66,7 +66,7 @@ import {
 	createResIcons,
 
 	loadAllCats,
-} from './cat.js';
+} from './unit.mjs';
 
 var cats;
 var targets = new Set();

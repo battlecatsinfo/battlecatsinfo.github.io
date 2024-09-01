@@ -2,7 +2,7 @@ import {
 	numStr,
 	numStrT,
 	loadAllEnemies,
-} from './cat.js';
+} from './unit.mjs';
 
 var cats;
 const filter_expr = document.getElementById('filter-expr');

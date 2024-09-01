@@ -43,6 +43,8 @@ const sources = [
 	'and.png',
 	'fav.png',
 
+	'unit.mjs',
+
 	'utils.js',
 	'common.js',
 	'navbar-search.js',
@@ -61,7 +63,6 @@ const sources = [
 	'ototo.js',
 	'medal.js',
 	'metal_killer.js',
-	'cat.js',
 	'unit.js',
 
 	'gif.min.js',
@@ -91,6 +92,8 @@ module.exports = class extends SiteGenerator {
 			else if (file.endsWith('.min.js'))
 				base = 'js';
 			else if (file.endsWith('.js'))
+				base = 'js';
+			else if (file.endsWith('.mjs'))
 				base = 'js';
 
 			const fsrc = resolve(TEMPLATE_DIR, base, file);
@@ -135,7 +138,7 @@ module.exports = class extends SiteGenerator {
 				}
 			} else if (file.endsWith('.min.js')) {
 				// nothing todo
-			} else if (file.endsWith('.js')) {
+			} else if (file.endsWith('.js') || file.endsWith('.mjs')) {
 				contents = this.template(contents, {});
 				if (UglifyJS) {
 					const r = UglifyJS.minify(contents, {'mangle': {}});

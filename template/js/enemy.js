@@ -79,7 +79,7 @@ import {
 	createImuIcons,
 
 	loadEnemy,
-} from './cat.js';
+} from './unit.mjs';
 
 var mult = document.getElementById('mult');
 var mult_atk = document.getElementById('mult-atk');
