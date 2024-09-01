@@ -1,3 +1,7 @@
+// @TODO: centralize treasure data
+const treasures = [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 30, 10, 30, 30, 30, 30, 30, 30, 30, 100, 600, 1500, 300, 100, 30, 300, 300, 300, 300, 100];
+
+// @TODO: refactor code to handle all localStorage related configs using this class
 class ConfigHandler {
 	get unit() {
 		return localStorage.getItem('unit') ?? 'S';
@@ -17,6 +21,62 @@ class ConfigHandler {
 			localStorage.removeItem('prec');
 		else
 			localStorage.setItem('prec', value);
+	}
+	get stagel() {
+		let value = localStorage.getItem('stagel');
+		return (value !== null) ? parseInt(value, 10) : 0;
+	}
+	set stagel(value) {
+		if (value === null)
+			localStorage.removeItem('stagel');
+		else
+			localStorage.setItem('stagel', value);
+	}
+	get stagef() {
+		return localStorage.getItem('stagef') ?? 'F';
+	}
+	set stagef(value) {
+		if (value === null)
+			localStorage.removeItem('stagef');
+		else
+			localStorage.setItem('stagef', value);
+	}
+	get layout() {
+		let value = localStorage.getItem('layout');
+		return (value !== null) ? parseInt(value, 10) : 1;
+	}
+	set layout(value) {
+		if (value === null)
+			localStorage.removeItem('layout');
+		else
+			localStorage.setItem('layout', value);
+	}
+	get starCats() {
+		let value = localStorage.getItem('star-cats');
+		return (value !== null) ? JSON.parse(value).map(x => x.id) : [];
+	}
+	set starCats(list) {
+		if (Array.isArray(list)) {
+			const value = JSON.stringify(list);
+			localStorage.setItem('star-cats', value);
+		} else if (list === null) {
+			localStorage.removeItem('star-cats');
+		} else {
+			throw new Error(`Unexpected value of cats: ${JSON.stringify(list)}`);
+		}
+	}
+	getTreasure(i) {
+		if (typeof i !== 'undefined') {
+			let value = localStorage.getItem("t$" + i);
+			return (value !== null) ? parseInt(value) : treasures[i];
+		}
+		return treasures.map((n, i) => {
+			let value = localStorage.getItem("t$" + i);
+			return (value !== null) ? parseInt(value) : n;
+		});
+	}
+	setTreasure(i, value) {
+		localStorage.setItem('t$' + i, value);
 	}
 }
 

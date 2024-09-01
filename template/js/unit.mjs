@@ -1,4 +1,4 @@
-import {fetch, numStr, numStrT} from './common.mjs';
+import {fetch, config, numStr, numStrT} from './common.mjs';
 
 const DB_NAME = 'db';
 const DB_VERSION = {{{lookup (loadJSON "config.json") "cat_ver"}}};
@@ -186,6 +186,12 @@ function toi(x) {
 class CatEnv {
 	constructor(configs) {
 		Object.assign(this, configs);
+	}
+	get atk_t() {
+		return 1 + 0.005 * this.treasures[0];
+	}
+	get hp_t() {
+		return 1 + 0.005 * this.treasures[1];
 	}
 }
 
@@ -1575,27 +1581,13 @@ function getRes(cd) {
 	return Math.max(60, cd - 6 * (catEnv.treasures[17] - 1) - .3 * catEnv.treasures[2]);
 }
 
-const catEnv = (() => {
-	const treasures = [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 30, 10, 30, 30, 30, 30, 30, 30, 30, 100, 600, 1500, 300, 100, 30, 300, 300, 300, 300, 100];
-
-	for (let i = 0; i < 31; ++i) {
-		const x = localStorage.getItem("t$" + i.toString());
-		null != x && (treasures[i] = parseInt(x));
-	}
-
-	const atk_t = 300 == treasures[0] ? 2.5 : 1 + .005 * treasures[0];
-	const hp_t = 300 == treasures[1] ? 2.5 : 1 + .005 * treasures[1];
-
-	return new CatEnv({
-		treasures,
-		atk_t,
-		hp_t,
-		orb_massive: 0,
-		orb_resist: 1,
-		orb_good_atk: 0,
-		orb_good_hp: 1,
-	});
-})();
+const catEnv = new CatEnv({
+	treasures: config.getTreasure(),
+	orb_massive: 0,
+	orb_resist: 1,
+	orb_good_atk: 0,
+	orb_good_hp: 1,
+});
 
 export {
 	DB_NAME,

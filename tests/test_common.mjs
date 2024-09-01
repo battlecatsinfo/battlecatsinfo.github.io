@@ -104,6 +104,87 @@ describe('common.mjs', function () {
 			});
 		});
 
+		it('get config.stagel', async function () {
+			withLocalStorage('stagel', () => {
+				localStorage.removeItem('stagel');
+				assert.strictEqual(config.stagel, 0);
+
+				localStorage.setItem('stagel', 0);
+				assert.strictEqual(config.stagel, 0);
+
+				localStorage.setItem('stagel', 1);
+				assert.strictEqual(config.stagel, 1);
+
+				localStorage.setItem('stagel', 2);
+				assert.strictEqual(config.stagel, 2);
+			});
+		});
+
+		it('set config.stagel', async function () {
+			withLocalStorage('stagel', () => {
+				config.stagel = 0;
+				assert.strictEqual(localStorage.getItem('stagel'), '0');
+
+				config.stagel = 2;
+				assert.strictEqual(localStorage.getItem('stagel'), '2');
+
+				config.stagel = null;
+				assert.isNull(localStorage.getItem('stagel'));
+			});
+		});
+
+		it('get config.stagef', async function () {
+			withLocalStorage('stagef', () => {
+				localStorage.removeItem('stagef');
+				assert.strictEqual(config.stagef, 'F');
+
+				localStorage.setItem('stagef', 'S');
+				assert.strictEqual(config.stagef, 'S');
+
+				localStorage.setItem('stagef', 'F');
+				assert.strictEqual(config.stagef, 'F');
+			});
+		});
+
+		it('set config.stagef', async function () {
+			withLocalStorage('stagef', () => {
+				config.stagef = 'F';
+				assert.strictEqual(localStorage.getItem('stagef'), 'F');
+
+				config.stagef = 'S';
+				assert.strictEqual(localStorage.getItem('stagef'), 'S');
+
+				config.stagef = null;
+				assert.isNull(localStorage.getItem('stagef'));
+			});
+		});
+
+		it('get config.layout', async function () {
+			withLocalStorage('layout', () => {
+				localStorage.removeItem('layout');
+				assert.strictEqual(config.layout, 1);
+
+				localStorage.setItem('layout', 2);
+				assert.strictEqual(config.layout, 2);
+
+				localStorage.setItem('layout', 1);
+				assert.strictEqual(config.layout, 1);
+			});
+		});
+
+		it('set config.layout', async function () {
+			withLocalStorage('layout', () => {
+				config.layout = 1;
+				assert.strictEqual(localStorage.getItem('layout'), '1');
+
+				config.layout = 2;
+				assert.strictEqual(localStorage.getItem('layout'), '2');
+
+				config.layout = null;
+				assert.isNull(localStorage.getItem('layout'));
+			});
+		});
+
 	});
 
 	describe('getNumFormatter', function () {
