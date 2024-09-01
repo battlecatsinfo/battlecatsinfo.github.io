@@ -288,7 +288,7 @@ function ok() {
 			if (!s.has(x))
 				results.delete(x);
 	if (!ex_only.classList.contains('selected'))
-		for (x of results)
+		for (const x of results)
 			if (limited_cats.has(x))
 				results.delete(x);
 
@@ -374,7 +374,7 @@ document.getElementById('search-name').onclick = function(event) {
 	cats_e.textContent = '';
 	if (!q) return;
 	let digit = q.length >= 1;
-	for (c of q) {
+	for (const c of q) {
 		var x = c.codePointAt(0);
 		(x < 48 || 57 < x) && (digit = false);
 	}

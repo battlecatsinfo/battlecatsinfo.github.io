@@ -4,7 +4,7 @@ const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
 const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINIVOLC, AB_VOLC, AB_ATKBASE, AB_SAGE]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
-layout = localStorage.getItem('layout');
+const layout = localStorage.getItem('layout');
 const maxLen = [0, 0];
 var level_count = 0;
 var my_cat;
@@ -3190,7 +3190,7 @@ loadCat(my_id)
 			localStorage.setItem('star-cats', JSON.stringify(oldList));
 		};
 
-		a = document.createElement('a');
+		let a = document.createElement('a');
 		a.classList.add('w3-bar-item');
 		a.href = '/anim.html?id=' + my_id.toString();
 		a.textContent = '檢視動畫';

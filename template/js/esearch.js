@@ -17,6 +17,7 @@ const abBtn = ab_s.firstElementChild.firstElementChild;
 const name_search = document.getElementById('name-search');
 var last_forms;
 var per_page = 10;
+let results;
 
 function rerender(event) {
 	event.preventDefault();

@@ -1,6 +1,7 @@
 const format = new Intl.NumberFormat(undefined, {
 	'maximumFractionDigits': 0
 });
+const CF = document.getElementById('CF');
 const CL = document.getElementById('CL');
 const add = document.getElementById('add');
 const cat_name = document.getElementById('cat-name');
