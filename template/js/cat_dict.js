@@ -15,17 +15,6 @@ const ex_only = document.getElementById('ex-only');
 const limited_cats = new Set({{toJSON (lookup (loadJSON "cat_extras.json") "limited_cats")}});
 let fav_setting = false;
 
-function t3str(x) {
-	var s = x.toString();
-	switch (s.length) {
-		case 2:
-			return "0" + s;
-		case 1:
-			return "00" + s;
-	}
-	return s;
-}
-
 function onClick(event) {
 	const t = event.currentTarget;
 	const i = t.firstElementChild;
