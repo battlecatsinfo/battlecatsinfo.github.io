@@ -1,3 +1,5 @@
+import {fetch} from './common.mjs';
+
 const DB_NAME = 'stage_v2';
 const DB_VERSION = {{{lookup (loadJSON "config.json") "stage_ver"}}};
 
@@ -17,7 +19,7 @@ function upgradeStageDb(db) {
 }
 
 async function _loadStageData(db) {
-	const response = await utils.fetch('/stage.json');
+	const response = await fetch('/stage.json');
 	const data =  await response.json();
 
 	await new Promise((resolve, reject) => {

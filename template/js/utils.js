@@ -20,49 +20,9 @@
 		localStorage.setItem('theme', newValue);
 	}
 
-	function getNumberFormatter() {
-		let value = localStorage.getItem('prec');
-		value = (value !== null) ? parseInt(value, 10) : 2;
-		return new Intl.NumberFormat(undefined, {
-			'maximumFractionDigits': value,
-		});
-	}
-
-	function getDurationUnit() {
-		return localStorage.getItem("unit");
-	}
-
-	const utils = {
-		get numberFormatter() {
-			const value = getNumberFormatter();
-			Object.defineProperty(this, 'numberFormatter', {value});
-			return value;
-		},
-
-		get durationUnit() {
-			const value = getDurationUnit();
-			Object.defineProperty(this, 'durationUnit', {value});
-			return value;
-		},
-
-		numStr(num) {
-			return this.numberFormatter.format(num);
-		},
-
-		async fetch(url, options) {
-			const response = await fetch(url, options).catch(ex => {
-				throw new Error(`Unable to fetch "${url}": ${ex.message}`);
-			});
-			if (!response.ok) {
-				throw new Error(`Bad rsponse when fetching "${url}": ${response.status} ${response.statusText}`, {cause: response});
-			}
-			return response;
-		},
-
+	return {
 		getTheme,
 		toggleTheme,
 	};
-
-	return utils;
 
 }));

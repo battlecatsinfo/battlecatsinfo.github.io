@@ -1,3 +1,5 @@
+import {numStr} from './common.mjs';
+
 const M = document.getElementById('MC');
 const modal = M.parentNode.parentNode;
 const ths = [
@@ -12,19 +14,15 @@ const ths = [
 ];
 
 function percentage(num) {
-	return utils.numStr(num) + '%';
+	return numStr(num) + '%';
 }
 
 function percentage2(num) {
-	return utils.numStr(num / 10) + '%';
-}
-
-function numStr(num) {
-	return utils.numStr(num);
+	return numStr(num / 10) + '%';
 }
 
 function numStrT(num) {
-	return `${num}F/${utils.numStr(num / 30)}秒`;
+	return `${num}F/${numStr(num / 30)}秒`;
 }
 
 function numHP(num) {

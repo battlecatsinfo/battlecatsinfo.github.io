@@ -1,8 +1,5 @@
-import {
-	numStr,
-	numStrT,
-	loadAllCats,
-} from './unit.mjs';
+import {numStr, numStrT} from './common.mjs';
+import {loadAllCats} from './unit.mjs';
 
 var cats;
 var cats_old;

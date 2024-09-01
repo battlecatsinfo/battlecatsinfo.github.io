@@ -1,3 +1,5 @@
+import {fetch, numStr, numStrT} from './common.mjs';
+
 const DB_NAME = 'db';
 const DB_VERSION = {{{lookup (loadJSON "config.json") "cat_ver"}}};
 const units_scheme = {{{toJSON (loadJSON "units_scheme.json")}}};
@@ -99,17 +101,6 @@ const RES_WARP = 8;
 
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
-
-function numStr(num) {
-	return utils.numStr(num);
-	// return (Math.round(100 * (num + Number.EPSILON)) / 100).toString();
-}
-
-function numStrT(num) {
-	if (utils.durationUnit === 'F')
-		return num.toString() + ' F';
-	return numStr(num / 30) + ' 秒';
-}
 
 function combineChances(count, chance) {
 	let x = 1;
@@ -1329,13 +1320,13 @@ class Cat {
 }
 
 async function getAllEnemies() {
-	const res = await utils.fetch('/enemy.json');
+	const res = await fetch('/enemy.json');
 	const data = await res.json();
 	return data.map(enemy => new Enemy(enemy));
 }
 
 async function getAllCats() {
-	const res = await utils.fetch('/cat.json');
+	const res = await fetch('/cat.json');
 	const data = await res.json();
 	return data.map(cat => {
 		// slightly tweak data before storage
@@ -1706,8 +1697,6 @@ export {
 
 	get_trait_short_names,
 	getAbiString,
-	numStr,
-	numStrT,
 
 	getRes,
 	getCoverUnit,

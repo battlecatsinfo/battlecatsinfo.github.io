@@ -43,6 +43,7 @@ const sources = [
 	'and.png',
 	'fav.png',
 
+	'common.mjs',
 	'unit.mjs',
 	'stage.mjs',
 

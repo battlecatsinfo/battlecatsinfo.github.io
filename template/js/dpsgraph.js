@@ -1,3 +1,4 @@
+import {getNumFormatter} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -59,9 +60,7 @@ import {
 	loadAllCats,
 } from './unit.mjs';
 
-const format = new Intl.NumberFormat(undefined, {
-	'maximumFractionDigits': 0
-});
+const format = getNumFormatter(0);
 const CF = document.getElementById('CF');
 const CL = document.getElementById('CL');
 const add = document.getElementById('add');

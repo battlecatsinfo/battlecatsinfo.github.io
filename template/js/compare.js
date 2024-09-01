@@ -1,3 +1,4 @@
+import {config, numStr, numStrT, numStrX} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -55,9 +56,6 @@ import {
 
 	units_scheme,
 	catEnv,
-
-	numStr,
-	numStrT,
 
 	getRes,
 
@@ -388,12 +386,6 @@ function newTab() {
 	return tby[0].children.length - 1;
 }
 
-function numStrX(num) {
-	if (utils.durationUnit === 'F')
-		return num.toString();
-	return utils.numStr(num / 30);
-}
-
 function floor(x) {
 	return ~~x;
 }
@@ -405,14 +397,14 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 		T = '①' + T + '②' + numStrX(F.pre1);
 	if (F.pre2)
 		T += '③' + numStrX(F.pre2);
-	tby[6].children[I].textContent = `${numStrX(F.attackF)} / ${T} ${utils.durationUnit === 'F' ? 'F' : '秒'}`;
+	tby[6].children[I].textContent = `${numStrX(F.attackF)} / ${T} ${config.unit === 'F' ? 'F' : '秒'}`;
 	T = '';
 	if (F.atkType & ATK_OMNI)
 		T += '全方位';
 	else if (F.atkType & ATK_LD)
 		T += '遠方';
 	T += (F.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
-	tby[7].children[I].textContent = numStrT(getRes(F.cd)) + ' / ' + utils.numStr(F.price * 1.5) + '元';
+	tby[7].children[I].textContent = numStrT(getRes(F.cd)) + ' / ' + numStr(F.price * 1.5) + '元';
 	if (F.lds) {
 		let s = '';
 		for (let i = 0; i < F.lds.length; ++i) {

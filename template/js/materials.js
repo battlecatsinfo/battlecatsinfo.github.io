@@ -1,3 +1,5 @@
+import {getNumFormatter} from './common.mjs';
+
 {{#each materials as |value key|}}
 const {{{key}}} = {{{toJSON value}}};
 {{/each}}
@@ -21,9 +23,7 @@ for (var j = 0; j < drop_ZL.length; ++j) {
 		drop_ZL[j][i] = rate * drop_ZL[j][i] / sum_ZL[j];
 	}
 }
-const F = new Intl.NumberFormat(undefined, {
-	'maximumFractionDigits': 2
-});
+const F = getNumFormatter(2);
 
 const lang = {
 	"processing": "處理中...",

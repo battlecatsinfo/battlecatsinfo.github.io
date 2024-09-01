@@ -1,8 +1,5 @@
-import {
-	numStr,
-	numStrT,
-	loadAllEnemies,
-} from './unit.mjs';
+import {numStr, numStrT} from './common.mjs';
+import {loadAllEnemies} from './unit.mjs';
 
 var cats;
 const filter_expr = document.getElementById('filter-expr');
