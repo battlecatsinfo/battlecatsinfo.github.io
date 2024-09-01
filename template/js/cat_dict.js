@@ -1,4 +1,4 @@
-import {loadAllCats} from './cat.js';
+import {loadAllCats} from './unit.mjs';
 
 var cats;
 var tooltip;

@@ -57,7 +57,7 @@ import {
 	getAbiString,
 
 	loadAllCats,
-} from './cat.js';
+} from './unit.mjs';
 
 const format = new Intl.NumberFormat(undefined, {
 	'maximumFractionDigits': 0

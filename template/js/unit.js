@@ -70,7 +70,7 @@ import {
 	createResIcons,
 
 	loadCat,
-} from './cat.js';
+} from './unit.mjs';
 import {combos} from './combo.js';
 
 const combos_scheme = {{{toJSON (loadJSON "combos_scheme.json")}}};
