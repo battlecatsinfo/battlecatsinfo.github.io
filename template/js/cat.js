@@ -3,11 +3,6 @@ const DB_VERSION = {{{lookup (loadJSON "config.json") "cat_ver"}}};
 const units_scheme = {{{toJSON (loadJSON "units_scheme.json")}}};
 const levelcurves = {{{toJSON (lookup (loadJSON "cat_extras.json") "level_curve")}}};
 
-var orb_massive = 0;
-var orb_resist = 1;
-var orb_good_atk = 0;
-var orb_good_hp = 1;
-
 // attack types
 const ATK_SINGLE = 1;      // 單體攻擊
 const ATK_RANGE = 2;       // 範圍攻擊
@@ -207,6 +202,12 @@ function get_trait_short_names(trait) {
 
 function toi(x) {
 	return parseInt(x, 10);
+}
+
+class CatEnv {
+	constructor(configs) {
+		Object.assign(this, configs);
+	}
 }
 
 class CatForm {
@@ -1082,7 +1083,7 @@ class CatForm {
 		for (let i = 0; i < atks.length; ++i)
 			atks[i] = ~~(
 				(
-					~~(Math.round(atks[i] * m) * atk_t)
+					~~(Math.round(atks[i] * m) * catEnv.atk_t)
 				) * this.atkM);
 		return atks;
 	}
@@ -1243,7 +1244,7 @@ class Enemy {
 		return this.backswing;
 	}
 	getcost() {
-		return Math.round(100 * (this.earn * (.95 + .05 * treasures[18] + .005 * treasures[3]) + Number.EPSILON)) / 100;
+		return Math.round(100 * (this.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]) + Number.EPSILON)) / 100;
 	}
 	getprice() {
 		return this.getcost();
@@ -1556,16 +1557,28 @@ function getAbiString(abi) {
 		1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
 }
 
-const treasures = [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 30, 10, 30, 30, 30, 30, 30, 30, 30, 100, 600, 1500, 300, 100, 30, 300, 300, 300, 300, 100];
-
-for (let i = 0; i < 31; ++i) {
-	const x = localStorage.getItem("t$" + i.toString());
-	null != x && (treasures[i] = parseInt(x));
-}
-
-const atk_t = 300 == treasures[0] ? 2.5 : 1 + .005 * treasures[0];
-const hp_t = 300 == treasures[1] ? 2.5 : 1 + .005 * treasures[1];
-
 function getRes(cd) {
-	return Math.max(60, cd - 6 * (treasures[17] - 1) - .3 * treasures[2]);
+	return Math.max(60, cd - 6 * (catEnv.treasures[17] - 1) - .3 * catEnv.treasures[2]);
 }
+
+const catEnv = (() => {
+	const treasures = [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 30, 10, 30, 30, 30, 30, 30, 30, 30, 100, 600, 1500, 300, 100, 30, 300, 300, 300, 300, 100];
+
+	for (let i = 0; i < 31; ++i) {
+		const x = localStorage.getItem("t$" + i.toString());
+		null != x && (treasures[i] = parseInt(x));
+	}
+
+	const atk_t = 300 == treasures[0] ? 2.5 : 1 + .005 * treasures[0];
+	const hp_t = 300 == treasures[1] ? 2.5 : 1 + .005 * treasures[1];
+
+	return new CatEnv({
+		treasures,
+		atk_t,
+		hp_t,
+		orb_massive: 0,
+		orb_resist: 1,
+		orb_good_atk: 0,
+		orb_good_hp: 1,
+	});
+})();

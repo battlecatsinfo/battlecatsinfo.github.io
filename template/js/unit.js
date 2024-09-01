@@ -480,9 +480,9 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
 				if (other_def[7])
-					mul(theATK,  (1 + other_def[7]) * (1.5  + (treasure ? treasures[23] / 1000 : 0)) + (lvc >= 2 ? orb_good_atk : 0));
+					mul(theATK,  (1 + other_def[7]) * (1.5  + (treasure ? catEnv.treasures[23] / 1000 : 0)) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
 				else
-					mul(theATK,  1.5  + (treasure ? treasures[23] / 1000 : 0) + (lvc >= 2 ? orb_good_atk : 0));
+					mul(theATK,  1.5  + (treasure ? catEnv.treasures[23] / 1000 : 0) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
@@ -511,14 +511,14 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 			case AB_MASSIVE:
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, (1 + (other_def[8] || 0)) * (treasure ? (treasures[23] == 300 ? 4 : (3 + treasures[23] / 300)) : 3) + (lvc >= 2 ? orb_massive : 0));
+				mul(theATK, (1 + (other_def[8] || 0)) * (treasure ? (catEnv.treasures[23] == 300 ? 4 : (3 + catEnv.treasures[23] / 300)) : 3) + (lvc >= 2 ? catEnv.orb_massive : 0));
 				lines.push('大傷');
 				t_ef = true;
 				break;
 			case AB_MASSIVES:
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, treasure ? (treasures[23] == 300 ? 6 : (5 + treasures[23] / 300)) : 5);
+				mul(theATK, treasure ? (catEnv.treasures[23] == 300 ? 6 : (5 + catEnv.treasures[23] / 300)) : 5);
 				lines.push('極傷');
 				t_ef = true;
 				break;
@@ -601,7 +601,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 }
 
 function getAtkString(form, atks, Cs, level, parent, plus, attackS) {
-	atks = atks.map(x => floor(floor(floor(Math.round(x * form.getLevelMulti(level)) * atk_t) * (1 + (other_def[2] || 0))) * form.atkM));
+	atks = atks.map(x => floor(floor(floor(Math.round(x * form.getLevelMulti(level)) * catEnv.atk_t) * (1 + (other_def[2] || 0))) * form.atkM));
 	parent.textContent = '';
 	let first;
 	let m1 = new Float64Array(atks);
@@ -644,9 +644,9 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
 				if (other_def[7])
-					theHP /= (lvc >= 2 ? orb_good_hp : 1) * (1 - other_def[7]) * (0.5 - (treasure ? treasures[23] / 3000 : 0));
+					theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - other_def[7]) * (0.5 - (treasure ? catEnv.treasures[23] / 3000 : 0));
 				else
-					theHP /= (lvc >= 2 ? orb_good_hp : 1) * (0.5 - (treasure ? treasures[23] / 3000 : 0));
+					theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (0.5 - (treasure ? catEnv.treasures[23] / 3000 : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
@@ -654,16 +654,16 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
 				if (other_def[9])
-					theHP *= (treasure ? 4 + treasures[23] / 300 : 4) / ((lvc >= 2 ? orb_resist : 1) * (1 - other_def[9]));
+					theHP *= (treasure ? 4 + catEnv.treasures[23] / 300 : 4) / ((lvc >= 2 ? catEnv.orb_resist : 1) * (1 - other_def[9]));
 				else
-					theHP *= (treasure ? 4 + treasures[23] / 300 : 4) / (lvc >= 2 ? orb_resist : 1);
+					theHP *= (treasure ? 4 + catEnv.treasures[23] / 300 : 4) / (lvc >= 2 ? catEnv.orb_resist : 1);
 				lines.push('耐打');
 				t_ef = true;
 				break;
 			case AB_RESISTS:
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
-				theHP *= (treasure ? 6 + treasures[23] / 300 : 6);
+				theHP *= (treasure ? 6 + catEnv.treasures[23] / 300 : 6);
 				lines.push('超耐打');
 				t_ef = true;
 				break;
@@ -730,7 +730,7 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 
 function getHpString(form, Cs, trait, level, parent, plus, KB) {
 	parent.textContent = '';
-	const hp = floor(floor(floor(Math.round(form.hp * form.getLevelMulti(level)) * hp_t) * (1 + (other_def[3] || 0))) * form.hpM);
+	const hp = floor(floor(floor(Math.round(form.hp * form.getLevelMulti(level)) * catEnv.hp_t) * (1 + (other_def[3] || 0))) * form.hpM);
 	let theHP = hp;
 	if (other_def[1])
 		theHP /= 0.85;
@@ -757,9 +757,9 @@ function getHP0(form, m, S, W) {
 	}
 	let hp_o, tmp = other_def[3];
 	if (tmp)
-		hp_o = floor(floor(floor(Math.round(form.hp * m) * hp_t) * (1 + tmp)) * form.hpM);
+		hp_o = floor(floor(floor(Math.round(form.hp * m) * catEnv.hp_t) * (1 + tmp)) * form.hpM);
 	else
-		hp_o = floor(floor(Math.round(form.hp * m) * hp_t) * form.hpM);
+		hp_o = floor(floor(Math.round(form.hp * m) * catEnv.hp_t) * form.hpM);
 	do {
 		if (flag) {
 			t = (FG == 2);
@@ -772,19 +772,19 @@ function getHP0(form, m, S, W) {
 				case AB_GOOD:
 					tmp = other_def[7];
 					if (tmp)
-						hp /= (form.lvc >= 2 ? orb_good_hp : 1) * (1 - tmp) * (0.5 - (t ? treasures[23] / 3000 : 0));
+						hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - tmp) * (0.5 - (t ? catEnv.treasures[23] / 3000 : 0));
 					else
-						hp /= (form.lvc >= 2 ? orb_good_hp : 1) * (0.5 - (t ? treasures[23] / 3000 : 0));
+						hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (0.5 - (t ? catEnv.treasures[23] / 3000 : 0));
 					break;
 				case AB_RESIST:
 					tmp = other_def[9];
 					if (tmp)
-						hp *= (t ? 4 + treasures[23] / 300 : 4) / ((form.lvc >= 2 ? orb_resist : 1) * (1 - tmp));
+						hp *= (t ? 4 + catEnv.treasures[23] / 300 : 4) / ((form.lvc >= 2 ? catEnv.orb_resist : 1) * (1 - tmp));
 					else
-						hp *= (t ? 4 + treasures[23] / 300 : 4) / (form.lvc >= 2 ? orb_resist : 1);
+						hp *= (t ? 4 + catEnv.treasures[23] / 300 : 4) / (form.lvc >= 2 ? catEnv.orb_resist : 1);
 					break;
 				case AB_RESISTS:
-					hp *= (t ? 6 + treasures[23] / 300 : 6);
+					hp *= (t ? 6 + catEnv.treasures[23] / 300 : 6);
 					break;
 				case AB_EKILL:
 					if (other_def[15])
@@ -856,10 +856,10 @@ function getATK0(form, m, S, W1, W2) {
 		if (tmp) {
 			const atk_m = 1 + tmp;
 			for (let i = 0; i < atks.length; ++i)
-				atks[i] = floor(floor(floor(Math.round(atks[i] * m) * atk_t) * atk_m) * form.atkM);
+				atks[i] = floor(floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * atk_m) * form.atkM);
 		} else {
 			for (let i = 0; i < atks.length; ++i)
-				atks[i] = floor(floor(Math.round(atks[i] * m) * atk_t) * form.atkM);
+				atks[i] = floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * form.atkM);
 		}
 
 		let dps = new Float64Array(atks);
@@ -890,9 +890,9 @@ function getATK0(form, m, S, W1, W2) {
 					break;
 				case AB_GOOD:
 					if (other_def[7])
-						a = (1 + other_def[7]) * (1.5 + (t ? treasures[23] / 1000 : 0)) + (form.lvc >= 2 ? orb_good_atk : 0);
+						a = (1 + other_def[7]) * (1.5 + (t ? catEnv.treasures[23] / 1000 : 0)) + (form.lvc >= 2 ? catEnv.orb_good_atk : 0);
 					else
-						a = 1.5 + (form.lvc >= 2 ? orb_good_atk : 0) + (t ? treasures[23] / 1000 : 0);
+						a = 1.5 + (form.lvc >= 2 ? catEnv.orb_good_atk : 0) + (t ? catEnv.treasures[23] / 1000 : 0);
 					mul(atks, a);
 					mul(dps, a);
 					break;
@@ -915,12 +915,12 @@ function getATK0(form, m, S, W1, W2) {
 					mul(dps, a);
 					break;
 				case AB_MASSIVE:
-					a = (1 + (other_def[8] || 0)) * (t ? (treasures[23] == 300 ? 4 : (3 + treasures[23] / 300)) : 3) + (form.lvc >= 2 ? orb_massive : 0);
+					a = (1 + (other_def[8] || 0)) * (t ? (catEnv.treasures[23] == 300 ? 4 : (3 + catEnv.treasures[23] / 300)) : 3) + (form.lvc >= 2 ? catEnv.orb_massive : 0);
 					mul(atks, a);
 					mul(dps, a);
 					break;
 				case AB_MASSIVES:
-					a = t ? (treasures[23] == 300 ? 6 : (5 + treasures[23] / 300)) : 5;
+					a = t ? (catEnv.treasures[23] == 300 ? 6 : (5 + catEnv.treasures[23] / 300)) : 5;
 					mul(atks, a);
 					mul(dps, a);
 					break;
@@ -1823,10 +1823,10 @@ async function applyOrb() {
 		}
 	}
 	orb_hp = 1;
-	orb_massive = 0;
-	orb_resist = 1;
-	orb_good_atk = 0;
-	orb_good_hp = 1;
+	catEnv.orb_massive = 0;
+	catEnv.orb_resist = 1;
+	catEnv.orb_good_atk = 0;
+	catEnv.orb_good_hp = 1;
 	add_atk = 0;
 	const C2 = [ // equipment_grade.imgcut
 		1, 1,
@@ -1874,22 +1874,22 @@ async function applyOrb() {
 					alert('提示：\n強化善於攻擊本能玉只能用在有「善於攻擊」效果的貓咪上');
 					break;
 				}
-				orb_good_hp -= 0.02 * s2;
-				orb_good_atk += 0.06 * s2;
+				catEnv.orb_good_hp -= 0.02 * s2;
+				catEnv.orb_good_atk += 0.06 * s2;
 				break;
 			case 4:
 				if (!my_cat.forms[2].ab.hasOwnProperty(AB_MASSIVE)) {
 					alert('提示：\n強化超大傷害只能用在有「超大傷害」效果的貓咪上');
 					break;
 				}
-				orb_massive += s2 / 10;
+				catEnv.orb_massive += s2 / 10;
 				break;
 			case 5:
 				if (!my_cat.forms[2].ab.hasOwnProperty(AB_RESIST)) {
 					alert('提示：\n強化很耐打本能玉只能用在有「很耐打」效果的貓咪上');
 					break;
 				}
-				orb_resist *= (1 - s2 / 20);
+				catEnv.orb_resist *= (1 - s2 / 20);
 				break;
 		}
 	}

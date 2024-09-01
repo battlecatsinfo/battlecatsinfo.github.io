@@ -168,7 +168,7 @@ function getAtk(form, line, theATK, parent, first, attackS) {
 }
 
 function getAtkString(form, atks, Cs, level, parent, attackS) {
-	atks = atks.map(x => ~~((~~(Math.round(x * form.getLevelMulti(level)) * atk_t)) * form.atkM));
+	atks = atks.map(x => ~~((~~(Math.round(x * form.getLevelMulti(level)) * catEnv.atk_t)) * form.atkM));
 	parent.textContent = '';
 	let first;
 	let m1 = new Float64Array(atks);
@@ -267,7 +267,7 @@ function getHp(lvc, line, theHP, parent, first, trait) {
 
 function getHpString(form, Cs, level, parent) {
 	parent.textContent = '';
-	const hp = ~~((~~(Math.round(form.hp * form.getLevelMulti(level)) * hp_t)) * form.hpM);
+	const hp = ~~((~~(Math.round(form.hp * form.getLevelMulti(level)) * catEnv.hp_t)) * form.hpM);
 	parent.append(numStr(~~hp));
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)

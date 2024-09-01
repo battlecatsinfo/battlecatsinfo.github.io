@@ -164,9 +164,9 @@ function calc() {
 	if (E.trait & TB_ALIEN) {
 		let m;
 		if (E.star == 1)
-			m = 16 - treasures[22] / 100;
+			m = 16 - catEnv.treasures[22] / 100;
 		else
-			m = 7 - treasures[21] / 100;
+			m = 7 - catEnv.treasures[21] / 100;
 		HP *= m;
 		atk *= m;
 		atk1 *= m;
@@ -175,13 +175,13 @@ function calc() {
 		let m;
 		switch (E.star) {
 			case 2:
-				m = 11 - (treasures[20] / 10);
+				m = 11 - (catEnv.treasures[20] / 10);
 				break;
 			case 3:
-				m = 11 - (treasures[24] / 10);
+				m = 11 - (catEnv.treasures[24] / 10);
 				break;
 			case 4:
-				m = 11 - (treasures[30] / 10);
+				m = 11 - (catEnv.treasures[30] / 10);
 				break;
 		}
 		HP *= m;
