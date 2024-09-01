@@ -11,6 +11,12 @@
 	<meta property="og:image" content="https://i.imgur.com/wzLaUm2.png">
 {{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="parser.js"></script>
+	<script src="esearch.js" type="module"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
@@ -190,7 +196,6 @@
 
 {{#*inline "content"}}
 	<div id="loader"></div>
-	<script src="cat.js"></script>
 	<div id="main" class="An">
 		<div class="w3-container">
 			<ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: auto;" id="trait-s">
@@ -441,8 +446,6 @@
 				</table>
 			</div>
 		</div>
-		<script src="parser.js"></script>
-		<script src="esearch.js"></script>
 	</div>
 {{/inline}}
 

@@ -1,3 +1,5 @@
+import {loadAllCats} from './cat.js';
+
 var cats;
 var tooltip;
 const _fav = localStorage.getItem('star-cats');
@@ -428,3 +430,11 @@ function favorite(e) {
 		localStorage.setItem('star-cats', JSON.stringify(arr));
 	}
 }
+
+// expose global methods
+// @TODO: refactor the code to prevent this
+Object.assign(globalThis, {
+	ok,
+	clearAll,
+	_clearAll,
+});

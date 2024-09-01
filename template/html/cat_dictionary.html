@@ -4,6 +4,11 @@
 
 {{#*inline "title"}}貓咪圖鑑{{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="cat_dict.js" type="module"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
@@ -239,10 +244,6 @@
 		) !important;
 	}
 	</style>
-{{/inline}}
-
-{{#*inline "scripts"}}
-	<script src="/utils.js"></script>
 {{/inline}}
 
 {{#*inline "content"}}
@@ -503,8 +504,6 @@
 		<div id="cats"></div>
 	</div>
 	<button class="btn" style="position: fixed;right: 1vw;bottom: 1vh;" onclick="favorite(event)" data-s="0">★設定我的最愛</button>
-	<script src="cat.js"></script>
-	<script src="cat_dict.js"></script>
 {{/inline}}
 
 {{/blank.html}}

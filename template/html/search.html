@@ -11,6 +11,12 @@
 	<meta property="og:image" content="https://i.imgur.com/cnYnN81.png">
 {{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="parser.js"></script>
+	<script src="search.js" type="module"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
@@ -509,9 +515,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="cat.js"></script>
-	<script src="parser.js"></script>
-	<script src="search.js"></script>
 {{/inline}}
 
 {{/common.html}}

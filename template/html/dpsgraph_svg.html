@@ -4,8 +4,9 @@
 
 {{#*inline "scripts"}}
 	{{~> @partial-block}}
-	<script src="/cat.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+	<script src="svg.js"></script>
+	<script src="dpsgraph.js" type="module"></script>
 {{/inline}}
 
 {{#*inline "styles-inline"}}
@@ -51,8 +52,6 @@
 		</div>
 	</div>
 	<a style="position: fixed;bottom: 1vh;right: 1vw;color: #0027ff !important;" href="dpsgraph_png.html">切換至點陣圖模式</a>
-	<script src="svg.js"></script>
-	<script src="dpsgraph.js"></script>
 {{/inline}}
 
 {{/common.html}}

@@ -1,3 +1,9 @@
+import {
+	numStr,
+	numStrT,
+	loadAllCats,
+} from './cat.js';
+
 var cats;
 var cats_old;
 var hide_seach = false;

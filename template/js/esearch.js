@@ -1,3 +1,9 @@
+import {
+	numStr,
+	numStrT,
+	loadAllEnemies,
+} from './cat.js';
+
 var cats;
 const filter_expr = document.getElementById('filter-expr');
 const sort_expr = document.getElementById('sort-expr');

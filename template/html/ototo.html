@@ -2,6 +2,11 @@
 
 {{#*inline "title"}}城堡寶開發隊{{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="ototo.js" type="module"></script>
+{{/inline}}
+
 {{#*inline "content"}}
 	<div class="M" style="display:none">
 		<div class="C">
@@ -851,7 +856,6 @@
 			</li>
 		</ul>
 	</div>
-	<script src="ototo.js"></script>
 {{/inline}}
 
 {{/static.html}}

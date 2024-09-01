@@ -13,6 +13,11 @@
 	<meta property="og:image" content="https://i.imgur.com/uzobngO.png">
 {{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="stage.js" type="module"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
@@ -304,9 +309,6 @@
 		</div>
 		<div id="search-result" hidden></div>
 	</div>
-	{{#> content-scripts}}
-	<script src="stage.js"></script>
-	{{/content-scripts}}
 {{/inline}}
 
 {{/common.html}}

@@ -1,1 +1,1 @@
-const combos={{{toJSON combos}}};
+export const combos = {{{toJSON combos}}};
