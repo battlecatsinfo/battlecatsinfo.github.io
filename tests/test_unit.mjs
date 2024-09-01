@@ -167,6 +167,54 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('Cat.animUrl', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.animUrl, "/anim.html?id=0");
+
+				var cat = await Unit.loadCat(205);
+				assert.strictEqual(cat.animUrl, "/anim.html?id=205");
+			});
+
+		});
+
+		describe('Cat.bcdbUrl', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.bcdbUrl, "https://battlecats-db.com/unit/001.html");
+
+				var cat = await Unit.loadCat(205);
+				assert.strictEqual(cat.bcdbUrl, "https://battlecats-db.com/unit/206.html");
+			});
+
+		});
+
+		describe('Cat.udpUrl', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.udpUrl, "https://thanksfeanor.pythonanywhere.com/UDP/000");
+
+				var cat = await Unit.loadCat(205);
+				assert.strictEqual(cat.udpUrl, "https://thanksfeanor.pythonanywhere.com/UDP/205");
+			});
+
+		});
+
+		describe('Cat.fandomUrl', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.fandomUrl, "https://battle-cats.fandom.com/wiki/Cat_(Normal_Cat)");
+
+				var cat = await Unit.loadCat(305);
+				assert.strictEqual(cat.fandomUrl, "https://battle-cats.fandom.com/wiki/Mighty_Drednot_(Uber_Rare_Cat)");
+			});
+
+		});
+
 	});
 
 	describe('CatForm', function () {
@@ -325,6 +373,42 @@ describe('unit.mjs', function () {
 
 				var enemy = await Unit.loadEnemy(47);
 				assert.strictEqual(enemy.icon, "/img/e/47/0.png");
+			});
+
+		});
+
+		describe('Enemy.animUrl', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.animUrl, "/anim.html?id=-1");
+
+				var enemy = await Unit.loadEnemy(205);
+				assert.strictEqual(enemy.animUrl, "/anim.html?id=-206");
+			});
+
+		});
+
+		describe('Enemy.bcdbUrl', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.bcdbUrl, "https://battlecats-db.com/enemy/002.html");
+
+				var enemy = await Unit.loadEnemy(205);
+				assert.strictEqual(enemy.bcdbUrl, "https://battlecats-db.com/enemy/207.html");
+			});
+
+		});
+
+		describe('Enemy.fandomUrl', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.fandomUrl, "https://battle-cats.fandom.com/wiki/Doge");
+
+				var enemy = await Unit.loadEnemy(205);
+				assert.strictEqual(enemy.fandomUrl, "https://battle-cats.fandom.com/wiki/Capy");
 			});
 
 		});

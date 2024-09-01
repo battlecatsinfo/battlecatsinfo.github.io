@@ -100,18 +100,6 @@ const RES_WARP = 8;
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 
-function t3str(x) {
-	var s = x.toString();
-	switch (s.length) {
-		case 2:
-			return "0" + s;
-
-		case 1:
-			return "00" + s;
-	}
-	return s;
-}
-
 function numStr(num) {
 	return utils.numStr(num);
 	// return (Math.round(100 * (num + Number.EPSILON)) / 100).toString();
@@ -1177,6 +1165,21 @@ class Enemy {
 	get icon() {
 		return `/img/e/${this.id}/0.png`;
 	}
+	get animUrl() {
+		const value = `/anim.html?id=${-(this.id + 1)}`;
+		Object.defineProperty(this, 'animUrl', {value});
+		return value;
+	}
+	get bcdbUrl() {
+		const value = `https://battlecats-db.com/enemy/${(this.id + 2).toString().padStart(3, '0')}.html`;
+		Object.defineProperty(this, 'bcdbUrl', {value});
+		return value;
+	}
+	get fandomUrl() {
+		const value = `https://battle-cats.fandom.com/wiki/${this.fandom}`;
+		Object.defineProperty(this, 'fandomUrl', {value});
+		return value;
+	}
 	gethp() {
 		return this.hp;
 	}
@@ -1302,6 +1305,26 @@ class Cat {
 		const curve = this.xpCurve;
 		const mul = units_scheme.xp_multipliers;
 		return mul[~~(level / 10)] * curve[level % 10];
+	}
+	get animUrl() {
+		const value = `/anim.html?id=${this.id}`;
+		Object.defineProperty(this, 'animUrl', {value});
+		return value;
+	}
+	get bcdbUrl() {
+		const value = `https://battlecats-db.com/unit/${(this.id + 1).toString().padStart(3, '0')}.html`;
+		Object.defineProperty(this, 'bcdbUrl', {value});
+		return value;
+	}
+	get udpUrl() {
+		const value = `https://thanksfeanor.pythonanywhere.com/UDP/${this.id.toString().padStart(3, '0')}`;
+		Object.defineProperty(this, 'udpUrl', {value});
+		return value;
+	}
+	get fandomUrl() {
+		const value = `https://battle-cats.fandom.com/wiki/${this.info.fandom}`;
+		Object.defineProperty(this, 'fandomUrl', {value});
+		return value;
 	}
 }
 
@@ -1685,7 +1708,6 @@ export {
 	getAbiString,
 	numStr,
 	numStrT,
-	t3str,
 
 	getRes,
 	getCoverUnit,

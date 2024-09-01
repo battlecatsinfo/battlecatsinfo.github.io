@@ -61,7 +61,6 @@ import {
 	getAbiString,
 	numStr,
 	numStrT,
-	t3str,
 
 	getCoverUnit,
 
@@ -3244,13 +3243,12 @@ loadCat(my_id)
 		document.title = cat_names.replaceAll(' → ', ' ') + ' - 貓咪資訊';
 		const abar = document.getElementById('abar');
 		const abars = abar.children;
-		abars[1].href = 'https://battlecats-db.com/unit/' + t3str(my_id + 1) + '.html';
+		abars[1].href = my_cat.bcdbUrl;
 		abars[2].onclick = () => makegraph(0);
 		abars[3].onclick = () => makegraph(1);
 		abars[4].onclick = () => makegraph(2);
 		abars[5].onclick = () => makegraph(3);
 		abars[6].onclick = xpgraph;
-		const s = t3str(my_id);
 		abars[7].onclick = function() {
 			var oldList = localStorage.getItem('star-cats');
 			if (oldList == null)
@@ -3267,7 +3265,7 @@ loadCat(my_id)
 
 		let a = document.createElement('a');
 		a.classList.add('w3-bar-item');
-		a.href = '/anim.html?id=' + my_id.toString();
+		a.href = my_cat.animUrl;
 		a.textContent = '檢視動畫';
 		a.target = '_black';
 		abar.appendChild(a);
@@ -3275,14 +3273,14 @@ loadCat(my_id)
 		a = document.createElement('a');
 		a.classList.add('w3-bar-item');
 		a.textContent = 'UDP';
-		a.href = 'https://thanksfeanor.pythonanywhere.com/UDP/' + s;
+		a.href = my_cat.udpUrl;
 		a.target = '_black';
 		abar.appendChild(a);
 
 		a = document.createElement('a');
 		a.classList.add('w3-bar-item');
 		a.textContent = 'Fandom';
-		a.href = 'https://battle-cats.fandom.com/wiki/' + my_cat.info.fandom;
+		a.href = my_cat.fandomUrl;
 		a.target = '_black';
 		abar.appendChild(a);
 
