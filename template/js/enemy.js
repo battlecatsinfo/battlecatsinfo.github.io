@@ -72,7 +72,6 @@ import {
 	getAbiString,
 	numStr,
 	numStrT,
-	t3str,
 
 	getCoverUnit,
 
@@ -561,7 +560,7 @@ loadEnemy(my_id)
 		chs[2].children[3].textContent = numStrT(E.backswing);
 		chs[2].children[5].textContent = numStrT(E.tba);
 		chs[2].children[7].textContent = numStrT(E.attackF);
-		X = new URL('https://battlecats-db.com/enemy/' + t3str(my_id + 2) + '.html');
+		X = new URL(E.bcdbUrl);
 		if (my_mult != 100) X.searchParams.set('mag', my_mult);
 		document.getElementById('open-db').href = X.href;
 		chs[1].children[5].textContent = E.range;
@@ -580,8 +579,8 @@ loadEnemy(my_id)
 		}
 		createAbIcons();
 		document.getElementById('search-appear').onclick = search_for;
-		document.getElementById('open-anim').href = `/anim.html?id=${-(my_id + 1)}`;
-		document.getElementById('fandom').href = 'https://battle-cats.fandom.com/wiki/' + E.fandom;
+		document.getElementById('open-anim').href = E.animUrl;
+		document.getElementById('fandom').href = E.fandomUrl;
 		mult.addEventListener('focus', hfocus);
 		mult.addEventListener('blur', function() {
 			let num = mult.textContent.match(/\d+/);
