@@ -27,6 +27,7 @@ const sources = [
 	'combo_effect.html',
 	'rewards.html',
 	'imgcut.html',
+	'anim.html',
 	'gamatoto.html',
 	'medal.html',
 	'rank.html',
@@ -57,6 +58,8 @@ const sources = [
 	'svg.js',
 	'dpsgraph.js',
 	'ototo.js',
+	'medal.js',
+	'metal_killer.js',
 	'cat.js',
 	'unit.js',
 

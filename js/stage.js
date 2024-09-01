@@ -102,7 +102,7 @@ module.exports = class extends SiteGenerator {
 	}
 
 	generate_pages({stageScheme, eggs}) {
-		this.write_template('html/anim.html', 'anim.html', {eggs});
+		this.write_template('js/anim.js', 'anim.js', {eggs});
 
 		const {categories} = stageScheme;
 		this.write_template('html/stage.html', 'stage.html', {
