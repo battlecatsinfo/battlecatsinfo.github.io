@@ -205,10 +205,6 @@ function get_trait_short_names(trait) {
 	return s;
 }
 
-function toi(x) {
-	return parseInt(x, 10);
-}
-
 class CatForm {
 	constructor(o, props = {}) {
 		Object.assign(this, o);

@@ -60,20 +60,6 @@
 	</style>
 {{/inline}}
 
-{{#*inline "scripts-inline"}}
-	<script>
-	function Switch() {
-		let x = localStorage.getItem('unit');
-		if (!x || x == 'S') {
-			localStorage.setItem('unit', 'F');
-			return alert('單位切換成「F」(幀)');
-		}
-		localStorage.setItem('unit', 'S');
-		alert('單位切換成「秒」');
-	}
-	</script>
-{{/inline}}
-
 {{#*inline "content"}}
 	<div class="w3-row">
 		<a class="w3-col s6" href="/search.html">貓咪搜尋<img class="A w3-card-4" src="https://i.imgur.com/cnYnN81.png"></a>

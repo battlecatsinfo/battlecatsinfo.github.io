@@ -76,13 +76,6 @@ document.querySelectorAll('.w3-input').forEach(x => {
 		x.value = val;
 });
 
-function fullTreasure() {
-	document.querySelectorAll('.w3-input').forEach(x => {
-		localStorage.setItem('t$' + x.getAttribute('data-i'), x.max);
-		x.value = x.max;
-	});
-}
-
 let x = localStorage.getItem('unit');
 if (x == 'F')
 	document.getElementById('unit-f').checked = true;

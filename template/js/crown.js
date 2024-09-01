@@ -26,10 +26,6 @@ const lang = {
 	"infoFiltered": "(從 _MAX_ 筆結果中篩選)"
 };
 
-const F = new Intl.NumberFormat(undefined, {
-	'maximumFractionDigits': 2
-});
-
 function format(num) {
 	if (num)
 		return num.toString(); //return F.format(num);
