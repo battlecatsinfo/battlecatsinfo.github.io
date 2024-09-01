@@ -1113,7 +1113,7 @@ function updateValues(form, tbl) {
 	const node = chs[5].children[5];
 	if (form.lds) {
 		const nums = '①②③';
-		node.append('接觸點' + form.range);
+		node.textContent = '接觸點' + form.range;
 		node.appendChild(document.createElement('br'));
 		node.append('範圍');
 		node.appendChild(document.createElement('br'));
