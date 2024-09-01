@@ -4,8 +4,9 @@
 
 {{#*inline "scripts"}}
 	{{~> @partial-block}}
-	<script src="/cat.js"></script>
 	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+	<script src="png.js"></script>
+	<script src="dpsgraph.js" type="module"></script>
 {{/inline}}
 
 {{#*inline "styles-inline"}}
@@ -59,8 +60,6 @@
 			<option value="dark2">深色2</option>
 		</select>
 	</div>
-	<script src="png.js"></script>
-	<script src="dpsgraph.js" type="module"></script>
 {{/inline}}
 
 {{/common.html}}

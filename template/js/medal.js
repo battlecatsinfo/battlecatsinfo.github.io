@@ -14,3 +14,9 @@ document.ontouchstart = function() {
 	G && (G.style.display = 'none', G = null);
 	event.stopPropagation();
 };
+
+// expose global methods
+// @TODO: refactor the code to prevent this
+Object.assign(globalThis, {
+	F,
+});

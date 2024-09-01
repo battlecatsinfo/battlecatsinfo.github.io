@@ -237,3 +237,10 @@ function detail(A, B) {
 	M.append(table);
 	modal.style.display = 'block';
 }
+
+// expose global methods
+// @TODO: refactor the code to prevent this
+Object.assign(globalThis, {
+	detail,
+	modal,
+});

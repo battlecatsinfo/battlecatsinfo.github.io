@@ -1,3 +1,9 @@
+import {
+	numStr,
+	numStrT,
+	loadAllCats,
+} from './cat.js';
+
 var cats;
 var cats_old;
 var hide_search = false;
@@ -54,7 +60,7 @@ function rerender(event) {
 	renderTable(last_forms, id);
 }
 
-function setRange(e) {
+document.getElementById('per_page').oninput = function setRange(e) {
 	per_page = parseInt(e.currentTarget.value);
 	const url = new URL(location.href);
 	if (per_page != 10) {
@@ -64,7 +70,7 @@ function setRange(e) {
 	}
 	history.pushState({}, '', url);
 	renderTable(last_forms);
-}
+};
 
 function renderTable(forms, page = 1) {
 	last_forms = forms;

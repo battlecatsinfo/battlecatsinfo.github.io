@@ -4,6 +4,11 @@
 
 {{#*inline "description"}}編輯ImgCut檔案{{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="/imgcut.js" type="module"></script>
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
@@ -84,7 +89,6 @@
 			<tbody id="edit"></tbody>
 		</table>
 	</div>
-	<script src="/imgcut.js"></script>
 {{/inline}}
 
 {{/common.html}}

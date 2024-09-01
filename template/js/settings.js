@@ -94,3 +94,10 @@ if (x)
 x = localStorage.getItem('stagef');
 if (x)
 	document.getElementById('stagef-' + x).checked = true;
+
+// expose global methods
+// @TODO: refactor the code to prevent this
+Object.assign(globalThis, {
+	fucus,
+	tab,
+});

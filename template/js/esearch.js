@@ -1,3 +1,9 @@
+import {
+	numStr,
+	numStrT,
+	loadAllEnemies,
+} from './cat.js';
+
 var cats;
 const filter_expr = document.getElementById('filter-expr');
 const sort_expr = document.getElementById('sort-expr');
@@ -42,10 +48,10 @@ function rerender(event) {
 	renderTable(last_forms, id);
 }
 
-function setRange(e) {
+document.getElementById('per_page').oninput = function setRange(e) {
 	per_page = parseInt(e.currentTarget.value);
 	renderTable(last_forms);
-}
+};
 
 function renderTable(forms, page = 1) {
 	let H = page * per_page;

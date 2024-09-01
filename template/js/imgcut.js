@@ -421,3 +421,20 @@ function scolor() {
 	ctx.strokeStyle = color.value;
 	draw();
 }
+
+// expose global methods
+// @TODO: refactor the code to prevent this
+Object.assign(globalThis, {
+	importImg,
+	importImgU,
+	pasteImg,
+	importCut,
+	importCutU,
+	scolor,
+	exportimg,
+	exportimga,
+	exportaimg,
+	exportcut,
+	addline,
+	removeline,
+});

@@ -1,3 +1,73 @@
+import {
+	ATK_SINGLE,
+	ATK_RANGE,
+	ATK_LD,
+	ATK_OMNI,
+	ATK_KB_REVENGE,
+
+	trait_no_treasure,
+	trait_treasure,
+
+	AB_STRONG,
+	AB_LETHAL,
+	AB_ATKBASE,
+	AB_CRIT,
+	AB_ZKILL,
+	AB_CKILL,
+	AB_BREAK,
+	AB_SHIELDBREAK,
+	AB_S,
+	AB_BOUNTY,
+	AB_METALIC,
+	AB_MINIWAVE,
+	AB_WAVE,
+	AB_MINIVOLC,
+	AB_VOLC,
+	AB_WAVES,
+	AB_BAIL,
+	AB_BSTHUNT,
+	AB_WKILL,
+	AB_EKILL,
+	AB_WEAK,
+	AB_STOP,
+	AB_SLOW,
+	AB_ONLY,
+	AB_GOOD,
+	AB_RESIST,
+	AB_RESISTS,
+	AB_MASSIVE,
+	AB_MASSIVES,
+	AB_KB,
+	AB_WARP,
+	AB_IMUATK,
+	AB_CURSE,
+	AB_BURROW,
+	AB_REVIVE,
+	AB_POIATK,
+	AB_GLASS,
+	AB_SHIELD,
+	AB_DSHIELD,
+	AB_COUNTER,
+	AB_AFTERMATH,
+	AB_SAGE,
+	AB_SUMMON,
+	AB_MK,
+
+	units_scheme,
+	catEnv,
+
+	numStr,
+	numStrT,
+
+	getRes,
+
+	createTraitIcons,
+	createImuIcons,
+	createResIcons,
+
+	loadAllCats,
+} from './cat.js';
+
 var cats;
 var targets = new Set();
 var CL;
