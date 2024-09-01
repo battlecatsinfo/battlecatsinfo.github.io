@@ -1,5 +1,6 @@
 import {assert} from './lib/chai.js';
 import {dbGetAll, dbClear, dbDelete} from './common.mjs';
+import * as Common from '../common.mjs';
 import * as Unit from '../unit.mjs';
 
 describe('unit.mjs', function () {
@@ -117,6 +118,107 @@ describe('unit.mjs', function () {
 
 			// data stored
 			await test();
+		});
+
+	});
+
+	describe('CatEnv', function () {
+
+		describe('constructor', function () {
+
+			it('no param', function () {
+				var env = new Unit.CatEnv();
+				var defaultTreasures = Common.config.getDefaultTreasures();
+				assert.deepEqual(env.treasures, defaultTreasures);
+				assert.notStrictEqual(env.treasures, defaultTreasures);
+				assert.strictEqual(env.add_atk, 0);
+				assert.strictEqual(env.orb_hp, 1);
+				assert.strictEqual(env.orb_massive, 0);
+				assert.strictEqual(env.orb_resist, 1);
+				assert.strictEqual(env.orb_good_atk, 0);
+				assert.strictEqual(env.orb_good_hp, 1);
+			});
+
+			it('with params', function () {
+				var treasures = [50, 100, , 200, 250];
+				var env = new Unit.CatEnv({
+					treasures,
+					add_atk: 5,
+					orb_hp: 0.8,
+					orb_massive: 0.5,
+					orb_resist: 0.75,
+					orb_good_atk: 0.3,
+					orb_good_hp: 0.9,
+				});
+				var defaultTreasures = Common.config.getDefaultTreasures();
+				assert.deepEqual(env.treasures, [50, 100, 300, 200, 250].concat(defaultTreasures.slice(5)));
+				assert.notStrictEqual(env.treasures, treasures);
+				assert.notStrictEqual(env.treasures, defaultTreasures);
+				assert.strictEqual(env.add_atk, 5);
+				assert.strictEqual(env.orb_hp, 0.8);
+				assert.strictEqual(env.orb_massive, 0.5);
+				assert.strictEqual(env.orb_resist, 0.75);
+				assert.strictEqual(env.orb_good_atk, 0.3);
+				assert.strictEqual(env.orb_good_hp, 0.9);
+			});
+
+			it('forbid changing internal objects', function () {
+				var env = new Unit.CatEnv();
+
+				assert.throws(() => {
+					env.treasures = 1;
+				}, TypeError);
+
+				assert.throws(() => {
+					delete env.treasures;
+				}, TypeError);
+			});
+
+		});
+
+		describe('reset', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv();
+				var treasures = env.treasures;
+
+				env.treasures[0] = 0;
+				env.treasures[2] = 0;
+				env.add_atk = 5;
+				env.orb_hp = 0.8;
+				env.orb_massive = 0.5;
+				env.orb_resist = 0.75;
+				env.orb_good_atk = 0.3;
+				env.orb_good_hp = 0.9;
+				env.reset();
+
+				assert.strictEqual(env.treasures, treasures);
+				assert.deepEqual(env.treasures, Common.config.getDefaultTreasures());
+				assert.strictEqual(env.add_atk, 0);
+				assert.strictEqual(env.orb_hp, 1);
+				assert.strictEqual(env.orb_massive, 0);
+				assert.strictEqual(env.orb_resist, 1);
+				assert.strictEqual(env.orb_good_atk, 0);
+				assert.strictEqual(env.orb_good_hp, 1);
+			});
+
+		});
+
+		describe('getters', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv({
+					treasures: [100, 200],
+				});
+				assert.strictEqual(env.atk_t, 1 + 0.005 * 100);
+				assert.strictEqual(env.hp_t, 1 + 0.005 * 200);
+
+				env.treasures[0] = 150;
+				env.treasures[1] = 250;
+				assert.strictEqual(env.atk_t, 1 + 0.005 * 150);
+				assert.strictEqual(env.hp_t, 1 + 0.005 * 250);
+			});
+
 		});
 
 	});

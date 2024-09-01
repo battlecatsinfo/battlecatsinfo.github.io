@@ -35,15 +35,21 @@ describe('common.mjs', function () {
 	});
 
 	describe('config', function () {
-		function withLocalStorage(name, callback) {
-			const oldValue = localStorage.getItem(name);
+		function withLocalStorage(names, callback) {
+			if (!Array.isArray(names)) {
+				names = [names];
+			}
+			const oldValues = names.map(name => localStorage.getItem(name));
 			try {
 				callback();
 			} finally {
-				if (oldValue !== null)
-					localStorage.setItem(name, oldValue);
-				else
-					localStorage.removeItem(name);
+				names.forEach((name, i) => {
+					const oldValue = oldValues[i];
+					if (oldValue !== null)
+						localStorage.setItem(name, oldValue);
+					else
+						localStorage.removeItem(name);
+				});
 			}
 		}
 
@@ -102,6 +108,168 @@ describe('common.mjs', function () {
 				config.prec = null;
 				assert.isNull(localStorage.getItem('prec'));
 			});
+		});
+
+		it('get config.stagel', function () {
+			withLocalStorage('stagel', () => {
+				localStorage.removeItem('stagel');
+				assert.strictEqual(config.stagel, 0);
+
+				localStorage.setItem('stagel', 0);
+				assert.strictEqual(config.stagel, 0);
+
+				localStorage.setItem('stagel', 1);
+				assert.strictEqual(config.stagel, 1);
+
+				localStorage.setItem('stagel', 2);
+				assert.strictEqual(config.stagel, 2);
+			});
+		});
+
+		it('set config.stagel', function () {
+			withLocalStorage('stagel', () => {
+				config.stagel = 0;
+				assert.strictEqual(localStorage.getItem('stagel'), '0');
+
+				config.stagel = 2;
+				assert.strictEqual(localStorage.getItem('stagel'), '2');
+
+				config.stagel = null;
+				assert.isNull(localStorage.getItem('stagel'));
+			});
+		});
+
+		it('get config.stagef', function () {
+			withLocalStorage('stagef', () => {
+				localStorage.removeItem('stagef');
+				assert.strictEqual(config.stagef, 'F');
+
+				localStorage.setItem('stagef', 'S');
+				assert.strictEqual(config.stagef, 'S');
+
+				localStorage.setItem('stagef', 'F');
+				assert.strictEqual(config.stagef, 'F');
+			});
+		});
+
+		it('set config.stagef', function () {
+			withLocalStorage('stagef', () => {
+				config.stagef = 'F';
+				assert.strictEqual(localStorage.getItem('stagef'), 'F');
+
+				config.stagef = 'S';
+				assert.strictEqual(localStorage.getItem('stagef'), 'S');
+
+				config.stagef = null;
+				assert.isNull(localStorage.getItem('stagef'));
+			});
+		});
+
+		it('get config.layout', function () {
+			withLocalStorage('layout', () => {
+				localStorage.removeItem('layout');
+				assert.strictEqual(config.layout, 1);
+
+				localStorage.setItem('layout', 2);
+				assert.strictEqual(config.layout, 2);
+
+				localStorage.setItem('layout', 1);
+				assert.strictEqual(config.layout, 1);
+			});
+		});
+
+		it('set config.layout', function () {
+			withLocalStorage('layout', () => {
+				config.layout = 1;
+				assert.strictEqual(localStorage.getItem('layout'), '1');
+
+				config.layout = 2;
+				assert.strictEqual(localStorage.getItem('layout'), '2');
+
+				config.layout = null;
+				assert.isNull(localStorage.getItem('layout'));
+			});
+		});
+
+		it('config.getTreasure', function () {
+			withLocalStorage('t$0', () => {
+				localStorage.removeItem('t$0');
+				assert.strictEqual(config.getTreasure(0), 300);
+
+				localStorage.setItem('t$0', 0);
+				assert.strictEqual(config.getTreasure(0), 0);
+
+				localStorage.setItem('t$0', 200);
+				assert.strictEqual(config.getTreasure(0), 200);
+			});
+
+			withLocalStorage('t$30', () => {
+				localStorage.removeItem('t$30');
+				assert.strictEqual(config.getTreasure(30), 100);
+
+				localStorage.setItem('t$30', 0);
+				assert.strictEqual(config.getTreasure(30), 0);
+
+				localStorage.setItem('t$30', 50);
+				assert.strictEqual(config.getTreasure(30), 50);
+			});
+		});
+
+		it('config.setTreasure', function () {
+			withLocalStorage('t$0', () => {
+				config.setTreasure(0, 100);
+				assert.strictEqual(localStorage.getItem('t$0'), '100');
+
+				config.setTreasure(0, 0);
+				assert.strictEqual(localStorage.getItem('t$0'), '0');
+
+				config.setTreasure(0, null);
+				assert.isNull(localStorage.getItem('t$0'));
+			});
+
+			withLocalStorage('t$30', () => {
+				config.setTreasure(30, 50);
+				assert.strictEqual(localStorage.getItem('t$30'), '50');
+
+				config.setTreasure(30, 0);
+				assert.strictEqual(localStorage.getItem('t$30'), '0');
+
+				config.setTreasure(30, null);
+				assert.isNull(localStorage.getItem('t$30'));
+			});
+		});
+
+		it('config.getTreasures', function () {
+			const keys = Array.from({length: 31}, (_, i) => `t$${i}`);
+			withLocalStorage(keys, () => {
+				keys.forEach((key) => localStorage.removeItem(key));
+				assert.deepEqual(config.getTreasures().slice(0, 5), [300, 300, 300, 300, 300]);
+
+				localStorage.setItem('t$0', 0);
+				localStorage.setItem('t$1', 25);
+				localStorage.setItem('t$2', 50);
+				localStorage.setItem('t$3', 75);
+				assert.deepEqual(config.getTreasures().slice(0, 5), [0, 25, 50, 75, 300]);
+			});
+		});
+
+		it('config.setTreasures', function () {
+			const keys = Array.from({length: 31}, (_, i) => `t$${i}`);
+			withLocalStorage(keys, () => {
+				config.setTreasures([0, 25, 50, 75, 100]);
+				assert.deepEqual(config.getTreasures().slice(0, 5), [0, 25, 50, 75, 100]);
+
+				config.setTreasures([null, null, null, null, null]);
+				assert.deepEqual(config.getTreasures().slice(0, 5), [300, 300, 300, 300, 300]);
+			});
+		});
+
+		it('config.getDefaultTreasures', function () {
+			assert.deepEqual(
+				config.getDefaultTreasures(),
+				[300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 30, 10, 30, 30, 30, 30, 30, 30, 30, 100, 600, 1500, 300, 100, 30, 300, 300, 300, 300, 100]
+			);
+
 		});
 
 	});
