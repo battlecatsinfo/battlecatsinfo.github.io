@@ -336,7 +336,7 @@ async function really_search() {
 				}
 
 				td = document.createElement('td')
-				a = document.createElement('a');
+				const a = document.createElement('a');
 				a.textContent = v.name || v.nameJp;
 				a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 				a.target = a.target = '_blank';

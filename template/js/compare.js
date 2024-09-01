@@ -380,7 +380,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 	}
 	const has_treasure = F.trait & trait_treasure;
 	let du;
-	for ([i, v] of Object.entries(F.ab)) {
+	for (let [i, v] of Object.entries(F.ab)) {
 		switch (parseInt(i, 10)) {
 			case 1:
 				W(`體力 ${v[0]} % 以下攻擊力增加至 ${100 + v[1]} %`, "IE6ihRp");

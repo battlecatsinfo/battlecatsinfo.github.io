@@ -4,6 +4,9 @@ var hide_search = false;
 var last_forms;
 var form_s = 5;
 var per_page = 10;
+let def_lv;
+let plus_lv;
+let display_forms;
 
 const ori_expr = document.getElementById('ori-expr');
 const filter_expr = document.getElementById("filter-expr");
