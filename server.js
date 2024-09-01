@@ -11,6 +11,8 @@ function main(chalk) {
 			pathname = './index.html';
 		if (pathname.startsWith('./img/'))
 			pathname = '../' + pathname.slice(2);
+		if (pathname.startsWith('./tests/'))
+			pathname = '../' + pathname.slice(2);
 		fs.stat(pathname, (err, stat) => {
 			if (err) {
 				res.statusCode = 404;
