@@ -1,3 +1,4 @@
+import {config, numStr, numStrT} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -59,8 +60,6 @@ import {
 
 	get_trait_short_names,
 	getAbiString,
-	numStr,
-	numStrT,
 
 	getCoverUnit,
 
@@ -1081,7 +1080,7 @@ function updateValues(form, tbl) {
 		getATK0(form, m, tbl._s, tr[1], chs[4].children[1]);
 		let t = other_def[4];
 		tr[3].textContent = t ? floor((1 + t) * form.speed) : form.speed;
-		if (utils.durationUnit === 'F') {
+		if (config.unit === 'F') {
 			t = numStr(form.pre);
 			if (form.pre1)
 				t += '/' + numStr(form.pre1);

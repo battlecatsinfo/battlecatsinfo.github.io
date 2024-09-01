@@ -1,3 +1,4 @@
+import {getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 
 const loader = document.getElementById('loader');
@@ -25,9 +26,7 @@ const stageL = parseInt(localStorage.getItem('stagel') || '0', 10);
 let info1, info2, info3, star, stage_extra, filter_page, stageF;
 
 if (localStorage.getItem('stagef') == 's')
-	stageF = new Intl.NumberFormat(undefined, {
-		maximumFractionDigits: 2
-	});
+	stageF = getNumFormatter(2);
 
 function fromV(s) {
 	switch (s) {
@@ -98,10 +97,6 @@ function createReward(tr, v) {
 	span.style.verticalAlign = 'center';
 	span.textContent = `${reward?.name} ×${numStr(v[2])}`;
 	img.src = reward.icon || `/img/r/${v[1]}.png`;
-}
-
-function numStr(num) {
-	return utils.numStr(num);
 }
 
 function TI(t) {
