@@ -44,6 +44,7 @@ const sources = [
 	'fav.png',
 
 	'unit.mjs',
+	'stage.mjs',
 
 	'utils.js',
 	'common.js',

@@ -1,3 +1,5 @@
+import * as Stage from './stage.mjs';
+
 const loader = document.getElementById('loader');
 
 const QQ = '？？？';
@@ -163,12 +165,12 @@ async function search_guard() {
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
 
-	for await (const v of utils.forEachStage()) {
+	for await (const v of Stage.forEachStage()) {
 		if (v.flags & 2) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
-			utils.getMap(~~(v.id / 1000)).then(map => {
+			Stage.getMap(~~(v.id / 1000)).then(map => {
 				a.textContent = namefor(map);
 			});
 			const mc = ~~(v.id / 1000000);
@@ -200,12 +202,12 @@ async function search_enemy(e) {
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
 
-	for await (const v of utils.forEachStage()) {
+	for await (const v of Stage.forEachStage()) {
 		if (v.enemyLines.startsWith(T)) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
-			utils.getMap(~~(v.id / 1000)).then(map => {
+			Stage.getMap(~~(v.id / 1000)).then(map => {
 				a.textContent = namefor(map);
 			});
 			const mc = ~~(v.id / 1000000);
@@ -250,7 +252,7 @@ async function search_gold() {
 		}
 	}
 
-	for await (const v of utils.forEachMap()) {
+	for await (const v of Stage.forEachMap()) {
 		if (v.flags & 2) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
@@ -288,14 +290,14 @@ async function search_reward(e) {
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '掉落';
 
-	for await (const v of utils.forEachStage()) {
+	for await (const v of Stage.forEachStage()) {
 		const drop_data = v.drop;
 		if (drop_data) {
 			for (const [, id, num] of drop_data) {
 				if (id == T) {
 					const tr = tbl.appendChild(document.createElement('tr'));
 					let td0 = tr.appendChild(document.createElement('td'));
-					utils.getMap(~~(v.id / 1000)).then(map => {
+					Stage.getMap(~~(v.id / 1000)).then(map => {
 						td0.textContent = namefor(map);
 					});
 					const mc = ~~(v.id / 1000000);
@@ -467,7 +469,7 @@ function getConditionHTML(obj) {
 		const div = document.createElement("div");
 		div.append("通過");
 		const a = div.appendChild(document.createElement("a"));
-		utils.getMap(mc * 1000 + sm).then(map => {
+		Stage.getMap(mc * 1000 + sm).then(map => {
 			a.textContent = namefor(map);
 		});
 		a.href = `/stage.html?s=${mc}-${sm}`;
@@ -485,7 +487,7 @@ function getConditionHTML(obj) {
 		const div = document.createElement("div");
 		div.append("通過");
 		const a = div.appendChild(document.createElement("a"));
-		utils.getMap(mc * 1000 + sm).then(map => {
+		Stage.getMap(mc * 1000 + sm).then(map => {
 			a.textContent = namefor(map) + a.n;
 		});
 		const st = obj.stage;
@@ -506,7 +508,7 @@ function getConditionHTML(obj) {
 		div.append(ay > 200000 ? "通過" : "玩過");
 		const a = div.appendChild(document.createElement("a"));
 		a.href = `/stage.html?s=${mc}-${sm}`;
-		utils.getMap(mc * 1000 + sm).then(map => {
+		Stage.getMap(mc * 1000 + sm).then(map => {
 			a.textContent = namefor(map);
 		});
 		a.onclick = onStageAnchorClick;
@@ -615,7 +617,7 @@ async function refresh_1(sts) {
 	if (info1 && info1.dataset.maps) {
 		for (const map_code of info1.dataset.maps.split(',').map(x => parseInt(x))) {
 			const o = M2.appendChild(document.createElement('option'));
-			utils.getMap(map_code).then(map => {
+			Stage.getMap(map_code).then(map => {
 				o.textContent = namefor(map);
 			});
 		}
@@ -627,7 +629,7 @@ async function refresh_1(sts) {
 	const start = M1.selectedIndex * 1000;
 	let _map;
 	let c = 0;
-	for await (const map of utils.forEachMap(IDBKeyRange.bound(start, start + 1000, false, true))) {
+	for await (const map of Stage.forEachMap(IDBKeyRange.bound(start, start + 1000, false, true))) {
 		const o = M2.appendChild(document.createElement('option'));
 		if (c === mapIdx)
 			_map = map;
@@ -657,7 +659,7 @@ async function process_2(stageIdx) {
 
 	let _stage;
 	let c = 0;
-	for await (const stage of utils.forEachStage(IDBKeyRange.bound(start, start + 1000, false, true))) {
+	for await (const stage of Stage.forEachStage(IDBKeyRange.bound(start, start + 1000, false, true))) {
 		const o = M3.appendChild(document.createElement('option'));
 		if (c === stageIdx)
 			_stage = stage;
@@ -689,7 +691,7 @@ async function refresh_2(sts, map) {
 	const mapIdx = info1.dataset.maps ?
 		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) :
 		M1.selectedIndex * 1000 + M2.selectedIndex;
-	info2 = await utils.getMap(mapIdx);
+	info2 = await Stage.getMap(mapIdx);
 	await process_2(stageIdx);
 }
 
@@ -771,7 +773,7 @@ async function refresh_3(stage) {
 	const base = info1.dataset.maps ?
 		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) * 1000 :
 		M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
-	info3 = await utils.getStage(base + M3.selectedIndex);
+	info3 = await Stage.getStage(base + M3.selectedIndex);
 	await render_stage();
 }
 
@@ -1031,7 +1033,7 @@ async function render_stage() {
 			else
 				td.textContent = (exChance == '100' ? "必定出現以下EX關卡：" : 'EX關卡：' + "（出現機率：" + exChance + "%）");
 			const start = 4000000 + parseInt(exMapID, 10) * 1000;
-			for await (const stage of utils.forEachStage(
+			for await (const stage of Stage.forEachStage(
 				IDBKeyRange.bound(start + parseInt(exStageIDMin, 10), start + parseInt(exStageIDMax, 10))
 			)) {
 				const td = ex_stages.appendChild(document.createElement("div"));
@@ -1066,7 +1068,7 @@ async function render_stage() {
 				const a = td0.appendChild(document.createElement("a"));
 				a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 				a.onclick = onStageAnchorClick;
-				utils.getStage(s).then(stage => {
+				Stage.getStage(s).then(stage => {
 					a.textContent = namefor(stage);
 				});
 				td1.textContent = exChance[i] + "%";
@@ -1156,7 +1158,7 @@ function add_result_stage(id, name, search_for) {
 	a.id = id;
 	a.onclick = onStageAnchorClick;
 	const groupName = M1.children[mc].textContent;
-	utils.getMap(mc * 1000 + sm).then(map => {
+	Stage.getMap(mc * 1000 + sm).then(map => {
 		a.innerHTML = groupName + ' - ' + namefor(map) + ' - ' + name;
 	});
 }
@@ -1183,7 +1185,7 @@ async function doSearch(t) {
 	main_div.hidden = true;
 	search_result.hidden = false;
 	search_result.textContent = '';
-	for await (const stage of utils.forEachStage()) {
+	for await (const stage of Stage.forEachStage()) {
 		let s = stage.name;
 		if (s?.includes(v))
 			add_result_stage(stage.id, s, v);
@@ -1193,7 +1195,7 @@ async function doSearch(t) {
 				add_result_stage(stage.id, s, v);
 		}
 	}
-	for await (const map of utils.forEachMap()) {
+	for await (const map of Stage.forEachMap()) {
 		let s = map.name;
 		if (s?.includes(v))
 			add_result_map(map.id, s, v);
@@ -1208,8 +1210,8 @@ async function doSearch(t) {
 }
 
 (async () => {
-	await utils.loadStageData();
-	stage_extra = await utils.getStageExtra();
+	await Stage.loadStageData();
+	stage_extra = await Stage.getStageExtra();
 	stage_extra.eggSet = new Set(stage_extra.eggs);
 	initUI();
 })();

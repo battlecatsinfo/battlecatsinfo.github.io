@@ -80,6 +80,7 @@ import {
 
 	loadEnemy,
 } from './unit.mjs';
+import * as Stage from './stage.mjs';
 
 var mult = document.getElementById('mult');
 var mult_atk = document.getElementById('mult-atk');
@@ -358,8 +359,8 @@ function namefor(v) {
 }
 
 async function _really_search() {
-	await utils.loadStageData();
-	const {grpName: groupNames} = await utils.getStageExtra(['grpName']);
+	await Stage.loadStageData();
+	const {grpName: groupNames} = await Stage.getStageExtra(['grpName']);
 	really_search.groupNames = groupNames;
 	_really_search = really_search;
 	await really_search();
@@ -386,7 +387,7 @@ async function really_search() {
 	modal.textContent = '';
 	modal.appendChild(tbl);
 
-	for await (const v of utils.forEachStage()) {
+	for await (const v of Stage.forEachStage()) {
 		for (const group of v.enemyLines.split('|')) {
 			if (group.slice(0, group.indexOf(',')) == target) {
 				const mc = ~~(v.id / 1000000);
@@ -410,7 +411,7 @@ async function really_search() {
 					previous_td2.rowSpan += 1;
 				} else {
 					const td0 = document.createElement('td');
-					utils.getMap(~~(v.id / 1000)).then(map => {
+					Stage.getMap(~~(v.id / 1000)).then(map => {
 						td0.textContent = namefor(map);
 					});
 					tr.appendChild(td0);
