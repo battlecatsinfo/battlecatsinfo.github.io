@@ -44,6 +44,7 @@ const sources = [
 	'fav.png',
 
 	'utils.js',
+	'common.js',
 	'navbar-search.js',
 	'gacha.js',
 	"enemy.js",
