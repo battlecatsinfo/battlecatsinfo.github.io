@@ -1,0 +1,334 @@
+import {assert} from './lib/chai.js';
+import {dbGetAll, dbDelete} from './common.mjs';
+import * as Unit from '../unit.mjs';
+
+describe('unit.mjs', function () {
+
+	describe('loadCat', function () {
+
+		it('check if cats data can be loaded and stored', async function () {
+			await dbDelete(Unit.DB_NAME);
+
+			// check when idb doesn't exists
+
+			// check return value
+			var cats = await Unit.loadCat();
+			assert.strictEqual(cats[0].i, 0);
+			assert.strictEqual(cats[0].info.rarity, 0);
+			assert.strictEqual(cats[0].forms[0].name, '貓咪');
+			assert.instanceOf(cats[106].info.talents, Int16Array);
+
+			// check the value stored in idb
+			var catsDb = await dbGetAll(Unit.DB_NAME, Unit.DB_VERSION, 'cats');
+			assert.strictEqual(catsDb.length, cats.length);
+			assert.strictEqual(catsDb[0].i, 0);
+			assert.strictEqual(catsDb[0].info.rarity, 0);
+			assert.strictEqual(catsDb[0].forms[0].name, '貓咪');
+			assert.instanceOf(catsDb[106].info.talents, Int16Array);
+
+			// check when idb exists
+
+			// check return value
+			var cats = await Unit.loadCat();
+			assert.strictEqual(cats[0].i, 0);
+			assert.strictEqual(cats[0].info.rarity, 0);
+			assert.strictEqual(cats[0].forms[0].name, '貓咪');
+			assert.instanceOf(cats[106].info.talents, Int16Array);
+
+			// check the value stored in idb
+			var catsDb = await dbGetAll(Unit.DB_NAME, Unit.DB_VERSION, 'cats');
+			assert.strictEqual(catsDb.length, cats.length);
+			assert.strictEqual(catsDb[0].i, 0);
+			assert.strictEqual(catsDb[0].info.rarity, 0);
+			assert.strictEqual(catsDb[0].forms[0].name, '貓咪');
+			assert.instanceOf(catsDb[106].info.talents, Int16Array);
+		});
+
+		it('check loading single cat', async function () {
+			var cat = await Unit.loadCat(1);
+			assert.strictEqual(cat.i, 1);
+			assert.strictEqual(cat.info.rarity, 0);
+			assert.strictEqual(cat.forms[0].name, '坦克貓');
+		});
+
+	});
+
+	describe('loadEnemy', function () {
+
+		it('check if enemies data can be loaded and stored', async function () {
+			await dbDelete(Unit.DB_NAME);
+
+			// check when idb doesn't exists
+
+			// check return value
+			var enemies = await Unit.loadEnemy();
+			assert.strictEqual(enemies[0].i, 0);
+			assert.strictEqual(enemies[0].name, '狗仔');
+
+			// check the value stored in idb
+			var enemiesDb = await dbGetAll(Unit.DB_NAME, Unit.DB_VERSION, 'enemy');
+			assert.strictEqual(enemiesDb.length, enemies.length);
+			assert.strictEqual(enemiesDb[0].i, 0);
+			assert.strictEqual(enemiesDb[0].name, '狗仔');
+
+			// check when idb exists
+
+			// check return value
+			var enemies = await Unit.loadEnemy();
+			assert.strictEqual(enemies[0].i, 0);
+			assert.strictEqual(enemies[0].name, '狗仔');
+
+			// check the value stored in idb
+			var enemiesDb = await dbGetAll(Unit.DB_NAME, Unit.DB_VERSION, 'enemy');
+			assert.strictEqual(enemiesDb.length, enemies.length);
+			assert.strictEqual(enemiesDb[0].i, 0);
+			assert.strictEqual(enemiesDb[0].name, '狗仔');
+		});
+
+		it('check loading single enemy', async function () {
+			var enemy = await Unit.loadEnemy(1);
+			assert.strictEqual(enemy.i, 1);
+			assert.strictEqual(enemy.name, "扭扭蛇");
+		});
+
+	});
+
+	describe('Cat', function () {
+
+		describe('Cat.id', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.id, 0);
+
+				var cat = await Unit.loadCat(138);
+				assert.strictEqual(cat.id, 138);
+			});
+
+		});
+
+		describe('Cat.maxBaseLv', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.maxBaseLv, 20);
+			});
+
+		});
+
+		describe('Cat.maxPlusLv', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.maxPlusLv, 90);
+			});
+
+		});
+
+		describe('Cat.maxLevel', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.maxLevel, 110);
+			});
+
+		});
+
+		describe('Cat.getLevelMulti', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.getLevelMulti(1), 1);
+				assert.approximately(cat.getLevelMulti(2), 1.2, Number.EPSILON);
+				assert.approximately(cat.getLevelMulti(10), 2.8, Number.EPSILON);
+				assert.approximately(cat.getLevelMulti(50), 10.8, Number.EPSILON);
+			});
+
+		});
+
+		describe('Cat.getXpCost', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+
+				assert.strictEqual(cat.getXpCost(0), 0);
+				assert.strictEqual(cat.getXpCost(1), 400);
+				assert.strictEqual(cat.getXpCost(2), 700);
+				assert.strictEqual(cat.getXpCost(9), 5600);
+
+				assert.strictEqual(cat.getXpCost(10), 400);
+				assert.strictEqual(cat.getXpCost(11), 800);
+				assert.strictEqual(cat.getXpCost(19), 11200);
+
+				assert.strictEqual(cat.getXpCost(20), 600);
+				assert.strictEqual(cat.getXpCost(21), 1200);
+				assert.strictEqual(cat.getXpCost(29), 16800);
+			});
+
+		});
+
+	});
+
+	describe('CatForm', function () {
+
+		describe('CatForm.id', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.forms[0].id, 0);
+				assert.strictEqual(cat.forms[1].id, 0);
+				assert.strictEqual(cat.forms[2].id, 0);
+
+				var cat = await Unit.loadCat(138);
+				assert.strictEqual(cat.forms[0].id, 138);
+				assert.strictEqual(cat.forms[1].id, 138);
+				assert.strictEqual(cat.forms[2].id, 138);
+				assert.strictEqual(cat.forms[3].id, 138);
+			});
+
+		});
+
+		describe('CatForm.baseLv', function () {
+
+			it('basic get and set', async function () {
+				var catForm = (await Unit.loadCat(0)).forms[2];
+				catForm.baseLv = 5;
+				assert.strictEqual(catForm.baseLv, 5);
+				catForm.baseLv = 20;
+				assert.strictEqual(catForm.baseLv, 20);
+			});
+
+			it('forbid setting beyond [1, maxBaseLv]', async function () {
+				var catForm = (await Unit.loadCat(0)).forms[2];
+				catForm.baseLv = 0;
+				assert.strictEqual(catForm.baseLv, 1);
+				catForm.baseLv = 21;
+				assert.strictEqual(catForm.baseLv, 20);
+			});
+
+		});
+
+		describe('CatForm.plusLv', function () {
+
+			it('basic get and set', async function () {
+				var catForm = (await Unit.loadCat(0)).forms[2];
+				catForm.plusLv = 5;
+				assert.strictEqual(catForm.plusLv, 5);
+				catForm.plusLv = 20;
+				assert.strictEqual(catForm.plusLv, 20);
+			});
+
+			it('forbid setting beyond [0, maxPlusLv]', async function () {
+				var catForm = (await Unit.loadCat(0)).forms[2];
+				catForm.plusLv = -1;
+				assert.strictEqual(catForm.plusLv, 0);
+				catForm.plusLv = 91;
+				assert.strictEqual(catForm.plusLv, 90);
+			});
+
+		});
+
+		describe('CatForm.level', function () {
+
+			it('basic get and set', async function () {
+				var catForm = (await Unit.loadCat(0)).forms[2];
+				catForm.level = 5;
+				assert.strictEqual(catForm.level, 5);
+				assert.strictEqual(catForm.baseLv, 5);
+				assert.strictEqual(catForm.plusLv, 0);
+				catForm.level = 20;
+				assert.strictEqual(catForm.level, 20);
+				assert.strictEqual(catForm.baseLv, 20);
+				assert.strictEqual(catForm.plusLv, 0);
+				catForm.level = 21;
+				assert.strictEqual(catForm.level, 21);
+				assert.strictEqual(catForm.baseLv, 20);
+				assert.strictEqual(catForm.plusLv, 1);
+			});
+
+			it('forbid setting beyond [1, maxBaseLv + maxPlusLv]', async function () {
+				var catForm = (await Unit.loadCat(0)).forms[2];
+				catForm.level = 0;
+				assert.strictEqual(catForm.level, 1);
+				assert.strictEqual(catForm.baseLv, 1);
+				assert.strictEqual(catForm.plusLv, 0);
+				catForm.level = 111;
+				assert.strictEqual(catForm.level, 110);
+				assert.strictEqual(catForm.baseLv, 20);
+				assert.strictEqual(catForm.plusLv, 90);
+			});
+
+		});
+
+		describe('CatForm.getLevelMulti', function () {
+
+			it('get value for the specified level', async function () {
+				var catForm = (await Unit.loadCat(0)).forms[2];
+				assert.approximately(catForm.getLevelMulti(1), 1, Number.EPSILON);
+				assert.approximately(catForm.getLevelMulti(2), 1.2, Number.EPSILON);
+				assert.approximately(catForm.getLevelMulti(10), 2.8, Number.EPSILON);
+				assert.approximately(catForm.getLevelMulti(50), 10.8, Number.EPSILON);
+			});
+
+			it('get value for current level if not specified', async function () {
+				var catForm = (await Unit.loadCat(0)).forms[2];
+
+				catForm.level = 1;
+				assert.approximately(catForm.getLevelMulti(), 1, Number.EPSILON);
+
+				catForm.level = 10;
+				assert.approximately(catForm.getLevelMulti(), 2.8, Number.EPSILON);
+
+				catForm.level = 50;
+				assert.approximately(catForm.getLevelMulti(), 10.8, Number.EPSILON);
+			});
+
+		});
+
+		describe('CatForm.icon', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.forms[0].icon, "/img/u/0/0.png");
+				assert.strictEqual(cat.forms[1].icon, "/img/u/0/1.png");
+				assert.strictEqual(cat.forms[2].icon, "/img/u/0/2.png");
+
+				var cat = await Unit.loadCat(1);
+				assert.strictEqual(cat.forms[0].icon, "/img/u/1/0.png");
+				assert.strictEqual(cat.forms[1].icon, "/img/u/1/1.png");
+				assert.strictEqual(cat.forms[2].icon, "/img/u/1/2.png");
+			});
+
+			it('egg', async function () {
+				var cat = await Unit.loadCat(656);
+				assert.strictEqual(cat.forms[0].icon, "/img/s/0/0.png");
+				assert.strictEqual(cat.forms[1].icon, "/img/s/1/1.png");
+				assert.strictEqual(cat.forms[2].icon, "/img/u/656/2.png");
+
+				var cat = await Unit.loadCat(658);
+				assert.strictEqual(cat.forms[0].icon, "/img/s/0/0.png");
+				assert.strictEqual(cat.forms[1].icon, "/img/s/2/1.png");
+				assert.strictEqual(cat.forms[2].icon, "/img/u/658/2.png");
+			});
+
+		});
+
+	});
+
+	describe('Enemy', function () {
+
+		describe('Enemy.icon', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.icon, "/img/e/0/0.png");
+
+				var enemy = await Unit.loadEnemy(47);
+				assert.strictEqual(enemy.icon, "/img/e/47/0.png");
+			});
+
+		});
+
+	});
+
+});
