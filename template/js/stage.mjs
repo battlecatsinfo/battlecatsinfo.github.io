@@ -1,5 +1,5 @@
-const DB_STAGE_NAME = 'stage_v2';
-const DB_STAGE_VERSION = {{{lookup (loadJSON "config.json") "stage_ver"}}};
+const DB_NAME = 'stage_v2';
+const DB_VERSION = {{{lookup (loadJSON "config.json") "stage_ver"}}};
 
 function upgradeStageDb(db) {
 	try {
@@ -56,7 +56,7 @@ async function openStageDb(autoReload = true) {
 	let needReload = false;
 
 	const db = await new Promise((resolve, reject) => {
-		const req = indexedDB.open(DB_STAGE_NAME, DB_STAGE_VERSION);
+		const req = indexedDB.open(DB_NAME, DB_VERSION);
 		if (autoReload) {
 			req.onupgradeneeded = (event) => {
 				const db = event.target.result;
@@ -236,6 +236,8 @@ async function* forEachStage(query, direction) {
 }
 
 export {
+	DB_NAME,
+	DB_VERSION,
 	loadStageData,
 	getStageExtra,
 	getMap,
