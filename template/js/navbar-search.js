@@ -1,6 +1,6 @@
 (function (global, factory) {
 	global = typeof globalThis !== "undefined" ? globalThis : global || self;
-	Object.assign(global, factory());
+	factory();
 }(this, function () {
 	'use strict';
 

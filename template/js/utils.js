@@ -307,8 +307,6 @@
 		toggleTheme,
 	};
 
-	toggleTheme(getTheme());
-
 	return utils;
 
 }));
