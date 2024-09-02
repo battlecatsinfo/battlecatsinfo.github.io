@@ -1,9 +1,13 @@
 (function (global, factory) {
 	global = typeof globalThis !== "undefined" ? globalThis : global || self;
-	factory(global.utils);
-}(this, function (utils) {
+	factory();
+}(this, function () {
 	'use strict';
 
-	utils.toggleTheme(utils.getTheme());
+	// apply color theme to the page
+	(async () => {
+		const {config, toggleTheme} = await import('./common.mjs');
+		toggleTheme(config.colorTheme);
+	})();
 
 }));

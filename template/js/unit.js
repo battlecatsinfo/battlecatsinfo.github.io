@@ -2907,7 +2907,7 @@ function drawgraph(T) {
 				'title': '等級',
 				'prefix': "Lv"
 			},
-			'theme': utils.getTheme() === 'dark' ? 'dark1' : 'light1',
+			'theme': config.colorTheme === 'dark' ? 'dark1' : 'light1',
 			'title': {
 				'text': "成長曲線"
 			},
@@ -2977,7 +2977,7 @@ function drawgraph(T) {
 					'title': '等級',
 					'prefix': "Lv"
 				},
-				'theme': utils.getTheme() === 'dark' ? 'dark1' : 'light1',
+				'theme': config.colorTheme === 'dark' ? 'dark1' : 'light1',
 				'title': {
 					'text': '成長曲線'
 				},
@@ -3020,7 +3020,7 @@ function xpgraph() {
 	for (let i = 0, I = costs.length; i < I; ++i) {
 		costs[i] = my_cat.getXpCost(i);
 	}
-	const light = utils.getTheme() !== 'dark';
+	const light = config.colorTheme !== 'dark';
 	for (let i = 1; i <= 10; ++i) {
 		tr = document.createElement('tr');
 		var sum = 0;

@@ -75,7 +75,7 @@ const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_W
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const cat_name = document.getElementById('cat-name');
 const CF = document.getElementById('CF');
-const TH = utils.getTheme();
+const TH = config.colorTheme;
 
 function getCombinations(arr) {
 	if (!arr.length) return [];

@@ -165,15 +165,15 @@
 			<h3>佈景主題</h3>
 			<div class="form w3-card-4">
 				<p>
-					<input oninput="utils.toggleTheme('light');" type="radio" name="theme" id="theme-light">
+					<input oninput="toggleTheme('light');" type="radio" name="theme" id="theme-light">
 					<label for="theme-light">淺色主題</label>
 				</p>
 				<p>
-					<input oninput="utils.toggleTheme('dark');" type="radio" name="theme" id="theme-dark">
+					<input oninput="toggleTheme('dark');" type="radio" name="theme" id="theme-dark">
 					<label for="theme-dark">深色主題</label>
 				</p>
 				<p>
-					<input oninput="localStorage.removeItem('theme');utils.toggleTheme(utils.getTheme());" type="radio" name="theme" id="theme-auto" checked>
+					<input oninput="resetTheme();" type="radio" name="theme" id="theme-auto" checked>
 					<label for="theme-auto">使用系統預設</label>
 				</p>
 			</div>

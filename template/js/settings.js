@@ -101,3 +101,9 @@ if (x)
 x = localStorage.getItem('stagef');
 if (x)
 	document.getElementById('stagef-' + x).checked = true;
+
+// expose handler functions to global
+(async () => {
+	const {toggleTheme, resetTheme} = await import('./common.mjs');
+	Object.assign(globalThis, {toggleTheme, resetTheme});
+})();
