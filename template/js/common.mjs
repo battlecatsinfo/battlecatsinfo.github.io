@@ -51,6 +51,16 @@ class ConfigHandler {
 		else
 			localStorage.setItem('layout', value);
 	}
+	get colorTheme() {
+		return localStorage.getItem('theme') ||
+			(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+	}
+	set colorTheme(value) {
+		if (value === null)
+			localStorage.removeItem('theme');
+		else
+			localStorage.setItem('theme', value);
+	}
 	getTreasure(i) {
 		let value = localStorage.getItem("t$" + i);
 		return (value !== null) ? parseInt(value, 10) : treasures[i];
@@ -74,6 +84,19 @@ class ConfigHandler {
 	getDefaultTreasures() {
 		return structuredClone(treasures);
 	}
+}
+
+function toggleTheme(newValue) {
+	if (!newValue) {
+		newValue = (config.colorTheme === 'dark') ? 'light' : 'dark';
+	}
+	document.documentElement.classList[newValue === 'dark' ? 'add' : 'remove']('dark');
+	config.colorTheme = newValue;
+}
+
+function resetTheme() {
+	config.colorTheme = null;
+	toggleTheme(config.colorTheme);
 }
 
 function getNumFormatter(prec = config.prec) {
@@ -116,6 +139,8 @@ const config = new ConfigHandler();
 
 export {
 	config,
+	toggleTheme,
+	resetTheme,
 	fetchUrl as fetch,
 	getNumFormatter,
 	numStr,

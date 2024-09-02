@@ -47,7 +47,6 @@ const sources = [
 	'unit.mjs',
 	'stage.mjs',
 
-	'utils.js',
 	'common.js',
 	'navbar-search.js',
 	'gacha.js',

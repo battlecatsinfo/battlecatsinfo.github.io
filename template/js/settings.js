@@ -1,3 +1,5 @@
+import {toggleTheme, resetTheme} from './common.mjs';
+
 function fucus(event) {
 	for (let node of Array.from(document.getElementsByClassName('fucus')))
 		node.classList.remove('fucus');
@@ -100,4 +102,6 @@ if (x)
 Object.assign(globalThis, {
 	fucus,
 	tab,
+	toggleTheme,
+	resetTheme,
 });

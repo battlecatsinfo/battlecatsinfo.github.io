@@ -7,6 +7,7 @@
 	const siteSearchForm = document.getElementById('site-search');
 	const siteSearchInput = siteSearchForm.querySelector('input');
 	const siteSearchResult = document.getElementById('site-s-result');
+	const siteThemeAnchor = siteSearchForm.parentNode.previousElementSibling;
 
 	siteSearchForm.addEventListener('submit', onFormSubmit);
 	siteSearchInput.addEventListener('focus', onInputFocus);
@@ -44,5 +45,10 @@
 			value = '/search.html?q=' + encodeURIComponent(value);
 		location.assign(value);
 	}
+
+	(async () => {
+		const {toggleTheme} = await import('./common.mjs');
+		siteThemeAnchor.addEventListener('click', () => toggleTheme());
+	})();
 
 }));

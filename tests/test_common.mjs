@@ -191,6 +191,33 @@ describe('common.mjs', function () {
 			});
 		});
 
+		it('get config.colorTheme', function () {
+			const prefIsDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			withLocalStorage('theme', () => {
+				localStorage.removeItem('theme');
+				assert.strictEqual(config.colorTheme, prefIsDark ? 'dark' : 'light');
+
+				localStorage.setItem('theme', 'dark');
+				assert.strictEqual(config.colorTheme, 'dark');
+
+				localStorage.setItem('theme', 'light');
+				assert.strictEqual(config.colorTheme, 'light');
+			});
+		});
+
+		it('set config.colorTheme', function () {
+			withLocalStorage('theme', () => {
+				config.colorTheme = 'light';
+				assert.strictEqual(localStorage.getItem('theme'), 'light');
+
+				config.colorTheme = 'dark';
+				assert.strictEqual(localStorage.getItem('theme'), 'dark');
+
+				config.colorTheme = null;
+				assert.isNull(localStorage.getItem('theme'));
+			});
+		});
+
 		it('config.getTreasure', function () {
 			withLocalStorage('t$0', () => {
 				localStorage.removeItem('t$0');
