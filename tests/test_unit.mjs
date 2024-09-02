@@ -651,6 +651,115 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm.health', function () {
+
+			it('level should be counted', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.health, 250);
+				cf.level = 10;
+				assert.strictEqual(cf.health, 700);
+				cf.level = 20;
+				assert.strictEqual(cf.health, 1200);
+				cf.level = 100;
+				assert.strictEqual(cf.health, 4200);
+			});
+
+			it('the defense buff talent should be counted', async function () {
+				var cf = (await Unit.loadCat(44)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.health, 105300);
+
+				cf.applyAllTalents([0, 0, 5, 0, 0]);
+				assert.strictEqual(cf.health, 115830);
+
+				cf.applyAllTalents([0, 0, 10, 0, 0]);
+				assert.strictEqual(cf.health, 126360);
+			});
+
+		});
+
+		describe('CatForm.ap', function () {
+
+			it('level should be counted', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.ap, 20);
+				cf.level = 10;
+				assert.strictEqual(cf.ap, 55);
+				cf.level = 20;
+				assert.strictEqual(cf.ap, 95);
+				cf.level = 100;
+				assert.strictEqual(cf.ap, 335);
+			});
+
+			it('multi-attack should be counted', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.ap, 121000);
+			});
+
+			it('the attack buff talent should be counted', async function () {
+				var cf = (await Unit.loadCat(44)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.ap, 101250);
+
+				cf.applyAllTalents([0, 0, 0, 5, 0]);
+				assert.strictEqual(cf.ap, 111375);
+
+				cf.applyAllTalents([0, 0, 0, 10, 0]);
+				assert.strictEqual(cf.ap, 121500);
+			});
+
+		});
+
+		describe('CatForm.dps', function () {
+
+			it('level should be counted', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.dps, 16);
+				cf.level = 10;
+				assert.strictEqual(cf.dps, 44);
+				cf.level = 20;
+				assert.strictEqual(cf.dps, 77);
+				cf.level = 100;
+				assert.strictEqual(cf.dps, 271);
+			});
+
+			it('multi-attack should be counted', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.dps, 39032);
+			});
+
+			it('the attack buff talent should be counted', async function () {
+				var cf = (await Unit.loadCat(44)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.dps, 44669);
+
+				cf.applyAllTalents([0, 0, 0, 5, 0]);
+				assert.strictEqual(cf.dps, 49136);
+
+				cf.applyAllTalents([0, 0, 0, 10, 0]);
+				assert.strictEqual(cf.dps, 53602);
+			});
+
+		});
+
+		describe('CatForm.cost', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.cost, 75);
+
+				var cf = (await Unit.loadCat(61)).forms[2];
+				assert.strictEqual(cf.cost, 1425);
+
+				var cf = (await Unit.loadCat(61)).forms[2];
+				cf.applyAllTalents();
+				assert.strictEqual(cf.cost, 975);
+			});
+
+		});
+
 		describe('CatForm.icon', function () {
 
 			it('basic', async function () {
@@ -1375,6 +1484,80 @@ describe('unit.mjs', function () {
 	});
 
 	describe('Enemy', function () {
+
+		describe('Enemy.health', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.health, 90);
+
+				var enemy = await Unit.loadEnemy(8);
+				assert.strictEqual(enemy.health, 2500);
+			});
+
+		});
+
+		describe('Enemy.ap', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.ap, 8);
+			});
+
+			it('multi-attack should be counted', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				assert.strictEqual(enemy.ap, 4997);
+			});
+
+		});
+
+		describe('Enemy.dps', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.dps, 8 / 47 * 30);
+			});
+
+			it('multi-attack should be counted', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				assert.strictEqual(enemy.dps, 4997 / 16 * 30);
+			});
+
+		});
+
+		describe('Enemy.cost', function () {
+
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.cost, 59.25);
+
+				var enemy = await Unit.loadEnemy(8);
+				assert.strictEqual(enemy.cost, 2567.5);
+			});
+
+			it('research and treasures should be counted', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				Unit.catEnv.treasures[3] = 0;
+				Unit.catEnv.treasures[18] = 1;
+				assert.strictEqual(enemy.cost, 15);
+
+				Unit.catEnv.treasures[3] = 100;
+				assert.strictEqual(enemy.cost, 22.5);
+
+				Unit.catEnv.treasures[3] = 300;
+				assert.strictEqual(enemy.cost, 37.5);
+
+				Unit.catEnv.treasures[18] = 5;
+				assert.strictEqual(enemy.cost, 40.5);
+				Unit.catEnv.treasures[18] = 30;
+				assert.strictEqual(enemy.cost, 59.25);
+			});
+
+		});
 
 		describe('Enemy.icon', function () {
 
