@@ -244,6 +244,27 @@ class CatForm {
 		return this.base.getLevelMulti(level);
 	}
 
+	get health() {
+		return ~~(~~(2.5 * Math.round(this.hp * this.getLevelMulti())) * this.hpM);
+	}
+	get ap() {
+		const m = this.getLevelMulti();
+		let atk = ~~(~~(2.5 * Math.round(this.atk * m)) * this.atkM);
+		if (this.atk1) {
+			atk += ~~(~~(2.5 * Math.round(this.atk1 * m)) * this.atkM);
+			if (this.atk2) {
+				atk += ~~(~~(2.5 * Math.round(this.atk2 * m)) * this.atkM);
+			}
+		}
+		return atk;
+	}
+	get dps() {
+		return ~~(30 * this.ap / this.attackF);
+	}
+	get cost() {
+		return 1.5 * this.price;
+	}
+
 	get talents() {
 		return this.base.talents;
 	}
@@ -772,27 +793,19 @@ class CatForm {
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
 	get __hp() {
-		return ~~(~~(2.5 * Math.round(this.hp * this.getLevelMulti())) * this.hpM);
+		return this.health;
 	}
 	get __atk() {
-		const m = this.getLevelMulti();
-		let atk = ~~(~~(2.5 * Math.round(this.atk * m)) * this.atkM);
-		if (this.atk1) {
-			atk += ~~(~~(2.5 * Math.round(this.atk1 * m)) * this.atkM);
-			if (this.atk2) {
-				atk += ~~(~~(2.5 * Math.round(this.atk2 * m)) * this.atkM);
-			}
-		}
-		return atk;
+		return this.ap;
 	}
 	get __attack() {
-		return this.__atk;
+		return this.ap;
 	}
 	get __dps() {
-		return ~~(30 * this.__atk / this.attackF);
+		return this.dps;
 	}
 	get __thp() {
-		let hp = this.__hp;
+		let hp = this.health;
 		if (this.ab.hasOwnProperty(AB_WKILL))
 			return hp * 10;
 		if (this.ab.hasOwnProperty(AB_EKILL))
@@ -834,7 +847,7 @@ class CatForm {
 		return this.ab[AB_CRIT] | 0;
 	}
 	__hpagainst(traits) {
-		let hp = this.__hp;
+		let hp = this.health;
 		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL))
 			return hp * 10;
 		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL))
@@ -1133,10 +1146,10 @@ class CatForm {
 		return this.speed;
 	}
 	get __price() {
-		return 1.5 * this.price;
+		return this.cost;
 	}
 	get __cost() {
-		return 1.5 * this.price;
+		return this.cost;
 	}
 	get __cdf() {
 		return getRes(this.cd);
@@ -1159,6 +1172,18 @@ class Enemy {
 	get id() {
 		return this.i;
 	}
+	get health() {
+		this.hp;
+	}
+	get ap() {
+		return this.atk + this.atk1 + this.atk2;
+	}
+	get dps() {
+		return 30 * this.ap / this.attackF;
+	}
+	get cost() {
+		return Math.round(100 * (this.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]) + Number.EPSILON)) / 100;
+	}
 	get icon() {
 		return `/img/e/${this.id}/0.png`;
 	}
@@ -1177,26 +1202,27 @@ class Enemy {
 		Object.defineProperty(this, 'fandomUrl', {value});
 		return value;
 	}
+
 	get __hp() {
-		return this.hp;
+		return this.health;
 	}
 	get __thp() {
-		return this.hp;
+		return this.health;
 	}
 	get __atk() {
-		return this.atk + this.atk1 + this.atk2;
+		return this.ap;
 	}
 	get __attack() {
-		return this.__atk;
+		return this.ap;
 	}
 	get __tatk() {
-		return this.__atk;
+		return this.ap;
 	}
 	get __dps() {
-		return 30 * this.__atk / this.attackF;
+		return this.dps;
 	}
 	get __tdps() {
-		return this.__dps;
+		return this.dps;
 	}
 	get __imu() {
 		return this.imu;
@@ -1244,10 +1270,10 @@ class Enemy {
 		return this.backswing;
 	}
 	get __cost() {
-		return Math.round(100 * (this.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]) + Number.EPSILON)) / 100;
+		return this.cost;
 	}
 	get __price() {
-		return this.getcost();
+		return this.cost;
 	}
 	get __speed() {
 		return this.speed;
