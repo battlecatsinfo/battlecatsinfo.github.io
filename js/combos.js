@@ -26,7 +26,7 @@ module.exports = class extends SiteGenerator {
 		}
 
 		// @TODO: Remove this data-only file. Maybe fetch into indexedDB?
-		this.write_template('js/combo.js', 'combo.js', {combos});
+		this.write_template('js/combo.mjs', 'combo.mjs', {combos});
 
 		// generate combosFormatted
 		const combosFormatted = {};
