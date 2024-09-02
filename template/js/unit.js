@@ -3020,7 +3020,6 @@ function xpgraph() {
 	for (let i = 0, I = costs.length; i < I; ++i) {
 		costs[i] = my_cat.getXpCost(i);
 	}
-	const light = config.colorTheme !== 'dark';
 	for (let i = 1; i <= 10; ++i) {
 		tr = document.createElement('tr');
 		var sum = 0;
@@ -3033,8 +3032,6 @@ function xpgraph() {
 			sum += costs[idx - 1];
 			tr.appendChild(td1);
 			tr.appendChild(td2);
-			if (light && i & 1)
-				tr.style.backgroundColor = 'rgb(241, 241, 241)';
 		}
 		table.appendChild(tr);
 	}
