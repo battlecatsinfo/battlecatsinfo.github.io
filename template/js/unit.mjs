@@ -603,10 +603,10 @@ class CatForm {
 		}
 	}
 
-	hasres(r) {
+	__hasres(r) {
 		return this.res && this.res.hasOwnProperty(r);
 	}
-	hasab(ab) {
+	__hasab(ab) {
 		return this.ab.hasOwnProperty(ab);
 	}
 	getid() {
@@ -833,7 +833,7 @@ class CatForm {
 	getcrit() {
 		return this.ab[AB_CRIT] | 0;
 	}
-	hpagainst(traits) {
+	__hpagainst(traits) {
 		let hp = this.gethp();
 		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL))
 			return hp * 10;
@@ -859,7 +859,7 @@ class CatForm {
 		return hp;
 
 	}
-	dpsagainst(traits) {
+	__dpsagainst(traits) {
 		if (this.ab.hasOwnProperty(AB_ONLY) && (!(traits & this.trait)))
 			return 0;
 		let t = 0;
@@ -973,7 +973,7 @@ class CatForm {
 		}
 		return 0;
 	}
-	evol4_require(x) {
+	__evol4_require(x) {
 		if (!this.base.evol4Req) return 0;
 		x = x.toString();
 		for (let r of this.base.evol4Req.split('|')) {
@@ -983,7 +983,7 @@ class CatForm {
 		}
 		return 0;
 	}
-	evol_require(x) {
+	__evol_require(x) {
 		if (!this.base.evolReq) return 0;
 		x = x.toString();
 		for (let r of this.base.evolReq.split('|')) {
@@ -1201,13 +1201,13 @@ class Enemy {
 	getimu() {
 		return this.imu;
 	}
-	hasab(i) {
+	__hasab(i) {
 		return this.ab.hasOwnProperty(i);
 	}
 	getid() {
 		return this.id;
 	}
-	hasres() {
+	__hasres() {
 		return 0;
 	}
 	gettba() {

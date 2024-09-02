@@ -227,7 +227,7 @@ Prim
 		var s = id;
 		if (args) {
 			if (known_methods.has(s))
-				return `form.${s}(${args[1]})`;
+				return `form.__${s}(${args[1]})`;
 			if (!Math[s])
 				throw Error("未知的函數: " + s);
 			return `Math.${s}(${args[1]})`;

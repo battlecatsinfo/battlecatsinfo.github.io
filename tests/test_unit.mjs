@@ -527,22 +527,22 @@ describe('unit.mjs', function () {
 
 			it('evol_require', async function () {
 				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.evol_require(0), 0);
+				assert.strictEqual(cf.__evol_require(0), 0);
 
 				var cf = (await Unit.loadCat(44)).forms[2];
-				assert.strictEqual(cf.evol_require(0), 1000000);
-				assert.strictEqual(cf.evol_require(35), 7);
-				assert.strictEqual(cf.evol_require(34), 0);
+				assert.strictEqual(cf.__evol_require(0), 1000000);
+				assert.strictEqual(cf.__evol_require(35), 7);
+				assert.strictEqual(cf.__evol_require(34), 0);
 			});
 
 			it('evol4_require', async function () {
 				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.evol4_require(0), 0);
+				assert.strictEqual(cf.__evol4_require(0), 0);
 
 				var cf = (await Unit.loadCat(138)).forms[3];
-				assert.strictEqual(cf.evol4_require(0), 1000000);
-				assert.strictEqual(cf.evol4_require(40), 2);
-				assert.strictEqual(cf.evol4_require(167), 5);
+				assert.strictEqual(cf.__evol4_require(0), 1000000);
+				assert.strictEqual(cf.__evol4_require(40), 2);
+				assert.strictEqual(cf.__evol4_require(167), 5);
 			});
 
 		});
