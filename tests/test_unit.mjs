@@ -26,7 +26,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(catsDb[0].i, 0);
 				assert.strictEqual(catsDb[0].info.rarity, 0);
 				assert.strictEqual(catsDb[0].forms[0].name, '貓咪');
-				assert.instanceOf(catsDb[106].info.talents, Int16Array);
+				assert.typeOf(catsDb[106].info.talents, 'string');
 			}
 
 			// IDB not exist
