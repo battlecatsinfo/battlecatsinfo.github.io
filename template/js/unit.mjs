@@ -628,172 +628,172 @@ class CatForm {
 	__hasab(ab) {
 		return this.ab.hasOwnProperty(ab);
 	}
-	getid() {
+	get __id() {
 		return this.id;
 	}
-	gettba() {
+	get __tba() {
 		return this.tba;
 	}
-	getpre() {
+	get __pre() {
 		return this.pre;
 	}
-	getpre1() {
+	get __pre1() {
 		return this.pre1;
 	}
-	getpre2() {
+	get __pre2() {
 		return this.pre2;
 	}
-	getmax_base_lv() {
+	get __max_base_lv() {
 		return this.base.maxBaseLv;
 	}
-	getmax_plus_lv() {
+	get __max_plus_lv() {
 		return this.base.maxPlusLv;
 	}
-	getslow_time() {
+	get __slow_time() {
 		const t = this.ab[AB_SLOW];
 		return t ? t[1] : 0;
 	}
-	getslow_prob() {
+	get __slow_prob() {
 		const t = this.ab[AB_SLOW];
 		return t ? t[0] : 0;
 	}
-	getstop_time() {
+	get __stop_time() {
 		const t = this.ab[AB_STOP];
 		return t ? t[1] : 0;
 	}
-	getstop_prob() {
+	get __stop_prob() {
 		const t = this.ab[AB_STOP];
 		return t ? t[0] : 0;
 	}
-	getcurse_time() {
+	get __curse_time() {
 		const t = this.ab[AB_CURSE];
 		return t ? t[1] : 0;
 	}
-	getcurse_prob() {
+	get __curse_prob() {
 		const t = this.ab[AB_CURSE];
 		return t ? t[0] : 0;
 	}
-	getweak_time() {
+	get __weak_time() {
 		const t = this.ab[AB_WEAK];
 		return t ? t[2] : 0;
 	}
-	getweak_prob() {
+	get __weak_prob() {
 		const t = this.ab[AB_WEAK];
 		return t ? t[0] : 0;
 	}
-	getweak_extent() {
+	get __weak_extent() {
 		const t = this.ab[AB_WEAK];
 		return t ? t[1] : 0;
 	}
-	getstrong_extent() {
+	get __strong_extent() {
 		const t = this.ab[AB_STRONG];
 		return t ? t[1] : 0;
 	}
-	getlethal_prob() {
+	get __lethal_prob() {
 		return this.ab[AB_LETHAL] || 0;
 	}
-	getsavage_extent() {
+	get __savage_extent() {
 		const t = this.ab[AB_S];
 		return t ? t[1] : 0;
 	}
-	getsavage_prob() {
+	get __savage_prob() {
 		const t = this.ab[AB_S];
 		return t ? t[0] : 0;
 	}
-	getbreak_prob() {
+	get __break_prob() {
 		const t = this.ab[AB_BREAK];
 		return t ? t[0] : 0;
 	}
-	getshield_break_prob() {
+	get __shield_break_prob() {
 		const t = this.ab[AB_SHIELDBREAK];
 		return t ? t[0] : 0;
 	}
-	getmini_wave_prob() {
+	get __mini_wave_prob() {
 		const t = this.ab[AB_MINIWAVE];
 		return t ? t[0] : 0;
 	}
-	getwave_prob() {
+	get __wave_prob() {
 		const t = this.ab[AB_WAVE];
 		return t ? t[0] : 0;
 	}
-	getmini_surge_prob() {
+	get __mini_surge_prob() {
 		const t = this.ab[AB_MINIVOLC];
 		return t ? t[0] : 0;
 	}
-	getsurge_prob() {
+	get __surge_prob() {
 		const t = this.ab[AB_VOLC];
 		return t ? t[0] : 0;
 	}
-	getdodge_time() {
+	get __dodge_time() {
 		const t = this.ab[AB_IMUATK];
 		return t ? t[1] : 0;
 	}
-	getdodge_prob() {
+	get __dodge_prob() {
 		const t = this.ab[AB_IMUATK];
 		return t ? t[0] : 0;
 	}
-	getformc() {
+	get __formc() {
 		return this.lvc + 1;
 	}
-	getmaxformc() {
+	get __maxformc() {
 		return this.base.forms.length;
 	}
-	getkb() {
+	get __kb() {
 		return this.kb;
 	}
-	getrarity() {
+	get __rarity() {
 		return this.base.rarity;
 	}
-	gettrait() {
+	get __trait() {
 		return this.trait;
 	}
-	getrange() {
+	get __range() {
 		return this.range;
 	}
-	getattackf() {
+	get __attackf() {
 		return this.attackF;
 	}
-	getattacks() {
+	get __attacks() {
 		return this.attackF / 30;
 	}
-	getrevenge() {
+	get __revenge() {
 		return 0 != (this.atkType & ATK_KB_REVENGE);
 	}
-	getbackswing() {
+	get __backswing() {
 		return this.backswing;
 	}
-	getbeast_prob() {
+	get __beast_prob() {
 		const t = this.ab[AB_BSTHUNT];
 		return t ? t[0] : 0;
 	}
-	getbeast_time() {
+	get __beast_time() {
 		const t = this.ab[AB_BSTHUNT];
 		return t ? t[1] : 0;
 	}
-	getstop_cover() {
+	get __stop_cover() {
 		const t = this.ab[AB_STOP];
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
-	getslow_cover() {
+	get __slow_cover() {
 		const t = this.ab[AB_SLOW];
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
-	getweak_cover() {
+	get __weak_cover() {
 		const t = this.ab[AB_WEAK];
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[2] * 1.2) : t[2]);
 	}
-	getcurse_cover() {
+	get __curse_cover() {
 		const t = this.ab[AB_CURSE];
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
-	gethp() {
+	get __hp() {
 		return ~~(~~(2.5 * Math.round(this.hp * this.getLevelMulti())) * this.hpM);
 	}
-	getatk() {
+	get __atk() {
 		const m = this.getLevelMulti();
 		let atk = ~~(~~(2.5 * Math.round(this.atk * m)) * this.atkM);
 		if (this.atk1) {
@@ -804,14 +804,14 @@ class CatForm {
 		}
 		return atk;
 	}
-	getattack() {
-		return this.getatk();
+	get __attack() {
+		return this.__atk;
 	}
-	getdps() {
-		return ~~(30 * this.getatk() / this.attackF);
+	get __dps() {
+		return ~~(30 * this.__atk / this.attackF);
 	}
-	getthp() {
-		let hp = this.gethp();
+	get __thp() {
+		let hp = this.__hp;
 		if (this.ab.hasOwnProperty(AB_WKILL))
 			return hp * 10;
 		if (this.ab.hasOwnProperty(AB_EKILL))
@@ -833,27 +833,27 @@ class CatForm {
 		}
 		return hp;
 	}
-	getwavelv() {
+	get __wavelv() {
 		const t = this.ab[AB_WAVE];
 		return t ? t[1] : 0;
 	}
-	getvolclv() {
+	get __volclv() {
 		const t = this.ab[AB_VOLC];
 		return t ? t[4] : 0;
 	}
-	getminiwavelv() {
+	get __miniwavelv() {
 		const t = this.ab[AB_MINIWAVE];
 		return t ? t[1] : 0;
 	}
-	getminivolclv() {
+	get __minivolclv() {
 		const t = this.ab[AB_MINIVOLC];
 		return t ? t[4] : 0;
 	}
-	getcrit() {
+	get __crit() {
 		return this.ab[AB_CRIT] | 0;
 	}
 	__hpagainst(traits) {
-		let hp = this.gethp();
+		let hp = this.__hp;
 		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL))
 			return hp * 10;
 		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL))
@@ -957,13 +957,13 @@ class CatForm {
 		}
 		return atks;
 	}
-	getrange_min() {
+	get __range_min() {
 		if ((this.atkType & ATK_OMNI) || (this.atkType & ATK_LD)) {
 			return Math.max.apply(null, this.lds);;
 		}
 		return this.range;
 	}
-	getrange_max() {
+	get __range_max() {
 		if ((this.atkType & ATK_OMNI) || (this.atkType & ATK_LD)) {
 			let m = this.lds[0] + this.ldr[1];
 			for (let i = 1; i < this.lds.length; ++i)
@@ -972,14 +972,14 @@ class CatForm {
 		}
 		return this.range;
 	}
-	getreach_base() {
+	get __reach_base() {
 		if (!this.lds) return this.range;
 		return this.lds[0] > 0 ? this.lds[0] : this.range;
 	}
-	getrange_interval() {
+	get __range_interval() {
 		return this.lds ? Math.abs(this.ldr[0]) : 0;
 	}
-	getrange_interval_max() {
+	get __range_interval_max() {
 		if ((this.atkType & ATK_OMNI) || (this.atkType & ATK_LD)) {
 			let x, r = this.lds[0],
 				R = r + this.ldr[0];
@@ -1012,7 +1012,7 @@ class CatForm {
 		}
 		return 0;
 	}
-	getatkcount() {
+	get __atkcount() {
 		let c = 1;
 		if (this.pre1) {
 			c += 1;
@@ -1021,7 +1021,7 @@ class CatForm {
 		}
 		return c;
 	}
-	gettdps() {
+	get __tdps() {
 		let t = 0;
 		for (let x of this._gettdps())
 			t += ~~x;
@@ -1091,7 +1091,7 @@ class CatForm {
 				) * this.atkM);
 		return atks;
 	}
-	gettatk() {
+	get __tatk() {
 		let x = this._gettatk();
 		let s = 0;
 		for (const i of x)
@@ -1148,25 +1148,25 @@ class CatForm {
 		}
 		return atks;
 	}
-	getspeed() {
+	get __speed() {
 		return this.speed;
 	}
-	getprice() {
+	get __price() {
 		return 1.5 * this.price;
 	}
-	getcost() {
+	get __cost() {
 		return 1.5 * this.price;
 	}
-	getcdf() {
+	get __cdf() {
 		return getRes(this.cd);
 	}
-	getcd() {
+	get __cd() {
 		return getRes(this.cd) / 30;
 	}
-	getimu() {
+	get __imu() {
 		return this.imu;
 	}
-	getatktype() {
+	get __atktype() {
 		return this.atkType;
 	}
 }
@@ -1196,82 +1196,82 @@ class Enemy {
 		Object.defineProperty(this, 'fandomUrl', {value});
 		return value;
 	}
-	gethp() {
+	get __hp() {
 		return this.hp;
 	}
-	getthp() {
+	get __thp() {
 		return this.hp;
 	}
-	getatk() {
+	get __atk() {
 		return this.atk + this.atk1 + this.atk2;
 	}
-	getattack() {
-		return this.getatk();
+	get __attack() {
+		return this.__atk;
 	}
-	gettatk() {
-		return this.getatk();
+	get __tatk() {
+		return this.__atk;
 	}
-	getdps() {
-		return 30 * this.getatk() / this.attackF;
+	get __dps() {
+		return 30 * this.__atk / this.attackF;
 	}
-	gettdps() {
-		return this.getdps();
+	get __tdps() {
+		return this.__dps;
 	}
-	getimu() {
+	get __imu() {
 		return this.imu;
 	}
 	__hasab(i) {
 		return this.ab.hasOwnProperty(i);
 	}
-	getid() {
+	get __id() {
 		return this.id;
 	}
 	__hasres() {
 		return 0;
 	}
-	gettba() {
+	get __tba() {
 		return this.tba;
 	}
-	getpre() {
+	get __pre() {
 		return this.pre;
 	}
-	getpre1() {
+	get __pre1() {
 		return this.pre1;
 	}
-	getpre2() {
+	get __pre2() {
 		return this.pre2;
 	}
-	getkb() {
+	get __kb() {
 		return this.kb;
 	}
-	gettrait() {
+	get __trait() {
 		return this.trait;
 	}
-	getrange() {
+	get __range() {
 		return this.range;
 	}
-	getattackf() {
+	get __attackf() {
 		return this.attackF;
 	}
-	getattacks() {
+	get __attacks() {
 		return this.attackF / 30;
 	}
-	getrevenge() {
+	get __revenge() {
 		return 0 != (this.atkType & ATK_KB_REVENGE);
 	}
-	getbackswing() {
+	get __backswing() {
 		return this.backswing;
 	}
-	getcost() {
+	get __cost() {
 		return Math.round(100 * (this.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]) + Number.EPSILON)) / 100;
 	}
-	getprice() {
-		return this.getcost();
+	get __price() {
+		return this.__cost;
 	}
-	getspeed() {
+	get __speed() {
 		return this.speed;
 	}
-	getatktype() {
+	get __atktype() {
 		return this.atkType;
 	}
 }

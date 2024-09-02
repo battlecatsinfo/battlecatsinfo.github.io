@@ -238,7 +238,7 @@ Prim
 		s = s.toLowerCase();
 		if (!known_identifiers.has(s))
 			throw new Error('未知的變數: ' + s);
-		return 'form.get' + s + '()';
+		return `form.__${s}`;
 	}
 ArgList = head:Expression? tail:(',' Expression)* {
 			if (!head) return '';

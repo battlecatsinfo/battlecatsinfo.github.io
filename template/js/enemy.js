@@ -563,7 +563,7 @@ loadEnemy(my_id)
 		if (my_mult != 100) X.searchParams.set('mag', my_mult);
 		document.getElementById('open-db').href = X.href;
 		chs[1].children[5].textContent = E.range;
-		chs[1].children[7].textContent = E.getcost();
+		chs[1].children[7].textContent = E.__cost;
 		if (config.unit === 'F')
 			chs[2].children[1].textContent = [E.pre, E.pre1, E.pre2].filter(x => x).map(numStr).join('/') + ' F';
 		else

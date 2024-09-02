@@ -96,7 +96,7 @@ function renderTable(forms, page = 1) {
 		for (let i = 0; i < display_forms.length; ++i) {
 			const tr = tbody.appendChild(document.createElement("tr"));
 			const F = display_forms[i][1];
-			const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", ~~F.gethp(), ~~F.getatk(), Math.round(F.getdps() + Number.EPSILON), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(1.5 * F.price), numStr(display_forms[i][0])];
+			const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", ~~F.__hp, ~~F.__atk, Math.round(F.__dps + Number.EPSILON), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(1.5 * F.price), numStr(display_forms[i][0])];
 			for (let j = 0; j < 13; ++j) {
 				var e = tr.appendChild(document.createElement("td"));
 				if (j == 3) {
