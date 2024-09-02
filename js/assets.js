@@ -48,7 +48,7 @@ const sources = [
 	'stage.mjs',
 
 	'common.js',
-	'navbar-search.js',
+	'navbar.js',
 	'gacha.js',
 	"enemy.js",
 	"parser.js",
