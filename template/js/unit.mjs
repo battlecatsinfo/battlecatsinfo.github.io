@@ -1290,6 +1290,10 @@ class Cat {
 		this.forms = o.forms.map(form => {
 			return new CatForm(form, {base: this});
 		});
+
+		// parse data for easier future usage
+		if (this.info.talents)
+			this.info.talents = new Int16Array(this.info.talents.split('|'));
 	}
 
 	get id() {
@@ -1409,22 +1413,13 @@ class Cat {
 }
 
 async function getAllEnemies() {
-	const res = await fetch('/enemy.json');
-	const data = await res.json();
-	return data.map(enemy => new Enemy(enemy));
+	const response = await fetch('/enemy.json');
+	return await response.json();
 }
 
 async function getAllCats() {
-	const res = await fetch('/cat.json');
-	const data = await res.json();
-	return data.map(cat => {
-		// slightly tweak data before storage
-		const info = cat.info;
-		if (info.talents)
-			info.talents = new Int16Array(info.talents.split('|'));
-
-		return new Cat(cat);
-	});
+	const response = await fetch('/cat.json');
+	return await response.json();
 }
 
 function onupgradeneeded(event) {
@@ -1496,9 +1491,9 @@ async function loadCat(id) {
 
 		if (cats) {
 			if (typeof id !== 'undefined')
-				return cats[id];
+				return new Cat(cats[id]);
 			else
-				return cats;
+				return cats.map(e => new Cat(e));
 		}
 
 		return await new Promise((resolve, reject) => {
@@ -1583,9 +1578,9 @@ async function loadEnemy(id) {
 
 		if (enemies) {
 			if (typeof id !== 'undefined')
-				return enemies[id];
+				return new Enemy(enemies[id]);
 			else
-				return enemies;
+				return enemies.map(e => new Enemy(e));
 		}
 
 		return await new Promise((resolve, reject) => {
