@@ -5,6 +5,10 @@ import * as Unit from '../unit.mjs';
 
 describe('unit.mjs', function () {
 
+	before(function () {
+		Unit.catEnv.reset();
+	});
+
 	describe('loadAllCats', function () {
 
 		it('check if cats data can be loaded and stored', async function () {
@@ -677,24 +681,62 @@ describe('unit.mjs', function () {
 
 		describe('Search keys', function () {
 
+			it('hasab()', async function () {
+				var cf = (await Unit.loadCat(2)).forms[2];
+				assert.isTrue(cf.__hasab(Unit.AB_GOOD));
+
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.isFalse(cf.__hasab(Unit.AB_GOOD));
+			});
+
+			it('hasres()', async function () {
+				var cf = (await Unit.loadCat(47)).forms[2];
+				cf.applyAllTalents();
+				assert.isTrue(cf.__hasres(Unit.RES_CURSE));
+
+				// @TODO: should return false
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.isNotOk(cf.__hasres(Unit.RES_CURSE));
+			});
+
+			it('dpsagainst()', async function () {
+				var cf = (await Unit.loadCat(2)).forms[2];
+				cf.level = 10;
+				assert.strictEqual(cf.__dpsagainst(Unit.TB_RED), 700);
+
+				var cf = (await Unit.loadCat(2)).forms[2];
+				cf.level = 10;
+				assert.strictEqual(cf.__dpsagainst(Unit.TB_BLACK), 388);
+			});
+
+			it('hpagainst()', async function () {
+				var cf = (await Unit.loadCat(2)).forms[2];
+				cf.level = 10;
+				assert.strictEqual(cf.__hpagainst(Unit.TB_RED), 5600);
+
+				var cf = (await Unit.loadCat(2)).forms[2];
+				cf.level = 10;
+				assert.strictEqual(cf.__hpagainst(Unit.TB_BLACK), 2800);
+			});
+
 			it('evol_require()', async function () {
 				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.evol_require(0), 0);
+				assert.strictEqual(cf.__evol_require(0), 0);
 
 				var cf = (await Unit.loadCat(44)).forms[2];
-				assert.strictEqual(cf.evol_require(0), 1000000);
-				assert.strictEqual(cf.evol_require(35), 7);
-				assert.strictEqual(cf.evol_require(34), 0);
+				assert.strictEqual(cf.__evol_require(0), 1000000);
+				assert.strictEqual(cf.__evol_require(35), 7);
+				assert.strictEqual(cf.__evol_require(34), 0);
 			});
 
 			it('evol4_require()', async function () {
 				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.evol4_require(0), 0);
+				assert.strictEqual(cf.__evol4_require(0), 0);
 
 				var cf = (await Unit.loadCat(138)).forms[3];
-				assert.strictEqual(cf.evol4_require(0), 1000000);
-				assert.strictEqual(cf.evol4_require(40), 2);
-				assert.strictEqual(cf.evol4_require(167), 5);
+				assert.strictEqual(cf.__evol4_require(0), 1000000);
+				assert.strictEqual(cf.__evol4_require(40), 2);
+				assert.strictEqual(cf.__evol4_require(167), 5);
 			});
 
 		});
@@ -747,6 +789,24 @@ describe('unit.mjs', function () {
 
 				var enemy = await Unit.loadEnemy(205);
 				assert.strictEqual(enemy.fandomUrl, "https://battle-cats.fandom.com/wiki/Capy");
+			});
+
+		});
+
+		describe('Search keys', function () {
+
+			it('hasab()', async function () {
+				var enemy = await Unit.loadEnemy(407);
+				assert.isTrue(enemy.__hasab(Unit.AB_CURSE));
+
+				var enemy = await Unit.loadEnemy(407);
+				assert.isFalse(enemy.__hasab(Unit.AB_WAVE));
+			});
+
+			it('hasres()', async function () {
+				// @TODO: should return false
+				var enemy = await Unit.loadEnemy(407);
+				assert.isNotOk(enemy.__hasres());
 			});
 
 		});
