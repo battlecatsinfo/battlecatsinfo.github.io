@@ -71,7 +71,7 @@ import {
 
 	loadCat,
 } from './unit.mjs';
-import {combos} from './combo.js';
+import {combos} from './combo.mjs';
 
 const combos_scheme = {{{toJSON (loadJSON "combos_scheme.json")}}};
 
