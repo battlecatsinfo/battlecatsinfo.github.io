@@ -75,7 +75,6 @@ const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_W
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const cat_name = document.getElementById('cat-name');
 const CF = document.getElementById('CF');
-const TH = config.colorTheme;
 
 function getCombinations(arr) {
 	if (!arr.length) return [];
@@ -639,7 +638,7 @@ function addCat(id, I, FC = 0) {
 		for (let i = 1; i < 113 && G[i]; i += 14) {
 			const D = document.createElement('div');
 			if (G[i + 13] == 1) {
-				D.style.setProperty('color', TH === 'dark' ? '#ff6363' : '#c10002', 'important');
+				D.classList.add('super-talent');
 				FL = 2;
 			}
 			const I = D.appendChild(new Image(40, 40));
