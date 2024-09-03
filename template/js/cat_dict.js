@@ -114,14 +114,14 @@ function ok() {
 			for (let x of chs) {
 				const r = parseInt(x.value);
 				for (i of fav_list)
-					if (cats[i].info.rarity == r)
+					if (cats[i].rarity == r)
 						results.add(i);
 			}
 		} else {
 			for (let x of chs) {
 				const r = parseInt(x.value);
 				for (i = 0; i < cats.length; ++i)
-					if (cats[i].info.rarity == r)
+					if (cats[i].rarity == r)
 						results.add(i);
 			}
 		}
@@ -229,19 +229,19 @@ function ok() {
 			switch (i) {
 				case 1: {
 					for (let x of results)
-						if (cats[x].info.talents)
+						if (cats[x].talents)
 							results.delete(x);
 				}
 				break;
 				case 2: {
 					for (let x of results)
-						if (!cats[x].info.talents)
+						if (!cats[x].talents)
 							results.delete(x);
 				}
 				break;
 				case 3: {
 					for (let x of results) {
-						const c = cats[x].info.talents;
+						const c = cats[x].talents;
 						if (!c) {
 							results.delete(x);
 						} else {
@@ -294,7 +294,7 @@ function ok() {
 	for (const x of results)
 		sorted[i++] = cats[x];
 	sorted.sort((x, y) => {
-		x.info.rarity - y.info.rarity
+		x.rarity - y.rarity
 	});
 	sorted.forEach(add_unit);
 }
