@@ -1285,7 +1285,7 @@ class Enemy {
 		return Math.round(100 * (this.earn * (.95 + .05 * treasures[18] + .005 * treasures[3]) + Number.EPSILON)) / 100;
 	}
 	getprice() {
-		return this.getCost();
+		return this.getcost();
 	}
 	getspeed() {
 		return this.speed;
