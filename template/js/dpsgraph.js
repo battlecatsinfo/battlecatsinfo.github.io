@@ -127,15 +127,14 @@ class FormDPS {
 
 		this.t_lv = [];
 		this.s_lv = [];
-		if (this.F.lvc >= 2 && C.info.talents) {
+		if (this.F.lvc >= 2 && C.talents) {
 			for (let i = 1; i < 113; i += 14) {
-				if (!C.info.talents[i]) break;
-				((C.info.talents[i + 13] == 1) ? this.s_lv : this.t_lv).push(C.info.talents[i + 1] || 1);
-				talent_types.add(C.info.talents[i]);
+				if (!C.talents[i]) break;
+				((C.talents[i + 13] == 1) ? this.s_lv : this.t_lv).push(C.talents[i + 1] || 1);
+				talent_types.add(C.talents[i]);
 			}
 		}
 		this.is_normal = !((this.F.atkType & ATK_LD) || (this.F.atkType & ATK_OMNI));
-		this.info = C.info;
 
 		let x = document.createElement('h3');
 		x.textContent = this.title;
@@ -407,9 +406,9 @@ class FormDPS {
 				};
 		}
 
-		if (this.F.lvc >= 2 && this.info.talents) {
-			for (let i = 1; i < 113 && this.info.talents[i]; i += 14) {
-				obj = units_scheme.talents.names[this.info.talents[i]];
+		if (this.F.lvc >= 2 && this.F.talents) {
+			for (let i = 1; i < 113 && this.F.talents[i]; i += 14) {
+				obj = units_scheme.talents.names[this.F.talents[i]];
 				if (!obj) continue;
 				const div = document.createElement('p');
 				let p = div.appendChild(document.createElement('label'));
@@ -420,14 +419,14 @@ class FormDPS {
 				p.style.paddingRight = '0';
 				p.type = 'range';
 				p.min = 0;
-				p.value = p.max = (this.info.talents[i + 1] || 1).toString();
+				p.value = p.max = (this.F.talents[i + 1] || 1).toString();
 				p.step = 1;
 				p.oninput = function() {
 					let tal_cnt = 0;
 					let sup_cnt = 0;
 					for (let j = 1;j < 113;j += 14) {
 						if (j == i) {
-							if (self.info.talents[j + 13] == 1) {
+							if (self.F.talents[j + 13] == 1) {
 								self.s_lv[sup_cnt] = parseInt(this.value);
 							} else {
 								self.t_lv[tal_cnt] = parseInt(this.value);
@@ -435,7 +434,7 @@ class FormDPS {
 							self.render();
 							return;
 						}
-						if (self.info.talents[j + 13] == 1)
+						if (self.F.talents[j + 13] == 1)
 							++sup_cnt;
 						else
 
@@ -616,7 +615,7 @@ class FormDPS {
 		let x, Xs;
 		this.atks = [F.atk];
 
-		if (this.info.talents && F.lvc >= 2) {
+		if (F.talents && F.lvc >= 2) {
 			F.applyTalents(this.t_lv);
 			F.applySuperTalents(this.s_lv);
 		}

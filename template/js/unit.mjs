@@ -216,7 +216,7 @@ class CatForm {
 		return this.base.id;
 	}
 	get icon() {
-		const eggId = this.base.info.eid?.[this.lvc];
+		const eggId = this.base.eid?.[this.lvc];
 		return (typeof eggId !== 'undefined') ?
 			`/img/s/${eggId}/${this.lvc}.png` :
 			`/img/u/${this.id}/${this.lvc}.png`;
@@ -225,13 +225,13 @@ class CatForm {
 		return this._baseLv;
 	}
 	set baseLv(value) {
-		this._baseLv = Math.max(Math.min(value, this.base.info.maxBaseLv), 1);
+		this._baseLv = Math.max(Math.min(value, this.base.maxBaseLv), 1);
 	}
 	get plusLv() {
 		return this._plusLv;
 	}
 	set plusLv(value) {
-		this._plusLv = Math.max(Math.min(value, this.base.info.maxPlusLv), 0);
+		this._plusLv = Math.max(Math.min(value, this.base.maxPlusLv), 0);
 	}
 	get level() {
 		return this._baseLv + this._plusLv;
@@ -245,7 +245,7 @@ class CatForm {
 	}
 
 	get talents() {
-		return this.base.info.talents;
+		return this.base.talents;
 	}
 
 	/**
@@ -625,10 +625,10 @@ class CatForm {
 		return this.pre2;
 	}
 	getmax_base_lv() {
-		return this.base.info.maxBaseLv;
+		return this.base.maxBaseLv;
 	}
 	getmax_plus_lv() {
-		return this.base.info.maxPlusLv;
+		return this.base.maxPlusLv;
 	}
 	getslow_time() {
 		const t = this.ab[AB_SLOW];
@@ -723,7 +723,7 @@ class CatForm {
 		return this.kb;
 	}
 	getrarity() {
-		return this.base.info.rarity;
+		return this.base.rarity;
 	}
 	gettrait() {
 		return this.trait;
@@ -974,9 +974,9 @@ class CatForm {
 		return 0;
 	}
 	evol4_require(x) {
-		if (!this.base.info.evol4Req) return 0;
+		if (!this.base.evol4Req) return 0;
 		x = x.toString();
-		for (let r of this.base.info.evol4Req.split('|')) {
+		for (let r of this.base.evol4Req.split('|')) {
 			r = r.split('!');
 			if (r[1] == x)
 				return parseInt(r[0]);
@@ -984,9 +984,9 @@ class CatForm {
 		return 0;
 	}
 	evol_require(x) {
-		if (!this.base.info.evolReq) return 0;
+		if (!this.base.evolReq) return 0;
 		x = x.toString();
-		for (let r of this.base.info.evolReq.split('|')) {
+		for (let r of this.base.evolReq.split('|')) {
 			r = r.split('!');
 			if (r[1] == x)
 				return parseInt(r[0]);
@@ -1265,9 +1265,59 @@ class Cat {
 			return new CatForm(form, {base: this});
 		});
 	}
+
 	get id() {
 		return this.i;
 	}
+
+	get rarity() {
+		return this.info.rarity;
+	}
+
+	get ver() {
+		return this.info.ver;
+	}
+
+	get obtn() {
+		return this.info.obtn;
+	}
+
+	get evol() {
+		return this.info.evol;
+	}
+
+	get obtnStage() {
+		return this.info.obtnStage;
+	}
+
+	get evolStage() {
+		return this.info.evolStage;
+	}
+
+	get evolReq() {
+		return this.info.evolReq;
+	}
+
+	get evol4Req() {
+		return this.info.evol4Req;
+	}
+
+	get evolDesc() {
+		return this.info.evolDesc;
+	}
+
+	get evol4Desc() {
+		return this.info.evol4Desc;
+	}
+
+	get orbs() {
+		return this.info.orbs;
+	}
+
+	get eid() {
+		return this.info.eid;
+	}
+
 	get maxBaseLv() {
 		return this.info.maxBaseLv;
 	}
@@ -1277,6 +1327,7 @@ class Cat {
 	get maxLevel() {
 		return this.maxBaseLv + this.maxPlusLv;
 	}
+
 	get lvCurve() {
 		const value = levelcurves[this.info.lvCurve];
 		Object.defineProperty(this, 'lvCurve', {value});
@@ -1291,6 +1342,7 @@ class Cat {
 		}
 		return multi;
 	}
+
 	get xpCurve() {
 		const s = this.info.xpCurve;
 		const value = units_scheme.xp_curves[s] || s.split('|').map(x => parseInt(x, 10));
@@ -1303,6 +1355,11 @@ class Cat {
 		const mul = units_scheme.xp_multipliers;
 		return mul[~~(level / 10)] * curve[level % 10];
 	}
+
+	get talents() {
+		return this.info.talents;
+	}
+
 	get animUrl() {
 		const value = `/anim.html?id=${this.id}`;
 		Object.defineProperty(this, 'animUrl', {value});

@@ -1401,7 +1401,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 				num = form.level;
 				if (this._v != num) {
 					this._v = num;
-					if (my_cat.info.talents && this._l >= 2) {
+					if (my_cat.talents && this._l >= 2) {
 						form = form.clone();
 						form.applyTalents(custom_talents);
 						if (super_talent)
@@ -1507,7 +1507,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		td.classList.add('A');
 		tr.appendChild(td);
 		const _td = td;
-		if (form.lvc >= 2 && my_cat.info.talents) {
+		if (form.lvc >= 2 && my_cat.talents) {
 			tr = document.createElement('tr');
 			td = document.createElement('td');
 			td.textContent = '等級';
@@ -1525,7 +1525,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 			tbody.appendChild(tr);
 			let N, O;
 			const sums = [95, 75, 50, 165, 125, 75, 235, 175, 100, 150, 250, 285, 215, 325];
-			const T = my_cat.info.talents;
+			const T = my_cat.talents;
 			let I = 0;
 			custom_talents = [];
 			for (let i = 1; i < 113; i += 14) {
@@ -1630,17 +1630,17 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		return tbl;
 	}
 	let x;
-	if (level_count == 2 && my_cat.info.evolReq) {
-		const fruits = my_cat.info.evolReq.split('|');
+	if (level_count == 2 && my_cat.evolReq) {
+		const fruits = my_cat.evolReq.split('|');
 		const container = document.createElement('table');
 		tables.push(['進化素材(三階)', container]);
 		mkTool(container);
 		container.classList.add('.w3-table', 'w3-centered', 'fruit', 'w3-card-4');
-		if (my_cat.info.evolDesc) {
+		if (my_cat.evolDesc) {
 			const tr = document.createElement('tr');
 			const td = document.createElement('td');
 			td.colSpan = fruits.length;
-			td.innerHTML = my_cat.info.evolDesc;
+			td.innerHTML = my_cat.evolDesc;
 			td.style.textAlign = 'center';
 			tr.appendChild(td);
 			container.appendChild(tr);
@@ -1667,17 +1667,17 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		container.appendChild(tr0);
 		container.appendChild(tr1);
 		unit_content.appendChild(container);
-	} else if (form.lvc == 3 && my_cat.info.evol4Req != undefined) {
+	} else if (form.lvc == 3 && my_cat.evol4Req != undefined) {
 		const container = document.createElement('table');
-		const fruits = my_cat.info.evol4Req.split('|');
+		const fruits = my_cat.evol4Req.split('|');
 		tables.push(['進化素材(四階)', container]);
 		mkTool(container);
 		container.classList.add('.w3-table', 'w3-centered', 'fruit', 'w3-card-4');
-		if (my_cat.info.evol4Desc) {
+		if (my_cat.evol4Desc) {
 			const tr = document.createElement('tr');
 			const td = document.createElement('td');
 			td.colSpan = fruits.length;
-			td.innerHTML = my_cat.info.evol4Desc;
+			td.innerHTML = my_cat.evol4Desc;
 			td.style.textAlign = 'center';
 			tr.appendChild(td);
 			container.appendChild(tr);
@@ -1921,7 +1921,7 @@ async function applyOrb() {
 		349, 88, // 悪魔
 	];
 	let idx;
-	for (let i = 0; i < my_cat.info.orbs; ++i) {
+	for (let i = 0; i < my_cat.orbs; ++i) {
 		const tr = document.getElementById('orb-' + i).children;
 		let s1 = tr[0].firstElementChild.selectedIndex;
 		let s2 = tr[2].firstElementChild.selectedIndex;
@@ -1968,7 +1968,7 @@ async function applyOrb() {
 	}
 	if (layout == '2') {
 		const TF = my_cat.forms[2].clone();
-		if (my_cat.info.talents) {
+		if (my_cat.talents) {
 			TF.applyTalents(custom_talents);
 			if (super_talent)
 				TF.applySuperTalents(custom_super_talents);
@@ -1976,7 +1976,7 @@ async function applyOrb() {
 		}
 		if (tf4_tbl) {
 			const F4 = my_cat.forms[3].clone();
-			if (my_cat.info.talents) {
+			if (my_cat.talents) {
 				F4.applyTalents(custom_talents);
 				if (super_talent)
 					F4.applySuperTalents(custom_super_talents);
@@ -2162,10 +2162,10 @@ function renderOrbs() {
 	const th0 = document.createElement('td');
 	th0.colSpan = 4;
 	th0.classList.add('f');
-	th0.textContent = `本能玉（可裝置數量:${my_cat.info.orbs}）`;
+	th0.textContent = `本能玉（可裝置數量:${my_cat.orbs}）`;
 	tr0.appendChild(th0);
 	table.appendChild(tr0);
-	for (let i = 0; i < my_cat.info.orbs; ++i) {
+	for (let i = 0; i < my_cat.orbs; ++i) {
 		const tr = document.createElement('tr');
 		tr.id = 'orb-' + i;
 		const td0 = document.createElement('td');
@@ -2227,7 +2227,7 @@ function renderExtras() {
 	table.appendChild(tr);
 	tr = document.createElement('tr');
 	makeTd(tr, '稀有度').classList.add('F');
-	makeTd(tr, ['基本', 'EX', '稀有', '激稀有', '超激稀有'][my_cat.info.rarity]);
+	makeTd(tr, ['基本', 'EX', '稀有', '激稀有', '超激稀有'][my_cat.rarity]);
 	table.appendChild(tr);
 	tr = document.createElement('tr');
 	makeTd(tr, '最大基本等級').classList.add('F');
@@ -2240,22 +2240,22 @@ function renderExtras() {
 
 	tr = document.createElement('tr');
 	makeTd(tr, '取得方式').classList.add('F');
-	makeTd(tr, my_cat.info.obtn).classList.add('F');
+	makeTd(tr, my_cat.obtn).classList.add('F');
 	table.appendChild(tr);
 
 	tr = document.createElement('tr');
 	makeTd(tr, '進化方式').classList.add('F');
-	makeTd(tr, my_cat.info.evol);
+	makeTd(tr, my_cat.evol);
 	table.appendChild(tr);
 
-	if (my_cat.info.obtnStage) {
+	if (my_cat.obtnStage) {
 		tr = document.createElement('tr');
 		td = makeTd(tr, '破關掉落').classList.add('F');
 		td = document.createElement('td');
 		td.textContent = '通過「';
 		const a = document.createElement('a');
 		td.classList.add('F');
-		const s = my_cat.info.obtnStage.split('|');
+		const s = my_cat.obtnStage.split('|');
 		a.textContent = s[3];
 		a.href = '/stage.html?s=' + s.slice(0, 3).join('-');
 		td.appendChild(a);
@@ -2266,14 +2266,14 @@ function renderExtras() {
 			td.classList.add('F');
 		odd = !odd;
 	}
-	if (my_cat.info.evolStage) {
+	if (my_cat.evolStage) {
 		tr = document.createElement('tr');
 		td = makeTd(tr, '進化條件');
 		td.classList.add('F');
 		td = document.createElement('td');
 		td.textContent = '通過「';
 		const a = document.createElement('a');
-		const s = my_cat.info.evolStage.split('|');
+		const s = my_cat.evolStage.split('|');
 		a.textContent = s[3];
 		a.href = '/stage.html?s=' + s.slice(0, 3).join('-');
 		td.appendChild(a);
@@ -2284,9 +2284,9 @@ function renderExtras() {
 			td.classList.add('F');
 		odd = !odd;
 	}
-	if (my_cat.info.ver) {
+	if (my_cat.ver) {
 		const div = document.createElement('div');
-		let x = my_cat.info.ver;
+		let x = my_cat.ver;
 		let y = x % 100;
 		let z = floor(x / 10000);
 		div.textContent = `Ver ${z}.${floor((x - z * 10000) / 100)}.${y} 新增`;
@@ -2658,18 +2658,18 @@ function renderCombos() {
 function renderUintPage() {
 	if (layout === '2') {
 		for (let form of my_cat.forms) {
-			if (form.lvc == 2 && my_cat.info.evolReq) {
-				const fruits = my_cat.info.evolReq.split('|');
+			if (form.lvc == 2 && my_cat.evolReq) {
+				const fruits = my_cat.evolReq.split('|');
 				const container = document.createElement('table');
 				tables.push(['進化素材(三階)', container]);
 				mkTool(container);
 				container.style.marginBottom = '60px';
 				container.classList.add('.w3-table', 'w3-centered', 'fruit', 'w3-card-4');
-				if (my_cat.info.evolDesc) {
+				if (my_cat.evolDesc) {
 					const tr = document.createElement('tr');
 					const td = document.createElement('td');
 					td.colSpan = fruits.length;
-					td.innerHTML = my_cat.info.evolDesc;
+					td.innerHTML = my_cat.evolDesc;
 					td.style.textAlign = 'center';
 					tr.appendChild(td);
 					container.appendChild(tr);
@@ -2698,16 +2698,16 @@ function renderUintPage() {
 				unit_content.appendChild(container);
 			} else if (form.lvc == 3) {
 				const container = document.createElement('table');
-				const fruits = my_cat.info.evol4Req.split('|');
+				const fruits = my_cat.evol4Req.split('|');
 				tables.push(['進化素材(四階)', container]);
 				mkTool(container);
 				container.style.marginBottom = '60px';
 				container.classList.add('.w3-table', 'w3-centered', 'fruit', 'w3-card-4');
-				if (my_cat.info.evol4Desc) {
+				if (my_cat.evol4Desc) {
 					const tr = document.createElement('tr');
 					const td = document.createElement('td');
 					td.colSpan = fruits.length;
-					td.innerHTML = my_cat.info.evol4Desc;
+					td.innerHTML = my_cat.evol4Desc;
 					td.style.textAlign = 'center';
 					tr.appendChild(td);
 					container.appendChild(tr);
@@ -2744,7 +2744,7 @@ function renderUintPage() {
 			mkTool(tbl);
 		}
 		renderDef();
-		if (my_cat.info.orbs)
+		if (my_cat.orbs)
 			renderOrbs();
 		renderExtras();
 		renderCombos();
@@ -2766,17 +2766,17 @@ function renderUintPage() {
 		tables.push([`${zh[i]}階數值表格`, tbl]);
 		mkTool(tbl);
 	}
-	if (my_cat.info.talents) {
+	if (my_cat.talents) {
 		const TF = my_cat.forms[2].clone();
-		const names = rednerTalentInfos(my_cat.info.talents);
-		renderTalentCosts(names, my_cat.info.talents);
+		const names = rednerTalentInfos(my_cat.talents);
+		renderTalentCosts(names, my_cat.talents);
 		const _super = TF.applyTalents(custom_talents);
 		tf_tbl = renderForm(TF, '本能完全升滿的數值表格', false, true);
 		tables.push(['三階+本能數值表格', tf_tbl]);
 		mkTool(tf_tbl);
 		if (_super) {
-			const names = rednerTalentInfos(my_cat.info.talents, true, true);
-			renderTalentCosts(names, my_cat.info.talents, true);
+			const names = rednerTalentInfos(my_cat.talents, true, true);
+			renderTalentCosts(names, my_cat.talents, true);
 			TF.applySuperTalents(custom_super_talents);
 			tf_tbl_s = renderForm(TF, '超本能完全升滿的數值表格', true, true);
 			tables.push(['三階+超本能數值表格', tf_tbl_s]);
@@ -2791,7 +2791,7 @@ function renderUintPage() {
 		}
 	}
 	renderDef();
-	if (my_cat.info.orbs)
+	if (my_cat.orbs)
 		renderOrbs();
 	renderExtras();
 	renderCombos();

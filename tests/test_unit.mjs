@@ -107,6 +107,153 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('Cat.rarity', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.rarity, 0);
+
+				var cat = await Unit.loadCat(138);
+				assert.strictEqual(cat.rarity, 4);
+			});
+
+		});
+
+		describe('Cat.ver', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.ver);
+
+				var cat = await Unit.loadCat(273);
+				assert.strictEqual(cat.ver, 50600);
+			});
+
+		});
+
+		describe('Cat.obtn', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.obtn, '遊戲開始時最初始的貓咪');
+
+				var cat = await Unit.loadCat(1);
+				assert.strictEqual(cat.obtn, '世界篇第1章「台灣」過關後開放');
+			});
+
+		});
+
+		describe('Cat.evol', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.strictEqual(cat.evol, '合計Lv30可進化（Lv. 10 + 20）');
+
+				var cat = await Unit.loadCat(200);
+				assert.strictEqual(cat.evol, '尚未開放');
+			});
+
+		});
+
+		describe('Cat.obtnStage', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.obtnStage);
+
+				var cat = await Unit.loadCat(60);
+				assert.strictEqual(cat.obtnStage, '10|19|0|黑暗天堂 - 進擊的黑漩渦 困難');
+			});
+
+		});
+
+		describe('Cat.evolStage', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.evolStage);
+
+				var cat = await Unit.loadCat(60);
+				assert.strictEqual(cat.evolStage, '1|172|1|絕・黑暗天堂 - 絕擊的黑漩渦　極難');
+			});
+
+		});
+
+		describe('Cat.evolReq', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.evolReq);
+
+				var cat = await Unit.loadCat(44);
+				assert.strictEqual(cat.evolReq, '1000000!0|5!38|7!35|5!36|7!39|3!40');
+			});
+
+		});
+
+		describe('Cat.evol4Req', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.evol4Req);
+
+				var cat = await Unit.loadCat(138);
+				assert.strictEqual(cat.evol4Req, '1000000!0|1!183|5!168|5!167|2!40');
+			});
+
+		});
+
+		describe('Cat.evolDesc', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.evolDesc);
+
+				var cat = await Unit.loadCat(71);
+				assert.deepEqual(cat.evolDesc, '第3進化後攻擊力上升！<br>同時移動速度也上升！<br>比誰都更快速！');
+			});
+
+		});
+
+		describe('Cat.evol4Desc', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.evol4Desc);
+
+				var cat = await Unit.loadCat(138);
+				assert.deepEqual(cat.evol4Desc, '第4進化是變回<br>原有樣貌的超級進化！<br>還取得了鋼鐵殺手的能力！');
+			});
+
+		});
+
+		describe('Cat.orbs', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.orbs);
+
+				var cat = await Unit.loadCat(13);
+				assert.strictEqual(cat.orbs, 1);
+
+				var cat = await Unit.loadCat(34);
+				assert.strictEqual(cat.orbs, 2);
+			});
+
+		});
+
+		describe('Cat.eid', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.eid);
+
+				var cat = await Unit.loadCat(656);
+				assert.deepEqual(cat.eid, [0, 1]);
+			});
+
+		});
+
 		describe('Cat.maxBaseLv', function () {
 
 			it('basic', async function () {
@@ -163,6 +310,21 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cat.getXpCost(20), 600);
 				assert.strictEqual(cat.getXpCost(21), 1200);
 				assert.strictEqual(cat.getXpCost(29), 16800);
+			});
+
+		});
+
+		describe('Cat.talents', function () {
+
+			it('basic', async function () {
+				var cat = await Unit.loadCat(0);
+				assert.isUndefined(cat.talents);
+
+				var cat = await Unit.loadCat(13);
+				assert.deepEqual(cat.talents, new Int16Array([0, 17, 10, 5, 15, 6, 6, 0, 0, 0, 0, 17, 4, -1, 0, 44, 1, 0, 0, 0, 0, 0, 0, 0, 0, 53, 6, -1, 0, 25, 10, 20, 200, 0, 0, 0, 0, 0, 0, 31, 5, -1, 0, 32, 10, 8, 80, 0, 0, 0, 0, 0, 0, 27, 5, -1, 0, 31, 10, 8, 80, 0, 0, 0, 0, 0, 0, 28, 5, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0]));
+
+				var cat = await Unit.loadCat(34);
+				assert.deepEqual(cat.talents, new Int16Array([0, 2, 10, 0, 0, 12, 30, 0, 0, 0, 0, 43, 8, -1, 0, 22, 10, 5, 50, 0, 0, 0, 0, 0, 0, 22, 8, -1, 0, 32, 10, 2, 20, 0, 0, 0, 0, 0, 0, 27, 8, -1, 0, 31, 10, 2, 20, 0, 0, 0, 0, 0, 0, 28, 8, -1, 0, 25, 10, 40, 400, 0, 0, 0, 0, 0, 0, 31, 8, -1, 0, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 67, 10, -1, 1, 11, 10, 28, 100, 0, 0, 0, 0, 0, 0, 11, 12, -1, 1, 51, 10, 5, 50, 30, 30, 0, 0, 0, 0, 88, 12, -1, 1]));
 			});
 
 		});
@@ -357,6 +519,30 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cat.forms[0].icon, "/img/s/0/0.png");
 				assert.strictEqual(cat.forms[1].icon, "/img/s/2/1.png");
 				assert.strictEqual(cat.forms[2].icon, "/img/u/658/2.png");
+			});
+
+		});
+
+		describe('Search keys', function () {
+
+			it('evol_require', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.evol_require(0), 0);
+
+				var cf = (await Unit.loadCat(44)).forms[2];
+				assert.strictEqual(cf.evol_require(0), 1000000);
+				assert.strictEqual(cf.evol_require(35), 7);
+				assert.strictEqual(cf.evol_require(34), 0);
+			});
+
+			it('evol4_require', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.evol4_require(0), 0);
+
+				var cf = (await Unit.loadCat(138)).forms[3];
+				assert.strictEqual(cf.evol4_require(0), 1000000);
+				assert.strictEqual(cf.evol4_require(40), 2);
+				assert.strictEqual(cf.evol4_require(167), 5);
 			});
 
 		});
