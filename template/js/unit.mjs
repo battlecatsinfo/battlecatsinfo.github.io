@@ -196,24 +196,124 @@ class CatEnv {
 }
 
 class CatForm {
-	constructor(o, props = {}) {
-		Object.assign(this, o);
-
-		// make non-structured-cloneable
+	constructor(props = {}) {
+		// make non-structured-cloneable by setting enumerable=false
 		Object.defineProperties(this, {
 			base: {value: props.base},
-			hpM: {value: props.hpM ?? 1, writable: true},
-			atkM: {value: props.atkM ?? 1, writable: true},
-			_baseLv: {value: props._baseLv ?? 1, writable: true},
-			_plusLv: {value: props._plusLv ?? 0, writable: true},
+			info: {value: props.info, enumerable: true},
+			hpM: {value: props.hpM ?? 1, writable: true, configurable: true, enumerable: true},
+			atkM: {value: props.atkM ?? 1, writable: true, configurable: true, enumerable: true},
+			_baseLv: {value: props._baseLv ?? 1, writable: true, configurable: true, enumerable: true},
+			_plusLv: {value: props._plusLv ?? 0, writable: true, configurable: true, enumerable: true},
 		});
 	}
 	clone() {
-		const {base, hpM, atkM, _baseLv, _plusLv} = this;
-		return new CatForm(structuredClone(this), {base, hpM, atkM, _baseLv, _plusLv});
+		return new this.constructor(Object.assign({base: this.base}, structuredClone(this)));
 	}
 	get id() {
 		return this.base.id;
+	}
+	get lvc() {
+		return this.info.lvc;
+	}
+	get name() {
+		return this.info.name;
+	}
+	get jp_name() {
+		return this.info.jp_name;
+	}
+	get desc() {
+		return this.info.desc;
+	}
+	get price() {
+		return this.info.price;
+	}
+	set price(value) {
+		this.info.price = value;
+	}
+	get hp() {
+		return this.info.hp;
+	}
+	get kb() {
+		return this.info.kb;
+	}
+	get speed() {
+		return this.info.speed;
+	}
+	set speed(value) {
+		this.info.speed = value;
+	}
+	get range() {
+		return this.info.range;
+	}
+	get pre() {
+		return this.info.pre;
+	}
+	get pre1() {
+		return this.info.pre1;
+	}
+	get pre2() {
+		return this.info.pre2;
+	}
+	get atk() {
+		return this.info.atk;
+	}
+	get atk1() {
+		return this.info.atk1;
+	}
+	get atk2() {
+		return this.info.atk2;
+	}
+	get tba() {
+		return this.info.tba;
+	}
+	set tba(value) {
+		this.info.tba = value;
+	}
+	get backswing() {
+		return this.info.backswing;
+	}
+	get attackF() {
+		return this.info.attackF;
+	}
+	set attackF(value) {
+		this.info.attackF = value;
+	}
+	get atkType() {
+		return this.info.atkType;
+	}
+	get trait() {
+		return this.info.trait;
+	}
+	set trait(value) {
+		this.info.trait = value;
+	}
+	get abi() {
+		return this.info.abi;
+	}
+	get lds() {
+		return this.info.lds;
+	}
+	get ldr() {
+		return this.info.ldr;
+	}
+	get imu() {
+		return this.info.imu;
+	}
+	set imu(value) {
+		this.info.imu = value;
+	}
+	get ab() {
+		return this.info.ab;
+	}
+	set ab(value) {
+		this.info.ab = value;
+	}
+	get cd() {
+		return this.info.cd;
+	}
+	set cd(value) {
+		this.info.cd = value;
 	}
 	get icon() {
 		const eggId = this.base.eid?.[this.lvc];
@@ -1167,11 +1267,92 @@ class CatForm {
 
 class Enemy {
 	constructor(o) {
-		Object.assign(this, o);
+		Object.defineProperties(this, {
+			info: {value: o, enumerable: true},
+		});
 	}
 	get id() {
-		return this.i;
+		return this.info.i;
 	}
+	get name() {
+		return this.info.name;
+	}
+	get jp_name() {
+		return this.info.jp_name;
+	}
+	get fandom() {
+		return this.info.fandom;
+	}
+	get desc() {
+		return this.info.desc;
+	}
+	get hp() {
+		return this.info.hp;
+	}
+	get kb() {
+		return this.info.kb;
+	}
+	get speed() {
+		return this.info.speed;
+	}
+	get range() {
+		return this.info.range;
+	}
+	get pre() {
+		return this.info.pre;
+	}
+	get pre1() {
+		return this.info.pre1;
+	}
+	get pre2() {
+		return this.info.pre2;
+	}
+	get atk() {
+		return this.info.atk;
+	}
+	get atk1() {
+		return this.info.atk1;
+	}
+	get atk2() {
+		return this.info.atk2;
+	}
+	get tba() {
+		return this.info.tba;
+	}
+	get backswing() {
+		return this.info.backswing;
+	}
+	get attackF() {
+		return this.info.attackF;
+	}
+	get atkType() {
+		return this.info.atkType;
+	}
+	get trait() {
+		return this.info.trait;
+	}
+	get abi() {
+		return this.info.abi;
+	}
+	get lds() {
+		return this.info.lds;
+	}
+	get ldr() {
+		return this.info.ldr;
+	}
+	get imu() {
+		return this.info.imu;
+	}
+	get ab() {
+		return this.info.ab;
+	}
+	get earn() {
+		return this.info.earn;
+	}
+	get star() {
+		return this.info.star;
+	}
+
 	get health() {
 		this.hp;
 	}
@@ -1288,7 +1469,7 @@ class Cat {
 		this.i = o.i;
 		this.info = o.info;
 		this.forms = o.forms.map(form => {
-			return new CatForm(form, {base: this});
+			return new CatForm({base: this, info: form});
 		});
 
 		// parse data for easier future usage
