@@ -17,7 +17,7 @@ describe('unit.mjs', function () {
 				var cats = await Unit.loadAllCats();
 				assert.strictEqual(cats[0].i, 0);
 				assert.strictEqual(cats[0].info.rarity, 0);
-				assert.strictEqual(cats[0].forms[0].name, '貓咪');
+				assert.strictEqual(cats[0].forms[0].info.name, '貓咪');
 				assert.instanceOf(cats[106].info.talents, Int16Array);
 
 				// check stored data
@@ -50,7 +50,7 @@ describe('unit.mjs', function () {
 				var cat = await Unit.loadCat(1);
 				assert.strictEqual(cat.i, 1);
 				assert.strictEqual(cat.info.rarity, 0);
-				assert.strictEqual(cat.forms[0].name, '坦克貓');
+				assert.strictEqual(cat.forms[0].info.name, '坦克貓');
 
 				var cat = await Unit.loadCat(106);
 				assert.strictEqual(cat.i, 106);
@@ -77,9 +77,9 @@ describe('unit.mjs', function () {
 			async function test() {
 				// check return value
 				var enemies = await Unit.loadAllEnemies();
-				assert.strictEqual(enemies[0].i, 0);
-				assert.strictEqual(enemies[0].name, '狗仔');
-				assert.strictEqual(enemies[683].name, '大型陶器埴輪巨犬');
+				assert.strictEqual(enemies[0].info.i, 0);
+				assert.strictEqual(enemies[0].info.name, '狗仔');
+				assert.strictEqual(enemies[683].info.name, '大型陶器埴輪巨犬');
 
 				// check the value stored in idb
 				var enemiesDb = await dbGetAll(Unit.DB_NAME, Unit.DB_VERSION, 'enemy');
@@ -108,8 +108,8 @@ describe('unit.mjs', function () {
 		it('check loading single enemy', async function () {
 			async function test() {
 				var enemy = await Unit.loadEnemy(1);
-				assert.strictEqual(enemy.i, 1);
-				assert.strictEqual(enemy.name, "扭扭蛇");
+				assert.strictEqual(enemy.info.i, 1);
+				assert.strictEqual(enemy.info.name, "扭扭蛇");
 			}
 
 			// IDB not exist
