@@ -976,10 +976,10 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__range_min, 450);
 
 				var cf = (await Unit.loadCat(643)).forms[2];
-				assert.strictEqual(cf.__range_min, 350);
+				assert.strictEqual(cf.__range_min, -100);
 
 				var cf = (await Unit.loadCat(690)).forms[1];
-				assert.strictEqual(cf.__range_min, 590);
+				assert.strictEqual(cf.__range_min, 250);
 			});
 
 			it('range_max', async function () {
@@ -987,10 +987,10 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__range_max, 140);
 
 				var cf = (await Unit.loadCat(259)).forms[2];
-				assert.isNaN(cf.__range_max);
+				assert.strictEqual(cf.__range_max, 850);
 
 				var cf = (await Unit.loadCat(643)).forms[2];
-				assert.isNaN(cf.__range_max);
+				assert.strictEqual(cf.__range_max, 350);
 
 				var cf = (await Unit.loadCat(690)).forms[1];
 				assert.strictEqual(cf.__range_max, 1000);
@@ -1038,7 +1038,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__range_interval_max, 410);
 
 				var cf = (await Unit.loadCat(686)).forms[1];
-				assert.strictEqual(cf.__range_interval_max, 200);
+				assert.strictEqual(cf.__range_interval_max, 430);
 			});
 
 			it('kb', async function () {

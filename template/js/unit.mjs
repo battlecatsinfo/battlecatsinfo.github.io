@@ -958,17 +958,20 @@ class CatForm {
 		return atks;
 	}
 	get __range_min() {
-		if ((this.atkType & ATK_OMNI) || (this.atkType & ATK_LD)) {
-			return Math.max.apply(null, this.lds);;
+		if (this.atkType & ATK_LD) {
+			return Math.min.apply(null, this.lds);
+		}
+		if (this.atkType & ATK_OMNI) {
+			return Math.min.apply(null, this.lds.map((x, i) => x + this.ldr[i]));
 		}
 		return this.range;
 	}
 	get __range_max() {
-		if ((this.atkType & ATK_OMNI) || (this.atkType & ATK_LD)) {
-			let m = this.lds[0] + this.ldr[1];
-			for (let i = 1; i < this.lds.length; ++i)
-				m = Math.max(m, this.lds[i] + this.ldr[i]);
-			return m;
+		if (this.atkType & ATK_LD) {
+			return Math.max.apply(null, this.lds.map((x, i) => x + this.ldr[i]));
+		}
+		if (this.atkType & ATK_OMNI) {
+			return Math.max.apply(null, this.lds);
 		}
 		return this.range;
 	}
@@ -980,15 +983,8 @@ class CatForm {
 		return this.lds ? Math.abs(this.ldr[0]) : 0;
 	}
 	get __range_interval_max() {
-		if ((this.atkType & ATK_OMNI) || (this.atkType & ATK_LD)) {
-			let x, r = this.lds[0],
-				R = r + this.ldr[0];
-			for (let i = 1; i < this.lds.length; ++i) {
-				x = this.lds[i];
-				r = Math.max(r, x);
-				R = Math.max(R, x + this.ldr[i]);
-			}
-			return Math.abs(R - r);
+		if (this.atkType & (ATK_LD | ATK_OMNI)) {
+			return Math.max.apply(null, this.ldr.map(Math.abs));
 		}
 		return 0;
 	}
