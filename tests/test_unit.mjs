@@ -970,6 +970,52 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm.cd', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.cd, 60);
+
+				var cf = (await Unit.loadCat(8)).forms[2];
+				assert.strictEqual(cf.cd, 666);
+			});
+
+			it('talents should be counted', async function () {
+				var cf0 = (await Unit.loadCat(19)).forms[2];
+				var cf = cf0;
+				cf.level = 50;
+				assert.strictEqual(cf.cd, 136);
+
+				var cf = cf0.clone();
+				cf.applyAllTalents([0, 0, 5, 0, 0]);
+				assert.strictEqual(cf.cd, 101);
+
+				var cf = cf0.clone();
+				cf.applyAllTalents([0, 0, 10, 0, 0]);
+				assert.strictEqual(cf.cd, 76);
+			});
+
+			it('research and treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(7)).forms[0];
+				Unit.catEnv.treasures[2] = 0;
+				Unit.catEnv.treasures[17] = 1;
+				assert.strictEqual(cf.cd, 570);
+
+				Unit.catEnv.treasures[2] = 100;
+				assert.strictEqual(cf.cd, 540);
+
+				Unit.catEnv.treasures[2] = 300;
+				assert.strictEqual(cf.cd, 480);
+
+				Unit.catEnv.treasures[17] = 10;
+				assert.strictEqual(cf.cd, 426);
+
+				Unit.catEnv.treasures[17] = 30;
+				assert.strictEqual(cf.cd, 306);
+			});
+
+		});
+
 		describe('CatForm.icon', function () {
 
 			it('basic', async function () {

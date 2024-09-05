@@ -57,8 +57,6 @@ import {
 	units_scheme,
 	catEnv,
 
-	getRes,
-
 	createTraitIcons,
 	createImuIcons,
 	createResIcons,
@@ -403,7 +401,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 	else if (F.atkType & ATK_LD)
 		T += '遠方';
 	T += (F.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
-	tby[7].children[I].textContent = numStrT(getRes(F.info.cd)) + ' / ' + numStr(F.info.price * 1.5) + '元';
+	tby[7].children[I].textContent = numStrT(F.cd) + ' / ' + numStr(F.info.price * 1.5) + '元';
 	if (F.lds) {
 		let s = '';
 		for (let i = 0; i < F.lds.length; ++i) {

@@ -396,7 +396,7 @@ class CatForm {
 		return this.abi & (1 << (2 - atkIdx));
 	}
 	get cd() {
-		return this.info.cd;
+		return Math.max(60, this.info.cd - 6 * (catEnv.treasures[17] - 1) - .3 * catEnv.treasures[2]);
 	}
 	set cd(value) {
 		this.info.cd = value;
@@ -594,7 +594,7 @@ class CatForm {
 				break;
 
 			case 26:
-				this.cd -= inc1;
+				this.cd = this.info.cd - inc1;
 				break;
 
 			case 27:
@@ -1281,10 +1281,10 @@ class CatForm {
 		return this.price;
 	}
 	get __cdf() {
-		return getRes(this.cd);
+		return this.cd;
 	}
 	get __cd() {
-		return getRes(this.cd) / 30;
+		return this.cd / 30;
 	}
 	get __imu() {
 		return this.imu;
@@ -1862,10 +1862,6 @@ function getAbiString(abi) {
 		1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
 }
 
-function getRes(cd) {
-	return Math.max(60, cd - 6 * (catEnv.treasures[17] - 1) - .3 * catEnv.treasures[2]);
-}
-
 const catEnv = new CatEnv({
 	treasures: config.getTreasures(),
 });
@@ -1971,7 +1967,6 @@ export {
 	get_trait_short_names,
 	getAbiString,
 
-	getRes,
 	getCoverUnit,
 	getCoverUnitStr,
 
