@@ -220,8 +220,32 @@ describe('unit.mjs', function () {
 
 				env.treasures[0] = 150;
 				env.treasures[1] = 250;
+				env.treasures[18] = 10;
+				env.treasures[3] = 50;
+				env.treasures[17] = 20;
+				env.treasures[2] = 75;
+				env.treasures[23] = 100;
+				env.treasures[21] = 500;
+				env.treasures[22] = 1000;
+				env.treasures[20] = 70;
+				env.treasures[24] = 80;
+				env.treasures[30] = 90;
+
 				assert.strictEqual(env.atk_t, 1 + 0.005 * 150);
 				assert.strictEqual(env.hp_t, 1 + 0.005 * 250);
+				assert.strictEqual(env.earn_r, 0.05 * (10 - 1));
+				assert.strictEqual(env.earn_t, 0.005 * 50);
+				assert.strictEqual(env.cd_r, 6 * (20 - 1));
+				assert.strictEqual(env.cd_t, 0.3 * 75);
+				assert.strictEqual(env.good_atk_t, 100 / 1000);
+				assert.strictEqual(env.good_hp_t, 100 / 3000);
+				assert.strictEqual(env.massive_t, 100 / 300);
+				assert.strictEqual(env.resist_t, 100 / 300);
+				assert.strictEqual(env.alien_t, 7 - 500 / 100);
+				assert.strictEqual(env.alien_star_t, 16 - 1000 / 100);
+				assert.strictEqual(env.god1_t, 11 - (70 / 10));
+				assert.strictEqual(env.god2_t, 11 - (80 / 10));
+				assert.strictEqual(env.god3_t, 11 - (90 / 10));
 			});
 
 		});

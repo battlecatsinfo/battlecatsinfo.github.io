@@ -244,11 +244,7 @@ function calc() {
 	let atk1 = E.info.atk1;
 	let atk2 = E.info.atk2;
 	if (E.trait & TB_ALIEN) {
-		let m;
-		if (E.star == 1)
-			m = 16 - catEnv.treasures[22] / 100;
-		else
-			m = 7 - catEnv.treasures[21] / 100;
+		const m = (E.star == 1) ? catEnv.alien_star_t : catEnv.alien_t;
 		HP *= m;
 		atk *= m;
 		atk1 *= m;
@@ -257,13 +253,13 @@ function calc() {
 		let m;
 		switch (E.star) {
 			case 2:
-				m = 11 - (catEnv.treasures[20] / 10);
+				m = catEnv.god1_t;
 				break;
 			case 3:
-				m = 11 - (catEnv.treasures[24] / 10);
+				m = catEnv.god2_t;
 				break;
 			case 4:
-				m = 11 - (catEnv.treasures[30] / 10);
+				m = catEnv.god3_t;
 				break;
 		}
 		HP *= m;

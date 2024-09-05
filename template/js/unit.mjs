@@ -216,6 +216,45 @@ class CatEnv {
 	get hp_t() {
 		return 1 + 0.005 * this.treasures[1];
 	}
+	get earn_r() {
+		return 0.05 * (this.treasures[18] - 1);
+	}
+	get earn_t() {
+		return 0.005 * this.treasures[3];
+	}
+	get cd_r() {
+		return 6 * (this.treasures[17] - 1);
+	}
+	get cd_t() {
+		return 0.3 * this.treasures[2];
+	}
+	get good_atk_t() {
+		return this.treasures[23] / 1000;
+	}
+	get good_hp_t() {
+		return this.treasures[23] / 3000;
+	}
+	get massive_t() {
+		return this.treasures[23] / 300;
+	}
+	get resist_t() {
+		return this.treasures[23] / 300;
+	}
+	get alien_t() {
+		return 7 - this.treasures[21] / 100;
+	}
+	get alien_star_t() {
+		return 16 - this.treasures[22] / 100;
+	}
+	get god1_t() {
+		return 11 - (this.treasures[20] / 10);
+	}
+	get god2_t() {
+		return 11 - (this.treasures[24] / 10);
+	}
+	get god3_t() {
+		return 11 - (this.treasures[30] / 10);
+	}
 }
 
 class CatForm {
@@ -358,7 +397,7 @@ class CatForm {
 		return this.abi & (1 << (2 - atkIdx));
 	}
 	get cd() {
-		return Math.max(60, this.info.cd - 6 * (this.env.treasures[17] - 1) - .3 * this.env.treasures[2]);
+		return Math.max(60, this.info.cd - this.env.cd_r - this.env.cd_t);
 	}
 	set cd(value) {
 		this.info.cd = value;
@@ -1344,7 +1383,7 @@ class Enemy {
 		return this.info.ab;
 	}
 	get earn() {
-		return round(this.info.earn * (.95 + .05 * this.env.treasures[18] + .005 * this.env.treasures[3]), 2);
+		return round(this.info.earn * (1 + this.env.earn_r + this.env.earn_t), 2);
 	}
 	get star() {
 		return this.info.star;
