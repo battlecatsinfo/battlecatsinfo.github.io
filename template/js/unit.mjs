@@ -223,6 +223,7 @@ class CatForm {
 		// make non-structured-cloneable by setting enumerable=false
 		Object.defineProperties(this, {
 			base: {value: props.base},
+			env: {value: props.env ?? catEnv, writable: true, configurable: true},
 			info: {value: props.info, enumerable: true},
 			hpM: {value: props.hpM ?? 1, writable: true, configurable: true, enumerable: true},
 			atkM: {value: props.atkM ?? 1, writable: true, configurable: true, enumerable: true},
@@ -231,7 +232,10 @@ class CatForm {
 		});
 	}
 	clone() {
-		return new this.constructor(Object.assign({base: this.base}, structuredClone(this)));
+		return new this.constructor(Object.assign({
+			base: this.base,
+			env: this.env,
+		}, structuredClone(this)));
 	}
 	get id() {
 		return this.base.id;
@@ -255,7 +259,7 @@ class CatForm {
 		this.info.price = value;
 	}
 	get hp() {
-		return ~~(~~(round(this.info.hp * this.getLevelMulti()) * catEnv.hp_t) * this.hpM);
+		return ~~(~~(round(this.info.hp * this.getLevelMulti()) * this.env.hp_t) * this.hpM);
 	}
 
 	get thp() {
@@ -354,7 +358,7 @@ class CatForm {
 		return this.abi & (1 << (2 - atkIdx));
 	}
 	get cd() {
-		return Math.max(60, this.info.cd - 6 * (catEnv.treasures[17] - 1) - .3 * catEnv.treasures[2]);
+		return Math.max(60, this.info.cd - 6 * (this.env.treasures[17] - 1) - .3 * this.env.treasures[2]);
 	}
 	set cd(value) {
 		this.info.cd = value;
@@ -1045,7 +1049,7 @@ class CatForm {
 		atks = (typeof i !== 'undefined') ? [atks[i]] : atks.filter((x, i) => !i || x);
 
 		atks = atks.map(atk => {
-			return ~~(~~(round(atk * m) * catEnv.atk_t) * this.atkM);
+			return ~~(~~(round(atk * m) * this.env.atk_t) * this.atkM);
 		});
 
 		return (typeof i !== 'undefined') ? atks[0] : atks;
@@ -1251,8 +1255,10 @@ class CatForm {
 }
 
 class Enemy {
-	constructor(o) {
+	constructor(o, props = {}) {
+		// make non-structured-cloneable by setting enumerable=false
 		Object.defineProperties(this, {
+			env: {value: props.env ?? catEnv, writable: true, configurable: true},
 			info: {value: o, enumerable: true},
 		});
 	}
@@ -1338,7 +1344,7 @@ class Enemy {
 		return this.info.ab;
 	}
 	get earn() {
-		return round(this.info.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]), 2);
+		return round(this.info.earn * (.95 + .05 * this.env.treasures[18] + .005 * this.env.treasures[3]), 2);
 	}
 	get star() {
 		return this.info.star;
