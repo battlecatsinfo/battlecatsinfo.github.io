@@ -550,10 +550,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 			case AB_GOOD:
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
-				if (other_def[7])
-					mul(theATK,  (1 + other_def[7]) * (1.5  + (treasure ? catEnv.good_atk_t : 0)) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
-				else
-					mul(theATK,  1.5  + (treasure ? catEnv.good_atk_t : 0) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
+				mul(theATK,  (1 + (other_def[7] || 0)) * (1.5  + (treasure ? catEnv.good_atk_t : 0)) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
@@ -714,20 +711,14 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 			case AB_GOOD:
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
-				if (other_def[7])
-					theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - other_def[7]) * (0.5 - (treasure ? catEnv.good_hp_t : 0));
-				else
-					theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (0.5 - (treasure ? catEnv.good_hp_t : 0));
+				theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - (other_def[7] || 0)) * (0.5 - (treasure ? catEnv.good_hp_t : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
 			case AB_RESIST:
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
-				if (other_def[9])
-					theHP *= (4 + (treasure ? catEnv.resist_t : 0)) / ((lvc >= 2 ? catEnv.orb_resist : 1) * (1 - other_def[9]));
-				else
-					theHP *= (4 + (treasure ? catEnv.resist_t : 0)) / (lvc >= 2 ? catEnv.orb_resist : 1);
+				theHP *= (4 + (treasure ? catEnv.resist_t : 0)) / ((lvc >= 2 ? catEnv.orb_resist : 1) * (1 - (other_def[9] || 0)));
 				lines.push('耐打');
 				t_ef = true;
 				break;
@@ -823,11 +814,7 @@ function getHP0(form, m, S, W) {
 		flag = true;
 		++FG;
 	}
-	let hp_o, tmp = other_def[3];
-	if (tmp)
-		hp_o = floor(floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * (1 + tmp)) * form.hpM);
-	else
-		hp_o = floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * form.hpM);
+	let hp_o = floor(floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * (1 + (other_def[3] || 0))) * form.hpM);
 	do {
 		if (flag) {
 			t = (FG == 2);
@@ -838,18 +825,10 @@ function getHP0(form, m, S, W) {
 		for (let k of S) {
 			switch (k) {
 				case AB_GOOD:
-					tmp = other_def[7];
-					if (tmp)
-						hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - tmp) * (0.5 - (t ? catEnv.good_hp_t : 0));
-					else
-						hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (0.5 - (t ? catEnv.good_hp_t : 0));
+					hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - (other_def[7] || 0)) * (0.5 - (t ? catEnv.good_hp_t : 0));
 					break;
 				case AB_RESIST:
-					tmp = other_def[9];
-					if (tmp)
-						hp *= (4 + (t ? catEnv.resist_t : 0)) / ((form.lvc >= 2 ? catEnv.orb_resist : 1) * (1 - tmp));
-					else
-						hp *= (4 + (t ? catEnv.resist_t : 0)) / (form.lvc >= 2 ? catEnv.orb_resist : 1);
+					hp *= (4 + (t ? catEnv.resist_t : 0)) / ((form.lvc >= 2 ? catEnv.orb_resist : 1) * (1 - (other_def[9] || 0)));
 					break;
 				case AB_RESISTS:
 					hp *= 6 + (t ? catEnv.resist_t : 0);
@@ -902,7 +881,6 @@ function getATK0(form, m, S, W1, W2) {
 		FG = 1;
 	let atk_s;
 	let dps_s;
-	let tmp;
 	let t = form.trait & trait_treasure;
 	if (t && (form.trait & trait_no_treasure)) {
 		flag = true;
@@ -920,15 +898,8 @@ function getATK0(form, m, S, W1, W2) {
 		if (form.info.atk2)
 			atks.push(form.info.atk2);
 
-		tmp = other_def[2];
-		if (tmp) {
-			const atk_m = 1 + tmp;
-			for (let i = 0; i < atks.length; ++i)
-				atks[i] = floor(floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * atk_m) * form.atkM);
-		} else {
-			for (let i = 0; i < atks.length; ++i)
-				atks[i] = floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * form.atkM);
-		}
+		for (let i = 0; i < atks.length; ++i)
+			atks[i] = floor(floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * (1 + (other_def[2] || 0))) * form.atkM);
 
 		let dps = new Float64Array(atks);
 
@@ -957,10 +928,7 @@ function getATK0(form, m, S, W1, W2) {
 					mul(atks, 1 + v[4] * 0.2, false);
 					break;
 				case AB_GOOD:
-					if (other_def[7])
-						a = (1 + other_def[7]) * (1.5 + (t ? catEnv.good_atk_t : 0)) + (form.lvc >= 2 ? catEnv.orb_good_atk : 0);
-					else
-						a = 1.5 + (form.lvc >= 2 ? catEnv.orb_good_atk : 0) + (t ? catEnv.good_atk_t : 0);
+					a = (1 + (other_def[7] || 0)) * (1.5 + (t ? catEnv.good_atk_t : 0)) + (form.lvc >= 2 ? catEnv.orb_good_atk : 0);
 					mul(atks, a);
 					mul(dps, a);
 					break;
