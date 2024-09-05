@@ -953,18 +953,18 @@ describe('unit.mjs', function () {
 
 		});
 
-		describe('CatForm.cost', function () {
+		describe('CatForm.price', function () {
 
 			it('basic', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.cost, 75);
+				assert.strictEqual(cf.price, 75);
 
 				var cf = (await Unit.loadCat(61)).forms[2];
-				assert.strictEqual(cf.cost, 1425);
+				assert.strictEqual(cf.price, 1425);
 
 				var cf = (await Unit.loadCat(61)).forms[2];
 				cf.applyAllTalents();
-				assert.strictEqual(cf.cost, 975);
+				assert.strictEqual(cf.price, 975);
 			});
 
 		});
@@ -1790,7 +1790,7 @@ describe('unit.mjs', function () {
 
 		});
 
-		describe('Enemy.cost', function () {
+		describe('Enemy.earn', function () {
 
 			afterEach(function () {
 				Unit.catEnv.reset();
@@ -1798,28 +1798,28 @@ describe('unit.mjs', function () {
 
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.cost, 59.25);
+				assert.strictEqual(enemy.earn, 59.25);
 
 				var enemy = await Unit.loadEnemy(8);
-				assert.strictEqual(enemy.cost, 2567.5);
+				assert.strictEqual(enemy.earn, 2567.5);
 			});
 
 			it('research and treasures should be counted', async function () {
 				var enemy = await Unit.loadEnemy(0);
 				Unit.catEnv.treasures[3] = 0;
 				Unit.catEnv.treasures[18] = 1;
-				assert.strictEqual(enemy.cost, 15);
+				assert.strictEqual(enemy.earn, 15);
 
 				Unit.catEnv.treasures[3] = 100;
-				assert.strictEqual(enemy.cost, 22.5);
+				assert.strictEqual(enemy.earn, 22.5);
 
 				Unit.catEnv.treasures[3] = 300;
-				assert.strictEqual(enemy.cost, 37.5);
+				assert.strictEqual(enemy.earn, 37.5);
 
 				Unit.catEnv.treasures[18] = 5;
-				assert.strictEqual(enemy.cost, 40.5);
+				assert.strictEqual(enemy.earn, 40.5);
 				Unit.catEnv.treasures[18] = 30;
-				assert.strictEqual(enemy.cost, 59.25);
+				assert.strictEqual(enemy.earn, 59.25);
 			});
 
 		});

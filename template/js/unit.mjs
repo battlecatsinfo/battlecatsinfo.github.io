@@ -245,7 +245,7 @@ class CatForm {
 		return this.info.desc;
 	}
 	get price() {
-		return this.info.price;
+		return 1.5 * this.info.price;
 	}
 	set price(value) {
 		this.info.price = value;
@@ -371,9 +371,6 @@ class CatForm {
 
 	get dps() {
 		return ~~(30 * this.atkm / this.attackF);
-	}
-	get cost() {
-		return 1.5 * this.price;
 	}
 
 	get talents() {
@@ -520,7 +517,7 @@ class CatForm {
 				break;
 
 			case 25:
-				this.price -= inc1;
+				this.price = this.info.price - inc1;
 				break;
 
 			case 26:
@@ -1257,10 +1254,10 @@ class CatForm {
 		return this.speed;
 	}
 	get __price() {
-		return this.cost;
+		return this.price;
 	}
 	get __cost() {
-		return this.cost;
+		return this.price;
 	}
 	get __cdf() {
 		return getRes(this.cd);
@@ -1364,7 +1361,7 @@ class Enemy {
 		return this.info.ab;
 	}
 	get earn() {
-		return this.info.earn;
+		return Math.round(100 * (this.info.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]) + Number.EPSILON)) / 100;
 	}
 	get star() {
 		return this.info.star;
@@ -1372,9 +1369,6 @@ class Enemy {
 
 	get dps() {
 		return 30 * this.atkm / this.attackF;
-	}
-	get cost() {
-		return Math.round(100 * (this.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]) + Number.EPSILON)) / 100;
 	}
 	get icon() {
 		return `/img/e/${this.id}/0.png`;
@@ -1462,10 +1456,10 @@ class Enemy {
 		return this.backswing;
 	}
 	get __cost() {
-		return this.cost;
+		return this.earn;
 	}
 	get __price() {
-		return this.cost;
+		return this.earn;
 	}
 	get __speed() {
 		return this.speed;
