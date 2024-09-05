@@ -120,7 +120,7 @@ class FormDPS {
 		this.title = this.F.name || this.F.jp_name || '<未命名>';
 		this.H = this.B.R.register(this.title);
 
-		for (let i = 0; i < (this.F.atk1 ? (this.F.atk2 ? 3 : 2) : 1); ++i)
+		for (let i = 0; i < (this.F.info.atk1 ? (this.F.info.atk2 ? 3 : 2) : 1); ++i)
 			this.abis.push((this.F.abi & (1 << 2 - i)) != 0);
 
 		this.t_lv = [];
@@ -141,7 +141,7 @@ class FormDPS {
 
 		if (this.F.atkType & ATK_OMNI) {
 			obj += '全方位';
-		} else if (this.F.atk1 & ATK_LD) {
+		} else if (this.F.info.atk1 & ATK_LD) {
 			obj += '遠方';
 		} else {
 			obj = '普通';
@@ -611,15 +611,15 @@ class FormDPS {
 		const F = this.F.clone();
 		this.E = F;
 		let x, Xs;
-		this.atks = [F.atk];
+		this.atks = [F.info.atk];
 
 		if (F.talents && F.lvc >= 2) {
 			F.applyTalents(this.t_lv);
 			F.applySuperTalents(this.s_lv);
 		}
 
-		if (F.atk1) this.atks.push(F.atk1);
-		if (F.atk2) this.atks.push(F.atk2);
+		if (F.info.atk1) this.atks.push(F.info.atk1);
+		if (F.info.atk2) this.atks.push(F.info.atk2);
 
 		let T = F.trait & trait_treasure;
 

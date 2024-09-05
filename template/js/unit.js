@@ -628,7 +628,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 	}
 
 	if (lvc >= 2 && catEnv.add_atk) {
-		const a = [my_cat.forms[lvc].atk, my_cat.forms[lvc].atk1, my_cat.forms[lvc].atk2];
+		const a = [my_cat.forms[lvc].info.atk, my_cat.forms[lvc].info.atk1, my_cat.forms[lvc].info.atk2];
 		for (let i = 0; i < theATK.length; ++i)
 			theATK[i] += catEnv.add_atk * a[i];
 	}
@@ -677,7 +677,7 @@ function getAtkString(form, atks, Cs, level, parent, plus, attackS) {
 	let first;
 	let m1 = new Float64Array(atks);
 	if (form.lvc >= 2 && catEnv.add_atk) {
-		const a = [my_cat.forms[2].atk, my_cat.forms[2].atk1, my_cat.forms[2].atk2];
+		const a = [my_cat.forms[2].info.atk, my_cat.forms[2].info.atk1, my_cat.forms[2].info.atk2];
 		for (let i = 0; i < m1.length; ++i)
 			m1[i] += catEnv.add_atk * a[i];
 	}
@@ -801,7 +801,7 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 
 function getHpString(form, Cs, trait, level, parent, plus, KB) {
 	parent.textContent = '';
-	const hp = floor(floor(floor(Math.round(form.hp * form.getLevelMulti(level)) * catEnv.hp_t) * (1 + (other_def[3] || 0))) * form.hpM);
+	const hp = floor(floor(floor(Math.round(form.info.hp * form.getLevelMulti(level)) * catEnv.hp_t) * (1 + (other_def[3] || 0))) * form.hpM);
 	let theHP = hp;
 	if (other_def[1])
 		theHP /= 0.85;
@@ -828,9 +828,9 @@ function getHP0(form, m, S, W) {
 	}
 	let hp_o, tmp = other_def[3];
 	if (tmp)
-		hp_o = floor(floor(floor(Math.round(form.hp * m) * catEnv.hp_t) * (1 + tmp)) * form.hpM);
+		hp_o = floor(floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * (1 + tmp)) * form.hpM);
 	else
-		hp_o = floor(floor(Math.round(form.hp * m) * catEnv.hp_t) * form.hpM);
+		hp_o = floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * form.hpM);
 	do {
 		if (flag) {
 			t = (FG == 2);
@@ -917,11 +917,11 @@ function getATK0(form, m, S, W1, W2) {
 		} else {
 			t = (form.trait & trait_treasure);
 		}
-		let atks = [form.atk];
-		if (form.atk1)
-			atks.push(form.atk1);
-		if (form.atk2)
-			atks.push(form.atk2);
+		let atks = [form.info.atk];
+		if (form.info.atk1)
+			atks.push(form.info.atk1);
+		if (form.info.atk2)
+			atks.push(form.info.atk2);
 
 		tmp = other_def[2];
 		if (tmp) {
@@ -1028,7 +1028,7 @@ function getATK0(form, m, S, W1, W2) {
 			}
 		}
 		if (form.lvc >= 2 && catEnv.add_atk) {
-			const a = [my_cat.forms[2].atk, my_cat.forms[2].atk1, my_cat.forms[2].atk2];
+			const a = [my_cat.forms[2].info.atk, my_cat.forms[2].info.atk1, my_cat.forms[2].info.atk2];
 			for (let i = 0; i < atks.length; ++i) {
 				const x = floor(catEnv.add_atk * a[i]);
 				atks[i] += x;
@@ -1099,8 +1099,8 @@ function updateValues(form, tbl) {
 		tr[3].textContent = form.range;
 		tr[5].textContent = numStrT(form.backswing);
 		tr = chs[5].children;
-		tr[1].textContent = numStr(form.price * 1.5)
-		tr[3].textContent = numStrT(getRes(form.cd));
+		tr[1].textContent = numStr(form.info.price * 1.5)
+		tr[3].textContent = numStrT(getRes(form.info.cd));
 		tr[5].textContent = numStrT(form.tba);
 		return;
 	}
@@ -1114,9 +1114,9 @@ function updateValues(form, tbl) {
 	let i;
 	i = other_def[4];
 	chs[7].children[3].textContent = i ? floor((1 + i) * form.speed) : form.speed;
-	PRs[2].textContent = form.price;
-	PRs[4].textContent = numStr(form.price * 1.5);
-	PRs[6].textContent = form.price * 2;
+	PRs[2].textContent = form.info.price;
+	PRs[4].textContent = numStr(form.info.price * 1.5);
+	PRs[6].textContent = form.info.price * 2;
 	let levels = new Array(5);
 	let lvE = chs[0].children[1];
 	const attackS = form.attackF / 30;
@@ -1132,7 +1132,7 @@ function updateValues(form, tbl) {
 	for (i = 1; i <= 5; ++i)
 		(i > lvMax) ? (HPPKBs[i].textContent = '-') : getHpString(form, HCs, form.trait, levels[i - 1], HPPKBs[i], false, form.kb);
 	getHpString(form, HCs, form.trait, 1, HPPKBs[i], true, form.kb * 5);
-	const atks = [form.atk, form.atk1, form.atk2].filter(x => x);
+	const atks = [form.info.atk, form.info.atk1, form.info.atk2].filter(x => x);
 	const ACs = getCombinations(ABF.filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
 	for (i = 1; i <= 5; ++i)
 		(i > lvMax) ? (ATKs[i].textContent = '-') : getAtkString(form, atks, ACs, levels[i - 1], ATKs[i], false);
@@ -1155,9 +1155,9 @@ function updateValues(form, tbl) {
 	chs[5].children[3].textContent = preStr;
 	const specials = chs[9].children[1];
 	specials.textContent = '';
-	if (form.atk1 || form.atk2) {
-		const atkNum = form.atk2 ? 3 : 2;
-		const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => numStr((x / (form.atk + form.atk1 + form.atk2)) * 100) + ' %');
+	if (form.info.atk1 || form.info.atk2) {
+		const atkNum = form.info.atk2 ? 3 : 2;
+		const atksPre = [form.info.atk, form.info.atk1, form.info.atk2].slice(0, atkNum).map(x => numStr((x / (form.info.atk + form.info.atk1 + form.info.atk2)) * 100) + ' %');
 		const p = document.createElement('div');
 		const img = new Image(40, 40);
 		img.src = 'https://i.imgur.com/veNQ90x.png';
@@ -1201,7 +1201,7 @@ function updateValues(form, tbl) {
 		node.textContent = form.range;
 	}
 	KB.textContent = form.kb.toString();
-	CD.textContent = numStrT(getRes(form.cd));
+	CD.textContent = numStrT(getRes(form.info.cd));
 }
 
 function makeTd(parent, text = '') {
@@ -1435,12 +1435,12 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		td.colSpan = 5;
 		td.style.paddingLeft = '0.5em';
 		td.style.textAlign = 'left';
-		if (form.atk1 || form.atk2) {
+		if (form.info.atk1 || form.info.atk2) {
 			const i = new Image(40, 40);
 			i.src = 'https://i.imgur.com/veNQ90x.png';
 			td.appendChild(i);
-			const atkNum = form.atk2 ? 3 : 2;
-			const atksPre = [form.atk, form.atk1, form.atk2].slice(0, atkNum).map(x => numStr((x / (form.atk + form.atk1 + form.atk2)) * 100) + ' %');
+			const atkNum = form.info.atk2 ? 3 : 2;
+			const atksPre = [form.info.atk, form.info.atk1, form.info.atk2].slice(0, atkNum).map(x => numStr((x / (form.info.atk + form.info.atk1 + form.info.atk2)) * 100) + ' %');
 			td.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
 			td.appendChild(document.createElement('br'));
 		}
@@ -2934,7 +2934,7 @@ function drawgraph(T) {
 			switch (T) {
 				case 1:
 					for (let level = 0; level <= lvs; level += 5) {
-						const hp = floor(2.5 * Math.round(form.hp * form.getLevelMulti(level ? level : 1)));
+						const hp = floor(2.5 * Math.round(form.info.hp * form.getLevelMulti(level ? level : 1)));
 						datas.push({
 							x: level ? level : 1,
 							y: hp
@@ -2943,7 +2943,7 @@ function drawgraph(T) {
 					break;
 				case 2:
 					for (let level = 0; level <= lvs; level += 5) {
-						const atk = floor(2.5 * Math.round((form.atk + form.atk1 + form.atk2) * form.getLevelMulti(level ? level : 1)));
+						const atk = floor(2.5 * Math.round((form.info.atk + form.info.atk1 + form.info.atk2) * form.getLevelMulti(level ? level : 1)));
 						datas.push({
 							x: level ? level : 1,
 							y: atk
@@ -2952,7 +2952,7 @@ function drawgraph(T) {
 					break;
 				case 3:
 					for (let level = 0; level <= lvs; level += 5) {
-						const atk = floor(2.5 * Math.round((form.atk + form.atk1 + form.atk2) * form.getLevelMulti(level ? level : 1)));
+						const atk = floor(2.5 * Math.round((form.info.atk + form.info.atk1 + form.info.atk2) * form.getLevelMulti(level ? level : 1)));
 						datas.push({
 							x: level ? level : 1,
 							y: atk * 30 / form.attackF

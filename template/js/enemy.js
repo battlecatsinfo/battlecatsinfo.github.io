@@ -239,10 +239,10 @@ function calc() {
 	const _atk_mag = atk_mag / 100;
 	const _my_mult = my_mult / 100;
 	const _stageM = stageMag / 100;
-	let HP = E.hp;
-	let atk = E.atk;
-	let atk1 = E.atk1;
-	let atk2 = E.atk2;
+	let HP = E.info.hp;
+	let atk = E.info.atk;
+	let atk1 = E.info.atk1;
+	let atk2 = E.info.atk2;
 	if (E.trait & TB_ALIEN) {
 		let m;
 		if (E.star == 1)
@@ -501,9 +501,9 @@ loadEnemy(my_id)
 		if (E.trait & TB_SAGE)
 			traits.push('超賢者');
 		chs[0].children[8].textContent = traits.join('・');
-		if (E.atk1 || E.atk2) {
-			const atkNum = E.atk2 ? 3 : 2;
-			const atksPre = [E.atk, E.atk1, E.atk2].slice(0, atkNum).map(x => numStr((x / (E.atk + E.atk1 + E.atk2)) * 100) + ' %');
+		if (E.info.atk1 || E.info.atk2) {
+			const atkNum = E.info.atk2 ? 3 : 2;
+			const atksPre = [E.info.atk, E.info.atk1, E.info.atk2].slice(0, atkNum).map(x => numStr((x / (E.info.atk + E.info.atk1 + E.info.atk2)) * 100) + ' %');
 			specials.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(E.abi));
 			specials.appendChild(document.createElement('br'));
 		}

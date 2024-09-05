@@ -334,7 +334,7 @@ function getHp(lvc, line, theHP, parent, first, trait) {
 
 function getHpString(form, Cs, level, parent) {
 	parent.textContent = '';
-	const hp = ~~((~~(Math.round(form.hp * form.getLevelMulti(level)) * catEnv.hp_t)) * form.hpM);
+	const hp = ~~((~~(Math.round(form.info.hp * form.getLevelMulti(level)) * catEnv.hp_t)) * form.hpM);
 	parent.append(numStr(~~hp));
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)
@@ -403,7 +403,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 	else if (F.atkType & ATK_LD)
 		T += '遠方';
 	T += (F.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
-	tby[7].children[I].textContent = numStrT(getRes(F.cd)) + ' / ' + numStr(F.price * 1.5) + '元';
+	tby[7].children[I].textContent = numStrT(getRes(F.info.cd)) + ' / ' + numStr(F.info.price * 1.5) + '元';
 	if (F.lds) {
 		let s = '';
 		for (let i = 0; i < F.lds.length; ++i) {
@@ -422,7 +422,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 	}
 	const c = Object.entries(F.ab);
 	getHpString(F, getCombinations(c.filter(x => hp_mult_abs.has(parseInt(x[0], 10))).map(x => Array.prototype.concat(x[0], x[1]))), L, tby[2].children[I]);
-	const a = [F.atk, F.atk1, F.atk2].filter(x => x);
+	const a = [F.info.atk, F.info.atk1, F.info.atk2].filter(x => x);
 	const b = getCombinations(c.filter(x => atk_mult_abs.has(parseInt(x[0], 10))).map(x => Array.prototype.concat(x[0], x[1])));
 	getAtkString(F, a, b, L, tby[3].children[I]);
 	getAtkString(F, a, b, L, tby[4].children[I], F.attackF / 30);
