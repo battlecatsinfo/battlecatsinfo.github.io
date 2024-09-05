@@ -251,7 +251,7 @@ class CatForm {
 		this.info.price = value;
 	}
 	get hp() {
-		return this.info.hp;
+		return ~~(~~(Math.round(this.info.hp * this.getLevelMulti()) * catEnv.hp_t) * this.hpM);
 	}
 	get kb() {
 		return this.info.kb;
@@ -274,14 +274,20 @@ class CatForm {
 	get pre2() {
 		return this.info.pre2;
 	}
+	get atkm() {
+		return this._getatks().reduce((rv, x) => rv + x);
+	}
+	get atks() {
+		return this._getatks();
+	}
 	get atk() {
-		return this.info.atk;
+		return this._getatks(0);
 	}
 	get atk1() {
-		return this.info.atk1;
+		return this._getatks(1);
 	}
 	get atk2() {
-		return this.info.atk2;
+		return this._getatks(2);
 	}
 	get tba() {
 		return this.info.tba;
@@ -363,22 +369,8 @@ class CatForm {
 		return this.base.getLevelMulti(level);
 	}
 
-	get health() {
-		return ~~(~~(2.5 * Math.round(this.hp * this.getLevelMulti())) * this.hpM);
-	}
-	get ap() {
-		const m = this.getLevelMulti();
-		let atk = ~~(~~(2.5 * Math.round(this.atk * m)) * this.atkM);
-		if (this.atk1) {
-			atk += ~~(~~(2.5 * Math.round(this.atk1 * m)) * this.atkM);
-			if (this.atk2) {
-				atk += ~~(~~(2.5 * Math.round(this.atk2 * m)) * this.atkM);
-			}
-		}
-		return atk;
-	}
 	get dps() {
-		return ~~(30 * this.ap / this.attackF);
+		return ~~(30 * this.atkm / this.attackF);
 	}
 	get cost() {
 		return 1.5 * this.price;
@@ -912,19 +904,19 @@ class CatForm {
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
 	get __hp() {
-		return this.health;
+		return this.hp;
 	}
 	get __atk() {
-		return this.ap;
+		return this.atkm;
 	}
 	get __attack() {
-		return this.ap;
+		return this.atkm;
 	}
 	get __dps() {
 		return this.dps;
 	}
 	get __thp() {
-		let hp = this.health;
+		let hp = this.hp;
 		if (this.ab.hasOwnProperty(AB_WKILL))
 			return hp * 10;
 		if (this.ab.hasOwnProperty(AB_EKILL))
@@ -966,7 +958,7 @@ class CatForm {
 		return this.ab[AB_CRIT] | 0;
 	}
 	__hpagainst(traits) {
-		let hp = this.health;
+		let hp = this.hp;
 		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL))
 			return hp * 10;
 		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL))
@@ -1186,19 +1178,23 @@ class CatForm {
 		}
 		return atks;
 	}
-	_getatks() {
+	get _atks() {
+		const value = [this.info.atk, this.info.atk1, this.info.atk2];
+		Object.defineProperty(this, '_atks', {value});
+		return value;
+	}
+	_getatks(i) {
 		const m = this.getLevelMulti();
-		let atks = [this.atk];
-		if (this.atk1)
-			atks.push(this.atk1);
-		if (this.atk2)
-			atks.push(this.atk2);
-		for (let i = 0; i < atks.length; ++i)
-			atks[i] = ~~(
-				(
-					~~(Math.round(atks[i] * m) * catEnv.atk_t)
-				) * this.atkM);
-		return atks;
+
+		let atks = this._atks;
+
+		atks = (typeof i !== 'undefined') ? [atks[i]] : atks.filter((x, i) => !i || x);
+
+		atks = atks.map(atk => {
+			return ~~(~~(Math.round(atk * m) * catEnv.atk_t) * this.atkM);
+		});
+
+		return (typeof i !== 'undefined') ? atks[0] : atks;
 	}
 	get __tatk() {
 		let x = this._gettatk();
@@ -1322,6 +1318,12 @@ class Enemy {
 	get pre2() {
 		return this.info.pre2;
 	}
+	get atkm() {
+		return this.atk + this.atk1 + this.atk2;
+	}
+	get atks() {
+		return [this.atk, this.atk1, this.atk2].filter(x => x);
+	}
 	get atk() {
 		return this.info.atk;
 	}
@@ -1368,14 +1370,8 @@ class Enemy {
 		return this.info.star;
 	}
 
-	get health() {
-		return this.hp;
-	}
-	get ap() {
-		return this.atk + this.atk1 + this.atk2;
-	}
 	get dps() {
-		return 30 * this.ap / this.attackF;
+		return 30 * this.atkm / this.attackF;
 	}
 	get cost() {
 		return Math.round(100 * (this.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]) + Number.EPSILON)) / 100;
@@ -1400,19 +1396,19 @@ class Enemy {
 	}
 
 	get __hp() {
-		return this.health;
+		return this.hp;
 	}
 	get __thp() {
-		return this.health;
+		return this.hp;
 	}
 	get __atk() {
-		return this.ap;
+		return this.atkm;
 	}
 	get __attack() {
-		return this.ap;
+		return this.atkm;
 	}
 	get __tatk() {
-		return this.ap;
+		return this.atkm;
 	}
 	get __dps() {
 		return this.dps;

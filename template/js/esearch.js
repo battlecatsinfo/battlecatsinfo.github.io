@@ -79,7 +79,7 @@ function renderTable(forms, page = 1) {
 	for (let i = 0; i < display_forms.length; ++i) {
 		const tr = document.createElement('tr');
 		const F = display_forms[i][1];
-		const texts = [F.id, '', F.name || F.jp_name || '?', F.health, F.ap,
+		const texts = [F.id, '', F.name || F.jp_name || '?', F.hp, F.atkm,
 			~~F.dps, F.kb, F.range, numStrT(F.attackF).replace('秒', '秒/下'), F.speed, F.info.earn, numStr(display_forms[i][0])
 		];
 		for (let j = 0; j < texts.length; ++j) {

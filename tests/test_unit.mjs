@@ -651,67 +651,263 @@ describe('unit.mjs', function () {
 
 		});
 
-		describe('CatForm.health', function () {
+		describe('CatForm.hp', function () {
+
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
 
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.health, 250);
+				assert.strictEqual(cf.hp, 250);
 				cf.level = 10;
-				assert.strictEqual(cf.health, 700);
+				assert.strictEqual(cf.hp, 700);
 				cf.level = 20;
-				assert.strictEqual(cf.health, 1200);
+				assert.strictEqual(cf.hp, 1200);
 				cf.level = 100;
-				assert.strictEqual(cf.health, 4200);
+				assert.strictEqual(cf.hp, 4200);
 			});
 
 			it('the defense buff talent should be counted', async function () {
 				var cf = (await Unit.loadCat(44)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf.health, 105300);
+				assert.strictEqual(cf.hp, 105300);
 
 				cf.applyAllTalents([0, 0, 5, 0, 0]);
-				assert.strictEqual(cf.health, 115830);
+				assert.strictEqual(cf.hp, 115830);
 
 				cf.applyAllTalents([0, 0, 10, 0, 0]);
-				assert.strictEqual(cf.health, 126360);
+				assert.strictEqual(cf.hp, 126360);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(44)).forms[2];
+				cf.level = 50;
+				Unit.catEnv.treasures[1] = 0;
+				assert.strictEqual(cf.hp, 42120);
+
+				Unit.catEnv.treasures[1] = 100;
+				assert.strictEqual(cf.hp, 63180);
+
+				Unit.catEnv.treasures[1] = 300;
+				assert.strictEqual(cf.hp, 105300);
 			});
 
 		});
 
-		describe('CatForm.ap', function () {
+		describe('CatForm.atks', function () {
+
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
 
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.ap, 20);
-				cf.level = 10;
-				assert.strictEqual(cf.ap, 55);
-				cf.level = 20;
-				assert.strictEqual(cf.ap, 95);
+				assert.deepEqual(cf.atks, [20]);
 				cf.level = 100;
-				assert.strictEqual(cf.ap, 335);
+				assert.deepEqual(cf.atks, [335]);
 			});
 
 			it('multi-attack should be counted', async function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf.ap, 121000);
+				assert.deepEqual(cf.atks, [110000, 4400, 6600]);
 			});
 
 			it('the attack buff talent should be counted', async function () {
-				var cf = (await Unit.loadCat(44)).forms[2];
+				var cf = (await Unit.loadCat(137)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf.ap, 101250);
+				assert.deepEqual(cf.atks, [16200, 16200, 97200]);
 
-				cf.applyAllTalents([0, 0, 0, 5, 0]);
-				assert.strictEqual(cf.ap, 111375);
+				cf.applyTalents([0, 0, 0, 0, 5]);
+				assert.deepEqual(cf.atks, [17820, 17820, 106920]);
 
-				cf.applyAllTalents([0, 0, 0, 10, 0]);
-				assert.strictEqual(cf.ap, 121500);
+				cf.applyTalents([0, 0, 0, 0, 10]);
+				assert.deepEqual(cf.atks, [19440, 19440, 116640]);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+				Unit.catEnv.treasures[0] = 0;
+				assert.deepEqual(cf.atks, [6480, 6480, 38880]);
+
+				Unit.catEnv.treasures[0] = 100;
+				assert.deepEqual(cf.atks, [9720, 9720, 58320]);
+
+				Unit.catEnv.treasures[0] = 300;
+				assert.deepEqual(cf.atks, [16200, 16200, 97200]);
+			});
+
+		});
+
+		describe('CatForm.atkm', function () {
+
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
+
+			it('level should be counted', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.atkm, 20);
+				cf.level = 100;
+				assert.strictEqual(cf.atkm, 335);
+			});
+
+			it('multi-attack should be counted', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.atkm, 121000);
+			});
+
+			it('the attack buff talent should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.atkm, 129600);
+
+				cf.applyTalents([0, 0, 0, 0, 5]);
+				assert.strictEqual(cf.atkm, 142560);
+
+				cf.applyTalents([0, 0, 0, 0, 10]);
+				assert.strictEqual(cf.atkm, 155520);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+				Unit.catEnv.treasures[0] = 0;
+				assert.strictEqual(cf.atkm, 51840);
+
+				Unit.catEnv.treasures[0] = 100;
+				assert.strictEqual(cf.atkm, 77760);
+
+				Unit.catEnv.treasures[0] = 300;
+				assert.strictEqual(cf.atkm, 129600);
+			});
+
+		});
+
+		describe('CatForm.atk', function () {
+
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
+
+			it('level should be counted', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.atk, cf.atks[0]);
+				cf.level = 100;
+				assert.strictEqual(cf.atk, cf.atks[0]);
+			});
+
+			it('return first attack for multi-attack', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.atk, cf.atks[0]);
+			});
+
+			it('the attack buff talent should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.atk, cf.atks[0]);
+
+				cf.applyTalents([0, 0, 0, 0, 10]);
+				assert.strictEqual(cf.atk, cf.atks[0]);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+				Unit.catEnv.treasures[0] = 0;
+				assert.strictEqual(cf.atk, cf.atks[0]);
+
+				Unit.catEnv.treasures[0] = 300;
+				assert.strictEqual(cf.atk, cf.atks[0]);
+			});
+
+		});
+
+		describe('CatForm.atk1', function () {
+
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
+
+			it('return second attack for multi-attack', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.atk1, cf.atks[1]);
+			});
+
+			it('return 0 if no multi-attack', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.atk1, 0);
+			});
+
+			it('the attack buff talent should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.atk1, cf.atks[1]);
+
+				cf.applyTalents([0, 0, 0, 0, 10]);
+				assert.strictEqual(cf.atk1, cf.atks[1]);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+				Unit.catEnv.treasures[0] = 0;
+				assert.strictEqual(cf.atk1, cf.atks[1]);
+
+				Unit.catEnv.treasures[0] = 300;
+				assert.strictEqual(cf.atk1, cf.atks[1]);
+			});
+
+		});
+
+		describe('CatForm.atk2', function () {
+
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
+
+			it('return third attack for multi-attack', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.atk2, cf.atks[2]);
+			});
+
+			it('return 0 if no related multi-attack', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.atk2, 0);
+			});
+
+			it('the attack buff talent should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.atk2, cf.atks[2]);
+
+				cf.applyTalents([0, 0, 0, 0, 10]);
+				assert.strictEqual(cf.atk2, cf.atks[2]);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+				Unit.catEnv.treasures[0] = 0;
+				assert.strictEqual(cf.atk2, cf.atks[2]);
+
+				Unit.catEnv.treasures[0] = 300;
+				assert.strictEqual(cf.atk2, cf.atks[2]);
 			});
 
 		});
 
 		describe('CatForm.dps', function () {
+
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
 
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
@@ -740,6 +936,19 @@ describe('unit.mjs', function () {
 
 				cf.applyAllTalents([0, 0, 0, 10, 0]);
 				assert.strictEqual(cf.dps, 53602);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(44)).forms[2];
+				cf.level = 50;
+				Unit.catEnv.treasures[0] = 0;
+				assert.strictEqual(cf.dps, 17867);
+
+				Unit.catEnv.treasures[0] = 100;
+				assert.strictEqual(cf.dps, 26801);
+
+				Unit.catEnv.treasures[0] = 300;
+				assert.strictEqual(cf.dps, 44669);
 			});
 
 		});
@@ -1485,28 +1694,84 @@ describe('unit.mjs', function () {
 
 	describe('Enemy', function () {
 
-		describe('Enemy.health', function () {
+		describe('Enemy.hp', function () {
 
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.health, 90);
+				assert.strictEqual(enemy.hp, 90);
 
 				var enemy = await Unit.loadEnemy(8);
-				assert.strictEqual(enemy.health, 2500);
+				assert.strictEqual(enemy.hp, 2500);
 			});
 
 		});
 
-		describe('Enemy.ap', function () {
+		describe('Enemy.atks', function () {
 
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.ap, 8);
+				assert.deepEqual(enemy.atks, [8]);
 			});
 
 			it('multi-attack should be counted', async function () {
 				var enemy = await Unit.loadEnemy(52);
-				assert.strictEqual(enemy.ap, 4997);
+				assert.deepEqual(enemy.atks, [4250, 250, 497]);
+			});
+
+		});
+
+		describe('Enemy.atkm', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.atkm, 8);
+			});
+
+			it('multi-attack should be counted', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				assert.strictEqual(enemy.atkm, 4997);
+			});
+
+		});
+
+		describe('Enemy.atk', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.deepEqual(enemy.atk, 8);
+			});
+
+			it('return first attack for multi-attack', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				assert.deepEqual(enemy.atk, 4250);
+			});
+
+		});
+
+		describe('Enemy.atk1', function () {
+
+			it('return 0 if no multi-attack', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.deepEqual(enemy.atk1, 0);
+			});
+
+			it('return second attack for multi-attack', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				assert.deepEqual(enemy.atk1, 250);
+			});
+
+		});
+
+		describe('Enemy.atk2', function () {
+
+			it('return 0 if no related multi-attack', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.deepEqual(enemy.atk2, 0);
+			});
+
+			it('return third attack for multi-attack', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				assert.deepEqual(enemy.atk2, 497);
 			});
 
 		});
