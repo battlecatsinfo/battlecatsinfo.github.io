@@ -1,5 +1,6 @@
 import {assert} from './lib/chai.js';
 import {dbGetAll, dbClear, dbDelete} from './common.mjs';
+import {round} from '../common.mjs';
 import * as Common from '../common.mjs';
 import * as Unit from '../unit.mjs';
 
@@ -911,44 +912,44 @@ describe('unit.mjs', function () {
 
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.dps, 16);
+				assert.strictEqual(round(cf.dps), 16);
 				cf.level = 10;
-				assert.strictEqual(cf.dps, 44);
+				assert.strictEqual(round(cf.dps), 45);
 				cf.level = 20;
-				assert.strictEqual(cf.dps, 77);
+				assert.strictEqual(round(cf.dps), 77);
 				cf.level = 100;
-				assert.strictEqual(cf.dps, 271);
+				assert.strictEqual(round(cf.dps), 272);
 			});
 
 			it('multi-attack should be counted', async function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf.dps, 39032);
+				assert.strictEqual(round(cf.dps), 39032);
 			});
 
 			it('the attack buff talent should be counted', async function () {
 				var cf = (await Unit.loadCat(44)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf.dps, 44669);
+				assert.strictEqual(round(cf.dps), 44669);
 
 				cf.applyAllTalents([0, 0, 0, 5, 0]);
-				assert.strictEqual(cf.dps, 49136);
+				assert.strictEqual(round(cf.dps), 49136);
 
 				cf.applyAllTalents([0, 0, 0, 10, 0]);
-				assert.strictEqual(cf.dps, 53602);
+				assert.strictEqual(round(cf.dps), 53603);
 			});
 
 			it('treasures should be counted', async function () {
 				var cf = (await Unit.loadCat(44)).forms[2];
 				cf.level = 50;
 				Unit.catEnv.treasures[0] = 0;
-				assert.strictEqual(cf.dps, 17867);
+				assert.strictEqual(round(cf.dps), 17868);
 
 				Unit.catEnv.treasures[0] = 100;
-				assert.strictEqual(cf.dps, 26801);
+				assert.strictEqual(round(cf.dps), 26801);
 
 				Unit.catEnv.treasures[0] = 300;
-				assert.strictEqual(cf.dps, 44669);
+				assert.strictEqual(round(cf.dps), 44669);
 			});
 
 		});
@@ -1020,11 +1021,11 @@ describe('unit.mjs', function () {
 			it('dpsagainst()', async function () {
 				var cf = (await Unit.loadCat(2)).forms[2];
 				cf.level = 10;
-				assert.strictEqual(cf.__dpsagainst(Unit.TB_RED), 700);
+				assert.strictEqual(round(cf.__dpsagainst(Unit.TB_RED)), 700);
 
 				var cf = (await Unit.loadCat(2)).forms[2];
 				cf.level = 10;
-				assert.strictEqual(cf.__dpsagainst(Unit.TB_BLACK), 388);
+				assert.strictEqual(round(cf.__dpsagainst(Unit.TB_BLACK)), 389);
 			});
 
 			it('hpagainst()', async function () {
@@ -1151,15 +1152,15 @@ describe('unit.mjs', function () {
 
 			it('dps', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__dps, 16);
+				assert.strictEqual(round(cf.__dps), 16);
 
 				var cf = (await Unit.loadCat(44)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf.__dps, 44669);
+				assert.strictEqual(round(cf.__dps), 44669);
 
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf.__dps, 39032);
+				assert.strictEqual(round(cf.__dps), 39032);
 			});
 
 			it('thp', async function () {
@@ -1182,11 +1183,11 @@ describe('unit.mjs', function () {
 
 			it('tdps', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__tdps, 16);
+				assert.strictEqual(round(cf.__tdps), 16);
 
 				var cf = (await Unit.loadCat(554)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf.__tdps, 28700);
+				assert.strictEqual(round(cf.__tdps), 28701);
 			});
 
 			it('attackf', async function () {
@@ -1780,12 +1781,12 @@ describe('unit.mjs', function () {
 
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.dps, 8 / 47 * 30);
+				assert.strictEqual(round(enemy.dps), 5);
 			});
 
 			it('multi-attack should be counted', async function () {
 				var enemy = await Unit.loadEnemy(52);
-				assert.strictEqual(enemy.dps, 4997 / 16 * 30);
+				assert.strictEqual(round(enemy.dps), 9369);
 			});
 
 		});
@@ -1922,10 +1923,10 @@ describe('unit.mjs', function () {
 
 			it('dps', async function () {
 				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__dps, 8 / 47 * 30);
+				assert.strictEqual(round(enemy.__dps), 5);
 
 				var enemy = await Unit.loadEnemy(52);
-				assert.strictEqual(enemy.__dps, 4997 / 16 * 30);
+				assert.strictEqual(round(enemy.__dps), 9369);
 			});
 
 			it('thp', async function () {
@@ -1946,10 +1947,10 @@ describe('unit.mjs', function () {
 
 			it('tdps', async function () {
 				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__tdps, 8 / 47 * 30);
+				assert.strictEqual(round(enemy.__tdps), 5);
 
 				var enemy = await Unit.loadEnemy(52);
-				assert.strictEqual(enemy.__tdps, 4997 / 16 * 30);
+				assert.strictEqual(round(enemy.__tdps), 9369);
 			});
 
 			it('attackf', async function () {

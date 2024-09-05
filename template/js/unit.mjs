@@ -427,24 +427,19 @@ class CatForm {
 	}
 
 	get dps() {
-		return ~~(30 * this.atkm / this.attackF);
+		return 30 * this.atkm / this.attackF;
 	}
 
 	get tdps() {
-		let t = 0;
-		for (let x of this._gettdps())
-			t += ~~x;
-		return ~~((30 * t) / this.attackF);
+		const atkm = this._gettdps().reduce((rv, x) => rv + x);
+		return 30 * atkm / this.attackF;
 	}
 
 	dpsAgainst(traits) {
 		if (this.ab.hasOwnProperty(AB_ONLY) && (!(traits & this.trait)))
 			return 0;
-		let t = 0;
-		for (let x of this._dpsagainst(traits)) {
-			t += ~~x;
-		}
-		return ~~((30 * t) / this.attackF);
+		const atkm = this._dpsagainst(traits).reduce((rv, x) => rv + x);
+		return 30 * atkm / this.attackF;
 	}
 
 	get talents() {
