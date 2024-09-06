@@ -762,7 +762,7 @@ class CatForm {
 	}
 
 	__hasres(r) {
-		return this.res && this.res.hasOwnProperty(r);
+		return this.res && this.res.hasOwnProperty(r) || false;
 	}
 	__hasab(ab) {
 		return this.ab.hasOwnProperty(ab);
@@ -1397,7 +1397,7 @@ class Enemy {
 		return this.id;
 	}
 	__hasres() {
-		return 0;
+		return false;
 	}
 	get __tba() {
 		return this.tba;

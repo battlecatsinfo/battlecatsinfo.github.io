@@ -1632,9 +1632,8 @@ describe('unit.mjs', function () {
 				cf.applyAllTalents();
 				assert.isTrue(cf.__hasres(Unit.RES_CURSE));
 
-				// @TODO: should return false
 				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.isNotOk(cf.__hasres(Unit.RES_CURSE));
+				assert.isFalse(cf.__hasres(Unit.RES_CURSE));
 			});
 
 			it('dpsagainst()', async function () {
@@ -2503,9 +2502,8 @@ describe('unit.mjs', function () {
 			});
 
 			it('hasres()', async function () {
-				// @TODO: should return false
 				var enemy = await Unit.loadEnemy(407);
-				assert.isNotOk(enemy.__hasres());
+				assert.isFalse(enemy.__hasres());
 			});
 
 			it('id', async function () {
