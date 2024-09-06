@@ -345,7 +345,7 @@ class CatForm {
 		return this._getatks(2);
 	}
 	get tatks() {
-		return this._gettatk();
+		return this._gettatks({mode: 'max'});
 	}
 	get tba() {
 		return this.info.tba;
@@ -435,7 +435,7 @@ class CatForm {
 	}
 
 	get tdps() {
-		const atkm = this._gettdps().reduce((rv, x) => rv + x);
+		const atkm = this._gettatks({mode: 'expected'}).reduce((rv, x) => rv + x);
 		return 30 * atkm / this.attackF;
 	}
 
@@ -1146,56 +1146,6 @@ class CatForm {
 	get __tdps() {
 		return this.tdps;
 	}
-	_gettdps() {
-		let atks = this._getatks();
-		let v;
-		if (this.ab.hasOwnProperty(AB_ATKBASE)) {
-			this.mul(atks, 1 + this.ab[AB_ATKBASE][0] / 100);
-			return atks;
-		}
-		if (this.ab.hasOwnProperty(AB_VOLC)) {
-			v = this.ab[AB_VOLC];
-			this.mul(atks, 1 + v[4] * v[0] / 100, false);
-		} else if (this.ab.hasOwnProperty(AB_MINIVOLC)) {
-			v = this.ab[AB_MINIVOLC];
-			this.mul(atks, 1 + v[4] * v[0] / 500, false);
-		}
-		if (this.ab.hasOwnProperty(AB_WAVE)) {
-			this.mul(atks, 1 + this.ab[AB_WAVE][0] / 100, false);
-		} else if (this.ab.hasOwnProperty(AB_MINIWAVE)) {
-			this.mul(atks, 1 + this.ab[AB_MINIWAVE][0] / 500, false);
-		}
-		if (this.ab.hasOwnProperty(AB_S)) {
-			v = this.ab[AB_S];
-			this.mul(atks, 1 + v[0] * v[1] / 10000, false);
-		}
-		if (this.ab.hasOwnProperty(AB_CRIT)) {
-			this.mul(atks, 1 + this.ab[AB_CRIT] / 100, false);
-		}
-		if (this.ab.hasOwnProperty(AB_STRONG)) {
-			this.mul(atks, 1 + this.ab[AB_STRONG][1] / 100);
-		}
-		if (this.ab.hasOwnProperty(AB_EKILL) || this.ab.hasOwnProperty(AB_WKILL)) {
-			this.mul(atks, 5);
-			return atks;
-		}
-		if (this.ab.hasOwnProperty(AB_MASSIVE)) {
-			this.mul(atks, this.trait & trait_treasure ? 4 : 3);
-		} else if (this.ab.hasOwnProperty(AB_MASSIVES)) {
-			this.mul(atks, this.trait & trait_treasure ? 6 : 5);
-		}
-		if (this.ab.hasOwnProperty(AB_GOOD)) {
-			this.mul(atks, this.trait & trait_treasure ? 1.8 : 1.5);
-		}
-		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
-			this.mul(atks, 2.5);
-		} else if (this.ab.hasOwnProperty(AB_BAIL)) {
-			this.mul(atks, 1.6);
-		} else if (this.ab.hasOwnProperty(AB_SAGE)) {
-			this.mul(atks, 1.2);
-		}
-		return atks;
-	}
 	get _atks() {
 		const value = [this.info.atk, this.info.atk1, this.info.atk2];
 		Object.defineProperty(this, '_atks', {value});
@@ -1215,37 +1165,65 @@ class CatForm {
 		return (typeof i !== 'undefined') ? atks[0] : atks;
 	}
 	get __tatk() {
-		let x = this.tatks;
-		let s = 0;
-		for (const i of x)
-			s += i;
-		return s;
+		return this.tatks.reduce((rv, x) => rv + x);
 	}
 	mul(arr, s, ab = true) {
 		for (let i = 0; i < arr.length; ++i)
 			(ab || this.abEnabled(i)) && (arr[i] *= s)
 	}
-	_gettatk() {
-		let atks = this._getatks();
+
+	/**
+	 * Calculate ability-boosted attack damages.
+	 *
+	 * @param {Object} [options]
+	 * @param {string} [options.mode="expected"] - the calculation mode:
+	 *     "max" for maximal possible damage;
+	 *     "expected" for expected damage.
+	 * @return {number[]} the boosted attack damages
+	 */
+	_gettatks({mode = 'expected'} = {}) {
+		const atks = this._getatks();
+		let v;
 		if (this.ab.hasOwnProperty(AB_ATKBASE)) {
 			this.mul(atks, 1 + this.ab[AB_ATKBASE][0] / 100);
 			return atks;
 		}
 		if (this.ab.hasOwnProperty(AB_VOLC)) {
-			this.mul(atks, 1 + this.ab[AB_VOLC][4], false);
+			v = this.ab[AB_VOLC];
+			if (mode === 'max')
+				this.mul(atks, 1 + v[4], false);
+			else
+				this.mul(atks, 1 + v[4] * v[0] / 100, false);
 		} else if (this.ab.hasOwnProperty(AB_MINIVOLC)) {
-			this.mul(atks, 1 + this.ab[AB_MINIVOLC][4] * 0.2, false);
+			v = this.ab[AB_MINIVOLC];
+			if (mode === 'max')
+				this.mul(atks, 1 + v[4] * 0.2, false);
+			else
+				this.mul(atks, 1 + v[4] * v[0] / 500, false);
 		}
 		if (this.ab.hasOwnProperty(AB_WAVE)) {
-			this.mul(atks, 2, false);
+			if (mode === 'max')
+				this.mul(atks, 2, false);
+			else
+				this.mul(atks, 1 + this.ab[AB_WAVE][0] / 100, false);
 		} else if (this.ab.hasOwnProperty(AB_MINIWAVE)) {
-			this.mul(atks, 1.2, false);
+			if (mode === 'max')
+				this.mul(atks, 1.2, false);
+			else
+				this.mul(atks, 1 + this.ab[AB_MINIWAVE][0] / 500, false);
 		}
 		if (this.ab.hasOwnProperty(AB_S)) {
-			this.mul(atks, 1 + this.ab[AB_S][1] / 100, false);
+			v = this.ab[AB_S];
+			if (mode === 'max')
+				this.mul(atks, 1 + v[1] / 100, false);
+			else
+				this.mul(atks, 1 + v[1] * v[0] / 10000, false);
 		}
 		if (this.ab.hasOwnProperty(AB_CRIT)) {
-			this.mul(atks, 2, false);
+			if (mode === 'max')
+				this.mul(atks, 2, false);
+			else
+				this.mul(atks, 1 + this.ab[AB_CRIT] / 100, false);
 		}
 		if (this.ab.hasOwnProperty(AB_STRONG)) {
 			this.mul(atks, 1 + this.ab[AB_STRONG][1] / 100);
@@ -1271,6 +1249,7 @@ class CatForm {
 		}
 		return atks;
 	}
+
 	get __speed() {
 		return this.speed;
 	}

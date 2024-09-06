@@ -954,6 +954,206 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm.tatks', function () {
+
+			it('attack base should be counted', async function () {
+				var cf = (await Unit.loadCat(226)).forms[0];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [692280]);
+			});
+
+			it('surge should be counted', async function () {
+				var cf = (await Unit.loadCat(642)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [143856]);
+			});
+
+			it('mini-surge should be counted', async function () {
+				var cf = (await Unit.loadCat(413)).forms[2];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [372600]);
+			});
+
+			it('wave should be counted', async function () {
+				var cf = (await Unit.loadCat(99)).forms[2];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [46174]);
+			});
+
+			it('mini-wave should be counted', async function () {
+				var cf = (await Unit.loadCat(585)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [74844]);
+			});
+
+			it('savage should be counted', async function () {
+				var cf = (await Unit.loadCat(519)).forms[2];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [1093500]);
+			});
+
+			it('critical should be counted', async function () {
+				var cf = (await Unit.loadCat(57)).forms[2];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [21600]);
+			});
+
+			it('strengthen should be counted', async function () {
+				var cf = (await Unit.loadCat(240)).forms[2];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [243000]);
+			});
+
+			it('EVA-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(412)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [371250]);
+			});
+
+			it('witch-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(289)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [274050]);
+			});
+
+			it('massive damage should be counted', async function () {
+				var cf = (await Unit.loadCat(36)).forms[2];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [96120]);
+			});
+
+			it('insane damage should be counted', async function () {
+				var cf = (await Unit.loadCat(463)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [291600]);
+			});
+
+			it('strong-against should be counted', async function () {
+				var cf = (await Unit.loadCat(2)).forms[2];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [2430]);
+			});
+
+			it('behemoth slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(656)).forms[2];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [200]);
+			});
+
+			it('colossus slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(643)).forms[2];
+				cf.level = 100;
+				assert.deepEqual(cf.tatks, [114912]);
+			});
+
+			it('sage slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(728)).forms[1];
+				cf.level = 100;
+				assert.deepEqual(cf.tatks, [8100]);
+			});
+
+		});
+
+		describe('CatForm.tdps', function () {
+
+			it('attack base should be counted', async function () {
+				var cf = (await Unit.loadCat(226)).forms[0];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 86897);
+			});
+
+			it('surge should be counted', async function () {
+				var cf = (await Unit.loadCat(642)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 15196);
+			});
+
+			it('mini-surge should be counted', async function () {
+				var cf = (await Unit.loadCat(413)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 72602);
+			});
+
+			it('wave should be counted', async function () {
+				var cf = (await Unit.loadCat(99)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 9833);
+			});
+
+			it('mini-wave should be counted', async function () {
+				var cf = (await Unit.loadCat(585)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(round(cf.tdps), 12137);
+			});
+
+			it('savage should be counted', async function () {
+				var cf = (await Unit.loadCat(519)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 34992);
+			});
+
+			it('critical should be counted', async function () {
+				var cf = (await Unit.loadCat(57)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 3240);
+			});
+
+			it('strengthen should be counted', async function () {
+				var cf = (await Unit.loadCat(240)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 14294);
+			});
+
+			it('EVA-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(412)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 38142);
+			});
+
+			it('witch-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(289)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 41314);
+			});
+
+			it('massive damage should be counted', async function () {
+				var cf = (await Unit.loadCat(36)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 23831);
+			});
+
+			it('insane damage should be counted', async function () {
+				var cf = (await Unit.loadCat(463)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 60750);
+			});
+
+			it('strong-against should be counted', async function () {
+				var cf = (await Unit.loadCat(2)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 2700);
+			});
+
+			it('behemoth slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(656)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 111);
+			});
+
+			it('colossus slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(643)).forms[2];
+				cf.level = 100;
+				assert.strictEqual(round(cf.tdps), 46586);
+			});
+
+			it('sage slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(728)).forms[1];
+				cf.level = 100;
+				assert.strictEqual(round(cf.tdps), 11571);
+			});
+
+		});
+
 		describe('CatForm.price', function () {
 
 			it('basic', async function () {
