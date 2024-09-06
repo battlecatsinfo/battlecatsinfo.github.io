@@ -1850,12 +1850,7 @@ async function applyOrb() {
 			applyOrb();
 		}
 	}
-	catEnv.orb_hp = 1;
-	catEnv.orb_massive = 0;
-	catEnv.orb_resist = 1;
-	catEnv.orb_good_atk = 0;
-	catEnv.orb_good_hp = 1;
-	catEnv.orb_atk = 0;
+	catEnv.resetOrbs();
 	const C2 = [ // equipment_grade.imgcut
 		1, 1,
 		88, 1,
@@ -1890,34 +1885,38 @@ async function applyOrb() {
 			idx = s3 + s3 - 2, ctx.drawImage(orb_eff, C2[idx], C2[idx + 1], 85, 85, 0, 0, 85, 85);
 		if (s2) // gradle
 			idx = s2 + s2 - 2, ctx.drawImage(orb_gradle, C2[idx], C2[idx + 1], 85, 85, 0, 0, 85, 85);
+
+		// don't add dummy level-0 orbs
+		if (!s2)
+			continue;
+
 		switch (s3) {
 			case 1:
-				catEnv.orb_atk += s2;
+				catEnv.addOrb('atk', s2);
 				break;
 			case 2:
-				catEnv.orb_hp *= (1 - 0.04 * s2);
+				catEnv.addOrb('hp', s2);
 				break;
 			case 3:
 				if (!my_cat.forms[2].ab.hasOwnProperty(AB_GOOD)) {
 					alert('提示：\n強化善於攻擊本能玉只能用在有「善於攻擊」效果的貓咪上');
 					break;
 				}
-				catEnv.orb_good_hp -= 0.02 * s2;
-				catEnv.orb_good_atk += 0.06 * s2;
+				catEnv.addOrb('good', s2);
 				break;
 			case 4:
 				if (!my_cat.forms[2].ab.hasOwnProperty(AB_MASSIVE)) {
 					alert('提示：\n強化超大傷害只能用在有「超大傷害」效果的貓咪上');
 					break;
 				}
-				catEnv.orb_massive += s2 / 10;
+				catEnv.addOrb('massive', s2);
 				break;
 			case 5:
 				if (!my_cat.forms[2].ab.hasOwnProperty(AB_RESIST)) {
 					alert('提示：\n強化很耐打本能玉只能用在有「很耐打」效果的貓咪上');
 					break;
 				}
-				catEnv.orb_resist *= (1 - s2 / 20);
+				catEnv.addOrb('resist', s2);
 				break;
 		}
 	}

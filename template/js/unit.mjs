@@ -184,34 +184,45 @@ function get_trait_short_names(trait) {
 }
 
 class CatEnv {
-	constructor(configs = {}) {
+	constructor({treasures, orbs} = {}) {
 		Object.defineProperties(this, {
 			_treasures: {
 				value: [],
 				enumerable: true,
 			},
+			_orbs: {
+				value: {
+					atk: [],
+					hp: [],
+					good: [],
+					massive: [],
+					resist: [],
+				},
+				enumerable: true,
+			},
 		});
 		this.reset();
 
-		const {treasures, ...props} = configs;
 		Object.assign(this._treasures, treasures);
-		Object.assign(this, props);
+		for (const [prop, arr] of Object.entries(orbs ?? {})) {
+			this.setOrbs(prop, arr);
+		}
 	}
 
 	reset() {
 		this.resetTreasures();
-
-		this.orb_atk = 0;
-		this.orb_hp = 1;
-		this.orb_massive = 0;
-		this.orb_resist = 1;
-		this.orb_good_atk = 0;
-		this.orb_good_hp = 1;
+		this.resetOrbs();
 	}
 
 	resetTreasures() {
 		this._treasures.length = 0;
 		Object.assign(this._treasures, config.getDefaultTreasures());
+	}
+
+	resetOrbs() {
+		for (const arr of Object.values(this._orbs)) {
+			arr.length = 0;
+		}
 	}
 
 	getTreasure(idx) {
@@ -220,6 +231,19 @@ class CatEnv {
 
 	setTreasure(idx, value) {
 		this._treasures[idx] = value;
+	}
+
+	getOrbs(type) {
+		return this._orbs[type].slice();
+	}
+
+	addOrb(type, ...levels) {
+		this._orbs[type].push(...levels);
+	}
+
+	setOrbs(type, levels) {
+		this._orbs[type].length = 0;
+		Object.assign(this._orbs[type], levels);
 	}
 
 	get atk_t() {
@@ -266,6 +290,25 @@ class CatEnv {
 	}
 	get god3_t() {
 		return 11 - (this._treasures[30] / 10);
+	}
+
+	get orb_atk() {
+		return this._orbs.atk.reduce((rv, x) => rv + x, 0);
+	}
+	get orb_hp() {
+		return this._orbs.hp.reduce((rv, x) => rv * (1 - 0.04 * x), 1);
+	}
+	get orb_good_hp() {
+		return this._orbs.good.reduce((rv, x) => rv - 0.02 * x, 1);
+	}
+	get orb_good_atk() {
+		return this._orbs.good.reduce((rv, x) => rv + 0.06 * x, 0);
+	}
+	get orb_massive() {
+		return this._orbs.massive.reduce((rv, x) => rv + x / 10, 0);
+	}
+	get orb_resist() {
+		return this._orbs.resist.reduce((rv, x) => rv * (1 - x / 20), 1);
 	}
 }
 

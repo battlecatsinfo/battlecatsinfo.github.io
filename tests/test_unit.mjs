@@ -136,35 +136,37 @@ describe('unit.mjs', function () {
 				var defaultTreasures = Common.config.getDefaultTreasures();
 				assert.deepEqual(env._treasures, defaultTreasures);
 				assert.notStrictEqual(env._treasures, defaultTreasures);
-				assert.strictEqual(env.orb_atk, 0);
-				assert.strictEqual(env.orb_hp, 1);
-				assert.strictEqual(env.orb_massive, 0);
-				assert.strictEqual(env.orb_resist, 1);
-				assert.strictEqual(env.orb_good_atk, 0);
-				assert.strictEqual(env.orb_good_hp, 1);
+				assert.deepEqual(env._orbs, {
+					atk: [],
+					hp: [],
+					good: [],
+					massive: [],
+					resist: [],
+				});
 			});
 
 			it('with params', function () {
 				var treasures = [50, 100, , 200, 250];
-				var env = new Unit.CatEnv({
-					treasures,
-					orb_atk: 5,
-					orb_hp: 0.8,
-					orb_massive: 0.5,
-					orb_resist: 0.75,
-					orb_good_atk: 0.3,
-					orb_good_hp: 0.9,
-				});
+				var orbs = {
+					atk: [1],
+					hp: [2],
+					good: [3],
+					massive: [4, 1],
+					resist: [5],
+				};
+				var env = new Unit.CatEnv({treasures, orbs});
 				var defaultTreasures = Common.config.getDefaultTreasures();
 				assert.deepEqual(env._treasures, [50, 100, 300, 200, 250].concat(defaultTreasures.slice(5)));
 				assert.notStrictEqual(env._treasures, treasures);
 				assert.notStrictEqual(env._treasures, defaultTreasures);
-				assert.strictEqual(env.orb_atk, 5);
-				assert.strictEqual(env.orb_hp, 0.8);
-				assert.strictEqual(env.orb_massive, 0.5);
-				assert.strictEqual(env.orb_resist, 0.75);
-				assert.strictEqual(env.orb_good_atk, 0.3);
-				assert.strictEqual(env.orb_good_hp, 0.9);
+				assert.deepEqual(env._orbs, {
+					atk: [1],
+					hp: [2],
+					good: [3],
+					massive: [4, 1],
+					resist: [5],
+				});
+				assert.notStrictEqual(env._orbs, orbs);
 			});
 
 			it('forbid changing internal objects', function () {
@@ -177,6 +179,14 @@ describe('unit.mjs', function () {
 				assert.throws(() => {
 					delete env._treasures;
 				}, TypeError);
+
+				assert.throws(() => {
+					env._orbs = "value";
+				}, TypeError);
+
+				assert.throws(() => {
+					delete env._orbs;
+				}, TypeError);
 			});
 
 		});
@@ -186,25 +196,27 @@ describe('unit.mjs', function () {
 			it('basic', function () {
 				var env = new Unit.CatEnv();
 				var treasures = env._treasures;
+				var orbs = env._orbs;
 
 				env._treasures[0] = 0;
 				env._treasures[2] = 0;
-				env.orb_atk = 5;
-				env.orb_hp = 0.8;
-				env.orb_massive = 0.5;
-				env.orb_resist = 0.75;
-				env.orb_good_atk = 0.3;
-				env.orb_good_hp = 0.9;
+				env._orbs.atk.push(5);
+				env._orbs.hp.push(5);
+				env._orbs.massive.push(5);
+				env._orbs.resist.push(5);
+				env._orbs.good.push(5);
 				env.reset();
 
 				assert.strictEqual(env._treasures, treasures);
 				assert.deepEqual(env._treasures, Common.config.getDefaultTreasures());
-				assert.strictEqual(env.orb_atk, 0);
-				assert.strictEqual(env.orb_hp, 1);
-				assert.strictEqual(env.orb_massive, 0);
-				assert.strictEqual(env.orb_resist, 1);
-				assert.strictEqual(env.orb_good_atk, 0);
-				assert.strictEqual(env.orb_good_hp, 1);
+				assert.strictEqual(env._orbs, orbs);
+				assert.deepEqual(env._orbs, {
+					atk: [],
+					hp: [],
+					good: [],
+					massive: [],
+					resist: [],
+				});
 			});
 
 		});
@@ -218,6 +230,25 @@ describe('unit.mjs', function () {
 				env.resetTreasures();
 
 				assert.deepEqual(env._treasures, Common.config.getDefaultTreasures());
+			});
+
+		});
+
+		describe('resetOrbs', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv();
+				env._orbs.atk.push(5);
+				env._orbs.hp.push(1, 2, 3);
+				env.resetOrbs();
+
+				assert.deepEqual(env._orbs, {
+					atk: [],
+					hp: [],
+					good: [],
+					massive: [],
+					resist: [],
+				});
 			});
 
 		});
@@ -252,9 +283,77 @@ describe('unit.mjs', function () {
 
 		});
 
-		describe('getters', function () {
+		describe('getOrbs', function () {
 
 			it('basic', function () {
+				var env = new Unit.CatEnv();
+				for (const key in env._orbs) {
+					env._orbs[key].push(5);
+					assert.deepEqual(env.getOrbs(key), [5]);
+					assert.deepEqual(env.getOrbs(key), env._orbs[key]);
+					assert.notStrictEqual(env.getOrbs(key), env._orbs[key]);
+
+					env._orbs[key].push(1, 2);
+					assert.deepEqual(env.getOrbs(key), [5, 1, 2]);
+					assert.deepEqual(env.getOrbs(key), env._orbs[key]);
+					assert.notStrictEqual(env.getOrbs(key), env._orbs[key]);
+				}
+			});
+
+		});
+
+		describe('addOrb', function () {
+
+			it('add single value', function () {
+				var env = new Unit.CatEnv();
+				for (const key in env._orbs) {
+					env.addOrb(key, 5);
+					assert.deepEqual(env._orbs[key], [5]);
+
+					env.addOrb(key, 3);
+					env.addOrb(key, 2);
+					env.addOrb(key, 1);
+					assert.deepEqual(env._orbs[key], [5, 3, 2, 1]);
+				}
+			});
+
+			it('add multiple values', function () {
+				var env = new Unit.CatEnv();
+				for (const key in env._orbs) {
+					env.addOrb(key, 2, 3);
+					assert.deepEqual(env._orbs[key], [2, 3]);
+
+					env.addOrb(key, 4, 1);
+					assert.deepEqual(env._orbs[key], [2, 3, 4, 1]);
+				}
+			});
+
+		});
+
+		describe('setOrbs', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv();
+				for (const key in env._orbs) {
+					var arr = [1, 2, 3];
+					env.setOrbs(key, arr);
+					assert.deepEqual(env._orbs[key], [1, 2, 3]);
+					assert.deepEqual(env._orbs[key], arr);
+					assert.notStrictEqual(env._orbs[key], arr);
+
+					var arr = [4, 5, 6];
+					env.setOrbs(key, arr);
+					assert.deepEqual(env._orbs[key], [4, 5, 6]);
+					assert.deepEqual(env._orbs[key], arr);
+					assert.notStrictEqual(env._orbs[key], arr);
+				}
+			});
+
+		});
+
+		describe('getters', function () {
+
+			it('treasures related', function () {
 				var env = new Unit.CatEnv({
 					treasures: [100, 200],
 				});
@@ -289,6 +388,40 @@ describe('unit.mjs', function () {
 				assert.strictEqual(env.god1_t, 11 - (70 / 10));
 				assert.strictEqual(env.god2_t, 11 - (80 / 10));
 				assert.strictEqual(env.god3_t, 11 - (90 / 10));
+			});
+
+			it('orbs related', function () {
+				var env = new Unit.CatEnv({
+					orbs: {
+						atk: [5],
+						hp: [4],
+						good: [3],
+						massive: [2],
+						resist: [1],
+					},
+				});
+				assert.strictEqual(env.orb_atk, 5);
+				assert.approximately(env.orb_hp, (1 - 0.04 * 4), Number.EPSILON);
+				assert.approximately(env.orb_good_hp, 1 - 0.02 * 3, Number.EPSILON);
+				assert.approximately(env.orb_good_atk, 0.06 * 3, Number.EPSILON);
+				assert.approximately(env.orb_massive, 2 / 10, Number.EPSILON);
+				assert.approximately(env.orb_resist, (1 - 1 / 20), Number.EPSILON);
+
+				var env = new Unit.CatEnv({
+					orbs: {
+						atk: [5, 5],
+						hp: [4, 2],
+						good: [3, 3, 2],
+						massive: [2, 2],
+						resist: [1, 4],
+					},
+				});
+				assert.strictEqual(env.orb_atk, 10);
+				assert.approximately(env.orb_hp, (1 - 0.04 * 4) * (1 - 0.04 * 2), Number.EPSILON);
+				assert.approximately(env.orb_good_hp, 1 - 0.02 * 8, Number.EPSILON);
+				assert.approximately(env.orb_good_atk, 0.06 * 8, Number.EPSILON);
+				assert.approximately(env.orb_massive, 4 / 10, Number.EPSILON);
+				assert.approximately(env.orb_resist, (1 - 1 / 20) * (1 - 4 / 20), Number.EPSILON);
 			});
 
 		});
