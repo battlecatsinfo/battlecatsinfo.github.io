@@ -624,10 +624,10 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 		}
 	}
 
-	if (lvc >= 2 && catEnv.add_atk) {
+	if (lvc >= 2 && catEnv.orb_atk) {
 		const a = [my_cat.forms[lvc].info.atk, my_cat.forms[lvc].info.atk1, my_cat.forms[lvc].info.atk2];
 		for (let i = 0; i < theATK.length; ++i)
-			theATK[i] += catEnv.add_atk * a[i];
+			theATK[i] += catEnv.orb_atk * a[i];
 	}
 	if (eva_ef && t_ef) return false;
 	let s = lines.join('・');
@@ -673,10 +673,10 @@ function getAtkString(form, atks, Cs, level, parent, plus, attackS) {
 	parent.textContent = '';
 	let first;
 	let m1 = new Float64Array(atks);
-	if (form.lvc >= 2 && catEnv.add_atk) {
+	if (form.lvc >= 2 && catEnv.orb_atk) {
 		const a = [my_cat.forms[2].info.atk, my_cat.forms[2].info.atk1, my_cat.forms[2].info.atk2];
 		for (let i = 0; i < m1.length; ++i)
-			m1[i] += catEnv.add_atk * a[i];
+			m1[i] += catEnv.orb_atk * a[i];
 	}
 	if (attackS != undefined) {
 		let t = 0;
@@ -992,10 +992,10 @@ function getATK0(form, m, S, W1, W2) {
 					break;
 			}
 		}
-		if (form.lvc >= 2 && catEnv.add_atk) {
+		if (form.lvc >= 2 && catEnv.orb_atk) {
 			const a = [my_cat.forms[2].info.atk, my_cat.forms[2].info.atk1, my_cat.forms[2].info.atk2];
 			for (let i = 0; i < atks.length; ++i) {
-				const x = floor(catEnv.add_atk * a[i]);
+				const x = floor(catEnv.orb_atk * a[i]);
 				atks[i] += x;
 				dps[i] += x;
 			}
@@ -1855,7 +1855,7 @@ async function applyOrb() {
 	catEnv.orb_resist = 1;
 	catEnv.orb_good_atk = 0;
 	catEnv.orb_good_hp = 1;
-	catEnv.add_atk = 0;
+	catEnv.orb_atk = 0;
 	const C2 = [ // equipment_grade.imgcut
 		1, 1,
 		88, 1,
@@ -1892,7 +1892,7 @@ async function applyOrb() {
 			idx = s2 + s2 - 2, ctx.drawImage(orb_gradle, C2[idx], C2[idx + 1], 85, 85, 0, 0, 85, 85);
 		switch (s3) {
 			case 1:
-				catEnv.add_atk += s2;
+				catEnv.orb_atk += s2;
 				break;
 			case 2:
 				catEnv.orb_hp *= (1 - 0.04 * s2);

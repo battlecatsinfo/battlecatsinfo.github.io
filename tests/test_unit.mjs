@@ -136,7 +136,7 @@ describe('unit.mjs', function () {
 				var defaultTreasures = Common.config.getDefaultTreasures();
 				assert.deepEqual(env._treasures, defaultTreasures);
 				assert.notStrictEqual(env._treasures, defaultTreasures);
-				assert.strictEqual(env.add_atk, 0);
+				assert.strictEqual(env.orb_atk, 0);
 				assert.strictEqual(env.orb_hp, 1);
 				assert.strictEqual(env.orb_massive, 0);
 				assert.strictEqual(env.orb_resist, 1);
@@ -148,7 +148,7 @@ describe('unit.mjs', function () {
 				var treasures = [50, 100, , 200, 250];
 				var env = new Unit.CatEnv({
 					treasures,
-					add_atk: 5,
+					orb_atk: 5,
 					orb_hp: 0.8,
 					orb_massive: 0.5,
 					orb_resist: 0.75,
@@ -159,7 +159,7 @@ describe('unit.mjs', function () {
 				assert.deepEqual(env._treasures, [50, 100, 300, 200, 250].concat(defaultTreasures.slice(5)));
 				assert.notStrictEqual(env._treasures, treasures);
 				assert.notStrictEqual(env._treasures, defaultTreasures);
-				assert.strictEqual(env.add_atk, 5);
+				assert.strictEqual(env.orb_atk, 5);
 				assert.strictEqual(env.orb_hp, 0.8);
 				assert.strictEqual(env.orb_massive, 0.5);
 				assert.strictEqual(env.orb_resist, 0.75);
@@ -189,7 +189,7 @@ describe('unit.mjs', function () {
 
 				env._treasures[0] = 0;
 				env._treasures[2] = 0;
-				env.add_atk = 5;
+				env.orb_atk = 5;
 				env.orb_hp = 0.8;
 				env.orb_massive = 0.5;
 				env.orb_resist = 0.75;
@@ -199,7 +199,7 @@ describe('unit.mjs', function () {
 
 				assert.strictEqual(env._treasures, treasures);
 				assert.deepEqual(env._treasures, Common.config.getDefaultTreasures());
-				assert.strictEqual(env.add_atk, 0);
+				assert.strictEqual(env.orb_atk, 0);
 				assert.strictEqual(env.orb_hp, 1);
 				assert.strictEqual(env.orb_massive, 0);
 				assert.strictEqual(env.orb_resist, 1);

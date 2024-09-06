@@ -201,7 +201,7 @@ class CatEnv {
 	reset() {
 		this.resetTreasures();
 
-		this.add_atk = 0;
+		this.orb_atk = 0;
 		this.orb_hp = 1;
 		this.orb_massive = 0;
 		this.orb_resist = 1;
