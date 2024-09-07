@@ -259,53 +259,11 @@ class CatForm {
 	}
 
 	get thp() {
-		let hp = this.hp;
-		if (this.ab.hasOwnProperty(AB_WKILL))
-			return hp * 10;
-		if (this.ab.hasOwnProperty(AB_EKILL))
-			return hp * 5;
-		if (this.ab.hasOwnProperty(AB_RESIST)) {
-			hp *= this.trait & trait_treasure ? 5 : 4;
-		} else if (this.ab.hasOwnProperty(AB_RESISTS)) {
-			hp *= this.trait & trait_treasure ? 7 : 6;
-		}
-		if (this.ab.hasOwnProperty(AB_GOOD)) {
-			hp *= this.trait & trait_treasure ? 2 : 2.5;
-		}
-		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
-			hp /= 0.6;
-		} else if (this.ab.hasOwnProperty(AB_BAIL)) {
-			hp /= 0.7;
-		} else if (this.ab.hasOwnProperty(AB_SAGE)) {
-			hp += hp;
-		}
-		return hp;
+		return this._getthp();
 	}
 
 	hpAgainst(traits) {
-		let hp = this.hp;
-		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL))
-			return hp * 10;
-		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL))
-			return hp * 5;
-		const t = this.trait & traits;
-		if (t) {
-			if (this.ab.hasOwnProperty(AB_RESIST)) {
-				hp *= t & trait_treasure ? 5 : 4;
-			} else if (this.ab.hasOwnProperty(AB_RESISTS)) {
-				hp *= t & trait_treasure ? 7 : 6;
-			}
-			if (this.ab.hasOwnProperty(AB_GOOD)) {
-				hp *= t & trait_treasure ? 2 : 2.5;
-			}
-		}
-		if (traits & TB_BEAST) {
-			hp /= 0.6;
-		}
-		if (traits & TB_BARON) {
-			hp /= 0.7;
-		}
-		return hp;
+		return this._getthp({traits});
 	}
 
 	get kb() {
@@ -1098,6 +1056,42 @@ class CatForm {
 	mul(arr, s, ab = true) {
 		for (let i = 0; i < arr.length; ++i)
 			(ab || this.abEnabled(i)) && (arr[i] *= s)
+	}
+
+	/**
+	 * Calculate ability-boosted HP.
+	 *
+	 * @param {Object} [options]
+	 * @param {integer} [options.traits] - the traits of the attacker; omit for
+	 *     general case.
+	 * @return {number} the boosted HP
+	 */
+	_getthp({traits} = {}) {
+		traits = traits ?? ~0;
+		let hp = this.hp;
+		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL))
+			return hp * 10;
+		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL))
+			return hp * 5;
+		const t = this.trait & traits;
+		if (t) {
+			if (this.ab.hasOwnProperty(AB_RESIST)) {
+				hp *= t & trait_treasure ? 5 : 4;
+			} else if (this.ab.hasOwnProperty(AB_RESISTS)) {
+				hp *= t & trait_treasure ? 7 : 6;
+			}
+			if (this.ab.hasOwnProperty(AB_GOOD)) {
+				hp *= t & trait_treasure ? 2.5 : 2;
+			}
+		}
+		if ((traits & TB_BEAST) && this.ab.hasOwnProperty(AB_BSTHUNT)) {
+			hp /= 0.6;
+		} else if ((traits & TB_BARON) && this.ab.hasOwnProperty(AB_BAIL)) {
+			hp /= 0.7;
+		} else if ((traits & TB_SAGE) && this.ab.hasOwnProperty(AB_SAGE)) {
+			hp /= 0.5;
+		}
+		return hp;
 	}
 
 	/**

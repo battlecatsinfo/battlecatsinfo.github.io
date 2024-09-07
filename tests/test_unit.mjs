@@ -954,6 +954,127 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm.thp', function () {
+
+			it('EVA-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(412)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.thp, 1012500);
+			});
+
+			it('witch-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(289)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.thp, 764100);
+			});
+
+			it('tough should be counted', async function () {
+				var cf = (await Unit.loadCat(585)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.thp, 945000);
+			});
+
+			it('insane tough should be counted', async function () {
+				var cf = (await Unit.loadCat(452)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.thp, 122850);
+			});
+
+			it('strong-against should be counted', async function () {
+				var cf = (await Unit.loadCat(269)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.thp, 256500);
+			});
+
+			it('behemoth slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(656)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.thp, 57600);
+			});
+
+			it('colossus slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(464)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.thp, 1044000);
+			});
+
+			it('sage slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(212)).forms[3];
+				cf.level = 60;
+				assert.strictEqual(cf.thp, 640000);
+			});
+
+		});
+
+		describe('CatForm.hpAgainst', function () {
+
+			it('EVA-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(412)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 202500);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_EVA), 1012500);
+			});
+
+			it('witch-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(289)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 76410);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WITCH), 764100);
+			});
+
+			it('tough should be counted', async function () {
+				var cf = (await Unit.loadCat(585)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 189000);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 945000);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RELIC), 756000);
+			});
+
+			it('insane tough should be counted', async function () {
+				var cf = (await Unit.loadCat(452)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 17550);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_METAL), 122850);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RELIC), 105300);
+			});
+
+			it('strong-against should be counted', async function () {
+				var cf = (await Unit.loadCat(269)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 102600);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 256500);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RELIC), 205200);
+			});
+
+			it('behemoth slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(656)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 8640);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 34560);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_BEAST), 14400);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE | Unit.TB_BEAST), 57600);
+			});
+
+			it('colossus slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(464)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 156600);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 626400);
+				assert.strictEqual(~~cf.hpAgainst(Unit.TB_BARON), 223714);
+				assert.strictEqual(~~cf.hpAgainst(Unit.TB_WHITE | Unit.TB_BARON), 894857);
+			});
+
+			it('sage slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(212)).forms[3];
+				cf.level = 60;
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 128000);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 320000);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_SAGE), 256000);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RED | Unit.TB_SAGE), 640000);
+			});
+
+		});
+
 		describe('CatForm.tatks', function () {
 
 			it('surge should be counted', async function () {
@@ -1529,7 +1650,7 @@ describe('unit.mjs', function () {
 			it('hpagainst()', async function () {
 				var cf = (await Unit.loadCat(2)).forms[2];
 				cf.level = 10;
-				assert.strictEqual(cf.__hpagainst(Unit.TB_RED), 5600);
+				assert.strictEqual(cf.__hpagainst(Unit.TB_RED), 7000);
 
 				var cf = (await Unit.loadCat(2)).forms[2];
 				cf.level = 10;
