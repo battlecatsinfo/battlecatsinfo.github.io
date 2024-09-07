@@ -60,7 +60,7 @@ import {
 	AB_REVIVE,
 	AB_POIATK,
 	AB_GLASS,
-	AB_SHIELD,
+	AB_BARRIER,
 	AB_DSHIELD,
 	AB_COUNTER,
 	AB_DEATHSURGE,
@@ -196,7 +196,7 @@ function createAbIcons() {
 			case AB_GLASS:
 				W('一次攻擊(自殺)', 'VY93npj');
 				break;
-			case AB_SHIELD:
+			case AB_BARRIER:
 				W(`護盾 ${numStr(d[0])} HP`, 'l2VfcmX');
 				break;
 			case AB_DSHIELD: {

@@ -87,7 +87,7 @@ const constants = {
 	ab_revive: 35,
 	ab_poiatk: 36,
 	ab_glass: 37,
-	ab_shield: 38,
+	AB_BARRIER: 38,
 	ab_dshield: 39,
 	ab_counter: 40,
 	ab_deathsurge: 41,
