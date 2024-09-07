@@ -59,7 +59,7 @@ import {
 	AB_BURROW,
 	AB_REVIVE,
 	AB_POIATK,
-	AB_GLASS,
+	AB_SUICIDE,
 	AB_BARRIER,
 	AB_DSHIELD,
 	AB_COUNTER,
@@ -193,7 +193,7 @@ function createAbIcons() {
 			case AB_IMUATK:
 				W(`${d[0]} % 發動攻擊無效持續 ${numStrT(d[1])}`, '8Eq6vPV');
 				break;
-			case AB_GLASS:
+			case AB_SUICIDE:
 				W('一次攻擊(自殺)', 'VY93npj');
 				break;
 			case AB_BARRIER:

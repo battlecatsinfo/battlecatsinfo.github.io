@@ -79,7 +79,7 @@ const AB_CURSE = 33;       // Curse 詛咒
 const AB_BURROW = 34;      // Burrow 鑽地 [UNOFFICIAL]
 const AB_REVIVE = 35;      // Revive 復活 [UNOFFICIAL]
 const AB_POIATK = 36;      // Toxic 毒擊
-const AB_GLASS = 37;       // Kamikaze(Suicide) 一次攻擊 [UNOFFICIAL]
+const AB_SUICIDE = 37;     // Kamikaze(Suicide) 一次攻擊 [UNOFFICIAL]
 const AB_BARRIER = 38;     // Barrier 護盾
 const AB_DSHIELD = 39;     // Aku Shield 惡魔盾
 const AB_COUNTER = 40;     // Counter-Surge 烈波反擊
@@ -2063,7 +2063,7 @@ export {
 	AB_BURROW,
 	AB_REVIVE,
 	AB_POIATK,
-	AB_GLASS,
+	AB_SUICIDE,
 	AB_BARRIER,
 	AB_DSHIELD,
 	AB_COUNTER,
