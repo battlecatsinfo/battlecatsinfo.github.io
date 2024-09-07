@@ -440,8 +440,6 @@ class CatForm {
 	}
 
 	dpsAgainst(traits) {
-		if (this.ab.hasOwnProperty(AB_ONLY) && (!(traits & this.trait)))
-			return 0;
 		const atkm = this._gettatks({traits, mode: 'expected'}).reduce((rv, x) => rv + x);
 		return 30 * atkm / this.attackF;
 	}
@@ -1121,12 +1119,15 @@ class CatForm {
 		metal: metalMode = true,
 	} = {}) {
 		traits = traits ?? ~0 ^ (metalMode ? TB_METAL : 0);
+		const isBase = traits === 0;
 		let atks = this._getatks();
 		let v;
-		if (this.ab.hasOwnProperty(AB_ATKBASE)) {
-			this.mul(atks, 1 + this.ab[AB_ATKBASE][0] / 100);
+
+		if (this.ab.hasOwnProperty(AB_ONLY) && !(this.trait & traits) && !isBase) {
+			atks.fill(0);
 			return atks;
 		}
+
 		if (this.ab.hasOwnProperty(AB_VOLC)) {
 			v = this.ab[AB_VOLC];
 			if (mode === 'max')
@@ -1140,17 +1141,19 @@ class CatForm {
 			else
 				this.mul(atks, 1 + v[4] * v[0] / 500, false);
 		}
-		if (this.ab.hasOwnProperty(AB_WAVE)) {
+
+		if (!isBase && this.ab.hasOwnProperty(AB_WAVE)) {
 			if (mode === 'max')
 				this.mul(atks, 2, false);
 			else
 				this.mul(atks, 1 + this.ab[AB_WAVE][0] / 100, false);
-		} else if (this.ab.hasOwnProperty(AB_MINIWAVE)) {
+		} else if (!isBase && this.ab.hasOwnProperty(AB_MINIWAVE)) {
 			if (mode === 'max')
 				this.mul(atks, 1.2, false);
 			else
 				this.mul(atks, 1 + this.ab[AB_MINIWAVE][0] / 500, false);
 		}
+
 		if (this.ab.hasOwnProperty(AB_S)) {
 			v = this.ab[AB_S];
 			if (mode === 'max')
@@ -1170,13 +1173,20 @@ class CatForm {
 		if (this.ab.hasOwnProperty(AB_STRONG)) {
 			this.mul(atks, 1 + this.ab[AB_STRONG][1] / 100);
 		}
+
+		if (isBase && this.ab.hasOwnProperty(AB_ATKBASE)) {
+			this.mul(atks, 1 + this.ab[AB_ATKBASE][0] / 100);
+			return atks;
+		}
 		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL)) {
 			this.mul(atks, 5);
 			return atks;
-		} else if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL)) {
+		}
+		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL)) {
 			this.mul(atks, 5);
 			return atks;
 		}
+
 		const t = this.trait & traits;
 		if (t) {
 			const x = t & trait_treasure;
@@ -1189,6 +1199,7 @@ class CatForm {
 				this.mul(atks, x ? 1.8 : 1.5);
 			}
 		}
+
 		if ((traits & TB_BEAST) && this.ab.hasOwnProperty(AB_BSTHUNT)) {
 			this.mul(atks, 2.5);
 		} else if ((traits & TB_BARON) && this.ab.hasOwnProperty(AB_BAIL)) {
@@ -1196,6 +1207,7 @@ class CatForm {
 		} else if ((traits & TB_SAGE) && this.ab.hasOwnProperty(AB_SAGE)) {
 			this.mul(atks, 1.2);
 		}
+
 		if (metalMode && traits & TB_METAL) {
 			const critRate = this.ab[AB_CRIT] ?? 0;
 			atks = atks.map((atk, i) => {
@@ -1218,6 +1230,7 @@ class CatForm {
 					return (2 * atk * rate) + (nonCritDmg * (1 - rate));
 			});
 		}
+
 		return atks;
 	}
 	get __speed() {

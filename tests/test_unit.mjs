@@ -956,12 +956,6 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.tatks', function () {
 
-			it('attack base should be counted', async function () {
-				var cf = (await Unit.loadCat(226)).forms[0];
-				cf.level = 50;
-				assert.deepEqual(cf.tatks, [692280]);
-			});
-
 			it('surge should be counted', async function () {
 				var cf = (await Unit.loadCat(642)).forms[1];
 				cf.level = 50;
@@ -1052,15 +1046,15 @@ describe('unit.mjs', function () {
 				assert.deepEqual(cf.tatks, [8100]);
 			});
 
+			it('attack base: ignore for tatk', async function () {
+				var cf = (await Unit.loadCat(226)).forms[0];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [173070]);
+			});
+
 		});
 
 		describe('CatForm.tdps', function () {
-
-			it('attack base should be counted', async function () {
-				var cf = (await Unit.loadCat(226)).forms[0];
-				cf.level = 50;
-				assert.strictEqual(round(cf.tdps), 86897);
-			});
 
 			it('surge should be counted', async function () {
 				var cf = (await Unit.loadCat(642)).forms[1];
@@ -1150,6 +1144,12 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(212)).forms[3];
 				cf.level = 60;
 				assert.strictEqual(round(cf.tdps), 22952);
+			});
+
+			it('attack base: ignore for tdps', async function () {
+				var cf = (await Unit.loadCat(226)).forms[0];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 21724);
 			});
 
 		});
@@ -1257,6 +1257,26 @@ describe('unit.mjs', function () {
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED | Unit.TB_SAGE)), 22952);
 			});
 
+			it('attack only: 0 dps when not attackable', async function () {
+				var cf = (await Unit.loadCat(226)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ALIEN)), 32586);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_BLACK)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_METAL)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ANGEL)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ZOMBIE)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_DEMON)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_EVA)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WITCH)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_BEAST)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_BARON)), 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_SAGE)), 0);
+			});
+
 			it('metal: 1 damage if no critical attack', async function () {
 				var cf = (await Unit.loadCat(44)).forms[2];
 				cf.level = 50;
@@ -1349,6 +1369,39 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(705)).forms[1];
 				cf.level = 50;
 				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), (1+1*1) * 3 / 216 * 30, Number.EPSILON);
+			});
+
+			it('base: include surge and exclude wave as a general calculation', async function () {
+				// surge
+				var cf = (await Unit.loadCat(543)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 18621);
+				assert.strictEqual(round(cf.dpsAgainst(0)), 18621);
+
+				// minisurge
+				var cf = (await Unit.loadCat(710)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 9100);
+				assert.strictEqual(round(cf.dpsAgainst(0)), 9100);
+
+				// wave
+				var cf = (await Unit.loadCat(94)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 3370);
+				assert.strictEqual(round(cf.dpsAgainst(0)), 1685);
+
+				// miniwave
+				var cf = (await Unit.loadCat(585)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 12137);
+				assert.strictEqual(round(cf.dpsAgainst(0)), 10114);
+			});
+
+			it('base: count attack base skill only for base (traits === 0)', async function () {
+				var cf = (await Unit.loadCat(226)).forms[0];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 21724);
+				assert.strictEqual(round(cf.dpsAgainst(0)), 86897);
 			});
 
 		});
