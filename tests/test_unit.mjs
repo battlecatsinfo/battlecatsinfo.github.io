@@ -1257,6 +1257,100 @@ describe('unit.mjs', function () {
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED | Unit.TB_SAGE)), 22952);
 			});
 
+			it('metal: 1 damage if no critical attack', async function () {
+				var cf = (await Unit.loadCat(44)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), 1 / 68 * 30, Number.EPSILON);
+			});
+
+			it('metal: n damage if multi-attack and no critical attack', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), 3 / 93 * 30, Number.EPSILON);
+			});
+
+			it('metal: double damage for critical attack and 1 for non-critical', async function () {
+				var cf = (await Unit.loadCat(57)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), (2*10800*0.5 + 1*0.5) / 150 * 30, Number.EPSILON);
+			});
+
+			it('metal: double damage for critical attack and 1 for non-critical for multi-attack', async function () {
+				var cf = (await Unit.loadCat(314)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), (2*4050*0.15 + 1*0.85) * 3 / 161 * 30, Number.EPSILON);
+			});
+
+			it('metal: 1 damage for attacks without abilities enabled for multi-attack', async function () {
+				var cf = (await Unit.loadCat(418)).forms[1];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), (2*5400 + 2) / 181 * 30, Number.EPSILON);
+			});
+
+			it('metal: 1 damage for non-critical waves', async function () {
+				// no critical, 100% wave
+				var cf = (await Unit.loadCat(94)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), 2 / 125 * 30, Number.EPSILON);
+
+				// no critical, 15% wave
+				var cf = (await Unit.loadCat(99)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), 1.15 / 81 * 30, Number.EPSILON);
+
+				// 5% critical, 20% wave
+				var cf = (await Unit.loadCat(311)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), ((2*11664 * 1.2 * 0.05) + (1.2 * 0.95)) / 53 * 30, Number.EPSILON);
+			});
+
+			it('metal: 1 damage for non-critical miniwaves', async function () {
+				// no critical, 100% miniwave
+				var cf = (await Unit.loadCat(585)).forms[1];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), 2 / 185 * 30, Number.EPSILON);
+
+				// no critical, 30% miniwave
+				var cf = (await Unit.loadCat(697)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), 1.30 / 131 * 30, Number.EPSILON);
+			});
+
+			it('metal: 1 damage for non-critical surges', async function () {
+				// no critical, 100% Lv3 surge
+				var cf = (await Unit.loadCat(554)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), (1+1*3) / 127 * 30, Number.EPSILON);
+
+				// no critical, 30% Lv1 surge
+				var cf = (await Unit.loadCat(547)).forms[1];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), (1+0.3*1) / 151 * 30, Number.EPSILON);
+
+				// 15% critical, 50% Lv1 surge
+				var cf = (await Unit.loadCat(446)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), ((2*4860*(1+0.5*1) * 0.15) + ((1+0.5*1) * 0.85)) / 104 * 30, Number.EPSILON);
+			});
+
+			it('metal: 1 damage for non-critical minisurges', async function () {
+				// no critical, 100% Lv2 minisurge
+				var cf = (await Unit.loadCat(625)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), (1+1*2) / 427 * 30, Number.EPSILON);
+
+				// no critical, 30% Lv1 minisurge
+				var cf = (await Unit.loadCat(413)).forms[2];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), (1+0.3*1) / 136 * 30, Number.EPSILON);
+
+				// no critical, 100% Lv1 minisurge for 3 attacks
+				var cf = (await Unit.loadCat(705)).forms[1];
+				cf.level = 50;
+				assert.approximately(cf.dpsAgainst(Unit.TB_METAL), (1+1*1) * 3 / 216 * 30, Number.EPSILON);
+			});
+
 		});
 
 		describe('CatForm.price', function () {

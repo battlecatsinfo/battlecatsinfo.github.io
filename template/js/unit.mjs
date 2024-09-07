@@ -1111,13 +1111,16 @@ class CatForm {
 	 * @param {string} [options.mode=expected] - the calculation mode:
 	 *     "expected" for expected damage;
 	 *     "max" for maximal possible damage.
+	 * @param {boolean} [options.metal=true] - treat non-critical attack as 1
+	 *     damage for a metal enemy.
 	 * @return {number[]} the boosted attack damages
 	 */
 	_gettatks({
 		traits,
 		mode = 'expected',
+		metal: metalMode = true,
 	} = {}) {
-		traits = traits ?? ~0 ^ TB_METAL;
+		traits = traits ?? ~0 ^ (metalMode ? TB_METAL : 0);
 		let atks = this._getatks();
 		let v;
 		if (this.ab.hasOwnProperty(AB_ATKBASE)) {
@@ -1155,18 +1158,15 @@ class CatForm {
 			else
 				this.mul(atks, 1 + v[1] * v[0] / 10000, false);
 		}
-		if (this.ab.hasOwnProperty(AB_CRIT)) {
-			if (mode === 'max') {
+
+		// handle metal case specially at last
+		if (this.ab.hasOwnProperty(AB_CRIT) && !(metalMode && traits & TB_METAL)) {
+			if (mode === 'max')
 				this.mul(atks, 2, false);
-			}
-			else {
-				if (traits & TB_METAL) {
-					this.mul(atks, this.ab[AB_CRIT] / 100, false);
-				} else {
-					this.mul(atks, 1 + this.ab[AB_CRIT] / 100, false);
-				}
-			}
+			else
+				this.mul(atks, 1 + this.ab[AB_CRIT] / 100, false);
 		}
+
 		if (this.ab.hasOwnProperty(AB_STRONG)) {
 			this.mul(atks, 1 + this.ab[AB_STRONG][1] / 100);
 		}
@@ -1196,14 +1196,27 @@ class CatForm {
 		} else if ((traits & TB_SAGE) && this.ab.hasOwnProperty(AB_SAGE)) {
 			this.mul(atks, 1.2);
 		}
-		if (traits & TB_METAL) {
-			let r = this.ab[AB_CRIT];
-			if (r == undefined) {
-				atks = [1];
-				return atks;
-			}
-			atks[0] += 1 - r / 100;
-			return atks;
+		if (metalMode && traits & TB_METAL) {
+			const critRate = this.ab[AB_CRIT] ?? 0;
+			atks = atks.map((atk, i) => {
+				const rate = this.abEnabled(i) ? critRate / 100 : 0;
+				const nonCritDmg = (() => {
+					let rv = 1;
+					if (this.abEnabled(i)) {
+						if (v = this.ab[AB_VOLC] || this.ab[AB_MINIVOLC]) {
+							rv += (mode === 'max') ? v[4] : v[4] * v[0] / 100;
+						}
+						if (v = this.ab[AB_WAVE] || this.ab[AB_MINIWAVE]) {
+							rv += (mode === 'max') ? 1 : v[0] / 100;
+						}
+					}
+					return rv;
+				})();
+				if (mode === 'max')
+					return rate ? 2 * atk : nonCritDmg;
+				else
+					return (2 * atk * rate) + (nonCritDmg * (1 - rate));
+			});
 		}
 		return atks;
 	}
