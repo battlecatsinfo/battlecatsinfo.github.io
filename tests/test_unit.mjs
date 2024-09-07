@@ -1117,39 +1117,144 @@ describe('unit.mjs', function () {
 			});
 
 			it('massive damage should be counted', async function () {
-				var cf = (await Unit.loadCat(36)).forms[2];
+				var cf = (await Unit.loadCat(271)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(round(cf.tdps), 23831);
+				assert.strictEqual(round(cf.tdps), 22387);
 			});
 
 			it('insane damage should be counted', async function () {
-				var cf = (await Unit.loadCat(463)).forms[1];
+				var cf = (await Unit.loadCat(493)).forms[1];
 				cf.level = 50;
-				assert.strictEqual(round(cf.tdps), 60750);
+				assert.strictEqual(round(cf.tdps), 45198);
 			});
 
 			it('strong-against should be counted', async function () {
-				var cf = (await Unit.loadCat(2)).forms[2];
+				var cf = (await Unit.loadCat(269)).forms[1];
 				cf.level = 50;
-				assert.strictEqual(round(cf.tdps), 2700);
+				assert.strictEqual(round(cf.tdps), 15602);
 			});
 
 			it('behemoth slayer should be counted', async function () {
-				var cf = (await Unit.loadCat(656)).forms[2];
+				var cf = (await Unit.loadCat(658)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(round(cf.tdps), 111);
+				assert.strictEqual(round(cf.tdps), 52523);
 			});
 
 			it('colossus slayer should be counted', async function () {
 				var cf = (await Unit.loadCat(643)).forms[2];
-				cf.level = 100;
-				assert.strictEqual(round(cf.tdps), 46586);
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 29948);
 			});
 
 			it('sage slayer should be counted', async function () {
-				var cf = (await Unit.loadCat(728)).forms[1];
-				cf.level = 100;
-				assert.strictEqual(round(cf.tdps), 11571);
+				var cf = (await Unit.loadCat(212)).forms[3];
+				cf.level = 60;
+				assert.strictEqual(round(cf.tdps), 22952);
+			});
+
+		});
+
+		describe('CatForm.dpsAgainst', function () {
+
+			it('surge should be counted', async function () {
+				var cf = (await Unit.loadCat(642)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 8442);
+			});
+
+			it('mini-surge should be counted', async function () {
+				var cf = (await Unit.loadCat(413)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 14520);
+			});
+
+			it('wave should be counted', async function () {
+				var cf = (await Unit.loadCat(99)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 9833);
+			});
+
+			it('savage should be counted', async function () {
+				var cf = (await Unit.loadCat(519)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 34992);
+			});
+
+			it('critical should be counted', async function () {
+				var cf = (await Unit.loadCat(57)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 3240);
+			});
+
+			it('HP-strengthen should be counted', async function () {
+				var cf = (await Unit.loadCat(240)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 14294);
+			});
+
+			it('EVA-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(412)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 7628);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_EVA)), 38142);
+			});
+
+			it('witch-killer should be counted', async function () {
+				var cf = (await Unit.loadCat(289)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 8263);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WITCH)), 41314);
+			});
+
+			it('massive damage should be counted', async function () {
+				var cf = (await Unit.loadCat(271)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 5597);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 22387);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 16790);
+			});
+
+			it('insane damage should be counted', async function () {
+				var cf = (await Unit.loadCat(493)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 7533);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ZOMBIE)), 45198);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 37665);
+			});
+
+			it('strong-against should be counted', async function () {
+				var cf = (await Unit.loadCat(269)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 8668);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 15602);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 13001);
+			});
+
+			it('behemoth slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(658)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 5252);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 21009);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_BEAST)), 13131);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED | Unit.TB_BEAST)), 52523);
+			});
+
+			it('colossus slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(643)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 6239);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_BARON)), 9983);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 18718);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC | Unit.TB_BARON)), 29948);
+			});
+
+			it('sage slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(212)).forms[3];
+				cf.level = 60;
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 10626);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 19127);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_SAGE)), 12751);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED | Unit.TB_SAGE)), 22952);
 			});
 
 		});

@@ -442,7 +442,7 @@ class CatForm {
 	dpsAgainst(traits) {
 		if (this.ab.hasOwnProperty(AB_ONLY) && (!(traits & this.trait)))
 			return 0;
-		const atkm = this._dpsagainst(traits).reduce((rv, x) => rv + x);
+		const atkm = this._gettatks({traits, mode: 'expected'}).reduce((rv, x) => rv + x);
 		return 30 * atkm / this.attackF;
 	}
 
@@ -1013,76 +1013,6 @@ class CatForm {
 	__dpsagainst(traits) {
 		return this.dpsAgainst(traits);
 	}
-	_dpsagainst(traits) {
-		let atks = this._getatks();
-		let v;
-		if (this.ab.hasOwnProperty(AB_ATKBASE)) {
-			this.mul(atks, 1 + this.ab[AB_ATKBASE][0] / 100);
-			return atks;
-		}
-		if (this.ab.hasOwnProperty(AB_VOLC)) {
-			v = this.ab[AB_VOLC];
-			this.mul(atks, 1 + v[4] * v[0] / 100, false);
-		} else if (this.ab.hasOwnProperty(AB_MINIVOLC)) {
-			v = this.ab[AB_MINIVOLC];
-			this.mul(atks, 1 + v[4] * v[0] / 500, false);
-		}
-		if (this.ab.hasOwnProperty(AB_WAVE)) {
-			this.mul(atks, 1 + this.ab[AB_WAVE][0] / 100, false);
-		} else if (this.ab.hasOwnProperty(AB_MINIWAVE)) {
-			this.mul(atks, 1 + this.ab[AB_MINIWAVE][0] / 500, false);
-		}
-		if (this.ab.hasOwnProperty(AB_S)) {
-			v = this.ab[AB_S];
-			this.mul(atks, 1 + v[0] * v[1] / 10000, false);
-		}
-		if (this.ab.hasOwnProperty(AB_CRIT)) {
-			if (traits & TB_METAL) {
-				this.mul(atks, this.ab[AB_CRIT] / 100, false);
-			} else {
-				this.mul(atks, 1 + this.ab[AB_CRIT] / 100, false);
-			}
-		}
-		if (this.ab.hasOwnProperty(AB_STRONG)) {
-			this.mul(atks, 1 + this.ab[AB_STRONG][1] / 100);
-		}
-		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL)) {
-			this.mul(atks, 5);
-			return atks;
-		} else if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL)) {
-			this.mul(atks, 5);
-			return atks;
-		}
-		const t = this.trait & traits;
-		if (t) {
-			const x = t & trait_treasure;
-			if (this.ab.hasOwnProperty(AB_MASSIVE)) {
-				this.mul(atks, x ? 4 : 3);
-			} else if (this.ab.hasOwnProperty(AB_MASSIVES)) {
-				this.mul(atks, x ? 6 : 5);
-			}
-			if (this.ab.hasOwnProperty(AB_GOOD)) {
-				this.mul(atks, x ? 1.8 : 1.5);
-			}
-		}
-		if ((traits & TB_BEAST) && this.ab.hasOwnProperty(AB_BSTHUNT)) {
-			this.mul(atks, 2.5);
-		} else if ((traits & TB_BARON) && this.ab.hasOwnProperty(AB_BAIL)) {
-			this.mul(atks, 1.6);
-		} else if ((traits & TB_SAGE) && this.ab.hasOwnProperty(AB_SAGE)) {
-			this.mul(atks, 1.2);
-		}
-		if (traits & TB_METAL) {
-			let r = this.ab[AB_CRIT];
-			if (r == undefined) {
-				atks = [1];
-				return atks;
-			}
-			atks[0] += 1 - r / 100;
-			return atks;
-		}
-		return atks;
-	}
 	get __range_min() {
 		if (this.atkType & ATK_LD) {
 			return Math.min.apply(null, this.lds);
@@ -1176,13 +1106,19 @@ class CatForm {
 	 * Calculate ability-boosted attack damages.
 	 *
 	 * @param {Object} [options]
-	 * @param {string} [options.mode="expected"] - the calculation mode:
-	 *     "max" for maximal possible damage;
-	 *     "expected" for expected damage.
+	 * @param {integer} [options.traits] - the traits of the target; omit for
+	 *     general case.
+	 * @param {string} [options.mode=expected] - the calculation mode:
+	 *     "expected" for expected damage;
+	 *     "max" for maximal possible damage.
 	 * @return {number[]} the boosted attack damages
 	 */
-	_gettatks({mode = 'expected'} = {}) {
-		const atks = this._getatks();
+	_gettatks({
+		traits,
+		mode = 'expected',
+	} = {}) {
+		traits = traits ?? ~0 ^ TB_METAL;
+		let atks = this._getatks();
 		let v;
 		if (this.ab.hasOwnProperty(AB_ATKBASE)) {
 			this.mul(atks, 1 + this.ab[AB_ATKBASE][0] / 100);
@@ -1220,36 +1156,57 @@ class CatForm {
 				this.mul(atks, 1 + v[1] * v[0] / 10000, false);
 		}
 		if (this.ab.hasOwnProperty(AB_CRIT)) {
-			if (mode === 'max')
+			if (mode === 'max') {
 				this.mul(atks, 2, false);
-			else
-				this.mul(atks, 1 + this.ab[AB_CRIT] / 100, false);
+			}
+			else {
+				if (traits & TB_METAL) {
+					this.mul(atks, this.ab[AB_CRIT] / 100, false);
+				} else {
+					this.mul(atks, 1 + this.ab[AB_CRIT] / 100, false);
+				}
+			}
 		}
 		if (this.ab.hasOwnProperty(AB_STRONG)) {
 			this.mul(atks, 1 + this.ab[AB_STRONG][1] / 100);
 		}
-		if (this.ab.hasOwnProperty(AB_EKILL) || this.ab.hasOwnProperty(AB_WKILL)) {
+		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL)) {
+			this.mul(atks, 5);
+			return atks;
+		} else if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL)) {
 			this.mul(atks, 5);
 			return atks;
 		}
-		if (this.ab.hasOwnProperty(AB_MASSIVE)) {
-			this.mul(atks, this.trait & trait_treasure ? 4 : 3);
-		} else if (this.ab.hasOwnProperty(AB_MASSIVES)) {
-			this.mul(atks, this.trait & trait_treasure ? 6 : 5);
+		const t = this.trait & traits;
+		if (t) {
+			const x = t & trait_treasure;
+			if (this.ab.hasOwnProperty(AB_MASSIVE)) {
+				this.mul(atks, x ? 4 : 3);
+			} else if (this.ab.hasOwnProperty(AB_MASSIVES)) {
+				this.mul(atks, x ? 6 : 5);
+			}
+			if (this.ab.hasOwnProperty(AB_GOOD)) {
+				this.mul(atks, x ? 1.8 : 1.5);
+			}
 		}
-		if (this.ab.hasOwnProperty(AB_GOOD)) {
-			this.mul(atks, this.trait & trait_treasure ? 1.8 : 1.5);
-		}
-		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
+		if ((traits & TB_BEAST) && this.ab.hasOwnProperty(AB_BSTHUNT)) {
 			this.mul(atks, 2.5);
-		} else if (this.ab.hasOwnProperty(AB_BAIL)) {
+		} else if ((traits & TB_BARON) && this.ab.hasOwnProperty(AB_BAIL)) {
 			this.mul(atks, 1.6);
-		} else if (this.ab.hasOwnProperty(AB_SAGE)) {
+		} else if ((traits & TB_SAGE) && this.ab.hasOwnProperty(AB_SAGE)) {
 			this.mul(atks, 1.2);
+		}
+		if (traits & TB_METAL) {
+			let r = this.ab[AB_CRIT];
+			if (r == undefined) {
+				atks = [1];
+				return atks;
+			}
+			atks[0] += 1 - r / 100;
+			return atks;
 		}
 		return atks;
 	}
-
 	get __speed() {
 		return this.speed;
 	}
