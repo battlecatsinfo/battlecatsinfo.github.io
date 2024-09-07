@@ -22,8 +22,8 @@ import {
 	AB_METALIC,
 	AB_MINIWAVE,
 	AB_WAVE,
-	AB_MINIVOLC,
-	AB_VOLC,
+	AB_MINISURGE,
+	AB_SURGE,
 	AB_WAVES,
 	AB_BAIL,
 	AB_BSTHUNT,
@@ -69,7 +69,7 @@ var targets = new Set();
 var CL;
 const tbl = document.getElementById('tbl');
 const tby = tbl.firstElementChild.children;
-const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINIVOLC, AB_VOLC, AB_ATKBASE, AB_SAGE]);
+const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const cat_name = document.getElementById('cat-name');
 const CF = document.getElementById('CF');
@@ -117,14 +117,14 @@ function getAtk(form, line, theATK, parent, first, attackS) {
 					mul(theATK, 1.2, false);
 				lines.push('小波動');
 				break;
-			case AB_VOLC:
+			case AB_SURGE:
 				if (attackS != undefined)
 					mul(theATK, 1 + ab[5] * ab[1] / 100, false);
 				else
 					mul(theATK, 1 + ab[5], false);
 				lines.push('烈波');
 				break;
-			case AB_MINIVOLC:
+			case AB_MINISURGE:
 				if (attackS != undefined)
 					mul(theATK, 1 + ab[5] * ab[1] / 500, false);
 				else

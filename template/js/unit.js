@@ -23,8 +23,8 @@ import {
 	AB_METALIC,
 	AB_MINIWAVE,
 	AB_WAVE,
-	AB_MINIVOLC,
-	AB_VOLC,
+	AB_MINISURGE,
+	AB_SURGE,
 	AB_WAVES,
 	AB_BAIL,
 	AB_BSTHUNT,
@@ -75,7 +75,7 @@ const combos_scheme = {{{toJSON (loadJSON "combos_scheme.json")}}};
 
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
-const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINIVOLC, AB_VOLC, AB_ATKBASE, AB_SAGE]);
+const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const layout = config.layout;
 const maxLen = [0, 0];
@@ -533,14 +533,14 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 					mul(theATK, 1.2, false);
 				lines.push('小波動');
 				break;
-			case AB_VOLC:
+			case AB_SURGE:
 				if (attackS != undefined)
 					mul(theATK, 1 + ab[5] * ab[1] / 100, false);
 				else
 					mul(theATK, 1 + ab[5], false);
 				lines.push('烈波');
 				break;
-			case AB_MINIVOLC:
+			case AB_MINISURGE:
 				if (attackS != undefined)
 					mul(theATK, 1 + ab[5] * ab[1] / 500, false);
 				else
@@ -951,11 +951,11 @@ function getATK0(form, m, S, W1, W2) {
 					mul(dps, 1 + v[0] / 500, false);
 					mul(atks, 1.2, false);
 					break;
-				case AB_VOLC:
+				case AB_SURGE:
 					mul(dps, 1 + v[4] * v[0] / 100, false);
 					mul(atks, 1 + v[4], false);
 					break;
-				case AB_MINIVOLC:
+				case AB_MINISURGE:
 					mul(dps, 1 + v[4] * v[0] / 500, false);
 					mul(atks, 1 + v[4] * 0.2, false);
 					break;

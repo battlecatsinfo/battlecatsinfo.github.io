@@ -35,7 +35,7 @@ const IMU_WAVE = 1;
 const IMU_STOP = 2;
 const IMU_SLOW = 4;
 const IMU_KB = 8;
-const IMU_VOLC = 16;
+const IMU_SURGE = 16;
 const IMU_WEAK = 32;
 const IMU_WARP = 64;
 const IMU_CURSE = 128;
@@ -56,8 +56,8 @@ const AB_BOUNTY = 10;
 const AB_METALIC = 11;
 const AB_MINIWAVE = 12;
 const AB_WAVE = 13;
-const AB_MINIVOLC = 14;
-const AB_VOLC = 15;
+const AB_MINISURGE = 14;
+const AB_SURGE = 15;
 const AB_WAVES = 16;
 const AB_BAIL = 17;
 const AB_BSTHUNT = 18;
@@ -668,15 +668,15 @@ class CatForm {
 				break;
 
 			case 55:
-				this.imu |= IMU_VOLC;
+				this.imu |= IMU_SURGE;
 				break;
 
 			case 56:
-				t = this.ab[AB_VOLC];
+				t = this.ab[AB_SURGE];
 				x = inc1 + (t ? t[0] : 0); // chance
 				y = inc2 + (t ? t[4] : 0); // level
 				z = inc3 >> 2;
-				this.ab[AB_VOLC] = [x, z, z + (inc4 >> 2), y * 20, y];
+				this.ab[AB_SURGE] = [x, z, z + (inc4 >> 2), y * 20, y];
 				break;
 
 			case 57:
@@ -721,11 +721,11 @@ class CatForm {
 				break;
 
 			case 65:
-				t = this.ab[AB_MINIVOLC];
+				t = this.ab[AB_MINISURGE];
 				x = inc1 + (t ? t[0] : 0); // chance
 				y = inc2 + (t ? t[4] : 0); // level
 				z = inc3 >> 2;
-				this.ab[AB_MINIVOLC] = [x, z, z + (inc4 >> 2), y * 20, y];
+				this.ab[AB_MINISURGE] = [x, z, z + (inc4 >> 2), y * 20, y];
 				break;
 			case 66:
 				this.ab[AB_SAGE] = null;
@@ -856,11 +856,11 @@ class CatForm {
 		return t ? t[0] : 0;
 	}
 	get __mini_surge_prob() {
-		const t = this.ab[AB_MINIVOLC];
+		const t = this.ab[AB_MINISURGE];
 		return t ? t[0] : 0;
 	}
 	get __surge_prob() {
-		const t = this.ab[AB_VOLC];
+		const t = this.ab[AB_SURGE];
 		return t ? t[0] : 0;
 	}
 	get __dodge_time() {
@@ -948,16 +948,16 @@ class CatForm {
 		const t = this.ab[AB_WAVE];
 		return t ? t[1] : 0;
 	}
-	get __volclv() {
-		const t = this.ab[AB_VOLC];
+	get __surgelv() {
+		const t = this.ab[AB_SURGE];
 		return t ? t[4] : 0;
 	}
 	get __miniwavelv() {
 		const t = this.ab[AB_MINIWAVE];
 		return t ? t[1] : 0;
 	}
-	get __minivolclv() {
-		const t = this.ab[AB_MINIVOLC];
+	get __minisurgelv() {
+		const t = this.ab[AB_MINISURGE];
 		return t ? t[4] : 0;
 	}
 	get __crit() {
@@ -1122,14 +1122,14 @@ class CatForm {
 			return atks;
 		}
 
-		if (this.ab.hasOwnProperty(AB_VOLC)) {
-			v = this.ab[AB_VOLC];
+		if (this.ab.hasOwnProperty(AB_SURGE)) {
+			v = this.ab[AB_SURGE];
 			if (mode === 'max')
 				this.mul(atks, 1 + v[4], false);
 			else
 				this.mul(atks, 1 + v[4] * v[0] / 100, false);
-		} else if (this.ab.hasOwnProperty(AB_MINIVOLC)) {
-			v = this.ab[AB_MINIVOLC];
+		} else if (this.ab.hasOwnProperty(AB_MINISURGE)) {
+			v = this.ab[AB_MINISURGE];
 			if (mode === 'max')
 				this.mul(atks, 1 + v[4] * 0.2, false);
 			else
@@ -1209,7 +1209,7 @@ class CatForm {
 				const nonCritDmg = (() => {
 					let rv = 1;
 					if (this.abEnabled(i)) {
-						if (v = this.ab[AB_VOLC] || this.ab[AB_MINIVOLC]) {
+						if (v = this.ab[AB_SURGE] || this.ab[AB_MINISURGE]) {
 							rv += (mode === 'max') ? v[4] : v[4] * v[0] / 100;
 						}
 						if (v = this.ab[AB_WAVE] || this.ab[AB_MINIWAVE]) {
@@ -1864,8 +1864,8 @@ export {
 	AB_METALIC,
 	AB_MINIWAVE,
 	AB_WAVE,
-	AB_MINIVOLC,
-	AB_VOLC,
+	AB_MINISURGE,
+	AB_SURGE,
 	AB_WAVES,
 	AB_BAIL,
 	AB_BSTHUNT,
@@ -1910,7 +1910,7 @@ export {
 	IMU_STOP,
 	IMU_SLOW,
 	IMU_KB,
-	IMU_VOLC,
+	IMU_SURGE,
 	IMU_WEAK,
 	IMU_WARP,
 	IMU_CURSE,

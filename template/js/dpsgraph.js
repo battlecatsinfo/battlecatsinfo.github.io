@@ -18,8 +18,8 @@ import {
 	AB_METALIC,
 	AB_MINIWAVE,
 	AB_WAVE,
-	AB_MINIVOLC,
-	AB_VOLC,
+	AB_MINISURGE,
+	AB_SURGE,
 	AB_WAVES,
 	AB_BAIL,
 	AB_BSTHUNT,
@@ -386,20 +386,20 @@ class FormDPS {
 				};
 		}
 
-		if (this.F.ab.hasOwnProperty(AB_VOLC) || talent_types.has(56)) {
-			this.options.volc = 0;
+		if (this.F.ab.hasOwnProperty(AB_SURGE) || talent_types.has(56)) {
+			this.options.surge = 0;
 			this.create_select('烈波', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
-					self.options.volc = this.selectedIndex;
+					self.options.surge = this.selectedIndex;
 					self.render();
 				};
 		}
 
-		if (this.F.ab.hasOwnProperty(AB_MINIVOLC) || talent_types.has(65)) {
-			this.options.volc = 0;
+		if (this.F.ab.hasOwnProperty(AB_MINISURGE) || talent_types.has(65)) {
+			this.options.surge = 0;
 			this.create_select('小烈波', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
-					self.options.volc = this.selectedIndex;
+					self.options.surge = this.selectedIndex;
 					self.render();
 				};
 		}
@@ -539,7 +539,7 @@ class FormDPS {
 		if (this.is_normal) {
 			if (x < -320 || x > this.E.range) RAW.fill(0);
 			if (this.surge_data) {
-				const ab = this.E.ab[AB_VOLC] || this.E.ab[AB_MINIVOLC];
+				const ab = this.E.ab[AB_SURGE] || this.E.ab[AB_MINISURGE];
 				const left_point = ab[1] - 250;
 				const right_point = ab[2] + 125;
 				if (x >= left_point && x <= right_point) {
@@ -577,7 +577,7 @@ class FormDPS {
 				if (x < a || x > b) RAW[i] = 0;
 			}
 			if (this.surge_data) {
-				const ab = this.E.ab[AB_VOLC] || this.E.ab[AB_MINIVOLC];
+				const ab = this.E.ab[AB_SURGE] || this.E.ab[AB_MINISURGE];
 				const left_point = ab[1] - 250;
 				const right_point = ab[2] + 125;
 				if (x >= left_point && x <= right_point) {
@@ -724,13 +724,13 @@ class FormDPS {
 		} else {
 			this.wave_pos = null;
 		}
-		x = F.ab[AB_VOLC] || F.ab[AB_MINIVOLC];
-		if (x && this.options.volc != 2) {
+		x = F.ab[AB_SURGE] || F.ab[AB_MINISURGE];
+		if (x && this.options.surge != 2) {
 			this.surge_data = surge_model(x[1], x[2], Xs);
-			this.surge_mul = this.options.volc ?
+			this.surge_mul = this.options.surge ?
 				(x[4] / (x[2] - x[1])) :
 				(x[0] * x[4]) / (100 * (x[2] - x[1]));
-			if (F.ab[AB_MINIVOLC]) this.surge_mul /= 5;
+			if (F.ab[AB_MINISURGE]) this.surge_mul /= 5;
 		} else {
 			this.surge_data = null;
 		}
@@ -759,7 +759,7 @@ class FormDPS {
 			if (this.is_normal) {
 				if (x < -320 || x > F.range) RAW.fill(0);
 				if (this.surge_data) {
-					const ab = F.ab[AB_VOLC] || F.ab[AB_MINIVOLC];
+					const ab = F.ab[AB_SURGE] || F.ab[AB_MINISURGE];
 					const left_point = ab[1] - 250;
 					const right_point = ab[2] + 125;
 					if (x >= left_point && x <= right_point) {
@@ -795,7 +795,7 @@ class FormDPS {
 					if (x < a || x > b) RAW[i] = 0;
 				}
 				if (this.surge_data) {
-					const ab = F.ab[AB_VOLC] || F.ab[AB_MINIVOLC];
+					const ab = F.ab[AB_SURGE] || F.ab[AB_MINISURGE];
 					const left_point = ab[1] - 250;
 					const right_point = ab[2] + 125;
 					if (x >= left_point && x <= right_point) {

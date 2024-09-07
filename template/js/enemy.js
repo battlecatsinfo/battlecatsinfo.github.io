@@ -36,8 +36,8 @@ import {
 	AB_METALIC,
 	AB_MINIWAVE,
 	AB_WAVE,
-	AB_MINIVOLC,
-	AB_VOLC,
+	AB_MINISURGE,
+	AB_SURGE,
 	AB_WAVES,
 	AB_BAIL,
 	AB_BSTHUNT,
@@ -225,10 +225,10 @@ function createAbIcons() {
 			case AB_POIATK:
 				W(`${d[0]} % 毒擊（造成角色血量 ${(d[1])} % 傷害）`, '6O6zwrp');
 				break;
-			case AB_VOLC:
+			case AB_SURGE:
 				T(`${d[0]} % 發射 Lv${d[3]} 烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'at4bW0n');
 				break;
-			case AB_MINIVOLC:
+			case AB_MINISURGE:
 				T(`${d[0]} % 發射 Lv${d[3]} 小烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'AEITK8t');
 				break;
 		}
@@ -305,11 +305,11 @@ function calc() {
 				ATK(1.2);
 				DPS *= (1 + v[0] / 500);
 				break;
-			case AB_VOLC:
+			case AB_SURGE:
 				ATK(1 + v[3]);
 				DPS *= (1 + v[3] * v[0] / 100);
 				break;
-			case AB_MINIVOLC:
+			case AB_MINISURGE:
 				ATK(1 + v[3] / 5);
 				DPS *= (1 + v[3] * v[0] / 500);
 				break;

@@ -2056,12 +2056,12 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__wavelv, 5);
 			});
 
-			it('volclv', async function () {
+			it('surgelv', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__volclv, 0);
+				assert.strictEqual(cf.__surgelv, 0);
 
 				var cf = (await Unit.loadCat(543)).forms[1];
-				assert.strictEqual(cf.__volclv, 3);
+				assert.strictEqual(cf.__surgelv, 3);
 			});
 
 			it('miniwavelv', async function () {
@@ -2072,12 +2072,12 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__miniwavelv, 5);
 			});
 
-			it('minivolclv', async function () {
+			it('minisurgelv', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__minivolclv, 0);
+				assert.strictEqual(cf.__minisurgelv, 0);
 
 				var cf = (await Unit.loadCat(413)).forms[2];
-				assert.strictEqual(cf.__minivolclv, 1);
+				assert.strictEqual(cf.__minisurgelv, 1);
 			});
 
 			it('wave_prob', async function () {
