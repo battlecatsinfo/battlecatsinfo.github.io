@@ -95,7 +95,7 @@ function getCombinations(arr) {
 function getAtk(form, line, theATK, parent, first, attackS) {
 	function mul(arr, s, ab = true) {
 		for (let i = 0; i < arr.length; ++i)
-			(ab || form.abi & 1 << 2 - i) && (arr[i] *= s)
+			(ab || form.abEnabled(i)) && (arr[i] *= s)
 	}
 	const lines = [];
 	var spec = false;

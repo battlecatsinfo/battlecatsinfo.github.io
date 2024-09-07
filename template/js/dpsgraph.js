@@ -121,7 +121,7 @@ class FormDPS {
 		this.H = this.B.R.register(this.title);
 
 		for (let i = 0; i < (this.F.info.atk1 ? (this.F.info.atk2 ? 3 : 2) : 1); ++i)
-			this.abis.push((this.F.abi & (1 << 2 - i)) != 0);
+			this.abis.push(this.F.abEnabled(i) !== 0);
 
 		this.t_lv = [];
 		this.s_lv = [];

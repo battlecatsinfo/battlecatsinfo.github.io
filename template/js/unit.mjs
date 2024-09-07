@@ -388,6 +388,9 @@ class CatForm {
 	set ab(value) {
 		this.info.ab = value;
 	}
+	abEnabled(atkIdx) {
+		return this.abi & (1 << (2 - atkIdx));
+	}
 	get cd() {
 		return this.info.cd;
 	}
@@ -1221,7 +1224,7 @@ class CatForm {
 	}
 	mul(arr, s, ab = true) {
 		for (let i = 0; i < arr.length; ++i)
-			(ab || this.abi & 1 << 2 - i) && (arr[i] *= s)
+			(ab || this.abEnabled(i)) && (arr[i] *= s)
 	}
 	_gettatk() {
 		let atks = this._getatks();
