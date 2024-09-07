@@ -63,7 +63,7 @@ import {
 	AB_SHIELD,
 	AB_DSHIELD,
 	AB_COUNTER,
-	AB_AFTERMATH,
+	AB_DEATHSURGE,
 	AB_SAGE,
 	AB_SUMMON,
 	AB_MK,
@@ -219,7 +219,7 @@ function createAbIcons() {
 			case AB_COUNTER:
 				W('烈波反擊', 'tchDtAr');
 				break;
-			case AB_AFTERMATH:
+			case AB_DEATHSURGE:
 				W(`死後 ${d[0]} % 發射 Lv${d[3]}烈波（範圍 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'WmB7utZ');
 				break;
 			case AB_POIATK:

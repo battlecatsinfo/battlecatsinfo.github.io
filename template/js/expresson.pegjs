@@ -90,7 +90,7 @@ const constants = {
 	ab_shield: 38,
 	ab_dshield: 39,
 	ab_counter: 40,
-	ab_aftermath: 41,
+	ab_deathsurge: 41,
 	ab_sage: 42,
 	ab_summon: 43,
 	ab_mk: 44,

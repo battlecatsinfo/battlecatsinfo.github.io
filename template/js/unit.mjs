@@ -83,7 +83,7 @@ const AB_GLASS = 37;       // Kamikaze(Suicide) 一次攻擊 [UNOFFICIAL]
 const AB_SHIELD = 38;      // Barrier 護盾
 const AB_DSHIELD = 39;     // Aku Shield 惡魔盾
 const AB_COUNTER = 40;     // Counter-Surge 烈波反擊
-const AB_AFTERMATH = 41;   // Death Surge 遺留烈波(死後烈波)
+const AB_DEATHSURGE = 41;  // Death Surge 遺留烈波(死後烈波)
 const AB_SAGE = 42;        // Sage Slayer 超賢者特效
 const AB_SUMMON = 43;      // Conjure(Summon) 召喚
 const AB_MK = 44;          // Metal Killer 鋼鐵殺手
@@ -2067,7 +2067,7 @@ export {
 	AB_SHIELD,
 	AB_DSHIELD,
 	AB_COUNTER,
-	AB_AFTERMATH,
+	AB_DEATHSURGE,
 	AB_SAGE,
 	AB_SUMMON,
 	AB_MK,
