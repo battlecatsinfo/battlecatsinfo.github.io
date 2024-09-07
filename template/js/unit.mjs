@@ -253,6 +253,57 @@ class CatForm {
 	get hp() {
 		return ~~(~~(Math.round(this.info.hp * this.getLevelMulti()) * catEnv.hp_t) * this.hpM);
 	}
+
+	get thp() {
+		let hp = this.hp;
+		if (this.ab.hasOwnProperty(AB_WKILL))
+			return hp * 10;
+		if (this.ab.hasOwnProperty(AB_EKILL))
+			return hp * 5;
+		if (this.ab.hasOwnProperty(AB_RESIST)) {
+			hp *= this.trait & trait_treasure ? 5 : 4;
+		} else if (this.ab.hasOwnProperty(AB_RESISTS)) {
+			hp *= this.trait & trait_treasure ? 7 : 6;
+		}
+		if (this.ab.hasOwnProperty(AB_GOOD)) {
+			hp *= this.trait & trait_treasure ? 2 : 2.5;
+		}
+		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
+			hp /= 0.6;
+		} else if (this.ab.hasOwnProperty(AB_BAIL)) {
+			hp /= 0.7;
+		} else if (this.ab.hasOwnProperty(AB_SAGE)) {
+			hp += hp;
+		}
+		return hp;
+	}
+
+	hpAgainst(traits) {
+		let hp = this.hp;
+		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL))
+			return hp * 10;
+		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL))
+			return hp * 5;
+		const t = this.trait & traits;
+		if (t) {
+			if (this.ab.hasOwnProperty(AB_RESIST)) {
+				hp *= t & trait_treasure ? 5 : 4;
+			} else if (this.ab.hasOwnProperty(AB_RESISTS)) {
+				hp *= t & trait_treasure ? 7 : 6;
+			}
+			if (this.ab.hasOwnProperty(AB_GOOD)) {
+				hp *= t & trait_treasure ? 2 : 2.5;
+			}
+		}
+		if (traits & TB_BEAST) {
+			hp /= 0.6;
+		}
+		if (traits & TB_BARON) {
+			hp /= 0.7;
+		}
+		return hp;
+	}
+
 	get kb() {
 		return this.info.kb;
 	}
@@ -288,6 +339,9 @@ class CatForm {
 	}
 	get atk2() {
 		return this._getatks(2);
+	}
+	get tatks() {
+		return this._gettatk();
 	}
 	get tba() {
 		return this.info.tba;
@@ -371,6 +425,23 @@ class CatForm {
 
 	get dps() {
 		return ~~(30 * this.atkm / this.attackF);
+	}
+
+	get tdps() {
+		let t = 0;
+		for (let x of this._gettdps())
+			t += ~~x;
+		return ~~((30 * t) / this.attackF);
+	}
+
+	dpsAgainst(traits) {
+		if (this.ab.hasOwnProperty(AB_ONLY) && (!(traits & this.trait)))
+			return 0;
+		let t = 0;
+		for (let x of this._dpsagainst(traits)) {
+			t += ~~x;
+		}
+		return ~~((30 * t) / this.attackF);
 	}
 
 	get talents() {
@@ -913,27 +984,7 @@ class CatForm {
 		return this.dps;
 	}
 	get __thp() {
-		let hp = this.hp;
-		if (this.ab.hasOwnProperty(AB_WKILL))
-			return hp * 10;
-		if (this.ab.hasOwnProperty(AB_EKILL))
-			return hp * 5;
-		if (this.ab.hasOwnProperty(AB_RESIST)) {
-			hp *= this.trait & trait_treasure ? 5 : 4;
-		} else if (this.ab.hasOwnProperty(AB_RESISTS)) {
-			hp *= this.trait & trait_treasure ? 7 : 6;
-		}
-		if (this.ab.hasOwnProperty(AB_GOOD)) {
-			hp *= this.trait & trait_treasure ? 2 : 2.5;
-		}
-		if (this.ab.hasOwnProperty(AB_BSTHUNT)) {
-			hp /= 0.6;
-		} else if (this.ab.hasOwnProperty(AB_BAIL)) {
-			hp /= 0.7;
-		} else if (this.ab.hasOwnProperty(AB_SAGE)) {
-			hp += hp;
-		}
-		return hp;
+		return this.thp;
 	}
 	get __wavelv() {
 		const t = this.ab[AB_WAVE];
@@ -955,39 +1006,10 @@ class CatForm {
 		return this.ab[AB_CRIT] | 0;
 	}
 	__hpagainst(traits) {
-		let hp = this.hp;
-		if ((traits & TB_WITCH) && this.ab.hasOwnProperty(AB_WKILL))
-			return hp * 10;
-		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL))
-			return hp * 5;
-		const t = this.trait & traits;
-		if (t) {
-			if (this.ab.hasOwnProperty(AB_RESIST)) {
-				hp *= t & trait_treasure ? 5 : 4;
-			} else if (this.ab.hasOwnProperty(AB_RESISTS)) {
-				hp *= t & trait_treasure ? 7 : 6;
-			}
-			if (this.ab.hasOwnProperty(AB_GOOD)) {
-				hp *= t & trait_treasure ? 2 : 2.5;
-			}
-		}
-		if (traits & TB_BEAST) {
-			hp /= 0.6;
-		}
-		if (traits & TB_BARON) {
-			hp /= 0.7;
-		}
-		return hp;
-
+		return this.hpAgainst(traits);
 	}
 	__dpsagainst(traits) {
-		if (this.ab.hasOwnProperty(AB_ONLY) && (!(traits & this.trait)))
-			return 0;
-		let t = 0;
-		for (let x of this._dpsagainst(traits)) {
-			t += ~~x;
-		}
-		return ~~((30 * t) / this.attackF);
+		return this.dpsAgainst(traits);
 	}
 	_dpsagainst(traits) {
 		let atks = this._getatks();
@@ -1120,10 +1142,7 @@ class CatForm {
 		return c;
 	}
 	get __tdps() {
-		let t = 0;
-		for (let x of this._gettdps())
-			t += ~~x;
-		return ~~((30 * t) / this.attackF);
+		return this.tdps;
 	}
 	_gettdps() {
 		let atks = this._getatks();
@@ -1194,7 +1213,7 @@ class CatForm {
 		return (typeof i !== 'undefined') ? atks[0] : atks;
 	}
 	get __tatk() {
-		let x = this._gettatk();
+		let x = this.tatks;
 		let s = 0;
 		for (const i of x)
 			s += i;
