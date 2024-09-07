@@ -39,7 +39,7 @@ const IMU_SURGE = 16;      // Immune to Surge 烈波傷害無效
 const IMU_WEAK = 32;       // Immune to Weaken 攻擊力下降無效
 const IMU_WARP = 64;       // Immune to Warp 傳送無效
 const IMU_CURSE = 128;     // Immune to Curse 古代詛咒無效
-const IMU_POIATK = 256;    // Immune to Toxic 毒擊傷害無效
+const IMU_TOXIC = 256;     // Immune to Toxic 毒擊傷害無效
 const IMU_BOSSWAVE = 512;  // Immune to Boss Shockwave 魔王震波無效 [UNOFFICIAL]
 
 // Abilities
@@ -834,7 +834,7 @@ class CatForm {
 				break;
 
 			case 53:
-				this.imu |= IMU_POIATK;
+				this.imu |= IMU_TOXIC;
 				break;
 
 			case 54:
@@ -2090,7 +2090,7 @@ export {
 	IMU_WEAK,
 	IMU_WARP,
 	IMU_CURSE,
-	IMU_POIATK,
+	IMU_TOXIC,
 	IMU_BOSSWAVE,
 
 	units_scheme,

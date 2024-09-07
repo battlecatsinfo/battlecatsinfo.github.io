@@ -1542,7 +1542,7 @@
     	imu_weak: 32,
     	imu_warp: 64,
     	imu_curse: 128,
-    	imu_poiatk: 256,
+    	imu_toxic: 256,
     	imu_bosswave: 512,
 
     	ab_strong: 1,
