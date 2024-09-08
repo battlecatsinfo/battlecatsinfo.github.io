@@ -3064,28 +3064,20 @@ function xpgraph() {
 	modal.style.display = 'block';
 }
 
-async function savePNG(tbl, e) {
+async function savePNG(tbl) {
 	await savePng(tbl[1], tbl[0], {
 		style: {
 			'margin': '0',
 		},
 	});
-	if (e) {
-		e.textContent = '下載成功！';
-		setTimeout(() => e.textContent = '複製', 1000);
-	}
 }
 
-async function drawPNG(tbl, e) {
+async function drawPNG(tbl) {
 	await copyPng(tbl[1], {
 		style: {
 			'margin': '0',
 		},
 	});
-	if (e) {
-		e.textContent = '複製成功！';
-		setTimeout(() => e.textContent = '複製', 1000);
-	}
 }
 
 function openBBCode() {
@@ -3167,10 +3159,16 @@ function openBBCode() {
 	e.onclick = function() {
 		const tbl = tables[select.selectedIndex];
 		if (s2.selectedIndex == 1) {
-			return drawPNG(tbl, e);
+			return drawPNG(tbl).then(() => {
+				e.textContent = '複製成功！';
+				setTimeout(() => e.textContent = '複製', 1000);
+			});
 		}
 		if (s2.selectedIndex == 2) {
-			return savePNG(tbl, e);
+			return savePNG(tbl).then(() => {
+				e.textContent = '下載成功！';
+				setTimeout(() => e.textContent = '複製', 1000);
+			});
 		}
 		buf = `[div align=center][b]${tbl[0]}[/b][/div]\n`;
 		opt_b = check.checked;
