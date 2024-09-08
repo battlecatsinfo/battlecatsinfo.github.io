@@ -143,6 +143,27 @@ function round(num, decimals = 0) {
 	return Math.round((num + Number.EPSILON) * mul) / mul;
 }
 
+/**
+ * Strip out the non-integer part of a number.
+ *
+ * This only floors a positive number and works more like parseInt(x), except
+ * that this also casts NaN to 0.
+ *
+ * @example:
+ * ~~(4.7) === parseInt(4.7) === Math.floor(4.7) === 4
+ * ~~(4.3) === parseInt(4.3) === Math.floor(4.3) === 4
+ * ~~(-3.4) === parseInt(-3.4) === Math.floor(-3.4) === -3
+ * ~~(-3.7) === parseInt(-3.7) === -3; Math.floor(-3.7) === -4
+ * ~~("") === 0; Math.floor("") === parseInt("") === NaN
+ * ~~(undefined) === 0; Math.floor(undefined) === parseInt(undefined) === NaN
+ * ~~(NaN) === 0; Math.floor(NaN) === parseInt(NaN) === NaN
+ *
+ * @TODO: rename to int() or toInt()?
+ */
+function floor(x) {
+	return ~~x;
+}
+
 async function fetchUrl(url, options) {
 	const response = await fetch(url, options).catch(ex => {
 		throw new Error(`Unable to fetch "${url}": ${ex.message}`);
@@ -165,4 +186,5 @@ export {
 	numStrT,
 	numStrX,
 	round,
+	floor,
 };

@@ -1,4 +1,4 @@
-import {config, numStr, numStrT, numStrX} from './common.mjs';
+import {config, numStr, numStrT, numStrX, floor} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -381,10 +381,6 @@ function newTab() {
 		tr.appendChild(t);
 	}
 	return tby[0].children.length - 1;
-}
-
-function floor(x) {
-	return ~~x;
 }
 
 function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level */ ) {

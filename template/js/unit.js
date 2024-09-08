@@ -1,4 +1,4 @@
-import {config, numStr, numStrT} from './common.mjs';
+import {config, numStr, numStrT, floor} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -812,9 +812,6 @@ function getHpString(form, Cs, trait, level, parent, plus, KB) {
 	parent.appendChild(document.createElement('br'));
 	for (let line of Cs)
 		getHp(form.lvc, line, hp, parent, true, trait, plus, KB) && getHp(form.lvc, line, hp, parent, false, trait, plus, KB);
-}
-function floor(x) {
-	return ~~x;
 }
 function getHP0(form, m, S, W) {
 	W.textContent = '';
