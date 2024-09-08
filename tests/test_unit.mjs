@@ -187,6 +187,14 @@ describe('unit.mjs', function () {
 				assert.throws(() => {
 					delete env._orbs;
 				}, TypeError);
+
+				assert.throws(() => {
+					env.other_def = "value";
+				}, TypeError);
+
+				assert.throws(() => {
+					delete env.other_def;
+				}, TypeError);
 			});
 
 		});
@@ -197,6 +205,7 @@ describe('unit.mjs', function () {
 				var env = new Unit.CatEnv();
 				var treasures = env._treasures;
 				var orbs = env._orbs;
+				var others = env.other_def;
 
 				env._treasures[0] = 0;
 				env._treasures[2] = 0;
@@ -205,6 +214,9 @@ describe('unit.mjs', function () {
 				env._orbs.massive.push(5);
 				env._orbs.resist.push(5);
 				env._orbs.good.push(5);
+				env.other_def[1] = 1;
+				env.other_def[2] = [0.1, 0.15];
+				env.other_def[5] = [528, 792];
 				env.reset();
 
 				assert.strictEqual(env._treasures, treasures);
@@ -217,6 +229,8 @@ describe('unit.mjs', function () {
 					massive: [],
 					resist: [],
 				});
+				assert.strictEqual(env.other_def, others);
+				assert.deepEqual(env.other_def, {});
 			});
 
 		});
@@ -249,6 +263,20 @@ describe('unit.mjs', function () {
 					massive: [],
 					resist: [],
 				});
+			});
+
+		});
+
+		describe('resetOthers', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv();
+				env.other_def[1] = 1;
+				env.other_def[2] = [0.1, 0.15];
+				env.other_def[5] = [528, 792];
+				env.resetOthers();
+
+				assert.deepEqual(env.other_def, {});
 			});
 
 		});

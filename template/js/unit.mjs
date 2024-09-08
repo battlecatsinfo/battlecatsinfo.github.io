@@ -200,6 +200,10 @@ class CatEnv {
 				},
 				enumerable: true,
 			},
+			other_def: {
+				value: {},
+				enumerable: true,
+			},
 		});
 		this.reset();
 
@@ -212,6 +216,7 @@ class CatEnv {
 	reset() {
 		this.resetTreasures();
 		this.resetOrbs();
+		this.resetOthers();
 	}
 
 	resetTreasures() {
@@ -222,6 +227,12 @@ class CatEnv {
 	resetOrbs() {
 		for (const arr of Object.values(this._orbs)) {
 			arr.length = 0;
+		}
+	}
+
+	resetOthers() {
+		for (let key in this.other_def) {
+			delete this.other_def[key];
 		}
 	}
 
