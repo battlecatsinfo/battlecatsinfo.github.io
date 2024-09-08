@@ -26,7 +26,7 @@ function onClick(event) {
 		if (i.classList.contains('grayscale')) {
 			i.classList.remove('grayscale');
 			t.style.position = 'relative';
-			const fav = new Image(128, 128);
+			const fav = new Image(104, 79);
 			fav.style.position = 'absolute';
 			fav.src = '/fav.png';
 			fav.style.left = '0px';
@@ -48,13 +48,12 @@ function add_unit(c) {
 	img.loading = 'lazy';
 	const F = c.forms[0];
 	img.src = F.icon;
-	img.style.padding = '7px';
 	a.href = '/unit.html?id=' + F.id;
 	a.onclick = onClick;
 	a.appendChild(img);
 	if (fav_list.has(c.forms[0].id)) {
 		a.style.position = 'relative';
-		const fav = new Image(128, 128);
+		const fav = new Image(104, 79);
 		fav.style.position = 'absolute';
 		fav.src = '/fav.png';
 		fav.style.left = '0px';

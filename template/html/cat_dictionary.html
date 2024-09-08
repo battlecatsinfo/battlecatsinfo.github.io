@@ -46,18 +46,21 @@
 	[data-t="1"] .grayscale {
 		filter: brightness(0.6);
 	}
+	#cats a {
+		margin: 7px;
+		display: inline-block;
+	}
 	#cats img {
 		max-width: 13vw;
 		height: auto;
-		cursor: pointer;
 	}
 	@media screen and (max-width: 600px) {
-		#cats img {
+		#cats a {
 			max-width: 15vw;
 		}
 	}
 	@media screen and (max-width: 500px) {
-		#cats img {
+		#cats a {
 			max-width: 17vw;
 		}
 	}
@@ -233,7 +236,7 @@
 	.ok button:first-child {
 		background-image: linear-gradient(#2196f3, #3f51b5);
 	}
-	.ok button:nth-child(1) {
+	.ok button:nth-child(2) {
 		background-image: linear-gradient(#ff5722, #e72213);
 	}
 	.fav {
@@ -510,7 +513,7 @@
 		<div style="z-index: 3;display: none;position: absolute;margin: 0;top: 0;left: 50%;transform: translate(-50%, 0%);">
 			<div id="text" class="M" style="text-align: center;width: 35em;font-size: larger;box-shadow: none;background-color: #ffffffb0;color: black;font-weight: bold;"></div>
 		</div>
-		<div id="cats"></div>
+		<div id="cats" style="margin-top:7px;"></div>
 	</div>
 	<button class="btn" style="position: fixed;right: 1vw;bottom: 1vh;" onclick="favorite(event)" data-s="0">★設定我的最愛</button>
 {{/inline}}
