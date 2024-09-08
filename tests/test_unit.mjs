@@ -143,6 +143,7 @@ describe('unit.mjs', function () {
 					massive: [],
 					resist: [],
 				});
+				assert.deepEqual(env._others, {});
 			});
 
 			it('with params', function () {
@@ -154,7 +155,11 @@ describe('unit.mjs', function () {
 					massive: [4, 1],
 					resist: [5],
 				};
-				var env = new Unit.CatEnv({treasures, orbs});
+				var others = {
+					'1': [1],
+					'5': [264, 792],
+				};
+				var env = new Unit.CatEnv({treasures, orbs, others});
 				var defaultTreasures = Common.config.getDefaultTreasures();
 				assert.deepEqual(env._treasures, [50, 100, 300, 200, 250].concat(defaultTreasures.slice(5)));
 				assert.notStrictEqual(env._treasures, treasures);
@@ -167,6 +172,11 @@ describe('unit.mjs', function () {
 					resist: [5],
 				});
 				assert.notStrictEqual(env._orbs, orbs);
+				assert.deepEqual(env._others, {
+					'1': [1],
+					'5': [264, 792],
+				});
+				assert.notStrictEqual(env._others, others);
 			});
 
 			it('forbid changing internal objects', function () {
@@ -189,11 +199,11 @@ describe('unit.mjs', function () {
 				}, TypeError);
 
 				assert.throws(() => {
-					env.other_def = "value";
+					env._others = "value";
 				}, TypeError);
 
 				assert.throws(() => {
-					delete env.other_def;
+					delete env._others;
 				}, TypeError);
 			});
 
@@ -205,7 +215,7 @@ describe('unit.mjs', function () {
 				var env = new Unit.CatEnv();
 				var treasures = env._treasures;
 				var orbs = env._orbs;
-				var others = env.other_def;
+				var others = env._others;
 
 				env._treasures[0] = 0;
 				env._treasures[2] = 0;
@@ -214,9 +224,9 @@ describe('unit.mjs', function () {
 				env._orbs.massive.push(5);
 				env._orbs.resist.push(5);
 				env._orbs.good.push(5);
-				env.other_def[1] = 1;
-				env.other_def[2] = [0.1, 0.15];
-				env.other_def[5] = [528, 792];
+				env._others[1] = 1;
+				env._others[2] = [0.1, 0.15];
+				env._others[5] = [528, 792];
 				env.reset();
 
 				assert.strictEqual(env._treasures, treasures);
@@ -229,8 +239,8 @@ describe('unit.mjs', function () {
 					massive: [],
 					resist: [],
 				});
-				assert.strictEqual(env.other_def, others);
-				assert.deepEqual(env.other_def, {});
+				assert.strictEqual(env._others, others);
+				assert.deepEqual(env._others, {});
 			});
 
 		});
@@ -271,12 +281,12 @@ describe('unit.mjs', function () {
 
 			it('basic', function () {
 				var env = new Unit.CatEnv();
-				env.other_def[1] = 1;
-				env.other_def[2] = [0.1, 0.15];
-				env.other_def[5] = [528, 792];
+				env._others[1] = 1;
+				env._others[2] = [0.1, 0.15];
+				env._others[5] = [528, 792];
 				env.resetOthers();
 
-				assert.deepEqual(env.other_def, {});
+				assert.deepEqual(env._others, {});
 			});
 
 		});
@@ -379,6 +389,71 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('getOthers', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv();
+				env._others[1] = [1];
+				env._others[2] = [0.1, 0.15];
+				env._others[5] = [528, 792];
+
+				assert.deepEqual(env.getOthers(1), [1]);
+				assert.deepEqual(env.getOthers(1), env._others[1]);
+				assert.notStrictEqual(env.getOthers(1), env._others[1]);
+
+				assert.deepEqual(env.getOthers(2), [0.1, 0.15]);
+				assert.deepEqual(env.getOthers(2), env._others[2]);
+				assert.notStrictEqual(env.getOthers(2), env._others[2]);
+
+				assert.deepEqual(env.getOthers(5), [528, 792]);
+				assert.deepEqual(env.getOthers(5), env._others[5]);
+				assert.notStrictEqual(env.getOthers(5), env._others[5]);
+			});
+
+		});
+
+		describe('addOther', function () {
+
+			it('add single value', function () {
+				var env = new Unit.CatEnv();
+				env.addOther(1, 1);
+				assert.deepEqual(env._others[1], [1]);
+
+				env.addOther(5, 528);
+				assert.deepEqual(env._others[5], [528]);
+
+				env.addOther(5, 792);
+				assert.deepEqual(env._others[5], [528, 792]);
+			});
+
+			it('add multiple values', function () {
+				var env = new Unit.CatEnv();
+				env.addOther(5, 528, 792);
+				assert.deepEqual(env._others[5], [528, 792]);
+			});
+
+		});
+
+		describe('setOthers', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv();
+
+				var arr = [0.3, 0.1, 0.2];
+				env.setOthers(9, arr);
+				assert.deepEqual(env._others[9], [0.3, 0.1, 0.2]);
+				assert.deepEqual(env._others[9], arr);
+				assert.notStrictEqual(env._others[9], arr);
+
+				var arr = [0.1, 0.3];
+				env.setOthers(9, arr);
+				assert.deepEqual(env._others[9], [0.1, 0.3]);
+				assert.deepEqual(env._others[9], arr);
+				assert.notStrictEqual(env._others[9], arr);
+			});
+
+		});
+
 		describe('getters', function () {
 
 			it('treasures related', function () {
@@ -450,6 +525,65 @@ describe('unit.mjs', function () {
 				assert.approximately(env.orb_good_atk, 0.06 * 8, Number.EPSILON);
 				assert.approximately(env.orb_massive, 4 / 10, Number.EPSILON);
 				assert.approximately(env.orb_resist, (1 - 1 / 20) * (1 - 4 / 20), Number.EPSILON);
+			});
+
+			it('others related', async function () {
+				var env = new Unit.CatEnv({
+					others: {
+						'2': [0.15],
+						'4': [0.1, 0.15],
+					},
+				});
+				assert.approximately(env.base_resist, 0, Number.EPSILON);
+				assert.approximately(env.combo_atk, 0.15, Number.EPSILON);
+				assert.approximately(env.combo_hp, 0, Number.EPSILON);
+				assert.approximately(env.combo_speed, 0.25, Number.EPSILON);
+				assert.approximately(env.combo_cd, 0, Number.EPSILON);
+				assert.approximately(env.combo_crit, 0, Number.EPSILON);
+				assert.approximately(env.combo_good, 0, Number.EPSILON);
+				assert.approximately(env.combo_massive, 0, Number.EPSILON);
+				assert.approximately(env.combo_resist, 0, Number.EPSILON);
+				assert.approximately(env.combo_slow, 0, Number.EPSILON);
+				assert.approximately(env.combo_stop, 0, Number.EPSILON);
+				assert.approximately(env.combo_weak, 0, Number.EPSILON);
+				assert.approximately(env.combo_strengthen, 0, Number.EPSILON);
+				assert.approximately(env.combo_witch, 0, Number.EPSILON);
+				assert.approximately(env.combo_eva, 0, Number.EPSILON);
+
+				var env = new Unit.CatEnv({
+					others: {
+						'1': [1],               // Base
+						'2': [0.1, 0.15],       // Atk
+						'3': [0.1, 0.2],        // HP
+						'4': [0.1, 0.15],       // Speed
+						'5': [264, 528, 792],   // Reseach
+						'6': [1, 2],            // Crit
+						'7': [0.1, 0.2],        // Good
+						'8': [0.1, 0.2],        // Massive
+						'9': [0.1, 0.2, 0.3],   // Resist
+						'10': [0.1, 0.2, 0.3],  // Slow
+						'11': [0.1, 0.2],       // Stop
+						'12': [0.1, 0.2, 0.3],  // Weak
+						'13': [20, 30],         // Strong
+						'14': [1],              // Witch
+						'15': [1],              // EVA
+					},
+				});
+				assert.approximately(env.base_resist, 1, Number.EPSILON);
+				assert.approximately(env.combo_atk, 0.25, Number.EPSILON);
+				assert.approximately(env.combo_hp, 0.3, Number.EPSILON);
+				assert.approximately(env.combo_speed, 0.25, Number.EPSILON);
+				assert.approximately(env.combo_cd, 1584, Number.EPSILON);
+				assert.approximately(env.combo_crit, 3, Number.EPSILON);
+				assert.approximately(env.combo_good, 0.3, Number.EPSILON);
+				assert.approximately(env.combo_massive, 0.3, Number.EPSILON);
+				assert.approximately(env.combo_resist, 0.6, Number.EPSILON);
+				assert.approximately(env.combo_slow, 0.6, Number.EPSILON);
+				assert.approximately(env.combo_stop, 0.3, Number.EPSILON);
+				assert.approximately(env.combo_weak, 0.6, Number.EPSILON);
+				assert.approximately(env.combo_strengthen, 50, Number.EPSILON);
+				assert.approximately(env.combo_witch, 1, Number.EPSILON);
+				assert.approximately(env.combo_eva, 1, Number.EPSILON);
 			});
 
 		});

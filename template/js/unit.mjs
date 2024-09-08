@@ -184,7 +184,7 @@ function get_trait_short_names(trait) {
 }
 
 class CatEnv {
-	constructor({treasures, orbs} = {}) {
+	constructor({treasures, orbs, others} = {}) {
 		Object.defineProperties(this, {
 			_treasures: {
 				value: [],
@@ -200,7 +200,7 @@ class CatEnv {
 				},
 				enumerable: true,
 			},
-			other_def: {
+			_others: {
 				value: {},
 				enumerable: true,
 			},
@@ -210,6 +210,9 @@ class CatEnv {
 		Object.assign(this._treasures, treasures);
 		for (const [prop, arr] of Object.entries(orbs ?? {})) {
 			this.setOrbs(prop, arr);
+		}
+		for (const [prop, arr] of Object.entries(others ?? {})) {
+			this.setOthers(prop, arr);
 		}
 	}
 
@@ -231,8 +234,8 @@ class CatEnv {
 	}
 
 	resetOthers() {
-		for (let key in this.other_def) {
-			delete this.other_def[key];
+		for (let key in this._others) {
+			delete this._others[key];
 		}
 	}
 
@@ -255,6 +258,20 @@ class CatEnv {
 	setOrbs(type, levels) {
 		this._orbs[type].length = 0;
 		Object.assign(this._orbs[type], levels);
+	}
+
+	getOthers(idx) {
+		return this._others[idx]?.slice() ?? [];
+	}
+
+	addOther(idx, ...values) {
+		(this._others[idx] ??= []).push(...values);
+	}
+
+	setOthers(idx, values) {
+		const arr = (this._others[idx] ??= []);
+		arr.length = 0;
+		Object.assign(arr, values);
 	}
 
 	get atk_t() {
@@ -320,6 +337,52 @@ class CatEnv {
 	}
 	get orb_resist() {
 		return this._orbs.resist.reduce((rv, x) => rv * (1 - x / 20), 1);
+	}
+
+	get base_resist() {
+		return this._others[1]?.[0] ?? 0;
+	}
+	get combo_atk() {
+		return (this._others[2] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_hp() {
+		return (this._others[3] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_speed() {
+		return (this._others[4] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_cd() {
+		return (this._others[5] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_crit() {
+		return (this._others[6] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_good() {
+		return (this._others[7] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_massive() {
+		return (this._others[8] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_resist() {
+		return (this._others[9] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_slow() {
+		return (this._others[10] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_stop() {
+		return (this._others[11] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_weak() {
+		return (this._others[12] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_strengthen() {
+		return (this._others[13] ?? []).reduce((rv, x) => rv + x, 0);
+	}
+	get combo_witch() {
+		return this._others[14]?.[0] ?? 0;
+	}
+	get combo_eva() {
+		return this._others[15]?.[0] ?? 0;
 	}
 }
 

@@ -101,8 +101,8 @@ const unit_content = document.getElementById('unit-content');
 const tooltip = document.getElementsByClassName('tooltip')[0];
 
 function getRes(cd) {
-	if (catEnv.other_def[5])
-		return Math.max(60, cd - 264 - floor(catEnv.other_def[5] / 10));
+	if (catEnv.combo_cd)
+		return Math.max(60, cd - 264 - floor(catEnv.combo_cd / 10));
 	return Math.max(60, cd - 264);
 }
 
@@ -173,7 +173,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`體力 ${v[0]} % 以下攻擊力上升至 ${100 + v[1] + (catEnv.other_def[13] || 0)} %`, "IE6ihRp");
+				func(`體力 ${v[0]} % 以下攻擊力上升至 ${100 + v[1] + (catEnv.combo_strengthen || 0)} %`, "IE6ihRp");
 				break;
 
 			case 2:
@@ -191,7 +191,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				tmp = catEnv.other_def[6];
+				tmp = catEnv.combo_crit;
 				if (tmp)
 					v += tmp;
 				func(`${v} % 會心一擊${U}`, "FV6We1L");
@@ -290,8 +290,8 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 21:
 				tmp = v[2];
-				if (catEnv.other_def[12])
-					tmp = floor(tmp * (1 + catEnv.other_def[12]));
+				if (catEnv.combo_weak)
+					tmp = floor(tmp * (1 + catEnv.combo_weak));
 				if (treasure) {
 					du = floor(tmp * 1.2);
 					if (form.trait & trait_no_treasure) {
@@ -314,8 +314,8 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 22:
 				tmp = v[1];
-				if (catEnv.other_def[11])
-					tmp = floor(tmp * (1 + catEnv.other_def[11]));
+				if (catEnv.combo_stop)
+					tmp = floor(tmp * (1 + catEnv.combo_stop));
 				if (treasure) {
 					du = floor(tmp * 1.2);
 					if (form.trait & trait_no_treasure) {
@@ -338,8 +338,8 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 23:
 				tmp = v[1];
-				if (catEnv.other_def[10])
-					tmp = floor(tmp * (1 + catEnv.other_def[10]));
+				if (catEnv.combo_slow)
+					tmp = floor(tmp * (1 + catEnv.combo_slow));
 				if (treasure) {
 					du = floor(tmp * 1.2);
 					if (form.trait & trait_no_treasure) {
@@ -549,19 +549,19 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 			case AB_GOOD:
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK,  (1 + (catEnv.other_def[7] || 0)) * (1.5  + (treasure ? catEnv.good_atk_t : 0)) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
+				mul(theATK,  (1 + (catEnv.combo_good || 0)) * (1.5  + (treasure ? catEnv.good_atk_t : 0)) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
 			case AB_CRIT:
 				if (attackS != undefined)
-					mul(theATK, 1 + (ab[1] + (catEnv.other_def[6] || 0)) / 100, false);
+					mul(theATK, 1 + (ab[1] + (catEnv.combo_crit || 0)) / 100, false);
 				else
 					mul(theATK, 2, false);
 				lines.push('爆');
 				break;
 			case AB_STRONG:
-				mul(theATK, 1 + (ab[2] + (catEnv.other_def[13] || 0)) / 100);
+				mul(theATK, 1 + (ab[2] + (catEnv.combo_strengthen || 0)) / 100);
 				lines.push('增攻');
 				break;
 			case AB_S:
@@ -578,7 +578,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 			case AB_MASSIVE:
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, (1 + (catEnv.other_def[8] || 0)) * (3 + (treasure ? catEnv.massive_t : 0)) + (lvc >= 2 ? catEnv.orb_massive : 0));
+				mul(theATK, (1 + (catEnv.combo_massive || 0)) * (3 + (treasure ? catEnv.massive_t : 0)) + (lvc >= 2 ? catEnv.orb_massive : 0));
 				lines.push('大傷');
 				t_ef = true;
 				break;
@@ -591,14 +591,14 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 				break;
 			case AB_EKILL:
 				lines.push('使徒');
-				if (catEnv.other_def[15])
+				if (catEnv.combo_eva)
 					mul(theATK, 25);
 				else
 					mul(theATK, 5);
 				eva_ef = true;
 				break;
 			case AB_WKILL:
-				if (catEnv.other_def[14])
+				if (catEnv.combo_witch)
 					mul(theATK, 25);
 				else
 					mul(theATK, 5);
@@ -668,7 +668,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 }
 
 function getAtkString(form, atks, Cs, level, parent, plus, attackS) {
-	atks = atks.map(x => floor(floor(floor(Math.round(x * form.getLevelMulti(level)) * catEnv.atk_t) * (1 + (catEnv.other_def[2] || 0))) * form.atkM));
+	atks = atks.map(x => floor(floor(floor(Math.round(x * form.getLevelMulti(level)) * catEnv.atk_t) * (1 + (catEnv.combo_atk || 0))) * form.atkM));
 	parent.textContent = '';
 	let first;
 	let m1 = new Float64Array(atks);
@@ -710,14 +710,14 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 			case AB_GOOD:
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
-				theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - (catEnv.other_def[7] || 0)) * (0.5 - (treasure ? catEnv.good_hp_t : 0));
+				theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - (catEnv.combo_good || 0)) * (0.5 - (treasure ? catEnv.good_hp_t : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
 			case AB_RESIST:
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
-				theHP *= (4 + (treasure ? catEnv.resist_t : 0)) / ((lvc >= 2 ? catEnv.orb_resist : 1) * (1 - (catEnv.other_def[9] || 0)));
+				theHP *= (4 + (treasure ? catEnv.resist_t : 0)) / ((lvc >= 2 ? catEnv.orb_resist : 1) * (1 - (catEnv.combo_resist || 0)));
 				lines.push('耐打');
 				t_ef = true;
 				break;
@@ -730,14 +730,14 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 				break;
 			case AB_EKILL:
 				lines.push('使徒');
-				if (catEnv.other_def[15])
+				if (catEnv.combo_eva)
 					theHP *= 25;
 				else
 					theHP *= 5;
 				eva_ef = true;
 				break;
 			case AB_WKILL:
-				if (catEnv.other_def[14])
+				if (catEnv.combo_witch)
 					theHP *= 50;
 				else
 					theHP *= 10;
@@ -763,7 +763,7 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 	if (t_ef && eva_ef) return false;
 	let s = lines.join('・');
 	s += ':';
-	if (catEnv.other_def[1])
+	if (catEnv.base_resist)
 		theHP /= 0.85;
 	if (lvc >= 2 && catEnv.orb_hp != 1)
 		theHP /= catEnv.orb_hp;
@@ -791,9 +791,9 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 
 function getHpString(form, Cs, trait, level, parent, plus, KB) {
 	parent.textContent = '';
-	const hp = floor(floor(floor(Math.round(form.info.hp * form.getLevelMulti(level)) * catEnv.hp_t) * (1 + (catEnv.other_def[3] || 0))) * form.hpM);
+	const hp = floor(floor(floor(Math.round(form.info.hp * form.getLevelMulti(level)) * catEnv.hp_t) * (1 + (catEnv.combo_hp || 0))) * form.hpM);
 	let theHP = hp;
-	if (catEnv.other_def[1])
+	if (catEnv.base_resist)
 		theHP /= 0.85;
 	if (form.lvc >= 2 && catEnv.orb_hp != 1)
 		theHP /= catEnv.orb_hp;
@@ -813,7 +813,7 @@ function getHP0(form, m, S, W) {
 		flag = true;
 		++FG;
 	}
-	let hp_o = floor(floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * (1 + (catEnv.other_def[3] || 0))) * form.hpM);
+	let hp_o = floor(floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * (1 + (catEnv.combo_hp || 0))) * form.hpM);
 	do {
 		if (flag) {
 			t = (FG == 2);
@@ -824,22 +824,22 @@ function getHP0(form, m, S, W) {
 		for (let k of S) {
 			switch (k) {
 				case AB_GOOD:
-					hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - (catEnv.other_def[7] || 0)) * (0.5 - (t ? catEnv.good_hp_t : 0));
+					hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - (catEnv.combo_good || 0)) * (0.5 - (t ? catEnv.good_hp_t : 0));
 					break;
 				case AB_RESIST:
-					hp *= (4 + (t ? catEnv.resist_t : 0)) / ((form.lvc >= 2 ? catEnv.orb_resist : 1) * (1 - (catEnv.other_def[9] || 0)));
+					hp *= (4 + (t ? catEnv.resist_t : 0)) / ((form.lvc >= 2 ? catEnv.orb_resist : 1) * (1 - (catEnv.combo_resist || 0)));
 					break;
 				case AB_RESISTS:
 					hp *= 6 + (t ? catEnv.resist_t : 0);
 					break;
 				case AB_EKILL:
-					if (catEnv.other_def[15])
+					if (catEnv.combo_eva)
 						hp *= 25;
 					else
 						hp *= 5;
 					break;
 				case AB_WKILL:
-					if (catEnv.other_def[14])
+					if (catEnv.combo_witch)
 						hp *= 50;
 					else
 						hp *= 10;
@@ -855,7 +855,7 @@ function getHP0(form, m, S, W) {
 					break;
 			}
 		}
-		if (catEnv.other_def[1])
+		if (catEnv.base_resist)
 			hp /= 0.85;
 		if (form.lvc >= 2 && catEnv.orb_hp != 1)
 			hp /= catEnv.orb_hp;
@@ -898,7 +898,7 @@ function getATK0(form, m, S, W1, W2) {
 			atks.push(form.info.atk2);
 
 		for (let i = 0; i < atks.length; ++i)
-			atks[i] = floor(floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * (1 + (catEnv.other_def[2] || 0))) * form.atkM);
+			atks[i] = floor(floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * (1 + (catEnv.combo_atk || 0))) * form.atkM);
 
 		let dps = new Float64Array(atks);
 
@@ -927,16 +927,16 @@ function getATK0(form, m, S, W1, W2) {
 					mul(atks, 1 + v[4] * 0.2, false);
 					break;
 				case AB_GOOD:
-					a = (1 + (catEnv.other_def[7] || 0)) * (1.5 + (t ? catEnv.good_atk_t : 0)) + (form.lvc >= 2 ? catEnv.orb_good_atk : 0);
+					a = (1 + (catEnv.combo_good || 0)) * (1.5 + (t ? catEnv.good_atk_t : 0)) + (form.lvc >= 2 ? catEnv.orb_good_atk : 0);
 					mul(atks, a);
 					mul(dps, a);
 					break;
 				case AB_CRIT:
-					mul(dps, 1 + ((catEnv.other_def[6] || 0) + v) / 100, false);
+					mul(dps, 1 + ((catEnv.combo_crit || 0) + v) / 100, false);
 					mul(atks, 2, false);
 					break;
 				case AB_STRONG:
-					a = 1 + (v[1] + (catEnv.other_def[13] || 0)) / 100;
+					a = 1 + (v[1] + (catEnv.combo_strengthen || 0)) / 100;
 					mul(atks, a);
 					mul(dps, a);
 					break;
@@ -950,7 +950,7 @@ function getATK0(form, m, S, W1, W2) {
 					mul(dps, a);
 					break;
 				case AB_MASSIVE:
-					a = (1 + (catEnv.other_def[8] || 0)) * (3 + (t ? catEnv.resist_t : 0)) + (form.lvc >= 2 ? catEnv.orb_massive : 0);
+					a = (1 + (catEnv.combo_massive || 0)) * (3 + (t ? catEnv.resist_t : 0)) + (form.lvc >= 2 ? catEnv.orb_massive : 0);
 					mul(atks, a);
 					mul(dps, a);
 					break;
@@ -960,7 +960,7 @@ function getATK0(form, m, S, W1, W2) {
 					mul(dps, a);
 					break;
 				case AB_EKILL:
-					if (catEnv.other_def[15]) {
+					if (catEnv.combo_eva) {
 						mul(atks, 25);
 						mul(dps, 25);
 					} else {
@@ -969,7 +969,7 @@ function getATK0(form, m, S, W1, W2) {
 					}
 					break;
 				case AB_WKILL:
-					if (catEnv.other_def[14]) {
+					if (catEnv.combo_witch) {
 						mul(atks, 25);
 						mul(dps, 25);
 					} else {
@@ -1042,7 +1042,7 @@ function updateValues(form, tbl) {
 		tr[5].textContent = numStrT(form.attackF);
 		tr = chs[3].children;
 		getATK0(form, m, tbl._s, tr[1], chs[4].children[1]);
-		let t = catEnv.other_def[4];
+		let t = catEnv.combo_speed;
 		tr[3].textContent = t ? floor((1 + t) * form.speed) : form.speed;
 		if (config.unit === 'F') {
 			t = numStr(form.pre);
@@ -1076,7 +1076,7 @@ function updateValues(form, tbl) {
 	let CD = chs[7].children[5];
 	let KB = chs[7].children[1];
 	let i;
-	i = catEnv.other_def[4];
+	i = catEnv.combo_speed;
 	chs[7].children[3].textContent = i ? floor((1 + i) * form.speed) : form.speed;
 	PRs[2].textContent = form.info.price;
 	PRs[4].textContent = numStr(form.info.price * 1.5);
@@ -2011,9 +2011,9 @@ function calc_def(table) {
 			const idx = chs[0].firstElementChild.selectedIndex;
 			const eff = def_options_eff[idx];
 			if (eff instanceof Array)
-				catEnv.other_def[idx] = (catEnv.other_def[idx] || 0) + eff[chs[1].firstElementChild.selectedIndex];
+				catEnv.addOther(idx, eff[chs[1].firstElementChild.selectedIndex]);
 			else
-				catEnv.other_def[idx] = eff;
+				catEnv.setOthers(idx, [eff]);
 		}
 	}
 	if (layout === 2) {
