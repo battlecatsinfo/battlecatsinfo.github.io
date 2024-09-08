@@ -67,7 +67,7 @@ const sources = [
 	'unit.js',
 
 	'gif.min.js',
-	'gif.worker.js',
+	'gif.worker.min.js',
 	'imgcut.js',
 	'stage.js',
 	'anim.min.js',
