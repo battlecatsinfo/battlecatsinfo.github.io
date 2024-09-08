@@ -186,7 +186,7 @@ function get_trait_short_names(trait) {
 class CatEnv {
 	constructor(configs = {}) {
 		Object.defineProperties(this, {
-			treasures: {
+			_treasures: {
 				value: [],
 				enumerable: true,
 			},
@@ -194,13 +194,12 @@ class CatEnv {
 		this.reset();
 
 		const {treasures, ...props} = configs;
-		Object.assign(this.treasures, treasures);
+		Object.assign(this._treasures, treasures);
 		Object.assign(this, props);
 	}
 
 	reset() {
-		this.treasures.length = 0;
-		Object.assign(this.treasures, config.getDefaultTreasures());
+		this.resetTreasures();
 
 		this.add_atk = 0;
 		this.orb_hp = 1;
@@ -210,50 +209,63 @@ class CatEnv {
 		this.orb_good_hp = 1;
 	}
 
+	resetTreasures() {
+		this._treasures.length = 0;
+		Object.assign(this._treasures, config.getDefaultTreasures());
+	}
+
+	getTreasure(idx) {
+		return this._treasures[idx];
+	}
+
+	setTreasure(idx, value) {
+		this._treasures[idx] = value;
+	}
+
 	get atk_t() {
-		return 1 + 0.005 * this.treasures[0];
+		return 1 + 0.005 * this._treasures[0];
 	}
 	get hp_t() {
-		return 1 + 0.005 * this.treasures[1];
+		return 1 + 0.005 * this._treasures[1];
 	}
 	get earn_r() {
-		return 0.05 * (this.treasures[18] - 1);
+		return 0.05 * (this._treasures[18] - 1);
 	}
 	get earn_t() {
-		return 0.005 * this.treasures[3];
+		return 0.005 * this._treasures[3];
 	}
 	get cd_r() {
-		return 6 * (this.treasures[17] - 1);
+		return 6 * (this._treasures[17] - 1);
 	}
 	get cd_t() {
-		return 0.3 * this.treasures[2];
+		return 0.3 * this._treasures[2];
 	}
 	get good_atk_t() {
-		return this.treasures[23] / 1000;
+		return this._treasures[23] / 1000;
 	}
 	get good_hp_t() {
-		return this.treasures[23] / 3000;
+		return this._treasures[23] / 3000;
 	}
 	get massive_t() {
-		return this.treasures[23] / 300;
+		return this._treasures[23] / 300;
 	}
 	get resist_t() {
-		return this.treasures[23] / 300;
+		return this._treasures[23] / 300;
 	}
 	get alien_t() {
-		return 7 - this.treasures[21] / 100;
+		return 7 - this._treasures[21] / 100;
 	}
 	get alien_star_t() {
-		return 16 - this.treasures[22] / 100;
+		return 16 - this._treasures[22] / 100;
 	}
 	get god1_t() {
-		return 11 - (this.treasures[20] / 10);
+		return 11 - (this._treasures[20] / 10);
 	}
 	get god2_t() {
-		return 11 - (this.treasures[24] / 10);
+		return 11 - (this._treasures[24] / 10);
 	}
 	get god3_t() {
-		return 11 - (this.treasures[30] / 10);
+		return 11 - (this._treasures[30] / 10);
 	}
 }
 

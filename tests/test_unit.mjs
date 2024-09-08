@@ -134,8 +134,8 @@ describe('unit.mjs', function () {
 			it('no param', function () {
 				var env = new Unit.CatEnv();
 				var defaultTreasures = Common.config.getDefaultTreasures();
-				assert.deepEqual(env.treasures, defaultTreasures);
-				assert.notStrictEqual(env.treasures, defaultTreasures);
+				assert.deepEqual(env._treasures, defaultTreasures);
+				assert.notStrictEqual(env._treasures, defaultTreasures);
 				assert.strictEqual(env.add_atk, 0);
 				assert.strictEqual(env.orb_hp, 1);
 				assert.strictEqual(env.orb_massive, 0);
@@ -156,9 +156,9 @@ describe('unit.mjs', function () {
 					orb_good_hp: 0.9,
 				});
 				var defaultTreasures = Common.config.getDefaultTreasures();
-				assert.deepEqual(env.treasures, [50, 100, 300, 200, 250].concat(defaultTreasures.slice(5)));
-				assert.notStrictEqual(env.treasures, treasures);
-				assert.notStrictEqual(env.treasures, defaultTreasures);
+				assert.deepEqual(env._treasures, [50, 100, 300, 200, 250].concat(defaultTreasures.slice(5)));
+				assert.notStrictEqual(env._treasures, treasures);
+				assert.notStrictEqual(env._treasures, defaultTreasures);
 				assert.strictEqual(env.add_atk, 5);
 				assert.strictEqual(env.orb_hp, 0.8);
 				assert.strictEqual(env.orb_massive, 0.5);
@@ -171,11 +171,11 @@ describe('unit.mjs', function () {
 				var env = new Unit.CatEnv();
 
 				assert.throws(() => {
-					env.treasures = 1;
+					env._treasures = 1;
 				}, TypeError);
 
 				assert.throws(() => {
-					delete env.treasures;
+					delete env._treasures;
 				}, TypeError);
 			});
 
@@ -185,10 +185,10 @@ describe('unit.mjs', function () {
 
 			it('basic', function () {
 				var env = new Unit.CatEnv();
-				var treasures = env.treasures;
+				var treasures = env._treasures;
 
-				env.treasures[0] = 0;
-				env.treasures[2] = 0;
+				env._treasures[0] = 0;
+				env._treasures[2] = 0;
 				env.add_atk = 5;
 				env.orb_hp = 0.8;
 				env.orb_massive = 0.5;
@@ -197,14 +197,57 @@ describe('unit.mjs', function () {
 				env.orb_good_hp = 0.9;
 				env.reset();
 
-				assert.strictEqual(env.treasures, treasures);
-				assert.deepEqual(env.treasures, Common.config.getDefaultTreasures());
+				assert.strictEqual(env._treasures, treasures);
+				assert.deepEqual(env._treasures, Common.config.getDefaultTreasures());
 				assert.strictEqual(env.add_atk, 0);
 				assert.strictEqual(env.orb_hp, 1);
 				assert.strictEqual(env.orb_massive, 0);
 				assert.strictEqual(env.orb_resist, 1);
 				assert.strictEqual(env.orb_good_atk, 0);
 				assert.strictEqual(env.orb_good_hp, 1);
+			});
+
+		});
+
+		describe('resetTreasures', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv();
+				env._treasures[0] = 0;
+				env._treasures[2] = 0;
+				env.resetTreasures();
+
+				assert.deepEqual(env._treasures, Common.config.getDefaultTreasures());
+			});
+
+		});
+
+		describe('getTreasure', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv();
+				assert.strictEqual(env.getTreasure(0), 300);
+				assert.strictEqual(env.getTreasure(1), 300);
+
+				env._treasures[0] = 100;
+				assert.strictEqual(env.getTreasure(0), 100);
+
+				env._treasures[2] = 200;
+				assert.strictEqual(env.getTreasure(2), 200);
+			});
+
+		});
+
+		describe('setTreasure', function () {
+
+			it('basic', function () {
+				var env = new Unit.CatEnv();
+
+				env.setTreasure(0, 50);
+				assert.strictEqual(env._treasures[0], 50);
+
+				env.setTreasure(1, 100);
+				assert.strictEqual(env._treasures[1], 100);
 			});
 
 		});
@@ -218,18 +261,18 @@ describe('unit.mjs', function () {
 				assert.strictEqual(env.atk_t, 1 + 0.005 * 100);
 				assert.strictEqual(env.hp_t, 1 + 0.005 * 200);
 
-				env.treasures[0] = 150;
-				env.treasures[1] = 250;
-				env.treasures[18] = 10;
-				env.treasures[3] = 50;
-				env.treasures[17] = 20;
-				env.treasures[2] = 75;
-				env.treasures[23] = 100;
-				env.treasures[21] = 500;
-				env.treasures[22] = 1000;
-				env.treasures[20] = 70;
-				env.treasures[24] = 80;
-				env.treasures[30] = 90;
+				env.setTreasure(0, 150);
+				env.setTreasure(1, 250);
+				env.setTreasure(18, 10);
+				env.setTreasure(3, 50);
+				env.setTreasure(17, 20);
+				env.setTreasure(2, 75);
+				env.setTreasure(23, 100);
+				env.setTreasure(21, 500);
+				env.setTreasure(22, 1000);
+				env.setTreasure(20, 70);
+				env.setTreasure(24, 80);
+				env.setTreasure(30, 90);
 
 				assert.strictEqual(env.atk_t, 1 + 0.005 * 150);
 				assert.strictEqual(env.hp_t, 1 + 0.005 * 250);
@@ -708,13 +751,13 @@ describe('unit.mjs', function () {
 			it('treasures should be counted', async function () {
 				var cf = (await Unit.loadCat(44)).forms[2];
 				cf.level = 50;
-				Unit.catEnv.treasures[1] = 0;
+				Unit.catEnv.setTreasure(1, 0);
 				assert.strictEqual(cf.hp, 42120);
 
-				Unit.catEnv.treasures[1] = 100;
+				Unit.catEnv.setTreasure(1, 100);
 				assert.strictEqual(cf.hp, 63180);
 
-				Unit.catEnv.treasures[1] = 300;
+				Unit.catEnv.setTreasure(1, 300);
 				assert.strictEqual(cf.hp, 105300);
 			});
 
@@ -754,13 +797,13 @@ describe('unit.mjs', function () {
 			it('treasures should be counted', async function () {
 				var cf = (await Unit.loadCat(137)).forms[2];
 				cf.level = 50;
-				Unit.catEnv.treasures[0] = 0;
+				Unit.catEnv.setTreasure(0, 0);
 				assert.deepEqual(cf.atks, [6480, 6480, 38880]);
 
-				Unit.catEnv.treasures[0] = 100;
+				Unit.catEnv.setTreasure(0, 100);
 				assert.deepEqual(cf.atks, [9720, 9720, 58320]);
 
-				Unit.catEnv.treasures[0] = 300;
+				Unit.catEnv.setTreasure(0, 300);
 				assert.deepEqual(cf.atks, [16200, 16200, 97200]);
 			});
 
@@ -800,13 +843,13 @@ describe('unit.mjs', function () {
 			it('treasures should be counted', async function () {
 				var cf = (await Unit.loadCat(137)).forms[2];
 				cf.level = 50;
-				Unit.catEnv.treasures[0] = 0;
+				Unit.catEnv.setTreasure(0, 0);
 				assert.strictEqual(cf.atkm, 51840);
 
-				Unit.catEnv.treasures[0] = 100;
+				Unit.catEnv.setTreasure(0, 100);
 				assert.strictEqual(cf.atkm, 77760);
 
-				Unit.catEnv.treasures[0] = 300;
+				Unit.catEnv.setTreasure(0, 300);
 				assert.strictEqual(cf.atkm, 129600);
 			});
 
@@ -843,10 +886,10 @@ describe('unit.mjs', function () {
 			it('treasures should be counted', async function () {
 				var cf = (await Unit.loadCat(137)).forms[2];
 				cf.level = 50;
-				Unit.catEnv.treasures[0] = 0;
+				Unit.catEnv.setTreasure(0, 0);
 				assert.strictEqual(cf.atk, cf.atks[0]);
 
-				Unit.catEnv.treasures[0] = 300;
+				Unit.catEnv.setTreasure(0, 300);
 				assert.strictEqual(cf.atk, cf.atks[0]);
 			});
 
@@ -881,10 +924,10 @@ describe('unit.mjs', function () {
 			it('treasures should be counted', async function () {
 				var cf = (await Unit.loadCat(137)).forms[2];
 				cf.level = 50;
-				Unit.catEnv.treasures[0] = 0;
+				Unit.catEnv.setTreasure(0, 0);
 				assert.strictEqual(cf.atk1, cf.atks[1]);
 
-				Unit.catEnv.treasures[0] = 300;
+				Unit.catEnv.setTreasure(0, 300);
 				assert.strictEqual(cf.atk1, cf.atks[1]);
 			});
 
@@ -919,10 +962,10 @@ describe('unit.mjs', function () {
 			it('treasures should be counted', async function () {
 				var cf = (await Unit.loadCat(137)).forms[2];
 				cf.level = 50;
-				Unit.catEnv.treasures[0] = 0;
+				Unit.catEnv.setTreasure(0, 0);
 				assert.strictEqual(cf.atk2, cf.atks[2]);
 
-				Unit.catEnv.treasures[0] = 300;
+				Unit.catEnv.setTreasure(0, 300);
 				assert.strictEqual(cf.atk2, cf.atks[2]);
 			});
 
@@ -966,13 +1009,13 @@ describe('unit.mjs', function () {
 			it('treasures should be counted', async function () {
 				var cf = (await Unit.loadCat(44)).forms[2];
 				cf.level = 50;
-				Unit.catEnv.treasures[0] = 0;
+				Unit.catEnv.setTreasure(0, 0);
 				assert.strictEqual(round(cf.dps), 17868);
 
-				Unit.catEnv.treasures[0] = 100;
+				Unit.catEnv.setTreasure(0, 100);
 				assert.strictEqual(round(cf.dps), 26801);
 
-				Unit.catEnv.treasures[0] = 300;
+				Unit.catEnv.setTreasure(0, 300);
 				assert.strictEqual(round(cf.dps), 44669);
 			});
 
@@ -1594,20 +1637,20 @@ describe('unit.mjs', function () {
 
 			it('research and treasures should be counted', async function () {
 				var cf = (await Unit.loadCat(7)).forms[0];
-				Unit.catEnv.treasures[2] = 0;
-				Unit.catEnv.treasures[17] = 1;
+				Unit.catEnv.setTreasure(2, 0);
+				Unit.catEnv.setTreasure(17, 1);
 				assert.strictEqual(cf.cd, 570);
 
-				Unit.catEnv.treasures[2] = 100;
+				Unit.catEnv.setTreasure(2, 100);
 				assert.strictEqual(cf.cd, 540);
 
-				Unit.catEnv.treasures[2] = 300;
+				Unit.catEnv.setTreasure(2, 300);
 				assert.strictEqual(cf.cd, 480);
 
-				Unit.catEnv.treasures[17] = 10;
+				Unit.catEnv.setTreasure(17, 10);
 				assert.strictEqual(cf.cd, 426);
 
-				Unit.catEnv.treasures[17] = 30;
+				Unit.catEnv.setTreasure(17, 30);
 				assert.strictEqual(cf.cd, 306);
 			});
 
@@ -2449,19 +2492,19 @@ describe('unit.mjs', function () {
 
 			it('research and treasures should be counted', async function () {
 				var enemy = await Unit.loadEnemy(0);
-				Unit.catEnv.treasures[3] = 0;
-				Unit.catEnv.treasures[18] = 1;
+				Unit.catEnv.setTreasure(3, 0);
+				Unit.catEnv.setTreasure(18, 1);
 				assert.strictEqual(enemy.earn, 15);
 
-				Unit.catEnv.treasures[3] = 100;
+				Unit.catEnv.setTreasure(3, 100);
 				assert.strictEqual(enemy.earn, 22.5);
 
-				Unit.catEnv.treasures[3] = 300;
+				Unit.catEnv.setTreasure(3, 300);
 				assert.strictEqual(enemy.earn, 37.5);
 
-				Unit.catEnv.treasures[18] = 5;
+				Unit.catEnv.setTreasure(18, 5);
 				assert.strictEqual(enemy.earn, 40.5);
-				Unit.catEnv.treasures[18] = 30;
+				Unit.catEnv.setTreasure(18, 30);
 				assert.strictEqual(enemy.earn, 59.25);
 			});
 
