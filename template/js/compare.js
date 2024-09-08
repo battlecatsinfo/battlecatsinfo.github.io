@@ -1,4 +1,4 @@
-import {config, numStr, numStrT, numStrX, floor} from './common.mjs';
+import {config, numStr, numStrT, numStrX, floor, savePng, copyPng} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -807,55 +807,27 @@ document.getElementById('tab').onclick = function() {
 	alert('無法識別輸入的貓咪！請檢查名稱是否正確！');
 }
 
-function savePNG() {
-	tbl.style.margin = '0';
-	document.documentElement.style.setProperty('--hd', 'none');
-	domtoimage.toBlob(tbl).then(function(blob) {
-		let N = [];
-		for (const C of targets) {
-			const X = C.split('-');
-			const M = cats[parseInt(X[0], 10)].forms[parseInt(X[1], 10)];
-			N.push(M.name || M.jp_name);
-		}
-		const a = document.createElement('a');
-		const url = window.URL.createObjectURL(blob);
-		a.href = url;
-		a.download = '貓咪比較 —— ' + N.join('.v.s') + '.png';
-		a.click();
-		URL.revokeObjectURL(url);
-		tbl.style.margin = '0 auto';
-		document.documentElement.style.setProperty('--hd', 'table-cell');
+document.getElementById('camera').onclick = async function() {
+	await copyPng(tbl, {
+		style: {
+			'margin-left': '0',
+		},
 	});
 }
 
-function drawPNG() {
-	tbl.style.margin = '0';
-	document.documentElement.style.setProperty('--hd', 'none');
-	domtoimage.toBlob(tbl).then(function(blob) {
-		navigator.clipboard.write([
-			new ClipboardItem({
-				'image/png': blob
-			})
-		]);
-		tbl.style.margin = '0 auto';
-		document.documentElement.style.setProperty('--hd', 'table-cell');
+document.getElementById('download').onclick = async function() {
+	let N = [];
+	for (const C of targets) {
+		const X = C.split('-');
+		const M = cats[parseInt(X[0], 10)].forms[parseInt(X[1], 10)];
+		N.push(M.name || M.jp_name);
+	}
+	const filename = '貓咪比較 —— ' + N.join('.v.s') + '.png';
+	await savePng(tbl, filename, {
+		style: {
+			'margin-left': '0',
+		},
 	});
-}
-
-document.getElementById('camera').onclick = function() {
-	if (window.domtoimage != undefined) return drawPNG();
-	const script = document.createElement('script');
-	script.onload = drawPNG;
-	script.src = 'dom-to-image.min.js';
-	document.head.appendChild(script);
-}
-
-document.getElementById('download').onclick = function() {
-	if (window.domtoimage != undefined) return savePNG();
-	const script = document.createElement('script');
-	script.onload = savePNG;
-	script.src = 'dom-to-image.min.js';
-	document.head.appendChild(script);
 }
 
 document.getElementById('clear').onclick = function() {

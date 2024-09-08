@@ -1,4 +1,4 @@
-import {config, numStr, numStrT, floor} from './common.mjs';
+import {config, numStr, numStrT, floor, savePng, copyPng} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -1292,19 +1292,11 @@ function mkTool(tbl) {
 	node._t = tbl;
 	node.firstElementChild.onclick = function(e) { // Camera
 		const t = e.currentTarget.parentNode._t;
-		if (window.domtoimage != undefined) return drawPNG([null, t]);
-		const script = document.createElement('script');
-		script.onload = () => drawPNG([null, t]);
-		script.src = 'dom-to-image.min.js';
-		document.head.appendChild(script);
+		return drawPNG([null, t]);
 	}
 	node.children[1].onclick = function(e) { // Download
 		const t = e.currentTarget.parentNode._t;
-		if (window.domtoimage != undefined) return savePNG([my_cat.forms[0].name || my_cat.forms[0].jp_name, t]);
-		const script = document.createElement('script');
-		script.onload = () => savePNG([my_cat.forms[0].name || my_cat.forms[0].jp_name, t]);
-		script.src = 'dom-to-image.min.js';
-		document.head.appendChild(script);
+		return savePNG([my_cat.forms[0].name || my_cat.forms[0].jp_name, t]);
 	}
 	tbl.appendChild(node);
 }
@@ -3072,16 +3064,11 @@ function xpgraph() {
 	modal.style.display = 'block';
 }
 
-function savePNG(tbl, e) {
-	tbl[1].style.margin = '0';
-	domtoimage.toBlob(tbl[1]).then(function(blob) {
-		const a = document.createElement('a');
-		const url = window.URL.createObjectURL(blob);
-		a.href = url;
-		a.download = tbl[0];
-		a.click();
-		URL.revokeObjectURL(url);
-		tbl[1].style.margin = '';
+async function savePNG(tbl, e) {
+	await savePng(tbl[1], tbl[0], {
+		style: {
+			'margin': '0',
+		},
 	});
 	if (e) {
 		e.textContent = '下載成功！';
@@ -3089,15 +3076,11 @@ function savePNG(tbl, e) {
 	}
 }
 
-function drawPNG(tbl, e) {
-	tbl[1].style.margin = '0';
-	domtoimage.toBlob(tbl[1]).then(function(blob) {
-		navigator.clipboard.write([
-			new ClipboardItem({
-				'image/png': blob
-			})
-		]);
-		tbl[1].style.margin = '';
+async function drawPNG(tbl, e) {
+	await copyPng(tbl[1], {
+		style: {
+			'margin': '0',
+		},
 	});
 	if (e) {
 		e.textContent = '複製成功！';
@@ -3183,16 +3166,11 @@ function openBBCode() {
 	e.classList.add('w3-btn', 'w3-cyan');
 	e.onclick = function() {
 		const tbl = tables[select.selectedIndex];
-		if (s2.selectedIndex == 1 || s2.selectedIndex == 2) {
-			const script = document.createElement('script');
-			if (window.domtoimage != undefined) return s2.selectedIndex == 2 ? savePNG(tbl, e) : drawPNG(tbl, e);
-			if (s2.selectedIndex == 2)
-				script.onload = () => savePNG(tbl, e);
-			else
-				script.onload = () => drawPNG(tbl, e);
-			script.src = 'dom-to-image.min.js';
-			document.head.appendChild(script);
-			return;
+		if (s2.selectedIndex == 1) {
+			return drawPNG(tbl, e);
+		}
+		if (s2.selectedIndex == 2) {
+			return savePNG(tbl, e);
 		}
 		buf = `[div align=center][b]${tbl[0]}[/b][/div]\n`;
 		opt_b = check.checked;

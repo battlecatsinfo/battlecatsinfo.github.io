@@ -174,6 +174,48 @@ async function fetchUrl(url, options) {
 	return response;
 }
 
+async function loadDomToImage() {
+	if (typeof globalThis.domtoimage === 'undefined') {
+		await new Promise((resolve, reject) => {
+			const script = document.createElement('script');
+			script.onload = resolve;
+			script.onerror = reject;
+			script.src = '/dom-to-image.min.js';
+			document.head.appendChild(script);
+			script.remove();
+		});
+	}
+	return globalThis.domtoimage;
+}
+
+function saveBlob(blob, filename) {
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement('a');
+	a.href = url;
+	if (filename) {
+		a.download = filename;
+	}
+	a.click();
+	a.remove();
+	URL.revokeObjectURL(url);
+}
+
+async function savePng(elem, filename, options) {
+	const domtoimage = await loadDomToImage();
+	const blob = await domtoimage.toBlob(elem, options);
+	saveBlob(blob, filename);
+}
+
+async function copyPng(elem, options) {
+	const domtoimage = await loadDomToImage();
+	const blob = await domtoimage.toBlob(elem, options);
+	await navigator.clipboard.write([
+		new ClipboardItem({
+			'image/png': blob
+		})
+	]);
+}
+
 const config = new ConfigHandler();
 
 export {
@@ -181,6 +223,9 @@ export {
 	toggleTheme,
 	resetTheme,
 	fetchUrl as fetch,
+	saveBlob,
+	savePng,
+	copyPng,
 	getNumFormatter,
 	numStr,
 	numStrT,
