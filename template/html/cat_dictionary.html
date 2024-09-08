@@ -76,7 +76,7 @@
 		border-radius: 0.35em;
 		margin: 0.2em;
 	}
-	.M button {
+	fieldset button {
 		display: flex;
 		align-items: center;
 	}
@@ -222,18 +222,18 @@
 		);
 	}
 	.ok {
-		width: 10em;
-		margin: 0.4em auto;
-		padding: 0.3em 0;
+		display: flex;
 		justify-content: center;
+	}
+	.ok button {
+		width: 8em;
+		padding: 0.3em 0;
+		gap: 1em;
+	}
+	.ok button:first-child {
 		background-image: linear-gradient(#2196f3, #3f51b5);
 	}
-	.ok + button {
-		width: 10em;
-		margin: 0.4em auto;
-		padding: 0.3em 0;
-		justify-content: center;
-		margin-bottom: 0;
+	.ok button:nth-child(1) {
 		background-image: linear-gradient(#ff5722, #e72213);
 	}
 	.fav {
@@ -262,8 +262,10 @@
 					<button value="4">超激稀有</button>
 					<button value="5">傳說稀有</button>
 				</fieldset>
-				<button class="ok" onclick="ok()">篩選</button>
-				<button onclick="clearAll(event)">清除</button>
+				<div class="ok">
+					<button onclick="ok()">篩選</button>
+					<button onclick="clearAll(event)">清除</button>
+				</div>
 			</div>
 		</div>
 		<button class="btn C">攻擊對象</button>
@@ -283,8 +285,10 @@
 					<button value="128">古代種</button>
 					<button value="2048">惡魔</button>
 				</fieldset>
-				<button class="ok" onclick="ok()">篩選</button>
-				<button onclick="clearAll(event)">清除</button>
+				<div class="ok">
+					<button onclick="ok()">篩選</button>
+					<button onclick="clearAll(event)">清除</button>
+				</div>
 			</div>
 		</div>
 		<button class="btn C">效果能力</button>
@@ -425,8 +429,10 @@
 					<button value="7">
 						<img src="https://i.imgur.com/sROk995.png" width="40" height="40">抗毒耐性 </button>
 				</fieldset>
-				<button class="ok" onclick="ok()">篩選</button>
-				<button onclick="clearAll(event)">清除</button>
+				<div class="ok">
+					<button onclick="ok()">篩選</button>
+					<button onclick="clearAll(event)">清除</button>
+				</div>
 			</div>
 		</div>
 		<button class="btn C">本能</button>
@@ -457,7 +463,9 @@
 						</p>
 					</fieldset>
 				</form>
-				<button class="ok" onclick="ok()">篩選</button>
+				<div class="ok">
+					<button onclick="ok()">篩選</button>
+				</div>
 			</div>
 		</div>
 		<button class="btn C">名稱</button>
@@ -468,7 +476,7 @@
 						<legend>搜尋名稱或Id</legend>
 						<input aria-label="搜尋名稱或Id" id="name-search" name="q" placeholder="搜尋名稱或Id" style="padding: .5em 1em;width: 100%;font-size: larger;border-radius: 4px;border: 2px solid #9E9E9E;" type="search">
 					</fieldset>
-					<input style="display: block;" class="btn ok" type="submit" name="s" value="搜尋" id="search-name">
+					<input style="display: block;width: 10em;margin: .5em auto;" class="btn" type="submit" name="s" value="搜尋" id="search-name">
 				</form>
 			</div>
 		</div>
@@ -486,8 +494,10 @@
 					{{/each}}
 				</fieldset>
 				{{/each}}
-				<button class="ok" onclick="ok()">篩選</button>
-				<button onclick="clearAll(event)">清除</button>
+				<div class="ok">
+					<button onclick="ok()">篩選</button>
+					<button onclick="clearAll(event)">清除</button>
+				</div>
 			</div>
 		</div>
 		<button class="btn" onclick="this.classList.toggle('selected');ok();" id="fav-only">我的最愛</button>
