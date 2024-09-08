@@ -51,10 +51,10 @@
 		border-radius: 4px;
 	}
 	.s6:hover {
-		background-color: #ccc !important;
+		background-color: #ccc;
 	}
 	:root.dark .s6:hover {
-		background-color: gray !important;
+		background-color: gray;
 	}
 	</style>
 {{/inline}}
@@ -120,7 +120,7 @@
 	</div>
 	<div style="width: 100%;">
 		{{#with (loadJSON "config.json") as |config|}}
-		<p style="color: var(--acolor) !important;">繁中版：{{config.taiwan}}
+		<p style="color: var(--acolor);">繁中版：{{config.taiwan}}
 			<br>日文版：{{config.japan}}</p>
 		{{/with}}
 
