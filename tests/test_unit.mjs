@@ -530,8 +530,10 @@ describe('unit.mjs', function () {
 			it('others related', async function () {
 				var env = new Unit.CatEnv({
 					others: {
-						'2': [0.15],
-						'4': [0.1, 0.15],
+						'2': [15],
+						'4': [10, 15],
+						'14': [400, 400],
+						'15': [400, 400],
 					},
 				});
 				assert.approximately(env.base_resist, 0, Number.EPSILON);
@@ -547,29 +549,29 @@ describe('unit.mjs', function () {
 				assert.approximately(env.combo_stop, 0, Number.EPSILON);
 				assert.approximately(env.combo_weak, 0, Number.EPSILON);
 				assert.approximately(env.combo_strengthen, 0, Number.EPSILON);
-				assert.approximately(env.combo_witch, 0, Number.EPSILON);
-				assert.approximately(env.combo_eva, 0, Number.EPSILON);
+				assert.approximately(env.combo_witch, 8, Number.EPSILON);
+				assert.approximately(env.combo_eva, 8, Number.EPSILON);
 
 				var env = new Unit.CatEnv({
 					others: {
-						'1': [1],               // Base
-						'2': [0.1, 0.15],       // Atk
-						'3': [0.1, 0.2],        // HP
-						'4': [0.1, 0.15],       // Speed
+						'1': [20],              // Base
+						'2': [10, 15],          // Atk
+						'3': [10, 20],          // HP
+						'4': [10, 15],          // Speed
 						'5': [264, 528, 792],   // Reseach
 						'6': [1, 2],            // Crit
-						'7': [0.1, 0.2],        // Good
-						'8': [0.1, 0.2],        // Massive
-						'9': [0.1, 0.2, 0.3],   // Resist
-						'10': [0.1, 0.2, 0.3],  // Slow
-						'11': [0.1, 0.2],       // Stop
-						'12': [0.1, 0.2, 0.3],  // Weak
+						'7': [10, 20],          // Good
+						'8': [10, 20],          // Massive
+						'9': [10, 20, 30],      // Resist
+						'10': [10, 20, 30],     // Slow
+						'11': [10, 20],         // Stop
+						'12': [10, 20, 30],     // Weak
 						'13': [20, 30],         // Strong
-						'14': [1],              // Witch
-						'15': [1],              // EVA
+						'14': [400],            // Witch
+						'15': [400],            // EVA
 					},
 				});
-				assert.approximately(env.base_resist, 1, Number.EPSILON);
+				assert.approximately(env.base_resist, 0.15, Number.EPSILON);
 				assert.approximately(env.combo_atk, 0.25, Number.EPSILON);
 				assert.approximately(env.combo_hp, 0.3, Number.EPSILON);
 				assert.approximately(env.combo_speed, 0.25, Number.EPSILON);
@@ -582,8 +584,8 @@ describe('unit.mjs', function () {
 				assert.approximately(env.combo_stop, 0.3, Number.EPSILON);
 				assert.approximately(env.combo_weak, 0.6, Number.EPSILON);
 				assert.approximately(env.combo_strengthen, 50, Number.EPSILON);
-				assert.approximately(env.combo_witch, 1, Number.EPSILON);
-				assert.approximately(env.combo_eva, 1, Number.EPSILON);
+				assert.approximately(env.combo_witch, 4, Number.EPSILON);
+				assert.approximately(env.combo_eva, 4, Number.EPSILON);
 			});
 
 		});

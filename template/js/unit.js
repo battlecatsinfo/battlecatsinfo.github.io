@@ -173,7 +173,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`體力 ${v[0]} % 以下攻擊力上升至 ${100 + v[1] + (catEnv.combo_strengthen || 0)} %`, "IE6ihRp");
+				func(`體力 ${v[0]} % 以下攻擊力上升至 ${100 + v[1] + catEnv.combo_strengthen} %`, "IE6ihRp");
 				break;
 
 			case 2:
@@ -549,19 +549,19 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 			case AB_GOOD:
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK,  (1 + (catEnv.combo_good || 0)) * (1.5  + (treasure ? catEnv.good_atk_t : 0)) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
+				mul(theATK,  (1 + catEnv.combo_good) * (1.5  + (treasure ? catEnv.good_atk_t : 0)) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
 			case AB_CRIT:
 				if (attackS != undefined)
-					mul(theATK, 1 + (ab[1] + (catEnv.combo_crit || 0)) / 100, false);
+					mul(theATK, 1 + (ab[1] + catEnv.combo_crit) / 100, false);
 				else
 					mul(theATK, 2, false);
 				lines.push('爆');
 				break;
 			case AB_STRONG:
-				mul(theATK, 1 + (ab[2] + (catEnv.combo_strengthen || 0)) / 100);
+				mul(theATK, 1 + (ab[2] + catEnv.combo_strengthen) / 100);
 				lines.push('增攻');
 				break;
 			case AB_S:
@@ -578,7 +578,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 			case AB_MASSIVE:
 				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
 				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, (1 + (catEnv.combo_massive || 0)) * (3 + (treasure ? catEnv.massive_t : 0)) + (lvc >= 2 ? catEnv.orb_massive : 0));
+				mul(theATK, (1 + catEnv.combo_massive) * (3 + (treasure ? catEnv.massive_t : 0)) + (lvc >= 2 ? catEnv.orb_massive : 0));
 				lines.push('大傷');
 				t_ef = true;
 				break;
@@ -591,17 +591,11 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 				break;
 			case AB_EKILL:
 				lines.push('使徒');
-				if (catEnv.combo_eva)
-					mul(theATK, 25);
-				else
-					mul(theATK, 5);
+				mul(theATK, 5 * (1 + catEnv.combo_eva));
 				eva_ef = true;
 				break;
 			case AB_WKILL:
-				if (catEnv.combo_witch)
-					mul(theATK, 25);
-				else
-					mul(theATK, 5);
+				mul(theATK, 5 * (1 + catEnv.combo_witch));
 				lines.push('魔女');
 				eva_ef = true;
 				break;
@@ -668,7 +662,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 }
 
 function getAtkString(form, atks, Cs, level, parent, plus, attackS) {
-	atks = atks.map(x => floor(floor(floor(Math.round(x * form.getLevelMulti(level)) * catEnv.atk_t) * (1 + (catEnv.combo_atk || 0))) * form.atkM));
+	atks = atks.map(x => floor(floor(floor(Math.round(x * form.getLevelMulti(level)) * catEnv.atk_t) * (1 + catEnv.combo_atk)) * form.atkM));
 	parent.textContent = '';
 	let first;
 	let m1 = new Float64Array(atks);
@@ -710,14 +704,14 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 			case AB_GOOD:
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
-				theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - (catEnv.combo_good || 0)) * (0.5 - (treasure ? catEnv.good_hp_t : 0));
+				theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - catEnv.combo_good) * (0.5 - (treasure ? catEnv.good_hp_t : 0));
 				lines.push('善攻');
 				t_ef = true;
 				break;
 			case AB_RESIST:
 				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
 				treasure = spec ? first : (trait & trait_treasure);
-				theHP *= (4 + (treasure ? catEnv.resist_t : 0)) / ((lvc >= 2 ? catEnv.orb_resist : 1) * (1 - (catEnv.combo_resist || 0)));
+				theHP *= (4 + (treasure ? catEnv.resist_t : 0)) / ((lvc >= 2 ? catEnv.orb_resist : 1) * (1 - catEnv.combo_resist));
 				lines.push('耐打');
 				t_ef = true;
 				break;
@@ -730,17 +724,11 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 				break;
 			case AB_EKILL:
 				lines.push('使徒');
-				if (catEnv.combo_eva)
-					theHP *= 25;
-				else
-					theHP *= 5;
+				theHP *= 5 * (1 + catEnv.combo_eva);
 				eva_ef = true;
 				break;
 			case AB_WKILL:
-				if (catEnv.combo_witch)
-					theHP *= 50;
-				else
-					theHP *= 10;
+				theHP *= 10 * (1 + catEnv.combo_witch);
 				lines.push('魔女');
 				eva_ef = true;
 				break;
@@ -763,8 +751,7 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 	if (t_ef && eva_ef) return false;
 	let s = lines.join('・');
 	s += ':';
-	if (catEnv.base_resist)
-		theHP /= 0.85;
+	theHP /= 1 - catEnv.base_resist;
 	if (lvc >= 2 && catEnv.orb_hp != 1)
 		theHP /= catEnv.orb_hp;
 	theHP = numStr(floor(theHP / KB));
@@ -791,10 +778,9 @@ function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
 
 function getHpString(form, Cs, trait, level, parent, plus, KB) {
 	parent.textContent = '';
-	const hp = floor(floor(floor(Math.round(form.info.hp * form.getLevelMulti(level)) * catEnv.hp_t) * (1 + (catEnv.combo_hp || 0))) * form.hpM);
+	const hp = floor(floor(floor(Math.round(form.info.hp * form.getLevelMulti(level)) * catEnv.hp_t) * (1 + catEnv.combo_hp)) * form.hpM);
 	let theHP = hp;
-	if (catEnv.base_resist)
-		theHP /= 0.85;
+	theHP /= 1 - catEnv.base_resist;
 	if (form.lvc >= 2 && catEnv.orb_hp != 1)
 		theHP /= catEnv.orb_hp;
 	const s = numStr(floor(theHP / KB));
@@ -813,7 +799,7 @@ function getHP0(form, m, S, W) {
 		flag = true;
 		++FG;
 	}
-	let hp_o = floor(floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * (1 + (catEnv.combo_hp || 0))) * form.hpM);
+	let hp_o = floor(floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * (1 + catEnv.combo_hp)) * form.hpM);
 	do {
 		if (flag) {
 			t = (FG == 2);
@@ -824,25 +810,19 @@ function getHP0(form, m, S, W) {
 		for (let k of S) {
 			switch (k) {
 				case AB_GOOD:
-					hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - (catEnv.combo_good || 0)) * (0.5 - (t ? catEnv.good_hp_t : 0));
+					hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - catEnv.combo_good) * (0.5 - (t ? catEnv.good_hp_t : 0));
 					break;
 				case AB_RESIST:
-					hp *= (4 + (t ? catEnv.resist_t : 0)) / ((form.lvc >= 2 ? catEnv.orb_resist : 1) * (1 - (catEnv.combo_resist || 0)));
+					hp *= (4 + (t ? catEnv.resist_t : 0)) / ((form.lvc >= 2 ? catEnv.orb_resist : 1) * (1 - catEnv.combo_resist));
 					break;
 				case AB_RESISTS:
 					hp *= 6 + (t ? catEnv.resist_t : 0);
 					break;
 				case AB_EKILL:
-					if (catEnv.combo_eva)
-						hp *= 25;
-					else
-						hp *= 5;
+					hp *= 5 * (1 + catEnv.combo_eva);
 					break;
 				case AB_WKILL:
-					if (catEnv.combo_witch)
-						hp *= 50;
-					else
-						hp *= 10;
+					hp *= 10 * (1 + catEnv.combo_witch);
 					break;
 				case AB_BSTHUNT:
 					hp /= 0.6;
@@ -855,8 +835,7 @@ function getHP0(form, m, S, W) {
 					break;
 			}
 		}
-		if (catEnv.base_resist)
-			hp /= 0.85;
+		hp /= 1 - catEnv.base_resist;
 		if (form.lvc >= 2 && catEnv.orb_hp != 1)
 			hp /= catEnv.orb_hp;
 		hp = numStr(floor(hp));
@@ -898,7 +877,7 @@ function getATK0(form, m, S, W1, W2) {
 			atks.push(form.info.atk2);
 
 		for (let i = 0; i < atks.length; ++i)
-			atks[i] = floor(floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * (1 + (catEnv.combo_atk || 0))) * form.atkM);
+			atks[i] = floor(floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * (1 + catEnv.combo_atk)) * form.atkM);
 
 		let dps = new Float64Array(atks);
 
@@ -927,16 +906,16 @@ function getATK0(form, m, S, W1, W2) {
 					mul(atks, 1 + v[4] * 0.2, false);
 					break;
 				case AB_GOOD:
-					a = (1 + (catEnv.combo_good || 0)) * (1.5 + (t ? catEnv.good_atk_t : 0)) + (form.lvc >= 2 ? catEnv.orb_good_atk : 0);
+					a = (1 + catEnv.combo_good) * (1.5 + (t ? catEnv.good_atk_t : 0)) + (form.lvc >= 2 ? catEnv.orb_good_atk : 0);
 					mul(atks, a);
 					mul(dps, a);
 					break;
 				case AB_CRIT:
-					mul(dps, 1 + ((catEnv.combo_crit || 0) + v) / 100, false);
+					mul(dps, 1 + (catEnv.combo_crit + v) / 100, false);
 					mul(atks, 2, false);
 					break;
 				case AB_STRONG:
-					a = 1 + (v[1] + (catEnv.combo_strengthen || 0)) / 100;
+					a = 1 + (v[1] + catEnv.combo_strengthen) / 100;
 					mul(atks, a);
 					mul(dps, a);
 					break;
@@ -950,7 +929,7 @@ function getATK0(form, m, S, W1, W2) {
 					mul(dps, a);
 					break;
 				case AB_MASSIVE:
-					a = (1 + (catEnv.combo_massive || 0)) * (3 + (t ? catEnv.resist_t : 0)) + (form.lvc >= 2 ? catEnv.orb_massive : 0);
+					a = (1 + catEnv.combo_massive) * (3 + (t ? catEnv.resist_t : 0)) + (form.lvc >= 2 ? catEnv.orb_massive : 0);
 					mul(atks, a);
 					mul(dps, a);
 					break;
@@ -960,22 +939,12 @@ function getATK0(form, m, S, W1, W2) {
 					mul(dps, a);
 					break;
 				case AB_EKILL:
-					if (catEnv.combo_eva) {
-						mul(atks, 25);
-						mul(dps, 25);
-					} else {
-						mul(atks, 5);
-						mul(dps, 5);
-					}
+					mul(atks, 5 * (1 + catEnv.combo_eva));
+					mul(dps, 5 * (1 + catEnv.combo_eva));
 					break;
 				case AB_WKILL:
-					if (catEnv.combo_witch) {
-						mul(atks, 25);
-						mul(dps, 25);
-					} else {
-						mul(atks, 5);
-						mul(dps, 5);
-					}
+					mul(atks, 5 * (1 + catEnv.combo_witch));
+					mul(dps, 5 * (1 + catEnv.combo_witch));
 					break;
 				case AB_BSTHUNT:
 					mul(atks, 2.5);
@@ -1987,21 +1956,21 @@ const def_options = [
 ];
 const def_options_eff = [
 	1,                // 0: None
-	1,                // 1: Base
-	[0.1, 0.15],      // 2: Atk
-	[0.1, 0.2],       // 3: HP
-	[0.1, 0.15],      // 4: Speed
+	[20],             // 1: Base
+	[10, 15],         // 2: Atk
+	[10, 20],         // 3: HP
+	[10, 15],         // 4: Speed
 	[264, 528, 792],  // 5: Reseach
 	[1, 2],           // 6: Crit
-	[0.1, 0.2],           // 7: Good
-	[0.1, 0.2],       // 8: Massive
-	[0.1, 0.2, 0.3],  // 9: Resist
-	[0.1, 0.2, 0.3],  // 10: Slow
-	[0.1, 0.2],       // 11: Stop
-	[0.1, 0.2, 0.3],  // 12: Weak
+	[10, 20],         // 7: Good
+	[10, 20],         // 8: Massive
+	[10, 20, 30],     // 9: Resist
+	[10, 20, 30],     // 10: Slow
+	[10, 20],         // 11: Stop
+	[10, 20, 30],     // 12: Weak
 	[20, 30],         // 13: Strong
-	1,                // 14: Witch
-	1                 // 15: EVA
+	[400],            // 14: Witch
+	[400],            // 15: EVA
 ];
 function calc_def(table) {
 	catEnv.resetOthers();

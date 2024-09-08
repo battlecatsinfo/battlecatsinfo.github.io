@@ -339,17 +339,19 @@ class CatEnv {
 		return this._orbs.resist.reduce((rv, x) => rv * (1 - x / 20), 1);
 	}
 
+	// @TODO: rework this as a treasure?
 	get base_resist() {
-		return this._others[1]?.[0] ?? 0;
+		return (this._others[1]?.[0] ?? 0) * 15 / 2000;
 	}
+
 	get combo_atk() {
-		return (this._others[2] ?? []).reduce((rv, x) => rv + x, 0);
+		return (this._others[2] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_hp() {
-		return (this._others[3] ?? []).reduce((rv, x) => rv + x, 0);
+		return (this._others[3] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_speed() {
-		return (this._others[4] ?? []).reduce((rv, x) => rv + x, 0);
+		return (this._others[4] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_cd() {
 		return (this._others[5] ?? []).reduce((rv, x) => rv + x, 0);
@@ -358,31 +360,31 @@ class CatEnv {
 		return (this._others[6] ?? []).reduce((rv, x) => rv + x, 0);
 	}
 	get combo_good() {
-		return (this._others[7] ?? []).reduce((rv, x) => rv + x, 0);
+		return (this._others[7] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_massive() {
-		return (this._others[8] ?? []).reduce((rv, x) => rv + x, 0);
+		return (this._others[8] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_resist() {
-		return (this._others[9] ?? []).reduce((rv, x) => rv + x, 0);
+		return (this._others[9] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_slow() {
-		return (this._others[10] ?? []).reduce((rv, x) => rv + x, 0);
+		return (this._others[10] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_stop() {
-		return (this._others[11] ?? []).reduce((rv, x) => rv + x, 0);
+		return (this._others[11] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_weak() {
-		return (this._others[12] ?? []).reduce((rv, x) => rv + x, 0);
+		return (this._others[12] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_strengthen() {
 		return (this._others[13] ?? []).reduce((rv, x) => rv + x, 0);
 	}
 	get combo_witch() {
-		return this._others[14]?.[0] ?? 0;
+		return (this._others[14] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 	get combo_eva() {
-		return this._others[15]?.[0] ?? 0;
+		return (this._others[15] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
 }
 
