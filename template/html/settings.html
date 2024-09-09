@@ -41,8 +41,8 @@
 	:root.dark h3 {
 		color: cyan !important;
 	}
-	label {
-		padding-left: 1vw;
+	input[type="radio"] {
+		margin-right: 1vw;
 	}
 	.w3-sidebar > .w3-bar-item {
 		color: var(--color) !important;
@@ -132,12 +132,10 @@
 			<h3>時間單位</h3>
 			<div class="form w3-card-4">
 				<p>
-					<input type="radio" name="unit" id="unit-s" value="S" checked>
-					<label for="unit-s">秒</label>
+					<label><input type="radio" name="unit" value="S" checked>秒</label>
 				</p>
 				<p>
-					<input type="radio" name="unit" id="unit-f" value="F">
-					<label for="unit-f">F（幀數）</label>
+					<label><input type="radio" name="unit" value="F">F（幀數）</label>
 				</p>
 				<p>通常表示上 30F 等於1秒，但實際上 1 秒大約在 28F~30F 之間。用 F 為單位可以作更精確的計算。</p>
 			</div>
@@ -147,20 +145,16 @@
 			<h3>小數點</h3>
 			<div class="form w3-card-4">
 				<p>
-					<input type="radio" name="prec" id="prec-1" value="1">
-					<label for="prec-1">1 位</label>
+					<label><input type="radio" name="prec" value="1">1 位</label>
 				</p>
 				<p>
-					<input type="radio" name="prec" id="prec-2" value="2" checked>
-					<label for="prec-2">2 位</label>
+					<label><input type="radio" name="prec" value="2" checked>2 位</label>
 				</p>
 				<p>
-					<input type="radio" name="prec" id="prec-3" value="3">
-					<label for="prec-3">3 位</label>
+					<label><input type="radio" name="prec" value="3">3 位</label>
 				</p>
 				<p>
-					<input type="radio" name="prec" id="prec-4" value="4">
-					<label for="prec-4">4 位</label>
+					<label><input type="radio" name="prec" value="4">4 位</label>
 				</p>
 				<p>設定最大要顯示幾個小數點。</p>
 			</div>
@@ -170,16 +164,13 @@
 			<h3>佈景主題</h3>
 			<div class="form w3-card-4">
 				<p>
-					<input type="radio" name="theme" id="theme-light" value="light">
-					<label for="theme-light">淺色主題</label>
+					<label><input type="radio" name="theme" value="light">淺色主題</label>
 				</p>
 				<p>
-					<input type="radio" name="theme" id="theme-dark" value="dark">
-					<label for="theme-dark">深色主題</label>
+					<label><input type="radio" name="theme" value="dark">深色主題</label>
 				</p>
 				<p>
-					<input type="radio" name="theme" id="theme-auto" value="" checked>
-					<label for="theme-auto">使用系統預設</label>
+					<label><input type="radio" name="theme" value="" checked>使用系統預設</label>
 				</p>
 			</div>
 		</div>
@@ -188,16 +179,13 @@
 			<h3>關卡資訊語言</h3>
 			<div class="form w3-card-4">
 				<p>
-					<input type="radio" name="stagel" id="stagel-0" value="0" checked>
-					<label for="stagel-0">繁體中文</label>
+					<label><input type="radio" name="stagel" value="0" checked>繁體中文</label>
 				</p>
 				<p>
-					<input type="radio" name="stagel" id="stagel-1" value="1">
-					<label for="stagel-1">日文</label>
+					<label><input type="radio" name="stagel" value="1">日文</label>
 				</p>
 				<p>
-					<input type="radio" name="stagel" id="stagel-2" value="2">
-					<label for="stagel-2">繁體中文 + 日文</label>
+					<label><input type="radio" name="stagel" value="2">繁體中文 + 日文</label>
 				</p>
 				<p>選擇關卡下拉選單的語言。如果你是日文版玩家，可以考慮用「繁體中文 + 日文」，否則建議用繁體中文（預設選項）。</p>
 			</div>
@@ -207,12 +195,10 @@
 			<h3>關卡資訊時間單位</h3>
 			<div class="form w3-card-4">
 				<p>
-					<input type="radio" name="stagef" id="stagef-f" value="f" checked>
-					<label for="stagef-f">F（幀數）</label>
+					<label><input type="radio" name="stagef" value="f" checked>F（幀數）</label>
 				</p>
 				<p>
-					<input type="radio" name="stagef" id="stagef-s" value="s">
-					<label for="stagef-s">秒</label>
+					<label><input type="radio" name="stagef" value="s">秒</label>
 				</p>
 				<p>選擇關卡資訊中「初登場」、「再登場」的顯示單位，預設為 F（幀數）。</p>
 			</div>
@@ -222,12 +208,10 @@
 			<h3>表格</h3>
 			<div class="form w3-card-4">
 				<p>
-					<input type="radio" name="layout" id="layout-1" value="1" checked>
-					<label for="layout-1">巴哈精華區表格風格（複雜）</label>
+					<label><input type="radio" name="layout" value="1" checked>巴哈精華區表格風格（複雜）</label>
 				</p>
 				<p>
-					<input type="radio" name="layout" id="layout-2" value="2">
-					<label for="layout-2">麻糬的貓咪查詢表風格（精簡、超絕）</label>
+					<label><input type="radio" name="layout" value="2">麻糬的貓咪查詢表風格（精簡、超絕）</label>
 				</p>
 				<p>巴哈風格會顯示 5 種等級的數值，並在全部能的能力效果加成下的數值<br>
 				<p>麻糬風格類似超絕，只會顯示一種數值，但可以點選要加成的項目。</p>
