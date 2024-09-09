@@ -2998,6 +2998,14 @@ describe('unit.mjs', function () {
 				assert.isTrue(enemy.__revenge());
 			});
 
+			it('atkcount', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__atkcount(), 1);
+
+				var enemy = await Unit.loadEnemy(10);
+				assert.strictEqual(enemy.__atkcount(), 3);
+			});
+
 			it('atktype', async function () {
 				var enemy = await Unit.loadEnemy(0);
 				assert.strictEqual(enemy.__atktype(), Unit.ATK_SINGLE);
@@ -3018,6 +3026,76 @@ describe('unit.mjs', function () {
 
 				var enemy = await Unit.loadEnemy(318);
 				assert.strictEqual(enemy.__range(), 150);
+			});
+
+			it('range_min', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__range_min(), 110);
+
+				var enemy = await Unit.loadEnemy(318);
+				assert.strictEqual(enemy.__range_min(), 350);
+
+				var enemy = await Unit.loadEnemy(317);
+				assert.strictEqual(enemy.__range_min(), -700);
+
+				var enemy = await Unit.loadEnemy(599);
+				assert.strictEqual(enemy.__range_min(), 1);
+			});
+
+			it('range_max', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__range_max(), 110);
+
+				var enemy = await Unit.loadEnemy(318);
+				assert.strictEqual(enemy.__range_max(), 650);
+
+				var enemy = await Unit.loadEnemy(317);
+				assert.strictEqual(enemy.__range_max(), 800);
+
+				var enemy = await Unit.loadEnemy(599);
+				assert.strictEqual(enemy.__range_max(), 600);
+			});
+
+			it('reach_base', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__reach_base(), 110);
+
+				var enemy = await Unit.loadEnemy(318);
+				assert.strictEqual(enemy.__reach_base(), 350);
+
+				var enemy = await Unit.loadEnemy(317);
+				assert.strictEqual(enemy.__reach_base(), 800);
+
+				var enemy = await Unit.loadEnemy(599);
+				assert.strictEqual(enemy.__reach_base(), 1);
+			});
+
+			it('range_interval', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__range_interval(), 0);
+
+				var enemy = await Unit.loadEnemy(318);
+				assert.strictEqual(enemy.__range_interval(), 300);
+
+				var enemy = await Unit.loadEnemy(317);
+				assert.strictEqual(enemy.__range_interval(), 1500);
+
+				var enemy = await Unit.loadEnemy(599);
+				assert.strictEqual(enemy.__range_interval(), 200);
+			});
+
+			it('range_interval_max', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__range_interval_max(), 0);
+
+				var enemy = await Unit.loadEnemy(318);
+				assert.strictEqual(enemy.__range_interval_max(), 300);
+
+				var enemy = await Unit.loadEnemy(317);
+				assert.strictEqual(enemy.__range_interval_max(), 1500);
+
+				var enemy = await Unit.loadEnemy(604);
+				assert.strictEqual(enemy.__range_interval_max(), 350);
 			});
 
 			it('kb', async function () {
@@ -3069,6 +3147,230 @@ describe('unit.mjs', function () {
 
 				var enemy = await Unit.loadEnemy(317);
 				assert.strictEqual(enemy.__imu(), Unit.IMU_STOP | Unit.IMU_SLOW | Unit.IMU_KB | Unit.IMU_WEAK);
+			});
+
+			it('wavelv', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__wavelv(), 0);
+
+				var enemy = await Unit.loadEnemy(34);
+				assert.strictEqual(enemy.__wavelv(), 4);
+			});
+
+			it('wave_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__wave_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(34);
+				assert.strictEqual(enemy.__wave_prob(), 100);
+			});
+
+			it('miniwavelv', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__miniwavelv(), 0);
+
+				var enemy = await Unit.loadEnemy(538);
+				assert.strictEqual(enemy.__miniwavelv(), 5);
+			});
+
+			it('mini_wave_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__mini_wave_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(538);
+				assert.strictEqual(enemy.__mini_wave_prob(), 100);
+			});
+
+			it('surgelv', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__surgelv(), 0);
+
+				var enemy = await Unit.loadEnemy(495);
+				assert.strictEqual(enemy.__surgelv(), 1);
+			});
+
+			it('surge_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__surge_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(495);
+				assert.strictEqual(enemy.__surge_prob(), 100);
+			});
+
+			it('minisurgelv', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__minisurgelv(), 0);
+
+				var enemy = await Unit.loadEnemy(652);
+				assert.strictEqual(enemy.__minisurgelv(), 1);
+			});
+
+			it('mini_surge_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__mini_surge_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(652);
+				assert.strictEqual(enemy.__mini_surge_prob(), 75);
+			});
+
+			it('crit', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__crit(), 0);
+
+				var enemy = await Unit.loadEnemy(32);
+				assert.strictEqual(enemy.__crit(), 10);
+			});
+
+			it('slow_time', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__slow_time(), 0);
+
+				var enemy = await Unit.loadEnemy(185);
+				assert.strictEqual(enemy.__slow_time(), 60);
+			});
+
+			it('slow_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__slow_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(185);
+				assert.strictEqual(enemy.__slow_prob(), 20);
+			});
+
+			it('slow_cover', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__slow_cover(), 0);
+
+				var enemy = await Unit.loadEnemy(185);
+				assert.strictEqual(round(enemy.__slow_cover()), 42);
+			});
+
+			it('stop_time', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__stop_time(), 0);
+
+				var enemy = await Unit.loadEnemy(160);
+				assert.strictEqual(enemy.__stop_time(), 60);
+			});
+
+			it('stop_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__stop_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(160);
+				assert.strictEqual(enemy.__stop_prob(), 25);
+			});
+
+			it('stop_cover', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__stop_cover(), 0);
+
+				var enemy = await Unit.loadEnemy(160);
+				assert.strictEqual(round(enemy.__stop_cover()), 14);
+			});
+
+			it('curse_time', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__curse_time(), 0);
+
+				var enemy = await Unit.loadEnemy(407);
+				assert.strictEqual(enemy.__curse_time(), 100);
+			});
+
+			it('curse_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__curse_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(407);
+				assert.strictEqual(enemy.__curse_prob(), 35);
+			});
+
+			it('curse_cover', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__curse_cover(), 0);
+
+				var enemy = await Unit.loadEnemy(407);
+				assert.strictEqual(round(enemy.__curse_cover()), 63);
+			});
+
+			it('weak_time', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__weak_time(), 0);
+
+				var enemy = await Unit.loadEnemy(172);
+				assert.strictEqual(enemy.__weak_time(), 300);
+			});
+
+			it('weak_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__weak_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(172);
+				assert.strictEqual(enemy.__weak_prob(), 25);
+			});
+
+			it('weak_cover', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__weak_cover(), 0);
+
+				var enemy = await Unit.loadEnemy(172);
+				assert.strictEqual(round(enemy.__weak_cover()), 93);
+			});
+
+			it('weak_extent', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__weak_extent(), 0);
+
+				var enemy = await Unit.loadEnemy(172);
+				assert.strictEqual(enemy.__weak_extent(), 20);
+			});
+
+			it('strengthen_extent', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__strengthen_extent(), 0);
+
+				var enemy = await Unit.loadEnemy(175);
+				assert.strictEqual(enemy.__strengthen_extent(), 100);
+			});
+
+			it('lethal_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__lethal_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(173);
+				assert.strictEqual(enemy.__lethal_prob(), 100);
+			});
+
+			it('savage_extent', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__savage_extent(), 0);
+
+				var enemy = await Unit.loadEnemy(556);
+				assert.strictEqual(enemy.__savage_extent(), 200);
+			});
+
+			it('savage_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__savage_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(556);
+				assert.strictEqual(enemy.__savage_prob(), 10);
+			});
+
+			it('dodge_time', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__dodge_time(), 0);
+
+				var enemy = await Unit.loadEnemy(608);
+				assert.strictEqual(enemy.__dodge_time(), 30);
+			});
+
+			it('dodge_prob', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.__dodge_prob(), 0);
+
+				var enemy = await Unit.loadEnemy(608);
+				assert.strictEqual(enemy.__dodge_prob(), 20);
 			});
 
 		});

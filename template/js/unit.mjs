@@ -483,6 +483,9 @@ class Unit {
 	get ab() {
 		return this.info.ab;
 	}
+	abEnabled(atkIdx) {
+		return this.abi & (1 << (2 - atkIdx));
+	}
 	get _atks() {
 		const value = [this.info.atk, this.info.atk1, this.info.atk2];
 		Object.defineProperty(this, '_atks', {value});
@@ -516,6 +519,46 @@ class Unit {
 	}
 	__tatk() {
 		return this.tatks.reduce((rv, x) => rv + x);
+	}
+	__atkcount() {
+		let c = 1;
+		if (this.pre1) {
+			c += 1;
+			if (this.pre2)
+				c += 1;
+		}
+		return c;
+	}
+	__range_min() {
+		if (this.atkType & ATK_LD) {
+			return Math.min.apply(null, this.lds);
+		}
+		if (this.atkType & ATK_OMNI) {
+			return Math.min.apply(null, this.lds.map((x, i) => x + this.ldr[i]));
+		}
+		return this.range;
+	}
+	__range_max() {
+		if (this.atkType & ATK_LD) {
+			return Math.max.apply(null, this.lds.map((x, i) => x + this.ldr[i]));
+		}
+		if (this.atkType & ATK_OMNI) {
+			return Math.max.apply(null, this.lds);
+		}
+		return this.range;
+	}
+	__reach_base() {
+		if (!this.lds) return this.range;
+		return this.lds[0] > 0 ? this.lds[0] : this.range;
+	}
+	__range_interval() {
+		return this.lds ? Math.abs(this.ldr[0]) : 0;
+	}
+	__range_interval_max() {
+		if (this.atkType & (ATK_LD | ATK_OMNI)) {
+			return Math.max.apply(null, this.ldr.map(Math.abs));
+		}
+		return 0;
 	}
 	__dps() {
 		return this.dps;
@@ -561,6 +604,121 @@ class Unit {
 	}
 	__atktype() {
 		return this.atkType;
+	}
+
+	__wavelv() {
+		const t = this.ab[AB_WAVE];
+		return t ? t[1] : 0;
+	}
+	__miniwavelv() {
+		const t = this.ab[AB_MINIWAVE];
+		return t ? t[1] : 0;
+	}
+	__surgelv() {
+		const t = this.ab[AB_SURGE];
+		return t ? t[3] : 0;
+	}
+	__minisurgelv() {
+		const t = this.ab[AB_MINISURGE];
+		return t ? t[3] : 0;
+	}
+	__wave_prob() {
+		const t = this.ab[AB_WAVE];
+		return t ? t[0] : 0;
+	}
+	__mini_wave_prob() {
+		const t = this.ab[AB_MINIWAVE];
+		return t ? t[0] : 0;
+	}
+	__surge_prob() {
+		const t = this.ab[AB_SURGE];
+		return t ? t[0] : 0;
+	}
+	__mini_surge_prob() {
+		const t = this.ab[AB_MINISURGE];
+		return t ? t[0] : 0;
+	}
+	__dodge_time() {
+		const t = this.ab[AB_IMUATK];
+		return t ? t[1] : 0;
+	}
+	__dodge_prob() {
+		const t = this.ab[AB_IMUATK];
+		return t ? t[0] : 0;
+	}
+	__crit() {
+		return this.ab[AB_CRIT] | 0;
+	}
+	__slow_time() {
+		const t = this.ab[AB_SLOW];
+		return t ? t[1] : 0;
+	}
+	__slow_prob() {
+		const t = this.ab[AB_SLOW];
+		return t ? t[0] : 0;
+	}
+	__stop_time() {
+		const t = this.ab[AB_STOP];
+		return t ? t[1] : 0;
+	}
+	__stop_prob() {
+		const t = this.ab[AB_STOP];
+		return t ? t[0] : 0;
+	}
+	__weak_time() {
+		const t = this.ab[AB_WEAK];
+		return t ? t[1] : 0;
+	}
+	__weak_prob() {
+		const t = this.ab[AB_WEAK];
+		return t ? t[0] : 0;
+	}
+	__weak_extent() {
+		const t = this.ab[AB_WEAK];
+		return t ? t[2] : 0;
+	}
+	__curse_time() {
+		const t = this.ab[AB_CURSE];
+		return t ? t[1] : 0;
+	}
+	__curse_prob() {
+		const t = this.ab[AB_CURSE];
+		return t ? t[0] : 0;
+	}
+	__slow_cover() {
+		const t = this.ab[AB_SLOW];
+		if (!t) return 0;
+		return getCoverUnit(this, t[0], t[1]);
+	}
+	__stop_cover() {
+		const t = this.ab[AB_STOP];
+		if (!t) return 0;
+		return getCoverUnit(this, t[0], t[1]);
+	}
+	__weak_cover() {
+		const t = this.ab[AB_WEAK];
+		if (!t) return 0;
+		return getCoverUnit(this, t[0], t[1]);
+	}
+	__curse_cover() {
+		const t = this.ab[AB_CURSE];
+		if (!t) return 0;
+		return getCoverUnit(this, t[0], t[1]);
+	}
+	__strengthen_extent() {
+		const t = this.ab[AB_STRENGTHEN];
+		return t ? t[1] : 0;
+	}
+	__lethal_prob() {
+		return this.ab[AB_LETHAL] || 0;
+	}
+	__savage_extent() {
+		const t = this.ab[AB_S];
+		return t ? t[1] : 0;
+	}
+	__savage_prob() {
+		const t = this.ab[AB_S];
+		return t ? t[0] : 0;
 	}
 }
 
@@ -661,9 +819,6 @@ class CatForm extends Unit {
 	}
 	set ab(value) {
 		this.info.ab = value;
-	}
-	abEnabled(atkIdx) {
-		return this.abi & (1 << (2 - atkIdx));
 	}
 	get cd() {
 		return Math.max(60, this.info.cd - this.env.cd_r - this.env.cd_t);
@@ -1078,56 +1233,13 @@ class CatForm extends Unit {
 	__max_plus_lv() {
 		return this.base.maxPlusLv;
 	}
-	__slow_time() {
-		const t = this.ab[AB_SLOW];
-		return t ? t[1] : 0;
-	}
-	__slow_prob() {
-		const t = this.ab[AB_SLOW];
-		return t ? t[0] : 0;
-	}
-	__stop_time() {
-		const t = this.ab[AB_STOP];
-		return t ? t[1] : 0;
-	}
-	__stop_prob() {
-		const t = this.ab[AB_STOP];
-		return t ? t[0] : 0;
-	}
-	__curse_time() {
-		const t = this.ab[AB_CURSE];
-		return t ? t[1] : 0;
-	}
-	__curse_prob() {
-		const t = this.ab[AB_CURSE];
-		return t ? t[0] : 0;
-	}
 	__weak_time() {
 		const t = this.ab[AB_WEAK];
 		return t ? t[2] : 0;
 	}
-	__weak_prob() {
-		const t = this.ab[AB_WEAK];
-		return t ? t[0] : 0;
-	}
 	__weak_extent() {
 		const t = this.ab[AB_WEAK];
 		return t ? t[1] : 0;
-	}
-	__strengthen_extent() {
-		const t = this.ab[AB_STRENGTHEN];
-		return t ? t[1] : 0;
-	}
-	__lethal_prob() {
-		return this.ab[AB_LETHAL] || 0;
-	}
-	__savage_extent() {
-		const t = this.ab[AB_S];
-		return t ? t[1] : 0;
-	}
-	__savage_prob() {
-		const t = this.ab[AB_S];
-		return t ? t[0] : 0;
 	}
 	__break_prob() {
 		const t = this.ab[AB_BREAK];
@@ -1135,30 +1247,6 @@ class CatForm extends Unit {
 	}
 	__shield_break_prob() {
 		const t = this.ab[AB_SHIELDBREAK];
-		return t ? t[0] : 0;
-	}
-	__mini_wave_prob() {
-		const t = this.ab[AB_MINIWAVE];
-		return t ? t[0] : 0;
-	}
-	__wave_prob() {
-		const t = this.ab[AB_WAVE];
-		return t ? t[0] : 0;
-	}
-	__mini_surge_prob() {
-		const t = this.ab[AB_MINISURGE];
-		return t ? t[0] : 0;
-	}
-	__surge_prob() {
-		const t = this.ab[AB_SURGE];
-		return t ? t[0] : 0;
-	}
-	__dodge_time() {
-		const t = this.ab[AB_IMUATK];
-		return t ? t[1] : 0;
-	}
-	__dodge_prob() {
-		const t = this.ab[AB_IMUATK];
 		return t ? t[0] : 0;
 	}
 	__formc() {
@@ -1198,61 +1286,19 @@ class CatForm extends Unit {
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
-	__wavelv() {
-		const t = this.ab[AB_WAVE];
-		return t ? t[1] : 0;
-	}
 	__surgelv() {
 		const t = this.ab[AB_SURGE];
 		return t ? t[4] : 0;
 	}
-	__miniwavelv() {
-		const t = this.ab[AB_MINIWAVE];
-		return t ? t[1] : 0;
-	}
 	__minisurgelv() {
 		const t = this.ab[AB_MINISURGE];
 		return t ? t[4] : 0;
-	}
-	__crit() {
-		return this.ab[AB_CRIT] | 0;
 	}
 	__hpagainst(traits) {
 		return this.hpAgainst(traits);
 	}
 	__dpsagainst(traits) {
 		return this.dpsAgainst(traits);
-	}
-	__range_min() {
-		if (this.atkType & ATK_LD) {
-			return Math.min.apply(null, this.lds);
-		}
-		if (this.atkType & ATK_OMNI) {
-			return Math.min.apply(null, this.lds.map((x, i) => x + this.ldr[i]));
-		}
-		return this.range;
-	}
-	__range_max() {
-		if (this.atkType & ATK_LD) {
-			return Math.max.apply(null, this.lds.map((x, i) => x + this.ldr[i]));
-		}
-		if (this.atkType & ATK_OMNI) {
-			return Math.max.apply(null, this.lds);
-		}
-		return this.range;
-	}
-	__reach_base() {
-		if (!this.lds) return this.range;
-		return this.lds[0] > 0 ? this.lds[0] : this.range;
-	}
-	__range_interval() {
-		return this.lds ? Math.abs(this.ldr[0]) : 0;
-	}
-	__range_interval_max() {
-		if (this.atkType & (ATK_LD | ATK_OMNI)) {
-			return Math.max.apply(null, this.ldr.map(Math.abs));
-		}
-		return 0;
 	}
 	__evol4_require(x) {
 		if (!this.base.evol4Req) return 0;
@@ -1273,15 +1319,6 @@ class CatForm extends Unit {
 				return parseInt(r[0]);
 		}
 		return 0;
-	}
-	__atkcount() {
-		let c = 1;
-		if (this.pre1) {
-			c += 1;
-			if (this.pre2)
-				c += 1;
-		}
-		return c;
 	}
 	_getatks(i) {
 		const m = this.getLevelMulti();
