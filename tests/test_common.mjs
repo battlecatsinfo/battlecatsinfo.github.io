@@ -218,6 +218,43 @@ describe('common.mjs', function () {
 			});
 		});
 
+		it('get config.starCats', function () {
+			withLocalStorage('star-cats', () => {
+				localStorage.removeItem('star-cats');
+				assert.deepEqual(config.starCats, []);
+
+				localStorage.setItem('star-cats', JSON.stringify([
+					{id: 0, name: "貓咪", icon:"/img/u/0/0.png"},
+					{id: 4, name: "牛貓", icon:"/img/u/4/0.png"},
+				]));
+				assert.deepEqual(config.starCats, [
+					{id: 0, name: "貓咪", icon:"/img/u/0/0.png"},
+					{id: 4, name: "牛貓", icon:"/img/u/4/0.png"},
+				]);
+
+				localStorage.setItem('star-cats', JSON.stringify([]));
+				assert.deepEqual(config.starCats, []);
+			});
+		});
+
+		it('set config.starCats', function () {
+			withLocalStorage('star-cats', () => {
+				config.starCats = [
+					{id: 0, name: "貓咪", icon:"/img/u/0/0.png"},
+					{id: 3, name: "噁心貓", icon:"/img/u/3/0.png"},
+					{id: 4, name: "牛貓", icon:"/img/u/4/0.png"},
+				];
+				assert.strictEqual(localStorage.getItem('star-cats'), JSON.stringify([
+					{id: 0, name: "貓咪", icon:"/img/u/0/0.png"},
+					{id: 3, name: "噁心貓", icon:"/img/u/3/0.png"},
+					{id: 4, name: "牛貓", icon:"/img/u/4/0.png"},
+				]));
+
+				config.starCats = null;
+				assert.isNull(localStorage.getItem('star-cats'));
+			});
+		});
+
 		it('config.getTreasure', function () {
 			withLocalStorage('t$0', () => {
 				localStorage.removeItem('t$0');

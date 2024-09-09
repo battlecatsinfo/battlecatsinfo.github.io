@@ -61,6 +61,20 @@ class ConfigHandler {
 		else
 			localStorage.setItem('theme', value);
 	}
+	get starCats() {
+		let value = localStorage.getItem('star-cats');
+		return (value !== null) ? JSON.parse(value) : [];
+	}
+	set starCats(list) {
+		if (Array.isArray(list)) {
+			const value = JSON.stringify(list);
+			localStorage.setItem('star-cats', value);
+		} else if (list === null) {
+			localStorage.removeItem('star-cats');
+		} else {
+			throw new Error(`Unexpected value of cats: ${JSON.stringify(list)}`);
+		}
+	}
 	getTreasure(i) {
 		let value = localStorage.getItem("t$" + i);
 		return (value !== null) ? parseInt(value, 10) : treasures[i];
