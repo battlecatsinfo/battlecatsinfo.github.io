@@ -61,7 +61,7 @@ import {
 	get_trait_short_names,
 	getAbiString,
 
-	getCoverUnit,
+	getCoverUnitStr as getCoverUnit,
 
 	createTraitIcons,
 	createImuIcons,

@@ -72,7 +72,7 @@ import {
 
 	getAbiString,
 
-	getCoverUnit,
+	getCoverUnitStr as getCoverUnit,
 
 	createImuIcons,
 

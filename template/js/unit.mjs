@@ -155,7 +155,7 @@ function getCover(p, durationF, attackF) {
 }
 
 function getCoverUnit(unit, chance, duration) {
-	if (!(unit.pre2 + unit.pre1)) return numStr(getCover(chance, duration, unit.attackF));
+	if (!(unit.pre2 + unit.pre1)) return getCover(chance, duration, unit.attackF);
 	var pres = [];
 	for (let i = 4; 1 <= i; i >>= 1)
 		if (unit.abi & i) switch (i) {
@@ -170,7 +170,11 @@ function getCoverUnit(unit, chance, duration) {
 			case 4:
 				pres.push(unit.pre);
 		}
-	return numStr(getChances(unit.attackF, pres, chance, duration));
+	return getChances(unit.attackF, pres, chance, duration);
+}
+
+function getCoverUnitStr(unit, chance, duration) {
+	return numStr(getCoverUnit(unit, chance, duration));
 }
 
 function get_trait_short_names(trait) {
@@ -1969,6 +1973,7 @@ export {
 
 	getRes,
 	getCoverUnit,
+	getCoverUnitStr,
 
 	createTraitIcons,
 	createImuIcons,

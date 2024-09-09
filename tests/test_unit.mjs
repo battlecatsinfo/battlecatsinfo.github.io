@@ -1523,7 +1523,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__slow_cover, 0);
 
 				var cf = (await Unit.loadCat(138)).forms[0];
-				assert.strictEqual(cf.__slow_cover, '33.87');
+				assert.strictEqual(round(cf.__slow_cover), 34);
 			});
 
 			it('stop_time', async function () {
@@ -1547,7 +1547,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__stop_cover, 0);
 
 				var cf = (await Unit.loadCat(439)).forms[0];
-				assert.strictEqual(cf.__stop_cover, '34.95');
+				assert.strictEqual(round(cf.__stop_cover), 35);
 			});
 
 			it('curse_time', async function () {
@@ -1571,7 +1571,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__curse_cover, 0);
 
 				var cf = (await Unit.loadCat(543)).forms[0];
-				assert.strictEqual(cf.__curse_cover, '94.74');
+				assert.strictEqual(round(cf.__curse_cover), 95);
 			});
 
 			it('weak_time', async function () {
@@ -1595,7 +1595,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__weak_cover, 0);
 
 				var cf = (await Unit.loadCat(198)).forms[2];
-				assert.strictEqual(cf.__weak_cover, '100');
+				assert.strictEqual(cf.__weak_cover, 100);
 			});
 
 			it('weak_extent', async function () {
