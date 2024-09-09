@@ -1,4 +1,4 @@
-import {numStr, numStrT} from './common.mjs';
+import {config, numStr, numStrT} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
 
 var cats;
@@ -344,10 +344,10 @@ document.getElementById("filter-clear").onclick = function() {
 only_my_fav.onchange = function() {
 	let favs;
 	if (only_my_fav.checked) {
-		favs = localStorage.getItem("star-cats");
-		if ((!favs) || (favs == '[]'))
+		favs = config.starCats;
+		if (!favs.length)
 			return alert('我的最愛裡還沒有貓咪！\n可以去貓咪資訊裡加入我的最愛或用貓咪圖鑑管理！');
-		favs = JSON.parse(favs).map(x => cats_old[x.id]);
+		favs = favs.map(x => cats_old[x.id]);
 	}
 	cats = only_my_fav.checked ? favs : cats_old;
 	calculate(simplify(ori_expr.value));

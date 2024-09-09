@@ -1,4 +1,4 @@
-import {getNumFormatter, numStr} from './common.mjs';
+import {config, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 
 const loader = document.getElementById('loader');
@@ -21,11 +21,11 @@ const rewards = document.getElementById("rewards");
 const m_times = document.getElementById("times");
 const mM = document.getElementById("mM");
 const ex_stages = document.getElementById("ex-stages");
-const stageL = parseInt(localStorage.getItem('stagel') || '0', 10);
+const stageL = config.stagel;
 
 let info1, info2, info3, star, stage_extra, filter_page, stageF;
 
-if (localStorage.getItem('stagef') == 's')
+if (config.stagef == 's')
 	stageF = getNumFormatter(2);
 
 function fromV(s) {

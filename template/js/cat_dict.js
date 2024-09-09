@@ -1,9 +1,9 @@
+import {config} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
 
 var cats;
 var tooltip;
-const _fav = localStorage.getItem('star-cats');
-const fav_list = new Set(_fav ? JSON.parse(_fav).map(x => x.id) : []);
+const fav_list = new Set(config.starCats.map(x => x.id));
 const cats_e = document.getElementById('cats');
 const main = cats_e.parentNode;
 const Ms = main.getElementsByClassName('modal');
@@ -427,7 +427,7 @@ function favorite(e) {
 				'name': c.forms[0].name || c.forms[0].jp_name
 			});
 		}
-		localStorage.setItem('star-cats', JSON.stringify(arr));
+		config.starCats = arr;
 	}
 }
 

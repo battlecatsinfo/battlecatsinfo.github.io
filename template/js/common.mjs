@@ -1,7 +1,6 @@
 // @TODO: centralize treasure data
 const treasures = [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 30, 10, 30, 30, 30, 30, 30, 30, 30, 100, 600, 1500, 300, 100, 30, 300, 300, 300, 300, 100];
 
-// @TODO: refactor code to handle all localStorage related configs using this class
 class ConfigHandler {
 	get unit() {
 		return localStorage.getItem('unit') ?? 'S';

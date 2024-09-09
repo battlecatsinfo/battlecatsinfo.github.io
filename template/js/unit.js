@@ -77,7 +77,7 @@ const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
 const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINIVOLC, AB_VOLC, AB_ATKBASE, AB_SAGE]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
-const layout = localStorage.getItem('layout');
+const layout = config.layout;
 const maxLen = [0, 0];
 var level_count = 0;
 var my_cat;
@@ -172,7 +172,7 @@ function createAbIcons(form, p1, p2, tbody) {
 		switch (i) {
 			case 1:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func(`體力 ${v[0]} % 以下攻擊力上升至 ${100 + v[1] + (other_def[13] || 0)} %`, "IE6ihRp");
 				break;
@@ -183,14 +183,14 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 3:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func(`善於攻城，對塔傷害增加 ${v[0]} % （${numStr(1 + v[0] / 100)} 倍）`, "xIcbDzl");
 				break;
 
 			case 4:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				tmp = other_def[6];
 				if (tmp)
@@ -216,7 +216,7 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 9:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func(`${v[0]} % 渾身一擊${U}（攻擊力增加至${100 + v[1]} %）`, "KDpH72p");
 				break;
@@ -231,28 +231,28 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 12:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func(`${v[0]} % 發射 Lv${v[1]} 小波動${U}`, "W18c1hw");
 				break;
 
 			case 13:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func(`${v[0]} % 發射 Lv${v[1]} 波動${U}`, "ZbPqGoj");
 				break;
 
 			case 14:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func(`${v[0]} % 發射 Lv${v[4]} 小烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3])}）`, "AEITK8t");
 				break;
 
 			case 15:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func(`${v[0]} % 發射 Lv${v[4]} 烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3])}）`, "at4bW0n");
 				break;
@@ -263,28 +263,28 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 17:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func("超生命體特效（傷害 1.6 倍、受傷害減少 30 %)", "nGZanly");
 				break;
 
 			case 18:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func(`超獸特效（對超獸敵人傷害 2.5 倍、減傷 40%、${v[0]} % 發動攻擊無效持續 ${numStrT(v[1])}）`, "yCMsSbc");
 				break;
 
 			case 19:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func('終結魔女', "ktlyJ15");
 				break;
 
 			case 20:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func("終結使徒", "y5JJJnJ");
 				break;
@@ -306,7 +306,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					du = numStrT(tmp);
 					cv = getCoverUnit(form, v[0], tmp) + ' %';
 				}
-				if (layout == '2') {
+				if (layout === 2) {
 					w2(`${v[0]} % 使攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`, 'yRkhAHL');
 					break;
 				}
@@ -330,7 +330,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					du = numStrT(tmp);
 					cv = getCoverUnit(form, v[0], tmp) + ' %';
 				}
-				if (layout == '2') {
+				if (layout === 2) {
 					w2(`${v[0]} % 使動作停止持續 ${du} ${U}，覆蓋率 ${cv}`, 'i1pP3Mi');
 					break;
 				}
@@ -354,7 +354,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					du = numStrT(tmp);
 					cv = getCoverUnit(form, v[0], tmp) + ' %';
 				}
-				if (layout == '2') {
+				if (layout === 2) {
 					w2(`${v[0]} % 使動作變慢${U}持續 ${du}，覆蓋率 ${cv}`, 'MyoCUMu');
 					break;
 				}
@@ -366,7 +366,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 25:
-				if (layout == '2') {
+				if (layout === 2) {
 					w3('善於攻擊', 'dlZ8xNU');
 					break;
 				}
@@ -374,7 +374,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 26:
-				if (layout == '2') {
+				if (layout === 2) {
 					w3('很耐打', '4em8Hzg');
 					break;
 				}
@@ -382,7 +382,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 27:
-				if (layout == '2') {
+				if (layout === 2) {
 					w3('超耐打', 'ck2nA1D');
 					break;
 				}
@@ -390,7 +390,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 28:
-				if (layout == '2') {
+				if (layout === 2) {
 					w3(`超大傷害`, "RbqsryO");
 					break;
 				}
@@ -398,7 +398,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 29:
-				if (layout == '2') {
+				if (layout === 2) {
 					w3('極度傷害', 'whTrzG1');
 					break;
 				}
@@ -406,7 +406,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 30:
-				if (layout == '2') {
+				if (layout === 2) {
 					w2(v[0] + " % 打飛" + U, "cLZsanQ");
 					break;
 				}
@@ -414,7 +414,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 31:
-				if (layout == '2') {
+				if (layout === 2) {
 					w2(v[0] + " % 傳送" + U, "KkYm2Og");
 					break;
 				}
@@ -450,7 +450,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					du = numStrT(tmp);
 					cv = getCoverUnit(form, v[0], tmp) + ' %';
 				}
-				if (layout == '2') {
+				if (layout === 2) {
 					w2(`${v[0]} % 詛咒${U}持續 ${du}，覆蓋率 ${cv}`, "0Rraywl");
 					break;
 				}
@@ -465,7 +465,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 			case 42:
 				func = w1;
-				if (layout == '2')
+				if (layout === 2)
 					func = w3;
 				func('超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、增傷 120 %、減傷 50 %）', 'Qq8vQTs');
 				break;
@@ -1070,7 +1070,7 @@ function getATK0(form, m, S, W1, W2) {
 function updateValues(form, tbl) {
 	const chs = tbl.children;
 	table_to_values.set(tbl, form);
-	if (layout == '2') {
+	if (layout === 2) {
 		let tr = chs[2].children;
 		const m = form.getLevelMulti(chs[1].children[1]._v);
 		getHP0(form, m, tbl._s, tr[1]);
@@ -1314,7 +1314,7 @@ function mkTool(tbl) {
 
 function renderForm(form, lvc_text, _super = false, hide = false) {
 	const info = my_cat.info;
-	if (layout == '2') {
+	if (layout === 2) {
 		const tbl = document.createElement('table');
 		const tbody = document.createElement('tbody');
 		tbl.classList.add('w3-table', 'w3-centered');
@@ -1964,7 +1964,7 @@ async function applyOrb() {
 				break;
 		}
 	}
-	if (layout == '2') {
+	if (layout === 2) {
 		const TF = my_cat.forms[2].clone();
 		if (my_cat.info.talents) {
 			TF.applyTalents(custom_talents);
@@ -2061,7 +2061,7 @@ function calc_def(table) {
 				other_def[idx] = eff;
 		}
 	}
-	if (layout == '2') {
+	if (layout === 2) {
 		for (const [tbody, form] of table_to_values) {
 			let td = tbody.children[7].children[1];
 			td.textContent = '';
@@ -2654,7 +2654,7 @@ function renderCombos() {
 }
 
 function renderUintPage() {
-	if (layout === '2') {
+	if (layout === 2) {
 		for (let form of my_cat.forms) {
 			if (form.lvc == 2 && my_cat.info.evolReq) {
 				const fruits = my_cat.info.evolReq.split('|');
@@ -3226,7 +3226,7 @@ loadCat(my_id)
 		my_cat = res;
 		const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
 		const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
-		if (layout != '2') {
+		if (layout !== 2) {
 			document.getElementById('ch_name').textContent = cat_names;
 			document.getElementById('jp_name').textContent = cat_names_jp;
 		}
@@ -3244,17 +3244,13 @@ loadCat(my_id)
 		abars[5].onclick = () => makegraph(3);
 		abars[6].onclick = xpgraph;
 		abars[7].onclick = function() {
-			var oldList = localStorage.getItem('star-cats');
-			if (oldList == null)
-				oldList = [];
-			else
-				oldList = JSON.parse(oldList);
+			var oldList = config.starCats;
 			oldList.push({
 				'id': my_id,
 				'icon': my_cat.forms[0].icon,
 				'name': my_cat.forms[0].name || my_cat.forms[0].jp_name
 			});
-			localStorage.setItem('star-cats', JSON.stringify(oldList));
+			config.starCats = oldList;
 		};
 
 		let a = document.createElement('a');
