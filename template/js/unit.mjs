@@ -388,8 +388,185 @@ class CatEnv {
 	}
 }
 
-class CatForm {
+class Unit {
+	constructor() {
+		if (new.target === Unit)
+			throw new Error('Abstract Class cannot be instantiated');
+	}
+	get id() {
+		return this.info.i;
+	}
+	get name() {
+		return this.info.name;
+	}
+	get jp_name() {
+		return this.info.jp_name;
+	}
+	get desc() {
+		return this.info.desc;
+	}
+	get hp() {
+		return this.info.hp;
+	}
+	get thp() {
+		return this.hp;
+	}
+	get kb() {
+		return this.info.kb;
+	}
+	get speed() {
+		return this.info.speed;
+	}
+	get range() {
+		return this.info.range;
+	}
+	get pre() {
+		return this.info.pre;
+	}
+	get pre1() {
+		return this.info.pre1;
+	}
+	get pre2() {
+		return this.info.pre2;
+	}
+	get atkm() {
+		return this._atks.reduce((rv, x) => rv + x);
+	}
+	get atks() {
+		return this._atks.filter(x => x);
+	}
+	get atk() {
+		return this.info.atk;
+	}
+	get atk1() {
+		return this.info.atk1;
+	}
+	get atk2() {
+		return this.info.atk2;
+	}
+	get tatks() {
+		return this.atks;
+	}
+	get tba() {
+		return this.info.tba;
+	}
+	get backswing() {
+		return this.info.backswing;
+	}
+	get attackF() {
+		return this.info.attackF;
+	}
+	get atkType() {
+		return this.info.atkType;
+	}
+	get dps() {
+		return 30 * this.atkm / this.attackF;
+	}
+	get tdps() {
+		return this.dps;
+	}
+	get trait() {
+		return this.info.trait;
+	}
+	get abi() {
+		return this.info.abi;
+	}
+	get lds() {
+		return this.info.lds;
+	}
+	get ldr() {
+		return this.info.ldr;
+	}
+	get imu() {
+		return this.info.imu;
+	}
+	get ab() {
+		return this.info.ab;
+	}
+	get _atks() {
+		const value = [this.info.atk, this.info.atk1, this.info.atk2];
+		Object.defineProperty(this, '_atks', {value});
+		return value;
+	}
+
+	__hasab(ab) {
+		return this.ab.hasOwnProperty(ab);
+	}
+	__hasres() {
+		return false;
+	}
+	__imu() {
+		return this.imu;
+	}
+
+	__id() {
+		return this.id;
+	}
+	__hp() {
+		return this.hp;
+	}
+	__thp() {
+		return this.thp;
+	}
+	__atk() {
+		return this.atkm;
+	}
+	__attack() {
+		return this.atkm;
+	}
+	__tatk() {
+		return this.tatks.reduce((rv, x) => rv + x);
+	}
+	__dps() {
+		return this.dps;
+	}
+	__tdps() {
+		return this.tdps;
+	}
+	__tba() {
+		return this.tba;
+	}
+	__pre() {
+		return this.pre;
+	}
+	__pre1() {
+		return this.pre1;
+	}
+	__pre2() {
+		return this.pre2;
+	}
+	__kb() {
+		return this.kb;
+	}
+	__trait() {
+		return this.trait;
+	}
+	__range() {
+		return this.range;
+	}
+	__attackf() {
+		return this.attackF;
+	}
+	__attacks() {
+		return this.attackF / 30;
+	}
+	__revenge() {
+		return 0 != (this.atkType & ATK_KB_REVENGE);
+	}
+	__backswing() {
+		return this.backswing;
+	}
+	__speed() {
+		return this.speed;
+	}
+	__atktype() {
+		return this.atkType;
+	}
+}
+
+class CatForm extends Unit {
 	constructor(props = {}) {
+		super();
 		// make non-structured-cloneable by setting enumerable=false
 		Object.defineProperties(this, {
 			base: {value: props.base},
@@ -413,15 +590,6 @@ class CatForm {
 	get lvc() {
 		return this.info.lvc;
 	}
-	get name() {
-		return this.info.name;
-	}
-	get jp_name() {
-		return this.info.jp_name;
-	}
-	get desc() {
-		return this.info.desc;
-	}
 	get price() {
 		return 1.5 * this.info.price;
 	}
@@ -440,26 +608,11 @@ class CatForm {
 		return this._getthp({traits});
 	}
 
-	get kb() {
-		return this.info.kb;
-	}
 	get speed() {
-		return this.info.speed;
+		return super.speed;
 	}
 	set speed(value) {
 		this.info.speed = value;
-	}
-	get range() {
-		return this.info.range;
-	}
-	get pre() {
-		return this.info.pre;
-	}
-	get pre1() {
-		return this.info.pre1;
-	}
-	get pre2() {
-		return this.info.pre2;
 	}
 	get atkm() {
 		return this._getatks().reduce((rv, x) => rv + x);
@@ -480,46 +633,31 @@ class CatForm {
 		return this._gettatks({mode: 'max'});
 	}
 	get tba() {
-		return this.info.tba;
+		return super.tba;
 	}
 	set tba(value) {
 		this.info.tba = value;
 	}
-	get backswing() {
-		return this.info.backswing;
-	}
 	get attackF() {
-		return this.info.attackF;
+		return super.attackF;
 	}
 	set attackF(value) {
 		this.info.attackF = value;
 	}
-	get atkType() {
-		return this.info.atkType;
-	}
 	get trait() {
-		return this.info.trait;
+		return super.trait;
 	}
 	set trait(value) {
 		this.info.trait = value;
 	}
-	get abi() {
-		return this.info.abi;
-	}
-	get lds() {
-		return this.info.lds;
-	}
-	get ldr() {
-		return this.info.ldr;
-	}
 	get imu() {
-		return this.info.imu;
+		return super.imu;
 	}
 	set imu(value) {
 		this.info.imu = value;
 	}
 	get ab() {
-		return this.info.ab;
+		return super.ab;
 	}
 	set ab(value) {
 		this.info.ab = value;
@@ -560,10 +698,6 @@ class CatForm {
 	}
 	getLevelMulti(level = this.level) {
 		return this.base.getLevelMulti(level);
-	}
-
-	get dps() {
-		return 30 * this.atkm / this.attackF;
 	}
 
 	get tdps() {
@@ -938,24 +1072,6 @@ class CatForm {
 	__hasres(r) {
 		return this.res && this.res.hasOwnProperty(r) || false;
 	}
-	__hasab(ab) {
-		return this.ab.hasOwnProperty(ab);
-	}
-	__id() {
-		return this.id;
-	}
-	__tba() {
-		return this.tba;
-	}
-	__pre() {
-		return this.pre;
-	}
-	__pre1() {
-		return this.pre1;
-	}
-	__pre2() {
-		return this.pre2;
-	}
 	__max_base_lv() {
 		return this.base.maxBaseLv;
 	}
@@ -1051,29 +1167,8 @@ class CatForm {
 	__maxformc() {
 		return this.base.forms.length;
 	}
-	__kb() {
-		return this.kb;
-	}
 	__rarity() {
 		return this.base.rarity;
-	}
-	__trait() {
-		return this.trait;
-	}
-	__range() {
-		return this.range;
-	}
-	__attackf() {
-		return this.attackF;
-	}
-	__attacks() {
-		return this.attackF / 30;
-	}
-	__revenge() {
-		return 0 != (this.atkType & ATK_KB_REVENGE);
-	}
-	__backswing() {
-		return this.backswing;
 	}
 	__beast_prob() {
 		const t = this.ab[AB_BSTHUNT];
@@ -1102,21 +1197,6 @@ class CatForm {
 		const t = this.ab[AB_CURSE];
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
-	}
-	__hp() {
-		return this.hp;
-	}
-	__atk() {
-		return this.atkm;
-	}
-	__attack() {
-		return this.atkm;
-	}
-	__dps() {
-		return this.dps;
-	}
-	__thp() {
-		return this.thp;
 	}
 	__wavelv() {
 		const t = this.ab[AB_WAVE];
@@ -1203,14 +1283,6 @@ class CatForm {
 		}
 		return c;
 	}
-	__tdps() {
-		return this.tdps;
-	}
-	get _atks() {
-		const value = [this.info.atk, this.info.atk1, this.info.atk2];
-		Object.defineProperty(this, '_atks', {value});
-		return value;
-	}
 	_getatks(i) {
 		const m = this.getLevelMulti();
 
@@ -1223,9 +1295,6 @@ class CatForm {
 		});
 
 		return (typeof i !== 'undefined') ? atks[0] : atks;
-	}
-	__tatk() {
-		return this.tatks.reduce((rv, x) => rv + x);
 	}
 	mul(arr, s, ab = true) {
 		for (let i = 0; i < arr.length; ++i)
@@ -1401,9 +1470,6 @@ class CatForm {
 
 		return atks;
 	}
-	__speed() {
-		return this.speed;
-	}
 	__price() {
 		return this.price;
 	}
@@ -1416,112 +1482,25 @@ class CatForm {
 	__cd() {
 		return this.cd / 30;
 	}
-	__imu() {
-		return this.imu;
-	}
-	__atktype() {
-		return this.atkType;
-	}
 }
 
-class Enemy {
+class Enemy extends Unit {
 	constructor(o, props = {}) {
+		super();
 		// make non-structured-cloneable by setting enumerable=false
 		Object.defineProperties(this, {
 			env: {value: props.env ?? catEnv, writable: true, configurable: true},
 			info: {value: o, enumerable: true},
 		});
 	}
-	get id() {
-		return this.info.i;
-	}
-	get name() {
-		return this.info.name;
-	}
-	get jp_name() {
-		return this.info.jp_name;
-	}
 	get fandom() {
 		return this.info.fandom;
-	}
-	get desc() {
-		return this.info.desc;
-	}
-	get hp() {
-		return this.info.hp;
-	}
-	get kb() {
-		return this.info.kb;
-	}
-	get speed() {
-		return this.info.speed;
-	}
-	get range() {
-		return this.info.range;
-	}
-	get pre() {
-		return this.info.pre;
-	}
-	get pre1() {
-		return this.info.pre1;
-	}
-	get pre2() {
-		return this.info.pre2;
-	}
-	get atkm() {
-		return this.atk + this.atk1 + this.atk2;
-	}
-	get atks() {
-		return [this.atk, this.atk1, this.atk2].filter(x => x);
-	}
-	get atk() {
-		return this.info.atk;
-	}
-	get atk1() {
-		return this.info.atk1;
-	}
-	get atk2() {
-		return this.info.atk2;
-	}
-	get tba() {
-		return this.info.tba;
-	}
-	get backswing() {
-		return this.info.backswing;
-	}
-	get attackF() {
-		return this.info.attackF;
-	}
-	get atkType() {
-		return this.info.atkType;
-	}
-	get trait() {
-		return this.info.trait;
-	}
-	get abi() {
-		return this.info.abi;
-	}
-	get lds() {
-		return this.info.lds;
-	}
-	get ldr() {
-		return this.info.ldr;
-	}
-	get imu() {
-		return this.info.imu;
-	}
-	get ab() {
-		return this.info.ab;
 	}
 	get earn() {
 		return round(this.info.earn * (1 + this.env.earn_r + this.env.earn_t), 2);
 	}
 	get star() {
 		return this.info.star;
-	}
-
-	get dps() {
-		return 30 * this.atkm / this.attackF;
 	}
 	get icon() {
 		return `/img/e/${this.id}/0.png`;
@@ -1542,83 +1521,11 @@ class Enemy {
 		return value;
 	}
 
-	__hp() {
-		return this.hp;
-	}
-	__thp() {
-		return this.hp;
-	}
-	__atk() {
-		return this.atkm;
-	}
-	__attack() {
-		return this.atkm;
-	}
-	__tatk() {
-		return this.atkm;
-	}
-	__dps() {
-		return this.dps;
-	}
-	__tdps() {
-		return this.dps;
-	}
-	__imu() {
-		return this.imu;
-	}
-	__hasab(i) {
-		return this.ab.hasOwnProperty(i);
-	}
-	__id() {
-		return this.id;
-	}
-	__hasres() {
-		return false;
-	}
-	__tba() {
-		return this.tba;
-	}
-	__pre() {
-		return this.pre;
-	}
-	__pre1() {
-		return this.pre1;
-	}
-	__pre2() {
-		return this.pre2;
-	}
-	__kb() {
-		return this.kb;
-	}
-	__trait() {
-		return this.trait;
-	}
-	__range() {
-		return this.range;
-	}
-	__attackf() {
-		return this.attackF;
-	}
-	__attacks() {
-		return this.attackF / 30;
-	}
-	__revenge() {
-		return 0 != (this.atkType & ATK_KB_REVENGE);
-	}
-	__backswing() {
-		return this.backswing;
-	}
 	__cost() {
 		return this.earn;
 	}
 	__price() {
 		return this.earn;
-	}
-	__speed() {
-		return this.speed;
-	}
-	__atktype() {
-		return this.atkType;
 	}
 }
 
