@@ -113,7 +113,5 @@ if (!my_stars_list.length) {
 		a3.style.setProperty('color', '#ff5722', 'important');
 		a3.style.cursor = 'pointer';
 		a3.onclick = onStarCatDeleteClick;
-		if (++i & 1)
-			tr.style.backgroundColor = 'rgb(241, 241, 241)';
 	}
 }
