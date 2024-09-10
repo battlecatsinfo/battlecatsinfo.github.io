@@ -1125,10 +1125,10 @@
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E033.html"
 	},
 	{
-		"tw_name": "貓咪的暑假 漂流記",
+		"tw_name": "貓咪的暑假 野外求生",
 		"jp_name": "ねこのなつやすみ サバイバル",
 		"en_name": "Summer Break Cats: Survival",
-		"img": "https://i.imgur.com/1UJPng1.png",
+		"img": "https://i.imgur.com/dQKRDnb.png",
 		"rate": [
 			1400,
 			0,
@@ -1143,7 +1143,7 @@
 		],
 		"stage": [
 			"/stage.html?s=11-67",
-			"ねこのなつやすみ サバイバル"
+			"貓咪的暑假 野外求生"
 		],
 		"ticket": [
 			"傳說的陷阱",
@@ -4904,7 +4904,7 @@
 		"tw_name": "鋼鐵破壞者",
 		"jp_name": "メタルバスターズ",
 		"en_name": "Metal Busters",
-		"img": "https://imgur.com/cGGGSMy.png",
+		"img": "https://i.imgur.com/ZENfCMm.png",
 		"rate": [
 			7000,
 			2500,
