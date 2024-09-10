@@ -5,7 +5,7 @@ import {
 	ATK_OMNI,
 	ATK_KB_REVENGE,
 
-	AB_STRONG,
+	AB_STRENGTHEN,
 	AB_LETHAL,
 	AB_ATKBASE,
 	AB_CRIT,
@@ -320,7 +320,7 @@ class FormDPS {
 			obj = null;
 		}
 
-		if (this.F.ab.hasOwnProperty(AB_STRONG)) {
+		if (this.F.ab.hasOwnProperty(AB_STRENGTHEN)) {
 			this.options.strong = true;
 			obj = this.create_select('攻擊力上升', ['ON', 'OFF']);
 		} else if (talent_types.has(10)) {
@@ -651,9 +651,9 @@ class FormDPS {
 						if (this.abis[i]) this.atks[i] = ~~(this.atks[i] * (1 + x[1] / 100));
 				}
 			}
-			if (this.options.strong && F.ab.hasOwnProperty(AB_STRONG))
+			if (this.options.strong && F.ab.hasOwnProperty(AB_STRENGTHEN))
 				for (let i = 0; i < this.atks.length; ++i)
-					if (this.abis[i]) this.atks[i] = ~~(this.atks[i] * (1 + (F.ab[AB_STRONG][1] / 100)));
+					if (this.abis[i]) this.atks[i] = ~~(this.atks[i] * (1 + (F.ab[AB_STRENGTHEN][1] / 100)));
 			if (this.options.good) {
 				for (let i = 0; i < this.atks.length; ++i) {
 					this.atks[i] = ~~(this.atks[i] * (T ? 1.8 : 1.5));

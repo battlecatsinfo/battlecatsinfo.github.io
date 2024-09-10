@@ -43,7 +43,7 @@ const IMU_TOXIC = 256;     // Immune to Toxic 毒擊傷害無效
 const IMU_BOSSWAVE = 512;  // Immune to Boss Shockwave 魔王震波無效 [UNOFFICIAL]
 
 // Abilities
-const AB_STRONG = 1;       // Strengthen 攻擊力上升
+const AB_STRENGTHEN = 1;   // Strengthen 攻擊力上升
 const AB_LETHAL = 2;       // Survive 死血存活
 const AB_ATKBASE = 3;      // Base Destroyer 善於攻城
 const AB_CRIT = 4;         // Critical 會心一擊
@@ -648,10 +648,10 @@ class CatForm {
 				break;
 
 			case 10:
-				t = this.ab[AB_STRONG];
+				t = this.ab[AB_STRENGTHEN];
 				x = t ? t[0] : (100 - inc1); // HP Trigger
 				y = inc2 + (t ? t[1] : 0); // attack
-				this.ab[AB_STRONG] = [x, y];
+				this.ab[AB_STRENGTHEN] = [x, y];
 				break;
 
 			case 11:
@@ -999,7 +999,7 @@ class CatForm {
 		return t ? t[1] : 0;
 	}
 	get __strong_extent() {
-		const t = this.ab[AB_STRONG];
+		const t = this.ab[AB_STRENGTHEN];
 		return t ? t[1] : 0;
 	}
 	get __lethal_prob() {
@@ -1338,8 +1338,8 @@ class CatForm {
 				this.mul(atks, 1 + this.ab[AB_CRIT] / 100, false);
 		}
 
-		if (this.ab.hasOwnProperty(AB_STRONG)) {
-			this.mul(atks, 1 + this.ab[AB_STRONG][1] / 100);
+		if (this.ab.hasOwnProperty(AB_STRENGTHEN)) {
+			this.mul(atks, 1 + this.ab[AB_STRENGTHEN][1] / 100);
 		}
 
 		if (isBase && this.ab.hasOwnProperty(AB_ATKBASE)) {
@@ -2027,7 +2027,7 @@ export {
 	trait_no_treasure,
 	trait_treasure,
 
-	AB_STRONG,
+	AB_STRENGTHEN,
 	AB_LETHAL,
 	AB_ATKBASE,
 	AB_CRIT,

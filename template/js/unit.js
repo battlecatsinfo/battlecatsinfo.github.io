@@ -10,7 +10,7 @@ import {
 	trait_no_treasure,
 	trait_treasure,
 
-	AB_STRONG,
+	AB_STRENGTHEN,
 	AB_LETHAL,
 	AB_ATKBASE,
 	AB_CRIT,
@@ -75,7 +75,7 @@ const combos_scheme = {{{toJSON (loadJSON "combos_scheme.json")}}};
 
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
-const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE]);
+const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const layout = config.layout;
 const maxLen = [0, 0];
@@ -560,7 +560,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 					mul(theATK, 2, false);
 				lines.push('爆');
 				break;
-			case AB_STRONG:
+			case AB_STRENGTHEN:
 				mul(theATK, 1 + (ab[2] + catEnv.combo_strengthen) / 100);
 				lines.push('增攻');
 				break;
@@ -914,7 +914,7 @@ function getATK0(form, m, S, W1, W2) {
 					mul(dps, 1 + (catEnv.combo_crit + v) / 100, false);
 					mul(atks, 2, false);
 					break;
-				case AB_STRONG:
+				case AB_STRENGTHEN:
 					a = 1 + (v[1] + catEnv.combo_strengthen) / 100;
 					mul(atks, a);
 					mul(dps, a);

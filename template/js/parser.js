@@ -1545,7 +1545,7 @@
     	imu_toxic: 256,
     	imu_bosswave: 512,
 
-    	ab_strong: 1,
+    	ab_strengthen: 1,
     	ab_lethal: 2,
     	ab_atkbase: 3,
     	ab_crit: 4,

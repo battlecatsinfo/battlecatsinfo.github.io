@@ -9,7 +9,7 @@ import {
 	trait_no_treasure,
 	trait_treasure,
 
-	AB_STRONG,
+	AB_STRENGTHEN,
 	AB_LETHAL,
 	AB_ATKBASE,
 	AB_CRIT,
@@ -69,7 +69,7 @@ var targets = new Set();
 var CL;
 const tbl = document.getElementById('tbl');
 const tby = tbl.firstElementChild.children;
-const atk_mult_abs = new Set([AB_STRONG, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE]);
+const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const cat_name = document.getElementById('cat-name');
 const CF = document.getElementById('CF');
@@ -145,7 +145,7 @@ function getAtk(form, line, theATK, parent, first, attackS) {
 					mul(theATK, 2, false);
 				lines.push('爆');
 				break;
-			case AB_STRONG:
+			case AB_STRENGTHEN:
 				mul(theATK, 1 + ab[2] / 100);
 				lines.push('增攻');
 				break;

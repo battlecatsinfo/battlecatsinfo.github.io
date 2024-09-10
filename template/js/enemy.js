@@ -23,7 +23,7 @@ import {
 	TB_BARON,
 	TB_SAGE,
 
-	AB_STRONG,
+	AB_STRENGTHEN,
 	AB_LETHAL,
 	AB_ATKBASE,
 	AB_CRIT,
@@ -166,7 +166,7 @@ function createAbIcons() {
 			case AB_WEAK:
 				W(`${d[0]} % 降低攻擊力${U}至 ${d[2]} % 持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`, 'yRkhAHL');
 				break;
-			case AB_STRONG:
+			case AB_STRENGTHEN:
 				T(`血量 ${d[0]} % 以下攻擊力上升至 ${100 + d[1]} %`, 'IE6ihRp');
 				break;
 			case AB_LETHAL:
@@ -309,7 +309,7 @@ function calc() {
 				ATK(1 + v[3] / 5);
 				DPS *= (1 + v[3] * v[0] / 500);
 				break;
-			case AB_STRONG: {
+			case AB_STRENGTHEN: {
 				const a = 1 + v[1] / 100;
 				ATK(a);
 				DPS *= a;
