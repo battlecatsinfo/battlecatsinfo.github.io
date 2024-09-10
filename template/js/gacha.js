@@ -24,4 +24,3 @@ onload = function() {
 		}
 	}
 }
-onerror = alert; // sometimes domtoimage failed to produce image when the DOM element is too large
