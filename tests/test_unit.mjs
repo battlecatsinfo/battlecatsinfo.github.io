@@ -2588,12 +2588,12 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__weak_extent, 50);
 			});
 
-			it('strong_extent', async function () {
+			it('strengthen_extent', async function () {
 				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__strong_extent, 0);
+				assert.strictEqual(cf.__strengthen_extent, 0);
 
 				var cf = (await Unit.loadCat(441)).forms[1];
-				assert.strictEqual(cf.__strong_extent, 100);
+				assert.strictEqual(cf.__strengthen_extent, 100);
 			});
 
 			it('lethal_prob', async function () {

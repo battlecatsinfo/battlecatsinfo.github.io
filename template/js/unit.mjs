@@ -998,7 +998,7 @@ class CatForm {
 		const t = this.ab[AB_WEAK];
 		return t ? t[1] : 0;
 	}
-	get __strong_extent() {
+	get __strengthen_extent() {
 		const t = this.ab[AB_STRENGTHEN];
 		return t ? t[1] : 0;
 	}

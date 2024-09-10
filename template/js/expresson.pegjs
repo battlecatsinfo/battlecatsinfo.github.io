@@ -151,7 +151,7 @@ const known_identifiers = new Set([
 	"weak_time",
 	"weak_prob",
 	"weak_extent",
-	"strong_extent",
+	"strengthen_extent",
 	"lethal_prob",
 	"savage_extent",
 	"savage_prob",
