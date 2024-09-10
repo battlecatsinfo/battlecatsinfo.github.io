@@ -1,12 +1,11 @@
-const {SiteGenerator} = require('./base.js');
+const {RewardSiteGenerator} = require('./reward.js');
 
-module.exports = class extends SiteGenerator {
+module.exports = class extends RewardSiteGenerator {
 	run() {
 		const mapTable = this.parse_tsv(this.load('map.tsv'));
 		const stageTable = this.parse_tsv(this.load('stage.tsv'));
 
 		const stageScheme = JSON.parse(this.load('stage_scheme.json'));
-		const stageExtras = JSON.parse(this.load('stage_extras.json'));
 
 		const catData = this.parse_tsv(this.load('cat.tsv'));
 		const eggs = catData.reduce((eggs, cat, id) => {
@@ -15,19 +14,17 @@ module.exports = class extends SiteGenerator {
 			}
 			return eggs;
 		}, {});
-		const eggSet = Object.keys(eggs).map(Number);
 
-		this.generate_data_files({mapTable, stageTable, stageScheme, stageExtras, eggSet});
+		this.generate_data_files({mapTable, stageTable, stageScheme});
 		this.generate_pages({stageScheme, eggs});
 		this.generate_crown({mapTable, stageScheme});
 		this.generate_materials({mapTable, stageTable});
 	}
 
-	generate_data_files({mapTable, stageTable, stageScheme, stageExtras, eggSet}) {
-		const {categories, conditions, material_drops, reset_modes} = stageScheme;
-		const {limit_groups} = stageExtras;
+	generate_data_files({mapTable, stageTable, stageScheme}) {
+		const {categories, conditions, material_drops, reset_modes, limit_groups} = stageScheme;
 		const {rarities} = JSON.parse(this.load('units_scheme.json'));
-		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
+		const rewardTable = this.load_rewards();
 		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
 
 		const map = mapTable.reduce((rv, entry, i) => {
@@ -80,16 +77,20 @@ module.exports = class extends SiteGenerator {
 			matDrops: material_drops,
 			resetModes: reset_modes,
 			rars: rarities,
-			eggs: eggSet,
 			eName: enemyTable.map(x => x.name_tw),
 			rewards: rewardTable.reduce((rv, entry) => {
 				const {id, name, cat_id, cat_lv, icon} = entry;
-				rv[entry.id] = {
-					name: name || undefined,
-					cid: cat_id ? parseInt(cat_id, 10) : undefined,
-					clv: cat_lv ? parseInt(cat_lv, 10) : undefined,
-					icon: icon || undefined,
-				};
+				if (cat_id !== undefined)
+					rv[entry.id] = {
+						name,
+						icon,
+						cid: cat_id,
+					};
+				else
+					rv[entry.id] = {
+						name,
+						icon,
+					};
 				return rv;
 			}, {}),
 		};

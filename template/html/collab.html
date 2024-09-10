@@ -137,16 +137,10 @@
 					<td>{{stage.stars.[3]}}</td>
 					<td>
 					{{~#each stage.rewards as |reward|~}}
-					{{~#if reward.cat_lv~}}
-					<a href="/unit.html?id={{reward.cat_id}}"><img class="R" width="104" height="79" loading="lazy" src="/img/u/{{reward.cat_id}}/{{reward.cat_lv}}.png"></a>
+					{{~#if (op reward.cat_id '!==' undefined)~}}
+					<a href="/unit.html?id={{reward.cat_id}}"><img class="R" width="104" height="79" loading="lazy" src="{{reward.icon}}"></a>
 					{{~else~}}
-					<img class="R" width="128" height="128" loading="lazy" src="
-						{{~#if reward.icon~}}
-							{{reward.icon}}
-						{{~else~}}
-							/img/r/{{reward.id}}.png
-						{{~/if~}}
-					">
+					<img class="R" width="128" height="128" loading="lazy" src="{{reward.icon}}">
 					{{~/if}}
 					{{~/each~}}
 					</td>

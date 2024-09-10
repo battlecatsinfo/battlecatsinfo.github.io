@@ -1,12 +1,13 @@
 const fs = require('node:fs');
 const {resolve} = require('node:path');
-const {OUTPUT_DIR, SiteGenerator} = require('./base.js');
+const {OUTPUT_DIR} = require('./base.js');
+const {RewardSiteGenerator} = require('./reward.js');
 
 function to_path(s) {
 	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');
 }
 
-module.exports = class extends SiteGenerator {
+module.exports = class extends RewardSiteGenerator {
 	run() {
 		try {
 			fs.mkdirSync(resolve(OUTPUT_DIR, 'collab'));
@@ -17,7 +18,7 @@ module.exports = class extends SiteGenerator {
 
 		const mapTable = this.parse_tsv(this.load('map.tsv'));
 		const stageTable = this.parse_tsv(this.load('stage.tsv'));
-		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
+		const rewardTable = this.load_rewards();
 
 		this.map_names = mapTable.reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp} = entry;
@@ -125,7 +126,7 @@ module.exports = class extends SiteGenerator {
 						const r = this.rewards[v[1]];
 
 						// ensure reward is valid
-						if (!r.cat_id && r.id > 1000)
+						if (r.cat_id === undefined && r.id > 1000)
 							continue;
 
 						// don't use pure number key to preserve the insertion order

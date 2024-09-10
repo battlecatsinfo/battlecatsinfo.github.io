@@ -80,9 +80,7 @@ function createReward(tr, v) {
 		const img = td1.appendChild(new Image(104, 79));
 		img.style.maxWidth = "3em";
 		img.style.height = 'auto';
-		img.src = stage_extra.eggSet.has(reward.cid) ?
-			'/img/s/0/0.png' :
-			reward.icon || `/img/u/${reward.cid}/${reward.clv ?? 0}.png`;
+		img.src = reward.icon;
 		const a = td.appendChild(document.createElement("a"));
 		a.href = "/unit.html?id=" + reward.cid;
 		a.textContent = reward.name;
@@ -96,7 +94,7 @@ function createReward(tr, v) {
 	const span = td.appendChild(document.createElement('span'));
 	span.style.verticalAlign = 'center';
 	span.textContent = `${reward?.name} ×${numStr(v[2])}`;
-	img.src = reward.icon || `/img/r/${v[1]}.png`;
+	img.src = reward.icon;
 }
 
 function TI(t) {
@@ -1207,6 +1205,5 @@ async function doSearch(t) {
 (async () => {
 	await Stage.loadStageData();
 	stage_extra = await Stage.getStageExtra();
-	stage_extra.eggSet = new Set(stage_extra.eggs);
 	initUI();
 })();

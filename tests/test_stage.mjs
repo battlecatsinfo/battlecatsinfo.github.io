@@ -43,7 +43,6 @@ describe('stage.mjs', function () {
 			assert.isArray(extra.matDrops);
 			assert.isArray(extra.resetModes);
 			assert.isArray(extra.rars);
-			assert.isArray(extra.eggs);
 			assert.isArray(extra.eName);
 			assert.isObject(extra.rewards);
 		});
