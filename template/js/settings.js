@@ -1,9 +1,9 @@
 import {config, toggleTheme, resetTheme} from './common.mjs';
 
 function onSidebarAnchorClick(event) {
-	for (const node of document.getElementsByClassName('fucus'))
-		node.classList.remove('fucus');
-	event.currentTarget.classList.add('fucus');
+	for (const node of document.getElementsByClassName('focus'))
+		node.classList.remove('focus');
+	event.currentTarget.classList.add('focus');
 }
 
 function onTabLinkClick(event) {
