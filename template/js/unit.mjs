@@ -409,7 +409,7 @@ class Unit {
 		return ~~(round(this.info.hp * (this.alienMag ?? 1) * this.hpM) * this.stageM);
 	}
 	get thp() {
-		return this.hp;
+		return this._getthp();
 	}
 	get kb() {
 		return this.info.kb;
@@ -445,7 +445,7 @@ class Unit {
 		return this._getatks(2);
 	}
 	get tatks() {
-		return this.atks;
+		return this._gettatks({mode: 'max'});
 	}
 	get tba() {
 		return this.info.tba;
@@ -463,7 +463,8 @@ class Unit {
 		return 30 * this.atkm / this.attackF;
 	}
 	get tdps() {
-		return this.dps;
+		const atkm = this._gettatks({mode: 'expected'}).reduce((rv, x) => rv + x);
+		return 30 * atkm / this.attackF;
 	}
 	get trait() {
 		return this.info.trait;
@@ -483,8 +484,13 @@ class Unit {
 	get ab() {
 		return this.info.ab;
 	}
+
 	abEnabled(atkIdx) {
 		return this.abi & (1 << (2 - atkIdx));
+	}
+	mul(arr, s, ab = true) {
+		for (let i = 0; i < arr.length; ++i)
+			(ab || this.abEnabled(i)) && (arr[i] *= s)
 	}
 	get _atks() {
 		const value = [this.info.atk, this.info.atk1, this.info.atk2];
@@ -503,6 +509,123 @@ class Unit {
 		});
 
 		return (typeof i !== 'undefined') ? atks[0] : atks;
+	}
+
+	/**
+	 * Calculate ability-boosted HP.
+	 *
+	 * @return {number} the boosted HP
+	 */
+	_getthp() {
+		const ab = this.ab;
+		let hp = this.hp;
+
+		if (ab.hasOwnProperty(AB_DSHIELD)) {
+			const v = ab[AB_DSHIELD];
+			const s = ~~(round(v[0] * this.hpM) * this.stageM);
+			hp += ~~(s + s * (v[1] / 100) * (this.kb - 1));
+		}
+
+		return hp;
+	}
+
+	/**
+	 * Calculate ability-boosted attack damages.
+	 *
+	 * @param {Object} [options]
+	 * @param {string} [options.mode=expected] - the calculation mode:
+	 *     "expected" for expected damage;
+	 *     "max" for maximal possible damage.
+	 * @param {boolean} [options.metal=true] - treat non-critical attack as 1
+	 *     damage for a metal target.
+	 * @param {boolean} [options.isBase=false] - target is base.
+	 * @param {boolean} [options.isMetal=false] - target is metal.
+	 * @return {number[]} the boosted attack damages
+	 */
+	_gettatks({
+		mode = 'expected',
+		metal: metalMode = true,
+		isBase = false,
+		isMetal = false,
+	} = {}) {
+		let atks = this._getatks();
+		let v;
+
+		if (this.ab.hasOwnProperty(AB_SURGE)) {
+			v = v = this.ab[AB_SURGE];
+			if (mode === 'max')
+				this.mul(atks, 1 + v[3], false);
+			else
+				this.mul(atks, 1 + v[3] * v[0] / 100, false);
+		} else if (this.ab.hasOwnProperty(AB_MINISURGE)) {
+			v = this.ab[AB_MINISURGE];
+			if (mode === 'max')
+				this.mul(atks, 1 + v[3] * 0.2, false);
+			else
+				this.mul(atks, 1 + v[3] * v[0] / 500, false);
+		}
+
+		if (!isBase && this.ab.hasOwnProperty(AB_WAVE)) {
+			if (mode === 'max')
+				this.mul(atks, 2, false);
+			else
+				this.mul(atks, 1 + this.ab[AB_WAVE][0] / 100, false);
+		} else if (!isBase && this.ab.hasOwnProperty(AB_MINIWAVE)) {
+			if (mode === 'max')
+				this.mul(atks, 1.2, false);
+			else
+				this.mul(atks, 1 + this.ab[AB_MINIWAVE][0] / 500, false);
+		}
+
+		if (this.ab.hasOwnProperty(AB_S)) {
+			v = this.ab[AB_S];
+			if (mode === 'max')
+				this.mul(atks, 1 + v[1] / 100, false);
+			else
+				this.mul(atks, 1 + v[1] * v[0] / 10000, false);
+		}
+
+		// handle metal case specially at last
+		if (this.ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
+			if (mode === 'max')
+				this.mul(atks, 2, false);
+			else
+				this.mul(atks, 1 + this.ab[AB_CRIT] / 100, false);
+		}
+
+		if (this.ab.hasOwnProperty(AB_STRENGTHEN)) {
+			this.mul(atks, 1 + this.ab[AB_STRENGTHEN][1] / 100);
+		}
+
+		if (isBase && this.ab.hasOwnProperty(AB_ATKBASE)) {
+			this.mul(atks, 4);
+			return atks;
+		}
+
+		if (metalMode && isMetal) {
+			const critRate = this.ab[AB_CRIT] ?? 0;
+			atks = atks.map((atk, i) => {
+				const rate = this.abEnabled(i) ? critRate / 100 : 0;
+				const nonCritDmg = (() => {
+					let rv = 1;
+					if (this.abEnabled(i)) {
+						if (v = this.ab[AB_SURGE] || this.ab[AB_MINISURGE]) {
+							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
+						}
+						if (v = this.ab[AB_WAVE] || this.ab[AB_MINIWAVE]) {
+							rv += (mode === 'max') ? 1 : v[0] / 100;
+						}
+					}
+					return rv;
+				})();
+				if (mode === 'max')
+					return rate ? 2 * atk : nonCritDmg;
+				else
+					return (2 * atk * rate) + (nonCritDmg * (1 - rate));
+			});
+		}
+
+		return atks;
 	}
 
 	__hasab(ab) {
@@ -771,10 +894,6 @@ class CatForm extends Unit {
 		return ~~(~~(round(this.info.hp * this.getLevelMulti()) * this.env.hp_t) * this.hpM);
 	}
 
-	get thp() {
-		return this._getthp();
-	}
-
 	hpAgainst(traits) {
 		return this._getthp({traits});
 	}
@@ -784,9 +903,6 @@ class CatForm extends Unit {
 	}
 	set speed(value) {
 		this.info.speed = value;
-	}
-	get tatks() {
-		return this._gettatks({mode: 'max'});
 	}
 	get tba() {
 		return super.tba;
@@ -851,11 +967,6 @@ class CatForm extends Unit {
 	}
 	getLevelMulti(level = this.level) {
 		return this.base.getLevelMulti(level);
-	}
-
-	get tdps() {
-		const atkm = this._gettatks({mode: 'expected'}).reduce((rv, x) => rv + x);
-		return 30 * atkm / this.attackF;
 	}
 
 	dpsAgainst(traits) {
@@ -1330,10 +1441,6 @@ class CatForm extends Unit {
 		});
 
 		return (typeof i !== 'undefined') ? atks[0] : atks;
-	}
-	mul(arr, s, ab = true) {
-		for (let i = 0; i < arr.length; ++i)
-			(ab || this.abEnabled(i)) && (arr[i] *= s)
 	}
 
 	/**

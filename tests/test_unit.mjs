@@ -2951,6 +2951,110 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('Enemy.thp', function () {
+
+			it('demon shield should be considered', async function () {
+				// no mag
+				var enemy = await Unit.loadEnemy(552);
+				assert.strictEqual(enemy.thp, 13500);
+
+				// mag
+				var enemy = await Unit.loadEnemy(552);
+				enemy.hpM = 3;
+				enemy.stageM = 2;
+				assert.strictEqual(enemy.thp, 81000);
+			});
+
+		});
+
+		describe('Enemy.tatks', function () {
+
+			it('surge should be counted', async function () {
+				var enemy = await Unit.loadEnemy(513);
+				assert.deepEqual(enemy.tatks, [92000]);
+			});
+
+			it('mini-surge should be counted', async function () {
+				var enemy = await Unit.loadEnemy(658);
+				assert.deepEqual(enemy.tatks, [5332.8]);
+			});
+
+			it('wave should be counted', async function () {
+				var enemy = await Unit.loadEnemy(44);
+				assert.deepEqual(enemy.tatks, [11000]);
+			});
+
+			it('mini-wave should be counted', async function () {
+				var enemy = await Unit.loadEnemy(538);
+				assert.deepEqual(enemy.tatks, [28200]);
+			});
+
+			it('savage should be counted', async function () {
+				var enemy = await Unit.loadEnemy(556);
+				assert.deepEqual(enemy.tatks, [20604]);
+			});
+
+			it('critical should be counted', async function () {
+				var enemy = await Unit.loadEnemy(32);
+				assert.deepEqual(enemy.tatks, [14400]);
+			});
+
+			it('strengthen should be counted', async function () {
+				var enemy = await Unit.loadEnemy(175);
+				assert.deepEqual(enemy.tatks, [2000]);
+			});
+
+			it('attack base: ignore for tatk', async function () {
+				var enemy = await Unit.loadEnemy(34);
+				assert.deepEqual(enemy.tatks, [2800]);
+			});
+
+		});
+
+		describe('Enemy.tdps', function () {
+
+			it('surge should be counted', async function () {
+				var enemy = await Unit.loadEnemy(513);
+				assert.strictEqual(round(enemy.tdps), 32693);
+			});
+
+			it('mini-surge should be counted', async function () {
+				var enemy = await Unit.loadEnemy(658);
+				assert.strictEqual(round(enemy.tdps), 27997);
+			});
+
+			it('wave should be counted', async function () {
+				var enemy = await Unit.loadEnemy(44);
+				assert.strictEqual(round(enemy.tdps), 5225);
+			});
+
+			it('mini-wave should be counted', async function () {
+				var enemy = await Unit.loadEnemy(538);
+				assert.strictEqual(round(enemy.tdps), 31333);
+			});
+
+			it('savage should be counted', async function () {
+				var enemy = await Unit.loadEnemy(556);
+				assert.strictEqual(round(enemy.tdps), 15453);
+			});
+
+			it('critical should be counted', async function () {
+				var enemy = await Unit.loadEnemy(32);
+				assert.strictEqual(round(enemy.tdps), 13976);
+			});
+
+			it('strengthen should be counted', async function () {
+				var enemy = await Unit.loadEnemy(175);
+				assert.strictEqual(round(enemy.tdps), 896);
+			});
+
+			it('attack base: ignore for tdps', async function () {
+				var enemy = await Unit.loadEnemy(34);
+				assert.strictEqual(round(enemy.tdps), 1400);
+			});
+
+		});
+
 		describe('Enemy.earn', function () {
 
 			afterEach(function () {
