@@ -941,200 +941,200 @@ class CatForm {
 	__hasab(ab) {
 		return this.ab.hasOwnProperty(ab);
 	}
-	get __id() {
+	__id() {
 		return this.id;
 	}
-	get __tba() {
+	__tba() {
 		return this.tba;
 	}
-	get __pre() {
+	__pre() {
 		return this.pre;
 	}
-	get __pre1() {
+	__pre1() {
 		return this.pre1;
 	}
-	get __pre2() {
+	__pre2() {
 		return this.pre2;
 	}
-	get __max_base_lv() {
+	__max_base_lv() {
 		return this.base.maxBaseLv;
 	}
-	get __max_plus_lv() {
+	__max_plus_lv() {
 		return this.base.maxPlusLv;
 	}
-	get __slow_time() {
+	__slow_time() {
 		const t = this.ab[AB_SLOW];
 		return t ? t[1] : 0;
 	}
-	get __slow_prob() {
+	__slow_prob() {
 		const t = this.ab[AB_SLOW];
 		return t ? t[0] : 0;
 	}
-	get __stop_time() {
+	__stop_time() {
 		const t = this.ab[AB_STOP];
 		return t ? t[1] : 0;
 	}
-	get __stop_prob() {
+	__stop_prob() {
 		const t = this.ab[AB_STOP];
 		return t ? t[0] : 0;
 	}
-	get __curse_time() {
+	__curse_time() {
 		const t = this.ab[AB_CURSE];
 		return t ? t[1] : 0;
 	}
-	get __curse_prob() {
+	__curse_prob() {
 		const t = this.ab[AB_CURSE];
 		return t ? t[0] : 0;
 	}
-	get __weak_time() {
+	__weak_time() {
 		const t = this.ab[AB_WEAK];
 		return t ? t[2] : 0;
 	}
-	get __weak_prob() {
+	__weak_prob() {
 		const t = this.ab[AB_WEAK];
 		return t ? t[0] : 0;
 	}
-	get __weak_extent() {
+	__weak_extent() {
 		const t = this.ab[AB_WEAK];
 		return t ? t[1] : 0;
 	}
-	get __strengthen_extent() {
+	__strengthen_extent() {
 		const t = this.ab[AB_STRENGTHEN];
 		return t ? t[1] : 0;
 	}
-	get __lethal_prob() {
+	__lethal_prob() {
 		return this.ab[AB_LETHAL] || 0;
 	}
-	get __savage_extent() {
+	__savage_extent() {
 		const t = this.ab[AB_S];
 		return t ? t[1] : 0;
 	}
-	get __savage_prob() {
+	__savage_prob() {
 		const t = this.ab[AB_S];
 		return t ? t[0] : 0;
 	}
-	get __break_prob() {
+	__break_prob() {
 		const t = this.ab[AB_BREAK];
 		return t ? t[0] : 0;
 	}
-	get __shield_break_prob() {
+	__shield_break_prob() {
 		const t = this.ab[AB_SHIELDBREAK];
 		return t ? t[0] : 0;
 	}
-	get __mini_wave_prob() {
+	__mini_wave_prob() {
 		const t = this.ab[AB_MINIWAVE];
 		return t ? t[0] : 0;
 	}
-	get __wave_prob() {
+	__wave_prob() {
 		const t = this.ab[AB_WAVE];
 		return t ? t[0] : 0;
 	}
-	get __mini_surge_prob() {
+	__mini_surge_prob() {
 		const t = this.ab[AB_MINISURGE];
 		return t ? t[0] : 0;
 	}
-	get __surge_prob() {
+	__surge_prob() {
 		const t = this.ab[AB_SURGE];
 		return t ? t[0] : 0;
 	}
-	get __dodge_time() {
+	__dodge_time() {
 		const t = this.ab[AB_IMUATK];
 		return t ? t[1] : 0;
 	}
-	get __dodge_prob() {
+	__dodge_prob() {
 		const t = this.ab[AB_IMUATK];
 		return t ? t[0] : 0;
 	}
-	get __formc() {
+	__formc() {
 		return this.lvc + 1;
 	}
-	get __maxformc() {
+	__maxformc() {
 		return this.base.forms.length;
 	}
-	get __kb() {
+	__kb() {
 		return this.kb;
 	}
-	get __rarity() {
+	__rarity() {
 		return this.base.rarity;
 	}
-	get __trait() {
+	__trait() {
 		return this.trait;
 	}
-	get __range() {
+	__range() {
 		return this.range;
 	}
-	get __attackf() {
+	__attackf() {
 		return this.attackF;
 	}
-	get __attacks() {
+	__attacks() {
 		return this.attackF / 30;
 	}
-	get __revenge() {
+	__revenge() {
 		return 0 != (this.atkType & ATK_KB_REVENGE);
 	}
-	get __backswing() {
+	__backswing() {
 		return this.backswing;
 	}
-	get __beast_prob() {
+	__beast_prob() {
 		const t = this.ab[AB_BSTHUNT];
 		return t ? t[0] : 0;
 	}
-	get __beast_time() {
+	__beast_time() {
 		const t = this.ab[AB_BSTHUNT];
 		return t ? t[1] : 0;
 	}
-	get __stop_cover() {
+	__stop_cover() {
 		const t = this.ab[AB_STOP];
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
-	get __slow_cover() {
+	__slow_cover() {
 		const t = this.ab[AB_SLOW];
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
-	get __weak_cover() {
+	__weak_cover() {
 		const t = this.ab[AB_WEAK];
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[2] * 1.2) : t[2]);
 	}
-	get __curse_cover() {
+	__curse_cover() {
 		const t = this.ab[AB_CURSE];
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
-	get __hp() {
+	__hp() {
 		return this.hp;
 	}
-	get __atk() {
+	__atk() {
 		return this.atkm;
 	}
-	get __attack() {
+	__attack() {
 		return this.atkm;
 	}
-	get __dps() {
+	__dps() {
 		return this.dps;
 	}
-	get __thp() {
+	__thp() {
 		return this.thp;
 	}
-	get __wavelv() {
+	__wavelv() {
 		const t = this.ab[AB_WAVE];
 		return t ? t[1] : 0;
 	}
-	get __surgelv() {
+	__surgelv() {
 		const t = this.ab[AB_SURGE];
 		return t ? t[4] : 0;
 	}
-	get __miniwavelv() {
+	__miniwavelv() {
 		const t = this.ab[AB_MINIWAVE];
 		return t ? t[1] : 0;
 	}
-	get __minisurgelv() {
+	__minisurgelv() {
 		const t = this.ab[AB_MINISURGE];
 		return t ? t[4] : 0;
 	}
-	get __crit() {
+	__crit() {
 		return this.ab[AB_CRIT] | 0;
 	}
 	__hpagainst(traits) {
@@ -1143,7 +1143,7 @@ class CatForm {
 	__dpsagainst(traits) {
 		return this.dpsAgainst(traits);
 	}
-	get __range_min() {
+	__range_min() {
 		if (this.atkType & ATK_LD) {
 			return Math.min.apply(null, this.lds);
 		}
@@ -1152,7 +1152,7 @@ class CatForm {
 		}
 		return this.range;
 	}
-	get __range_max() {
+	__range_max() {
 		if (this.atkType & ATK_LD) {
 			return Math.max.apply(null, this.lds.map((x, i) => x + this.ldr[i]));
 		}
@@ -1161,14 +1161,14 @@ class CatForm {
 		}
 		return this.range;
 	}
-	get __reach_base() {
+	__reach_base() {
 		if (!this.lds) return this.range;
 		return this.lds[0] > 0 ? this.lds[0] : this.range;
 	}
-	get __range_interval() {
+	__range_interval() {
 		return this.lds ? Math.abs(this.ldr[0]) : 0;
 	}
-	get __range_interval_max() {
+	__range_interval_max() {
 		if (this.atkType & (ATK_LD | ATK_OMNI)) {
 			return Math.max.apply(null, this.ldr.map(Math.abs));
 		}
@@ -1194,7 +1194,7 @@ class CatForm {
 		}
 		return 0;
 	}
-	get __atkcount() {
+	__atkcount() {
 		let c = 1;
 		if (this.pre1) {
 			c += 1;
@@ -1203,7 +1203,7 @@ class CatForm {
 		}
 		return c;
 	}
-	get __tdps() {
+	__tdps() {
 		return this.tdps;
 	}
 	get _atks() {
@@ -1224,7 +1224,7 @@ class CatForm {
 
 		return (typeof i !== 'undefined') ? atks[0] : atks;
 	}
-	get __tatk() {
+	__tatk() {
 		return this.tatks.reduce((rv, x) => rv + x);
 	}
 	mul(arr, s, ab = true) {
@@ -1401,25 +1401,25 @@ class CatForm {
 
 		return atks;
 	}
-	get __speed() {
+	__speed() {
 		return this.speed;
 	}
-	get __price() {
+	__price() {
 		return this.price;
 	}
-	get __cost() {
+	__cost() {
 		return this.price;
 	}
-	get __cdf() {
+	__cdf() {
 		return this.cd;
 	}
-	get __cd() {
+	__cd() {
 		return this.cd / 30;
 	}
-	get __imu() {
+	__imu() {
 		return this.imu;
 	}
-	get __atktype() {
+	__atktype() {
 		return this.atkType;
 	}
 }
@@ -1542,82 +1542,82 @@ class Enemy {
 		return value;
 	}
 
-	get __hp() {
+	__hp() {
 		return this.hp;
 	}
-	get __thp() {
+	__thp() {
 		return this.hp;
 	}
-	get __atk() {
+	__atk() {
 		return this.atkm;
 	}
-	get __attack() {
+	__attack() {
 		return this.atkm;
 	}
-	get __tatk() {
+	__tatk() {
 		return this.atkm;
 	}
-	get __dps() {
+	__dps() {
 		return this.dps;
 	}
-	get __tdps() {
+	__tdps() {
 		return this.dps;
 	}
-	get __imu() {
+	__imu() {
 		return this.imu;
 	}
 	__hasab(i) {
 		return this.ab.hasOwnProperty(i);
 	}
-	get __id() {
+	__id() {
 		return this.id;
 	}
 	__hasres() {
 		return false;
 	}
-	get __tba() {
+	__tba() {
 		return this.tba;
 	}
-	get __pre() {
+	__pre() {
 		return this.pre;
 	}
-	get __pre1() {
+	__pre1() {
 		return this.pre1;
 	}
-	get __pre2() {
+	__pre2() {
 		return this.pre2;
 	}
-	get __kb() {
+	__kb() {
 		return this.kb;
 	}
-	get __trait() {
+	__trait() {
 		return this.trait;
 	}
-	get __range() {
+	__range() {
 		return this.range;
 	}
-	get __attackf() {
+	__attackf() {
 		return this.attackF;
 	}
-	get __attacks() {
+	__attacks() {
 		return this.attackF / 30;
 	}
-	get __revenge() {
+	__revenge() {
 		return 0 != (this.atkType & ATK_KB_REVENGE);
 	}
-	get __backswing() {
+	__backswing() {
 		return this.backswing;
 	}
-	get __cost() {
+	__cost() {
 		return this.earn;
 	}
-	get __price() {
+	__price() {
 		return this.earn;
 	}
-	get __speed() {
+	__speed() {
 		return this.speed;
 	}
-	get __atktype() {
+	__atktype() {
 		return this.atkType;
 	}
 }
