@@ -155,21 +155,33 @@ function calculate(code = '') {
 	var pcode;
 	try {
 		pcode = pegjs.parse(code);
-	} catch (e) {
-		alert(e.toString());
+	} catch (ex) {
+		alert(`篩選表達式錯誤: ${ex}`);
+		throw ex;
 	}
 	let f = eval(`form => (${pcode})`);
-	results = cats.filter(f);
+	try {
+		results = cats.filter(f);
+	} catch (ex) {
+		alert(`篩選錯誤: ${ex}`);
+		throw ex;
+	}
 	try {
 		pcode = pegjs.parse(sortCode || '1');
-	} catch (e) {
-		alert(e.toString());
+	} catch (ex) {
+		alert(`排序表達式錯誤: ${ex}`);
+		throw ex;
 	}
 	let fn = eval(`form => (${pcode})`);
-	results = results.map((form, i) => {
-		const x = fn(form);
-		return [isFinite(x) ? x : 0, form];
-	}).sort((a, b) => b[0] - a[0]);
+	try {
+		results = results.map((form, i) => {
+			const x = fn(form);
+			return [isFinite(x) ? x : 0, form];
+		}).sort((a, b) => b[0] - a[0]);
+	} catch (ex) {
+		alert(`排序錯誤: ${ex}`);
+		throw ex;
+	}
 	renderTable(results);
 	if (sortCode.length && sortCode != '1')
 		url.searchParams.set('sort', sortCode);

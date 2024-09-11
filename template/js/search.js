@@ -160,8 +160,9 @@ function calculate(code = "") {
 		pcode;
 	try {
 		pcode = pegjs.parse(code);
-	} catch (e) {
-		alert(e.toString());
+	} catch (ex) {
+		alert(`篩選表達式錯誤: ${ex}`);
+		throw ex;
 	}
 	let f = eval(`form => (${pcode})`);
 
@@ -188,23 +189,34 @@ function calculate(code = "") {
 			break;
 	}
 
-	results = results.filter(form => {
-		form.baseLv = def_lv;
-		form.plusLv = plus_lv;
-		return f(form);
-	});
+	try {
+		results = results.filter(form => {
+			form.baseLv = def_lv;
+			form.plusLv = plus_lv;
+			return f(form);
+		});
+	} catch (ex) {
+		alert(`篩選錯誤: ${ex}`);
+		throw ex;
+	}
 
 	try {
 		pcode = pegjs.parse(sortCode || "1");
-	} catch (e) {
-		alert(e.toString());
+	} catch (ex) {
+		alert(`排序表達式錯誤: ${ex}`);
+		throw ex;
 	}
 	let fn = eval(`form => (${pcode})`);
-	results = results.map((form, i) => {
-		let c = cats_old[form.id];
-		var x = fn(form);
-		return [isFinite(x) ? x : 0, form];
-	}).sort((a, b) => b[0] - a[0]);
+	try {
+		results = results.map((form, i) => {
+			let c = cats_old[form.id];
+			var x = fn(form);
+			return [isFinite(x) ? x : 0, form];
+		}).sort((a, b) => b[0] - a[0]);
+	} catch (ex) {
+		alert(`排序錯誤: ${ex}`);
+		throw ex;
+	}
 	renderTable(results);
 	if (def_lv != 50) // Lv50 (default)
 		url.searchParams.set("deflv", def_lv); // base level
