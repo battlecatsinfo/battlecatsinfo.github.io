@@ -2679,6 +2679,10 @@ describe('unit.mjs', function () {
 
 		describe('Enemy.hp', function () {
 
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
+
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
 				assert.strictEqual(enemy.hp, 90);
@@ -2687,9 +2691,98 @@ describe('unit.mjs', function () {
 				assert.strictEqual(enemy.hp, 2500);
 			});
 
+			it('stage mag should be counted', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				enemy.hpM = 3;
+				assert.strictEqual(enemy.hp, 270);
+
+				var enemy = await Unit.loadEnemy(0);
+				enemy.stageM = 2;
+				assert.strictEqual(enemy.hp, 180);
+
+				var enemy = await Unit.loadEnemy(0);
+				enemy.hpM = 3;
+				enemy.stageM = 2;
+				assert.strictEqual(enemy.hp, 540);
+
+				var enemy = await Unit.loadEnemy(0);
+				enemy.atkM = 4;
+				assert.strictEqual(enemy.hp, 90);
+			});
+
+			it('alien mag and related treasures should be counted', async function () {
+				var enemy = await Unit.loadEnemy(167);
+				Unit.catEnv.setTreasure(21, 0);
+				assert.strictEqual(enemy.hp, 6300);
+
+				Unit.catEnv.setTreasure(21, 300);
+				assert.strictEqual(enemy.hp, 3600);
+
+				Unit.catEnv.setTreasure(21, 500);
+				assert.strictEqual(enemy.hp, 1800);
+
+				Unit.catEnv.setTreasure(21, 500);
+				enemy.hpM = 3;
+				enemy.stageM = 2;
+				assert.strictEqual(enemy.hp, 10800);
+			});
+
+			it('alien (star) mag and related treasures should be counted', async function () {
+				var enemy = await Unit.loadEnemy(360);
+				Unit.catEnv.setTreasure(22, 0);
+				assert.strictEqual(enemy.hp, 112000);
+
+				Unit.catEnv.setTreasure(22, 600);
+				assert.strictEqual(enemy.hp, 70000);
+
+				Unit.catEnv.setTreasure(22, 1300);
+				assert.strictEqual(enemy.hp, 21000);
+
+				Unit.catEnv.setTreasure(22, 1300);
+				enemy.hpM = 3;
+				enemy.stageM = 2;
+				assert.strictEqual(enemy.hp, 126000);
+			});
+
+			it('God mag and related treasures should be counted', async function () {
+				// God 1
+				var enemy = await Unit.loadEnemy(367);
+				Unit.catEnv.setTreasure(20, 0);
+				Unit.catEnv.setTreasure(24, 0);
+				Unit.catEnv.setTreasure(30, 0);
+				assert.strictEqual(enemy.hp, 15399989);
+
+				Unit.catEnv.setTreasure(20, 100);
+				assert.strictEqual(enemy.hp, 1399999);
+
+				// God 2
+				var enemy = await Unit.loadEnemy(419);
+				Unit.catEnv.setTreasure(20, 0);
+				Unit.catEnv.setTreasure(24, 0);
+				Unit.catEnv.setTreasure(30, 0);
+				assert.strictEqual(enemy.hp, 16499989);
+
+				Unit.catEnv.setTreasure(24, 100);
+				assert.strictEqual(enemy.hp, 1499999);
+
+				// God 3
+				var enemy = await Unit.loadEnemy(446);
+				Unit.catEnv.setTreasure(20, 0);
+				Unit.catEnv.setTreasure(24, 0);
+				Unit.catEnv.setTreasure(30, 0);
+				assert.strictEqual(enemy.hp, 10999989);
+
+				Unit.catEnv.setTreasure(30, 100);
+				assert.strictEqual(enemy.hp, 999999);
+			});
+
 		});
 
 		describe('Enemy.atks', function () {
+
+			afterEach(function () {
+				Unit.catEnv.reset();
+			});
 
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
@@ -2699,6 +2792,91 @@ describe('unit.mjs', function () {
 			it('multi-attack should be counted', async function () {
 				var enemy = await Unit.loadEnemy(52);
 				assert.deepEqual(enemy.atks, [4250, 250, 497]);
+			});
+
+			it('stage mag should be counted', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				enemy.atkM = 3;
+				assert.deepEqual(enemy.atks, [12750, 750, 1491]);
+
+				var enemy = await Unit.loadEnemy(52);
+				enemy.stageM = 2;
+				assert.deepEqual(enemy.atks, [8500, 500, 994]);
+
+				var enemy = await Unit.loadEnemy(52);
+				enemy.atkM = 3;
+				enemy.stageM = 2;
+				assert.deepEqual(enemy.atks, [25500, 1500, 2982]);
+
+				var enemy = await Unit.loadEnemy(52);
+				enemy.hpM = 4;
+				assert.deepEqual(enemy.atks, [4250, 250, 497]);
+			});
+
+			it('alien mag and related treasures should be counted', async function () {
+				var enemy = await Unit.loadEnemy(167);
+				Unit.catEnv.setTreasure(21, 0);
+				assert.deepEqual(enemy.atks, [1050]);
+
+				Unit.catEnv.setTreasure(21, 300);
+				assert.deepEqual(enemy.atks, [600]);
+
+				Unit.catEnv.setTreasure(21, 500);
+				assert.deepEqual(enemy.atks, [300]);
+
+				Unit.catEnv.setTreasure(21, 500);
+				enemy.atkM = 3;
+				enemy.stageM = 2;
+				assert.deepEqual(enemy.atks, [1800]);
+			});
+
+			it('alien (star) mag and related treasures should be counted', async function () {
+				var enemy = await Unit.loadEnemy(360);
+				Unit.catEnv.setTreasure(22, 0);
+				assert.deepEqual(enemy.atks, [8000]);
+
+				Unit.catEnv.setTreasure(22, 600);
+				assert.deepEqual(enemy.atks, [5000]);
+
+				Unit.catEnv.setTreasure(22, 1300);
+				assert.deepEqual(enemy.atks, [1500]);
+
+				Unit.catEnv.setTreasure(22, 1300);
+				enemy.atkM = 3;
+				enemy.stageM = 2;
+				assert.deepEqual(enemy.atks, [9000]);
+			});
+
+			it('God mag and related treasures should be counted', async function () {
+				// God 1
+				var enemy = await Unit.loadEnemy(367);
+				Unit.catEnv.setTreasure(20, 0);
+				Unit.catEnv.setTreasure(24, 0);
+				Unit.catEnv.setTreasure(30, 0);
+				assert.deepEqual(enemy.atks, [197989, 197989, 197989]);
+
+				Unit.catEnv.setTreasure(20, 100);
+				assert.deepEqual(enemy.atks, [17999, 17999, 17999]);
+
+				// God 2
+				var enemy = await Unit.loadEnemy(419);
+				Unit.catEnv.setTreasure(20, 0);
+				Unit.catEnv.setTreasure(24, 0);
+				Unit.catEnv.setTreasure(30, 0);
+				assert.deepEqual(enemy.atks, [10989, 10989, 725989]);
+
+				Unit.catEnv.setTreasure(24, 100);
+				assert.deepEqual(enemy.atks, [999, 999, 65999]);
+
+				// God 3
+				var enemy = await Unit.loadEnemy(446);
+				Unit.catEnv.setTreasure(20, 0);
+				Unit.catEnv.setTreasure(24, 0);
+				Unit.catEnv.setTreasure(30, 0);
+				assert.deepEqual(enemy.atks, [43989, 43989, 725989]);
+
+				Unit.catEnv.setTreasure(30, 100);
+				assert.deepEqual(enemy.atks, [3999, 3999, 65999]);
 			});
 
 		});

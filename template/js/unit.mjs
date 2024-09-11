@@ -406,7 +406,7 @@ class Unit {
 		return this.info.desc;
 	}
 	get hp() {
-		return this.info.hp;
+		return ~~(round(this.info.hp * (this.alienMag ?? 1) * this.hpM) * this.stageM);
 	}
 	get thp() {
 		return this.hp;
@@ -430,19 +430,19 @@ class Unit {
 		return this.info.pre2;
 	}
 	get atkm() {
-		return this._atks.reduce((rv, x) => rv + x);
+		return this._getatks().reduce((rv, x) => rv + x);
 	}
 	get atks() {
-		return this._atks.filter(x => x);
+		return this._getatks();
 	}
 	get atk() {
-		return this.info.atk;
+		return this._getatks(0);
 	}
 	get atk1() {
-		return this.info.atk1;
+		return this._getatks(1);
 	}
 	get atk2() {
-		return this.info.atk2;
+		return this._getatks(2);
 	}
 	get tatks() {
 		return this.atks;
@@ -490,6 +490,19 @@ class Unit {
 		const value = [this.info.atk, this.info.atk1, this.info.atk2];
 		Object.defineProperty(this, '_atks', {value});
 		return value;
+	}
+	_getatks(i) {
+		const m = this.atkM;
+
+		let atks = this._atks;
+
+		atks = (typeof i !== 'undefined') ? [atks[i]] : atks.filter((x, i) => !i || x);
+
+		atks = atks.map(atk => {
+			return ~~(round(atk * (this.alienMag ?? 1) * this.atkM) * this.stageM);
+		});
+
+		return (typeof i !== 'undefined') ? atks[0] : atks;
 	}
 
 	__hasab(ab) {
@@ -771,21 +784,6 @@ class CatForm extends Unit {
 	}
 	set speed(value) {
 		this.info.speed = value;
-	}
-	get atkm() {
-		return this._getatks().reduce((rv, x) => rv + x);
-	}
-	get atks() {
-		return this._getatks();
-	}
-	get atk() {
-		return this._getatks(0);
-	}
-	get atk1() {
-		return this._getatks(1);
-	}
-	get atk2() {
-		return this._getatks(2);
 	}
 	get tatks() {
 		return this._gettatks({mode: 'max'});
@@ -1528,6 +1526,9 @@ class Enemy extends Unit {
 		Object.defineProperties(this, {
 			env: {value: props.env ?? catEnv, writable: true, configurable: true},
 			info: {value: o, enumerable: true},
+			hpM: {value: props.hpM ?? 1, writable: true, configurable: true, enumerable: true},
+			atkM: {value: props.atkM ?? 1, writable: true, configurable: true, enumerable: true},
+			stageM: {value: props.stageM ?? 1, writable: true, configurable: true, enumerable: true},
 		});
 	}
 	get fandom() {
@@ -1556,6 +1557,19 @@ class Enemy extends Unit {
 		const value = `https://battle-cats.fandom.com/wiki/${this.fandom}`;
 		Object.defineProperty(this, 'fandomUrl', {value});
 		return value;
+	}
+	get alienMag() {
+		if (this.trait & TB_ALIEN)
+			return (this.star === 1) ? this.env.alien_star_t : this.env.alien_t;
+
+		if (this.star === 2)
+			return this.env.god1_t;
+
+		if (this.star === 3)
+			return this.env.god2_t;
+
+		if (this.star === 4)
+			return this.env.god3_t;
 	}
 
 	__cost() {
