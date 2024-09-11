@@ -1,4 +1,4 @@
-import {config, numStr, numStrT} from './common.mjs';
+import {config, numStr, numStrT, round} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
 
 var cats;
@@ -96,7 +96,7 @@ function renderTable(forms, page = 1) {
 		for (let i = 0; i < display_forms.length; ++i) {
 			const tr = tbody.appendChild(document.createElement("tr"));
 			const F = display_forms[i][1];
-			const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", F.hp, F.atkm, Math.round(F.dps + Number.EPSILON), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(1.5 * F.info.price), numStr(display_forms[i][0])];
+			const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", F.hp, F.atkm, round(F.dps), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(1.5 * F.info.price), numStr(display_forms[i][0])];
 			for (let j = 0; j < 13; ++j) {
 				var e = tr.appendChild(document.createElement("td"));
 				if (j == 3) {

@@ -1,4 +1,4 @@
-import {fetch, config, numStr} from './common.mjs';
+import {fetch, config, numStr, round} from './common.mjs';
 
 const DB_NAME = 'db';
 const DB_VERSION = {{{lookup (loadJSON "config.json") "cat_ver"}}};
@@ -251,7 +251,7 @@ class CatForm {
 		this.info.price = value;
 	}
 	get hp() {
-		return ~~(~~(Math.round(this.info.hp * this.getLevelMulti()) * catEnv.hp_t) * this.hpM);
+		return ~~(~~(round(this.info.hp * this.getLevelMulti()) * catEnv.hp_t) * this.hpM);
 	}
 
 	get thp() {
@@ -1210,7 +1210,7 @@ class CatForm {
 		atks = (typeof i !== 'undefined') ? [atks[i]] : atks.filter((x, i) => !i || x);
 
 		atks = atks.map(atk => {
-			return ~~(~~(Math.round(atk * m) * catEnv.atk_t) * this.atkM);
+			return ~~(~~(round(atk * m) * catEnv.atk_t) * this.atkM);
 		});
 
 		return (typeof i !== 'undefined') ? atks[0] : atks;
@@ -1383,7 +1383,7 @@ class Enemy {
 		return this.info.ab;
 	}
 	get earn() {
-		return Math.round(100 * (this.info.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]) + Number.EPSILON)) / 100;
+		return round(this.info.earn * (.95 + .05 * catEnv.treasures[18] + .005 * catEnv.treasures[3]), 2);
 	}
 	get star() {
 		return this.info.star;

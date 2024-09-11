@@ -138,6 +138,11 @@ function numStrX(num) {
 	return fn(num);
 }
 
+function round(num, decimals = 0) {
+	const mul = 10 ** decimals;
+	return Math.round((num + Number.EPSILON) * mul) / mul;
+}
+
 async function fetchUrl(url, options) {
 	const response = await fetch(url, options).catch(ex => {
 		throw new Error(`Unable to fetch "${url}": ${ex.message}`);
@@ -159,4 +164,5 @@ export {
 	numStr,
 	numStrT,
 	numStrX,
+	round,
 };

@@ -1,5 +1,5 @@
 import {assert} from './lib/chai.js';
-import {config, fetch, getNumFormatter} from '../common.mjs';
+import {config, fetch, getNumFormatter, round} from '../common.mjs';
 
 describe('common.mjs', function () {
 
@@ -355,6 +355,25 @@ describe('common.mjs', function () {
 			assert.strictEqual(formatter.format(5), '5');
 			assert.strictEqual(formatter.format(16384), '16,384');
 			assert.strictEqual(formatter.format(Math.PI), "3.142");
+		});
+
+	});
+
+	describe('round', function () {
+
+		it('basic', function () {
+			assert.strictEqual(round(1.2), 1);
+			assert.strictEqual(round(1.49), 1);
+			assert.strictEqual(round(1.5), 2);
+			assert.strictEqual(round(1.6), 2);
+		});
+
+		it('with decimals specified', function () {
+			assert.strictEqual(round(1.0049, 2), 1.00);
+			assert.strictEqual(round(1.005, 2), 1.01);
+
+			assert.strictEqual(round(10049, -2), 10000);
+			assert.strictEqual(round(10050, -2), 10100);
 		});
 
 	});
