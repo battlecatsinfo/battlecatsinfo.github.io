@@ -1289,7 +1289,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		tr = document.createElement('tr');
 		tbody.appendChild(tr);
 		td = document.createElement('td');
-		td.textContent = `${form.id} - ${form.lvc}`;
+		td.textContent = `${form.id} - ${form.lvc + 1}`;
 		td.contentEditable = true;
 		td.inputMode = 'numeric';
 		td.addEventListener('focus', handleFocus);
@@ -1304,7 +1304,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 					return;
 				}
 			}
-			t.textContent = `${form.id} - ${form.lvc}`;
+			t.textContent = `${form.id} - ${form.lvc + 1}`;
 		});
 		tr.appendChild(td);
 		td = document.createElement('td');
