@@ -6,7 +6,7 @@ import * as Unit from '../unit.mjs';
 
 describe('unit.mjs', function () {
 
-	before(function () {
+	beforeEach(function() {
 		Unit.catEnv.reset();
 	});
 
@@ -1018,10 +1018,6 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.hp', function () {
 
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
-
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
 				assert.strictEqual(cf.hp, 250);
@@ -1061,10 +1057,6 @@ describe('unit.mjs', function () {
 		});
 
 		describe('CatForm.atks', function () {
-
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
 
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
@@ -1108,10 +1100,6 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.atkm', function () {
 
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
-
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
 				assert.strictEqual(cf.atkm, 20);
@@ -1154,10 +1142,6 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.atk', function () {
 
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
-
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
 				assert.strictEqual(cf.atk, cf.atks[0]);
@@ -1194,10 +1178,6 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.atk1', function () {
 
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
-
 			it('return second attack for multi-attack', async function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
@@ -1232,10 +1212,6 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.atk2', function () {
 
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
-
 			it('return third attack for multi-attack', async function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
@@ -1269,10 +1245,6 @@ describe('unit.mjs', function () {
 		});
 
 		describe('CatForm.dps', function () {
-
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
 
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
@@ -2679,10 +2651,6 @@ describe('unit.mjs', function () {
 
 		describe('Enemy.hp', function () {
 
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
-
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
 				assert.strictEqual(enemy.hp, 90);
@@ -2779,10 +2747,6 @@ describe('unit.mjs', function () {
 		});
 
 		describe('Enemy.atks', function () {
-
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
 
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
@@ -3056,10 +3020,6 @@ describe('unit.mjs', function () {
 		});
 
 		describe('Enemy.earn', function () {
-
-			afterEach(function () {
-				Unit.catEnv.reset();
-			});
 
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
