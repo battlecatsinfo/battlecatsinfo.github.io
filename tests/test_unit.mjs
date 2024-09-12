@@ -1,4 +1,5 @@
 import {assert} from './lib/chai.js';
+import sinon from './lib/sinon-esm.js';
 import {dbGetAll, dbClear, dbDelete} from './common.mjs';
 import {round} from '../common.mjs';
 import * as Common from '../common.mjs';
@@ -211,36 +212,16 @@ describe('unit.mjs', function () {
 
 		describe('reset', function () {
 
-			it('basic', function () {
+			it('check if underlying reset methods are correctly called', function () {
 				var env = new Unit.CatEnv();
-				var treasures = env._treasures;
-				var orbs = env._orbs;
-				var others = env._others;
+				var spy1 = sinon.spy(env, 'resetTreasures');
+				var spy2 = sinon.spy(env, 'resetOrbs');
+				var spy3 = sinon.spy(env, 'resetOthers');
 
-				env._treasures[0] = 0;
-				env._treasures[2] = 0;
-				env._orbs.atk.push(5);
-				env._orbs.hp.push(5);
-				env._orbs.massive.push(5);
-				env._orbs.resist.push(5);
-				env._orbs.good.push(5);
-				env._others[1] = 1;
-				env._others[2] = [0.1, 0.15];
-				env._others[5] = [528, 792];
 				env.reset();
-
-				assert.strictEqual(env._treasures, treasures);
-				assert.deepEqual(env._treasures, Common.config.getDefaultTreasures());
-				assert.strictEqual(env._orbs, orbs);
-				assert.deepEqual(env._orbs, {
-					atk: [],
-					hp: [],
-					good: [],
-					massive: [],
-					resist: [],
-				});
-				assert.strictEqual(env._others, others);
-				assert.deepEqual(env._others, {});
+				assert(spy1.calledOnceWith());
+				assert(spy2.calledOnceWith());
+				assert(spy3.calledOnceWith());
 			});
 
 		});
@@ -1058,6 +1039,15 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.atks', function () {
 
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_getatks');
+				assert.strictEqual(cf.atks, spy.returnValues[0]);
+				assert(spy.calledOnceWith());
+			});
+
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
 				assert.deepEqual(cf.atks, [20]);
@@ -1099,6 +1089,15 @@ describe('unit.mjs', function () {
 		});
 
 		describe('CatForm.atkm', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_getatks');
+				assert.strictEqual(cf.atkm, spy.returnValues[0].reduce((rv, x) => rv + x));
+				assert(spy.calledOnceWith());
+			});
 
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
@@ -1142,6 +1141,15 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.atk', function () {
 
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_getatks');
+				assert.strictEqual(cf.atk, spy.returnValues[0]);
+				assert(spy.calledOnceWith(0));
+			});
+
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
 				assert.strictEqual(cf.atk, cf.atks[0]);
@@ -1178,6 +1186,15 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.atk1', function () {
 
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_getatks');
+				assert.strictEqual(cf.atk1, spy.returnValues[0]);
+				assert(spy.calledOnceWith(1));
+			});
+
 			it('return second attack for multi-attack', async function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
@@ -1212,6 +1229,15 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.atk2', function () {
 
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_getatks');
+				assert.strictEqual(cf.atk2, spy.returnValues[0]);
+				assert(spy.calledOnceWith(2));
+			});
+
 			it('return third attack for multi-attack', async function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
@@ -1245,6 +1271,19 @@ describe('unit.mjs', function () {
 		});
 
 		describe('CatForm.dps', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_getatks');
+				assert.approximately(
+					cf.dps,
+					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / cf.attackF,
+					Number.EPSILON,
+				);
+				assert(spy.calledOnceWith());
+			});
 
 			it('level should be counted', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
@@ -1291,6 +1330,15 @@ describe('unit.mjs', function () {
 		});
 
 		describe('CatForm.thp', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(269)).forms[1];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_getthp');
+				assert.strictEqual(cf.thp, spy.returnValues[0]);
+				assert(spy.calledOnceWith());
+			});
 
 			it('EVA-killer should be counted', async function () {
 				var cf = (await Unit.loadCat(412)).forms[1];
@@ -1343,6 +1391,23 @@ describe('unit.mjs', function () {
 		});
 
 		describe('CatForm.hpAgainst', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(269)).forms[1];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_getthp');
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), spy.returnValues[0]);
+				assert(spy.calledOnceWith({traits: Unit.TB_WHITE}));
+
+				spy.resetHistory();
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RED | Unit.TB_FLOAT), spy.returnValues[0]);
+				assert(spy.calledOnceWith({traits: Unit.TB_RED | Unit.TB_FLOAT}));
+
+				spy.resetHistory();
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RELIC), spy.returnValues[0]);
+				assert(spy.calledOnceWith({traits: Unit.TB_RELIC}));
+			});
 
 			it('EVA-killer should be counted', async function () {
 				var cf = (await Unit.loadCat(412)).forms[1];
@@ -1412,6 +1477,15 @@ describe('unit.mjs', function () {
 		});
 
 		describe('CatForm.tatks', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(642)).forms[1];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_gettatks');
+				assert.strictEqual(cf.tatks, spy.returnValues[0]);
+				assert(spy.calledOnceWith({mode: 'max'}));
+			});
 
 			it('surge should be counted', async function () {
 				var cf = (await Unit.loadCat(642)).forms[1];
@@ -1513,6 +1587,32 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.tdps', function () {
 
+			it('check if underlying API is correctly called', async function () {
+				// single attack
+				var cf = (await Unit.loadCat(642)).forms[1];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_gettatks');
+				assert.approximately(
+					cf.tdps,
+					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / cf.attackF,
+					Number.EPSILON,
+				);
+				assert(spy.calledOnceWith({mode: 'expected'}));
+
+				// multi-attack
+				var cf = (await Unit.loadCat(71)).forms[2];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_gettatks');
+				assert.approximately(
+					cf.tdps,
+					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / cf.attackF,
+					Number.EPSILON,
+				);
+				assert(spy.calledOnceWith({mode: 'expected'}));
+			});
+
 			it('surge should be counted', async function () {
 				var cf = (await Unit.loadCat(642)).forms[1];
 				cf.level = 50;
@@ -1612,6 +1712,28 @@ describe('unit.mjs', function () {
 		});
 
 		describe('CatForm.dpsAgainst', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				// single attack
+				var cf = (await Unit.loadCat(269)).forms[1];
+				cf.level = 50;
+
+				var spy = sinon.spy(cf, '_gettatks');
+				assert.approximately(
+					cf.dpsAgainst(Unit.TB_WHITE),
+					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / cf.attackF,
+					Number.EPSILON,
+				);
+				assert(spy.calledOnceWith({traits: Unit.TB_WHITE, mode: 'expected'}));
+
+				spy.resetHistory();
+				assert.approximately(
+					cf.dpsAgainst(Unit.TB_RED | Unit.TB_FLOAT),
+					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / cf.attackF,
+					Number.EPSILON,
+				);
+				assert(spy.calledOnceWith({traits: Unit.TB_RED | Unit.TB_FLOAT, mode: 'expected'}));
+			});
 
 			it('surge should be counted', async function () {
 				var cf = (await Unit.loadCat(642)).forms[1];
@@ -2748,6 +2870,13 @@ describe('unit.mjs', function () {
 
 		describe('Enemy.atks', function () {
 
+			it('check if underlying API is correctly called', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				var spy = sinon.spy(enemy, '_getatks');
+				assert.strictEqual(enemy.atks, spy.returnValues[0]);
+				assert(spy.calledOnceWith());
+			});
+
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
 				assert.deepEqual(enemy.atks, [8]);
@@ -2847,6 +2976,13 @@ describe('unit.mjs', function () {
 
 		describe('Enemy.atkm', function () {
 
+			it('check if underlying API is correctly called', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				var spy = sinon.spy(enemy, '_getatks');
+				assert.strictEqual(enemy.atkm, spy.returnValues[0].reduce((rv, x) => rv + x));
+				assert(spy.calledOnceWith());
+			});
+
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
 				assert.strictEqual(enemy.atkm, 8);
@@ -2860,6 +2996,13 @@ describe('unit.mjs', function () {
 		});
 
 		describe('Enemy.atk', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				var spy = sinon.spy(enemy, '_getatks');
+				assert.strictEqual(enemy.atk, spy.returnValues[0]);
+				assert(spy.calledOnceWith(0));
+			});
 
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
@@ -2875,6 +3018,13 @@ describe('unit.mjs', function () {
 
 		describe('Enemy.atk1', function () {
 
+			it('check if underlying API is correctly called', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				var spy = sinon.spy(enemy, '_getatks');
+				assert.strictEqual(enemy.atk1, spy.returnValues[0]);
+				assert(spy.calledOnceWith(1));
+			});
+
 			it('return 0 if no multi-attack', async function () {
 				var enemy = await Unit.loadEnemy(0);
 				assert.deepEqual(enemy.atk1, 0);
@@ -2888,6 +3038,13 @@ describe('unit.mjs', function () {
 		});
 
 		describe('Enemy.atk2', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				var spy = sinon.spy(enemy, '_getatks');
+				assert.strictEqual(enemy.atk2, spy.returnValues[0]);
+				assert(spy.calledOnceWith(2));
+			});
 
 			it('return 0 if no related multi-attack', async function () {
 				var enemy = await Unit.loadEnemy(0);
@@ -2903,6 +3060,17 @@ describe('unit.mjs', function () {
 
 		describe('Enemy.dps', function () {
 
+			it('check if underlying API is correctly called', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				var spy = sinon.spy(enemy, '_getatks');
+				assert.approximately(
+					enemy.dps,
+					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / enemy.attackF,
+					Number.EPSILON,
+				);
+				assert(spy.calledOnceWith());
+			});
+
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
 				assert.strictEqual(round(enemy.dps), 5);
@@ -2916,6 +3084,13 @@ describe('unit.mjs', function () {
 		});
 
 		describe('Enemy.thp', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var enemy = await Unit.loadEnemy(552);
+				var spy = sinon.spy(enemy, '_getthp');
+				assert.strictEqual(enemy.thp, spy.returnValues[0]);
+				assert(spy.calledOnceWith());
+			});
 
 			it('demon shield should be considered', async function () {
 				// no mag
@@ -2932,6 +3107,13 @@ describe('unit.mjs', function () {
 		});
 
 		describe('Enemy.tatks', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var enemy = await Unit.loadEnemy(552);
+				var spy = sinon.spy(enemy, '_gettatks');
+				assert.strictEqual(enemy.tatks, spy.returnValues[0]);
+				assert(spy.calledOnceWith({mode: 'max'}));
+			});
 
 			it('surge should be counted', async function () {
 				var enemy = await Unit.loadEnemy(513);
@@ -2976,6 +3158,17 @@ describe('unit.mjs', function () {
 		});
 
 		describe('Enemy.tdps', function () {
+
+			it('check if underlying API is correctly called', async function () {
+				var enemy = await Unit.loadEnemy(52);
+				var spy = sinon.spy(enemy, '_gettatks');
+				assert.approximately(
+					enemy.tdps,
+					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / enemy.attackF,
+					Number.EPSILON,
+				);
+				assert(spy.calledOnceWith({mode: 'expected'}));
+			});
 
 			it('surge should be counted', async function () {
 				var enemy = await Unit.loadEnemy(513);
