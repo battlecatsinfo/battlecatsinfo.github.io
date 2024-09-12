@@ -738,11 +738,7 @@
 			0,
 			0
 		],
-		"stage": [
-			"/stage.html?s=11-48",
-			"Season1～學園生活～"
-		],
-		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每100統率力</th></tr><tr><td>決定命運的換座位</td><td>運命を決める席替え</td><td>10</td><td>0.25</td><td>2.5</td></tr><tr><td>青梅竹馬坐在隔壁</td><td>幼馴染が隣の席</td><td>20</td><td>0.35</td><td>1.75</td></tr><tr><td>常掉地上的橡皮擦</td><td>よく落ちる消しゴム</td><td>30</td><td>0.45</td><td>1.5</td></tr><tr><td>併桌子一起看課本</td><td>教科書見せてとくっつく机</td><td>40</td><td>0.55</td><td>1.375</td></tr><tr><td>照抄朋友寫的功課</td><td>友達の宿題を丸写し</td><td>50</td><td>0.65</td><td>1.3</td></tr><tr><td>上課時偷偷吃便當</td><td>こっそり早弁チャレンジ</td><td>60</td><td>0.75</td><td>1.25</td></tr><tr><td>課堂中與周公下棋</td><td>授業中は夢の中</td><td>70</td><td>0.8</td><td>1.14</td></tr><tr><td>躲避球的閃球達人</td><td>ドッヂボールは逃走専門</td><td>80</td><td>0.9</td><td>1.125</td></tr><tr><td>午休時間卻睡不著</td><td>昼休み購買競走</td><td>90</td><td>1</td><td>1.11</td></tr><tr><td>下課後的兩人自修</td><td>放課後二人きりのテスト勉強</td><td>100</td><td>1.08</td><td>1.08</td></tr><tr><td>操行成績也很重要</td><td>内申点のために行儀よく</td><td>110</td><td>1.1</td><td>1</td></tr><tr><td>不會的題目被點名</td><td>解けない問題に限って当たる</td><td>120</td><td>1.2</td><td>1</td></tr><tr><td>還好有人偷給提示</td><td>こっそり教えてくれる答え</td><td>130</td><td>1.35</td><td>1.04</td></tr><tr><td>措手不及隨堂小考</td><td>突然の抜き打ちテスト</td><td>140</td><td>1.45</td><td>1.03</td></tr><tr><td>剛好跨過及格門檻</td><td>ギリギリ赤点回避</td><td>150</td><td>1.55</td><td>1.03</td></tr><tr><td>今天的書包特別輕</td><td>置き勉でらくらく登下校</td><td>160</td><td>1.7</td><td>1.06</td></tr><tr><td>和她一起當值日生</td><td>あの子と一緒の掃除当番</td><td>170</td><td>1.85</td><td>1.09</td></tr><tr><td>目光總是在妳身上</td><td>目線の先にはいつも君</td><td>180</td><td>2</td><td>1.11</td></tr><tr><td>前天熬夜惡補失敗</td><td>一夜漬けに失敗</td><td>190</td><td>2.15</td><td>1.13</td></tr><tr><td>考試愛情求神保佑</td><td>成績と恋の行方は神頼み</td><td>200</td><td>2.3</td><td>1.15</td></tr></tbody>",
+		"stage": "11-48",
 		"ticket": [
 			"傳說的情書",
 			"/img/r/200.png"
@@ -792,11 +788,7 @@
 			0,
 			0
 		],
-		"stage": [
-			"/stage.html?s=11-41",
-			"貓咪歡慶佳節～過年篇～"
-		],
-		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每100統率力</th></tr><tr><td>一年一度農曆新年</td><td>太陰暦のお正月らしい</td><td>50</td><td>0.5</td><td>1</td></tr><tr><td>響亮沖天炮迎好年</td><td>大玉花火でド派手にお祝い</td><td>55</td><td>5.5</td><td>1</td></tr><tr><td>爆音炮聲驅魔避邪</td><td>大音量の爆竹で魔除け</td><td>60</td><td>0.6</td><td>1</td></tr><tr><td>換新鈔票來包紅包</td><td>赤い袋でお年玉ねだり</td><td>65</td><td>0.65</td><td>1</td></tr><tr><td>相互拜年大吉大利</td><td>挨拶回りは長寿祈願</td><td>70</td><td>0.7</td><td>1</td></tr><tr><td>活靈活現舞龍舞獅</td><td>アクロバティック獅子舞</td><td>75</td><td>0.75</td><td>1</td></tr><tr><td>福字倒貼象徵福到</td><td>逆さ福字の飾りで福を招く</td><td>80</td><td>0.8</td><td>1</td></tr><tr><td>紅色代表吉祥如意</td><td>赤提灯は超めでたい色</td><td>85</td><td>0.85</td><td>1</td></tr><tr><td>吃了水餃招財進寶</td><td>まんぷく年越し水餃子</td><td>90</td><td>1.3</td><td>1.44</td></tr><tr><td>家家戶戶返鄉過年</td><td>帰省で全国大移動</td><td>100</td><td>1.5</td><td>1.5</td></tr></tbody>",
+		"stage": "11-41",
 		"ticket": [
 			"傳說金元寶",
 			"/img/r/199.png"
@@ -845,11 +837,7 @@
 			0,
 			0
 		],
-		"stage": [
-			"/stage.html?s=11-41",
-			"貓咪歡慶佳節～過年篇～"
-		],
-		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每100統率力</th></tr><tr><td>一年一度農曆新年</td><td>太陰暦のお正月らしい</td><td>50</td><td>0.5</td><td>1</td></tr><tr><td>響亮沖天炮迎好年</td><td>大玉花火でド派手にお祝い</td><td>55</td><td>5.5</td><td>1</td></tr><tr><td>爆音炮聲驅魔避邪</td><td>大音量の爆竹で魔除け</td><td>60</td><td>0.6</td><td>1</td></tr><tr><td>換新鈔票來包紅包</td><td>赤い袋でお年玉ねだり</td><td>65</td><td>0.65</td><td>1</td></tr><tr><td>相互拜年大吉大利</td><td>挨拶回りは長寿祈願</td><td>70</td><td>0.7</td><td>1</td></tr><tr><td>活靈活現舞龍舞獅</td><td>アクロバティック獅子舞</td><td>75</td><td>0.75</td><td>1</td></tr><tr><td>福字倒貼象徵福到</td><td>逆さ福字の飾りで福を招く</td><td>80</td><td>0.8</td><td>1</td></tr><tr><td>紅色代表吉祥如意</td><td>赤提灯は超めでたい色</td><td>85</td><td>0.85</td><td>1</td></tr><tr><td>吃了水餃招財進寶</td><td>まんぷく年越し水餃子</td><td>90</td><td>1.3</td><td>1.44</td></tr><tr><td>家家戶戶返鄉過年</td><td>帰省で全国大移動</td><td>100</td><td>1.5</td><td>1.5</td></tr></tbody>",
+		"stage": "11-41",
 		"ticket": [
 			"傳說金元寶",
 			"/img/r/199.png"
@@ -897,11 +885,7 @@
 			200,
 			0
 		],
-		"stage": [
-			"/stage.html?s=11-52",
-			"#01「惡魔婚宴會場」"
-		],
-		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每100統率力</th></tr><tr><td>附身在新郎的惡魔</td><td>新郎に憑りついた悪霊</td><td>50</td><td>0.5</td><td>1</td></tr><tr><td>吃螺絲的新手神父</td><td>噛み噛み新人神父</td><td>55</td><td>0.55</td><td>1</td></tr><tr><td>半透明的親朋好友</td><td>スケスケ参列者</td><td>60</td><td>0.6</td><td>1</td></tr><tr><td>雜音滿滿婚禮致詞</td><td>ノイズまみれのスピーチ</td><td>65</td><td>0.65</td><td>1</td></tr><tr><td>受到詛咒的聖歌隊</td><td>呪われた聖歌隊</td><td>70</td><td>0.8</td><td>1.14</td></tr><tr><td>素食主義者的殭屍</td><td>ベジタリアンゾンビ</td><td>75</td><td>0.95</td><td>1.26</td></tr><tr><td>會自動演奏的風琴</td><td>ひとりでに鳴るオルガン</td><td>80</td><td>1.1</td><td>1.375</td></tr><tr><td>四處亂飛的送客禮</td><td>飛び交う引き出物</td><td>85</td><td>1.08</td><td>1.27</td></tr><tr><td>名為聖水的礦泉水</td><td>聖水の中身は水道水</td><td>90</td><td>1.175</td><td>1.03</td></tr><tr><td>大家一起前往天堂</td><td>みんなで仲良く成仏</td><td>100</td><td>1.3</td><td>1.3</td></tr></tbody>",
+		"stage": "11-52",
 		"ticket": [
 			"傳說的聖水",
 			"/img/r/202.png"
@@ -952,11 +936,7 @@
 			200,
 			0
 		],
-		"stage": [
-			"/stage.html?s=11-19",
-			"貓咪的暑假"
-		],
-		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每100統率力</th></tr><tr><td>暑假的開始</td><td>夏休みのはじまり</td><td>30</td><td>0.3</td><td>1</td></tr><tr><td>日暮的合唱</td><td>ひぐらしの合唱</td><td>35</td><td>0.36</td><td>1.03</td></tr><tr><td>泛亮夜的光</td><td>夜にあふれる光</td><td>40</td><td>0.42</td><td>1.05</td></tr><tr><td>樹上的基地</td><td>樹上のひみつ基地</td><td>45</td><td>0.48</td><td>1.07</td></tr><tr><td>晚餐到來音</td><td>夕飯を告げる声</td><td>50</td><td>0.54</td><td>1.08</td></tr><tr><td>臭丸味浴衣</td><td>防虫剤の匂いの浴衣</td><td>60</td><td>0.65</td><td>1.08</td></tr><tr><td>今夜來晚睡</td><td>今日だけは夜ふかし</td><td>70</td><td>0.76</td><td>1.09</td></tr><tr><td>手拿捕蟲網</td><td>虫取り網を握って</td><td>80</td><td>0.88</td><td>1.1</td></tr><tr><td>海底發光寶</td><td>海底に光るお宝</td><td>90</td><td>1</td><td>1.11</td></tr><tr><td>驅蚊香煙霧</td><td>蚊取り線香のけむり</td><td>100</td><td>1.12</td><td>1.12</td></tr><tr><td>校園內圍舞</td><td>校庭で盆踊り</td><td>110</td><td>1.25</td><td>1.14</td></tr><tr><td>不思議小姐</td><td>ふしぎなお姉さん</td><td>120</td><td>1.4</td><td>1.17</td></tr><tr><td>曬黑王小白</td><td>日焼けしたタケシ君</td><td>130</td><td>1.55</td><td>1.19</td></tr><tr><td>遠處的藝聲</td><td>遠くに聞こえる祭囃子</td><td>140</td><td>1.7</td><td>1.21</td></tr><tr><td>試膽友失蹤</td><td>肝試しで消えた友達</td><td>150</td><td>1.85</td><td>1.23</td></tr><tr><td>醒來已中午</td><td>起きたら昼だった</td><td>160</td><td>2</td><td>1.25</td></tr><tr><td>秘密的海浦</td><td>発見！ヒミツの入り江</td><td>170</td><td>2.15</td><td>1.26</td></tr><tr><td>微微秋意涼</td><td>かすかな秋の気配</td><td>180</td><td>2.3</td><td>1.28</td></tr><tr><td>今夏末煙火</td><td>この夏最後の花火</td><td>190</td><td>2.45</td><td>1.29</td></tr><tr><td>寫不完作業</td><td>終わらない宿題</td><td>200</td><td>2.6</td><td>1.3</td></tr></tbody>",
+		"stage": "11-19",
 		"ticket": [
 			"傳說的捕蟲網",
 			"/img/r/203.png"
@@ -1075,11 +1055,7 @@
 			1200,
 			1
 		],
-		"stage": [
-			"/stage.html?s=2-93",
-			"聖魔大戰巧克力"
-		],
-		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td>潛在巧克力中的貼紙</td><td>チョコ裏に潜むシール</td><td>30</td><td>0.3</td><td>1</td></tr><tr><td>惡魔VS天使</td><td>悪魔VS天使</td><td>70</td><td>0.8</td><td>1.14</td></tr><tr><td>被貼上則加倍貼回！</td><td>はられたらはりかえせ！</td><td>100</td><td>1.3</td><td>1.3</td></tr><tr><td>如夢似的整箱買走</td><td>夢を箱買い</td><td>130</td><td>1.7</td><td>1.31</td></tr><tr><td>是真的！閃亮貼紙</td><td>驚き！キラシール</td><td>150</td><td>2.3</td><td>1.53</td></tr></tbody>",
+		"stage": "2-93",
 		"ticket": [
 			"聖魔大戰巧克力",
 			"/img/r/205.png"
@@ -1135,15 +1111,11 @@
 			0,
 			0
 		],
-		"stage": [
-			"/stage.html?s=11-67",
-			"貓咪的暑假 野外求生"
-		],
+		"stage": "11-67",
 		"ticket": [
 			"傳說的陷阱",
 			"/img/r/204.png"
 		],
-		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td>清晨的海岸</td><td>目覚めの海岸</td><td>30</td><td>0.3</td><td>1</td></tr><tr><td>在洞窟裡顫抖的夜晚</td><td>洞窟で震える夜</td><td>50</td><td>0.55</td><td>1.1</td></tr><tr><td>無人接收的SOS</td><td>誰にも届かぬSOS</td><td>60</td><td>0.7</td><td>1.17</td></tr><tr><td>因為毒蘑菇而腹瀉</td><td>毒キノコで腹下し</td><td>65</td><td>0.8</td><td>1.23</td></tr><tr><td>夢中的逃脫，食欲爆棚</td><td>夢見る脱出、溢れる食欲</td><td>70</td><td>0.9</td><td>1.29</td></tr><tr><td>捕獲了！</td><td>狩ったどー！</td><td>75</td><td>1</td><td>1.33</td></tr><tr><td>開始製作木筏</td><td>始まるいかだ作り</td><td>80</td><td>1.2</td><td>1.5</td></tr><tr><td>揚帆起航</td><td>いざ出航</td><td>85</td><td>1.3</td><td>1.53</td></tr><tr><td>被風暴吞噬的木筏</td><td>嵐に飲まれるいかだ</td><td>90</td><td>1.4</td><td>1.56</td></tr><tr><td>歡迎回家 貓咪的暑假</td><td>おかえり ねこのなつやすみ</td><td>100</td><td>1.5</td><td>1.5</td></tr></tbody>",
 		"type": "event",
 		"units": [
 			[
@@ -1188,11 +1160,7 @@
 			0,
 			0
 		],
-		"stage": [
-			"/stage.html?s=13-10",
-			"めざせＧＩ にゃんこ競馬"
-		],
-		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td>出馬表チェックは入念に</td><td>10</td><td>1</td><td>10</td></tr><tr><td>天気には人一倍敏感</td><td>20</td><td>1.05</td><td>5.25</td></tr><tr><td>競馬新聞とにらめっこ</td><td>30</td><td>1.1</td><td>3.67</td></tr><tr><td>一度は当てたい万馬券</td><td>40</td><td>1.2</td><td>3</td></tr><tr><td>パドックで馬の調子を熟考</td><td>50</td><td>1.3</td><td>2.6</td></tr><tr><td>血統の知識は一級品</td><td>60</td><td>1.34</td><td>2.23</td></tr><tr><td>ラッキーナンバー頼み</td><td>70</td><td>1.38</td><td>1.97</td></tr><tr><td>オッズに踊らされる</td><td>80</td><td>1.42</td><td>1.775</td></tr><tr><td>財布はなぜか小銭だけ</td><td>90</td><td>1.46</td><td>1.62</td></tr><tr><td>迫る馬券発売の締切</td><td>100</td><td>1.5</td><td>1.5</td></tr><tr><td>追いつけ追い越せ引っこ抜け</td><td>110</td><td>1.56</td><td>1.42</td></tr><tr><td>逃げ馬たちの逆噴射</td><td>120</td><td>1.62</td><td>1.35</td></tr><tr><td>大番狂わせの大波乱</td><td>130</td><td>1.68</td><td>1.29</td></tr><tr><td>最後尾から驚異的な末脚</td><td>140</td><td>1.74</td><td>1.24</td></tr><tr><td>最後はスタミナ勝負</td><td>150</td><td>1.8</td><td>1.2</td></tr><tr><td>ハナ差で決着の超接戦</td><td>160</td><td>1.9</td><td>1.19</td></tr><tr><td>ハラハラ写真判定</td><td>170</td><td>2</td><td>1.18</td></tr><tr><td>買った馬券を三度見</td><td>180</td><td>2.1</td><td>1.17</td></tr><tr><td>まさかの同着に大興奮</td><td>190</td><td>2.2</td><td>1.16</td></tr><tr><td>来週もまた観ます</td><td>200</td><td>2.3</td><td>1.15</td></tr></tbody>",
+		"stage": "13-10",
 		"ticket": [
 			"傳說的胡蘿蔔",
 			"/img/r/162.png"
@@ -1241,15 +1209,11 @@
 			0,
 			0
 		],
-		"stage": [
-			"/stage.html?s=11-57-19",
-			"第1部 10年の軌跡パレード"
-		],
+		"stage": "11-57",
 		"ticket": [
 			"傳說的票券",
 			"/img/r/178.png"
 		],
-		"farm": "<tbody><tr><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td></td><td>2012年</td><td>10</td><td>0.25</td><td>2.5</td></tr><tr><td></td><td>2013年 その1</td><td>20</td><td>0.35</td><td>1.75</td></tr><tr><td></td><td>2013年 その2</td><td>30</td><td>0.45</td><td>1.5</td></tr><tr><td></td><td>2014年 その1</td><td>40</td><td>0.55</td><td>1.375</td></tr><tr><td></td><td>2014年 その2</td><td>50</td><td>0.65</td><td>1.3</td></tr><tr><td></td><td>2015年 その1</td><td>60</td><td>0.75</td><td>1.25</td></tr><tr><td></td><td>2015年 その2</td><td>70</td><td>0.8</td><td>1.14</td></tr><tr><td></td><td>2016年 その1</td><td>80</td><td>0.9</td><td>1.125</td></tr><tr><td></td><td>2016年 その2</td><td>90</td><td>1</td><td>1.11</td></tr><tr><td></td><td>2017年 その1</td><td>100</td><td>1.08</td><td>1.08</td></tr><tr><td></td><td>2017年 その2</td><td>110</td><td>1.1</td><td>1</td></tr><tr><td></td><td>2018年 その1</td><td>120</td><td>1.2</td><td>1</td></tr><tr><td></td><td>2018年 その2</td><td>130</td><td>1.35</td><td>1.04</td></tr><tr><td></td><td>2019年 その1</td><td>140</td><td>1.45</td><td>1.04</td></tr><tr><td></td><td>2019年 その2</td><td>150</td><td>1.6</td><td>1.07</td></tr><tr><td></td><td>2020年 その1</td><td>160</td><td>1.7</td><td>1.06</td></tr><tr><td></td><td>2020年 その2</td><td>170</td><td>1.85</td><td>1.09</td></tr><tr><td></td><td>2021年 その1</td><td>180</td><td>2</td><td>1.11</td></tr><tr><td></td><td>2021年 その2</td><td>190</td><td>2.15</td><td>1.13</td></tr><tr><td></td><td>2022年</td><td>200</td><td>2.3</td><td>1.15</td></tr></tbody>",
 		"tw_url": "",
 		"type": "event",
 		"units": [
@@ -1296,15 +1260,11 @@
 			0,
 			0
 		],
-		"stage": [
-			"/stage.html?s=11-62-0",
-			"第1章 ネコたちの冒険"
-		],
+		"stage": "11-62",
 		"ticket": [
 			"傳說的小徽章",
 			"/img/r/198.png"
 		],
-		"farm": "<tbody><tr><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td></td><td>旅立ちの朝</td><td>10</td><td>0.25</td><td>2.5</td></tr><tr><td></td><td>ネコはタンスを開けた</td><td>20</td><td>0.35</td><td>1.75</td></tr><tr><td></td><td>しかし中身はからっぽだった</td><td>30</td><td>0.45</td><td>1.5</td></tr><tr><td></td><td>やせいの犬がとびだしてきた！</td><td>40</td><td>0.55</td><td>1.375</td></tr><tr><td></td><td>不思議な踊りを踊った</td><td>50</td><td>0.65</td><td>1.3</td></tr><tr><td></td><td>薬草も尽きた</td><td>60</td><td>0.75</td><td>1.25</td></tr><tr><td></td><td>ネコは急所をついた</td><td>70</td><td>0.8</td><td>1.14</td></tr><tr><td></td><td>起き上がりこちらを見ている</td><td>80</td><td>0.9</td><td>1.125</td></tr><tr><td></td><td>ゆうべは夜更かしでしたね</td><td>90</td><td>1</td><td>1.11</td></tr><tr><td></td><td>故郷の村が壊滅した！</td><td>100</td><td>1.08</td><td>1.08</td></tr><tr><td></td><td>宝箱は罠だった</td><td>110</td><td>1.1</td><td>1</td></tr><tr><td></td><td>使うと回復する杖</td><td>120</td><td>1.2</td><td>1</td></tr><tr><td></td><td>呪いで装備が外れない</td><td>130</td><td>1.35</td><td>1.04</td></tr><tr><td></td><td>おや！？ネコの様子が…！</td><td>140</td><td>1.45</td><td>1.04</td></tr><tr><td></td><td>ジョブチェンジした</td><td>150</td><td>1.6</td><td>1.07</td></tr><tr><td></td><td>伝説の剣が抜けない</td><td>160</td><td>1.7</td><td>1.06</td></tr><tr><td></td><td>すり抜けられる壁</td><td>170</td><td>1.75</td><td>1.03</td></tr><tr><td></td><td>王様が操られている！</td><td>180</td><td>2</td><td>1.11</td></tr><tr><td></td><td>決戦前夜</td><td>190</td><td>2.15</td><td>1.13</td></tr><tr><td></td><td>冒険のきろくが消えました</td><td>200</td><td>2.3</td><td>1.15</td></tr></tbody>",
 		"type": "event",
 		"units": [
 			[
@@ -1351,11 +1311,7 @@
 			0,
 			0
 		],
-		"stage": [
-			"/stage.html?s=1-282",
-			"Q1.猜猜我是誰"
-		],
-		"farm": "<tbody><tr class=\"w3-black\"><th>關卡</th><th>日文</th><th>統率力</th><th>期望值</th><th>每 100 統率力</th></tr><tr><td>共有三隻神秘角色</td><td>隠れキャラは合計4体!</td><td>40</td><td>0.5</td><td>1.25</td></tr><tr><td>打開箱子一探究竟</td><td>はてなボックスを開き確かめろ!</td><td>45</td><td>0.55</td><td>1.22</td></tr><tr><td>第一隻是限量發行</td><td>1体目は限定生産品!?</td><td>50</td><td>0.6</td><td>1.2</td></tr><tr><td>抱著滿滿感恩的心</td><td>感謝の気持ち入り!</td><td>55</td><td>0.65</td><td>1.18</td></tr><tr><td>好像是某種紀念幣</td><td>何かの記念メダル!?</td><td>60</td><td>0.7</td><td>1.17</td></tr><tr><td>第二隻會招來福氣</td><td>2体目は福を招く?</td><td>65</td><td>0.75</td><td>1.15</td></tr><tr><td>感謝所有人的愛戴</td><td>縁起物!!</td><td>70</td><td>0.8</td><td>1.14</td></tr><tr><td>帶給大家滿滿食糧</td><td>3体目はミステリアスキャラ?</td><td>80</td><td>0.85</td><td>1.06</td></tr><tr><td>貓咪造型的吉祥物</td><td>エイリアンを斬る!!</td><td>90</td><td>0.89</td><td>0.99</td></tr><tr><td>第三隻是首次登場</td><td>4体目は食べ物!?</td><td>100</td><td>0.93</td><td>0.93</td></tr><tr><td>於行星間華麗飛舞</td><td>ファーストフード!?</td><td>110</td><td>0.97</td><td>0.88</td></tr><tr><td>一刀斬斷異星戰士</td><td>重量150グラム!!</td><td>120</td><td>1</td><td>0.83</td></tr></tbody>",
+		"stage": "1-282",
 		"ticket": [
 			"神秘箱子",
 			"/img/r/163.png"

@@ -126,6 +126,57 @@ function to_path(s) {
 	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');
 }
 
+// calculate average reward per stage
+function average_reward(drop, rand) {
+	const drops = drop.split('|').map(x => x.split(',').map(Number));
+	const chances = [];
+	let sum = 0;
+	rand = parseInt(rand, 10);
+	const ints = [];
+	for (const v of drops) {
+		ints.push(v[0]);
+		sum += v[0];
+	}
+	if (sum === 1000 || sum === 100 || rand === -4) {
+		for (const c of ints)
+			chances.push(new Fraction(c, sum));
+	} else if (rand === -3) {
+		for (const _ of ints)
+			chances.push(new Fraction(1, drops.length));
+	} else if (sum > 100 && (rand === 0 || rand === 1)) {
+		let rest = new Fraction(100);
+		if (ints[0] === 100) {
+			chances.push(new Fraction(1));
+			for (let i = 1; i < ints.length; ++i) {
+				const filter = rest.mul(ints[i]).div(100);
+				rest = rest.sub(filter);
+				chances.push(filter.div(100));
+			}
+		} else {
+			for (const x of ints) {
+				const filter = rest.mul(x).div(100);
+				rest = rest.sub(filter);
+				chances.push(filter.div(100));
+			}
+		}
+	} else {
+		for (const c of ints)
+			chances.push(new Fraction(c, 100));
+	}
+
+	// must have rewards!
+	console.assert(chances.length);
+
+	if (rand === 1)
+		chances[0] = new Fraction(0);
+
+	let avg = new Fraction(0);
+	for (let i = 0;i < drops.length;++i)
+		avg = avg.add(chances[i].mul(drops[i][2]));
+
+	return avg;
+}
+
 module.exports = class extends SiteGenerator {
 	run() {
 		try {
@@ -141,8 +192,22 @@ module.exports = class extends SiteGenerator {
 		this.categroy_pools = [];
 		this.resident_pools = [];
 		this.collab_pools = [];
+		this.stage_rewards = this.parse_tsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
+			let {id, name_tw, name_jp, energy, rand, drop} = entry;
+			id = parseInt(id, 36);
+			if (drop)
+				rv[id] = {name_tw, name_jp, energy, rand, drop};
+			return rv;
+		}, {});
+		this.map_names = this.parse_tsv(this.load('map.tsv')).reduce((rv, entry, i) => {
+			let {id, name_tw, name_jp} = entry;
+			id = parseInt(id, 36);
+			rv[id] = name_tw || name_jp || '？？？';
+			return rv;
+		}, {});
 
 		this.fmt = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 5 });
+		this.fmt2 = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 2 });
 		this.load_unit();
 
 		for (const pool of JSON.parse(this.load('pools.json'))) {
@@ -570,6 +635,30 @@ module.exports = class extends SiteGenerator {
 					base: this.max_base[id],
 					plus_jp: this.max_plus[id],
 					plus_tw: this.max_plus_tw[id],
+				});
+			}
+		}
+
+		if (O.stage) {
+			const [groupIdx, mapIdx] = O.stage.split('-').map(x => parseInt(x));
+			const map_id = groupIdx * 1000 + mapIdx;
+			S.farm = {
+				map_name: this.map_names[map_id],
+				stages: [],
+			}
+			for (let stage_id = map_id * 1000;;++stage_id) {
+				const rw = this.stage_rewards[stage_id];
+				if (!rw)
+					break;
+				const energy = parseInt(rw.energy, 36);
+				const average = average_reward(rw.drop, rw.rand);
+				const per100 = new Fraction(100, energy).mul(average);
+				S.farm.stages.push({
+					name_tw: rw.name_tw,
+					name_jp: rw.name_jp,
+					energy,
+					average: this.fmt2.format(average.valueOf()),
+					per100: this.fmt2.format(per100.valueOf()),
 				});
 			}
 		}

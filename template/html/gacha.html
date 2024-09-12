@@ -341,10 +341,25 @@
 	</table>
 	<small>有*標示為每十抽必定可獲得的限定角色</small>
 	{{#if pool.stage}}
-	<p style="margin-top:2em;"><a href="{{pool.stage.[0]}}">{{pool.stage.[1]}}</a></p>
-	{{/if}}
-	{{#if pool.farm}}
-	<table class="w3-table Y" style="width:auto">{{{pool.farm}}}</table>
+	<p style="margin-top:2em;"><a href="/stage.html?s={{pool.stage}}">{{data.farm.map_name}}</a></p>
+	<table class="w3-table Y" style="width:auto">
+		<tr class="w3-black">
+			<th>關卡</th>
+			<th>日文</th>
+			<th>統率力</th>
+			<th>期望值</th>
+			<th>每100統率力</th>
+		</tr>
+		{{#each data.farm.stages as |item|}}
+		<tr>
+			<td>{{item.name_tw}}</td>
+			<td>{{item.name_jp}}</td>
+			<td>{{item.energy}}</td>
+			<td>{{item.average}}</td>
+			<td>{{item.per100}}</td>
+		</tr>
+		{{/each}}
+	</table>
 	{{/if}}
 	{{#if data.max}}
 	<p style="margin-top:2em;">角色加值上限</p>
