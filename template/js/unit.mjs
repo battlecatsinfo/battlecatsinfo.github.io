@@ -650,7 +650,6 @@ class Unit {
 
 			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
 				atk *= 4;
-				return atk;
 			}
 
 			if (metalMode && isMetal) {
@@ -1613,15 +1612,12 @@ class CatForm extends Unit {
 
 			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
 				atk *= 4;
-				return atk;
 			}
 			if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL)) {
 				atk *= 5;
-				return atk;
 			}
 			if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL)) {
 				atk *= 5;
-				return atk;
 			}
 
 			const t = this.trait & traits;
