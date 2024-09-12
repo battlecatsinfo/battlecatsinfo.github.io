@@ -346,9 +346,30 @@
 	{{#if pool.farm}}
 	<table class="w3-table Y" style="width:auto">{{{pool.farm}}}</table>
 	{{/if}}
-	{{#if pool.max}}
+	{{#if data.max}}
 	<p style="margin-top:2em;">角色加值上限</p>
-	<table class="w3-table Y" style="width:auto">{{{pool.max}}}</table>
+	<table class="w3-table Y" style="width:auto">
+		<tbody>
+		<tr>
+			<td></td>
+			{{#each data.max as |item|}}
+			<td>{{item.name}}</td>
+			{{/each}}
+		</tr>
+		<tr>
+			<td>繁中版</td>
+			{{#each data.max as |item|}}
+			<td>{{#if (op item.plus_tw '!==' '')}}Lv. {{item.base}}+{{item.plus_tw}}{{else}}N/A{{/if}}</td>
+			{{/each}}
+		</tr>
+		<tr>
+			<td>日文版</td>
+			{{#each data.max as |item|}}
+			<td>Lv. {{item.base}}+{{item.plus_jp}}</td>
+			{{/each}}
+		</tr>
+		</tbody>
+	</table>
 	{{/if}}
 
 	{{/if}}

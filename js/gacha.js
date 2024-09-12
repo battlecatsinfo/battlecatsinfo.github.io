@@ -452,6 +452,7 @@ module.exports = class extends SiteGenerator {
 		const result = [];
 		let must_drop_group = 0;
 		let must_drop_rate = 0;
+		let gacha_units = new Set();
 
 		for (let i = 0, I;i < 9;i += 2) {
 			let rate = d_rate[i];
@@ -478,6 +479,7 @@ module.exports = class extends SiteGenerator {
 						'79',
 						'padding:.4em'
 					]);
+					gacha_units.add(I);
 				} else {
 					I = reward_order[x];
 					result.push([
@@ -560,6 +562,18 @@ module.exports = class extends SiteGenerator {
 
 		S.must_drop_rate = must_drop_rate;
 
+		if (gacha_units.size) {
+			S.max = [];
+			for (const id of Array.from(gacha_units).sort((a, b) => a - b)) {
+				S.max.push({
+					name: this.unit_name[id],
+					base: this.max_base[id],
+					plus_jp: this.max_plus[id],
+					plus_tw: this.max_plus_tw[id],
+				});
+			}
+		}
+
 		return S;
 	}
 	get_category(O) {
@@ -599,11 +613,17 @@ module.exports = class extends SiteGenerator {
 		this.egg_set = new Set();
 		this.unit_name = [];
 		this.unit_desc = [];
+		this.max_base = [];
+		this.max_plus = [];
+		this.max_plus_tw = [];
 
 		let data = this.parse_tsv(this.load('cat.tsv'));
 		let id = 0;
 		for (const cat of data) {
 			this.unit_rarity.push(parseInt(cat.rarity, 10));
+			this.max_base.push(cat.max_base_level);
+			this.max_plus.push(cat.max_plus_level);
+			this.max_plus_tw.push(cat.max_plus_level_tw);
 			if (cat.egg_id)
 				this.egg_set.add(id);
 			id++;
