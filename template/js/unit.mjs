@@ -940,7 +940,7 @@ class CatForm extends Unit {
 		this.info.price = value;
 	}
 	get hp() {
-		return ~~(~~(round(this.info.hp * this.getLevelMulti()) * this.env.hp_t) * this.hpM);
+		return ~~(~~(~~(round(this.info.hp * this.getLevelMulti()) * this.env.hp_t) * (1 + this.env.combo_hp)) * this.hpM);
 	}
 
 	hpAgainst(traits) {
@@ -1478,7 +1478,7 @@ class CatForm extends Unit {
 		atks = (typeof i !== 'undefined') ? [atks[i]] : atks.filter((x, i) => !i || x);
 
 		atks = atks.map(atk => {
-			return ~~(~~(round(atk * m) * this.env.atk_t) * this.atkM);
+			return ~~(~~(~~(round(atk * m) * this.env.atk_t) * (1 + this.env.combo_atk)) * this.atkM);
 		});
 
 		return (typeof i !== 'undefined') ? atks[0] : atks;
@@ -1501,19 +1501,19 @@ class CatForm extends Unit {
 		const ab = this._getab(abFilter);
 		let hp = this.hp;
 		if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL))
-			return hp * 10;
+			return hp * 10 * (1 + this.env.combo_witch);
 		if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL))
-			return hp * 5;
+			return hp * 5 * (1 + this.env.combo_eva);
 		const t = this.trait & traits;
 		if (t) {
 			const x = t & trait_treasure;
 			if (ab.hasOwnProperty(AB_RESIST)) {
-				hp *= x ? 5 : 4;
+				hp *= (4 + (x ? this.env.resist_t : 0)) / ((this.lvc >= 2 ? this.env.orb_resist : 1) * (1 - this.env.combo_resist));
 			} else if (ab.hasOwnProperty(AB_RESISTS)) {
-				hp *= x ? 7 : 6;
+				hp *= 6 + (x ? this.env.resist_t : 0);
 			}
 			if (ab.hasOwnProperty(AB_GOOD)) {
-				hp *= x ? 2.5 : 2;
+				hp /= (this.lvc >= 2 ? this.env.orb_good_hp : 1) * (1 - this.env.combo_good) * (0.5 - (x ? this.env.good_hp_t : 0));
 			}
 		}
 		if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
@@ -1523,6 +1523,12 @@ class CatForm extends Unit {
 		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
 			hp /= 0.5;
 		}
+
+		hp /= 1 - this.env.base_resist;
+
+		if (this.lvc >= 2)
+			hp /= this.env.orb_hp;
+
 		return hp;
 	}
 
@@ -1602,34 +1608,34 @@ class CatForm extends Unit {
 					if (mode === 'max')
 						atk *= 2;
 					else
-						atk *= 1 + ab[AB_CRIT] / 100;
+						atk *= 1 + (ab[AB_CRIT] + this.env.combo_crit) / 100;
 				}
 			}
 
 			if (ab.hasOwnProperty(AB_STRENGTHEN)) {
-				atk *= 1 + ab[AB_STRENGTHEN][1] / 100;
+				atk *= 1 + (ab[AB_STRENGTHEN][1] + this.env.combo_strengthen) / 100;
 			}
 
 			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
 				atk *= 4;
 			}
 			if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL)) {
-				atk *= 5;
+				atk *= 5 * (1 + this.env.combo_eva);
 			}
 			if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL)) {
-				atk *= 5;
+				atk *= 5 * (1 + this.env.combo_witch);
 			}
 
 			const t = this.trait & traits;
 			if (t) {
 				const x = t & trait_treasure;
 				if (ab.hasOwnProperty(AB_MASSIVE)) {
-					atk *= x ? 4 : 3;
+					atk *= (1 + this.env.combo_massive) * (3 + (x ? this.env.massive_t : 0)) + (this.lvc >= 2 ? this.env.orb_massive : 0);
 				} else if (ab.hasOwnProperty(AB_MASSIVES)) {
-					atk *= x ? 6 : 5;
+					atk *= 5 + (x ? this.env.massive_t : 0);
 				}
 				if (ab.hasOwnProperty(AB_GOOD)) {
-					atk *= x ? 1.8 : 1.5;
+					atk *= (1 + this.env.combo_good) * (1.5  + (x ? this.env.good_atk_t : 0)) + (this.lvc >= 2 ? this.env.orb_good_atk : 0);
 				}
 			}
 
@@ -1660,6 +1666,25 @@ class CatForm extends Unit {
 					return rate ? 2 * atk : nonCritDmg;
 				else
 					return (2 * atk * rate) + (nonCritDmg * (1 - rate));
+			}
+
+			if (this.lvc >= 2 && this.env.orb_atk > 0) {
+				const buff = this.env.orb_atk * this._atks[idx];
+				atk += buff;
+				if (this.abEnabled(idx)) {
+					if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
+						if (mode === 'max')
+							atk += buff * v[3];
+						else
+							atk += buff * v[3] * v[0] / 100;
+					}
+					if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
+						if (mode === 'max')
+							atk += buff;
+						else
+							atk += buff * v[0] / 100;
+					}
+				}
 			}
 
 			return atk;

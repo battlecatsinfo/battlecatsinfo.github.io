@@ -1035,6 +1035,20 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.hp, 105300);
 			});
 
+			it('combo defense up should be counted', async function () {
+				var cf = (await Unit.loadCat(44)).forms[2];
+				cf.level = 50;
+
+				Unit.catEnv.setOthers(3, [10]);
+				assert.strictEqual(cf.hp, 115830);
+
+				Unit.catEnv.setOthers(3, [20]);
+				assert.strictEqual(cf.hp, 126360);
+
+				Unit.catEnv.setOthers(3, [10, 20]);
+				assert.strictEqual(cf.hp, 136890);
+			});
+
 		});
 
 		describe('CatForm.atks', function () {
@@ -1084,6 +1098,20 @@ describe('unit.mjs', function () {
 
 				Unit.catEnv.setTreasure(0, 300);
 				assert.deepEqual(cf.atks, [16200, 16200, 97200]);
+			});
+
+			it('combo attack up should be counted', async function () {
+				var cf = (await Unit.loadCat(137)).forms[2];
+				cf.level = 50;
+
+				Unit.catEnv.setOthers(2, [10]);
+				assert.deepEqual(cf.atks, [17820, 17820, 106920]);
+
+				Unit.catEnv.setOthers(2, [15]);
+				assert.deepEqual(cf.atks, [18630, 18630, 111779]);
+
+				Unit.catEnv.setOthers(2, [10, 15]);
+				assert.deepEqual(cf.atks, [20250, 20250, 121500]);
 			});
 
 		});
@@ -1414,6 +1442,11 @@ describe('unit.mjs', function () {
 				cf.level = 50;
 				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 202500);
 				assert.strictEqual(cf.hpAgainst(Unit.TB_EVA), 1012500);
+
+				// combo EVA
+				Unit.catEnv.addOther(15, 400);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 202500);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_EVA), 5062500);
 			});
 
 			it('witch-killer should be counted', async function () {
@@ -1421,6 +1454,11 @@ describe('unit.mjs', function () {
 				cf.level = 50;
 				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 76410);
 				assert.strictEqual(cf.hpAgainst(Unit.TB_WITCH), 764100);
+
+				// combo witch
+				Unit.catEnv.addOther(14, 400);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 76410);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WITCH), 3820500);
 			});
 
 			it('tough should be counted', async function () {
@@ -1429,6 +1467,39 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 189000);
 				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 945000);
 				assert.strictEqual(cf.hpAgainst(Unit.TB_RELIC), 756000);
+
+				// treasure effect up
+				Unit.catEnv.setTreasure(23, 0);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 189000);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 756000);
+
+				Unit.catEnv.resetTreasures();
+
+				// combo tough up
+				Unit.catEnv.setOthers(9, [10]);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 189000);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 1050000);
+
+				Unit.catEnv.setOthers(9, [30]);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 1350000);
+
+				Unit.catEnv.setOthers(9, [10, 20]);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 1350000);
+
+				Unit.catEnv.resetOthers();
+
+				// orb tough up
+				var cf = (await Unit.loadCat(106)).forms[2];
+				cf.level = 50;
+
+				Unit.catEnv.setOrbs('resist', [2]);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 1710000);
+
+				Unit.catEnv.setOrbs('resist', [5]);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 2052000);
+
+				Unit.catEnv.setOrbs('resist', [2, 3]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 2011765);
 			});
 
 			it('insane tough should be counted', async function () {
@@ -1440,11 +1511,43 @@ describe('unit.mjs', function () {
 			});
 
 			it('strong-against should be counted', async function () {
-				var cf = (await Unit.loadCat(269)).forms[1];
+				var cf = (await Unit.loadCat(105)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 102600);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 256500);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_RELIC), 205200);
+				cf.applyAllTalents();
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 139320);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 348300);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RELIC), 278640);
+
+				// treasure effect up
+				Unit.catEnv.setTreasure(23, 0);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 139320);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 278640);
+
+				Unit.catEnv.resetTreasures();
+
+				// combo strong up
+				Unit.catEnv.setOthers(7, [10]);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 139320);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 387000);
+
+				Unit.catEnv.setOthers(7, [20]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 435375);
+
+				Unit.catEnv.setOthers(7, [10, 20]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 497571);
+
+				Unit.catEnv.resetOthers();
+
+				// orb strong up
+				Unit.catEnv.setOrbs('good', [2]);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 139320);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 362813);
+
+				Unit.catEnv.setOrbs('good', [5]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 387000);
+
+				Unit.catEnv.setOrbs('good', [2, 3]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 387000);
 			});
 
 			it('behemoth slayer should be counted', async function () {
@@ -1472,6 +1575,31 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 320000);
 				assert.strictEqual(cf.hpAgainst(Unit.TB_SAGE), 256000);
 				assert.strictEqual(cf.hpAgainst(Unit.TB_RED | Unit.TB_SAGE), 640000);
+			});
+
+			it('orb defense up should be counted', async function () {
+				var cf = (await Unit.loadCat(106)).forms[2];
+				cf.level = 50;
+
+				Unit.catEnv.setOrbs('hp', [2]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1672826);
+
+				Unit.catEnv.setOrbs('hp', [5]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1923750);
+
+				Unit.catEnv.setOrbs('hp', [2, 3]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1900939);
+			});
+
+			it('base defense up should be counted', async function () {
+				var cf = (await Unit.loadCat(106)).forms[2];
+				cf.level = 50;
+
+				Unit.catEnv.setOthers(1, [5]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1598961);
+
+				Unit.catEnv.setOthers(1, [20]);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1810588);
 			});
 
 		});
@@ -1776,6 +1904,11 @@ describe('unit.mjs', function () {
 				cf.level = 50;
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 7628);
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_EVA)), 38142);
+
+				// combo EVA
+				Unit.catEnv.addOther(15, 400);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 7628);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_EVA)), 190711);
 			});
 
 			it('witch-killer should be counted', async function () {
@@ -1783,6 +1916,11 @@ describe('unit.mjs', function () {
 				cf.level = 50;
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 8263);
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WITCH)), 41314);
+
+				// combo witch
+				Unit.catEnv.addOther(14, 400);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 8263);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WITCH)), 206570);
 			});
 
 			it('massive damage should be counted', async function () {
@@ -1791,6 +1929,37 @@ describe('unit.mjs', function () {
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 5597);
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 22387);
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 16790);
+
+				// treasure effect up
+				Unit.catEnv.setTreasure(23, 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 5597);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 16790);
+
+				Unit.catEnv.resetTreasures();
+
+				// combo massive up
+				Unit.catEnv.setOthers(8, [10]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 5597);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 24626);
+
+				Unit.catEnv.setOthers(8, [20]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 26864);
+
+				Unit.catEnv.setOthers(8, [10, 20]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 29103);
+
+				Unit.catEnv.resetOthers();
+
+				// orb massive up
+				Unit.catEnv.setOrbs('massive', [2]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 5597);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 23506);
+
+				Unit.catEnv.setOrbs('massive', [5]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 25185);
+
+				Unit.catEnv.setOrbs('massive', [2, 3]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 25185);
 			});
 
 			it('insane damage should be counted', async function () {
@@ -1802,11 +1971,43 @@ describe('unit.mjs', function () {
 			});
 
 			it('strong-against should be counted', async function () {
-				var cf = (await Unit.loadCat(269)).forms[1];
+				var cf = (await Unit.loadCat(105)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 8668);
-				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 15602);
-				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 13001);
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 17639);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 31749);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 26458);
+
+				// treasure effect up
+				Unit.catEnv.setTreasure(23, 0);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 17639);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 26458);
+
+				Unit.catEnv.resetTreasures();
+
+				// combo strong up
+				Unit.catEnv.setOthers(7, [10]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 17639);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 34924);
+
+				Unit.catEnv.setOthers(7, [20]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 38099);
+
+				Unit.catEnv.setOthers(7, [10, 20]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 41274);
+
+				Unit.catEnv.resetOthers();
+
+				// orb strong up
+				Unit.catEnv.setOrbs('good', [2]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 17639);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 33866);
+
+				Unit.catEnv.setOrbs('good', [5]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 37041);
+
+				Unit.catEnv.setOrbs('good', [2, 3]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 37041);
 			});
 
 			it('behemoth slayer should be counted', async function () {
@@ -1981,6 +2182,75 @@ describe('unit.mjs', function () {
 				cf.level = 50;
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 21724);
 				assert.strictEqual(round(cf.dpsAgainst(0)), 86897);
+			});
+
+			it('orb attack up should be counted', async function () {
+				// basic
+				var cf = (await Unit.loadCat(32)).forms[2];
+				cf.level = 50;
+
+				Unit.catEnv.setOrbs('atk', [2]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 10038);
+
+				Unit.catEnv.setOrbs('atk', [5]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 11077);
+
+				Unit.catEnv.setOrbs('atk', [2, 3]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 11077);
+
+				// strong should not multiply
+				var cf = (await Unit.loadCat(18)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 3695);
+
+				// massive should not multiply
+				var cf = (await Unit.loadCat(36)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 29701);
+
+				// strengthen should not multiply
+				var cf = (await Unit.loadCat(44)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 169081);
+
+				// critical should not multiply
+				var cf = (await Unit.loadCat(46)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 4314);
+
+				// savage should not multiply
+				var cf = (await Unit.loadCat(307)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 5825);
+
+				// wave should multiply
+				var cf = (await Unit.loadCat(13)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 20346);
+
+				// miniwave should multiply
+				var cf = (await Unit.loadCat(240)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 20192);
+
+				// surge should multiply
+				var cf = (await Unit.loadCat(10)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 11118);
+
+				// minisurge should multiply
+				var cf = (await Unit.loadCat(107)).forms[2];
+				cf.level = 50;
+				cf.applyAllTalents();
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 25707);
 			});
 
 		});
