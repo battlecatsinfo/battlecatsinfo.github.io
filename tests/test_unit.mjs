@@ -2075,8 +2075,129 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm._getab', function () {
+
+			it('return original ability data if param is undefined', async function () {
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(cf._getab(), {
+					[Unit.AB_STRENGTHEN]: [60, 100],
+					[Unit.AB_MASSIVE]: null,
+				});
+			});
+
+			it('return original ability data if param is null', async function () {
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(cf._getab(null), {
+					[Unit.AB_STRENGTHEN]: [60, 100],
+					[Unit.AB_MASSIVE]: null,
+				});
+			});
+
+			it('return filtered abilities if param is an Array', async function () {
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(cf._getab([Unit.AB_STRENGTHEN]), {
+					[Unit.AB_STRENGTHEN]: [60, 100],
+				});
+
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(cf._getab([Unit.AB_MASSIVE]), {
+					[Unit.AB_MASSIVE]: null,
+				});
+
+				// order does not matter
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(cf._getab([Unit.AB_MASSIVE, Unit.AB_STRENGTHEN]), {
+					[Unit.AB_STRENGTHEN]: [60, 100],
+					[Unit.AB_MASSIVE]: null,
+				});
+
+				// ignore non-existent ID
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(cf._getab([[Unit.AB_STRENGTHEN], Unit.AB_LETHAL, Unit.AB_CRIT]), {
+					[Unit.AB_STRENGTHEN]: [60, 100],
+				});
+			});
+
+			it('return specified ability key and value if Object value is provided', async function () {
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(
+					cf._getab({
+						'1': [50, 100],
+					}),
+					{
+						'1': [50, 100],
+					},
+				);
+
+				// ignore non-existent IDs
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(
+					cf._getab({
+						'1': 100,
+						'2': null,
+						'3': [50, 100],
+					}),
+					{
+						'1': 100,
+					},
+				);
+			});
+
+			it('return original ability key and value if Object value is undefined', async function () {
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(
+					cf._getab({
+						'1': undefined,
+					}),
+					{
+						'1': [60, 100],
+					},
+				);
+
+				assert.deepEqual(
+					cf._getab({
+						'28': undefined,
+					}),
+					{
+						'28': null,
+					},
+				);
+
+				// ignore non-existent IDs
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.deepEqual(
+					cf._getab({
+						'2': undefined,
+					}),
+					{},
+				);
+			});
+
+		});
+
+		describe('CatForm._getthp', function () {
+
+			it('ability filter', async function () {
+				var cf = (await Unit.loadCat(61)).forms[2];
+				cf.level = 50;
+				assert.strictEqual(cf._getthp({filter: []}), 102600);
+				assert.strictEqual(cf._getthp({filter: [Unit.AB_RESIST]}), 513000);
+
+			});
+
+		});
 
 		describe('CatForm._gettatks', function () {
+
+			it('ability filter', async function () {
+				var cf = (await Unit.loadCat(441)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf._gettatks({filter: []}), [29700]);
+				assert.deepEqual(cf._gettatks({filter: [Unit.AB_STRENGTHEN]}), [59400]);
+				assert.deepEqual(cf._gettatks({filter: [Unit.AB_MASSIVE]}), [89100]);
+				assert.deepEqual(cf._gettatks({filter: [Unit.AB_STRENGTHEN, Unit.AB_MASSIVE]}), [178200]);
+				assert.deepEqual(cf._gettatks({filter: {[Unit.AB_STRENGTHEN]: [50, 250]}}), [103950]);
+			});
 
 			it('mode', async function () {
 				var cf = (await Unit.loadCat(57)).forms[2];
@@ -3309,7 +3430,25 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('Enemy._getthp', function () {
+
+			it('ability filter', async function () {
+				var enemy = await Unit.loadEnemy(557);
+				assert.strictEqual(enemy._getthp({filter: []}), 380000);
+				assert.strictEqual(enemy._getthp({filter: [Unit.AB_DSHIELD]}), 1180000);
+			});
+
+		});
+
 		describe('Enemy._gettatks', function () {
+
+			it('ability filter', async function () {
+				var enemy = await Unit.loadEnemy(397);
+				assert.deepEqual(enemy._gettatks({filter: []}), [20000, 20000, 20000]);
+				assert.deepEqual(enemy._gettatks({filter: [Unit.AB_CRIT]}), [20000, 20000, 30000]);
+				assert.deepEqual(enemy._gettatks({filter: [Unit.AB_WAVE]}), [20000, 20000, 40000]);
+				assert.deepEqual(enemy._gettatks({filter: [Unit.AB_CRIT, Unit.AB_WAVE]}), [20000, 20000, 60000]);
+			});
 
 			it('mode', async function () {
 				var enemy = await Unit.loadEnemy(668);

@@ -512,12 +512,58 @@ class Unit {
 	}
 
 	/**
+	 * @typedef {(null|integer|integer[])} AbilityDataEntry
+	 */
+
+	/**
+	 * @typedef {Object<number, AbilityDataEntry>} AbilityData
+	 */
+
+	/**
+	 * @typedef {(number[]|AbilityData)} AbilityFilter
+	 */
+
+	/**
+	 * Get filtered ability data.
+	 *
+	 * @param {?AbilityFilter} [filter]
+	 * @return {AbilityData}
+	 */
+	_getab(filter) {
+		// null or undefined
+		if (filter == null) {
+			return this.ab;
+		}
+
+		if (Array.isArray(filter)) {
+			return filter.reduce((rv, id) => {
+				if (this.ab.hasOwnProperty(id)) {
+					rv[id] = this.ab[id];
+				}
+				return rv;
+			}, {});
+		}
+
+		const ab = {};
+		for (const id in filter) {
+			if (this.ab.hasOwnProperty(id)) {
+				ab[id] = typeof filter[id] !== 'undefined' ? filter[id] : this.ab[id];
+			}
+		}
+		return ab;
+	}
+
+	/**
 	 * Calculate ability-boosted HP.
 	 *
+	 * @param {Object} [options]
+	 * @param {AbilityFilter} [options.filter] - the ability data filter.
 	 * @return {number} the boosted HP
 	 */
-	_getthp() {
-		const ab = this.ab;
+	_getthp({
+		filter: abFilter,
+	} = {}) {
+		const ab = this._getab(abFilter);
 		let hp = this.hp;
 
 		if (ab.hasOwnProperty(AB_DSHIELD)) {
@@ -533,6 +579,7 @@ class Unit {
 	 * Calculate ability-boosted attack damages.
 	 *
 	 * @param {Object} [options]
+	 * @param {AbilityFilter} [options.filter] - the ability data filter.
 	 * @param {string} [options.mode=expected] - the calculation mode:
 	 *     "expected" for expected damage;
 	 *     "max" for maximal possible damage.
@@ -543,12 +590,13 @@ class Unit {
 	 * @return {number[]} the boosted attack damages
 	 */
 	_gettatks({
+		filter: abFilter,
 		mode = 'expected',
 		metal: metalMode = true,
 		isBase = false,
 		isMetal = false,
 	} = {}) {
-		const ab = this.ab;
+		const ab = this._getab(abFilter);
 		let atks = this._getatks();
 		let v;
 
@@ -1442,11 +1490,15 @@ class CatForm extends Unit {
 	 * @param {Object} [options]
 	 * @param {integer} [options.traits] - the traits of the attacker; omit for
 	 *     general case.
+	 * @param {AbilityFilter} [options.filter] - the ability data filter.
 	 * @return {number} the boosted HP
 	 */
-	_getthp({traits} = {}) {
+	_getthp({
+		traits,
+		filter: abFilter,
+	} = {}) {
 		traits = traits ?? ~0;
-		const ab = this.ab;
+		const ab = this._getab(abFilter);
 		let hp = this.hp;
 		if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL))
 			return hp * 10;
@@ -1480,6 +1532,7 @@ class CatForm extends Unit {
 	 * @param {Object} [options]
 	 * @param {integer} [options.traits] - the traits of the target; omit for
 	 *     general case.
+	 * @param {AbilityFilter} [options.filter] - the ability data filter.
 	 * @param {string} [options.mode=expected] - the calculation mode:
 	 *     "expected" for expected damage;
 	 *     "max" for maximal possible damage.
@@ -1489,12 +1542,13 @@ class CatForm extends Unit {
 	 */
 	_gettatks({
 		traits,
+		filter: abFilter,
 		mode = 'expected',
 		metal: metalMode = true,
 	} = {}) {
 		traits = traits ?? ~0 ^ (metalMode ? TB_METAL : 0);
 
-		const ab = this.ab;
+		const ab = this._getab(abFilter);
 		const isBase = traits === 0;
 		const isMetal = traits & TB_METAL;
 
