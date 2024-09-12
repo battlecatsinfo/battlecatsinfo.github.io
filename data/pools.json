@@ -739,10 +739,7 @@
 			0
 		],
 		"stage": "11-48",
-		"ticket": [
-			"傳說的情書",
-			"/img/r/200.png"
-		],
+		"ticket": 200,
 		"type": "event",
 		"units": [
 			[
@@ -789,10 +786,7 @@
 			0
 		],
 		"stage": "11-41",
-		"ticket": [
-			"傳說金元寶",
-			"/img/r/199.png"
-		],
+		"ticket": 199,
 		"type": "event",
 		"units": [
 			[
@@ -838,10 +832,7 @@
 			0
 		],
 		"stage": "11-41",
-		"ticket": [
-			"傳說金元寶",
-			"/img/r/199.png"
-		],
+		"ticket": 199,
 		"type": "event",
 		"units": [
 			[
@@ -886,10 +877,7 @@
 			0
 		],
 		"stage": "11-52",
-		"ticket": [
-			"傳說的聖水",
-			"/img/r/202.png"
-		],
+		"ticket": 202,
 		"type": "event",
 		"units": [
 			[
@@ -937,10 +925,7 @@
 			0
 		],
 		"stage": "11-19",
-		"ticket": [
-			"傳說的捕蟲網",
-			"/img/r/203.png"
-		],
+		"ticket": 203,
 		"type": "event",
 		"units": [
 			[
@@ -976,10 +961,7 @@
 		"en_name": "Monster Hunter",
 		"img": "https://i.imgur.com/E7Z9RpW.png",
 		"tw_url": "",
-		"ticket": [
-			"MH大狩猟チケット",
-			"/img/r/24.png"
-		],
+		"ticket": 24,
 		"type": "event",
 		"units": [
 			[],
@@ -1006,10 +988,7 @@
 		"en_name": "Nebaaru-kun and Nyanpazuru",
 		"img": "https://i.imgur.com/k5MIn1E.png",
 		"tw_url": "",
-		"ticket": [
-			"まもるよチケット",
-			"/img/r/25.png"
-		],
+		"ticket": 25,
 		"type": "event",
 		"units": [
 			[
@@ -1056,10 +1035,7 @@
 			1
 		],
 		"stage": "2-93",
-		"ticket": [
-			"聖魔大戰巧克力",
-			"/img/r/205.png"
-		],
+		"ticket": 205,
 		"collab": [
 			"聖魔大戰",
 			"/collab/Bikkuriman.html"
@@ -1112,10 +1088,7 @@
 			0
 		],
 		"stage": "11-67",
-		"ticket": [
-			"傳說的陷阱",
-			"/img/r/204.png"
-		],
+		"ticket": 204,
 		"type": "event",
 		"units": [
 			[
@@ -1161,10 +1134,7 @@
 			0
 		],
 		"stage": "13-10",
-		"ticket": [
-			"傳說的胡蘿蔔",
-			"/img/r/162.png"
-		],
+		"ticket": 162,
 		"type": "event",
 		"units": [
 			[
@@ -1210,10 +1180,7 @@
 			0
 		],
 		"stage": "11-57",
-		"ticket": [
-			"傳說的票券",
-			"/img/r/178.png"
-		],
+		"ticket": 178,
 		"tw_url": "",
 		"type": "event",
 		"units": [
@@ -1261,10 +1228,7 @@
 			0
 		],
 		"stage": "11-62",
-		"ticket": [
-			"傳說的小徽章",
-			"/img/r/198.png"
-		],
+		"ticket": 198,
 		"type": "event",
 		"units": [
 			[
@@ -1312,10 +1276,7 @@
 			0
 		],
 		"stage": "1-282",
-		"ticket": [
-			"神秘箱子",
-			"/img/r/163.png"
-		],
+		"ticket": 163,
 		"type": "event",
 		"units": [
 			[

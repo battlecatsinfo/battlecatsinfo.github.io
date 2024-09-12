@@ -1,7 +1,8 @@
 const Fraction = require('fraction.js');
 const fs = require('node:fs');
 const {resolve} = require('node:path');
-const {OUTPUT_DIR, SiteGenerator} = require('./base.js');
+const {OUTPUT_DIR,} = require('./base.js');
+const {RewardSiteGenerator} = require('./reward.js');
 
 const category_set = {
 	'常駐稀有貓': new Set([37, 38, 41, 46, 47, 48, 49, 50, 51, 52, 55, 56, 58, 145, 146, 147, 148, 149, 197, 198, 308, 325, 376, 495, 523]),
@@ -177,7 +178,7 @@ function average_reward(drop, rand) {
 	return avg;
 }
 
-module.exports = class extends SiteGenerator {
+module.exports = class extends RewardSiteGenerator {
 	run() {
 		try {
 			fs.mkdirSync(resolve(OUTPUT_DIR, 'gacha'));
@@ -192,6 +193,11 @@ module.exports = class extends SiteGenerator {
 		this.categroy_pools = [];
 		this.resident_pools = [];
 		this.collab_pools = [];
+		this.rewards = this.load_rewards().reduce((rv, entry, i) => {
+			let {id, name} = entry;
+			rv[id] = {name, id};
+			return rv;
+		}, {});
 		this.stage_rewards = this.parse_tsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp, energy, rand, drop} = entry;
 			id = parseInt(id, 36);
@@ -662,6 +668,9 @@ module.exports = class extends SiteGenerator {
 				});
 			}
 		}
+
+		if (O.ticket)
+			S.ticket = this.rewards[O.ticket];
 
 		return S;
 	}
