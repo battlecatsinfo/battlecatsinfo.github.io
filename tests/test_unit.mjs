@@ -2075,6 +2075,25 @@ describe('unit.mjs', function () {
 
 		});
 
+
+		describe('CatForm._gettatks', function () {
+
+			it('mode', async function () {
+				var cf = (await Unit.loadCat(57)).forms[2];
+				cf.level = 50;
+				assert.deepEqual(cf._gettatks({mode: 'expected'}), [16200]);
+				assert.deepEqual(cf._gettatks({mode: 'max'}), [21600]);
+			});
+
+			it('metal mode', async function () {
+				var cf = (await Unit.loadCat(441)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf._gettatks({traits: Unit.TB_METAL, metal: true}), [1]);
+				assert.deepEqual(cf._gettatks({traits: Unit.TB_METAL, metal: false}), [59400]);
+			});
+
+		});
+
 		describe('Search keys', function () {
 
 			it('hasab', async function () {
@@ -3286,6 +3305,30 @@ describe('unit.mjs', function () {
 
 				var enemy = await Unit.loadEnemy(205);
 				assert.strictEqual(enemy.fandomUrl, "https://battle-cats.fandom.com/wiki/Capy");
+			});
+
+		});
+
+		describe('Enemy._gettatks', function () {
+
+			it('mode', async function () {
+				var enemy = await Unit.loadEnemy(668);
+				assert.deepEqual(enemy._gettatks({mode: 'expected'}), [66000]);
+				assert.deepEqual(enemy._gettatks({mode: 'max'}), [198000]);
+			});
+
+			it('metal mode', async function () {
+				var enemy = await Unit.loadEnemy(205);
+				assert.deepEqual(enemy._gettatks({isMetal: false}), [59799.99999999999]);
+				assert.deepEqual(enemy._gettatks({isMetal: true}), [15600.85]);
+				assert.deepEqual(enemy._gettatks({metal: false, isMetal: false}), [59799.99999999999]);
+				assert.deepEqual(enemy._gettatks({metal: false, isMetal: true}), [59799.99999999999]);
+			});
+
+			it('attack base', async function () {
+				var enemy = await Unit.loadEnemy(34);
+				assert.deepEqual(enemy._gettatks({isBase: false}), [2800]);
+				assert.deepEqual(enemy._gettatks({isBase: true}), [5600]);
 			});
 
 		});
