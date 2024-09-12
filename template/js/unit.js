@@ -184,7 +184,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`善於攻城，對塔傷害增加 ${v[0]} % （${numStr(1 + v[0] / 100)} 倍）`, "xIcbDzl");
+				func(`善於攻城（對塔傷害 4 倍）`, "xIcbDzl");
 				break;
 
 			case 4:
@@ -246,14 +246,14 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[4]} 小烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3])}）`, "AEITK8t");
+				func(`${v[0]} % 發射 Lv${v[3]} 小烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`, "AEITK8t");
 				break;
 
 			case 15:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[4]} 烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3])}）`, "at4bW0n");
+				func(`${v[0]} % 發射 Lv${v[3]} 烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`, "at4bW0n");
 				break;
 
 			case 16:
@@ -534,16 +534,16 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 				break;
 			case AB_SURGE:
 				if (attackS != undefined)
-					mul(theATK, 1 + ab[5] * ab[1] / 100, false);
+					mul(theATK, 1 + ab[4] * ab[1] / 100, false);
 				else
-					mul(theATK, 1 + ab[5], false);
+					mul(theATK, 1 + ab[4], false);
 				lines.push('烈波');
 				break;
 			case AB_MINISURGE:
 				if (attackS != undefined)
-					mul(theATK, 1 + ab[5] * ab[1] / 500, false);
+					mul(theATK, 1 + ab[4] * ab[1] / 500, false);
 				else
-					mul(theATK, 1 + ab[5] * 0.2, false);
+					mul(theATK, 1 + ab[4] * 0.2, false);
 				lines.push('小烈波');
 				break;
 			case AB_GOOD:
@@ -572,7 +572,7 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 				lines.push('渾身');
 				break;
 			case AB_ATKBASE:
-				mul(theATK, 1 + (ab[1] / 100));
+				mul(theATK, 4);
 				lines.push('塔');
 				break;
 			case AB_MASSIVE:
@@ -898,12 +898,12 @@ function getATK0(form, m, S, W1, W2) {
 					mul(atks, 1.2, false);
 					break;
 				case AB_SURGE:
-					mul(dps, 1 + v[4] * v[0] / 100, false);
-					mul(atks, 1 + v[4], false);
+					mul(dps, 1 + v[3] * v[0] / 100, false);
+					mul(atks, 1 + v[3], false);
 					break;
 				case AB_MINISURGE:
-					mul(dps, 1 + v[4] * v[0] / 500, false);
-					mul(atks, 1 + v[4] * 0.2, false);
+					mul(dps, 1 + v[3] * v[0] / 500, false);
+					mul(atks, 1 + v[3] * 0.2, false);
 					break;
 				case AB_GOOD:
 					a = (1 + catEnv.combo_good) * (1.5 + (t ? catEnv.good_atk_t : 0)) + (form.lvc >= 2 ? catEnv.orb_good_atk : 0);
@@ -924,9 +924,8 @@ function getATK0(form, m, S, W1, W2) {
 					mul(atks, 1 + (v[1] / 100), false);
 					break;
 				case AB_ATKBASE:
-					a = 1 + v[0] / 100;
-					mul(atks, a);
-					mul(dps, a);
+					mul(atks, 4);
+					mul(dps, 4);
 					break;
 				case AB_MASSIVE:
 					a = (1 + catEnv.combo_massive) * (3 + (t ? catEnv.resist_t : 0)) + (form.lvc >= 2 ? catEnv.orb_massive : 0);

@@ -119,9 +119,9 @@ function getAtk(form, line, theATK, parent, first, attackS) {
 				break;
 			case AB_SURGE:
 				if (attackS != undefined)
-					mul(theATK, 1 + ab[5] * ab[1] / 100, false);
+					mul(theATK, 1 + ab[4] * ab[1] / 100, false);
 				else
-					mul(theATK, 1 + ab[5], false);
+					mul(theATK, 1 + ab[4], false);
 				lines.push('烈波');
 				break;
 			case AB_MINISURGE:
@@ -157,7 +157,7 @@ function getAtk(form, line, theATK, parent, first, attackS) {
 				lines.push('渾身');
 				break;
 			case AB_ATKBASE:
-				mul(theATK, 1 + (ab[1] / 100));
+				mul(theATK, 4);
 				lines.push('塔');
 				break;
 			case AB_MASSIVE:

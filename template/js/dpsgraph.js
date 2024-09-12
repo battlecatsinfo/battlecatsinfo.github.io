@@ -629,7 +629,7 @@ class FormDPS {
 
 		if (this.options.base && F.ab.hasOwnProperty(AB_ATKBASE)) {
 			for (let i = 0; i < this.atks.length; ++i)
-				this.atks[i] = ~~(this.atks[i] * (1 + (F.ab[AB_ATKBASE][0] / 100)));
+				this.atks[i] *= 4;
 		} else {
 			x = F.ab[AB_CRIT];
 			if (x) {
@@ -728,8 +728,8 @@ class FormDPS {
 		if (x && this.options.surge != 2) {
 			this.surge_data = surge_model(x[1], x[2], Xs);
 			this.surge_mul = this.options.surge ?
-				(x[4] / (x[2] - x[1])) :
-				(x[0] * x[4]) / (100 * (x[2] - x[1]));
+				(x[3] / (x[2] - x[1])) :
+				(x[0] * x[3]) / (100 * (x[2] - x[1]));
 			if (F.ab[AB_MINISURGE]) this.surge_mul /= 5;
 		} else {
 			this.surge_data = null;

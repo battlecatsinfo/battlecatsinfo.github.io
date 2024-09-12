@@ -1246,9 +1246,9 @@ class CatForm extends Unit {
 			case 56:
 				t = this.ab[AB_SURGE];
 				x = inc1 + (t ? t[0] : 0); // chance
-				y = inc2 + (t ? t[4] : 0); // level
+				y = inc2 + (t ? t[3] : 0); // level
 				z = inc3 >> 2;
-				this.ab[AB_SURGE] = [x, z, z + (inc4 >> 2), y * 20, y];
+				this.ab[AB_SURGE] = [x, z, z + (inc4 >> 2), y];
 				break;
 
 			case 57:
@@ -1295,9 +1295,9 @@ class CatForm extends Unit {
 			case 65:
 				t = this.ab[AB_MINISURGE];
 				x = inc1 + (t ? t[0] : 0); // chance
-				y = inc2 + (t ? t[4] : 0); // level
+				y = inc2 + (t ? t[3] : 0); // level
 				z = inc3 >> 2;
-				this.ab[AB_MINISURGE] = [x, z, z + (inc4 >> 2), y * 20, y];
+				this.ab[AB_MINISURGE] = [x, z, z + (inc4 >> 2), y];
 				break;
 			case 66:
 				this.ab[AB_SAGE] = null;
@@ -1397,11 +1397,11 @@ class CatForm extends Unit {
 	}
 	__surgelv() {
 		const t = this.ab[AB_SURGE];
-		return t ? t[4] : 0;
+		return t ? t[3] : 0;
 	}
 	__minisurgelv() {
 		const t = this.ab[AB_MINISURGE];
-		return t ? t[4] : 0;
+		return t ? t[3] : 0;
 	}
 	__hpagainst(traits) {
 		return this.hpAgainst(traits);
@@ -1510,15 +1510,15 @@ class CatForm extends Unit {
 		if (this.ab.hasOwnProperty(AB_SURGE)) {
 			v = this.ab[AB_SURGE];
 			if (mode === 'max')
-				this.mul(atks, 1 + v[4], false);
+				this.mul(atks, 1 + v[3], false);
 			else
-				this.mul(atks, 1 + v[4] * v[0] / 100, false);
+				this.mul(atks, 1 + v[3] * v[0] / 100, false);
 		} else if (this.ab.hasOwnProperty(AB_MINISURGE)) {
 			v = this.ab[AB_MINISURGE];
 			if (mode === 'max')
-				this.mul(atks, 1 + v[4] * 0.2, false);
+				this.mul(atks, 1 + v[3] * 0.2, false);
 			else
-				this.mul(atks, 1 + v[4] * v[0] / 500, false);
+				this.mul(atks, 1 + v[3] * v[0] / 500, false);
 		}
 
 		if (!isBase && this.ab.hasOwnProperty(AB_WAVE)) {
@@ -1554,7 +1554,7 @@ class CatForm extends Unit {
 		}
 
 		if (isBase && this.ab.hasOwnProperty(AB_ATKBASE)) {
-			this.mul(atks, 1 + this.ab[AB_ATKBASE][0] / 100);
+			this.mul(atks, 4);
 			return atks;
 		}
 		if ((traits & TB_EVA) && this.ab.hasOwnProperty(AB_EKILL)) {
@@ -1595,7 +1595,7 @@ class CatForm extends Unit {
 					let rv = 1;
 					if (this.abEnabled(i)) {
 						if (v = this.ab[AB_SURGE] || this.ab[AB_MINISURGE]) {
-							rv += (mode === 'max') ? v[4] : v[4] * v[0] / 100;
+							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
 						}
 						if (v = this.ab[AB_WAVE] || this.ab[AB_MINIWAVE]) {
 							rv += (mode === 'max') ? 1 : v[0] / 100;
