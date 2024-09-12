@@ -3442,6 +3442,12 @@ describe('unit.mjs', function () {
 
 		describe('Enemy._gettatks', function () {
 
+			it('0-damage attack should not be altered', async function () {
+				var enemy = await Unit.loadEnemy(574);
+				assert.deepEqual(enemy._gettatks(), [0]);
+				assert.deepEqual(enemy._gettatks({isMetal: true}), [0]);
+			});
+
 			it('ability filter', async function () {
 				var enemy = await Unit.loadEnemy(397);
 				assert.deepEqual(enemy._gettatks({filter: []}), [20000, 20000, 20000]);

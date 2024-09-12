@@ -596,6 +596,10 @@ class Unit {
 		let v;
 
 		return this._getatks().map((atk, idx) => {
+			if (atk === 0) {
+				return atk;
+			}
+
 			if (this.abEnabled(idx)) {
 				if (ab.hasOwnProperty(AB_SURGE)) {
 					v = v = ab[AB_SURGE];
@@ -1551,6 +1555,10 @@ class CatForm extends Unit {
 		let v;
 
 		return this._getatks().map((atk, idx) => {
+			if (atk === 0) {
+				return atk;
+			}
+
 			if (ab.hasOwnProperty(AB_ONLY) && !(this.trait & traits) && !isBase) {
 				return 0;
 			}
