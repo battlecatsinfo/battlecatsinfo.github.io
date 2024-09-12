@@ -1496,7 +1496,7 @@ describe('unit.mjs', function () {
 			it('mini-surge should be counted', async function () {
 				var cf = (await Unit.loadCat(413)).forms[2];
 				cf.level = 50;
-				assert.deepEqual(cf.tatks, [372600]);
+				assert.deepEqual(cf.tatks, [134136]);
 			});
 
 			it('wave should be counted', async function () {
@@ -1527,18 +1527,6 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(240)).forms[2];
 				cf.level = 50;
 				assert.deepEqual(cf.tatks, [243000]);
-			});
-
-			it('EVA-killer should be counted', async function () {
-				var cf = (await Unit.loadCat(412)).forms[1];
-				cf.level = 50;
-				assert.deepEqual(cf.tatks, [371250]);
-			});
-
-			it('witch-killer should be counted', async function () {
-				var cf = (await Unit.loadCat(289)).forms[1];
-				cf.level = 50;
-				assert.deepEqual(cf.tatks, [274050]);
 			});
 
 			it('massive damage should be counted', async function () {
@@ -1583,6 +1571,18 @@ describe('unit.mjs', function () {
 				assert.deepEqual(cf.tatks, [173070]);
 			});
 
+			it('EVA-killer: ignore for tatk', async function () {
+				var cf = (await Unit.loadCat(412)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [74250]);
+			});
+
+			it('witch-killer: ignore for tatk', async function () {
+				var cf = (await Unit.loadCat(289)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [54810]);
+			});
+
 		});
 
 		describe('CatForm.tdps', function () {
@@ -1622,7 +1622,7 @@ describe('unit.mjs', function () {
 			it('mini-surge should be counted', async function () {
 				var cf = (await Unit.loadCat(413)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(round(cf.tdps), 72602);
+				assert.strictEqual(round(cf.tdps), 26137);
 			});
 
 			it('wave should be counted', async function () {
@@ -1653,18 +1653,6 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(240)).forms[2];
 				cf.level = 50;
 				assert.strictEqual(round(cf.tdps), 14294);
-			});
-
-			it('EVA-killer should be counted', async function () {
-				var cf = (await Unit.loadCat(412)).forms[1];
-				cf.level = 50;
-				assert.strictEqual(round(cf.tdps), 38142);
-			});
-
-			it('witch-killer should be counted', async function () {
-				var cf = (await Unit.loadCat(289)).forms[1];
-				cf.level = 50;
-				assert.strictEqual(round(cf.tdps), 41314);
 			});
 
 			it('massive damage should be counted', async function () {
@@ -1707,6 +1695,18 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(226)).forms[0];
 				cf.level = 50;
 				assert.strictEqual(round(cf.tdps), 21724);
+			});
+
+			it('EVA-killer: ignore for tdps', async function () {
+				var cf = (await Unit.loadCat(412)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 7628);
+			});
+
+			it('witch-killer: ignore for tdps', async function () {
+				var cf = (await Unit.loadCat(289)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(round(cf.tdps), 8263);
 			});
 
 		});

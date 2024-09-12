@@ -1547,7 +1547,7 @@ class CatForm extends Unit {
 		mode = 'expected',
 		metal: metalMode = true,
 	} = {}) {
-		traits = traits ?? ~0 ^ (metalMode ? TB_METAL : 0);
+		traits = traits ?? ~(TB_EVA | TB_WITCH) ^ (metalMode ? TB_METAL : 0);
 
 		const ab = this._getab(abFilter);
 		const isBase = traits === 0;
