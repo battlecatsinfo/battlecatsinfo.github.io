@@ -198,6 +198,8 @@ module.exports = class extends RewardSiteGenerator {
 			rv[id] = {name, id};
 			return rv;
 		}, {});
+		this.rewards[24].name = this.rewards[14].name;
+		this.rewards[25].name = this.rewards[15].name;
 		this.stage_rewards = this.parse_tsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp, energy, rand, drop} = entry;
 			id = parseInt(id, 36);
