@@ -488,10 +488,6 @@ class Unit {
 	abEnabled(atkIdx) {
 		return this.abi & (1 << (2 - atkIdx));
 	}
-	mul(arr, s, ab = true) {
-		for (let i = 0; i < arr.length; ++i)
-			(ab || this.abEnabled(i)) && (arr[i] *= s)
-	}
 	get _atks() {
 		const value = [this.info.atk, this.info.atk1, this.info.atk2];
 		Object.defineProperty(this, '_atks', {value});
@@ -597,67 +593,68 @@ class Unit {
 		isMetal = false,
 	} = {}) {
 		const ab = this._getab(abFilter);
-		let atks = this._getatks();
 		let v;
 
-		if (ab.hasOwnProperty(AB_SURGE)) {
-			v = v = ab[AB_SURGE];
-			if (mode === 'max')
-				this.mul(atks, 1 + v[3], false);
-			else
-				this.mul(atks, 1 + v[3] * v[0] / 100, false);
-		} else if (ab.hasOwnProperty(AB_MINISURGE)) {
-			v = ab[AB_MINISURGE];
-			if (mode === 'max')
-				this.mul(atks, 1 + v[3] * 0.2, false);
-			else
-				this.mul(atks, 1 + v[3] * v[0] / 500, false);
-		}
+		return this._getatks().map((atk, idx) => {
+			if (this.abEnabled(idx)) {
+				if (ab.hasOwnProperty(AB_SURGE)) {
+					v = v = ab[AB_SURGE];
+					if (mode === 'max')
+						atk *= 1 + v[3];
+					else
+						atk *= 1 + v[3] * v[0] / 100;
+				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
+					v = ab[AB_MINISURGE];
+					if (mode === 'max')
+						atk *= 1 + v[3] * 0.2;
+					else
+						atk *= 1 + v[3] * v[0] / 500;
+				}
 
-		if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
-			if (mode === 'max')
-				this.mul(atks, 2, false);
-			else
-				this.mul(atks, 1 + ab[AB_WAVE][0] / 100, false);
-		} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
-			if (mode === 'max')
-				this.mul(atks, 1.2, false);
-			else
-				this.mul(atks, 1 + ab[AB_MINIWAVE][0] / 500, false);
-		}
+				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
+					if (mode === 'max')
+						atk *= 2;
+					else
+						atk *= 1 + ab[AB_WAVE][0] / 100;
+				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
+					if (mode === 'max')
+						atk *= 1.2;
+					else
+						atk *= 1 + ab[AB_MINIWAVE][0] / 500;
+				}
 
-		if (ab.hasOwnProperty(AB_S)) {
-			v = ab[AB_S];
-			if (mode === 'max')
-				this.mul(atks, 1 + v[1] / 100, false);
-			else
-				this.mul(atks, 1 + v[1] * v[0] / 10000, false);
-		}
+				if (ab.hasOwnProperty(AB_S)) {
+					v = ab[AB_S];
+					if (mode === 'max')
+						atk *= 1 + v[1] / 100;
+					else
+						atk *= 1 + v[1] * v[0] / 10000;
+				}
 
-		// handle metal case specially at last
-		if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
-			if (mode === 'max')
-				this.mul(atks, 2, false);
-			else
-				this.mul(atks, 1 + ab[AB_CRIT] / 100, false);
-		}
+				// handle metal case specially at last
+				if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
+					if (mode === 'max')
+						atk *= 2;
+					else
+						atk *= 1 + ab[AB_CRIT] / 100;
+				}
+			}
 
-		if (ab.hasOwnProperty(AB_STRENGTHEN)) {
-			this.mul(atks, 1 + ab[AB_STRENGTHEN][1] / 100);
-		}
+			if (ab.hasOwnProperty(AB_STRENGTHEN)) {
+				atk *= 1 + ab[AB_STRENGTHEN][1] / 100;
+			}
 
-		if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
-			this.mul(atks, 4);
-			return atks;
-		}
+			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
+				atk *= 4;
+				return atk;
+			}
 
-		if (metalMode && isMetal) {
-			const critRate = ab[AB_CRIT] ?? 0;
-			atks = atks.map((atk, i) => {
-				const rate = this.abEnabled(i) ? critRate / 100 : 0;
+			if (metalMode && isMetal) {
+				const critRate = ab[AB_CRIT] ?? 0;
+				const rate = this.abEnabled(idx) ? critRate / 100 : 0;
 				const nonCritDmg = (() => {
 					let rv = 1;
-					if (this.abEnabled(i)) {
+					if (this.abEnabled(idx)) {
 						if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
 							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
 						}
@@ -671,10 +668,10 @@ class Unit {
 					return rate ? 2 * atk : nonCritDmg;
 				else
 					return (2 * atk * rate) + (nonCritDmg * (1 - rate));
-			});
-		}
+			}
 
-		return atks;
+			return atk;
+		});
 	}
 
 	__hasab(ab) {
@@ -1551,102 +1548,101 @@ class CatForm extends Unit {
 		const ab = this._getab(abFilter);
 		const isBase = traits === 0;
 		const isMetal = traits & TB_METAL;
-
-		let atks = this._getatks();
 		let v;
 
-		if (ab.hasOwnProperty(AB_ONLY) && !(this.trait & traits) && !isBase) {
-			atks.fill(0);
-			return atks;
-		}
-
-		if (ab.hasOwnProperty(AB_SURGE)) {
-			v = ab[AB_SURGE];
-			if (mode === 'max')
-				this.mul(atks, 1 + v[3], false);
-			else
-				this.mul(atks, 1 + v[3] * v[0] / 100, false);
-		} else if (ab.hasOwnProperty(AB_MINISURGE)) {
-			v = ab[AB_MINISURGE];
-			if (mode === 'max')
-				this.mul(atks, 1 + v[3] * 0.2, false);
-			else
-				this.mul(atks, 1 + v[3] * v[0] / 500, false);
-		}
-
-		if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
-			if (mode === 'max')
-				this.mul(atks, 2, false);
-			else
-				this.mul(atks, 1 + ab[AB_WAVE][0] / 100, false);
-		} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
-			if (mode === 'max')
-				this.mul(atks, 1.2, false);
-			else
-				this.mul(atks, 1 + ab[AB_MINIWAVE][0] / 500, false);
-		}
-
-		if (ab.hasOwnProperty(AB_S)) {
-			v = ab[AB_S];
-			if (mode === 'max')
-				this.mul(atks, 1 + v[1] / 100, false);
-			else
-				this.mul(atks, 1 + v[1] * v[0] / 10000, false);
-		}
-
-		// handle metal case specially at last
-		if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
-			if (mode === 'max')
-				this.mul(atks, 2, false);
-			else
-				this.mul(atks, 1 + ab[AB_CRIT] / 100, false);
-		}
-
-		if (ab.hasOwnProperty(AB_STRENGTHEN)) {
-			this.mul(atks, 1 + ab[AB_STRENGTHEN][1] / 100);
-		}
-
-		if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
-			this.mul(atks, 4);
-			return atks;
-		}
-		if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL)) {
-			this.mul(atks, 5);
-			return atks;
-		}
-		if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL)) {
-			this.mul(atks, 5);
-			return atks;
-		}
-
-		const t = this.trait & traits;
-		if (t) {
-			const x = t & trait_treasure;
-			if (ab.hasOwnProperty(AB_MASSIVE)) {
-				this.mul(atks, x ? 4 : 3);
-			} else if (ab.hasOwnProperty(AB_MASSIVES)) {
-				this.mul(atks, x ? 6 : 5);
+		return this._getatks().map((atk, idx) => {
+			if (ab.hasOwnProperty(AB_ONLY) && !(this.trait & traits) && !isBase) {
+				return 0;
 			}
-			if (ab.hasOwnProperty(AB_GOOD)) {
-				this.mul(atks, x ? 1.8 : 1.5);
+
+			if (this.abEnabled(idx)) {
+				if (ab.hasOwnProperty(AB_SURGE)) {
+					v = ab[AB_SURGE];
+					if (mode === 'max')
+						atk *= 1 + v[3];
+					else
+						atk *= 1 + v[3] * v[0] / 100;
+				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
+					v = ab[AB_MINISURGE];
+					if (mode === 'max')
+						atk *= 1 + v[3] * 0.2;
+					else
+						atk *= 1 + v[3] * v[0] / 500;
+				}
+
+				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
+					if (mode === 'max')
+						atk *= 2;
+					else
+						atk *= 1 + ab[AB_WAVE][0] / 100;
+				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
+					if (mode === 'max')
+						atk *= 1.2;
+					else
+						atk *= 1 + ab[AB_MINIWAVE][0] / 500;
+				}
+
+				if (ab.hasOwnProperty(AB_S)) {
+					v = ab[AB_S];
+					if (mode === 'max')
+						atk *= 1 + v[1] / 100;
+					else
+						atk *= 1 + v[1] * v[0] / 10000;
+				}
+
+				// handle metal case specially at last
+				if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
+					if (mode === 'max')
+						atk *= 2;
+					else
+						atk *= 1 + ab[AB_CRIT] / 100;
+				}
 			}
-		}
 
-		if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
-			this.mul(atks, 2.5);
-		} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
-			this.mul(atks, 1.6);
-		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
-			this.mul(atks, 1.2);
-		}
+			if (ab.hasOwnProperty(AB_STRENGTHEN)) {
+				atk *= 1 + ab[AB_STRENGTHEN][1] / 100;
+			}
 
-		if (metalMode && isMetal) {
-			const critRate = ab[AB_CRIT] ?? 0;
-			atks = atks.map((atk, i) => {
-				const rate = this.abEnabled(i) ? critRate / 100 : 0;
+			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
+				atk *= 4;
+				return atk;
+			}
+			if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL)) {
+				atk *= 5;
+				return atk;
+			}
+			if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL)) {
+				atk *= 5;
+				return atk;
+			}
+
+			const t = this.trait & traits;
+			if (t) {
+				const x = t & trait_treasure;
+				if (ab.hasOwnProperty(AB_MASSIVE)) {
+					atk *= x ? 4 : 3;
+				} else if (ab.hasOwnProperty(AB_MASSIVES)) {
+					atk *= x ? 6 : 5;
+				}
+				if (ab.hasOwnProperty(AB_GOOD)) {
+					atk *= x ? 1.8 : 1.5;
+				}
+			}
+
+			if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
+				atk *= 2.5;
+			} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
+				atk *= 1.6;
+			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
+				atk *= 1.2;
+			}
+
+			if (metalMode && isMetal) {
+				const critRate = ab[AB_CRIT] ?? 0;
+				const rate = this.abEnabled(idx) ? critRate / 100 : 0;
 				const nonCritDmg = (() => {
 					let rv = 1;
-					if (this.abEnabled(i)) {
+					if (this.abEnabled(idx)) {
 						if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
 							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
 						}
@@ -1660,10 +1656,10 @@ class CatForm extends Unit {
 					return rate ? 2 * atk : nonCritDmg;
 				else
 					return (2 * atk * rate) + (nonCritDmg * (1 - rate));
-			});
-		}
+			}
 
-		return atks;
+			return atk;
+		});
 	}
 	__price() {
 		return this.price;
