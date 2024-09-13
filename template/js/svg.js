@@ -1,3 +1,5 @@
+import {getNumFormatter} from './common.mjs';
+
 class ColorGen {
 	constructor() {
 		this.i = 0;
@@ -30,6 +32,8 @@ class ColorGen {
 }
 
 const GEN = new ColorGen();
+
+const format = getNumFormatter(0);
 
 class DPSRender {
 	constructor(C) {
@@ -327,3 +331,9 @@ class DPSRender {
 
 	}
 }
+
+// expose global methods
+// @TODO: refactor the code to prevent this
+Object.assign(globalThis, {
+	DPSRender,
+});

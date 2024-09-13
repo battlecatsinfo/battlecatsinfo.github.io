@@ -5,7 +5,7 @@
 {{#*inline "scripts"}}
 	{{~> @partial-block}}
 	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-	<script src="png.js"></script>
+	<script src="png.js" type="module"></script>
 	<script src="dpsgraph.js" type="module"></script>
 {{/inline}}
 
@@ -53,7 +53,7 @@
 	</div>
 	<div style="position: fixed;bottom: 1vh;right: 1vw;">
 		<a href="dpsgraph_svg.html">切換至向量圖模式</a> 主題
-		<select oninput="th(event)">
+		<select id="theme-picker">
 			<option value="light1" selected>淺色1</option>
 			<option value="light2">淺色2</option>
 			<option value="dark1">深色1</option>

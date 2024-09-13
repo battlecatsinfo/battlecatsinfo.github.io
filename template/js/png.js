@@ -1,13 +1,14 @@
 const CS = new Set();
 let theme = 'light1';
 
-function th(e) {
-	document.documentElement.setAttribute("data-Q", theme = e.currentTarget.value);
+document.getElementById('theme-picker').oninput = function th(e) {
+	theme = e.currentTarget.value;
+	document.documentElement.setAttribute("data-Q", theme);
 	for (const x of CS) {
 		x.options.theme = theme;
 		x.render();
 	}
-}
+};
 
 class DPSRender {
 	constructor(C) {
@@ -166,3 +167,10 @@ class DPSRender {
 		this.W.render();
 	}
 }
+
+// expose global methods
+// @TODO: refactor the code to prevent this
+Object.assign(globalThis, {
+	DPSRender,
+});
+

@@ -1,4 +1,3 @@
-import {getNumFormatter} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -60,7 +59,6 @@ import {
 	loadAllCats,
 } from './unit.mjs';
 
-const format = getNumFormatter(0);
 const CF = document.getElementById('CF');
 const CL = document.getElementById('CL');
 const add = document.getElementById('add');
@@ -913,9 +911,3 @@ document.getElementById('ok').onclick = function() {
 	}
 	alert('無法識別輸入的貓咪！請檢查名稱是否正確！');
 };
-
-// expose global methods
-// @TODO: refactor the code to prevent this
-Object.assign(globalThis, {
-	format,
-});
