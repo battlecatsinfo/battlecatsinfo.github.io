@@ -304,6 +304,9 @@ class CatEnv {
 	get resist_t() {
 		return this._treasures[23] / 300;
 	}
+	get dur_t() {
+		return 1 + this._treasures[23] / 1500;
+	}
 	get alien_t() {
 		return 7 - this._treasures[21] / 100;
 	}
@@ -683,6 +686,10 @@ class Unit {
 	hasRes(r) {
 		return (this.res ?? {}).hasOwnProperty(r);
 	}
+	getCover(chance, duration) {
+		if (!(chance && duration)) { return 0; }
+		return getCoverUnit(this, chance, duration);
+	}
 
 	get waveLv() {
 		return this.ab[AB_WAVE]?.[1] ?? 0;
@@ -745,24 +752,16 @@ class Unit {
 		return this.ab[AB_CURSE]?.[0] ?? 0;
 	}
 	get slowCover() {
-		const t = this.ab[AB_SLOW];
-		if (!t) return 0;
-		return getCoverUnit(this, t[0], t[1]);
+		return this.getCover(this.slowProb, this.slowTime);
 	}
 	get stopCover() {
-		const t = this.ab[AB_STOP];
-		if (!t) return 0;
-		return getCoverUnit(this, t[0], t[1]);
+		return this.getCover(this.stopProb, this.stopTime);
 	}
 	get weakCover() {
-		const t = this.ab[AB_WEAK];
-		if (!t) return 0;
-		return getCoverUnit(this, t[0], t[1]);
+		return this.getCover(this.weakProb, this.weakTime);
 	}
 	get curseCover() {
-		const t = this.ab[AB_CURSE];
-		if (!t) return 0;
-		return getCoverUnit(this, t[0], t[1]);
+		return this.getCover(this.curseProb, this.curseTime);
 	}
 	get strengthenExtent() {
 		return this.ab[AB_STRENGTHEN]?.[1] ?? 0;
@@ -1673,31 +1672,32 @@ class CatForm extends Unit {
 		}
 	}
 
+	get critProb() {
+		const p = super.critProb;
+		return p ? p + this.env.combo_crit : 0;
+	}
+	get slowTime() {
+		const t = super.slowTime;
+		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_slow);
+	}
+	get stopTime() {
+		const t = super.stopTime;
+		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_stop);
+	}
 	get weakTime() {
-		return this.ab[AB_WEAK]?.[2] ?? 0;
+		const t = this.ab[AB_WEAK]?.[2] ?? 0;
+		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_weak);
 	}
 	get weakExtent() {
 		return this.ab[AB_WEAK]?.[1] ?? 0;
 	}
-	get stopCover() {
-		const t = this.ab[AB_STOP];
-		if (!t) return 0;
-		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
+	get curseTime() {
+		const t = super.curseTime;
+		return (this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t;
 	}
-	get slowCover() {
-		const t = this.ab[AB_SLOW];
-		if (!t) return 0;
-		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
-	}
-	get weakCover() {
-		const t = this.ab[AB_WEAK];
-		if (!t) return 0;
-		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[2] * 1.2) : t[2]);
-	}
-	get curseCover() {
-		const t = this.ab[AB_CURSE];
-		if (!t) return 0;
-		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
+	get strengthenExtent() {
+		const t = super.strengthenExtent;
+		return t ? t + this.env.combo_strengthen : 0;
 	}
 	get barrierBreakProb() {
 		return this.ab[AB_BREAK]?.[0] ?? 0;

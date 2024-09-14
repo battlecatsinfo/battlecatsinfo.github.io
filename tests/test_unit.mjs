@@ -467,6 +467,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(env.good_hp_t, 100 / 3000);
 				assert.strictEqual(env.massive_t, 100 / 300);
 				assert.strictEqual(env.resist_t, 100 / 300);
+				assert.strictEqual(env.dur_t, 1 + 100 / 1500);
 				assert.strictEqual(env.alien_t, 7 - 500 / 100);
 				assert.strictEqual(env.alien_star_t, 16 - 1000 / 100);
 				assert.strictEqual(env.god1_t, 11 - (70 / 10));
@@ -2670,6 +2671,23 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.critProb, 50);
 			});
 
+			it('combos should be counted', async function () {
+				var cf = (await Unit.loadCat(57)).forms[2];
+
+				Unit.catEnv.setOthers(6, [1]);
+				assert.strictEqual(cf.critProb, 51);
+
+				Unit.catEnv.setOthers(6, [2]);
+				assert.strictEqual(cf.critProb, 52);
+
+				Unit.catEnv.setOthers(6, [1, 2]);
+				assert.strictEqual(cf.critProb, 53);
+
+				// 0 if no ability
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.critProb, 0);
+			});
+
 		});
 
 		describe('CatForm.slowTime', function () {
@@ -2679,7 +2697,37 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.slowTime, 0);
 
 				var cf = (await Unit.loadCat(138)).forms[0];
-				assert.strictEqual(cf.slowTime, 70);
+				assert.strictEqual(cf.slowTime, 84);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(138)).forms[0];
+
+				Unit.catEnv.setTreasure(23, 0);
+				assert.strictEqual(round(cf.slowTime), 70);
+
+				Unit.catEnv.setTreasure(23, 100);
+				assert.strictEqual(round(cf.slowTime), 74);
+
+				Unit.catEnv.setTreasure(23, 300);
+				assert.strictEqual(round(cf.slowTime), 84);
+			});
+
+			it('combos should be counted', async function () {
+				var cf = (await Unit.loadCat(138)).forms[0];
+
+				Unit.catEnv.setOthers(10, [10]);
+				assert.strictEqual(round(cf.slowTime), 92);
+
+				Unit.catEnv.setOthers(10, [30]);
+				assert.strictEqual(round(cf.slowTime), 109);
+
+				Unit.catEnv.setOthers(10, [10, 20]);
+				assert.strictEqual(round(cf.slowTime), 109);
+
+				// 0 if no ability
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.slowTime, 0);
 			});
 
 		});
@@ -2698,12 +2746,21 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.slowCover', function () {
 
-			it('basic', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.slowCover, 0);
-
+			it('check if underlying API is correctly called', async function () {
 				var cf = (await Unit.loadCat(138)).forms[0];
-				assert.strictEqual(round(cf.slowCover), 34);
+				var spy1 = sinon.spy(cf, 'slowProb', ['get']);
+				var spy2 = sinon.spy(cf, 'slowTime', ['get']);
+				var spy3 = sinon.spy(cf, 'getCover');
+				assert.strictEqual(cf.slowCover, spy3.returnValues[0]);
+				assert.strictEqual(round(spy3.returnValues[0]), 34);
+				assert(spy1.get.calledOnceWith());
+				assert(spy2.get.calledOnceWith());
+				assert(spy3.calledOnceWith(spy1.get.returnValues[0], spy2.get.returnValues[0]));
+			});
+
+			it('check safety when no ability', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.slowCover, 0);
 			});
 
 		});
@@ -2715,7 +2772,37 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.stopTime, 0);
 
 				var cf = (await Unit.loadCat(439)).forms[0];
-				assert.strictEqual(cf.stopTime, 30);
+				assert.strictEqual(cf.stopTime, 36);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(439)).forms[0];
+
+				Unit.catEnv.setTreasure(23, 0);
+				assert.strictEqual(round(cf.stopTime), 30);
+
+				Unit.catEnv.setTreasure(23, 100);
+				assert.strictEqual(round(cf.stopTime), 32);
+
+				Unit.catEnv.setTreasure(23, 300);
+				assert.strictEqual(round(cf.stopTime), 36);
+			});
+
+			it('combos should be counted', async function () {
+				var cf = (await Unit.loadCat(439)).forms[0];
+
+				Unit.catEnv.setOthers(11, [10]);
+				assert.strictEqual(round(cf.stopTime), 40);
+
+				Unit.catEnv.setOthers(11, [20]);
+				assert.strictEqual(round(cf.stopTime), 43);
+
+				Unit.catEnv.setOthers(11, [10, 20]);
+				assert.strictEqual(round(cf.stopTime), 47);
+
+				// 0 if no ability
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.stopTime, 0);
 			});
 
 		});
@@ -2734,12 +2821,21 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.stopCover', function () {
 
-			it('basic', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.stopCover, 0);
-
+			it('check if underlying API is correctly called', async function () {
 				var cf = (await Unit.loadCat(439)).forms[0];
-				assert.strictEqual(round(cf.stopCover), 35);
+				var spy1 = sinon.spy(cf, 'stopProb', ['get']);
+				var spy2 = sinon.spy(cf, 'stopTime', ['get']);
+				var spy3 = sinon.spy(cf, 'getCover');
+				assert.strictEqual(cf.stopCover, spy3.returnValues[0]);
+				assert.strictEqual(round(spy3.returnValues[0]), 35);
+				assert(spy1.get.calledOnceWith());
+				assert(spy2.get.calledOnceWith());
+				assert(spy3.calledOnceWith(spy1.get.returnValues[0], spy2.get.returnValues[0]));
+			});
+
+			it('check safety when no ability', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.stopCover, 0);
 			});
 
 		});
@@ -2751,7 +2847,20 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.curseTime, 0);
 
 				var cf = (await Unit.loadCat(543)).forms[0];
+				assert.strictEqual(cf.curseTime, 162);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(543)).forms[0];
+
+				Unit.catEnv.setTreasure(23, 0);
 				assert.strictEqual(cf.curseTime, 135);
+
+				Unit.catEnv.setTreasure(23, 100);
+				assert.strictEqual(cf.curseTime, 144);
+
+				Unit.catEnv.setTreasure(23, 300);
+				assert.strictEqual(cf.curseTime, 162);
 			});
 
 		});
@@ -2770,12 +2879,21 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.curseCover', function () {
 
-			it('basic', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.curseCover, 0);
-
+			it('check if underlying API is correctly called', async function () {
 				var cf = (await Unit.loadCat(543)).forms[0];
-				assert.strictEqual(round(cf.curseCover), 95);
+				var spy1 = sinon.spy(cf, 'curseProb', ['get']);
+				var spy2 = sinon.spy(cf, 'curseTime', ['get']);
+				var spy3 = sinon.spy(cf, 'getCover');
+				assert.strictEqual(cf.curseCover, spy3.returnValues[0]);
+				assert.strictEqual(round(spy3.returnValues[0]), 95);
+				assert(spy1.get.calledOnceWith());
+				assert(spy2.get.calledOnceWith());
+				assert(spy3.calledOnceWith(spy1.get.returnValues[0], spy2.get.returnValues[0]));
+			});
+
+			it('check safety when no ability', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.curseCover, 0);
 			});
 
 		});
@@ -2787,7 +2905,37 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.weakTime, 0);
 
 				var cf = (await Unit.loadCat(198)).forms[2];
+				assert.strictEqual(cf.weakTime, 240);
+			});
+
+			it('treasures should be counted', async function () {
+				var cf = (await Unit.loadCat(198)).forms[2];
+
+				Unit.catEnv.setTreasure(23, 0);
 				assert.strictEqual(cf.weakTime, 200);
+
+				Unit.catEnv.setTreasure(23, 100);
+				assert.strictEqual(cf.weakTime, 213);
+
+				Unit.catEnv.setTreasure(23, 300);
+				assert.strictEqual(cf.weakTime, 240);
+			});
+
+			it('combos should be counted', async function () {
+				var cf = (await Unit.loadCat(198)).forms[2];
+
+				Unit.catEnv.setOthers(12, [10]);
+				assert.strictEqual(cf.weakTime, 264);
+
+				Unit.catEnv.setOthers(12, [30]);
+				assert.strictEqual(cf.weakTime, 312);
+
+				Unit.catEnv.setOthers(12, [10, 20]);
+				assert.strictEqual(cf.weakTime, 312);
+
+				// 0 if no ability
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.weakTime, 0);
 			});
 
 		});
@@ -2806,12 +2954,21 @@ describe('unit.mjs', function () {
 
 		describe('CatForm.weakCover', function () {
 
-			it('basic', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.weakCover, 0);
+			it('check if underlying API is correctly called', async function () {
+				var cf = (await Unit.loadCat(33)).forms[2];
+				var spy1 = sinon.spy(cf, 'weakProb', ['get']);
+				var spy2 = sinon.spy(cf, 'weakTime', ['get']);
+				var spy3 = sinon.spy(cf, 'getCover');
+				assert.strictEqual(cf.weakCover, spy3.returnValues[0]);
+				assert.strictEqual(round(spy3.returnValues[0]), 74);
+				assert(spy1.get.calledOnceWith());
+				assert(spy2.get.calledOnceWith());
+				assert(spy3.calledOnceWith(spy1.get.returnValues[0], spy2.get.returnValues[0]));
+			});
 
-				var cf = (await Unit.loadCat(198)).forms[2];
-				assert.strictEqual(cf.weakCover, 100);
+			it('check safety when no ability', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.weakCover, 0);
 			});
 
 		});
@@ -2836,6 +2993,23 @@ describe('unit.mjs', function () {
 
 				var cf = (await Unit.loadCat(441)).forms[1];
 				assert.strictEqual(cf.strengthenExtent, 100);
+			});
+
+			it('combos should be counted', async function () {
+				var cf = (await Unit.loadCat(441)).forms[1];
+
+				Unit.catEnv.setOthers(13, [20]);
+				assert.strictEqual(cf.strengthenExtent, 120);
+
+				Unit.catEnv.setOthers(13, [30]);
+				assert.strictEqual(cf.strengthenExtent, 130);
+
+				Unit.catEnv.setOthers(13, [20, 30]);
+				assert.strictEqual(cf.strengthenExtent, 150);
+
+				// 0 if no ability
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.strengthenExtent, 0);
 			});
 
 		});
