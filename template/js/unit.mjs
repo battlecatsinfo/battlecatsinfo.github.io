@@ -685,83 +685,64 @@ class Unit {
 	}
 
 	get waveLv() {
-		const t = this.ab[AB_WAVE];
-		return t ? t[1] : 0;
+		return this.ab[AB_WAVE]?.[1] ?? 0;
 	}
 	get miniWaveLv() {
-		const t = this.ab[AB_MINIWAVE];
-		return t ? t[1] : 0;
+		return this.ab[AB_MINIWAVE]?.[1] ?? 0;
 	}
 	get surgeLv() {
-		const t = this.ab[AB_SURGE];
-		return t ? t[3] : 0;
+		return this.ab[AB_SURGE]?.[3] ?? 0;
 	}
 	get miniSurgeLv() {
-		const t = this.ab[AB_MINISURGE];
-		return t ? t[3] : 0;
+		return this.ab[AB_MINISURGE]?.[3] ?? 0;
 	}
 	get waveProb() {
-		const t = this.ab[AB_WAVE];
-		return t ? t[0] : 0;
+		return this.ab[AB_WAVE]?.[0] ?? 0;
 	}
 	get miniWaveProb() {
-		const t = this.ab[AB_MINIWAVE];
-		return t ? t[0] : 0;
+		return this.ab[AB_MINIWAVE]?.[0] ?? 0;
 	}
 	get surgeProb() {
-		const t = this.ab[AB_SURGE];
-		return t ? t[0] : 0;
+		return this.ab[AB_SURGE]?.[0] ?? 0;
 	}
 	get miniSurgeProb() {
-		const t = this.ab[AB_MINISURGE];
-		return t ? t[0] : 0;
+		return this.ab[AB_MINISURGE]?.[0] ?? 0;
 	}
 	get dodgeTime() {
-		const t = this.ab[AB_IMUATK];
-		return t ? t[1] : 0;
+		return this.ab[AB_IMUATK]?.[1] ?? 0;
 	}
 	get dodgeProb() {
-		const t = this.ab[AB_IMUATK];
-		return t ? t[0] : 0;
+		return this.ab[AB_IMUATK]?.[0] ?? 0;
 	}
 	get critProb() {
-		return this.ab[AB_CRIT] | 0;
+		return this.ab[AB_CRIT] ?? 0;
 	}
 	get slowTime() {
-		const t = this.ab[AB_SLOW];
-		return t ? t[1] : 0;
+		return this.ab[AB_SLOW]?.[1] ?? 0;
 	}
 	get slowProb() {
-		const t = this.ab[AB_SLOW];
-		return t ? t[0] : 0;
+		return this.ab[AB_SLOW]?.[0] ?? 0;
 	}
 	get stopTime() {
-		const t = this.ab[AB_STOP];
-		return t ? t[1] : 0;
+		return this.ab[AB_STOP]?.[1] ?? 0;
 	}
 	get stopProb() {
-		const t = this.ab[AB_STOP];
-		return t ? t[0] : 0;
+		return this.ab[AB_STOP]?.[0] ?? 0;
 	}
 	get weakTime() {
-		const t = this.ab[AB_WEAK];
-		return t ? t[1] : 0;
+		return this.ab[AB_WEAK]?.[1] ?? 0;
 	}
 	get weakProb() {
-		const t = this.ab[AB_WEAK];
-		return t ? t[0] : 0;
+		return this.ab[AB_WEAK]?.[0] ?? 0;
 	}
 	get weakExtent() {
-		const t = this.ab[AB_WEAK];
-		return t ? t[2] : 0;
+		return this.ab[AB_WEAK]?.[2] ?? 0;
 	}
 	get curseTime() {
-		const t = this.ab[AB_CURSE];
-		return t ? t[1] : 0;
+		return this.ab[AB_CURSE]?.[1] ?? 0;
 	}
 	get curseProb() {
-		const t = this.ab[AB_CURSE];
-		return t ? t[0] : 0;
+		return this.ab[AB_CURSE]?.[0] ?? 0;
 	}
 	get slowCover() {
 		const t = this.ab[AB_SLOW];
@@ -784,19 +765,16 @@ class Unit {
 		return getCoverUnit(this, t[0], t[1]);
 	}
 	get strengthenExtent() {
-		const t = this.ab[AB_STRENGTHEN];
-		return t ? t[1] : 0;
+		return this.ab[AB_STRENGTHEN]?.[1] ?? 0;
 	}
 	get lethalProb() {
-		return this.ab[AB_LETHAL] || 0;
+		return this.ab[AB_LETHAL] ?? 0;
 	}
 	get savageExtent() {
-		const t = this.ab[AB_S];
-		return t ? t[1] : 0;
+		return this.ab[AB_S]?.[1] ?? 0;
 	}
 	get savageProb() {
-		const t = this.ab[AB_S];
-		return t ? t[0] : 0;
+		return this.ab[AB_S]?.[0] ?? 0;
 	}
 
 	__hasab(ab) {
@@ -1696,12 +1674,10 @@ class CatForm extends Unit {
 	}
 
 	get weakTime() {
-		const t = this.ab[AB_WEAK];
-		return t ? t[2] : 0;
+		return this.ab[AB_WEAK]?.[2] ?? 0;
 	}
 	get weakExtent() {
-		const t = this.ab[AB_WEAK];
-		return t ? t[1] : 0;
+		return this.ab[AB_WEAK]?.[1] ?? 0;
 	}
 	get stopCover() {
 		const t = this.ab[AB_STOP];
@@ -1724,20 +1700,16 @@ class CatForm extends Unit {
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
 	get barrierBreakProb() {
-		const t = this.ab[AB_BREAK];
-		return t ? t[0] : 0;
+		return this.ab[AB_BREAK]?.[0] ?? 0;
 	}
 	get shieldBreakProb() {
-		const t = this.ab[AB_SHIELDBREAK];
-		return t ? t[0] : 0;
+		return this.ab[AB_SHIELDBREAK]?.[0] ?? 0;
 	}
 	get beastDodgeProb() {
-		const t = this.ab[AB_BSTHUNT];
-		return t ? t[0] : 0;
+		return this.ab[AB_BSTHUNT]?.[0] ?? 0;
 	}
 	get beastDodgeTime() {
-		const t = this.ab[AB_BSTHUNT];
-		return t ? t[1] : 0;
+		return this.ab[AB_BSTHUNT]?.[1] ?? 0;
 	}
 
 	__max_base_lv() {
