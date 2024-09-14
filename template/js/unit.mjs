@@ -1110,6 +1110,227 @@ class CatForm extends Unit {
 		return this.base.getLevelMulti(level);
 	}
 
+	getatks(i) {
+		const m = this.getLevelMulti();
+
+		let atks = this._atks;
+
+		atks = (typeof i !== 'undefined') ? [atks[i]] : atks.filter((x, i) => !i || x);
+
+		atks = atks.map(atk => {
+			return ~~(~~(~~(round(atk * m) * this.env.atk_t) * (1 + this.env.combo_atk)) * this.atkM);
+		});
+
+		return (typeof i !== 'undefined') ? atks[0] : atks;
+	}
+
+	/**
+	 * Calculate ability-boosted HP.
+	 *
+	 * @param {Object} [options]
+	 * @param {integer} [options.traits] - the traits of the attacker; omit for
+	 *     general case.
+	 * @param {AbilityFilter} [options.filter] - the ability data filter.
+	 * @return {number} the boosted HP
+	 */
+	getthp({
+		traits,
+		filter: abFilter,
+	} = {}) {
+		traits = traits ?? ~0;
+		const ab = this._getab(abFilter);
+		let hp = this.hp;
+		if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL))
+			return hp * 10 * (1 + this.env.combo_witch);
+		if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL))
+			return hp * 5 * (1 + this.env.combo_eva);
+		const t = this.trait & traits;
+		if (t) {
+			const x = t & trait_treasure;
+			if (ab.hasOwnProperty(AB_RESIST)) {
+				hp *= (4 + (x ? this.env.resist_t : 0)) / ((this.lvc >= 2 ? this.env.orb_resist : 1) * (1 - this.env.combo_resist));
+			} else if (ab.hasOwnProperty(AB_RESISTS)) {
+				hp *= 6 + (x ? this.env.resist_t : 0);
+			}
+			if (ab.hasOwnProperty(AB_GOOD)) {
+				hp /= (this.lvc >= 2 ? this.env.orb_good_hp : 1) * (1 - this.env.combo_good) * (0.5 - (x ? this.env.good_hp_t : 0));
+			}
+		}
+		if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
+			hp /= 0.6;
+		} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
+			hp /= 0.7;
+		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
+			hp /= 0.5;
+		}
+
+		hp /= 1 - this.env.base_resist;
+
+		if (this.lvc >= 2)
+			hp /= this.env.orb_hp;
+
+		return hp;
+	}
+
+	/**
+	 * Calculate ability-boosted attack damages.
+	 *
+	 * @param {Object} [options]
+	 * @param {integer} [options.traits] - the traits of the target; omit for
+	 *     general case.
+	 * @param {AbilityFilter} [options.filter] - the ability data filter.
+	 * @param {string} [options.mode=expected] - the calculation mode:
+	 *     "expected" for expected damage;
+	 *     "max" for maximal possible damage.
+	 * @param {boolean} [options.metal=true] - treat non-critical attack as 1
+	 *     damage for a metal enemy.
+	 * @return {number[]} the boosted attack damages
+	 */
+	gettatks({
+		traits,
+		filter: abFilter,
+		mode = 'expected',
+		metal: metalMode = true,
+	} = {}) {
+		traits = traits ?? ~(TB_EVA | TB_WITCH) ^ (metalMode ? TB_METAL : 0);
+
+		const ab = this._getab(abFilter);
+		const isBase = traits === 0;
+		const isMetal = traits & TB_METAL;
+		let v;
+
+		return this.getatks().map((atk, idx) => {
+			if (atk === 0) {
+				return atk;
+			}
+
+			if (ab.hasOwnProperty(AB_ONLY) && !(this.trait & traits) && !isBase) {
+				return 0;
+			}
+
+			if (this.abEnabled(idx)) {
+				if (ab.hasOwnProperty(AB_SURGE)) {
+					v = ab[AB_SURGE];
+					if (mode === 'max')
+						atk *= 1 + v[3];
+					else
+						atk *= 1 + v[3] * v[0] / 100;
+				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
+					v = ab[AB_MINISURGE];
+					if (mode === 'max')
+						atk *= 1 + v[3] * 0.2;
+					else
+						atk *= 1 + v[3] * v[0] / 500;
+				}
+
+				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
+					if (mode === 'max')
+						atk *= 2;
+					else
+						atk *= 1 + ab[AB_WAVE][0] / 100;
+				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
+					if (mode === 'max')
+						atk *= 1.2;
+					else
+						atk *= 1 + ab[AB_MINIWAVE][0] / 500;
+				}
+
+				if (ab.hasOwnProperty(AB_S)) {
+					v = ab[AB_S];
+					if (mode === 'max')
+						atk *= 1 + v[1] / 100;
+					else
+						atk *= 1 + v[1] * v[0] / 10000;
+				}
+
+				// handle metal case specially at last
+				if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
+					if (mode === 'max')
+						atk *= 2;
+					else
+						atk *= 1 + (ab[AB_CRIT] + this.env.combo_crit) / 100;
+				}
+			}
+
+			if (ab.hasOwnProperty(AB_STRENGTHEN)) {
+				atk *= 1 + (ab[AB_STRENGTHEN][1] + this.env.combo_strengthen) / 100;
+			}
+
+			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
+				atk *= 4;
+			}
+			if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL)) {
+				atk *= 5 * (1 + this.env.combo_eva);
+			}
+			if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL)) {
+				atk *= 5 * (1 + this.env.combo_witch);
+			}
+
+			const t = this.trait & traits;
+			if (t) {
+				const x = t & trait_treasure;
+				if (ab.hasOwnProperty(AB_MASSIVE)) {
+					atk *= (1 + this.env.combo_massive) * (3 + (x ? this.env.massive_t : 0)) + (this.lvc >= 2 ? this.env.orb_massive : 0);
+				} else if (ab.hasOwnProperty(AB_MASSIVES)) {
+					atk *= 5 + (x ? this.env.massive_t : 0);
+				}
+				if (ab.hasOwnProperty(AB_GOOD)) {
+					atk *= (1 + this.env.combo_good) * (1.5  + (x ? this.env.good_atk_t : 0)) + (this.lvc >= 2 ? this.env.orb_good_atk : 0);
+				}
+			}
+
+			if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
+				atk *= 2.5;
+			} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
+				atk *= 1.6;
+			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
+				atk *= 1.2;
+			}
+
+			if (metalMode && isMetal) {
+				const critRate = ab[AB_CRIT] ?? 0;
+				const rate = this.abEnabled(idx) ? critRate / 100 : 0;
+				const nonCritDmg = (() => {
+					let rv = 1;
+					if (this.abEnabled(idx)) {
+						if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
+							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
+						}
+						if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
+							rv += (mode === 'max') ? 1 : v[0] / 100;
+						}
+					}
+					return rv;
+				})();
+				if (mode === 'max')
+					return rate ? 2 * atk : nonCritDmg;
+				else
+					return (2 * atk * rate) + (nonCritDmg * (1 - rate));
+			}
+
+			if (this.lvc >= 2 && this.env.orb_atk > 0) {
+				const buff = this.env.orb_atk * this._atks[idx];
+				atk += buff;
+				if (this.abEnabled(idx)) {
+					if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
+						if (mode === 'max')
+							atk += buff * v[3];
+						else
+							atk += buff * v[3] * v[0] / 100;
+					}
+					if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
+						if (mode === 'max')
+							atk += buff;
+						else
+							atk += buff * v[0] / 100;
+					}
+				}
+			}
+
+			return atk;
+		});
+	}
+
 	dpsAgainst(traits) {
 		const atkm = this.gettatks({traits, mode: 'expected'}).reduce((rv, x) => rv + x);
 		return 30 * atkm / this.attackF;
@@ -1525,12 +1746,6 @@ class CatForm extends Unit {
 	__max_plus_lv() {
 		return this.base.maxPlusLv;
 	}
-	__break_prob() {
-		return this.barrierBreakProb;
-	}
-	__shield_break_prob() {
-		return this.shieldBreakProb;
-	}
 	__formc() {
 		return this.lvc + 1;
 	}
@@ -1539,12 +1754,6 @@ class CatForm extends Unit {
 	}
 	__rarity() {
 		return this.base.rarity;
-	}
-	__beast_prob() {
-		return this.beastDodgeProb;
-	}
-	__beast_time() {
-		return this.beastDodgeTime;
 	}
 	__hpagainst(traits) {
 		return this.hpAgainst(traits);
@@ -1572,226 +1781,6 @@ class CatForm extends Unit {
 		}
 		return 0;
 	}
-	getatks(i) {
-		const m = this.getLevelMulti();
-
-		let atks = this._atks;
-
-		atks = (typeof i !== 'undefined') ? [atks[i]] : atks.filter((x, i) => !i || x);
-
-		atks = atks.map(atk => {
-			return ~~(~~(~~(round(atk * m) * this.env.atk_t) * (1 + this.env.combo_atk)) * this.atkM);
-		});
-
-		return (typeof i !== 'undefined') ? atks[0] : atks;
-	}
-
-	/**
-	 * Calculate ability-boosted HP.
-	 *
-	 * @param {Object} [options]
-	 * @param {integer} [options.traits] - the traits of the attacker; omit for
-	 *     general case.
-	 * @param {AbilityFilter} [options.filter] - the ability data filter.
-	 * @return {number} the boosted HP
-	 */
-	getthp({
-		traits,
-		filter: abFilter,
-	} = {}) {
-		traits = traits ?? ~0;
-		const ab = this._getab(abFilter);
-		let hp = this.hp;
-		if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL))
-			return hp * 10 * (1 + this.env.combo_witch);
-		if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL))
-			return hp * 5 * (1 + this.env.combo_eva);
-		const t = this.trait & traits;
-		if (t) {
-			const x = t & trait_treasure;
-			if (ab.hasOwnProperty(AB_RESIST)) {
-				hp *= (4 + (x ? this.env.resist_t : 0)) / ((this.lvc >= 2 ? this.env.orb_resist : 1) * (1 - this.env.combo_resist));
-			} else if (ab.hasOwnProperty(AB_RESISTS)) {
-				hp *= 6 + (x ? this.env.resist_t : 0);
-			}
-			if (ab.hasOwnProperty(AB_GOOD)) {
-				hp /= (this.lvc >= 2 ? this.env.orb_good_hp : 1) * (1 - this.env.combo_good) * (0.5 - (x ? this.env.good_hp_t : 0));
-			}
-		}
-		if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
-			hp /= 0.6;
-		} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
-			hp /= 0.7;
-		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
-			hp /= 0.5;
-		}
-
-		hp /= 1 - this.env.base_resist;
-
-		if (this.lvc >= 2)
-			hp /= this.env.orb_hp;
-
-		return hp;
-	}
-
-	/**
-	 * Calculate ability-boosted attack damages.
-	 *
-	 * @param {Object} [options]
-	 * @param {integer} [options.traits] - the traits of the target; omit for
-	 *     general case.
-	 * @param {AbilityFilter} [options.filter] - the ability data filter.
-	 * @param {string} [options.mode=expected] - the calculation mode:
-	 *     "expected" for expected damage;
-	 *     "max" for maximal possible damage.
-	 * @param {boolean} [options.metal=true] - treat non-critical attack as 1
-	 *     damage for a metal enemy.
-	 * @return {number[]} the boosted attack damages
-	 */
-	gettatks({
-		traits,
-		filter: abFilter,
-		mode = 'expected',
-		metal: metalMode = true,
-	} = {}) {
-		traits = traits ?? ~(TB_EVA | TB_WITCH) ^ (metalMode ? TB_METAL : 0);
-
-		const ab = this._getab(abFilter);
-		const isBase = traits === 0;
-		const isMetal = traits & TB_METAL;
-		let v;
-
-		return this.getatks().map((atk, idx) => {
-			if (atk === 0) {
-				return atk;
-			}
-
-			if (ab.hasOwnProperty(AB_ONLY) && !(this.trait & traits) && !isBase) {
-				return 0;
-			}
-
-			if (this.abEnabled(idx)) {
-				if (ab.hasOwnProperty(AB_SURGE)) {
-					v = ab[AB_SURGE];
-					if (mode === 'max')
-						atk *= 1 + v[3];
-					else
-						atk *= 1 + v[3] * v[0] / 100;
-				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
-					v = ab[AB_MINISURGE];
-					if (mode === 'max')
-						atk *= 1 + v[3] * 0.2;
-					else
-						atk *= 1 + v[3] * v[0] / 500;
-				}
-
-				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
-					if (mode === 'max')
-						atk *= 2;
-					else
-						atk *= 1 + ab[AB_WAVE][0] / 100;
-				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
-					if (mode === 'max')
-						atk *= 1.2;
-					else
-						atk *= 1 + ab[AB_MINIWAVE][0] / 500;
-				}
-
-				if (ab.hasOwnProperty(AB_S)) {
-					v = ab[AB_S];
-					if (mode === 'max')
-						atk *= 1 + v[1] / 100;
-					else
-						atk *= 1 + v[1] * v[0] / 10000;
-				}
-
-				// handle metal case specially at last
-				if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
-					if (mode === 'max')
-						atk *= 2;
-					else
-						atk *= 1 + (ab[AB_CRIT] + this.env.combo_crit) / 100;
-				}
-			}
-
-			if (ab.hasOwnProperty(AB_STRENGTHEN)) {
-				atk *= 1 + (ab[AB_STRENGTHEN][1] + this.env.combo_strengthen) / 100;
-			}
-
-			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
-				atk *= 4;
-			}
-			if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL)) {
-				atk *= 5 * (1 + this.env.combo_eva);
-			}
-			if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL)) {
-				atk *= 5 * (1 + this.env.combo_witch);
-			}
-
-			const t = this.trait & traits;
-			if (t) {
-				const x = t & trait_treasure;
-				if (ab.hasOwnProperty(AB_MASSIVE)) {
-					atk *= (1 + this.env.combo_massive) * (3 + (x ? this.env.massive_t : 0)) + (this.lvc >= 2 ? this.env.orb_massive : 0);
-				} else if (ab.hasOwnProperty(AB_MASSIVES)) {
-					atk *= 5 + (x ? this.env.massive_t : 0);
-				}
-				if (ab.hasOwnProperty(AB_GOOD)) {
-					atk *= (1 + this.env.combo_good) * (1.5  + (x ? this.env.good_atk_t : 0)) + (this.lvc >= 2 ? this.env.orb_good_atk : 0);
-				}
-			}
-
-			if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
-				atk *= 2.5;
-			} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
-				atk *= 1.6;
-			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
-				atk *= 1.2;
-			}
-
-			if (metalMode && isMetal) {
-				const critRate = ab[AB_CRIT] ?? 0;
-				const rate = this.abEnabled(idx) ? critRate / 100 : 0;
-				const nonCritDmg = (() => {
-					let rv = 1;
-					if (this.abEnabled(idx)) {
-						if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
-							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
-						}
-						if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
-							rv += (mode === 'max') ? 1 : v[0] / 100;
-						}
-					}
-					return rv;
-				})();
-				if (mode === 'max')
-					return rate ? 2 * atk : nonCritDmg;
-				else
-					return (2 * atk * rate) + (nonCritDmg * (1 - rate));
-			}
-
-			if (this.lvc >= 2 && this.env.orb_atk > 0) {
-				const buff = this.env.orb_atk * this._atks[idx];
-				atk += buff;
-				if (this.abEnabled(idx)) {
-					if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
-						if (mode === 'max')
-							atk += buff * v[3];
-						else
-							atk += buff * v[3] * v[0] / 100;
-					}
-					if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
-						if (mode === 'max')
-							atk += buff;
-						else
-							atk += buff * v[0] / 100;
-					}
-				}
-			}
-
-			return atk;
-		});
-	}
 	__price() {
 		return this.price;
 	}
@@ -1803,6 +1792,18 @@ class CatForm extends Unit {
 	}
 	__cd() {
 		return this.cd / 30;
+	}
+	__break_prob() {
+		return this.barrierBreakProb;
+	}
+	__shield_break_prob() {
+		return this.shieldBreakProb;
+	}
+	__beast_prob() {
+		return this.beastDodgeProb;
+	}
+	__beast_time() {
+		return this.beastDodgeTime;
 	}
 }
 
