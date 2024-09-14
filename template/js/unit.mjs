@@ -104,6 +104,9 @@ const TRAIT_ALL = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN 
 								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE;
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
+const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
+const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
+
 
 function combineChances(count, chance) {
 	let x = 1;
@@ -1124,16 +1127,18 @@ class CatForm extends Unit {
 			return hp * 10 * (1 + this.env.combo_witch);
 		if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL))
 			return hp * 5 * (1 + this.env.combo_eva);
+
 		const t = this.trait & traits;
+		const buff_t = t & trait_treasure;
+		const buff_o = traits & TRAIT_ORB && this.lvc >= 2;
 		if (t) {
-			const x = t & trait_treasure;
 			if (ab.hasOwnProperty(AB_RESIST)) {
-				hp *= (4 + (x ? this.env.resist_t : 0)) / ((this.lvc >= 2 ? this.env.orb_resist : 1) * (1 - this.env.combo_resist));
+				hp *= (4 + (buff_t ? this.env.resist_t : 0)) / ((buff_o ? this.env.orb_resist : 1) * (1 - this.env.combo_resist));
 			} else if (ab.hasOwnProperty(AB_RESISTS)) {
-				hp *= 6 + (x ? this.env.resist_t : 0);
+				hp *= 6 + (buff_t ? this.env.resist_t : 0);
 			}
 			if (ab.hasOwnProperty(AB_GOOD)) {
-				hp /= (this.lvc >= 2 ? this.env.orb_good_hp : 1) * (1 - this.env.combo_good) * (0.5 - (x ? this.env.good_hp_t : 0));
+				hp /= (buff_o ? this.env.orb_good_hp : 1) * (1 - this.env.combo_good) * (0.5 - (buff_t ? this.env.good_hp_t : 0));
 			}
 		}
 		if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
@@ -1144,9 +1149,10 @@ class CatForm extends Unit {
 			hp /= 0.5;
 		}
 
-		hp /= 1 - this.env.base_resist;
+		if (traits & TRAIT_BASE)
+			hp /= 1 - this.env.base_resist;
 
-		if (this.lvc >= 2)
+		if (buff_o)
 			hp /= this.env.orb_hp;
 
 		return hp;
@@ -1247,15 +1253,16 @@ class CatForm extends Unit {
 			}
 
 			const t = this.trait & traits;
+			const buff_t = t & trait_treasure;
+			const buff_o = traits & TRAIT_ORB && this.lvc >= 2;
 			if (t) {
-				const x = t & trait_treasure;
 				if (ab.hasOwnProperty(AB_MASSIVE)) {
-					atk *= (1 + this.env.combo_massive) * (3 + (x ? this.env.massive_t : 0)) + (this.lvc >= 2 ? this.env.orb_massive : 0);
+					atk *= (1 + this.env.combo_massive) * (3 + (buff_t ? this.env.massive_t : 0)) + (buff_o ? this.env.orb_massive : 0);
 				} else if (ab.hasOwnProperty(AB_MASSIVES)) {
-					atk *= 5 + (x ? this.env.massive_t : 0);
+					atk *= 5 + (buff_t ? this.env.massive_t : 0);
 				}
 				if (ab.hasOwnProperty(AB_GOOD)) {
-					atk *= (1 + this.env.combo_good) * (1.5  + (x ? this.env.good_atk_t : 0)) + (this.lvc >= 2 ? this.env.orb_good_atk : 0);
+					atk *= (1 + this.env.combo_good) * (1.5  + (buff_t ? this.env.good_atk_t : 0)) + (buff_o ? this.env.orb_good_atk : 0);
 				}
 			}
 
@@ -1288,7 +1295,7 @@ class CatForm extends Unit {
 					return (2 * atk * rate) + (nonCritDmg * (1 - rate));
 			}
 
-			if (this.lvc >= 2 && this.env.orb_atk > 0) {
+			if (buff_o && this.env.orb_atk > 0) {
 				const buff = this.env.orb_atk * this._atks[idx];
 				atk += buff;
 				if (this.abEnabled(idx)) {

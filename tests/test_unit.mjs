@@ -1526,6 +1526,15 @@ describe('unit.mjs', function () {
 
 				Unit.catEnv.setOrbs('resist', [2, 3]);
 				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 2011765);
+
+				// orb tough up shouldn't work for white
+				var stub = sinon.stub(cf.info, 'trait');
+				stub.get(() => Unit.TB_WHITE);
+				Unit.catEnv.setOrbs('resist', []);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 1231200);
+
+				Unit.catEnv.setOrbs('resist', [5]);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 1231200);
 			});
 
 			it('insane tough should be counted', async function () {
@@ -1574,6 +1583,15 @@ describe('unit.mjs', function () {
 
 				Unit.catEnv.setOrbs('good', [2, 3]);
 				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 387000);
+
+				// orb strong up shouldn't work for white
+				var stub = sinon.stub(cf.info, 'trait');
+				stub.get(() => Unit.TB_WHITE);
+				Unit.catEnv.setOrbs('good', []);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 278640);
+
+				Unit.catEnv.setOrbs('good', [5]);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 278640);
 			});
 
 			it('behemoth slayer should be counted', async function () {
@@ -1604,28 +1622,83 @@ describe('unit.mjs', function () {
 			});
 
 			it('orb defense up should be counted', async function () {
-				var cf = (await Unit.loadCat(106)).forms[2];
+				var cf = (await Unit.loadCat(44)).forms[2];
 				cf.level = 50;
 
 				Unit.catEnv.setOrbs('hp', [2]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1672826);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 114457);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 114457);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_BLACK)), 114457);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_METAL)), 114457);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ANGEL)), 114457);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ALIEN)), 114457);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ZOMBIE)), 114457);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RELIC)), 114457);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_DEMON)), 114457);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WHITE)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_EVA)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WITCH)), 105300);
 
 				Unit.catEnv.setOrbs('hp', [5]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1923750);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_BLACK)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_METAL)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ANGEL)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ALIEN)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ZOMBIE)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RELIC)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_DEMON)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WHITE)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_EVA)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WITCH)), 105300);
 
 				Unit.catEnv.setOrbs('hp', [2, 3]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1900939);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_BLACK)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_METAL)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ANGEL)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ALIEN)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ZOMBIE)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RELIC)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_DEMON)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WHITE)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_EVA)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WITCH)), 105300);
 			});
 
 			it('base defense up should be counted', async function () {
-				var cf = (await Unit.loadCat(106)).forms[2];
+				var cf = (await Unit.loadCat(44)).forms[2];
 				cf.level = 50;
 
 				Unit.catEnv.setOthers(1, [5]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1598961);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 109403);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 109403);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_BLACK)), 109403);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ANGEL)), 109403);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ALIEN)), 109403);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ZOMBIE)), 109403);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RELIC)), 109403);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_METAL)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_DEMON)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WHITE)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_EVA)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WITCH)), 105300);
 
 				Unit.catEnv.setOthers(1, [20]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 1810588);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 123882);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 123882);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_BLACK)), 123882);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ANGEL)), 123882);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ALIEN)), 123882);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ZOMBIE)), 123882);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RELIC)), 123882);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_METAL)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_DEMON)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WHITE)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_EVA)), 105300);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WITCH)), 105300);
 			});
 
 		});
@@ -1986,6 +2059,15 @@ describe('unit.mjs', function () {
 
 				Unit.catEnv.setOrbs('massive', [2, 3]);
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 25185);
+
+				// orb massive up shouldn't work for white
+				var stub = sinon.stub(cf.info, 'trait');
+				stub.get(() => Unit.TB_WHITE);
+				Unit.catEnv.setOrbs('massive', []);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 16790);
+
+				Unit.catEnv.setOrbs('massive', [5]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 16790);
 			});
 
 			it('insane damage should be counted', async function () {
@@ -2034,6 +2116,15 @@ describe('unit.mjs', function () {
 
 				Unit.catEnv.setOrbs('good', [2, 3]);
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 37041);
+
+				// orb strong up shouldn't work for white
+				var stub = sinon.stub(cf.info, 'trait');
+				stub.get(() => Unit.TB_WHITE);
+				Unit.catEnv.setOrbs('good', []);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 26458);
+
+				Unit.catEnv.setOrbs('good', [5]);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 26458);
 			});
 
 			it('behemoth slayer should be counted', async function () {
@@ -2217,12 +2308,42 @@ describe('unit.mjs', function () {
 
 				Unit.catEnv.setOrbs('atk', [2]);
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 10038);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 10038);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_BLACK)), 10038);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ANGEL)), 10038);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ALIEN)), 10038);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ZOMBIE)), 10038);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 10038);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_DEMON)), 10038);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 9346);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_EVA)), 9346);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WITCH)), 9346);
 
 				Unit.catEnv.setOrbs('atk', [5]);
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_BLACK)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ANGEL)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ALIEN)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ZOMBIE)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_DEMON)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 9346);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_EVA)), 9346);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WITCH)), 9346);
 
 				Unit.catEnv.setOrbs('atk', [2, 3]);
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_BLACK)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ANGEL)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ALIEN)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_ZOMBIE)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RELIC)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_DEMON)), 11077);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 9346);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_EVA)), 9346);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WITCH)), 9346);
 
 				// strong should not multiply
 				var cf = (await Unit.loadCat(18)).forms[2];
