@@ -1082,7 +1082,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_getatks');
+				var spy = sinon.spy(cf, 'getatks');
 				assert.strictEqual(cf.atks, spy.returnValues[0]);
 				assert(spy.calledOnceWith());
 			});
@@ -1147,7 +1147,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_getatks');
+				var spy = sinon.spy(cf, 'getatks');
 				assert.strictEqual(cf.atkm, spy.returnValues[0].reduce((rv, x) => rv + x));
 				assert(spy.calledOnceWith());
 			});
@@ -1198,7 +1198,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_getatks');
+				var spy = sinon.spy(cf, 'getatks');
 				assert.strictEqual(cf.atk, spy.returnValues[0]);
 				assert(spy.calledOnceWith(0));
 			});
@@ -1243,7 +1243,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_getatks');
+				var spy = sinon.spy(cf, 'getatks');
 				assert.strictEqual(cf.atk1, spy.returnValues[0]);
 				assert(spy.calledOnceWith(1));
 			});
@@ -1286,7 +1286,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_getatks');
+				var spy = sinon.spy(cf, 'getatks');
 				assert.strictEqual(cf.atk2, spy.returnValues[0]);
 				assert(spy.calledOnceWith(2));
 			});
@@ -1329,7 +1329,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(25)).forms[2];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_getatks');
+				var spy = sinon.spy(cf, 'getatks');
 				assert.approximately(
 					cf.dps,
 					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / cf.attackF,
@@ -1388,7 +1388,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(269)).forms[1];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_getthp');
+				var spy = sinon.spy(cf, 'getthp');
 				assert.strictEqual(cf.thp, spy.returnValues[0]);
 				assert(spy.calledOnceWith());
 			});
@@ -1449,7 +1449,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(269)).forms[1];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_getthp');
+				var spy = sinon.spy(cf, 'getthp');
 				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), spy.returnValues[0]);
 				assert(spy.calledOnceWith({traits: Unit.TB_WHITE}));
 
@@ -1635,7 +1635,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(642)).forms[1];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_gettatks');
+				var spy = sinon.spy(cf, 'gettatks');
 				assert.strictEqual(cf.tatks, spy.returnValues[0]);
 				assert(spy.calledOnceWith({mode: 'max'}));
 			});
@@ -1745,7 +1745,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(642)).forms[1];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_gettatks');
+				var spy = sinon.spy(cf, 'gettatks');
 				assert.approximately(
 					cf.tdps,
 					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / cf.attackF,
@@ -1757,7 +1757,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(71)).forms[2];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_gettatks');
+				var spy = sinon.spy(cf, 'gettatks');
 				assert.approximately(
 					cf.tdps,
 					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / cf.attackF,
@@ -1871,7 +1871,7 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(269)).forms[1];
 				cf.level = 50;
 
-				var spy = sinon.spy(cf, '_gettatks');
+				var spy = sinon.spy(cf, 'gettatks');
 				assert.approximately(
 					cf.dpsAgainst(Unit.TB_WHITE),
 					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / cf.attackF,
@@ -2484,42 +2484,42 @@ describe('unit.mjs', function () {
 
 		});
 
-		describe('CatForm._getthp', function () {
+		describe('CatForm.getthp', function () {
 
 			it('ability filter', async function () {
 				var cf = (await Unit.loadCat(61)).forms[2];
 				cf.level = 50;
-				assert.strictEqual(cf._getthp({filter: []}), 102600);
-				assert.strictEqual(cf._getthp({filter: [Unit.AB_RESIST]}), 513000);
+				assert.strictEqual(cf.getthp({filter: []}), 102600);
+				assert.strictEqual(cf.getthp({filter: [Unit.AB_RESIST]}), 513000);
 
 			});
 
 		});
 
-		describe('CatForm._gettatks', function () {
+		describe('CatForm.gettatks', function () {
 
 			it('ability filter', async function () {
 				var cf = (await Unit.loadCat(441)).forms[1];
 				cf.level = 50;
-				assert.deepEqual(cf._gettatks({filter: []}), [29700]);
-				assert.deepEqual(cf._gettatks({filter: [Unit.AB_STRENGTHEN]}), [59400]);
-				assert.deepEqual(cf._gettatks({filter: [Unit.AB_MASSIVE]}), [89100]);
-				assert.deepEqual(cf._gettatks({filter: [Unit.AB_STRENGTHEN, Unit.AB_MASSIVE]}), [178200]);
-				assert.deepEqual(cf._gettatks({filter: {[Unit.AB_STRENGTHEN]: [50, 250]}}), [103950]);
+				assert.deepEqual(cf.gettatks({filter: []}), [29700]);
+				assert.deepEqual(cf.gettatks({filter: [Unit.AB_STRENGTHEN]}), [59400]);
+				assert.deepEqual(cf.gettatks({filter: [Unit.AB_MASSIVE]}), [89100]);
+				assert.deepEqual(cf.gettatks({filter: [Unit.AB_STRENGTHEN, Unit.AB_MASSIVE]}), [178200]);
+				assert.deepEqual(cf.gettatks({filter: {[Unit.AB_STRENGTHEN]: [50, 250]}}), [103950]);
 			});
 
 			it('mode', async function () {
 				var cf = (await Unit.loadCat(57)).forms[2];
 				cf.level = 50;
-				assert.deepEqual(cf._gettatks({mode: 'expected'}), [16200]);
-				assert.deepEqual(cf._gettatks({mode: 'max'}), [21600]);
+				assert.deepEqual(cf.gettatks({mode: 'expected'}), [16200]);
+				assert.deepEqual(cf.gettatks({mode: 'max'}), [21600]);
 			});
 
 			it('metal mode', async function () {
 				var cf = (await Unit.loadCat(441)).forms[1];
 				cf.level = 50;
-				assert.deepEqual(cf._gettatks({traits: Unit.TB_METAL, metal: true}), [1]);
-				assert.deepEqual(cf._gettatks({traits: Unit.TB_METAL, metal: false}), [59400]);
+				assert.deepEqual(cf.gettatks({traits: Unit.TB_METAL, metal: true}), [1]);
+				assert.deepEqual(cf.gettatks({traits: Unit.TB_METAL, metal: false}), [59400]);
 			});
 
 		});
@@ -3321,7 +3321,7 @@ describe('unit.mjs', function () {
 
 			it('check if underlying API is correctly called', async function () {
 				var enemy = await Unit.loadEnemy(52);
-				var spy = sinon.spy(enemy, '_getatks');
+				var spy = sinon.spy(enemy, 'getatks');
 				assert.strictEqual(enemy.atks, spy.returnValues[0]);
 				assert(spy.calledOnceWith());
 			});
@@ -3427,7 +3427,7 @@ describe('unit.mjs', function () {
 
 			it('check if underlying API is correctly called', async function () {
 				var enemy = await Unit.loadEnemy(52);
-				var spy = sinon.spy(enemy, '_getatks');
+				var spy = sinon.spy(enemy, 'getatks');
 				assert.strictEqual(enemy.atkm, spy.returnValues[0].reduce((rv, x) => rv + x));
 				assert(spy.calledOnceWith());
 			});
@@ -3448,7 +3448,7 @@ describe('unit.mjs', function () {
 
 			it('check if underlying API is correctly called', async function () {
 				var enemy = await Unit.loadEnemy(52);
-				var spy = sinon.spy(enemy, '_getatks');
+				var spy = sinon.spy(enemy, 'getatks');
 				assert.strictEqual(enemy.atk, spy.returnValues[0]);
 				assert(spy.calledOnceWith(0));
 			});
@@ -3469,7 +3469,7 @@ describe('unit.mjs', function () {
 
 			it('check if underlying API is correctly called', async function () {
 				var enemy = await Unit.loadEnemy(52);
-				var spy = sinon.spy(enemy, '_getatks');
+				var spy = sinon.spy(enemy, 'getatks');
 				assert.strictEqual(enemy.atk1, spy.returnValues[0]);
 				assert(spy.calledOnceWith(1));
 			});
@@ -3490,7 +3490,7 @@ describe('unit.mjs', function () {
 
 			it('check if underlying API is correctly called', async function () {
 				var enemy = await Unit.loadEnemy(52);
-				var spy = sinon.spy(enemy, '_getatks');
+				var spy = sinon.spy(enemy, 'getatks');
 				assert.strictEqual(enemy.atk2, spy.returnValues[0]);
 				assert(spy.calledOnceWith(2));
 			});
@@ -3511,7 +3511,7 @@ describe('unit.mjs', function () {
 
 			it('check if underlying API is correctly called', async function () {
 				var enemy = await Unit.loadEnemy(52);
-				var spy = sinon.spy(enemy, '_getatks');
+				var spy = sinon.spy(enemy, 'getatks');
 				assert.approximately(
 					enemy.dps,
 					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / enemy.attackF,
@@ -3536,7 +3536,7 @@ describe('unit.mjs', function () {
 
 			it('check if underlying API is correctly called', async function () {
 				var enemy = await Unit.loadEnemy(552);
-				var spy = sinon.spy(enemy, '_getthp');
+				var spy = sinon.spy(enemy, 'getthp');
 				assert.strictEqual(enemy.thp, spy.returnValues[0]);
 				assert(spy.calledOnceWith());
 			});
@@ -3559,7 +3559,7 @@ describe('unit.mjs', function () {
 
 			it('check if underlying API is correctly called', async function () {
 				var enemy = await Unit.loadEnemy(552);
-				var spy = sinon.spy(enemy, '_gettatks');
+				var spy = sinon.spy(enemy, 'gettatks');
 				assert.strictEqual(enemy.tatks, spy.returnValues[0]);
 				assert(spy.calledOnceWith({mode: 'max'}));
 			});
@@ -3610,7 +3610,7 @@ describe('unit.mjs', function () {
 
 			it('check if underlying API is correctly called', async function () {
 				var enemy = await Unit.loadEnemy(52);
-				var spy = sinon.spy(enemy, '_gettatks');
+				var spy = sinon.spy(enemy, 'gettatks');
 				assert.approximately(
 					enemy.tdps,
 					30 * spy.returnValues[0].reduce((rv, x) => rv + x) / enemy.attackF,
@@ -3739,50 +3739,50 @@ describe('unit.mjs', function () {
 
 		});
 
-		describe('Enemy._getthp', function () {
+		describe('Enemy.getthp', function () {
 
 			it('ability filter', async function () {
 				var enemy = await Unit.loadEnemy(557);
-				assert.strictEqual(enemy._getthp({filter: []}), 380000);
-				assert.strictEqual(enemy._getthp({filter: [Unit.AB_DSHIELD]}), 1180000);
+				assert.strictEqual(enemy.getthp({filter: []}), 380000);
+				assert.strictEqual(enemy.getthp({filter: [Unit.AB_DSHIELD]}), 1180000);
 			});
 
 		});
 
-		describe('Enemy._gettatks', function () {
+		describe('Enemy.gettatks', function () {
 
 			it('0-damage attack should not be altered', async function () {
 				var enemy = await Unit.loadEnemy(574);
-				assert.deepEqual(enemy._gettatks(), [0]);
-				assert.deepEqual(enemy._gettatks({isMetal: true}), [0]);
+				assert.deepEqual(enemy.gettatks(), [0]);
+				assert.deepEqual(enemy.gettatks({isMetal: true}), [0]);
 			});
 
 			it('ability filter', async function () {
 				var enemy = await Unit.loadEnemy(397);
-				assert.deepEqual(enemy._gettatks({filter: []}), [20000, 20000, 20000]);
-				assert.deepEqual(enemy._gettatks({filter: [Unit.AB_CRIT]}), [20000, 20000, 30000]);
-				assert.deepEqual(enemy._gettatks({filter: [Unit.AB_WAVE]}), [20000, 20000, 40000]);
-				assert.deepEqual(enemy._gettatks({filter: [Unit.AB_CRIT, Unit.AB_WAVE]}), [20000, 20000, 60000]);
+				assert.deepEqual(enemy.gettatks({filter: []}), [20000, 20000, 20000]);
+				assert.deepEqual(enemy.gettatks({filter: [Unit.AB_CRIT]}), [20000, 20000, 30000]);
+				assert.deepEqual(enemy.gettatks({filter: [Unit.AB_WAVE]}), [20000, 20000, 40000]);
+				assert.deepEqual(enemy.gettatks({filter: [Unit.AB_CRIT, Unit.AB_WAVE]}), [20000, 20000, 60000]);
 			});
 
 			it('mode', async function () {
 				var enemy = await Unit.loadEnemy(668);
-				assert.deepEqual(enemy._gettatks({mode: 'expected'}), [66000]);
-				assert.deepEqual(enemy._gettatks({mode: 'max'}), [198000]);
+				assert.deepEqual(enemy.gettatks({mode: 'expected'}), [66000]);
+				assert.deepEqual(enemy.gettatks({mode: 'max'}), [198000]);
 			});
 
 			it('metal mode', async function () {
 				var enemy = await Unit.loadEnemy(205);
-				assert.deepEqual(enemy._gettatks({isMetal: false}), [59799.99999999999]);
-				assert.deepEqual(enemy._gettatks({isMetal: true}), [15600.85]);
-				assert.deepEqual(enemy._gettatks({metal: false, isMetal: false}), [59799.99999999999]);
-				assert.deepEqual(enemy._gettatks({metal: false, isMetal: true}), [59799.99999999999]);
+				assert.deepEqual(enemy.gettatks({isMetal: false}), [59799.99999999999]);
+				assert.deepEqual(enemy.gettatks({isMetal: true}), [15600.85]);
+				assert.deepEqual(enemy.gettatks({metal: false, isMetal: false}), [59799.99999999999]);
+				assert.deepEqual(enemy.gettatks({metal: false, isMetal: true}), [59799.99999999999]);
 			});
 
 			it('attack base', async function () {
 				var enemy = await Unit.loadEnemy(34);
-				assert.deepEqual(enemy._gettatks({isBase: false}), [2800]);
-				assert.deepEqual(enemy._gettatks({isBase: true}), [5600]);
+				assert.deepEqual(enemy.gettatks({isBase: false}), [2800]);
+				assert.deepEqual(enemy.gettatks({isBase: true}), [5600]);
 			});
 
 		});

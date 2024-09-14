@@ -409,7 +409,7 @@ class Unit {
 		return ~~(round(this.info.hp * (this.alienMag ?? 1) * this.hpM) * this.stageM);
 	}
 	get thp() {
-		return this._getthp();
+		return this.getthp();
 	}
 	get kb() {
 		return this.info.kb;
@@ -430,22 +430,22 @@ class Unit {
 		return this.info.pre2;
 	}
 	get atkm() {
-		return this._getatks().reduce((rv, x) => rv + x);
+		return this.getatks().reduce((rv, x) => rv + x);
 	}
 	get atks() {
-		return this._getatks();
+		return this.getatks();
 	}
 	get atk() {
-		return this._getatks(0);
+		return this.getatks(0);
 	}
 	get atk1() {
-		return this._getatks(1);
+		return this.getatks(1);
 	}
 	get atk2() {
-		return this._getatks(2);
+		return this.getatks(2);
 	}
 	get tatks() {
-		return this._gettatks({mode: 'max'});
+		return this.gettatks({mode: 'max'});
 	}
 	get tba() {
 		return this.info.tba;
@@ -463,7 +463,7 @@ class Unit {
 		return 30 * this.atkm / this.attackF;
 	}
 	get tdps() {
-		const atkm = this._gettatks({mode: 'expected'}).reduce((rv, x) => rv + x);
+		const atkm = this.gettatks({mode: 'expected'}).reduce((rv, x) => rv + x);
 		return 30 * atkm / this.attackF;
 	}
 	get trait() {
@@ -493,7 +493,7 @@ class Unit {
 		Object.defineProperty(this, '_atks', {value});
 		return value;
 	}
-	_getatks(i) {
+	getatks(i) {
 		const m = this.atkM;
 
 		let atks = this._atks;
@@ -556,7 +556,7 @@ class Unit {
 	 * @param {AbilityFilter} [options.filter] - the ability data filter.
 	 * @return {number} the boosted HP
 	 */
-	_getthp({
+	getthp({
 		filter: abFilter,
 	} = {}) {
 		const ab = this._getab(abFilter);
@@ -585,7 +585,7 @@ class Unit {
 	 * @param {boolean} [options.isMetal=false] - target is metal.
 	 * @return {number[]} the boosted attack damages
 	 */
-	_gettatks({
+	gettatks({
 		filter: abFilter,
 		mode = 'expected',
 		metal: metalMode = true,
@@ -595,7 +595,7 @@ class Unit {
 		const ab = this._getab(abFilter);
 		let v;
 
-		return this._getatks().map((atk, idx) => {
+		return this.getatks().map((atk, idx) => {
 			if (atk === 0) {
 				return atk;
 			}
@@ -944,7 +944,7 @@ class CatForm extends Unit {
 	}
 
 	hpAgainst(traits) {
-		return this._getthp({traits});
+		return this.getthp({traits});
 	}
 
 	get speed() {
@@ -1019,7 +1019,7 @@ class CatForm extends Unit {
 	}
 
 	dpsAgainst(traits) {
-		const atkm = this._gettatks({traits, mode: 'expected'}).reduce((rv, x) => rv + x);
+		const atkm = this.gettatks({traits, mode: 'expected'}).reduce((rv, x) => rv + x);
 		return 30 * atkm / this.attackF;
 	}
 
@@ -1470,7 +1470,7 @@ class CatForm extends Unit {
 		}
 		return 0;
 	}
-	_getatks(i) {
+	getatks(i) {
 		const m = this.getLevelMulti();
 
 		let atks = this._atks;
@@ -1493,7 +1493,7 @@ class CatForm extends Unit {
 	 * @param {AbilityFilter} [options.filter] - the ability data filter.
 	 * @return {number} the boosted HP
 	 */
-	_getthp({
+	getthp({
 		traits,
 		filter: abFilter,
 	} = {}) {
@@ -1546,7 +1546,7 @@ class CatForm extends Unit {
 	 *     damage for a metal enemy.
 	 * @return {number[]} the boosted attack damages
 	 */
-	_gettatks({
+	gettatks({
 		traits,
 		filter: abFilter,
 		mode = 'expected',
@@ -1559,7 +1559,7 @@ class CatForm extends Unit {
 		const isMetal = traits & TB_METAL;
 		let v;
 
-		return this._getatks().map((atk, idx) => {
+		return this.getatks().map((atk, idx) => {
 			if (atk === 0) {
 				return atk;
 			}
