@@ -1051,6 +1051,31 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm.speed', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.speed, 10);
+
+				var cf = (await Unit.loadCat(25)).forms[2];
+				assert.strictEqual(cf.speed, 60);
+			});
+
+			it('combo speed up should be counted', async function () {
+				var cf = (await Unit.loadCat(25)).forms[2];
+
+				Unit.catEnv.setOthers(4, [10]);
+				assert.strictEqual(cf.speed, 66);
+
+				Unit.catEnv.setOthers(4, [15]);
+				assert.strictEqual(cf.speed, 69);
+
+				Unit.catEnv.setOthers(4, [10, 15]);
+				assert.strictEqual(cf.speed, 75);
+			});
+
+		});
+
 		describe('CatForm.atks', function () {
 
 			it('check if underlying API is correctly called', async function () {
@@ -2315,6 +2340,20 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.cd, 306);
 			});
 
+			it('combo research up should be counted', async function () {
+				var cf = (await Unit.loadCat(7)).forms[2];
+				assert.strictEqual(cf.cd, 506);
+
+				Unit.catEnv.setOthers(5, [264]);
+				assert.strictEqual(cf.cd, 480);
+
+				Unit.catEnv.setOthers(5, [792]);
+				assert.strictEqual(cf.cd, 427);
+
+				Unit.catEnv.setOthers(5, [264, 792]);
+				assert.strictEqual(cf.cd, 401);
+			});
+
 		});
 
 		describe('CatForm.icon', function () {
@@ -2856,10 +2895,10 @@ describe('unit.mjs', function () {
 
 			it('speed', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__speed(), 10);
-
-				var cf = (await Unit.loadCat(25)).forms[2];
-				assert.strictEqual(cf.__speed(), 60);
+				var spy = sinon.spy(cf, 'speed', ['get']);
+				assert.strictEqual(cf.__speed(), spy.get.returnValues[0]);
+				assert.strictEqual(spy.get.returnValues[0], 10);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('price', async function () {
@@ -2880,18 +2919,18 @@ describe('unit.mjs', function () {
 
 			it('cdf', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__cdf(), 60);
-
-				var cf = (await Unit.loadCat(25)).forms[2];
-				assert.strictEqual(cf.__cdf(), 2936);
+				var spy = sinon.spy(cf, 'cd', ['get']);
+				assert.strictEqual(cf.__cdf(), spy.get.returnValues[0]);
+				assert.strictEqual(spy.get.returnValues[0], 60);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('cd', async function () {
 				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__cd(), 2);
-
-				var cf = (await Unit.loadCat(25)).forms[2];
-				assert.approximately(cf.__cd(), 2936 / 30, Number.EPSILON);
+				var spy = sinon.spy(cf, 'cd', ['get']);
+				assert.strictEqual(cf.__cd(), spy.get.returnValues[0] / 30);
+				assert.strictEqual(spy.get.returnValues[0], 60);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('trait', async function () {
@@ -4001,10 +4040,10 @@ describe('unit.mjs', function () {
 
 			it('speed', async function () {
 				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__speed(), 5);
-
-				var enemy = await Unit.loadEnemy(318);
-				assert.strictEqual(enemy.__speed(), 36);
+				var spy = sinon.spy(enemy, 'speed', ['get']);
+				assert.strictEqual(enemy.__speed(), spy.get.returnValues[0]);
+				assert.strictEqual(spy.get.returnValues[0], 5);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('price', async function () {

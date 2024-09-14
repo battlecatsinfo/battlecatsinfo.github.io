@@ -948,7 +948,7 @@ class CatForm extends Unit {
 	}
 
 	get speed() {
-		return super.speed;
+		return ~~(super.speed * (1 + this.env.combo_speed));
 	}
 	set speed(value) {
 		this.info.speed = value;
@@ -984,7 +984,7 @@ class CatForm extends Unit {
 		this.info.ab = value;
 	}
 	get cd() {
-		return Math.max(60, this.info.cd - this.env.cd_r - this.env.cd_t);
+		return Math.max(60, this.info.cd - this.env.cd_r - this.env.cd_t - ~~(this.env.combo_cd / 10));
 	}
 	set cd(value) {
 		this.info.cd = value;
@@ -1175,7 +1175,7 @@ class CatForm extends Unit {
 				break;
 
 			case 27:
-				this.speed += inc1;
+				this.speed = this.info.speed + inc1;
 				break;
 
 			case 29:
