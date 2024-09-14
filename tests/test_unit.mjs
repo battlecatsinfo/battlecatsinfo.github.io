@@ -2564,6 +2564,393 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm.waveLv', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.waveLv, 0);
+
+				var cf = (await Unit.loadCat(352)).forms[2];
+				assert.strictEqual(cf.waveLv, 5);
+			});
+
+		});
+
+		describe('CatForm.surgeLv', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.surgeLv, 0);
+
+				var cf = (await Unit.loadCat(543)).forms[1];
+				assert.strictEqual(cf.surgeLv, 3);
+			});
+
+		});
+
+		describe('CatForm.miniWaveLv', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.miniWaveLv, 0);
+
+				var cf = (await Unit.loadCat(585)).forms[1];
+				assert.strictEqual(cf.miniWaveLv, 5);
+			});
+
+		});
+
+		describe('CatForm.miniSurgeLv', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.miniSurgeLv, 0);
+
+				var cf = (await Unit.loadCat(413)).forms[2];
+				assert.strictEqual(cf.miniSurgeLv, 1);
+			});
+
+		});
+
+		describe('CatForm.waveProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.waveProb, 0);
+
+				var cf = (await Unit.loadCat(94)).forms[2];
+				assert.strictEqual(cf.waveProb, 100);
+			});
+
+		});
+
+		describe('CatForm.miniWaveProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.miniWaveProb, 0);
+
+				var cf = (await Unit.loadCat(585)).forms[1];
+				assert.strictEqual(cf.miniWaveProb, 100);
+			});
+
+		});
+
+		describe('CatForm.surgeProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.surgeProb, 0);
+
+				var cf = (await Unit.loadCat(543)).forms[1];
+				assert.strictEqual(cf.surgeProb, 100);
+			});
+
+		});
+
+		describe('CatForm.miniSurgeProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.miniSurgeProb, 0);
+
+				var cf = (await Unit.loadCat(705)).forms[1];
+				assert.strictEqual(cf.miniSurgeProb, 100);
+			});
+
+		});
+
+		describe('CatForm.critProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[0];
+				assert.strictEqual(cf.critProb, 0);
+
+				var cf = (await Unit.loadCat(57)).forms[2];
+				assert.strictEqual(cf.critProb, 50);
+			});
+
+		});
+
+		describe('CatForm.slowTime', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.slowTime, 0);
+
+				var cf = (await Unit.loadCat(138)).forms[0];
+				assert.strictEqual(cf.slowTime, 70);
+			});
+
+		});
+
+		describe('CatForm.slowProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.slowProb, 0);
+
+				var cf = (await Unit.loadCat(138)).forms[0];
+				assert.strictEqual(cf.slowProb, 20);
+			});
+
+		});
+
+		describe('CatForm.slowCover', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.slowCover, 0);
+
+				var cf = (await Unit.loadCat(138)).forms[0];
+				assert.strictEqual(round(cf.slowCover), 34);
+			});
+
+		});
+
+		describe('CatForm.stopTime', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.stopTime, 0);
+
+				var cf = (await Unit.loadCat(439)).forms[0];
+				assert.strictEqual(cf.stopTime, 30);
+			});
+
+		});
+
+		describe('CatForm.stopProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.stopProb, 0);
+
+				var cf = (await Unit.loadCat(439)).forms[0];
+				assert.strictEqual(cf.stopProb, 100);
+			});
+
+		});
+
+		describe('CatForm.stopCover', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.stopCover, 0);
+
+				var cf = (await Unit.loadCat(439)).forms[0];
+				assert.strictEqual(round(cf.stopCover), 35);
+			});
+
+		});
+
+		describe('CatForm.curseTime', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.curseTime, 0);
+
+				var cf = (await Unit.loadCat(543)).forms[0];
+				assert.strictEqual(cf.curseTime, 135);
+			});
+
+		});
+
+		describe('CatForm.curseProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.curseProb, 0);
+
+				var cf = (await Unit.loadCat(543)).forms[0];
+				assert.strictEqual(cf.curseProb, 100);
+			});
+
+		});
+
+		describe('CatForm.curseCover', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.curseCover, 0);
+
+				var cf = (await Unit.loadCat(543)).forms[0];
+				assert.strictEqual(round(cf.curseCover), 95);
+			});
+
+		});
+
+		describe('CatForm.weakTime', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.weakTime, 0);
+
+				var cf = (await Unit.loadCat(198)).forms[2];
+				assert.strictEqual(cf.weakTime, 200);
+			});
+
+		});
+
+		describe('CatForm.weakProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.weakProb, 0);
+
+				var cf = (await Unit.loadCat(198)).forms[2];
+				assert.strictEqual(cf.weakProb, 100);
+			});
+
+		});
+
+		describe('CatForm.weakCover', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.weakCover, 0);
+
+				var cf = (await Unit.loadCat(198)).forms[2];
+				assert.strictEqual(cf.weakCover, 100);
+			});
+
+		});
+
+		describe('CatForm.weakExtent', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.weakExtent, 0);
+
+				var cf = (await Unit.loadCat(198)).forms[2];
+				assert.strictEqual(cf.weakExtent, 50);
+			});
+
+		});
+
+		describe('CatForm.strengthenExtent', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.strengthenExtent, 0);
+
+				var cf = (await Unit.loadCat(441)).forms[1];
+				assert.strictEqual(cf.strengthenExtent, 100);
+			});
+
+		});
+
+		describe('CatForm.lethalProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.lethalProb, 0);
+
+				var cf = (await Unit.loadCat(37)).forms[1];
+				assert.strictEqual(cf.lethalProb, 50);
+
+				var cf = (await Unit.loadCat(37)).forms[2];
+				assert.strictEqual(cf.lethalProb, 100);
+			});
+
+		});
+
+		describe('CatForm.savageExtent', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.savageExtent, 0);
+
+				var cf = (await Unit.loadCat(519)).forms[2];
+				assert.strictEqual(cf.savageExtent, 200);
+			});
+
+		});
+
+		describe('CatForm.savageProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.savageProb, 0);
+
+				var cf = (await Unit.loadCat(519)).forms[2];
+				assert.strictEqual(cf.savageProb, 30);
+			});
+
+		});
+
+		describe('CatForm.barrierBreakProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.barrierBreakProb, 0);
+
+				var cf = (await Unit.loadCat(245)).forms[2];
+				assert.strictEqual(cf.barrierBreakProb, 30);
+			});
+
+		});
+
+		describe('CatForm.shieldBreakProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.shieldBreakProb, 0);
+
+				var cf = (await Unit.loadCat(617)).forms[2];
+				assert.strictEqual(cf.shieldBreakProb, 50);
+			});
+
+		});
+
+		describe('CatForm.dodgeTime', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.dodgeTime, 0);
+
+				var cf = (await Unit.loadCat(187)).forms[2];
+				assert.strictEqual(cf.dodgeTime, 60);
+			});
+
+		});
+
+		describe('CatForm.dodgeProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.dodgeProb, 0);
+
+				var cf = (await Unit.loadCat(187)).forms[2];
+				assert.strictEqual(cf.dodgeProb, 20);
+			});
+
+		});
+
+		describe('CatForm.beastDodgeProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.beastDodgeProb, 0);
+
+				var cf = (await Unit.loadCat(532)).forms[2];
+				assert.strictEqual(cf.beastDodgeProb, 30);
+			});
+
+		});
+
+		describe('CatForm.beastDodgeTime', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.beastDodgeTime, 0);
+
+				var cf = (await Unit.loadCat(532)).forms[2];
+				assert.strictEqual(cf.beastDodgeTime, 30);
+			});
+
+		});
+
 		describe('Search keys', function () {
 
 			it('hasab', async function () {
@@ -2998,262 +3385,227 @@ describe('unit.mjs', function () {
 			});
 
 			it('wavelv', async function () {
-				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__wavelv(), 0);
-
 				var cf = (await Unit.loadCat(352)).forms[2];
-				assert.strictEqual(cf.__wavelv(), 5);
+				var spy = sinon.spy(cf, 'waveLv', ['get']);
+				assert.strictEqual(cf.__wavelv(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('surgelv', async function () {
-				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__surgelv(), 0);
-
 				var cf = (await Unit.loadCat(543)).forms[1];
-				assert.strictEqual(cf.__surgelv(), 3);
+				var spy = sinon.spy(cf, 'surgeLv', ['get']);
+				assert.strictEqual(cf.__surgelv(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('miniwavelv', async function () {
-				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__miniwavelv(), 0);
-
 				var cf = (await Unit.loadCat(585)).forms[1];
-				assert.strictEqual(cf.__miniwavelv(), 5);
+				var spy = sinon.spy(cf, 'miniWaveLv', ['get']);
+				assert.strictEqual(cf.__miniwavelv(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('minisurgelv', async function () {
-				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__minisurgelv(), 0);
-
 				var cf = (await Unit.loadCat(413)).forms[2];
-				assert.strictEqual(cf.__minisurgelv(), 1);
+				var spy = sinon.spy(cf, 'miniSurgeLv', ['get']);
+				assert.strictEqual(cf.__minisurgelv(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('wave_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__wave_prob(), 0);
-
 				var cf = (await Unit.loadCat(94)).forms[2];
-				assert.strictEqual(cf.__wave_prob(), 100);
+				var spy = sinon.spy(cf, 'waveProb', ['get']);
+				assert.strictEqual(cf.__wave_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('mini_wave_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__mini_wave_prob(), 0);
-
 				var cf = (await Unit.loadCat(585)).forms[1];
-				assert.strictEqual(cf.__mini_wave_prob(), 100);
+				var spy = sinon.spy(cf, 'miniWaveProb', ['get']);
+				assert.strictEqual(cf.__mini_wave_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('surge_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__surge_prob(), 0);
-
 				var cf = (await Unit.loadCat(543)).forms[1];
-				assert.strictEqual(cf.__surge_prob(), 100);
+				var spy = sinon.spy(cf, 'surgeProb', ['get']);
+				assert.strictEqual(cf.__surge_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('mini_surge_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__mini_surge_prob(), 0);
-
 				var cf = (await Unit.loadCat(705)).forms[1];
-				assert.strictEqual(cf.__mini_surge_prob(), 100);
+				var spy = sinon.spy(cf, 'miniSurgeProb', ['get']);
+				assert.strictEqual(cf.__mini_surge_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('crit', async function () {
-				var cf = (await Unit.loadCat(0)).forms[0];
-				assert.strictEqual(cf.__crit(), 0);
-
 				var cf = (await Unit.loadCat(57)).forms[2];
-				assert.strictEqual(cf.__crit(), 50);
+				var spy = sinon.spy(cf, 'critProb', ['get']);
+				assert.strictEqual(cf.__crit(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('slow_time', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__slow_time(), 0);
-
 				var cf = (await Unit.loadCat(138)).forms[0];
-				assert.strictEqual(cf.__slow_time(), 70);
+				var spy = sinon.spy(cf, 'slowTime', ['get']);
+				assert.strictEqual(cf.__slow_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('slow_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__slow_prob(), 0);
-
 				var cf = (await Unit.loadCat(138)).forms[0];
-				assert.strictEqual(cf.__slow_prob(), 20);
+				var spy = sinon.spy(cf, 'slowProb', ['get']);
+				assert.strictEqual(cf.__slow_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('slow_cover', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__slow_cover(), 0);
-
 				var cf = (await Unit.loadCat(138)).forms[0];
-				assert.strictEqual(round(cf.__slow_cover()), 34);
+				var spy = sinon.spy(cf, 'slowCover', ['get']);
+				assert.strictEqual(cf.__slow_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('stop_time', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__stop_time(), 0);
-
 				var cf = (await Unit.loadCat(439)).forms[0];
-				assert.strictEqual(cf.__stop_time(), 30);
+				var spy = sinon.spy(cf, 'stopTime', ['get']);
+				assert.strictEqual(cf.__stop_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('stop_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__stop_prob(), 0);
-
 				var cf = (await Unit.loadCat(439)).forms[0];
-				assert.strictEqual(cf.__stop_prob(), 100);
+				var spy = sinon.spy(cf, 'stopProb', ['get']);
+				assert.strictEqual(cf.__stop_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('stop_cover', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__stop_cover(), 0);
-
 				var cf = (await Unit.loadCat(439)).forms[0];
-				assert.strictEqual(round(cf.__stop_cover()), 35);
+				var spy = sinon.spy(cf, 'stopCover', ['get']);
+				assert.strictEqual(cf.__stop_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('curse_time', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__curse_time(), 0);
-
 				var cf = (await Unit.loadCat(543)).forms[0];
-				assert.strictEqual(cf.__curse_time(), 135);
+				var spy = sinon.spy(cf, 'curseTime', ['get']);
+				assert.strictEqual(cf.__curse_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('curse_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__curse_prob(), 0);
-
 				var cf = (await Unit.loadCat(543)).forms[0];
-				assert.strictEqual(cf.__curse_prob(), 100);
+				var spy = sinon.spy(cf, 'curseProb', ['get']);
+				assert.strictEqual(cf.__curse_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('curse_cover', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__curse_cover(), 0);
-
 				var cf = (await Unit.loadCat(543)).forms[0];
-				assert.strictEqual(round(cf.__curse_cover()), 95);
+				var spy = sinon.spy(cf, 'curseCover', ['get']);
+				assert.strictEqual(cf.__curse_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('weak_time', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__weak_time(), 0);
-
 				var cf = (await Unit.loadCat(198)).forms[2];
-				assert.strictEqual(cf.__weak_time(), 200);
+				var spy = sinon.spy(cf, 'weakTime', ['get']);
+				assert.strictEqual(cf.__weak_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('weak_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__weak_prob(), 0);
-
 				var cf = (await Unit.loadCat(198)).forms[2];
-				assert.strictEqual(cf.__weak_prob(), 100);
+				var spy = sinon.spy(cf, 'weakProb', ['get']);
+				assert.strictEqual(cf.__weak_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('weak_cover', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__weak_cover(), 0);
-
 				var cf = (await Unit.loadCat(198)).forms[2];
-				assert.strictEqual(cf.__weak_cover(), 100);
+				var spy = sinon.spy(cf, 'weakCover', ['get']);
+				assert.strictEqual(cf.__weak_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('weak_extent', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__weak_extent(), 0);
-
 				var cf = (await Unit.loadCat(198)).forms[2];
-				assert.strictEqual(cf.__weak_extent(), 50);
+				var spy = sinon.spy(cf, 'weakExtent', ['get']);
+				assert.strictEqual(cf.__weak_extent(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('strengthen_extent', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__strengthen_extent(), 0);
-
 				var cf = (await Unit.loadCat(441)).forms[1];
-				assert.strictEqual(cf.__strengthen_extent(), 100);
+				var spy = sinon.spy(cf, 'strengthenExtent', ['get']);
+				assert.strictEqual(cf.__strengthen_extent(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('lethal_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__lethal_prob(), 0);
-
-				var cf = (await Unit.loadCat(37)).forms[1];
-				assert.strictEqual(cf.__lethal_prob(), 50);
-
 				var cf = (await Unit.loadCat(37)).forms[2];
-				assert.strictEqual(cf.__lethal_prob(), 100);
+				var spy = sinon.spy(cf, 'lethalProb', ['get']);
+				assert.strictEqual(cf.__lethal_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('savage_extent', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__savage_extent(), 0);
-
 				var cf = (await Unit.loadCat(519)).forms[2];
-				assert.strictEqual(cf.__savage_extent(), 200);
+				var spy = sinon.spy(cf, 'savageExtent', ['get']);
+				assert.strictEqual(cf.__savage_extent(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('savage_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__savage_prob(), 0);
-
 				var cf = (await Unit.loadCat(519)).forms[2];
-				assert.strictEqual(cf.__savage_prob(), 30);
+				var spy = sinon.spy(cf, 'savageProb', ['get']);
+				assert.strictEqual(cf.__savage_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('break_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__break_prob(), 0);
-
 				var cf = (await Unit.loadCat(245)).forms[2];
-				assert.strictEqual(cf.__break_prob(), 30);
+				var spy = sinon.spy(cf, 'barrierBreakProb', ['get']);
+				assert.strictEqual(cf.__break_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('shield_break_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__shield_break_prob(), 0);
-
 				var cf = (await Unit.loadCat(617)).forms[2];
-				assert.strictEqual(cf.__shield_break_prob(), 50);
+				var spy = sinon.spy(cf, 'shieldBreakProb', ['get']);
+				assert.strictEqual(cf.__shield_break_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('dodge_time', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__dodge_time(), 0);
-
 				var cf = (await Unit.loadCat(187)).forms[2];
-				assert.strictEqual(cf.__dodge_time(), 60);
+				var spy = sinon.spy(cf, 'dodgeTime', ['get']);
+				assert.strictEqual(cf.__dodge_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('dodge_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__dodge_prob(), 0);
-
 				var cf = (await Unit.loadCat(187)).forms[2];
-				assert.strictEqual(cf.__dodge_prob(), 20);
+				var spy = sinon.spy(cf, 'dodgeProb', ['get']);
+				assert.strictEqual(cf.__dodge_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('beast_prob', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__beast_prob(), 0);
-
 				var cf = (await Unit.loadCat(532)).forms[2];
-				assert.strictEqual(cf.__beast_prob(), 30);
+				var spy = sinon.spy(cf, 'beastDodgeProb', ['get']);
+				assert.strictEqual(cf.__beast_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('beast_time', async function () {
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.strictEqual(cf.__beast_time(), 0);
-
 				var cf = (await Unit.loadCat(532)).forms[2];
-				assert.strictEqual(cf.__beast_time(), 30);
+				var spy = sinon.spy(cf, 'beastDodgeTime', ['get']);
+				assert.strictEqual(cf.__beast_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 		});
@@ -3865,6 +4217,342 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('Enemy.waveLv', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.waveLv, 0);
+
+				var enemy = await Unit.loadEnemy(34);
+				assert.strictEqual(enemy.waveLv, 4);
+			});
+
+		});
+
+		describe('Enemy.waveProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.waveProb, 0);
+
+				var enemy = await Unit.loadEnemy(34);
+				assert.strictEqual(enemy.waveProb, 100);
+			});
+
+		});
+
+		describe('Enemy.miniWaveLv', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.miniWaveLv, 0);
+
+				var enemy = await Unit.loadEnemy(538);
+				assert.strictEqual(enemy.miniWaveLv, 5);
+			});
+
+		});
+
+		describe('Enemy.miniWaveProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.miniWaveProb, 0);
+
+				var enemy = await Unit.loadEnemy(538);
+				assert.strictEqual(enemy.miniWaveProb, 100);
+			});
+
+		});
+
+		describe('Enemy.surgeLv', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.surgeLv, 0);
+
+				var enemy = await Unit.loadEnemy(495);
+				assert.strictEqual(enemy.surgeLv, 1);
+			});
+
+		});
+
+		describe('Enemy.surgeProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.surgeProb, 0);
+
+				var enemy = await Unit.loadEnemy(495);
+				assert.strictEqual(enemy.surgeProb, 100);
+			});
+
+		});
+
+		describe('Enemy.miniSurgeLv', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.miniSurgeLv, 0);
+
+				var enemy = await Unit.loadEnemy(652);
+				assert.strictEqual(enemy.miniSurgeLv, 1);
+			});
+
+		});
+
+		describe('Enemy.miniSurgeProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.miniSurgeProb, 0);
+
+				var enemy = await Unit.loadEnemy(652);
+				assert.strictEqual(enemy.miniSurgeProb, 75);
+			});
+
+		});
+
+		describe('Enemy.critProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.critProb, 0);
+
+				var enemy = await Unit.loadEnemy(32);
+				assert.strictEqual(enemy.critProb, 10);
+			});
+
+		});
+
+		describe('Enemy.slowTime', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.slowTime, 0);
+
+				var enemy = await Unit.loadEnemy(185);
+				assert.strictEqual(enemy.slowTime, 60);
+			});
+
+		});
+
+		describe('Enemy.slowProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.slowProb, 0);
+
+				var enemy = await Unit.loadEnemy(185);
+				assert.strictEqual(enemy.slowProb, 20);
+			});
+
+		});
+
+		describe('Enemy.slowCover', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.slowCover, 0);
+
+				var enemy = await Unit.loadEnemy(185);
+				assert.strictEqual(round(enemy.slowCover), 42);
+			});
+
+		});
+
+		describe('Enemy.stopTime', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.stopTime, 0);
+
+				var enemy = await Unit.loadEnemy(160);
+				assert.strictEqual(enemy.stopTime, 60);
+			});
+
+		});
+
+		describe('Enemy.stopProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.stopProb, 0);
+
+				var enemy = await Unit.loadEnemy(160);
+				assert.strictEqual(enemy.stopProb, 25);
+			});
+
+		});
+
+		describe('Enemy.stopCover', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.stopCover, 0);
+
+				var enemy = await Unit.loadEnemy(160);
+				assert.strictEqual(round(enemy.stopCover), 14);
+			});
+
+		});
+
+		describe('Enemy.curseTime', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.curseTime, 0);
+
+				var enemy = await Unit.loadEnemy(407);
+				assert.strictEqual(enemy.curseTime, 100);
+			});
+
+		});
+
+		describe('Enemy.curseProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.curseProb, 0);
+
+				var enemy = await Unit.loadEnemy(407);
+				assert.strictEqual(enemy.curseProb, 35);
+			});
+
+		});
+
+		describe('Enemy.curseCover', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.curseCover, 0);
+
+				var enemy = await Unit.loadEnemy(407);
+				assert.strictEqual(round(enemy.curseCover), 63);
+			});
+
+		});
+
+		describe('Enemy.weakTime', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.weakTime, 0);
+
+				var enemy = await Unit.loadEnemy(172);
+				assert.strictEqual(enemy.weakTime, 300);
+			});
+
+		});
+
+		describe('Enemy.weakProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.weakProb, 0);
+
+				var enemy = await Unit.loadEnemy(172);
+				assert.strictEqual(enemy.weakProb, 25);
+			});
+
+		});
+
+		describe('Enemy.weakCover', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.weakCover, 0);
+
+				var enemy = await Unit.loadEnemy(172);
+				assert.strictEqual(round(enemy.weakCover), 93);
+			});
+
+		});
+
+		describe('Enemy.weakExtent', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.weakExtent, 0);
+
+				var enemy = await Unit.loadEnemy(172);
+				assert.strictEqual(enemy.weakExtent, 20);
+			});
+
+		});
+
+		describe('Enemy.strengthenExtent', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.strengthenExtent, 0);
+
+				var enemy = await Unit.loadEnemy(175);
+				assert.strictEqual(enemy.strengthenExtent, 100);
+			});
+
+		});
+
+		describe('Enemy.lethalProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.lethalProb, 0);
+
+				var enemy = await Unit.loadEnemy(173);
+				assert.strictEqual(enemy.lethalProb, 100);
+			});
+
+		});
+
+		describe('Enemy.savageExtent', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.savageExtent, 0);
+
+				var enemy = await Unit.loadEnemy(556);
+				assert.strictEqual(enemy.savageExtent, 200);
+			});
+
+		});
+
+		describe('Enemy.savageProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.savageProb, 0);
+
+				var enemy = await Unit.loadEnemy(556);
+				assert.strictEqual(enemy.savageProb, 10);
+			});
+
+		});
+
+		describe('Enemy.dodgeTime', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.dodgeTime, 0);
+
+				var enemy = await Unit.loadEnemy(608);
+				assert.strictEqual(enemy.dodgeTime, 30);
+			});
+
+		});
+
+		describe('Enemy.dodgeProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.dodgeProb, 0);
+
+				var enemy = await Unit.loadEnemy(608);
+				assert.strictEqual(enemy.dodgeProb, 20);
+			});
+
+		});
+
 		describe('Search keys', function () {
 
 			it('hasab', async function () {
@@ -4163,227 +4851,199 @@ describe('unit.mjs', function () {
 			});
 
 			it('wavelv', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__wavelv(), 0);
-
 				var enemy = await Unit.loadEnemy(34);
-				assert.strictEqual(enemy.__wavelv(), 4);
+				var spy = sinon.spy(enemy, 'waveLv', ['get']);
+				assert.strictEqual(enemy.__wavelv(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('wave_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__wave_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(34);
-				assert.strictEqual(enemy.__wave_prob(), 100);
+				var spy = sinon.spy(enemy, 'waveProb', ['get']);
+				assert.strictEqual(enemy.__wave_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('miniwavelv', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__miniwavelv(), 0);
-
 				var enemy = await Unit.loadEnemy(538);
-				assert.strictEqual(enemy.__miniwavelv(), 5);
+				var spy = sinon.spy(enemy, 'miniWaveLv', ['get']);
+				assert.strictEqual(enemy.__miniwavelv(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('mini_wave_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__mini_wave_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(538);
-				assert.strictEqual(enemy.__mini_wave_prob(), 100);
+				var spy = sinon.spy(enemy, 'miniWaveProb', ['get']);
+				assert.strictEqual(enemy.__mini_wave_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('surgelv', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__surgelv(), 0);
-
 				var enemy = await Unit.loadEnemy(495);
-				assert.strictEqual(enemy.__surgelv(), 1);
+				var spy = sinon.spy(enemy, 'surgeLv', ['get']);
+				assert.strictEqual(enemy.__surgelv(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('surge_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__surge_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(495);
-				assert.strictEqual(enemy.__surge_prob(), 100);
+				var spy = sinon.spy(enemy, 'surgeProb', ['get']);
+				assert.strictEqual(enemy.__surge_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('minisurgelv', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__minisurgelv(), 0);
-
 				var enemy = await Unit.loadEnemy(652);
-				assert.strictEqual(enemy.__minisurgelv(), 1);
+				var spy = sinon.spy(enemy, 'miniSurgeLv', ['get']);
+				assert.strictEqual(enemy.__minisurgelv(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('mini_surge_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__mini_surge_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(652);
-				assert.strictEqual(enemy.__mini_surge_prob(), 75);
+				var spy = sinon.spy(enemy, 'miniSurgeProb', ['get']);
+				assert.strictEqual(enemy.__mini_surge_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('crit', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__crit(), 0);
-
 				var enemy = await Unit.loadEnemy(32);
-				assert.strictEqual(enemy.__crit(), 10);
+				var spy = sinon.spy(enemy, 'critProb', ['get']);
+				assert.strictEqual(enemy.__crit(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('slow_time', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__slow_time(), 0);
-
 				var enemy = await Unit.loadEnemy(185);
-				assert.strictEqual(enemy.__slow_time(), 60);
+				var spy = sinon.spy(enemy, 'slowTime', ['get']);
+				assert.strictEqual(enemy.__slow_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('slow_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__slow_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(185);
-				assert.strictEqual(enemy.__slow_prob(), 20);
+				var spy = sinon.spy(enemy, 'slowProb', ['get']);
+				assert.strictEqual(enemy.__slow_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('slow_cover', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__slow_cover(), 0);
-
 				var enemy = await Unit.loadEnemy(185);
-				assert.strictEqual(round(enemy.__slow_cover()), 42);
+				var spy = sinon.spy(enemy, 'slowCover', ['get']);
+				assert.strictEqual(enemy.__slow_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('stop_time', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__stop_time(), 0);
-
 				var enemy = await Unit.loadEnemy(160);
-				assert.strictEqual(enemy.__stop_time(), 60);
+				var spy = sinon.spy(enemy, 'stopTime', ['get']);
+				assert.strictEqual(enemy.__stop_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('stop_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__stop_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(160);
-				assert.strictEqual(enemy.__stop_prob(), 25);
+				var spy = sinon.spy(enemy, 'stopProb', ['get']);
+				assert.strictEqual(enemy.__stop_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('stop_cover', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__stop_cover(), 0);
-
 				var enemy = await Unit.loadEnemy(160);
-				assert.strictEqual(round(enemy.__stop_cover()), 14);
+				var spy = sinon.spy(enemy, 'stopCover', ['get']);
+				assert.strictEqual(enemy.__stop_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('curse_time', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__curse_time(), 0);
-
 				var enemy = await Unit.loadEnemy(407);
-				assert.strictEqual(enemy.__curse_time(), 100);
+				var spy = sinon.spy(enemy, 'curseTime', ['get']);
+				assert.strictEqual(enemy.__curse_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('curse_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__curse_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(407);
-				assert.strictEqual(enemy.__curse_prob(), 35);
+				var spy = sinon.spy(enemy, 'curseProb', ['get']);
+				assert.strictEqual(enemy.__curse_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('curse_cover', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__curse_cover(), 0);
-
 				var enemy = await Unit.loadEnemy(407);
-				assert.strictEqual(round(enemy.__curse_cover()), 63);
+				var spy = sinon.spy(enemy, 'curseCover', ['get']);
+				assert.strictEqual(enemy.__curse_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('weak_time', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__weak_time(), 0);
-
 				var enemy = await Unit.loadEnemy(172);
-				assert.strictEqual(enemy.__weak_time(), 300);
+				var spy = sinon.spy(enemy, 'weakTime', ['get']);
+				assert.strictEqual(enemy.__weak_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('weak_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__weak_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(172);
-				assert.strictEqual(enemy.__weak_prob(), 25);
+				var spy = sinon.spy(enemy, 'weakProb', ['get']);
+				assert.strictEqual(enemy.__weak_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('weak_cover', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__weak_cover(), 0);
-
 				var enemy = await Unit.loadEnemy(172);
-				assert.strictEqual(round(enemy.__weak_cover()), 93);
+				var spy = sinon.spy(enemy, 'weakCover', ['get']);
+				assert.strictEqual(enemy.__weak_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('weak_extent', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__weak_extent(), 0);
-
 				var enemy = await Unit.loadEnemy(172);
-				assert.strictEqual(enemy.__weak_extent(), 20);
+				var spy = sinon.spy(enemy, 'weakExtent', ['get']);
+				assert.strictEqual(enemy.__weak_extent(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('strengthen_extent', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__strengthen_extent(), 0);
-
 				var enemy = await Unit.loadEnemy(175);
-				assert.strictEqual(enemy.__strengthen_extent(), 100);
+				var spy = sinon.spy(enemy, 'strengthenExtent', ['get']);
+				assert.strictEqual(enemy.__strengthen_extent(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('lethal_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__lethal_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(173);
-				assert.strictEqual(enemy.__lethal_prob(), 100);
+				var spy = sinon.spy(enemy, 'lethalProb', ['get']);
+				assert.strictEqual(enemy.__lethal_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('savage_extent', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__savage_extent(), 0);
-
 				var enemy = await Unit.loadEnemy(556);
-				assert.strictEqual(enemy.__savage_extent(), 200);
+				var spy = sinon.spy(enemy, 'savageExtent', ['get']);
+				assert.strictEqual(enemy.__savage_extent(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('savage_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__savage_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(556);
-				assert.strictEqual(enemy.__savage_prob(), 10);
+				var spy = sinon.spy(enemy, 'savageProb', ['get']);
+				assert.strictEqual(enemy.__savage_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('dodge_time', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__dodge_time(), 0);
-
 				var enemy = await Unit.loadEnemy(608);
-				assert.strictEqual(enemy.__dodge_time(), 30);
+				var spy = sinon.spy(enemy, 'dodgeTime', ['get']);
+				assert.strictEqual(enemy.__dodge_time(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 			it('dodge_prob', async function () {
-				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.__dodge_prob(), 0);
-
 				var enemy = await Unit.loadEnemy(608);
-				assert.strictEqual(enemy.__dodge_prob(), 20);
+				var spy = sinon.spy(enemy, 'dodgeProb', ['get']);
+				assert.strictEqual(enemy.__dodge_prob(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
 			});
 
 		});
