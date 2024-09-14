@@ -677,11 +677,18 @@ class Unit {
 		});
 	}
 
-	__hasab(ab) {
+	hasAb(ab) {
 		return this.ab.hasOwnProperty(ab);
 	}
-	__hasres() {
-		return false;
+	hasRes(r) {
+		return (this.res ?? {}).hasOwnProperty(r);
+	}
+
+	__hasab(ab) {
+		return this.hasAb(ab);
+	}
+	__hasres(r) {
+		return this.hasRes(r);
 	}
 	__imu() {
 		return this.imu;
@@ -1382,9 +1389,6 @@ class CatForm extends Unit {
 		}
 	}
 
-	__hasres(r) {
-		return this.res && this.res.hasOwnProperty(r) || false;
-	}
 	__max_base_lv() {
 		return this.base.maxBaseLv;
 	}

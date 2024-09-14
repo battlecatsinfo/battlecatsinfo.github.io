@@ -2524,23 +2524,65 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm.hasAb', function () {
+
+			it('basic', async function () {
+				// ab data is null
+				var cf = (await Unit.loadCat(2)).forms[2];
+				assert.isTrue(cf.hasAb(Unit.AB_GOOD));
+
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.isFalse(cf.hasAb(Unit.AB_GOOD));
+
+				// ab data is number
+				var cf = (await Unit.loadCat(57)).forms[2];
+				assert.isTrue(cf.hasAb(Unit.AB_CRIT));
+
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.isFalse(cf.hasAb(Unit.AB_CRIT));
+
+				// ab data is array
+				var cf = (await Unit.loadCat(496)).forms[2];
+				assert.isTrue(cf.hasAb(Unit.AB_S));
+
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.isFalse(cf.hasAb(Unit.AB_S));
+			});
+
+		});
+
+		describe('CatForm.hasRes', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(47)).forms[2];
+				cf.applyAllTalents();
+				assert.isTrue(cf.hasRes(Unit.RES_CURSE));
+
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.isFalse(cf.hasRes(Unit.RES_CURSE));
+			});
+
+		});
+
 		describe('Search keys', function () {
 
 			it('hasab', async function () {
 				var cf = (await Unit.loadCat(2)).forms[2];
-				assert.isTrue(cf.__hasab(Unit.AB_GOOD));
-
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.isFalse(cf.__hasab(Unit.AB_GOOD));
+				var args = [Unit.AB_GOOD];
+				var spy = sinon.spy(cf, 'hasAb');
+				assert.strictEqual(cf.__hasab(...args), spy.returnValues[0]);
+				assert.isTrue(spy.returnValues[0]);
+				assert(spy.calledOnceWith(...args));
 			});
 
 			it('hasres', async function () {
 				var cf = (await Unit.loadCat(47)).forms[2];
 				cf.applyAllTalents();
-				assert.isTrue(cf.__hasres(Unit.RES_CURSE));
-
-				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.isFalse(cf.__hasres(Unit.RES_CURSE));
+				var args = [Unit.RES_CURSE];
+				var spy = sinon.spy(cf, 'hasRes');
+				assert.strictEqual(cf.__hasres(...args), spy.returnValues[0]);
+				assert.isTrue(spy.returnValues[0]);
+				assert(spy.calledOnceWith(...args));
 			});
 
 			it('dpsagainst', async function () {
@@ -3787,19 +3829,58 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('Enemy.hasAb', function () {
+
+			it('basic', async function () {
+				// ab data is null
+				var enemy = await Unit.loadEnemy(551);
+				assert.isTrue(enemy.hasAb(Unit.AB_SUICIDE));
+
+				var enemy = await Unit.loadEnemy(0);
+				assert.isFalse(enemy.hasAb(Unit.AB_SUICIDE));
+
+				// ab data is number
+				var enemy = await Unit.loadEnemy(32);
+				assert.isTrue(enemy.hasAb(Unit.AB_CRIT));
+
+				var enemy = await Unit.loadEnemy(0);
+				assert.isFalse(enemy.hasAb(Unit.AB_CRIT));
+
+				// ab data is array
+				var enemy = await Unit.loadEnemy(407);
+				assert.isTrue(enemy.hasAb(Unit.AB_CURSE));
+
+				var enemy = await Unit.loadEnemy(0);
+				assert.isFalse(enemy.hasAb(Unit.AB_CURSE));
+			});
+
+		});
+
+		describe('Enemy.hasRes', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(407);
+				assert.isFalse(enemy.hasRes(Unit.RES_CURSE));
+			});
+
+		});
+
 		describe('Search keys', function () {
 
 			it('hasab', async function () {
 				var enemy = await Unit.loadEnemy(407);
-				assert.isTrue(enemy.__hasab(Unit.AB_CURSE));
-
-				var enemy = await Unit.loadEnemy(407);
-				assert.isFalse(enemy.__hasab(Unit.AB_WAVE));
+				var args = [Unit.AB_CURSE];
+				var spy = sinon.spy(enemy, 'hasAb');
+				assert.strictEqual(enemy.__hasab(...args), spy.returnValues[0]);
+				assert(spy.calledOnceWith(...args));
 			});
 
 			it('hasres', async function () {
 				var enemy = await Unit.loadEnemy(407);
-				assert.isFalse(enemy.__hasres());
+				var args = [Unit.RES_CURSE];
+				var spy = sinon.spy(enemy, 'hasRes');
+				assert.strictEqual(enemy.__hasres(...args), spy.returnValues[0]);
+				assert(spy.calledOnceWith(...args));
 			});
 
 			it('id', async function () {
