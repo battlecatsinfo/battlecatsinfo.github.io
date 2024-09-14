@@ -1395,14 +1395,6 @@ class CatForm extends Unit {
 		if (!t) return 0;
 		return getCoverUnit(this, t[0], (this.trait & trait_treasure) ? ~~(t[1] * 1.2) : t[1]);
 	}
-	__surgelv() {
-		const t = this.ab[AB_SURGE];
-		return t ? t[3] : 0;
-	}
-	__minisurgelv() {
-		const t = this.ab[AB_MINISURGE];
-		return t ? t[3] : 0;
-	}
 	__hpagainst(traits) {
 		return this.hpAgainst(traits);
 	}
