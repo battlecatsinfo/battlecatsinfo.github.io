@@ -23,7 +23,7 @@ describe('unit.mjs', function () {
 				assert.instanceOf(cats[106].info.talents, Int16Array);
 
 				// check stored data
-				var catsDb = await dbGetAll(Unit.DB_NAME, Unit.DB_VERSION, 'cats');
+				var catsDb = await dbGetAll(Common.DB_NAME, Common.DB_VERSION, 'cats');
 				assert.strictEqual(catsDb.length, cats.length);
 				assert.strictEqual(catsDb[0].i, 0);
 				assert.strictEqual(catsDb[0].info.rarity, 0);
@@ -32,11 +32,11 @@ describe('unit.mjs', function () {
 			}
 
 			// IDB not exist
-			await dbDelete(Unit.DB_NAME);
+			await dbDelete(Common.DB_NAME);
 			await test();
 
 			// data not stored
-			await dbClear(Unit.DB_NAME, Unit.DB_VERSION, 'cats');
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'cats');
 			await test();
 
 			// data stored
@@ -60,11 +60,11 @@ describe('unit.mjs', function () {
 			}
 
 			// IDB not exist
-			await dbDelete(Unit.DB_NAME);
+			await dbDelete(Common.DB_NAME);
 			await test();
 
 			// data not stored
-			await dbClear(Unit.DB_NAME, Unit.DB_VERSION, 'cats');
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'cats');
 			await test();
 
 			// data stored
@@ -84,7 +84,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(enemies[683].info.name, '大型陶器埴輪巨犬');
 
 				// check the value stored in idb
-				var enemiesDb = await dbGetAll(Unit.DB_NAME, Unit.DB_VERSION, 'enemy');
+				var enemiesDb = await dbGetAll(Common.DB_NAME, Common.DB_VERSION, 'enemy');
 				assert.strictEqual(enemiesDb.length, enemies.length);
 				assert.strictEqual(enemiesDb[0].i, 0);
 				assert.strictEqual(enemiesDb[0].name, '狗仔');
@@ -92,11 +92,11 @@ describe('unit.mjs', function () {
 			}
 
 			// IDB not exist
-			await dbDelete(Unit.DB_NAME);
+			await dbDelete(Common.DB_NAME);
 			await test();
 
 			// data not stored
-			await dbClear(Unit.DB_NAME, Unit.DB_VERSION, 'enemy');
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'enemy');
 			await test();
 
 			// data stored
@@ -115,11 +115,11 @@ describe('unit.mjs', function () {
 			}
 
 			// IDB not exist
-			await dbDelete(Unit.DB_NAME);
+			await dbDelete(Common.DB_NAME);
 			await test();
 
 			// data not stored
-			await dbClear(Unit.DB_NAME, Unit.DB_VERSION, 'enemy');
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'enemy');
 			await test();
 
 			// data stored

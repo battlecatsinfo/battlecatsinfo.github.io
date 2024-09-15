@@ -1,29 +1,11 @@
-import {fetch} from './common.mjs';
-
-const DB_NAME = 'stage_v2';
-const DB_VERSION = {{{lookup (loadJSON "config.json") "stage_ver"}}};
-
-function upgradeStageDb(db) {
-	try {
-		db.deleteObjectStore("map");
-	} catch (ex) {}
-	try {
-		db.deleteObjectStore("stage");
-	} catch (ex) {}
-	try {
-		db.deleteObjectStore("extra");
-	} catch (ex) {}
-	db.createObjectStore("map", {keyPath: "id"});
-	db.createObjectStore("stage", {keyPath: "id"});
-	db.createObjectStore("extra");
-}
+import {DB_NAME, DB_VERSION, onIdbUpgrade, fetch} from './common.mjs';
 
 async function _loadStageData(db) {
 	const response = await fetch('/stage.json');
 	const data = await response.json();
 
 	await new Promise((resolve, reject) => {
-		const tx = db.transaction(db.objectStoreNames, 'readwrite');
+		const tx = db.transaction(['map', 'stage', 'extra'], 'readwrite');
 		tx.oncomplete = resolve;
 		tx.onerror = reject;
 
@@ -61,9 +43,8 @@ async function openStageDb(autoReload = true) {
 		const req = indexedDB.open(DB_NAME, DB_VERSION);
 		if (autoReload) {
 			req.onupgradeneeded = (event) => {
-				const db = event.target.result;
 				needReload = true;
-				upgradeStageDb(db);
+				onIdbUpgrade(event);
 			};
 		}
 		req.onsuccess = (event) => resolve(event.target.result);
@@ -238,8 +219,6 @@ async function* forEachStage(query, direction) {
 }
 
 export {
-	DB_NAME,
-	DB_VERSION,
 	loadStageData,
 	getStageExtra,
 	getMap,

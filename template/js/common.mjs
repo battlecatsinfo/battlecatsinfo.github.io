@@ -1,3 +1,47 @@
+const DB_NAME = 'battlecatsinfo';
+const DB_VERSION = {{{lookup (loadJSON "config.json") "db_ver"}}};
+
+function onIdbUpgrade(event) {
+	const {target: {result: db}, oldVersion, newVersion} = event;
+
+	// database being deleted
+	if (newVersion === null)
+		return;
+
+	const stores = new Set(db.objectStoreNames);
+
+	// Selectively update object stores.
+	// e.g. `oldVersion < 1360008 || 1360010 < newVersion`
+	// if updates of 1360008-1360010 don't involve a change of cats.
+	// newVersion is checked to force an update in case we forget to update the
+	// code in a future version.
+	if (oldVersion < 1360010 || 1360010 < newVersion) {
+		if (stores.has("cats"))
+			db.deleteObjectStore("cats");
+		db.createObjectStore("cats", {keyPath: "i"});
+	}
+
+	if (oldVersion < 1360010 || 1360010 < newVersion) {
+		if (stores.has("enemy"))
+			db.deleteObjectStore("enemy");
+		db.createObjectStore("enemy", {keyPath: "i"});
+	}
+
+	if (oldVersion < 1360010 || 1360010 < newVersion) {
+		if (stores.has("map"))
+			db.deleteObjectStore("map");
+		db.createObjectStore("map", {keyPath: "id"});
+
+		if (stores.has("stage"))
+			db.deleteObjectStore("stage");
+		db.createObjectStore("stage", {keyPath: "id"});
+
+		if (stores.has("extra"))
+			db.deleteObjectStore("extra");
+		db.createObjectStore("extra");
+	}
+}
+
 // @TODO: centralize treasure data
 const treasures = [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 30, 10, 30, 30, 30, 30, 30, 30, 30, 100, 600, 1500, 300, 100, 30, 300, 300, 300, 300, 100];
 
@@ -219,6 +263,9 @@ async function copyPng(elem, options) {
 const config = new ConfigHandler();
 
 export {
+	DB_NAME,
+	DB_VERSION,
+	onIdbUpgrade,
 	config,
 	toggleTheme,
 	resetTheme,

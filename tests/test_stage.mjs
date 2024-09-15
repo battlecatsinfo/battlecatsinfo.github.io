@@ -1,5 +1,6 @@
 import {assert} from './lib/chai.js';
 import {dbGet, dbCount, dbClear, dbDelete} from './common.mjs';
+import * as Common from '../common.mjs';
 import * as Stage from '../stage.mjs';
 
 describe('stage.mjs', function () {
@@ -10,23 +11,23 @@ describe('stage.mjs', function () {
 			async function test() {
 				await Stage.loadStageData();
 
-				var map = await dbGet(Stage.DB_NAME, Stage.DB_VERSION, 'map', 0);
+				var map = await dbGet(Common.DB_NAME, Common.DB_VERSION, 'map', 0);
 				assert.strictEqual(map.id, 0);
 				assert.strictEqual(map.name, "傳說的開始");
 
-				var stage = await dbGet(Stage.DB_NAME, Stage.DB_VERSION, 'stage', 0);
+				var stage = await dbGet(Common.DB_NAME, Common.DB_VERSION, 'stage', 0);
 				assert.strictEqual(stage.id, 0);
 				assert.strictEqual(stage.name, "天搖地動");
 			}
 
 			// IDB not exist
-			await dbDelete(Stage.DB_NAME);
+			await dbDelete(Common.DB_NAME);
 			await test();
 
 			// data not stored
-			await dbClear(Stage.DB_NAME, Stage.DB_VERSION, 'map');
-			await dbClear(Stage.DB_NAME, Stage.DB_VERSION, 'stage');
-			await dbClear(Stage.DB_NAME, Stage.DB_VERSION, 'extra');
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'map');
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'stage');
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'extra');
 			await test();
 		});
 
@@ -93,7 +94,7 @@ describe('stage.mjs', function () {
 			assert.strictEqual(maps[0].name, "傳說的開始");
 			assert.strictEqual(maps[1].id, 1);
 			assert.strictEqual(maps[1].name, "熱情的國家");
-			assert.strictEqual(maps.length, await dbCount(Stage.DB_NAME, Stage.DB_VERSION, 'map'));
+			assert.strictEqual(maps.length, await dbCount(Common.DB_NAME, Common.DB_VERSION, 'map'));
 		});
 
 		it('iterate one', async function () {
@@ -138,7 +139,7 @@ describe('stage.mjs', function () {
 			assert.strictEqual(stages[0].name, "天搖地動");
 			assert.strictEqual(stages[1].id, 1);
 			assert.strictEqual(stages[1].name, "恐怖再現");
-			assert.strictEqual(stages.length, await dbCount(Stage.DB_NAME, Stage.DB_VERSION, 'stage'));
+			assert.strictEqual(stages.length, await dbCount(Common.DB_NAME, Common.DB_VERSION, 'stage'));
 		});
 
 		it('iterate one', async function () {

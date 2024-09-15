@@ -1,7 +1,5 @@
-import {fetch, config, numStr, round} from './common.mjs';
+import {DB_NAME, DB_VERSION, onIdbUpgrade, fetch, config, numStr, round} from './common.mjs';
 
-const DB_NAME = 'db';
-const DB_VERSION = {{{lookup (loadJSON "config.json") "cat_ver"}}};
 const units_scheme = {{{toJSON (loadJSON "units_scheme.json")}}};
 const levelcurves = {{{toJSON (lookup (loadJSON "cat_extras.json") "level_curve")}}};
 
@@ -1989,22 +1987,6 @@ async function getAllCats() {
 	return await response.json();
 }
 
-function onupgradeneeded(event) {
-	const db = event.target.result;
-	try {
-		db.deleteObjectStore("cats");
-	} catch (ex) {}
-	try {
-		db.deleteObjectStore("enemy");
-	} catch (ex) {}
-	db.createObjectStore("cats", {
-		keyPath: 'i'
-	});
-	db.createObjectStore('enemy', {
-		keyPath: 'i'
-	});
-}
-
 /**
  * @param {number} [id] - ID of the cat to load. Load all cats when omitted.
  * @return {(Cat|Cat[])}
@@ -2019,7 +2001,7 @@ async function loadCat(id) {
 			const req = indexedDB.open(DB_NAME, DB_VERSION);
 			req.onupgradeneeded = (event) => {
 				needReload = true;
-				onupgradeneeded(event);
+				onIdbUpgrade(event);
 			};
 			req.onsuccess = (event) => resolve(event.target.result);
 			req.onerror = (event) => reject(new Error(event.target.error));
@@ -2106,7 +2088,7 @@ async function loadEnemy(id) {
 			const req = indexedDB.open(DB_NAME, DB_VERSION);
 			req.onupgradeneeded = (event) => {
 				needReload = true;
-				onupgradeneeded(event);
+				onIdbUpgrade(event);
 			};
 			req.onsuccess = (event) => resolve(event.target.result);
 			req.onerror = (event) => reject(new Error(event.target.error));
@@ -2227,9 +2209,6 @@ const catEnv = new CatEnv({
 });
 
 export {
-	DB_NAME,
-	DB_VERSION,
-
 	ATK_SINGLE,
 	ATK_RANGE,
 	ATK_LD,
