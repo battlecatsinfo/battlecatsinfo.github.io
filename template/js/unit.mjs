@@ -576,6 +576,10 @@ class Unit {
 			const v = ab[AB_BARRIER];
 			hp += v[0];
 		}
+		if (ab.hasOwnProperty(AB_REVIVE)) {
+			const v = ab[AB_REVIVE];
+			hp *= (1 + (v[2] / 100) * (v[0] >= 0 ? v[0] : 999));
+		}
 
 		return hp;
 	}

@@ -4254,6 +4254,32 @@ describe('unit.mjs', function () {
 				assert.strictEqual(enemy.thp, 100000);
 			});
 
+			it('revive should be considered', async function () {
+				// revive with 50% HP * 1 
+				var enemy = await Unit.loadEnemy(284);
+				assert.strictEqual(enemy.thp, 22500);
+
+				enemy.hpM = 5;
+				enemy.stageM = 2;
+				assert.strictEqual(enemy.thp, 225000);
+
+				// revive with 100% HP * 1 
+				var enemy = await Unit.loadEnemy(468);
+				assert.strictEqual(enemy.thp, 35000);
+
+				enemy.hpM = 5;
+				enemy.stageM = 2;
+				assert.strictEqual(enemy.thp, 350000);
+
+				// revive with 100% HP * inf (treat as 999)
+				var enemy = await Unit.loadEnemy(309);
+				assert.strictEqual(enemy.thp, 40000000);
+
+				enemy.hpM = 5;
+				enemy.stageM = 2;
+				assert.strictEqual(enemy.thp, 400000000);
+			});
+
 		});
 
 		describe('Enemy.tatks', function () {
