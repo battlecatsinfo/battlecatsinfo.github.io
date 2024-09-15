@@ -164,7 +164,7 @@ function createAbIcons() {
 				T(`${d[0]} % 發射 Lv${d[1]} 小波動${U}`, 'W18c1hw');
 				break;
 			case AB_WEAK:
-				W(`${d[0]} % 降低攻擊力${U}至 ${d[2]} % 持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`, 'yRkhAHL');
+				W(`${d[0]} % 降低攻擊力${U}至 ${d[1]} % 持續 ${numStrT(d[2])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[2])} %`, 'yRkhAHL');
 				break;
 			case AB_STRENGTHEN:
 				T(`血量 ${d[0]} % 以下攻擊力上升至 ${100 + d[1]} %`, 'IE6ihRp');

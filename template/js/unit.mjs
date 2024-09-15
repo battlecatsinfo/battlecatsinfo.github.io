@@ -739,13 +739,13 @@ class Unit {
 		return this.ab[AB_STOP]?.[0] ?? 0;
 	}
 	get weakTime() {
-		return this.ab[AB_WEAK]?.[1] ?? 0;
+		return this.ab[AB_WEAK]?.[2] ?? 0;
 	}
 	get weakProb() {
 		return this.ab[AB_WEAK]?.[0] ?? 0;
 	}
 	get weakExtent() {
-		return this.ab[AB_WEAK]?.[2] ?? 0;
+		return this.ab[AB_WEAK]?.[1] ?? 0;
 	}
 	get curseTime() {
 		return this.ab[AB_CURSE]?.[1] ?? 0;
