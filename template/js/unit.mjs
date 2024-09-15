@@ -99,6 +99,9 @@ const RES_CURSE = 6;       // Resist Curse 抗古代詛咒耐性
 const RES_TOXIC = 7;       // Resist Toxic 抗毒擊耐性
 const RES_WARP = 8;        // Resist Warp 抗傳耐性
 
+const TRAIT_ALL = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE
+								| TB_RELIC | TB_WHITE | TB_EVA | TB_WITCH | TB_DEMON
+								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE;
 const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 
@@ -1114,7 +1117,7 @@ class CatForm extends Unit {
 		traits,
 		filter: abFilter,
 	} = {}) {
-		traits = traits ?? ~0;
+		traits = traits ?? TRAIT_ALL;
 		const ab = this._getab(abFilter);
 		let hp = this.hp;
 		if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL))
@@ -1169,7 +1172,7 @@ class CatForm extends Unit {
 		mode = 'expected',
 		metal: metalMode = true,
 	} = {}) {
-		traits = traits ?? ~(TB_EVA | TB_WITCH) ^ (metalMode ? TB_METAL : 0);
+		traits = traits ?? TRAIT_ALL ^ (TB_EVA | TB_WITCH) ^ (metalMode ? TB_METAL : 0);
 
 		const ab = this._getab(abFilter);
 		const isBase = traits === 0;
