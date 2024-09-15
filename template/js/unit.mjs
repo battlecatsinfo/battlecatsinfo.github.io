@@ -1691,11 +1691,8 @@ class CatForm extends Unit {
 		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_stop);
 	}
 	get weakTime() {
-		const t = this.ab[AB_WEAK]?.[2] ?? 0;
+		const t = super.weakTime;
 		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_weak);
-	}
-	get weakExtent() {
-		return this.ab[AB_WEAK]?.[1] ?? 0;
 	}
 	get curseTime() {
 		const t = super.curseTime;
