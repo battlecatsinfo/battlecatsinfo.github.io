@@ -75,46 +75,48 @@ function renderTable(forms, page = 1) {
 	display_forms = forms.slice(H - per_page, H);
 	tbody.textContent = "";
 	search_result.textContent = `顯示第${H - per_page + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
-	if (0 == forms.length)
+
+	if (0 == forms.length) {
 		tbody.innerHTML = '<tr><td colSpan="13">沒有符合條件的貓咪！</td></tr>';
-	else {
-		if (!pages_a.children.length) {
-			let c = 1;
-			for (let i = 0; i < forms.length; i += per_page) {
-				var td = pages_a.appendChild(document.createElement("td"));
-				td.textContent = c.toString();
-				td._i = c;
-				if (page == c) {
-					td.classList.add("N");
-				} else {
-					td.onclick = rerender;
+		return;
+	}
+
+	if (!pages_a.children.length) {
+		let c = 1;
+		for (let i = 0; i < forms.length; i += per_page) {
+			var td = pages_a.appendChild(document.createElement("td"));
+			td.textContent = c.toString();
+			td._i = c;
+			if (page == c) {
+				td.classList.add("N");
+			} else {
+				td.onclick = rerender;
+			}
+			if (c++ >= 10)
+				break;
+		}
+	}
+	for (let i = 0; i < display_forms.length; ++i) {
+		const tr = tbody.appendChild(document.createElement("tr"));
+		const F = display_forms[i][1];
+		const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", F.hp, F.atkm, round(F.dps), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(F.price), numStr(display_forms[i][0])];
+		for (let j = 0; j < 13; ++j) {
+			var e = tr.appendChild(document.createElement("td"));
+			if (j == 3) {
+				if (F.name)
+					e.appendChild(document.createTextNode(F.name));
+				if (F.jp_name) {
+					e.appendChild(document.createElement("br"));
+					e.appendChild(document.createTextNode(F.jp_name));
 				}
-				if (c++ >= 10)
-					break;
+			} else {
+				e.textContent = texts[j].toString();
 			}
 		}
-		for (let i = 0; i < display_forms.length; ++i) {
-			const tr = tbody.appendChild(document.createElement("tr"));
-			const F = display_forms[i][1];
-			const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", F.hp, F.atkm, round(F.dps), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(F.price), numStr(display_forms[i][0])];
-			for (let j = 0; j < 13; ++j) {
-				var e = tr.appendChild(document.createElement("td"));
-				if (j == 3) {
-					if (F.name)
-						e.appendChild(document.createTextNode(F.name));
-					if (F.jp_name) {
-						e.appendChild(document.createElement("br"));
-						e.appendChild(document.createTextNode(F.jp_name));
-					}
-				} else {
-					e.textContent = texts[j].toString();
-				}
-			}
-			const a = tr.children[2].appendChild(document.createElement("a"));
-			a.href = "./unit.html?id=" + F.id.toString();
-			const img = a.appendChild(new Image(104, 79));
-			img.src = F.icon;
-		}
+		const a = tr.children[2].appendChild(document.createElement("a"));
+		a.href = "./unit.html?id=" + F.id.toString();
+		const img = a.appendChild(new Image(104, 79));
+		img.src = F.icon;
 	}
 }
 
