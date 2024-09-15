@@ -1,5 +1,6 @@
 import {config} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
+import {limited_cats} from './units_scheme.mjs';
 
 var cats;
 var tooltip;
@@ -14,7 +15,6 @@ const text_e = document.getElementById('text');
 const not_e = document.getElementById('not-f');
 const fav_only = document.getElementById('fav-only');
 const ex_only = document.getElementById('ex-only');
-const limited_cats = new Set({{toJSON (lookup (loadJSON "cat_extras.json") "limited_cats")}});
 let fav_setting = false;
 
 function onClick(event) {

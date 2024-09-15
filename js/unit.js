@@ -4,6 +4,7 @@ module.exports = class extends SiteGenerator {
 	run() {
 		this.generate_cats();
 		this.generate_enemy();
+		this.generate_data_files();
 	}
 
 	generate_cats() {
@@ -111,6 +112,17 @@ module.exports = class extends SiteGenerator {
 		});
 
 		this.write_json('enemy.json', enemies);
+	}
+
+	generate_data_files() {
+		const units_scheme = JSON.parse(this.load('units_scheme.json'));
+		const {limited_cats, level_curve} = JSON.parse(this.load('cat_extras.json'));
+
+		this.write_template('js/units_scheme.mjs', 'units_scheme.mjs', {
+			units_scheme,
+			limited_cats,
+			level_curve,
+		});
 	}
 
 	parse_distance(dist) {

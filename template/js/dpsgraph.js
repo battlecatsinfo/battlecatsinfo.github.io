@@ -50,14 +50,13 @@ import {
 	AB_SUMMON,
 	AB_MK,
 
-	units_scheme,
-
 	trait_treasure,
 
 	getAbiString,
 
 	loadAllCats,
 } from './unit.mjs';
+import * as units_scheme from './units_scheme.mjs';
 
 const CF = document.getElementById('CF');
 const CL = document.getElementById('CL');

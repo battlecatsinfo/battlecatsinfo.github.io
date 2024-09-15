@@ -54,7 +54,6 @@ import {
 	AB_SUMMON,
 	AB_MK,
 
-	units_scheme,
 	catEnv,
 
 	createTraitIcons,
@@ -63,6 +62,7 @@ import {
 
 	loadAllCats,
 } from './unit.mjs';
+import * as units_scheme from './units_scheme.mjs';
 
 var cats;
 var targets = new Set();

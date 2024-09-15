@@ -55,7 +55,6 @@ import {
 	AB_SUMMON,
 	AB_MK,
 
-	units_scheme,
 	catEnv,
 
 	get_trait_short_names,
@@ -69,9 +68,9 @@ import {
 
 	loadCat,
 } from './unit.mjs';
+import * as units_scheme from './units_scheme.mjs';
 import {combos} from './combo.mjs';
-
-const combos_scheme = {{{toJSON (loadJSON "combos_scheme.json")}}};
+import * as combos_scheme from './combos_scheme.mjs';
 
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));

@@ -1,7 +1,5 @@
 import {DB_NAME, DB_VERSION, onIdbUpgrade, fetch, config, numStr, round} from './common.mjs';
-
-const units_scheme = {{{toJSON (loadJSON "units_scheme.json")}}};
-const levelcurves = {{{toJSON (lookup (loadJSON "cat_extras.json") "level_curve")}}};
+import * as units_scheme from './units_scheme.mjs';
 
 // Attack types
 const ATK_SINGLE = 1;      // Single Attack 單體攻擊
@@ -1924,7 +1922,7 @@ class Cat {
 	}
 
 	get lvCurve() {
-		const value = levelcurves[this.info.lvCurve];
+		const value = units_scheme.levelcurves[this.info.lvCurve];
 		Object.defineProperty(this, 'lvCurve', {value});
 		return value;
 	}
