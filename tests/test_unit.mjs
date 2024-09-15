@@ -4242,6 +4242,18 @@ describe('unit.mjs', function () {
 				assert.strictEqual(enemy.thp, 81000);
 			});
 
+			it('barrier should be considered', async function () {
+				// no mag
+				var enemy = await Unit.loadEnemy(363);
+				assert.strictEqual(enemy.thp, 50000);
+
+				// barrier shouldn't be multiplied by mag
+				var enemy = await Unit.loadEnemy(363);
+				enemy.hpM = 3;
+				enemy.stageM = 2;
+				assert.strictEqual(enemy.thp, 100000);
+			});
+
 		});
 
 		describe('Enemy.tatks', function () {

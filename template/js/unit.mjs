@@ -572,6 +572,10 @@ class Unit {
 			const s = ~~(round(v[0] * this.hpM) * this.stageM);
 			hp += ~~(s + s * (v[1] / 100) * (this.kb - 1));
 		}
+		if (ab.hasOwnProperty(AB_BARRIER)) {
+			const v = ab[AB_BARRIER];
+			hp += v[0];
+		}
 
 		return hp;
 	}
