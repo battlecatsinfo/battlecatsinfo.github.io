@@ -1,6 +1,6 @@
 import {assert} from './lib/chai.js';
 import sinon from './lib/sinon-esm.js';
-import {config, fetch, getNumFormatter, round} from '../common.mjs';
+import {config, fetch, getNumFormatter, round, pagination} from '../common.mjs';
 
 describe('common.mjs', function () {
 
@@ -361,6 +361,118 @@ describe('common.mjs', function () {
 
 			assert.strictEqual(round(10049, -2), 10000);
 			assert.strictEqual(round(10050, -2), 10100);
+		});
+
+	});
+
+	describe('pagination', function () {
+
+		it('show page and up to adjacentPages at both sides', function () {
+			assert.deepEqual(pagination({
+				page: 6, max: 11,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+
+			assert.deepEqual(pagination({
+				page: 3, max: 6,
+			}), [1, 2, 3, 4, 5, 6]);
+
+			assert.deepEqual(pagination({
+				page: 1, max: 1,
+			}), [1]);
+		});
+
+		it('show first and last page if not all pages are shown and jump == true (default)', function () {
+			assert.deepEqual(pagination({
+				page: 6, max: 15,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15]);
+
+			assert.deepEqual(pagination({
+				page: 10, max: 15,
+			}), [1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
+
+			assert.deepEqual(pagination({
+				page: 6, max: 15, jump: false,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+
+			assert.deepEqual(pagination({
+				page: 10, max: 15, jump: false,
+			}), [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
+
+			// custom adjacentPages
+			assert.deepEqual(pagination({
+				page: 6, max: 15, adjacentPages: 3,
+			}), [1, 4, 5, 6, 7, 8, 15]);
+
+			assert.deepEqual(pagination({
+				page: 6, max: 15, adjacentPages: 1,
+			}), [1, 6, 15]);
+		});
+
+		it('add pages at another side if shown pages < displayPages because page is close to start/end', function () {
+			assert.deepEqual(pagination({
+				page: 1, max: 10,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+			assert.deepEqual(pagination({
+				page: 1, max: 11,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 11]);
+
+			assert.deepEqual(pagination({
+				page: 9, max: 10,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+			assert.deepEqual(pagination({
+				page: 9, max: 11,
+			}), [1, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+
+			// larger displayPages
+			assert.deepEqual(pagination({
+				page: 1, max: 10,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+			assert.deepEqual(pagination({
+				page: 1, max: 11,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 11]);
+
+			assert.deepEqual(pagination({
+				page: 9, max: 10,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+			assert.deepEqual(pagination({
+				page: 9, max: 11,
+			}), [1, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+
+			// smaller displayPages
+			assert.deepEqual(pagination({
+				page: 1, max: 10, displayPages: 8,
+			}), [1, 2, 3, 4, 5, 6, 7, 10]);
+
+			assert.deepEqual(pagination({
+				page: 10, max: 10, displayPages: 8,
+			}), [1, 4, 5, 6, 7, 8, 9, 10]);
+
+			// show normally if shown pages not < displayPages
+			assert.deepEqual(pagination({
+				page: 1, max: 10, displayPages: 5,
+			}), [1, 2, 3, 4, 5, 10]);
+
+			assert.deepEqual(pagination({
+				page: 10, max: 10, displayPages: 5,
+			}), [1, 6, 7, 8, 9, 10]);
+
+			assert.deepEqual(pagination({
+				page: 1, max: 10, displayPages: 4,
+			}), [1, 2, 3, 4, 5, 10]);
+
+			assert.deepEqual(pagination({
+				page: 10, max: 10, displayPages: 4,
+			}), [1, 6, 7, 8, 9, 10]);
+		});
+
+		it('treat displayPages as page with adjacentPages if null', function () {
+			assert.deepEqual(pagination({
+				page: 1, max: 15, displayPages: null,
+			}), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15]);
 		});
 
 	});

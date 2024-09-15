@@ -1,4 +1,4 @@
-import {numStr, numStrT, round} from './common.mjs';
+import {numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllEnemies} from './unit.mjs';
 
 var cats;
@@ -22,27 +22,13 @@ var last_forms;
 var per_page = 10;
 let results;
 
-function rerender(event) {
+function rerender(page) {
+	renderTable(last_forms, page);
+}
+
+function onPagerClick(event) {
 	event.preventDefault();
-	const id = event.currentTarget._i;
-	pages_a.textContent = '';
-	if (id >= 9) {
-		let i = 0;
-		let maxPage = Math.min(Math.ceil(last_forms.length / per_page), id + 7);
-		for (let c = id - 5; c <= maxPage; ++c) {
-			const td = document.createElement('td');
-			td.textContent = c.toString();
-			td.onclick = rerender;
-			td._i = c;
-			if (c == id) {
-				td.classList.add('N');
-				td.onclick = null;
-			}
-			pages_a.appendChild(td);
-			if (++i >= 10) break;
-		}
-	}
-	renderTable(last_forms, id);
+	rerender(event.currentTarget._i);
 }
 
 document.getElementById('per_page').oninput = function setRange(e) {
@@ -61,21 +47,22 @@ function renderTable(forms, page = 1) {
 			'<tr><td colSpan="13">沒有符合條件的敵人！</td></tr>';
 		return;
 	}
-	if (!pages_a.children.length) {
-		let c = 1;
-		for (let i = 0; i < forms.length; i += per_page) {
-			const td = document.createElement('td');
-			td.textContent = c.toString();
-			td.onclick = rerender;
-			td._i = c;
-			if (page == c) {
-				td.classList.add('N');
-				td.onclick = null;
-			}
-			pages_a.appendChild(td);
-			if (c++ >= 10) break;
+
+	pages_a.textContent = '';
+	for (const c of pagination({
+		page,
+		max: Math.ceil(forms.length / per_page),
+	})) {
+		const td = pages_a.appendChild(document.createElement("td"));
+		td.textContent = c;
+		td._i = c;
+		if (page == c) {
+			td.classList.add("N");
+		} else {
+			td.onclick = onPagerClick;
 		}
 	}
+
 	for (let i = 0; i < display_forms.length; ++i) {
 		const tr = document.createElement('tr');
 		const F = display_forms[i][1];
@@ -102,7 +89,6 @@ function simplify(code) {
 }
 
 function calculate(code = '') {
-	pages_a.textContent = '';
 	const sortCode = simplify(sort_expr.value);
 	const url = new URL(location.pathname, location.href);
 	if (!code.length) {
@@ -314,7 +300,6 @@ name_search.oninput = function() {
 		if (C.name.includes(search) || C.jp_name.includes(search))
 			results.push([1, C]);
 
-	pages_a.textContent = "";
 	renderTable(results);
 }
 const th = document.getElementById('th');

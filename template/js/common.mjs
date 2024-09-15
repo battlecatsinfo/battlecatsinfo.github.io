@@ -260,6 +260,34 @@ async function copyPng(elem, options) {
 	]);
 }
 
+function pagination({
+	page = 1, min = 1, max,
+	adjacentPages = 5,
+	displayPages = 10,
+	jump = true,
+}) {
+	adjacentPages = Math.max(adjacentPages, 1);
+	displayPages = displayPages ?? adjacentPages * 2 + 1;
+	const rv = [];
+	let start = Math.max(page - adjacentPages, min);
+	let end = Math.min(page + adjacentPages, max);
+	if (end - start + 1 < displayPages) {
+		if (page - adjacentPages < min) {
+			end = Math.min(Math.max(min + displayPages - 1, end), max);
+		} else if (page + adjacentPages > max) {
+			start = Math.max(Math.min(max - displayPages + 1, start), min);
+		}
+	}
+	for (let i = start; i <= end; i++) {
+		rv.push(i);
+	}
+	if (jump) {
+		rv[0] = min;
+		rv[rv.length - 1] = max;
+	}
+	return rv;
+}
+
 const config = new ConfigHandler();
 
 export {
@@ -279,4 +307,5 @@ export {
 	numStrX,
 	round,
 	floor,
+	pagination,
 };

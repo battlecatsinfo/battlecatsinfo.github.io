@@ -1,4 +1,4 @@
-import {config, numStr, numStrT, round} from './common.mjs';
+import {config, numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
 
 var cats;
@@ -31,30 +31,17 @@ const traitBtn = trait_s.firstElementChild.firstElementChild;
 const abBtn = ab_s.firstElementChild.firstElementChild;
 const name_search = document.getElementById("name-search");
 
-function rerender(event) {
-	const id = event.currentTarget._i;
+function rerender(page) {
 	const url = new URL(location.href);
-	url.searchParams.set("page", id);
+	url.searchParams.set("page", page);
 	if (location.href != url.href)
 		history.pushState({}, "", url);
-	pages_a.textContent = '';
-	if (id >= 9) {
-		let i = 0;
-		let maxPage = Math.min(Math.ceil(last_forms.length / per_page), id + 7);
-		for (let c = id - 5; c <= maxPage; ++c) {
-			const td = document.createElement('td');
-			td.textContent = c.toString();
-			td.onclick = rerender;
-			td._i = c;
-			if (c == id) {
-				td.classList.add('N');
-				td.onclick = null;
-			}
-			pages_a.appendChild(td);
-			if (++i >= 10) break;
-		}
-	}
-	renderTable(last_forms, id);
+	renderTable(last_forms, page);
+}
+
+function onPagerClick(event) {
+	event.preventDefault();
+	rerender(event.currentTarget._i);
 }
 
 document.getElementById('per_page').oninput = function setRange(e) {
@@ -81,21 +68,21 @@ function renderTable(forms, page = 1) {
 		return;
 	}
 
-	if (!pages_a.children.length) {
-		let c = 1;
-		for (let i = 0; i < forms.length; i += per_page) {
-			var td = pages_a.appendChild(document.createElement("td"));
-			td.textContent = c.toString();
-			td._i = c;
-			if (page == c) {
-				td.classList.add("N");
-			} else {
-				td.onclick = rerender;
-			}
-			if (c++ >= 10)
-				break;
+	pages_a.textContent = '';
+	for (const c of pagination({
+		page,
+		max: Math.ceil(forms.length / per_page),
+	})) {
+		const td = pages_a.appendChild(document.createElement("td"));
+		td.textContent = c;
+		td._i = c;
+		if (page == c) {
+			td.classList.add("N");
+		} else {
+			td.onclick = onPagerClick;
 		}
 	}
+
 	for (let i = 0; i < display_forms.length; ++i) {
 		const tr = tbody.appendChild(document.createElement("tr"));
 		const F = display_forms[i][1];
@@ -125,7 +112,6 @@ function simplify(code) {
 }
 
 function calculate(code = "") {
-	pages_a.textContent = "";
 	const sortCode = simplify(sort_expr.value);
 	def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60);
 	plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90);
@@ -309,11 +295,7 @@ loadAllCats().then(_cats => {
 	if (Q) {
 		Q = parseInt(Q);
 		if (isFinite(Q) && Q > 1) {
-			rerender({
-				'currentTarget': {
-					'_i': Q
-				}
-			});
+			rerender(Q);
 		}
 	}
 });
@@ -400,7 +382,6 @@ name_search.oninput = function() {
 	}
 	for (C of s)
 		for (let f of C.forms)(f.name.includes(search) || f.jp_name.includes(search)) && results.push([1, f]);
-	pages_a.textContent = "";
 	renderTable(results);
 };
 document.getElementById('form-s').onchange = function() {
