@@ -36,12 +36,24 @@ document.getElementById('per_page').oninput = function setRange(e) {
 	renderTable(last_forms);
 };
 
+function filterByNameOrId(results) {
+	const key = name_search.value.trim();
+	if (!key)
+		return results;
+	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
+	return results.filter(result => {
+		const f = result[1];
+		return (f.id === qid) || f.name.includes(key) || f.jp_name.includes(key);
+	});
+}
+
 function renderTable(forms, page = 1) {
+	last_forms = forms;
+	forms = filterByNameOrId(forms);
 	let H = page * per_page;
 	let display_forms = forms.slice(H - per_page, H);
 	tbody.textContent = '';
 	search_result.textContent = `顯示第${H - per_page + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
-	last_forms = forms;
 	if (forms.length == 0) {
 		tbody.innerHTML =
 			'<tr><td colSpan="13">沒有符合條件的敵人！</td></tr>';
@@ -88,7 +100,7 @@ function simplify(code) {
 	return code.replaceAll('\n', '').replaceAll(' ', '').replaceAll('\r', '').replaceAll('\t', '');
 }
 
-function calculate(code = '') {
+function calculate(code = '', noUpdateUrl) {
 	const sortCode = simplify(sort_expr.value);
 	const url = new URL(location.pathname, location.href);
 	if (!code.length) {
@@ -177,7 +189,7 @@ function calculate(code = '') {
 	const ao = a + b + c;
 	if (ao != '000') // AND/AND/AND (default)
 		url.searchParams.set('ao', ao);
-	if (location.href != url.href)
+	if (location.href != url.href && !noUpdateUrl)
 		history.pushState({}, "", url);
 }
 
@@ -199,11 +211,8 @@ loadAllEnemies()
 		document.getElementById('main').style.display = 'block';
 
 		const Q = params.get('q');
-
 		if (Q) {
 			name_search.value = Q;
-			name_search.oninput();
-			return;
 		}
 
 		const filter = params.get('filter');
@@ -222,7 +231,7 @@ loadAllEnemies()
 		addBtns(ab_s, params.get('abs'));
 		addBtns(trait_s, params.get('traits'));
 		addBtns(kind_s, params.get('kinds'));
-		calculate(filter ? filter : '');
+		calculate(filter ? filter : '', true);
 	});
 document.querySelectorAll('button').forEach(elem => {
 	elem.state = '0';
@@ -278,29 +287,7 @@ toggle_s.onclick = function() {
 	hide_seach = !hide_seach;
 }
 name_search.oninput = function() {
-	let search = name_search.value.trim();
-	if (!search)
-		return;
-	let digit = search.length >= 1;
-	for (let c of search) {
-		const x = c.codePointAt(0);
-		if (x < 48 || x > 57)
-			digit = false;
-	}
-	const results = [];
-	const clone = [...cats];
-	if (digit) {
-		let x = parseInt(search);
-		if (x < clone.length) {
-			results.push([1, clone[x]]);
-			clone[x] = {'name': '', 'jp_name': ''};
-		}
-	}
-	for (let C of clone)
-		if (C.name.includes(search) || C.jp_name.includes(search))
-			results.push([1, C]);
-
-	renderTable(results);
+	renderTable(last_forms);
 }
 const th = document.getElementById('th');
 for (let n of th.children) {

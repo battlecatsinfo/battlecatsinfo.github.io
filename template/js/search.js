@@ -56,8 +56,20 @@ document.getElementById('per_page').oninput = function setRange(e) {
 	renderTable(last_forms);
 };
 
+function filterByNameOrId(results) {
+	const key = name_search.value.trim();
+	if (!key)
+		return results;
+	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
+	return results.filter(result => {
+		const f = result[1];
+		return (f.id === qid) || f.name.includes(key) || f.jp_name.includes(key);
+	});
+}
+
 function renderTable(forms, page = 1) {
 	last_forms = forms;
+	forms = filterByNameOrId(forms);
 	var H = per_page * page;
 	display_forms = forms.slice(H - per_page, H);
 	tbody.textContent = "";
@@ -111,7 +123,7 @@ function simplify(code) {
 	return code.replaceAll("\n", "").replaceAll(" ", "").replaceAll("\r", "").replaceAll("\t", "");
 }
 
-function calculate(code = "") {
+function calculate(code = "", noUpdateUrl) {
 	const sortCode = simplify(sort_expr.value);
 	def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60);
 	plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90);
@@ -222,7 +234,7 @@ function calculate(code = "") {
 		url.searchParams.set('form', form_s); // all/first form/envolved/true form/highest
 	if (per_page != 10) // 10 result per page (default)
 		url.searchParams.set('per', per_page); // num results per page
-	if (location.href != url.href)
+	if (location.href != url.href && !noUpdateUrl)
 		history.pushState({}, "", url);
 }
 
@@ -250,13 +262,11 @@ loadAllCats().then(_cats => {
 			TF.applyAllTalents();
 		}
 	}
-	let Q = params.get('q')
+	let Q = params.get('q');
 	if (Q) {
 		plus_lv = 0;
 		def_lv = 50;
 		name_search.value = Q;
-		name_search.oninput();
-		return;
 	}
 	const filter = params.get('filter');
 	const sort = params.get('sort');
@@ -290,7 +300,7 @@ loadAllCats().then(_cats => {
 			document.getElementById('per_page').value = Q;
 		}
 	}
-	calculate(filter || '');
+	calculate(filter || '', true);
 	Q = params.get('page');
 	if (Q) {
 		Q = parseInt(Q);
@@ -363,26 +373,7 @@ toggle_s.onclick = function() {
 	hide_search = !hide_search;
 };
 name_search.oninput = function() {
-	var c, search = name_search.value.trim();
-	if (!search) return calculate(simplify(ori_expr.value));
-	let digit = 1 <= search.length;
-	for (c of search) {
-		var x = c.codePointAt(0);
-		(x < 48 || 57 < x) && (digit = !1);
-	}
-	var C, s = cats,
-		results = [];
-	if (digit) {
-		let x = parseInt(search);
-		if (x < cats.length) {
-			s = [...cats];
-			for (var f of cats[x].forms) results.push([1, f]);
-			s.splice(x, 1);
-		}
-	}
-	for (C of s)
-		for (let f of C.forms)(f.name.includes(search) || f.jp_name.includes(search)) && results.push([1, f]);
-	renderTable(results);
+	renderTable(last_forms);
 };
 document.getElementById('form-s').onchange = function() {
 	form_s = this.selectedIndex;
