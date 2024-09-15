@@ -1,6 +1,8 @@
 {{#each units_scheme as |value key|}}
+{{#if (op key '==' 'limited_cats')}}
+export const {{{key}}} = new Set({{{toJSON value}}});
+{{else}}
 export const {{{key}}} = {{{toJSON value}}};
+{{/if}}
 {{/each}}
-export const limited_cats = new Set({{{toJSON limited_cats}}});
-export const levelcurves = {{{toJSON level_curve}}};
 export const eggs = {{{toJSON eggs}}};

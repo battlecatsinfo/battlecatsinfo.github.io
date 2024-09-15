@@ -115,7 +115,6 @@ module.exports = class extends SiteGenerator {
 
 	generate_data_files({catTable}) {
 		const units_scheme = JSON.parse(this.load('units_scheme.json'));
-		const {limited_cats, level_curve} = JSON.parse(this.load('cat_extras.json'));
 
 		const eggs = catTable.reduce((eggs, cat, id) => {
 			if (cat.egg_id) {
@@ -126,8 +125,6 @@ module.exports = class extends SiteGenerator {
 
 		this.write_template('js/units_scheme.mjs', 'units_scheme.mjs', {
 			units_scheme,
-			limited_cats,
-			level_curve,
 			eggs,
 		});
 	}
