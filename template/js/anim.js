@@ -1,3 +1,5 @@
+import {eggs} from './units_scheme.mjs';
+
 if (window.OffscreenCanvas == undefined || window.OffscreenCanvas.prototype.convertToBlob == undefined) {
 	window.OffscreenCanvas = class OffscreenCanvas {
 		constructor(width, height) {
@@ -18,4 +20,10 @@ if (window.OffscreenCanvas == undefined || window.OffscreenCanvas.prototype.conv
 		}
 	}
 }
-const eggs={{{toJSON eggs}}};
+
+// expose global variables
+// @TODO: refactor code to prevent this
+// maybe import directly in anim.min.js?
+Object.assign(globalThis, {
+	eggs,
+});

@@ -65,6 +65,7 @@ const sources = [
 	'medal.js',
 	'metal_killer.js',
 	'unit.js',
+	'anim.js',
 
 	'gif.min.js',
 	'gif.worker.min.js',

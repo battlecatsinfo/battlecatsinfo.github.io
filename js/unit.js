@@ -2,15 +2,16 @@ const {SiteGenerator} = require('./base.js');
 
 module.exports = class extends SiteGenerator {
 	run() {
-		this.generate_cats();
-		this.generate_enemy();
-		this.generate_data_files();
-	}
-
-	generate_cats() {
 		const catTable = this.parse_tsv(this.load('cat.tsv'));
 		const catstatTable = this.parse_tsv(this.load('catstat.tsv'));
+		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
 
+		this.generate_cats({catTable, catstatTable});
+		this.generate_enemy({enemyTable});
+		this.generate_data_files({catTable});
+	}
+
+	generate_cats({catTable, catstatTable}) {
 		// format cats
 		const cats = catTable.map((cat, i) => {
 			const info = {
@@ -75,9 +76,7 @@ module.exports = class extends SiteGenerator {
 		this.write_json('cat.json', cats);
 	}
 
-	generate_enemy() {
-		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
-
+	generate_enemy({enemyTable}) {
 		// format enemies
 		const enemies = enemyTable.map(enemy => {
 			return {
@@ -114,14 +113,22 @@ module.exports = class extends SiteGenerator {
 		this.write_json('enemy.json', enemies);
 	}
 
-	generate_data_files() {
+	generate_data_files({catTable}) {
 		const units_scheme = JSON.parse(this.load('units_scheme.json'));
 		const {limited_cats, level_curve} = JSON.parse(this.load('cat_extras.json'));
+
+		const eggs = catTable.reduce((eggs, cat, id) => {
+			if (cat.egg_id) {
+				eggs[id] = cat.egg_id.split(',').map(Number);
+			}
+			return eggs;
+		}, {});
 
 		this.write_template('js/units_scheme.mjs', 'units_scheme.mjs', {
 			units_scheme,
 			limited_cats,
 			level_curve,
+			eggs,
 		});
 	}
 

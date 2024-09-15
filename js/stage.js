@@ -7,16 +7,8 @@ module.exports = class extends RewardSiteGenerator {
 
 		const stageScheme = JSON.parse(this.load('stage_scheme.json'));
 
-		const catData = this.parse_tsv(this.load('cat.tsv'));
-		const eggs = catData.reduce((eggs, cat, id) => {
-			if (cat.egg_id) {
-				eggs[id] = cat.egg_id.split(',').map(Number);
-			}
-			return eggs;
-		}, {});
-
 		this.generate_data_files({mapTable, stageTable, stageScheme});
-		this.generate_pages({stageScheme, eggs});
+		this.generate_pages({stageScheme});
 		this.generate_crown({mapTable, stageScheme});
 		this.generate_materials({mapTable, stageTable});
 	}
@@ -102,9 +94,7 @@ module.exports = class extends RewardSiteGenerator {
 		});
 	}
 
-	generate_pages({stageScheme, eggs}) {
-		this.write_template('js/anim.js', 'anim.js', {eggs});
-
+	generate_pages({stageScheme}) {
 		const {categories} = stageScheme;
 		this.write_template('html/stage.html', 'stage.html', {
 			category: categories.default,
