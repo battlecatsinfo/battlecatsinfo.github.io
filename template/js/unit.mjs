@@ -1,4 +1,4 @@
-import {DB_NAME, DB_VERSION, onIdbUpgrade, fetch, config, numStr, round} from './common.mjs';
+import {AutoIdb, fetch, config, numStr, round} from './common.mjs';
 import * as units_scheme from './units_scheme.mjs';
 
 // Attack types
@@ -1980,188 +1980,54 @@ class Cat {
 	}
 }
 
-async function getAllEnemies() {
-	const response = await fetch('/enemy.json');
-	return await response.json();
+class CatIdb extends AutoIdb {
+	static storeName = 'cats';
+	static src = '/cat.json';
 }
 
-async function getAllCats() {
-	const response = await fetch('/cat.json');
-	return await response.json();
-}
-
-/**
- * @param {number} [id] - ID of the cat to load. Load all cats when omitted.
- * @return {(Cat|Cat[])}
- */
 async function loadCat(id) {
-	let db;
-	let cats;
-	let needReload = false;
-
+	const db = await CatIdb.open();
 	try {
-		db = await new Promise((resolve, reject) => {
-			const req = indexedDB.open(DB_NAME, DB_VERSION);
-			req.onupgradeneeded = (event) => {
-				needReload = true;
-				onIdbUpgrade(event);
-			};
-			req.onsuccess = (event) => resolve(event.target.result);
-			req.onerror = (event) => reject(new Error(event.target.error));
-		});
-
-		if (!needReload) {
-			await new Promise((resolve, reject) => {
-				const tx = db.transaction(["cats"]);
-				tx.oncomplete = resolve;
-				tx.onerror = (event) => reject(new Error(event.target.error));
-				tx.objectStore("cats").openCursor().onsuccess = (event) => {
-					if (!event.target.result)
-						needReload = true;
-				};
-			});
-		}
-
-		if (needReload) {
-			cats = await getAllCats();
-			await new Promise((resolve, reject) => {
-				const tx = db.transaction(["cats"], "readwrite");
-				tx.oncomplete = resolve;
-				tx.onerror = (event) => reject(new Error(event.target.error));
-				try {
-					const store = tx.objectStore("cats");
-					store.clear();
-					for (const cat of cats) {
-						store.put(cat);
-					}
-				} catch (ex) {
-					reject(ex);
-					tx.abort();
-				}
-			});
-		}
-
-		if (cats) {
-			if (typeof id !== 'undefined')
-				return new Cat(cats[id]);
-			else
-				return cats.map(e => new Cat(e));
-		}
-
-		return await new Promise((resolve, reject) => {
-			let rv;
-			const tx = db.transaction(["cats"]);
-			tx.oncomplete = (event) => resolve(rv);
-			tx.onerror = (event) => reject(new Error(event.target.error));
-
-			const store = tx.objectStore("cats");
-			if (typeof id !== 'undefined') {
-				store.get(id).onsuccess = (event) => {
-					rv = new Cat(event.target.result);
-				};
-			} else {
-				store.getAll().onsuccess = (event) => {
-					rv = event.target.result.map(e => new Cat(e));
-				};
-			}
-		});
+		const cat = db._data ? db._data[id] : await CatIdb.get(db, id);
+		return new Cat(cat);
 	} finally {
-		db && db.close();
+		db.close();
 	}
 }
 
-/**
- * Alias for loadCat().
- */
 async function loadAllCats() {
-	return await loadCat();
-}
-
-/**
- * @param {number} [id] - ID of the enemy to load. Load all enemies when omitted.
- * @return {(Enemy|Enemy[])}
- */
-async function loadEnemy(id) {
-	let db;
-	let enemies;
-	let needReload = false;
-
+	const db = await CatIdb.open();
 	try {
-		db = await new Promise((resolve, reject) => {
-			const req = indexedDB.open(DB_NAME, DB_VERSION);
-			req.onupgradeneeded = (event) => {
-				needReload = true;
-				onIdbUpgrade(event);
-			};
-			req.onsuccess = (event) => resolve(event.target.result);
-			req.onerror = (event) => reject(new Error(event.target.error));
-		});
-
-		if (!needReload) {
-			await new Promise((resolve, reject) => {
-				const tx = db.transaction(["enemy"]);
-				tx.oncomplete = resolve;
-				tx.onerror = (event) => reject(new Error(event.target.error));
-				tx.objectStore("enemy").openCursor().onsuccess = (event) => {
-					if (!event.target.result)
-						needReload = true;
-				};
-			});
-		}
-
-		if (needReload) {
-			enemies = await getAllEnemies();
-			await new Promise((resolve, reject) => {
-				const tx = db.transaction(["enemy"], "readwrite");
-				tx.oncomplete = resolve;
-				tx.onerror = (event) => reject(new Error(event.target.error));
-				try {
-					const store = tx.objectStore("enemy");
-					store.clear();
-					for (const enemy of enemies) {
-						store.put(enemy);
-					}
-				} catch (ex) {
-					reject(ex);
-					tx.abort();
-				}
-			});
-		}
-
-		if (enemies) {
-			if (typeof id !== 'undefined')
-				return new Enemy(enemies[id]);
-			else
-				return enemies.map(e => new Enemy(e));
-		}
-
-		return await new Promise((resolve, reject) => {
-			let rv;
-			const tx = db.transaction(["enemy"]);
-			tx.oncomplete = (event) => resolve(rv);
-			tx.onerror = (event) => reject(new Error(event.target.error));
-
-			const store = tx.objectStore("enemy");
-			if (typeof id !== 'undefined') {
-				store.get(id).onsuccess = (event) => {
-					rv = new Enemy(event.target.result);
-				};
-			} else {
-				store.getAll().onsuccess = (event) => {
-					rv = event.target.result.map(e => new Enemy(e));
-				};
-			}
-		});
+		const cats = db._data || await CatIdb.getAll(db);
+		return cats.map(e => new Cat(e));
 	} finally {
-		db && db.close();
+		db.close();
 	}
 }
 
-/**
- * Alias for loadEnemy().
- */
+class EnemyIdb extends AutoIdb {
+	static storeName = 'enemy';
+	static src = '/enemy.json';
+}
+
+async function loadEnemy(id) {
+	const db = await EnemyIdb.open();
+	try {
+		const enemy = db._data ? db._data[id] : await EnemyIdb.get(db, id);
+		return new Enemy(enemy);
+	} finally {
+		db.close();
+	}
+}
+
 async function loadAllEnemies() {
-	return await loadEnemy();
+	const db = await EnemyIdb.open();
+	try {
+		const enemies = db._data || await EnemyIdb.getAll(db);
+		return enemies.map(e => new Enemy(e));
+	} finally {
+		db.close();
+	}
 }
 
 
@@ -2321,6 +2187,8 @@ export {
 	CatForm,
 	Enemy,
 
+	CatIdb,
+	EnemyIdb,
 	loadCat,
 	loadAllCats,
 	loadEnemy,

@@ -1,44 +1,259 @@
 const DB_NAME = 'battlecatsinfo';
 const DB_VERSION = {{{lookup (loadJSON "config.json") "db_ver"}}};
 
-function onIdbUpgrade(event) {
-	const {target: {result: db}, oldVersion, newVersion} = event;
+class IdbBase {
+	static onUpgrade(event) {
+		const {target: {result: db}, oldVersion, newVersion} = event;
 
-	// database being deleted
-	if (newVersion === null)
-		return;
+		// database being deleted
+		if (newVersion === null)
+			return;
 
-	const stores = new Set(db.objectStoreNames);
+		const stores = new Set(db.objectStoreNames);
 
-	// Selectively update object stores.
-	// e.g. `oldVersion < 1360008 || 1360010 < newVersion`
-	// if updates of 1360008-1360010 don't involve a change of cats.
-	// newVersion is checked to force an update in case we forget to update the
-	// code in a future version.
-	if (oldVersion < 1360010 || 1360010 < newVersion) {
-		if (stores.has("cats"))
-			db.deleteObjectStore("cats");
-		db.createObjectStore("cats", {keyPath: "i"});
+		// Selectively update object stores.
+		// e.g. `oldVersion < 1360008 || 1360010 < newVersion`
+		// if updates of 1360008-1360010 don't involve a change of cats.
+		// newVersion is checked to force an update in case we forget to update the
+		// code in a future version.
+		if (oldVersion < 1360010 || 1360010 < newVersion) {
+			if (stores.has("cats"))
+				db.deleteObjectStore("cats");
+			db.createObjectStore("cats", {keyPath: "i"});
+		}
+
+		if (oldVersion < 1360010 || 1360010 < newVersion) {
+			if (stores.has("enemy"))
+				db.deleteObjectStore("enemy");
+			db.createObjectStore("enemy", {keyPath: "i"});
+		}
+
+		if (oldVersion < 1360010 || 1360010 < newVersion) {
+			if (stores.has("map"))
+				db.deleteObjectStore("map");
+			db.createObjectStore("map", {keyPath: "id"});
+
+			if (stores.has("stage"))
+				db.deleteObjectStore("stage");
+			db.createObjectStore("stage", {keyPath: "id"});
+
+			if (stores.has("extra"))
+				db.deleteObjectStore("extra");
+			db.createObjectStore("extra");
+		}
+
+		db._upgraded = true;
 	}
 
-	if (oldVersion < 1360010 || 1360010 < newVersion) {
-		if (stores.has("enemy"))
-			db.deleteObjectStore("enemy");
-		db.createObjectStore("enemy", {keyPath: "i"});
+	static async open() {
+		return await new Promise((resolve, reject) => {
+			const req = indexedDB.open(DB_NAME, DB_VERSION);
+			req.onupgradeneeded = this.onUpgrade;
+			req.onsuccess = (event) => resolve(event.target.result);
+			req.onerror = (event) => reject(event.target.error);
+		});
 	}
 
-	if (oldVersion < 1360010 || 1360010 < newVersion) {
-		if (stores.has("map"))
-			db.deleteObjectStore("map");
-		db.createObjectStore("map", {keyPath: "id"});
+	static async get(db, store, key) {
+		return await new Promise((resolve, reject) => {
+			const req = db.transaction(store).objectStore(store).get(key);
+			req.onsuccess = (event) => resolve(event.target.result);
+			req.onerror = (event) => reject(event.target.error);
+		});
+	}
 
-		if (stores.has("stage"))
-			db.deleteObjectStore("stage");
-		db.createObjectStore("stage", {keyPath: "id"});
+	static async getAll(db, store, query, count) {
+		const req = db.transaction(store).objectStore(store).getAll(query, count);
+		return await new Promise((resolve, reject) => {
+			req.onsuccess = (event) => resolve(event.target.result);
+			req.onerror = (event) => reject(event.target.error);
+		});
+	}
 
-		if (stores.has("extra"))
-			db.deleteObjectStore("extra");
-		db.createObjectStore("extra");
+	static async getAllKeys(db, store, query, count) {
+		const req = db.transaction(store).objectStore(store).getAllKeys(query, count);
+		return await new Promise((resolve, reject) => {
+			req.onsuccess = (event) => resolve(event.target.result);
+			req.onerror = (event) => reject(event.target.error);
+		});
+	}
+
+	/**
+	 * A general wrapper to iterate through database entries.
+	 *
+	 * @example
+	 *
+	 *   for await (const [key, value] of forEachEntry(IDBKeyRange.bound(0, 1000))) {
+	 *     // Do something with key and value.
+	 *     // NOTE: no await is allowed here since the indexedDB transaction will
+	 *     // be closed after that.
+	 *     if (!value.name.includes('interested')) { continue; }
+	 *     console.log(`found ${key} => ${value}`);
+	 *   }
+	 *
+	 * @param {string} store - the object store name to iterate.
+	 * @param {string|IDBKeyRange} [query] - the query of the cursor to be opened.
+	 * @param {string} [direction] - the query for the cursor to be opened.
+	 * @yield {[*~key, *~value]} The key-value pair of each hit database entry.
+	 */
+	static async *forEachEntry(db, store, query, direction) {
+		let _resolve, _reject;
+		const req = db.transaction(store).objectStore(store).openCursor(query, direction);
+		req.onsuccess = (event) => _resolve(event.target.result);
+		req.onerror = (event) => _reject(event.target.error);
+		let cursor = await new Promise((resolve, reject) => {
+			_resolve = resolve;
+			_reject = reject;
+		});
+		while (cursor) {
+			yield [cursor.key, cursor.value];
+			cursor = await new Promise((resolve, reject) => {
+				cursor.continue();
+				_resolve = resolve;
+				_reject = reject;
+			});
+		}
+	}
+
+	/**
+	 * A general wrapper to iterate through database entries.
+	 *
+	 * @example
+	 *
+	 *   for await (const value of forEachValue(IDBKeyRange.bound(0, 1000))) {
+	 *     // Do something with value.
+	 *     // NOTE: no await is allowed here since the indexedDB transaction will
+	 *     // be closed after that.
+	 *     if (!value.name.includes('interested')) { continue; }
+	 *     console.log(`found ${value}`);
+	 *   }
+	 *
+	 * @param {string} store - the object store name to iterate.
+	 * @param {string|IDBKeyRange} [query] - the query of the cursor to be opened.
+	 * @param {string} [direction] - the query for the cursor to be opened.
+	 * @yield {*} The value of each hit database entry.
+	 */
+	static async *forEachValue(db, store, query, direction) {
+		const req = db.transaction(store).objectStore(store).openCursor(query, direction);
+		let _resolve, _reject;
+		req.onsuccess = (event) => _resolve(event.target.result);
+		req.onerror = (event) => _reject(event.target.error);
+		let cursor = await new Promise((resolve, reject) => {
+			_resolve = resolve;
+			_reject = reject;
+		});
+		while (cursor) {
+			yield cursor.value;
+			cursor = await new Promise((resolve, reject) => {
+				cursor.continue();
+				_resolve = resolve;
+				_reject = reject;
+			});
+		}
+	}
+}
+
+class Idb extends IdbBase {
+	static storeName;
+
+	static async get(db, key) {
+		return await super.get(db, this.storeName, key);
+	}
+
+	static async getAll(db, query, count) {
+		return await super.getAll(db, this.storeName, query, count);
+	}
+
+	static async getAllKeys(db, query, count) {
+		return await super.getAllKeys(db, this.storeName, query, count);
+	}
+
+	static async *forEachEntry(db, query, direction) {
+		yield* super.forEachEntry(db, this.storeName, query, direction);
+	}
+
+	static async *forEachValue(db, query, direction) {
+		yield* super.forEachValue(db, this.storeName, query, direction);
+	}
+
+	static resolveProtoObject(data) {
+		if (data.__proto) {
+			return new globalThis[data.__proto](...(data.__args ?? []));
+		}
+		return data;
+	}
+}
+
+class AutoIdb extends Idb {
+	static autoReload = true;
+	static storeNames;
+	static src;
+
+	static async open({
+		autoReload = this.autoReload,
+		reloadStore = this.storeNames ?? this.storeName,
+		reloadSrc = this.src,
+		reloadExtra,
+		checkStore = this.storeName,
+		checkKey,
+	} = {}) {
+		const db = await super.open();
+		if (autoReload && await this.isReloadNeeded(db, checkStore, checkKey)) {
+			try {
+				await this.reload(db, reloadStore, reloadSrc, reloadExtra);
+			} catch (ex) {
+				db.close();
+				throw ex;
+			}
+		}
+		return db;
+	}
+
+	static async isReloadNeeded(db, storeToCheck, keyToCheck) {
+		if (db._upgraded)
+			return true;
+
+		const count = await new Promise((resolve, reject) => {
+			const req = db.transaction(storeToCheck).objectStore(storeToCheck).count(keyToCheck);
+			req.onsuccess = (event) => resolve(event.target.result);
+			req.onerror = (event) => reject(event.target.error);
+		});
+
+		return count === 0;
+	}
+
+	static async reload(db, storeNames, src, extra) {
+		const response = await fetch(src);
+		const data = db._data = await response.json();
+
+		await new Promise((resolve, reject) => {
+			const tx = db.transaction(storeNames, 'readwrite');
+			tx.oncomplete = resolve;
+			tx.onerror = reject;
+
+			try {
+				const isArray = Array.isArray(storeNames);
+				let stores = (isArray ? storeNames : [storeNames]).map(n => {
+					const store = tx.objectStore(n);
+					store.clear();
+					return store;
+				});
+				if (!isArray)
+					stores = stores[0];
+				this.reloader(stores, data, extra);
+			} catch (ex) {
+				reject(ex);
+				tx.abort();
+			}
+		});
+	}
+
+	static reloader(store, data, _extra) {
+		for (const k in data) {
+			// also modify data items
+			const v = data[k] = this.resolveProtoObject(data[k]);
+			store.put(v);
+		}
 	}
 }
 
@@ -293,7 +508,9 @@ const config = new ConfigHandler();
 export {
 	DB_NAME,
 	DB_VERSION,
-	onIdbUpgrade,
+	IdbBase,
+	Idb,
+	AutoIdb,
 	config,
 	toggleTheme,
 	resetTheme,

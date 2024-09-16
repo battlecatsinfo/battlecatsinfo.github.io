@@ -1,81 +1,39 @@
-import {DB_NAME, DB_VERSION, onIdbUpgrade, fetch} from './common.mjs';
+import {IdbBase, AutoIdb, fetch} from './common.mjs';
 
-async function _loadStageData(db) {
-	const response = await fetch('/stage.json');
-	const data = await response.json();
+class StageIdb extends AutoIdb {
+	static autoReload = false;
+	static storeName = 'extra';
+	static storeNames = ['extra', 'map', 'stage'];
+	static src = '/stage.json';
 
-	await new Promise((resolve, reject) => {
-		const tx = db.transaction(['map', 'stage', 'extra'], 'readwrite');
-		tx.oncomplete = resolve;
-		tx.onerror = reject;
-
-		try {
-			const mapStore = tx.objectStore('map');
-			const stageStore = tx.objectStore('stage');
-			const extraStore = tx.objectStore('extra');
-
-			mapStore.clear();
-			stageStore.clear();
-			extraStore.clear();
-
-			for (const idx in data.map) {
-				mapStore.put(data.map[idx]);
-			}
-
-			for (const idx in data.stage) {
-				stageStore.put(data.stage[idx]);
-			}
-
-			for (const key in data.extra) {
-				extraStore.put(data.extra[key], key);
-			}
-		} catch (ex) {
-			reject(ex);
-			tx.abort();
-		}
-	});
-}
-
-async function openStageDb(autoReload = true) {
-	let needReload = false;
-
-	const db = await new Promise((resolve, reject) => {
-		const req = indexedDB.open(DB_NAME, DB_VERSION);
-		if (autoReload) {
-			req.onupgradeneeded = (event) => {
-				needReload = true;
-				onIdbUpgrade(event);
-			};
-		}
-		req.onsuccess = (event) => resolve(event.target.result);
-		req.onerror = (event) => reject(event.target.error);
-	});
-
-	if (autoReload) {
-		if (!needReload) {
-			const cursor = await new Promise((resolve, reject) => {
-				const req = db.transaction("extra").objectStore("extra").openCursor();
-				req.onsuccess = (event) => resolve(event.target.result);
-				req.onerror = (event) => reject(event.target.error);
-			});
-			if (!cursor)
-				needReload = true;
-		}
-		if (needReload) {
-			await _loadStageData(db);
-		}
+	static async open(autoReload = this.autoReload) {
+		return await super.open({autoReload});
 	}
 
-	return db;
+	static reloader(stores, data) {
+		const [extraStore, mapStore, stageStore] = stores;
+
+		for (const idx in data.map) {
+			mapStore.put(data.map[idx]);
+		}
+
+		for (const idx in data.stage) {
+			stageStore.put(data.stage[idx]);
+		}
+
+		for (const key in data.extra) {
+			extraStore.put(data.extra[key], key);
+		}
+	}
 }
 
 async function loadStageData() {
-	const db = await openStageDb(true);
+	const db = await StageIdb.open(true);
 	db.close();
 }
 
 async function getStageExtra(fields) {
-	const db = await openStageDb(false);
+	const db = await StageIdb.open();
 	try {
 		const rv = {};
 		await new Promise((resolve, reject) => {
@@ -115,107 +73,40 @@ async function getStageExtra(fields) {
 	}
 }
 
-async function getValue(store, key) {
-	const db = await openStageDb(false);
+async function getMap(id) {
+	const db = await StageIdb.open();
 	try {
-		return await new Promise((resolve, reject) => {
-			const req = db.transaction(store).objectStore(store).get(key);
-			req.onsuccess = (event) => resolve(event.target.result);
-			req.onerror = (event) => reject(event.target.error);
-		});
+		return await IdbBase.get(db, 'map', id);
 	} finally {
 		db.close();
 	}
-}
-
-async function getMap(id) {
-	return await getValue('map', id);
 }
 
 async function getStage(id) {
-	return await getValue('stage', id);
-}
-
-/**
- * A general wrapper to iterate through database entries.
- *
- * @example
- *
- *   for await (const [key, value] of forEachEntry(IDBKeyRange.bound(0, 1000))) {
- *     // Do something with key and value.
- *     // NOTE: no await is allowed here since the indexedDB transaction will
- *     // be closed after that.
- *     if (!value.name.includes('interested')) { continue; }
- *     console.log(`found ${key} => ${value}`);
- *   }
- *
- * @param {string} store - the object store name to iterate.
- * @param {string|IDBKeyRange} [query] - the query of the cursor to be opened.
- * @param {string} [direction] - the query for the cursor to be opened.
- * @yield {[*~key, *~value]} The key-value pair of each hit database entry.
- */
-async function* forEachEntry(store, query, direction) {
-	const db = await openStageDb(false);
+	const db = await StageIdb.open();
 	try {
-		let _resolve, _reject;
-		const req = db.transaction(store).objectStore(store).openCursor(query, direction);
-		req.onsuccess = (event) => _resolve(event.target.result);
-		req.onerror = (event) => _reject(event.target.error);
-		let cursor = await new Promise((resolve, reject) => {
-			_resolve = resolve;
-			_reject = reject;
-		});
-		while (cursor) {
-			yield [cursor.key, cursor.value];
-			cursor = await new Promise((resolve, reject) => {
-				cursor.continue();
-				_resolve = resolve;
-				_reject = reject;
-			});
-		}
-	} finally {
-		db.close();
-	}
-}
-
-/**
- * A general wrapper to iterate through database entries.
- *
- * @param {string} store - the object store name to iterate.
- * @param {string|IDBKeyRange} [query] - the query of the cursor to be opened.
- * @param {string} [direction] - the query for the cursor to be opened.
- * @yield {*} The value of each hit database entry.
- */
-async function* forEachValue(store, query, direction) {
-	const db = await openStageDb(false);
-	try {
-		const req = db.transaction(store).objectStore(store).openCursor(query, direction);
-		let _resolve, _reject;
-		req.onsuccess = (event) => _resolve(event.target.result);
-		req.onerror = (event) => _reject(event.target.error);
-		let cursor = await new Promise((resolve, reject) => {
-			_resolve = resolve;
-			_reject = reject;
-		});
-		while (cursor) {
-			yield cursor.value;
-			cursor = await new Promise((resolve, reject) => {
-				cursor.continue();
-				_resolve = resolve;
-				_reject = reject;
-			});
-		}
+		return await IdbBase.get(db, 'stage', id);
 	} finally {
 		db.close();
 	}
 }
 
 async function* forEachMap(query, direction) {
-	yield* forEachValue('map', query, direction);
+	const db = await StageIdb.open();
+	try {
+		yield* IdbBase.forEachValue(db, 'map', query, direction);
+	} finally {
+		db.close();
+	}
 }
 
 async function* forEachStage(query, direction) {
-	yield* forEachValue('stage', query, direction);
+	const db = await StageIdb.open();
+	try {
+		yield* IdbBase.forEachValue(db, 'stage', query, direction);
+	} finally {
+		db.close();
+	}
 }
 
 export {
