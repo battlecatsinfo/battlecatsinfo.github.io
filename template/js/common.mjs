@@ -36,10 +36,12 @@ class IdbBase {
 			if (stores.has("stage"))
 				db.deleteObjectStore("stage");
 			db.createObjectStore("stage", {keyPath: "id"});
+		}
 
-			if (stores.has("extra"))
-				db.deleteObjectStore("extra");
-			db.createObjectStore("extra");
+		if (oldVersion < 1360010 || 1360010 < newVersion) {
+			if (stores.has("scheme"))
+				db.deleteObjectStore("scheme");
+			db.createObjectStore("scheme");
 		}
 
 		db._upgraded = true;
@@ -254,6 +256,83 @@ class AutoIdb extends Idb {
 			const v = data[k] = this.resolveProtoObject(data[k]);
 			store.put(v);
 		}
+	}
+}
+
+class SchemeIdb extends AutoIdb {
+	static storeName = 'scheme';
+
+	static async open(domain) {
+		return await super.open({
+			reloadSrc: `/${domain}_scheme.json`,
+			reloadExtra: domain,
+			checkKey: this.domainKeyRange(domain),
+		});
+	}
+
+	static domainKeyRange(domain) {
+		return IDBKeyRange.bound([domain], [domain + '\0'], true, true);
+	}
+
+	static reloader(store, data, domain) {
+		for (const field in data) {
+			// also modify data items
+			const entry = data[field] = this.resolveProtoObject(data[field]);
+			store.put(entry, [domain, field]);
+		}
+	}
+}
+
+async function loadScheme(domain, fields) {
+	const db = await SchemeIdb.open(domain);
+	try {
+		if (db._data) {
+			if (fields) {
+				return fields.reduce((rv, field) => {
+					rv[field] = db._data[field];
+					return rv;
+				}, {});
+			} else {
+				return db._data;
+			}
+		}
+
+		const rv = {};
+		await new Promise((resolve, reject) => {
+			const tx = db.transaction(SchemeIdb.storeName);
+			const store = tx.objectStore(SchemeIdb.storeName);
+			tx.oncomplete = resolve;
+			tx.onerror = (event) => reject(event.target.error);
+			if (fields) {
+				for (const field of fields) {
+					store.get([domain, field]).onsuccess = (event) => {
+						rv[field] = event.target.result;
+					};
+				}
+			} else {
+				const query = SchemeIdb.domainKeyRange(domain);
+				Promise.all([
+					new Promise((resolve, reject) => {
+						const req = store.getAllKeys(query);
+						req.onsuccess = (event) => resolve(event.target.result);
+						req.onerror = (event) => reject(event.target.error);
+					}),
+					new Promise((resolve, reject) => {
+						const req = store.getAll(query);
+						req.onsuccess = (event) => resolve(event.target.result);
+						req.onerror = (event) => reject(event.target.error);
+					}),
+				])
+				.then(([fields, values]) => {
+					fields.forEach(([, field], i) => {
+						rv[field] = values[i];
+					});
+				});
+			}
+		});
+		return rv;
+	} finally {
+		db.close();
 	}
 }
 
@@ -511,6 +590,7 @@ export {
 	IdbBase,
 	Idb,
 	AutoIdb,
+	loadScheme,
 	config,
 	toggleTheme,
 	resetTheme,

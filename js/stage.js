@@ -62,7 +62,13 @@ module.exports = class extends RewardSiteGenerator {
 			};
 			return rv;
 		}, {});
-		const extra = {
+
+		this.write_json('stage.json', {
+			map,
+			stage,
+		});
+
+		const scheme = {
 			lmGrp: limit_groups,
 			grpName: categories.default.map(x => x.name),
 			conditions,
@@ -87,11 +93,7 @@ module.exports = class extends RewardSiteGenerator {
 			}, {}),
 		};
 
-		this.write_json('stage.json', {
-			map,
-			stage,
-			extra,
-		});
+		this.write_json('stage_scheme.json', scheme);
 	}
 
 	generate_pages({stageScheme}) {

@@ -27,33 +27,7 @@ describe('stage.mjs', function () {
 			// data not stored
 			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'map');
 			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'stage');
-			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'extra');
 			await test();
-		});
-
-	});
-
-	describe('getStageExtra', function () {
-
-		it('load all', async function () {
-			await Stage.loadStageData();
-			const extra = await Stage.getStageExtra();
-			assert.isObject(extra.lmGrp);
-			assert.isArray(extra.grpName);
-			assert.isObject(extra.conditions);
-			assert.isArray(extra.matDrops);
-			assert.isArray(extra.resetModes);
-			assert.isArray(extra.rars);
-			assert.isArray(extra.eName);
-			assert.isObject(extra.rewards);
-		});
-
-		it('load specified keys', async function () {
-			await Stage.loadStageData();
-			const extra = await Stage.getStageExtra(['lmGrp', 'grpName']);
-			assert.deepEqual(Object.keys(extra), ['lmGrp', 'grpName']);
-			assert.isObject(extra.lmGrp);
-			assert.isArray(extra.grpName);
 		});
 
 	});

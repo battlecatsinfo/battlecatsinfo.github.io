@@ -1,4 +1,4 @@
-import {config, getNumFormatter, numStr} from './common.mjs';
+import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 
 const loader = document.getElementById('loader');
@@ -1204,6 +1204,6 @@ async function doSearch(t) {
 
 (async () => {
 	await Stage.loadStageData();
-	stage_extra = await Stage.getStageExtra();
+	stage_extra = await loadScheme('stage');
 	initUI();
 })();

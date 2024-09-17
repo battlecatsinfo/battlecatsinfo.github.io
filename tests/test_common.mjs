@@ -1,6 +1,7 @@
 import {assert} from './lib/chai.js';
 import sinon from './lib/sinon-esm.js';
-import {config, fetch, getNumFormatter, round, pagination} from '../common.mjs';
+import {dbClear, dbDelete} from './common.mjs';
+import {DB_NAME, DB_VERSION, loadScheme, config, fetch, getNumFormatter, round, pagination} from '../common.mjs';
 
 describe('common.mjs', function () {
 
@@ -31,6 +32,55 @@ describe('common.mjs', function () {
 				hasThrown = true;
 			}
 			assert.isTrue(hasThrown, 'Error not thrown for a bad response');
+		});
+
+	});
+
+	describe('loadScheme', function () {
+
+		it('load all keys under a domain', async function () {
+			async function test() {
+				var scheme = await loadScheme('stage');
+				assert.isObject(scheme.lmGrp);
+				assert.isArray(scheme.grpName);
+				assert.isObject(scheme.conditions);
+				assert.isArray(scheme.matDrops);
+				assert.isArray(scheme.resetModes);
+				assert.isArray(scheme.rars);
+				assert.isArray(scheme.eName);
+				assert.isObject(scheme.rewards);
+			}
+
+			// IDB not exist
+			await dbDelete(DB_NAME);
+			await test();
+
+			// data not stored
+			await dbClear(DB_NAME, DB_VERSION, 'scheme');
+			await test();
+
+			// data stored
+			await test();
+		});
+
+		it('load specified keys under a domain', async function () {
+			async function test() {
+				var scheme = await loadScheme('stage', ['lmGrp', 'grpName']);
+				assert.deepEqual(Object.keys(scheme), ['lmGrp', 'grpName']);
+				assert.isObject(scheme.lmGrp);
+				assert.isArray(scheme.grpName);
+			}
+
+			// IDB not exist
+			await dbDelete(DB_NAME);
+			await test();
+
+			// data not stored
+			await dbClear(DB_NAME, DB_VERSION, 'scheme');
+			await test();
+
+			// data stored
+			await test();
 		});
 
 	});

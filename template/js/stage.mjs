@@ -2,8 +2,8 @@ import {IdbBase, AutoIdb, fetch} from './common.mjs';
 
 class StageIdb extends AutoIdb {
 	static autoReload = false;
-	static storeName = 'extra';
-	static storeNames = ['extra', 'map', 'stage'];
+	static storeName = 'map';
+	static storeNames = ['map', 'stage'];
 	static src = '/stage.json';
 
 	static async open(autoReload = this.autoReload) {
@@ -11,7 +11,7 @@ class StageIdb extends AutoIdb {
 	}
 
 	static reloader(stores, data) {
-		const [extraStore, mapStore, stageStore] = stores;
+		const [mapStore, stageStore] = stores;
 
 		for (const idx in data.map) {
 			mapStore.put(data.map[idx]);
@@ -20,57 +20,12 @@ class StageIdb extends AutoIdb {
 		for (const idx in data.stage) {
 			stageStore.put(data.stage[idx]);
 		}
-
-		for (const key in data.extra) {
-			extraStore.put(data.extra[key], key);
-		}
 	}
 }
 
 async function loadStageData() {
 	const db = await StageIdb.open(true);
 	db.close();
-}
-
-async function getStageExtra(fields) {
-	const db = await StageIdb.open();
-	try {
-		const rv = {};
-		await new Promise((resolve, reject) => {
-			const tx = db.transaction("extra");
-			const store = tx.objectStore("extra");
-			tx.oncomplete = resolve;
-			tx.onerror = (event) => reject(event.target.error);
-			if (fields) {
-				for (const field of fields) {
-					store.get(field).onsuccess = (event) => {
-						rv[field] = event.target.result;
-					};
-				}
-			} else {
-				Promise.all([
-					new Promise((resolve, reject) => {
-						const req = store.getAllKeys();
-						req.onsuccess = (event) => resolve(event.target.result);
-						req.onerror = (event) => reject(event.target.error);
-					}),
-					new Promise((resolve, reject) => {
-						const req = store.getAll();
-						req.onsuccess = (event) => resolve(event.target.result);
-						req.onerror = (event) => reject(event.target.error);
-					}),
-				])
-				.then(([keys, values]) => {
-					keys.forEach((key, i) => {
-						rv[key] = values[i];
-					});
-				});
-			}
-		});
-		return rv;
-	} finally {
-		db.close();
-	}
 }
 
 async function getMap(id) {
@@ -111,7 +66,6 @@ async function* forEachStage(query, direction) {
 
 export {
 	loadStageData,
-	getStageExtra,
 	getMap,
 	getStage,
 	forEachMap,
