@@ -46,7 +46,6 @@ describe('common.mjs', function () {
 				assert.isObject(scheme.conditions);
 				assert.isArray(scheme.matDrops);
 				assert.isArray(scheme.resetModes);
-				assert.isArray(scheme.rars);
 				assert.isArray(scheme.eName);
 
 				var scheme = await loadScheme('units');
