@@ -49,6 +49,10 @@ describe('common.mjs', function () {
 				assert.isArray(scheme.rars);
 				assert.isArray(scheme.eName);
 				assert.isObject(scheme.rewards);
+
+				var scheme = await loadScheme('units');
+				assert.instanceOf(scheme.limited_cats, Set);
+				assert.isArray(scheme.rarities);
 			}
 
 			// IDB not exist

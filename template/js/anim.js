@@ -1,4 +1,4 @@
-import {eggs} from './units_scheme.mjs';
+import {loadScheme} from './common.mjs';
 
 if (window.OffscreenCanvas == undefined || window.OffscreenCanvas.prototype.convertToBlob == undefined) {
 	window.OffscreenCanvas = class OffscreenCanvas {
@@ -21,9 +21,13 @@ if (window.OffscreenCanvas == undefined || window.OffscreenCanvas.prototype.conv
 	}
 }
 
-// expose global variables
+// expose global variables and load anim.min.js afterwards
 // @TODO: refactor code to prevent this
 // maybe import directly in anim.min.js?
+const {eggs} = await loadScheme('units', ['eggs']);
+
 Object.assign(globalThis, {
 	eggs,
 });
+
+await import('./anim.min.js');

@@ -1,4 +1,4 @@
-import {config, numStr, numStrT, floor, savePng, copyPng} from './common.mjs';
+import {config, loadScheme, numStr, numStrT, floor, savePng, copyPng} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -68,7 +68,7 @@ import {
 
 	loadCat,
 } from './unit.mjs';
-import * as units_scheme from './units_scheme.mjs';
+const units_scheme = await loadScheme('units');
 import {combos} from './combo.mjs';
 import * as combos_scheme from './combos_scheme.mjs';
 

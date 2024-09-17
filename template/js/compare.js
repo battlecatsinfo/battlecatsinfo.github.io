@@ -1,4 +1,4 @@
-import {config, numStr, numStrT, numStrX, floor, savePng, copyPng} from './common.mjs';
+import {loadScheme, config, numStr, numStrT, numStrX, floor, savePng, copyPng} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -62,7 +62,7 @@ import {
 
 	loadAllCats,
 } from './unit.mjs';
-import * as units_scheme from './units_scheme.mjs';
+const units_scheme = await loadScheme('units', ['talents']);
 
 var cats;
 var targets = new Set();

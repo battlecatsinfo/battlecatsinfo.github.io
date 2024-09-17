@@ -1,5 +1,5 @@
-import {AutoIdb, fetch, config, numStr, round} from './common.mjs';
-import * as units_scheme from './units_scheme.mjs';
+import {AutoIdb, loadScheme, fetch, config, numStr, round} from './common.mjs';
+const units_scheme = await loadScheme('units');
 
 // Attack types
 const ATK_SINGLE = 1;      // Single Attack 單體攻擊

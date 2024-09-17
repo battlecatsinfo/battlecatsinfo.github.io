@@ -123,9 +123,12 @@ module.exports = class extends SiteGenerator {
 			return eggs;
 		}, {});
 
-		this.write_template('js/units_scheme.mjs', 'units_scheme.mjs', {
-			units_scheme,
-			limited_cats,
+		this.write_json('units_scheme.json', {
+			...units_scheme,
+			limited_cats: {
+				__proto: 'Set',
+				__args: [limited_cats],
+			},
 			eggs,
 		});
 	}

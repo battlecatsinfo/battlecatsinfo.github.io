@@ -1,6 +1,6 @@
-import {config} from './common.mjs';
+import {loadScheme, config} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
-import {limited_cats} from './units_scheme.mjs';
+const {limited_cats} = await loadScheme('units', ['limited_cats']);
 
 var cats;
 var tooltip;
