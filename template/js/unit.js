@@ -70,7 +70,7 @@ import {
 } from './unit.mjs';
 const units_scheme = await loadScheme('units');
 import {combos} from './combo.mjs';
-import * as combos_scheme from './combos_scheme.mjs';
+const combos_scheme = await loadScheme('combos');
 
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
