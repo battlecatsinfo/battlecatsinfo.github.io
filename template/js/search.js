@@ -61,10 +61,24 @@ function filterByNameOrId(results) {
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
-	return results.filter(result => {
-		const f = result[1];
-		return (f.id === qid) || f.name.includes(key) || f.jp_name.includes(key);
-	});
+
+	if (form_s === 0) {
+		return results.filter(result => {
+			const f = result[1];
+			return (f.id === qid) || f.name.includes(key) || f.jp_name.includes(key);
+		});
+	}
+
+	const cats = new Set(results.map(r => r[1].base));
+	for (const cat of cats) {
+		if (!(
+			cat.id === qid ||
+			cat.forms.some(f => f.name.includes(key) || f.jp_name.includes(key))
+		)) {
+			cats.delete(cat);
+		}
+	}
+	return results.filter(r => cats.has(r[1].base));
 }
 
 function renderTable(forms, page = 1) {
