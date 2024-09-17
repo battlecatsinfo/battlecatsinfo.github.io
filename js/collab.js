@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const {resolve} = require('node:path');
 const {OUTPUT_DIR} = require('./base.js');
-const {RewardSiteGenerator} = require('./reward.js');
+const RewardSiteGenerator = require('./reward.js');
 
 function to_path(s) {
 	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');

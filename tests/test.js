@@ -128,5 +128,6 @@ Object.assign(globalThis, {
 await import('./test_common.mjs');
 await import('./test_unit.mjs');
 await import('./test_stage.mjs');
+await import('./test_reward.mjs');
 
 mocha.run();	

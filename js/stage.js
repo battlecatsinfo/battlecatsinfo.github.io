@@ -1,6 +1,6 @@
-const {RewardSiteGenerator} = require('./reward.js');
+const {SiteGenerator} = require('./base.js');
 
-module.exports = class extends RewardSiteGenerator {
+module.exports = class extends SiteGenerator {
 	run() {
 		const mapTable = this.parse_tsv(this.load('map.tsv'));
 		const stageTable = this.parse_tsv(this.load('stage.tsv'));
@@ -16,7 +16,6 @@ module.exports = class extends RewardSiteGenerator {
 	generate_data_files({mapTable, stageTable, stageScheme}) {
 		const {categories, conditions, material_drops, reset_modes, limit_groups} = stageScheme;
 		const {rarities} = JSON.parse(this.load('units_scheme.json'));
-		const rewardTable = this.load_rewards();
 		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
 
 		const map = mapTable.reduce((rv, entry, i) => {
@@ -76,21 +75,6 @@ module.exports = class extends RewardSiteGenerator {
 			resetModes: reset_modes,
 			rars: rarities,
 			eName: enemyTable.map(x => x.name_tw),
-			rewards: rewardTable.reduce((rv, entry) => {
-				const {id, name, cat_id, cat_lv, icon} = entry;
-				if (cat_id !== undefined)
-					rv[entry.id] = {
-						name,
-						icon,
-						cid: cat_id,
-					};
-				else
-					rv[entry.id] = {
-						name,
-						icon,
-					};
-				return rv;
-			}, {}),
 		};
 
 		this.write_json('stage_scheme.json', scheme);

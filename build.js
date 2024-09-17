@@ -8,6 +8,7 @@ const modules = new Set([
 	'unit',
 	'combos',
 	'stage',
+	'reward',
 	'collab',
 	'gacha',
 ]);

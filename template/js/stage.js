@@ -1,5 +1,6 @@
 import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
+import {loadAllRewards} from './reward.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -1202,8 +1203,15 @@ async function doSearch(t) {
 		search_result.textContent = "找不到名稱包含「" + v + "」的關卡";
 }
 
-(async () => {
+{
 	await Stage.loadStageData();
-	stage_extra = await loadScheme('stage');
+	const [scheme, rewards] = await Promise.all([
+		loadScheme('stage'),
+		loadAllRewards(),
+	]);
+	stage_extra = {
+		...scheme,
+		rewards,
+	};
 	initUI();
-})();
+}

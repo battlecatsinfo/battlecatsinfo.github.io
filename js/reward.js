@@ -1,6 +1,23 @@
 const {SiteGenerator} = require('./base.js');
 
 class RewardSiteGenerator extends SiteGenerator {
+	run() {
+		const rewardTable = this.load_rewards();
+
+		const rewards = rewardTable.map(entry => {
+			const {id, name, cat_id, cat_lv, icon} = entry;
+			return {
+				id,
+				name,
+				icon,
+				cid: cat_id,
+				lvc: cat_lv,
+			};
+		});
+
+		this.write_json('rewards.json', rewards);
+	}
+
 	load_rewards() {
 		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
 		const catstatTable = this.parse_tsv(this.load('catstat.tsv'));
@@ -57,6 +74,4 @@ class RewardSiteGenerator extends SiteGenerator {
 	}
 }
 
-module.exports = {
-	RewardSiteGenerator
-};
+module.exports = RewardSiteGenerator;
