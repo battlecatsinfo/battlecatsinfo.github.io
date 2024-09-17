@@ -1,6 +1,7 @@
 import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
+import {EnemyIdb} from './unit.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -1205,15 +1206,31 @@ async function doSearch(t) {
 
 {
 	await Stage.loadStageData();
-	const [scheme, {rarities: rars}, rewards] = await Promise.all([
+	const [scheme, {rarities: rars}, rewards, eName] = await Promise.all([
 		loadScheme('stage'),
 		loadScheme('units', ['rarities']),
 		loadAllRewards(),
+		(async () => {
+			// load all enemy names from raw data for better performance
+			// @TODO: improve the code to be less ad hoc
+			const eName = [];
+			const db = await EnemyIdb.open();
+			try {
+				const gen = db._data ?? EnemyIdb.forEachValue(db);
+				for await (const e of gen) {
+					eName[e.i] = e.name;
+				}
+			} finally {
+				db.close();
+			}
+			return eName;
+		})(),
 	]);
 	stage_extra = {
 		...scheme,
 		rars,
 		rewards,
+		eName,
 	};
 	initUI();
 }

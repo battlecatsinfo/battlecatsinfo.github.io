@@ -15,7 +15,6 @@ module.exports = class extends SiteGenerator {
 
 	generate_data_files({mapTable, stageTable, stageScheme}) {
 		const {categories, conditions, material_drops, reset_modes, limit_groups} = stageScheme;
-		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
 
 		const map = mapTable.reduce((rv, entry, i) => {
 			const id = parseInt(entry.id, 36);
@@ -72,7 +71,6 @@ module.exports = class extends SiteGenerator {
 			conditions,
 			matDrops: material_drops,
 			resetModes: reset_modes,
-			eName: enemyTable.map(x => x.name_tw),
 		};
 
 		this.write_json('stage_scheme.json', scheme);
