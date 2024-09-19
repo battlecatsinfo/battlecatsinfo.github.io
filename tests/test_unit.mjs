@@ -643,7 +643,7 @@ describe('unit.mjs', function () {
 				assert.isUndefined(cat.obtnStage);
 
 				var cat = await Unit.loadCat(60);
-				assert.strictEqual(cat.obtnStage, '10|19|0|黑暗天堂 - 進擊的黑漩渦 困難');
+				assert.deepEqual(cat.obtnStage, [10, 19, 0]);
 			});
 
 		});
@@ -655,7 +655,7 @@ describe('unit.mjs', function () {
 				assert.isUndefined(cat.evolStage);
 
 				var cat = await Unit.loadCat(60);
-				assert.strictEqual(cat.evolStage, '1|172|1|絕・黑暗天堂 - 絕擊的黑漩渦　極難');
+				assert.deepEqual(cat.evolStage, [1, 172, 1]);
 			});
 
 		});

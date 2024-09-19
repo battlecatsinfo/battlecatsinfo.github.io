@@ -72,6 +72,7 @@ import {loadAllCombos} from './combo.mjs';
 const units_scheme = await loadScheme('units');
 const combos = await loadAllCombos();
 const combos_scheme = await loadScheme('combos');
+import {getStage} from './stage.mjs';
 
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
@@ -2176,9 +2177,11 @@ function renderExtras() {
 		td.textContent = '通過「';
 		const a = document.createElement('a');
 		td.classList.add('F');
-		const s = my_cat.obtnStage.split('|');
-		a.textContent = s[3];
-		a.href = '/stage.html?s=' + s.slice(0, 3).join('-');
+		const s = my_cat.obtnStage;
+		getStage(s.reduce((rv, i) => rv * 1000 + i)).then(stage => {
+			a.textContent = stage.name || stage.nameJp || '？？？';
+		});
+		a.href = '/stage.html?s=' + s.join('-');
 		td.appendChild(a);
 		td.append('」');
 		tr.appendChild(td);
@@ -2194,9 +2197,11 @@ function renderExtras() {
 		td = document.createElement('td');
 		td.textContent = '通過「';
 		const a = document.createElement('a');
-		const s = my_cat.evolStage.split('|');
-		a.textContent = s[3];
-		a.href = '/stage.html?s=' + s.slice(0, 3).join('-');
+		const s = my_cat.evolStage;
+		getStage(s.reduce((rv, i) => rv * 1000 + i)).then(stage => {
+			a.textContent = stage.name || stage.nameJp || '？？？';
+		});
+		a.href = '/stage.html?s=' + s.join('-');
 		td.appendChild(a);
 		td.append('」');
 		tr.appendChild(td);

@@ -31,8 +31,8 @@ module.exports = class extends SiteGenerator {
 				evolDesc: cat.evol_description || undefined,
 				evol4Desc: cat.evol4_description || undefined,
 				lvCurve: Number(cat.level_curve),
-				obtnStage: cat.obtain_stage || undefined,
-				evolStage: cat.evol_stage || undefined,
+				obtnStage: cat.obtain_stage ? cat.obtain_stage.split('|').map(Number) : undefined,
+				evolStage: cat.evol_stage ? cat.evol_stage.split('|').map(Number) : undefined,
 				fandom: cat.name_fandom || undefined,
 			};
 			return {
