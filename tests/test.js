@@ -127,6 +127,7 @@ Object.assign(globalThis, {
 // import sub modules
 await import('./test_common.mjs');
 await import('./test_unit.mjs');
+await import('./test_combo.mjs');
 await import('./test_stage.mjs');
 await import('./test_reward.mjs');
 

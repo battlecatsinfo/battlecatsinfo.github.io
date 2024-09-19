@@ -39,6 +39,12 @@ class IdbBase {
 		}
 
 		if (oldVersion < 1360010 || 1360010 < newVersion) {
+			if (stores.has("combo"))
+				db.deleteObjectStore("combo");
+			db.createObjectStore("combo");
+		}
+
+		if (oldVersion < 1360010 || 1360010 < newVersion) {
 			if (stores.has("reward"))
 				db.deleteObjectStore("reward");
 			db.createObjectStore("reward", {keyPath: "id"});

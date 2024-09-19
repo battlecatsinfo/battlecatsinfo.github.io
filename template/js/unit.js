@@ -68,8 +68,9 @@ import {
 
 	loadCat,
 } from './unit.mjs';
+import {loadAllCombos} from './combo.mjs';
 const units_scheme = await loadScheme('units');
-import {combos} from './combo.mjs';
+const combos = await loadAllCombos();
 const combos_scheme = await loadScheme('combos');
 
 const my_params = new URLSearchParams(location.search);

@@ -45,6 +45,7 @@ const sources = [
 
 	'common.mjs',
 	'unit.mjs',
+	'combo.mjs',
 	'stage.mjs',
 	'reward.mjs',
 
