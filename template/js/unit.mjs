@@ -1943,7 +1943,7 @@ class Cat {
 
 	get xpCurve() {
 		const s = this.info.xpCurve;
-		const value = units_scheme.xp_curves[s] || s.split('|').map(Number);
+		const value = Array.isArray(s) ? s : units_scheme.xp_curves[s];
 		Object.defineProperty(this, 'xpCurve', {value});
 		return value;
 	}

@@ -27,7 +27,7 @@ module.exports = class extends SiteGenerator {
 				talents: cat.talents || undefined,
 				ver: cat.version ? Number(cat.version) : undefined,
 				orbs: cat.orb_count ? Number(cat.orb_count) : undefined,
-				xpCurve: cat.xp_curve,
+				xpCurve: Number(cat.xp_curve) || cat.xp_curve.split('|').map(Number),
 				evolDesc: cat.evol_description || undefined,
 				evol4Desc: cat.evol4_description || undefined,
 				lvCurve: Number(cat.level_curve),
