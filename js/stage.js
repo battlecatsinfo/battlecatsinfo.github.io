@@ -36,6 +36,9 @@ module.exports = class extends SiteGenerator {
 			};
 			return rv;
 		}, {});
+
+		this.write_json('map.json', map);
+
 		const stage = stageTable.reduce((rv, entry, i) => {
 			const id = parseInt(entry.id, 36);
 			rv[id] = {
@@ -60,10 +63,7 @@ module.exports = class extends SiteGenerator {
 			return rv;
 		}, {});
 
-		this.write_json('stage.json', {
-			map,
-			stage,
-		});
+		this.write_json('stage.json', stage);
 
 		const scheme = {
 			lmGrp: limit_groups,

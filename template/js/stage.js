@@ -1205,7 +1205,6 @@ async function doSearch(t) {
 }
 
 {
-	await Stage.loadStageData();
 	const [scheme, {rarities: rars}, rewards, eName] = await Promise.all([
 		loadScheme('stage'),
 		loadScheme('units', ['rarities']),

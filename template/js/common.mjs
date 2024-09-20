@@ -200,15 +200,14 @@ class Idb extends IdbBase {
 
 class AutoIdb extends Idb {
 	static autoReload = true;
-	static storeNames;
 	static src;
 
 	static async open({
 		autoReload = this.autoReload,
-		reloadStore = this.storeNames ?? this.storeName,
+		reloadStore = this.storeName,
 		reloadSrc = this.src,
 		reloadExtra,
-		checkStore = this.storeName,
+		checkStore = reloadStore,
 		checkKey,
 	} = {}) {
 		const db = await super.open();
@@ -236,25 +235,18 @@ class AutoIdb extends Idb {
 		return count === 0;
 	}
 
-	static async reload(db, storeNames, src, extra) {
+	static async reload(db, storeName, src, extra) {
 		const response = await fetch(src);
 		const data = db._data = await response.json();
 
 		await new Promise((resolve, reject) => {
-			const tx = db.transaction(storeNames, 'readwrite');
+			const tx = db.transaction(storeName, 'readwrite');
 			tx.oncomplete = resolve;
 			tx.onerror = reject;
 
 			try {
-				const isArray = Array.isArray(storeNames);
-				let stores = (isArray ? storeNames : [storeNames]).map(n => {
-					const store = tx.objectStore(n);
-					store.clear();
-					return store;
-				});
-				if (!isArray)
-					stores = stores[0];
-				this.reloader(stores, data, extra);
+				const store = tx.objectStore(storeName);
+				this.reloader(store, data, extra);
 			} catch (ex) {
 				reject(ex);
 				tx.abort();

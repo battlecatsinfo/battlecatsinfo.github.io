@@ -1,37 +1,19 @@
 import {IdbBase, AutoIdb, fetch} from './common.mjs';
 
-class StageIdb extends AutoIdb {
-	static autoReload = false;
+class MapIdb extends AutoIdb {
 	static storeName = 'map';
-	static storeNames = ['map', 'stage'];
-	static src = '/stage.json';
-
-	static async open(autoReload = this.autoReload) {
-		return await super.open({autoReload});
-	}
-
-	static reloader(stores, data) {
-		const [mapStore, stageStore] = stores;
-
-		for (const idx in data.map) {
-			mapStore.put(data.map[idx]);
-		}
-
-		for (const idx in data.stage) {
-			stageStore.put(data.stage[idx]);
-		}
-	}
+	static src = '/map.json';
 }
 
-async function loadStageData() {
-	const db = await StageIdb.open(true);
-	db.close();
+class StageIdb extends AutoIdb {
+	static storeName = 'stage';
+	static src = '/stage.json';
 }
 
 async function getMap(id) {
-	const db = await StageIdb.open();
+	const db = await MapIdb.open();
 	try {
-		return await IdbBase.get(db, 'map', id);
+		return db._data ? db._data[id] : await MapIdb.get(db, id);
 	} finally {
 		db.close();
 	}
@@ -40,16 +22,23 @@ async function getMap(id) {
 async function getStage(id) {
 	const db = await StageIdb.open();
 	try {
-		return await IdbBase.get(db, 'stage', id);
+		return db._data ? db._data[id] : await StageIdb.get(db, id);
 	} finally {
 		db.close();
 	}
 }
 
 async function* forEachMap(query, direction) {
-	const db = await StageIdb.open();
+	const db = await MapIdb.open();
 	try {
-		yield* IdbBase.forEachValue(db, 'map', query, direction);
+		const gen = (db._data && query == null && direction == null) ?
+			(function* (data) {
+				for (const k in data) {
+					yield data[k];
+				}
+			})(db._data) :
+			MapIdb.forEachValue(db, query, direction);
+		yield* gen;
 	} finally {
 		db.close();
 	}
@@ -58,14 +47,22 @@ async function* forEachMap(query, direction) {
 async function* forEachStage(query, direction) {
 	const db = await StageIdb.open();
 	try {
-		yield* IdbBase.forEachValue(db, 'stage', query, direction);
+		const gen = (db._data && query == null && direction == null) ?
+			(function* (data) {
+				for (const k in data) {
+					yield data[k];
+				}
+			})(db._data) :
+			StageIdb.forEachValue(db, query, direction);
+		yield* gen;
 	} finally {
 		db.close();
 	}
 }
 
 export {
-	loadStageData,
+	MapIdb,
+	StageIdb,
 	getMap,
 	getStage,
 	forEachMap,

@@ -5,17 +5,34 @@ import * as Stage from '../stage.mjs';
 
 describe('stage.mjs', function () {
 
-	describe('loadStageData', function () {
+	describe('getMap', function () {
 
-		it('check if stage data can be loaded and stored', async function () {
+		it('basic', async function () {
 			async function test() {
-				await Stage.loadStageData();
-
-				var map = await dbGet(Common.DB_NAME, Common.DB_VERSION, 'map', 0);
+				var map = await Stage.getMap(0);
 				assert.strictEqual(map.id, 0);
 				assert.strictEqual(map.name, "傳說的開始");
+			}
 
-				var stage = await dbGet(Common.DB_NAME, Common.DB_VERSION, 'stage', 0);
+			// IDB not exist
+			await dbDelete(Common.DB_NAME);
+			await test();
+
+			// data not stored
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'map');
+			await test();
+
+			// data stored
+			await test();
+		});
+
+	});
+
+	describe('getStage', function () {
+
+		it('basic', async function () {
+			async function test() {
+				var stage = await Stage.getStage(0);
 				assert.strictEqual(stage.id, 0);
 				assert.strictEqual(stage.name, "天搖地動");
 			}
@@ -25,121 +42,129 @@ describe('stage.mjs', function () {
 			await test();
 
 			// data not stored
-			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'map');
 			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'stage');
 			await test();
-		});
 
-	});
-
-	describe('getMap', function () {
-
-		it('basic', async function () {
-			await Stage.loadStageData();
-			var map = await Stage.getMap(0);
-			assert.strictEqual(map.id, 0);
-			assert.strictEqual(map.name, "傳說的開始");
-		});
-
-	});
-
-	describe('getStage', function () {
-
-		it('basic', async function () {
-			await Stage.loadStageData();
-			var stage = await Stage.getStage(0);
-			assert.strictEqual(stage.id, 0);
-			assert.strictEqual(stage.name, "天搖地動");
+			// data stored
+			await test();
 		});
 
 	});
 
 	describe('forEachMap', function () {
 
-		it('iterate all', async function () {
-			await Stage.loadStageData();
+		it('basic', async function () {
+			async function test() {
+				var maps = [];
+				for await (const map of Stage.forEachMap()) {
+					maps.push(map);
+					if (maps.length >= 10) { break; }
+				}
 
-			var maps = [];
-			for await (const map of Stage.forEachMap()) {
-				maps.push(map);
+				assert.strictEqual(maps.length, 10);
+				assert.strictEqual(maps[0].id, 0);
+				assert.strictEqual(maps[0].name, "傳說的開始");
+				assert.strictEqual(maps[1].id, 1);
+				assert.strictEqual(maps[1].name, "熱情的國家");
 			}
 
-			assert.strictEqual(maps[0].id, 0);
-			assert.strictEqual(maps[0].name, "傳說的開始");
-			assert.strictEqual(maps[1].id, 1);
-			assert.strictEqual(maps[1].name, "熱情的國家");
-			assert.strictEqual(maps.length, await dbCount(Common.DB_NAME, Common.DB_VERSION, 'map'));
+			// IDB not exist
+			await dbDelete(Common.DB_NAME);
+			await test();
+
+			// data not stored
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'map');
+			await test();
+
+			// data stored
+			await test();
 		});
 
-		it('iterate one', async function () {
-			await Stage.loadStageData();
+		it('with params', async function () {
+			async function test() {
+				var maps = [];
+				for await (const map of Stage.forEachMap(IDBKeyRange.bound(3, 5), 'prev')) {
+					maps.push(map);
+				}
 
-			var maps = [];
-			for await (const map of Stage.forEachMap(1)) {
-				maps.push(map);
+				assert.strictEqual(maps.length, 3);
+				assert.strictEqual(maps[0].id, 5);
+				assert.strictEqual(maps[0].name, "西方街道");
+				assert.strictEqual(maps[1].id, 4);
+				assert.strictEqual(maps[1].name, "凝視著貓眼石");
+				assert.strictEqual(maps[2].id, 3);
+				assert.strictEqual(maps[2].name, "貓咪們渡海");
 			}
 
-			assert.strictEqual(maps[0].id, 1);
-			assert.strictEqual(maps[0].name, "熱情的國家");
-			assert.strictEqual(maps.length, 1);
-		});
+			// IDB not exist
+			await dbDelete(Common.DB_NAME);
+			await test();
 
-		it('iterate range', async function () {
-			await Stage.loadStageData();
+			// data not stored
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'map');
+			await test();
 
-			var maps = [];
-			for await (const map of Stage.forEachMap(IDBKeyRange.bound(3, 5))) {
-				maps.push(map);
-			}
-
-			assert.strictEqual(maps[0].id, 3);
-			assert.strictEqual(maps[0].name, "貓咪們渡海");
-			assert.strictEqual(maps.length, 3);
+			// data stored
+			await test();
 		});
 
 	});
 
 	describe('forEachStage', function () {
 
-		it('iterate all', async function () {
-			await Stage.loadStageData();
+		it('basic', async function () {
+			async function test() {
+				var stages = [];
+				for await (const stage of Stage.forEachStage()) {
+					stages.push(stage);
+					if (stages.length >= 10) { break; }
+				}
 
-			var stages = [];
-			for await (const stage of Stage.forEachStage()) {
-				stages.push(stage);
+				assert.strictEqual(stages.length, 10);
+				assert.strictEqual(stages[0].id, 0);
+				assert.strictEqual(stages[0].name, "天搖地動");
+				assert.strictEqual(stages[1].id, 1);
+				assert.strictEqual(stages[1].name, "恐怖再現");
 			}
 
-			assert.strictEqual(stages[0].id, 0);
-			assert.strictEqual(stages[0].name, "天搖地動");
-			assert.strictEqual(stages[1].id, 1);
-			assert.strictEqual(stages[1].name, "恐怖再現");
-			assert.strictEqual(stages.length, await dbCount(Common.DB_NAME, Common.DB_VERSION, 'stage'));
+			// IDB not exist
+			await dbDelete(Common.DB_NAME);
+			await test();
+
+			// data not stored
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'stage');
+			await test();
+
+			// data stored
+			await test();
 		});
 
-		it('iterate one', async function () {
-			await Stage.loadStageData();
+		it('with params', async function () {
+			async function test() {
+				var stages = [];
+				for await (const stage of Stage.forEachStage(IDBKeyRange.bound(3, 5), 'prev')) {
+					stages.push(stage);
+				}
 
-			var stages = [];
-			for await (const stage of Stage.forEachStage(1)) {
-				stages.push(stage);
+				assert.strictEqual(stages.length, 3);
+				assert.strictEqual(stages[0].id, 5);
+				assert.strictEqual(stages[0].name, "愛意眼神");
+				assert.strictEqual(stages[1].id, 4);
+				assert.strictEqual(stages[1].name, "碰碰廣場");
+				assert.strictEqual(stages[2].id, 3);
+				assert.strictEqual(stages[2].name, "憂鬱濕地");
 			}
 
-			assert.strictEqual(stages[0].id, 1);
-			assert.strictEqual(stages[0].name, "恐怖再現");
-			assert.strictEqual(stages.length, 1);
-		});
+			// IDB not exist
+			await dbDelete(Common.DB_NAME);
+			await test();
 
-		it('iterate range', async function () {
-			await Stage.loadStageData();
+			// data not stored
+			await dbClear(Common.DB_NAME, Common.DB_VERSION, 'stage');
+			await test();
 
-			var stages = [];
-			for await (const stage of Stage.forEachStage(IDBKeyRange.bound(3, 5))) {
-				stages.push(stage);
-			}
-
-			assert.strictEqual(stages[0].id, 3);
-			assert.strictEqual(stages[0].name, "憂鬱濕地");
-			assert.strictEqual(stages.length, 3);
+			// data stored
+			await test();
 		});
 
 	});

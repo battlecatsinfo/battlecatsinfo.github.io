@@ -353,7 +353,6 @@ function namefor(v) {
 }
 
 async function _really_search() {
-	await Stage.loadStageData();
 	const {grpName: groupNames} = await loadScheme('stage', ['grpName']);
 	really_search.groupNames = groupNames;
 	_really_search = really_search;
