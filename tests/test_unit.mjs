@@ -781,15 +781,15 @@ describe('unit.mjs', function () {
 				var cat = await Unit.loadCat(0);
 				assert.deepEqual(cat.xpCurve, [200, 400, 700, 1100, 1600, 2200, 2900, 3700, 4600, 5600]);
 
-				// "#"
+				// 1
 				var cat = await Unit.loadCat(34);
 				assert.deepEqual(cat.xpCurve, [7800, 9800, 14800, 21800, 42500, 64300, 93200, 118000, 197400, 513500]);
 
-				// "$"
+				// 2
 				var cat = await Unit.loadCat(30);
 				assert.deepEqual(cat.xpCurve, [6250, 8200, 12400, 17800, 24800, 42400, 64500, 93000, 148000, 298000]);
 
-				// "@"
+				// 3
 				var cat = await Unit.loadCat(24);
 				assert.deepEqual(cat.xpCurve, [5000, 8000, 12200, 17800, 24800, 33200, 43000, 54200, 66800, 80800]);
 			});
