@@ -484,7 +484,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 			}
 			case 44: {
-				w1(`鋼鐵殺手（減敵方目前體力的 ${v}%）`, 'MDuECPl');
+				w1(`鋼鐵殺手（減敵方目前體力的 ${v}%）`, '9vLOiAm');
 			}
 		}
 	}

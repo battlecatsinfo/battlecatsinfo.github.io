@@ -594,7 +594,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 				W(`召喚精靈 No. ${v}`, 'AJYPM6p');
 				break;
 			case 44:
-				W(`鋼鐵殺手（-${v}%）`, 'MDuECPl');
+				W(`鋼鐵殺手（-${v}%）`, '9vLOiAm');
 				break;
 		}
 	}
