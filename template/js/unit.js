@@ -2255,9 +2255,9 @@ function getTalentInfo(talent) {
 				return range('%', 4);
 			return range();
 		case 13:
-			if (snd)
-				return range('%', 4);
-			return;
+			if (talent[2] != talent[3])
+				return range('%');
+			return undefined;
 		case 15:
 			if (snd)
 				return range('%', 4);
