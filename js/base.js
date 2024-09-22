@@ -133,6 +133,34 @@ for (const file of fs.readdirSync(layoutDir)) {
 	});
 }
 
+Handlebars.registerHelper('lookupRankReward', function (table, rank) {
+	// handle special ids
+	
+	if (rank.reward_count) {
+		if (rank.reward_id === '22')
+			return '貓罐頭';
+		if (rank.reward_id === '21')
+			return '稀有券';
+
+		return Handlebars.Utils.escapeExpression(table.find(x => x.id === rank.reward_id).reward);
+	}
+	let combos;
+
+	switch (rank.rank) {
+	case '2150':
+		combos = ['酒瘋青年', '恐龍時代', '百鬼夜行'];
+		break;
+	case '1450':
+		combos = ['喵卜力工作室', '兜襠布祭典', '南瓜褲'];
+		break;
+	case '2700':
+		combos = ['幽魂來也', '懶鬼一族', '四人約會'];
+		break;
+	}
+
+	return combos ? combos.map(x => `<a target="_blank" href="/combos.html#${x}">${x}</a>`).join('、' ) : '';
+});
+
 Handlebars.registerHelper('split', function (...args) {
 	const options = args.pop();
 	const [str, separator, limit] = args;

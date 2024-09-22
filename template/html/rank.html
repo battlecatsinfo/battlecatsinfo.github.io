@@ -28,14 +28,16 @@
 				</tr>
 			</thead>
 			<tbody id="rank">
+			{{#with (loadTSV "reward.tsv") as |reward_names|}}
 			{{#each (loadTSV "rank.tsv") as |rank|}}
 			<tr>
 				<td>{{rank.rank}}</td>
 				<td>{{{rank.message}}}</td>
-				<td>{{{rank.reward}}}</td>
-				<td>{{#if rank.image}}<img width="128" height="128" loading="lazy" src="{{rank.image}}">{{/if}}</td>
+				<td>{{{lookupRankReward reward_names rank}}}{{#if rank.reward_count}} × {{rank.reward_count}}{{/if}}</td>
+				<td>{{#if rank.reward_count}}<img width="128" height="128" loading="lazy" src="/img/r/{{rank.reward_id}}.png">{{/if}}</td>
 			</tr>
 			{{/each}}
+			{{/with}}
 			</tbody>
 		</table>
 	</div>
