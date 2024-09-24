@@ -904,10 +904,9 @@ async function main(render) {
 	});
 
 	const cats = await loadAllCats();
-	let o;
-	for (let i = 0; i < cats.length; ++i) {
-		o = document.createElement('option');
-		o.value = cats[i].forms.map(CL => CL.name || CL.jp_name).join('/');
+	for (const cat of cats) {
+		const o = document.createElement('option');
+		o.value = cat.forms.map(CL => CL.name || CL.jp_name).join('/');
 		CL.appendChild(o);
 	}
 }
