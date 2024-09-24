@@ -49,27 +49,27 @@
 		<div class="w3-dropdown-hover">
 			<button class="w3-button w3-black w3-round">導入圖片</button>
 			<div class="w3-dropdown-content w3-bar-block w3-border">
-				<a class="w3-bar-item w3-button w3-round" onclick="importImg()">選擇檔案</a>
-				<a class="w3-bar-item w3-button w3-round" onclick="importImgU()">輸入圖片連結</a>
-				<a class="w3-bar-item w3-button w3-round" onclick="pasteImg()">剪貼簿:Ctrl+V</a>
+				<a class="w3-bar-item w3-button w3-round" id="import-img-file">選擇檔案</a>
+				<a class="w3-bar-item w3-button w3-round" id="import-img-url">輸入圖片連結</a>
+				<a class="w3-bar-item w3-button w3-round" id="import-img-paste">剪貼簿:Ctrl+V</a>
 			</div>
 		</div>
 		<input type="file" style="display: none;" name="file" id="file">
 		<div class="w3-dropdown-hover">
 			<button class="w3-button w3-gray w3-round">導入ImgCut</button>
 			<div class="w3-dropdown-content w3-bar-block w3-border">
-				<a class="w3-bar-item w3-button w3-round" onclick="importCut()">選擇檔案</a>
-				<a class="w3-bar-item w3-button w3-round" onclick="importCutU()">輸入ImgCut連結</a>
+				<a class="w3-bar-item w3-button w3-round" id="import-cut-file">選擇檔案</a>
+				<a class="w3-bar-item w3-button w3-round" id="import-cut-url">輸入ImgCut連結</a>
 			</div>
 		</div>
 		<label for="color" class="w3-orange w3-button w3-round">框顏色</label>
-		<input onchange="scolor()" type="color" name="color" id="color">
-		<button onclick="exportimg()" class="w3-button w3-teal w3-round">下載部件</button>
-		<button onclick="exportimga()" class="w3-button w3-green w3-round">下載全部部件</button>
-		<button onclick="exportaimg()" class="w3-button w3-blue w3-round">下載整張圖片</button>
-		<button onclick="exportcut()" class="w3-button w3-indigo w3-round">下載ImgCut</button>
-		<button onclick="addline()" class="w3-button w3-purple w3-round">添加行</button>
-		<button onclick="removeline()" class="w3-button w3-red w3-round">刪除行</button>
+		<input type="color" name="color" id="color-select">
+		<button id="export-part" class="w3-button w3-teal w3-round">下載部件</button>
+		<button id="export-all" class="w3-button w3-green w3-round">下載全部部件</button>
+		<button id="export-img" class="w3-button w3-blue w3-round">下載整張圖片</button>
+		<button id="export-cut" class="w3-button w3-indigo w3-round">下載ImgCut</button>
+		<button id="add-line" class="w3-button w3-purple w3-round">添加行</button>
+		<button id="del-line" class="w3-button w3-red w3-round">刪除行</button>
 	</div>
 	<div style="max-height: 50vh;overflow: scroll;margin: 0 2vw auto;">
 		<table class="w3-table w3-centered w3-border">

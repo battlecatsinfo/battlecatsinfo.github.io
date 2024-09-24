@@ -1,5 +1,6 @@
 var G;
-function F(event) {
+
+function handleClick(event) {
 	if (!G) {
 		G && (G.style.display = 'none');
 		(G = event.currentTarget.nextElementSibling).style.display = 'block';
@@ -15,8 +16,5 @@ document.ontouchstart = function() {
 	event.stopPropagation();
 };
 
-// expose global methods
-// @TODO: refactor the code to prevent this
-Object.assign(globalThis, {
-	F,
-});
+for (const img of document.getElementById('container').querySelectorAll('img'))
+	img.addEventListener('click', handleClick);

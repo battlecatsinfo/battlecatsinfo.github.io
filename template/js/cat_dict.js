@@ -98,7 +98,7 @@ const G0 = document.getElementById('G0');
 const G1 = document.getElementById('G1');
 const G2 = document.getElementById('G2');
 
-function ok() {
+function filter() {
 	undo.length = 0;
 	for (let x of Ms)
 		if (x.style.display == 'block') {
@@ -298,7 +298,7 @@ function ok() {
 	sorted.forEach(add_unit);
 }
 
-function clearAll(event) {
+function clear(event) {
 	event.preventDefault();
 	event.stopPropagation();
 	for (let x of Ms) {
@@ -310,7 +310,7 @@ function clearAll(event) {
 	}
 }
 
-function _clearAll(event) {
+function clearAll(event) {
 	event.preventDefault();
 	event.stopPropagation();
 	for (let x of Ms)
@@ -430,11 +430,11 @@ function favorite(e) {
 	}
 }
 
-// expose global methods
-// @TODO: refactor the code to prevent this
-Object.assign(globalThis, {
-	ok,
-	clearAll,
-	_clearAll,
-	favorite,
-});
+for (const e of document.getElementsByClassName('filter'))
+	e.addEventListener('click', filter);
+
+for (const e of document.getElementsByClassName('clear'))
+	e.addEventListener('click', clear);
+
+document.getElementById('favorite').addEventListener('click', favorite);
+document.getElementById('clear-all').addEventListener('click', clearAll);

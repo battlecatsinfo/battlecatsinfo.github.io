@@ -415,26 +415,19 @@ async function pasteImg() {
 		}
 	}
 }
-const color = document.getElementById('color');
 
-function scolor() {
+document.getElementById('import-img-file').addEventListener('click', importImg);
+document.getElementById('import-img-url').addEventListener('click', importImgU);
+document.getElementById('import-img-paste').addEventListener('click', pasteImg);
+document.getElementById('import-cut-file').addEventListener('click', importCut);
+document.getElementById('import-cut-url').addEventListener('click', importCutU);
+document.getElementById('export-part').addEventListener('click', exportimg);
+document.getElementById('export-all').addEventListener('click', exportimga);
+document.getElementById('export-img').addEventListener('click', exportaimg);
+document.getElementById('export-cut').addEventListener('click', exportcut);
+document.getElementById('add-line').addEventListener('click', addline);
+document.getElementById('del-line').addEventListener('click', removeline);
+document.getElementById('color-select').addEventListener('change', function (event) {
 	ctx.strokeStyle = color.value;
 	draw();
-}
-
-// expose global methods
-// @TODO: refactor the code to prevent this
-Object.assign(globalThis, {
-	importImg,
-	importImgU,
-	pasteImg,
-	importCut,
-	importCutU,
-	scolor,
-	exportimg,
-	exportimga,
-	exportaimg,
-	exportcut,
-	addline,
-	removeline,
 });
