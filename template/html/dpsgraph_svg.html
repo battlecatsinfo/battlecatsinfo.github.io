@@ -4,9 +4,12 @@
 
 {{#*inline "scripts"}}
 	{{~> @partial-block}}
-	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-	<script src="svg.js" type="module"></script>
-	<script src="dpsgraph.js" type="module"></script>
+	<script type="module">
+	import {DPSRender} from "./svg.js";
+	import {main} from "./dpsgraph.js";
+
+	main(DPSRender);
+	</script>
 {{/inline}}
 
 {{#*inline "styles-inline"}}

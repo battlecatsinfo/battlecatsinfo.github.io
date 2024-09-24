@@ -89,14 +89,14 @@ function surge_model(min_spawn, max_spawn, Xs) {
 
 
 class DPSBlock {
-	constructor(C) {
+	constructor(C, render) {
 		let x, y;
 
 		this.dom = document.createElement('div');
 		this.dom.classList.add('w3-quarter', 'w3-container');
 		y = document.createElement('div');
 		y.classList.add('w3-threequarter', 'w3-container');
-		this.R = new DPSRender(y);
+		this.R = new render(y);
 
 		x = document.createElement('div');
 		//x.classList.add('w3-row-padding', 'w3-card-4', 'w3-light-grey');
@@ -877,36 +877,41 @@ class FormDPS {
 	}
 }
 
-loadAllCats().then(s => {
+async function main(render) {
+	cat_name.focus();
+	document.getElementById('loader').hidden = true;
+	document.getElementById('ok').addEventListener('click', function() {
+		const X = CL.options;
+		const Y = cat_name.value;
+		for (let i = 0; i < X.length; ++i) {
+			if (X[i].value == Y) {
+				const X = cats[i].forms.length;
+				let m = CF.selectedIndex;
+				if (m <= 3) {
+					if (m >= X) {
+						alert('此貓咪沒有第' + (m + 1) + '型態');
+						return;
+					}
+				} else {
+					m = X - 1;
+				}
+				new FormDPS(new DPSBlock(document.body, render), cats[i], m);
+				cat_name.value = '';
+				return;
+			}
+		}
+		alert('無法識別輸入的貓咪！請檢查名稱是否正確！');
+	});
+
+	const cats = await loadAllCats();
 	let o;
-	document.getElementById('loader').style.display = 'none';
-	cats = s;
-	for (let i = 0; i < s.length; ++i) {
+	for (let i = 0; i < cats.length; ++i) {
 		o = document.createElement('option');
-		o.value = s[i].forms.map(CL => CL.name || CL.jp_name).join('/');
+		o.value = cats[i].forms.map(CL => CL.name || CL.jp_name).join('/');
 		CL.appendChild(o);
 	}
-	cat_name.focus();
-});
-document.getElementById('ok').onclick = function() {
-	const X = CL.options;
-	const Y = cat_name.value;
-	for (let i = 0; i < X.length; ++i) {
-		if (X[i].value == Y) {
-			const X = cats[i].forms.length;
-			let m = CF.selectedIndex;
-			if (m <= 3) {
-				if (m >= X) {
-					alert('此貓咪沒有第' + (m + 1) + '型態');
-					return;
-				}
-			} else {
-				m = X - 1;
-			}
-			new FormDPS(new DPSBlock(document.body), cats[i], m);
-			cat_name.value = '';
-			return;
-		}
-	}
-	alert('無法識別輸入的貓咪！請檢查名稱是否正確！');
+}
+
+export {
+	main
 };

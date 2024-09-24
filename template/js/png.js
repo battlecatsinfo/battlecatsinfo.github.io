@@ -168,9 +168,6 @@ class DPSRender {
 	}
 }
 
-// expose global methods
-// @TODO: refactor the code to prevent this
-Object.assign(globalThis, {
-	DPSRender,
-});
-
+export {
+	DPSRender
+};

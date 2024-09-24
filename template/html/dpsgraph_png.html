@@ -5,8 +5,12 @@
 {{#*inline "scripts"}}
 	{{~> @partial-block}}
 	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-	<script src="png.js" type="module"></script>
-	<script src="dpsgraph.js" type="module"></script>
+	<script type="module">
+	import {DPSRender} from "./png.js";
+	import {main} from "./dpsgraph.js";
+
+	main(DPSRender);
+	</script>
 {{/inline}}
 
 {{#*inline "styles-inline"}}
