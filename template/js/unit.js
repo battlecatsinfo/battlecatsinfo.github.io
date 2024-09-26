@@ -54,6 +54,7 @@ import {
 	AB_SAGE,
 	AB_SUMMON,
 	AB_MK,
+	AB_EXPLOSION,
 
 	catEnv,
 
@@ -485,7 +486,11 @@ function createAbIcons(form, p1, p2, tbody) {
 			}
 			case 44: {
 				w1(`鋼鐵殺手（減敵方目前體力的 ${v}%）`, '9vLOiAm');
+				break;
 			}
+			case 45:
+				w2(`${v[0]}% 爆波攻撃（${v[1]}～${v[2]}）`, '4KshrNX');
+				break;
 		}
 	}
 }

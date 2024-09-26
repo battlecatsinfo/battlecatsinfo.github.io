@@ -318,6 +318,18 @@
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E032.html"
 	},
 	{
+		"tw_name": "萬聖節派對活動轉蛋",
+		"jp_name": "ハロウィンパーティ! スペシャル★イベントガチャ",
+		"en_name": "Halloween Party!(Event Gacha)",
+		"img": "https://i.imgur.com/jgC7ETc.png",
+		"stage": "11-68",
+		"ticket": "206",
+		"type": "event",
+		"units": [[10], [0, 3, 11, 12], [2, 4, 5, 14], [], []],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E034.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E034.html"
+	},
+	{
 		"tw_name": "GI競馬活動轉蛋",
 		"jp_name": "めざせGI にゃんこ競馬イベントガチャ",
 		"en_name": "JRA Collaboration",
@@ -952,7 +964,7 @@
 		"tw_name": "超古代勇者超級靈魂勇者",
 		"jp_name": "超古代勇者ウルトラソウルズ",
 		"en_name": "Ancient Heroes Ultra Souls",
-		"img": "https://i.imgur.com/uMybcfm.png",
+		"img": "https://i.imgur.com/W5thwrc.png",
 		"rate": [6970, 2500, 500, 30],
 		"history": [
 			"2023/8/7(11:00)~8/10(10:59) 超古代勇者 5%/0.3%",
@@ -1053,9 +1065,9 @@
 			"2015/2/28~2015/3/5 超古代勇者"
 		],
 		"type": "rare",
-		"units": [692, 633, 525, 451, 322, 203, 138, 137, 136, 135, 134, 447, 446, 445, 444, 443, 239, 238, 237, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R790.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R790.html"
+		"units": [769, 692, 633, 525, 451, 322, 203, 138, 137, 136, 135, 134, 447, 446, 445, 444, 443, 200, 144, 131, 129, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R916.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R916.html"
 	},
 	{
 		"tag": "黑暗英雄",
@@ -1550,7 +1562,7 @@
 		"tw_name": "萬聖節轉蛋",
 		"jp_name": "ハロウィンガチャ",
 		"en_name": "Halloween Capsules",
-		"img": "https://i.imgur.com/PQ8cC2O.png",
+		"img": "https://i.imgur.com/65Zhhiu.png",
 		"rate": [7000, 2500, 500, 0],
 		"history": [
 			"2022/10/31(11:00)~11/14(10:59) 萬聖節轉蛋 5% [碎] (新增: 伯爵・真田幸村) [2022/11/4(11:00)~11/7(10:59) 5% 必中]",
@@ -1563,9 +1575,9 @@
 			"2015/10/17~2015/11/1 萬聖節轉蛋"
 		],
 		"type": "rare",
-		"units": [684, 683, 654, 629, 570, 523, 522, 495, 377, 376, 302, 230, 229, 228, 228, 228, 228, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R762.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R762.html"
+		"units": [772, 683, 229, 230, 302, 570, 773, 773, 773, 228, 228, 228, 629, 636, 662, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R922.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R922.html"
 	},
 	{
 		"tag": "聖誕",
@@ -1843,7 +1855,7 @@
 		"tw_name": "梅露可物語",
 		"jp_name": "メルクストーリ",
 		"en_name": "Merc Storia",
-		"img": "https://i.imgur.com/5yvGQZK.png",
+		"img": "https://i.imgur.com/6HKyAvf.png",
 		"rate": [7000, 2500, 500, 0],
 		"history": [
 			"2023/2/27(11:00)~3/13(10:59) 梅露可物語 5% [碎] [2023/3/10(11:00)~3/13(10:59) 5% 必中]",
@@ -1858,9 +1870,9 @@
 			"/collab/Merc_Storia.html"
 		],
 		"type": "rare",
-		"units": [506, 346, 345, 344, 190, 189, 188, 187, 186, 185, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R414.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R414.html"
+		"units": [768, 506, 346, 345, 344, 190, 189, 188, 187, 186, 185, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R925.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R925.html"
 	},
 	{
 		"tag": "悠閒世界樹",
@@ -2189,7 +2201,7 @@
 		"tw_name": "熱血！大運動會 白隊",
 		"jp_name": "熱血！大運動会ガチャ 白組",
 		"en_name": "River City Clash White Team",
-		"img": "https://i.imgur.com/r8NOxMy.png",
+		"img": "https://i.imgur.com/4BMAhQc.png",
 		"rate": [7000, 2500, 500, 0],
 		"free": 721,
 		"history": [
@@ -2201,9 +2213,9 @@
 			"/collab/River_City_Clash.html"
 		],
 		"type": "rare",
-		"units": [87, 107, 212, 316, 401, 525, 618, 625, 668, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R849.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R849.html"
+		"units": [177, 619, 212, 316, 401, 137, 618, 625, 668, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R924.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R924.html"
 	},
 	{
 		"tw_name": "龍族撲克",

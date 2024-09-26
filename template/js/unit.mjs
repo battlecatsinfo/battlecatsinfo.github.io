@@ -37,6 +37,7 @@ const IMU_WARP = 64;       // Immune to Warp 傳送無效
 const IMU_CURSE = 128;     // Immune to Curse 古代詛咒無效
 const IMU_TOXIC = 256;     // Immune to Toxic 毒擊傷害無效
 const IMU_BOSSWAVE = 512;  // Immune to Boss Shockwave 魔王震波無效 [UNOFFICIAL]
+const IMU_EXPLOSION = 1024; // Immune to Explosion 爆波傷害無效
 
 // Abilities
 const AB_STRENGTHEN = 1;   // Strengthen 攻擊力上升
@@ -83,6 +84,7 @@ const AB_DEATHSURGE = 41;  // Death Surge 遺留烈波(死後烈波)
 const AB_SAGE = 42;        // Sage Slayer 超賢者特效
 const AB_SUMMON = 43;      // Conjure(Summon) 召喚
 const AB_MK = 44;          // Metal Killer 鋼鐵殺手
+const AB_EXPLOSION = 45;   // Explosion 爆波
 
 // Resist
 const RES_WEAK = 0;        // Resist to Weaken 抗擊耐性
@@ -2046,7 +2048,7 @@ function createImuIcons(imu, parent) {
 	if (!imu) { return; }
 	const p = document.createElement('div');
 	const names = [];
-	for (let x = 1, i = 0; x <= 512; x <<= 1, ++i) {
+	for (let x = 1, i = 0; x <= 1024; x <<= 1, ++i) {
 		if (!(imu & x)) { continue; }
 		const e = p.appendChild(new Image(40, 40));
 		e.src = 'https://i.imgur.com/' + units_scheme.immunes.icons[i] + '.png';
@@ -2147,6 +2149,7 @@ export {
 	AB_SAGE,
 	AB_SUMMON,
 	AB_MK,
+	AB_EXPLOSION,
 
 	RES_WEAK,
 	RES_STOP,

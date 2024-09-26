@@ -49,6 +49,7 @@ const constants = {
 	imu_curse: 128,
 	imu_toxic: 256,
 	imu_bosswave: 512,
+	imu_explosion: 1024,
 
 	ab_strengthen: 1,
 	ab_lethal: 2,
@@ -94,6 +95,7 @@ const constants = {
 	ab_sage: 42,
 	ab_summon: 43,
 	ab_mk: 44,
+	ab_explosion: 45,
 
 	res_weak: 0,
 	res_stop: 1,

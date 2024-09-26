@@ -67,6 +67,7 @@ import {
 	AB_SAGE,
 	AB_SUMMON,
 	AB_MK,
+	AB_EXPLOSION,
 
 	catEnv,
 
@@ -230,6 +231,9 @@ function createAbIcons() {
 				break;
 			case AB_MINISURGE:
 				T(`${d[0]} % 發射 Lv${d[3]} 小烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'AEITK8t');
+				break;
+			case AB_EXPLOSION:
+				T(`${d[0]}% 爆波攻撃（${d[1]}～${d[2]}）`, '4KshrNX');
 				break;
 		}
 	}

@@ -50,6 +50,7 @@ import {
 	AB_SAGE,
 	AB_SUMMON,
 	AB_MK,
+	AB_EXPLOSION,
 
 	trait_treasure,
 
