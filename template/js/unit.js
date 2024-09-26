@@ -2359,9 +2359,12 @@ function rednerTalentInfos(talents, _super = false) {
 	table.appendChild(tr2);
 	let infos = [];
 	let O = true;
+	let has_super = false;
 	for (let i = 1; i < 113; i += 14) {
 		if (!talents[i]) break;
-		if (_super != (talents[i + 13] == 1)) continue;
+		const super_flag = talents[i + 13] == 1;
+		has_super |= super_flag;
+		if (_super != super_flag) continue;
 		const info = getTalentInfo(talents.subarray(i, i + 14));
 		const name = units_scheme.talents.names[talents[i]];
 		infos.push(name);
@@ -2399,7 +2402,7 @@ function rednerTalentInfos(talents, _super = false) {
 	}
 	table.classList.add('w3-table', 'w3-centered', 'tcost');
 	unit_content.appendChild(table);
-	return infos;
+	return [infos, has_super];
 }
 
 function calcCost(event) {
@@ -2699,14 +2702,14 @@ function renderUintPage() {
 	}
 	if (my_cat.talents) {
 		const TF = my_cat.forms[2].clone();
-		const names = rednerTalentInfos(my_cat.talents);
+		const [names, has_super] = rednerTalentInfos(my_cat.talents);
 		renderTalentCosts(names, my_cat.talents);
-		const _super = TF.applyTalents(custom_talents);
+		TF.applyTalents(custom_talents);
 		tf_tbl = renderForm(TF, '本能完全升滿的數值表格', false, true);
 		tables.push(['三階+本能數值表格', tf_tbl]);
 		mkTool(tf_tbl);
-		if (_super) {
-			const names = rednerTalentInfos(my_cat.talents, true, true);
+		if (has_super) {
+			const [names, _] = rednerTalentInfos(my_cat.talents, true, true);
 			renderTalentCosts(names, my_cat.talents, true);
 			TF.applySuperTalents(custom_super_talents);
 			tf_tbl_s = renderForm(TF, '超本能完全升滿的數值表格', true, true);
