@@ -885,7 +885,7 @@ async function render_stage() {
 		}
 	}
 	rewards.textContent = "";
-	if (info3.drop && (M1.selectedOptions[0].dataset.map || M1.selectedIndex !== 3)) {
+	if (info3.drop && (info1.dataset.map || M1.selectedIndex !== 3)) {
 		var drop_data = info3.drop;
 		var chances = getDropData(drop_data);
 		var once = true;
@@ -964,17 +964,22 @@ async function render_stage() {
 		st3[5].textContent = "無限制";
 	}
 	var xp = info3.xp;
-	switch (M1.selectedIndex) {
-		case 3:
-			st3[1].textContent = 1000 + Math.min(M3.selectedIndex, 47) * 300;
-			break;
-		case 0:
-		case 9:
-		case 6:
-			st3[1].textContent = numStr(~~(xp * 9 * 4.7));
-			break;
-		default:
-			st3[1].textContent = numStr(~~(xp * 4.7));
+	if (info1.dataset.maps) {
+		// Always normal stages
+		st3[1].textContent = numStr(~~(xp * 4.7));
+	} else {
+		switch (M1.selectedIndex) {
+			case 3: // Main chapter story
+				st3[1].textContent = 1000 + Math.min(M3.selectedIndex, 47) * 300;
+				break;
+			case 0:
+			case 9:
+			case 16: // SoL, UL, ZL
+				st3[1].textContent = numStr(~~(xp * 9 * 4.7));
+				break;
+			default: // Normal stages
+				st3[1].textContent = numStr(~~(xp * 4.7));
+		}
 	}
 
 	st2[5].textContent = info3.bg;
