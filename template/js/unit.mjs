@@ -1184,10 +1184,13 @@ class CatForm extends Unit {
 		mode = 'expected',
 		metal: metalMode = true,
 	} = {}) {
-		traits = traits ?? TRAIT_ALL ^ (TB_EVA | TB_WITCH) ^ (metalMode ? TB_METAL : 0);
+		traits = traits ?? TRAIT_ALL ^ (TB_EVA | TB_WITCH | TB_INFN) ^ (metalMode ? TB_METAL : 0);
 
 		const ab = this._getab(abFilter);
-		const isBase = traits === 0;
+
+		// note false positive for few cases with (traits === 0 && speed !== 0), e.g. enemy 19, 20
+		const isBase = traits & TB_INFN || traits === 0;
+
 		const isMetal = traits & TB_METAL;
 		let v;
 
@@ -1215,6 +1218,7 @@ class CatForm extends Unit {
 						atk *= 1 + v[3] * v[0] / 500;
 				}
 
+				// specially exclude bases they all have IMU_WAVE
 				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
 					if (mode === 'max')
 						atk *= 2;
@@ -1289,7 +1293,9 @@ class CatForm extends Unit {
 						if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
 							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
 						}
-						if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
+
+						// specially exclude bases
+						if (!isBase && (v = ab[AB_WAVE] || ab[AB_MINIWAVE])) {
 							rv += (mode === 'max') ? 1 : v[0] / 100;
 						}
 					}
@@ -1311,7 +1317,9 @@ class CatForm extends Unit {
 						else
 							atk += buff * v[3] * v[0] / 100;
 					}
-					if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
+
+					// specially exclude bases
+					if (!isBase && (v = ab[AB_WAVE] || ab[AB_MINIWAVE])) {
 						if (mode === 'max')
 							atk += buff;
 						else

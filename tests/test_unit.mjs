@@ -2282,31 +2282,36 @@ describe('unit.mjs', function () {
 				cf.level = 50;
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 18621);
 				assert.strictEqual(round(cf.dpsAgainst(0)), 18621);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_INFN)), 18621);
 
 				// minisurge
 				var cf = (await Unit.loadCat(710)).forms[1];
 				cf.level = 50;
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 9100);
 				assert.strictEqual(round(cf.dpsAgainst(0)), 9100);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_INFN)), 9100);
 
 				// wave
 				var cf = (await Unit.loadCat(94)).forms[2];
 				cf.level = 50;
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 3370);
 				assert.strictEqual(round(cf.dpsAgainst(0)), 1685);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_INFN)), 1685);
 
 				// miniwave
 				var cf = (await Unit.loadCat(585)).forms[1];
 				cf.level = 50;
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 12137);
 				assert.strictEqual(round(cf.dpsAgainst(0)), 10114);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_INFN)), 10114);
 			});
 
-			it('base: count attack base skill only for base (traits === 0)', async function () {
+			it('base: count attack base skill only for base (traits & TB_INFN || traits === 0)', async function () {
 				var cf = (await Unit.loadCat(226)).forms[0];
 				cf.level = 50;
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 21724);
 				assert.strictEqual(round(cf.dpsAgainst(0)), 86897);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_INFN)), 86897);
 			});
 
 			it('orb attack up should be counted', async function () {
@@ -2383,17 +2388,21 @@ describe('unit.mjs', function () {
 				cf.applyAllTalents();
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 5825);
 
-				// wave should multiply
+				// wave should multiply (except for base)
 				var cf = (await Unit.loadCat(13)).forms[2];
 				cf.level = 50;
 				cf.applyAllTalents();
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 20346);
+				assert.strictEqual(round(cf.dpsAgainst(0)), 16043);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_INFN)), 16043);
 
-				// miniwave should multiply
+				// miniwave should multiply (except for base)
 				var cf = (await Unit.loadCat(240)).forms[2];
 				cf.level = 50;
 				cf.applyAllTalents();
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_RED)), 20192);
+				assert.strictEqual(round(cf.dpsAgainst(0)), 17153);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_INFN)), 17153);
 
 				// surge should multiply
 				var cf = (await Unit.loadCat(10)).forms[2];
