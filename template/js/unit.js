@@ -3042,7 +3042,7 @@ function openBBCode() {
 	modal_content.appendChild(e);
 
 	let s2 = document.createElement('select');
-	for (let x of ['複製巴哈原始碼(BBCode)', '複製圖片', '下載圖片']) {
+	for (let x of ['複製巴哈文章原始碼（BBCode）', '複製圖片', '下載圖片']) {
 		e = document.createElement('option');
 		e.textContent = x;
 		s2.appendChild(e);
