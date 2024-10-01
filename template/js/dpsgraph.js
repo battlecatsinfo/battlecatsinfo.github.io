@@ -142,7 +142,7 @@ class FormDPS {
 
 		if (this.F.atkType & ATK_OMNI) {
 			obj += '全方位';
-		} else if (this.F.info.atk1 & ATK_LD) {
+		} else if (this.F.atkType & ATK_LD) {
 			obj += '遠方';
 		} else {
 			obj = '普通';
