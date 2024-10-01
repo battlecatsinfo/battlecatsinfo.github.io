@@ -808,14 +808,10 @@ document.getElementById('tab').onclick = function() {
 }
 
 async function screenshot(filename) {
-	tby[10].hidden = tby[11].hidden = true;
 	const fn = typeof filename === 'string' ? savePng : copyPng;
-	await fn(tbl, filename, {
-		style: {
-			'margin-left': '0',
-		},
-	});
-	tby[10].hidden = tby[11].hidden = false;
+	tbl.classList.add('export');
+	await fn(tbl, filename);
+	tbl.classList.remove('export');
 }
 
 document.getElementById('camera').onclick = screenshot;
