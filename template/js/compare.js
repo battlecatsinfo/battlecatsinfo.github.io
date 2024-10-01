@@ -701,7 +701,6 @@ function addCat(id, I, FC = 0) {
 	}
 	setStat(C, F, I, span.lv);
 	M = tby[11].children[I];
-	M.classList.add('HD');
 	M.style.border = 'none';
 	G = document.createElement('span');
 	G.textContent = '移除';
@@ -808,13 +807,18 @@ document.getElementById('tab').onclick = function() {
 	alert('無法識別輸入的貓咪！請檢查名稱是否正確！');
 }
 
-document.getElementById('camera').onclick = async function() {
-	await copyPng(tbl, {
+async function screenshot(filename) {
+	tby[10].hidden = tby[11].hidden = true;
+	const fn = typeof filename === 'string' ? savePng : copyPng;
+	await fn(tbl, filename, {
 		style: {
 			'margin-left': '0',
 		},
 	});
+	tby[10].hidden = tby[11].hidden = false;
 }
+
+document.getElementById('camera').onclick = screenshot;
 
 document.getElementById('download').onclick = async function() {
 	let N = [];
@@ -823,12 +827,7 @@ document.getElementById('download').onclick = async function() {
 		const M = cats[parseInt(X[0], 10)].forms[parseInt(X[1], 10)];
 		N.push(M.name || M.jp_name);
 	}
-	const filename = '貓咪比較 —— ' + N.join('.v.s') + '.png';
-	await savePng(tbl, filename, {
-		style: {
-			'margin-left': '0',
-		},
-	});
+	await screenshot('貓咪比較 —— ' + N.join('.v.s') + '.png');
 }
 
 document.getElementById('clear').onclick = function() {
