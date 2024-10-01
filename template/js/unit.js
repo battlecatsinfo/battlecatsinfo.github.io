@@ -3012,7 +3012,7 @@ function xpgraph() {
 }
 
 async function savePNG(tbl) {
-	await savePng(tbl[1], tbl[0], {
+	await savePng(tbl[1], tbl[0] + '.png', {
 		style: {
 			'margin': '0',
 		},
