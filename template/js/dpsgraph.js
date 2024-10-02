@@ -1,4 +1,4 @@
-import {loadScheme} from './common.mjs';
+import {loadScheme, floor} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -56,7 +56,10 @@ import {
 
 	getAbiString,
 
-	loadAllCats,
+	CatIdb,
+	EnemyIdb,
+	loadCat,
+	loadEnemy,
 } from './unit.mjs';
 const units_scheme = await loadScheme('units', ['talents']);
 
@@ -66,8 +69,51 @@ const add = document.getElementById('add');
 const cat_name = document.getElementById('cat-name');
 const cat_name2 = document.getElementById('cat-name2');
 const id01 = document.getElementById('id01');
-let cats, adder;
+const graph_container = document.getElementById('graph_container');
+let num_cats, num_enemies;
 
+/**
+ * @param {HTMLInputElement} [input] - the html input element for unit name
+ * @param {DPSBlock|Render} [B] - if B is not an instance of DPSBlock, a new DPSBlock will be inserted at the end of document
+ * @return {Boolean} true if the DPSGraph is created, otherwise false is returned
+ */
+async function handle_input(input, B) {
+	const X = CL.options;
+	const name = input.value.trim();
+	if (name) {
+		for (let i = 0; i < X.length; ++i) {
+			if (X[i].value === name) {
+				if (i < num_cats) {
+					const cat = await loadCat(i);
+					const num_forms = cat.forms.length;
+					let lvc = CF.selectedIndex;
+					if (lvc <= 3) {
+						if (lvc >= num_forms) {
+							alert('此貓咪沒有第' + (lvc + 1) + '型態');
+							return false;
+						}
+					} else {
+						lvc = num_forms - 1;
+					}
+					if (!(B instanceof DPSBlock))
+						B = new DPSBlock(graph_container, B);
+					new DPSGraph(new CatDPSHelper(B, cat.forms[lvc]));
+					input.value = '';
+					return true;
+				}
+				const enemy = await loadEnemy(i - num_cats);
+				if (!(B instanceof DPSBlock))
+					B = new DPSBlock(graph_container, B);
+				new DPSGraph(new EnemyDPSHelper(B, enemy));
+				input.value = '';
+				return true;
+			}
+		}
+	}
+
+	alert('無法識別輸入的貓咪！請檢查名稱是否正確！');
+	return false;
+}
 
 function surge_model(min_spawn, max_spawn, Xs) {
 	const left_point = min_spawn - 250;
@@ -90,328 +136,243 @@ function surge_model(min_spawn, max_spawn, Xs) {
 
 
 class DPSBlock {
-	constructor(C, render) {
-		let x, y;
-
+	constructor(parent, render) {
 		this.dom = document.createElement('div');
 		this.dom.classList.add('w3-quarter', 'w3-container');
-		y = document.createElement('div');
-		y.classList.add('w3-threequarter', 'w3-container');
-		this.R = new render(y);
+		const plot_div = document.createElement('div');
+		plot_div.classList.add('w3-threequarter', 'w3-container');
+		this.R = new render(plot_div);
 
-		x = document.createElement('div');
-		//x.classList.add('w3-row-padding', 'w3-card-4', 'w3-light-grey');
-		x.classList.add('w3-panel', 'w3-border', 'w3-light-grey', 'w3-round-large');
-		x.style.margin = '1em';
-		x.style.padding = '0';
-		x.appendChild(y);
-		x.appendChild(this.dom);
-		C.appendChild(x);
+		const container = document.createElement('div');
+		container.classList.add('w3-panel', 'w3-border', 'w3-light-grey', 'w3-round-large');
+		container.style.margin = '1em';
+		container.style.padding = '0';
+		container.appendChild(plot_div);
+		container.appendChild(this.dom);
+		container.dataset.units = '';
+		parent.appendChild(container);;
 	}
 }
 
-class FormDPS {
-	constructor(B, C, m) {
-		const self = this;
-		const talent_types = new Set();
-
-		this.F = C.forms[m];
-		this.abis = [];
+class UnitDPSHelper {
+	/**
+	 * @param {DPSBlock} [B] - a valid DPSBlock
+	 * @param {Unit} [F] - any instance of Unit
+	 */
+	constructor(B, F) {
+		if (new.target === UnitDPSHelper)
+			throw new Error('Abstract Class cannot be instantiated');
 		this.B = B;
+		this.F = F;
 		this.title = this.F.name || this.F.jp_name || '<未命名>';
-		this.H = this.B.R.register(this.title);
+		this.talent_types = new Set();
+	}
+	createAttackTypeUI() {
+		{
+			const h3 = document.createElement('h3');
+			h3.textContent = this.title;
+			this.B.dom.appendChild(h3);
+		}
 
-		for (let i = 0; i < (this.F.info.atk1 ? (this.F.info.atk2 ? 3 : 2) : 1); ++i)
-			this.abis.push(this.F.abEnabled(i) !== 0);
+		{
+			const div = document.createElement('div');
+			let desc = '';
+			if (this.F.atkType & ATK_OMNI) {
+				desc += '全方位';
+			} else if (this.F.atkType & ATK_LD) {
+				desc += '遠方';
+			} else {
+				desc += '普通';
+			}
+			desc += (this.F.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
+			if (this.graph.abis.length > 1) {
+				div.textContent = desc + getAbiString(this.F.abi);
+			} else {
+				div.textContent = desc;
+			}
+			this.B.dom.appendChild(div);
+		}
 
+		{
+			let div = document.createElement('div');
+			if (this.F.lds) {
+				const nums = '①②③';
+				let desc = '';
+				for (let i = 0; i < this.F.lds.length; ++i) {
+					const x = this.F.lds[i];
+					const y = x + this.F.ldr[i];
+					if (x <= y)
+						desc += `${nums[i]}${x}～${y}`;
+					else
+						desc += `${nums[i]}${y}～${x}`;
+				}
+				div.textContent = `接觸點${this.F.range}，範圍：${desc}`;
+			} else {
+				div.textContent = '射程：' + this.F.range;
+			}
+			this.B.dom.appendChild(div);
+		}
+	}
+	createButtons() {
+		const self = this;
+		let btn = document.createElement('button');
+		btn.textContent = '下載';
+		btn.classList.add('w3-button', 'w3-teal', 'w3-round');
+		btn.onclick = function() {
+			self.B.R.D();
+		}
+		btn.style.marginRight = '0.5em';
+		this.B.dom.appendChild(btn);
+
+		btn = document.createElement('button');
+		btn.textContent = '複製';
+		btn.classList.add('w3-button', 'w3-green', 'w3-round');
+		btn.onclick = function() {
+			navigator.clipboard.writeText(self.B.R.text());
+			this.textContent = '成功';
+			const u = this;
+			setTimeout(function() {
+				u.textContent = '複製';
+			}, 500);
+		}
+		btn.style.marginRight = '0.5em';
+		this.B.dom.appendChild(btn);
+
+		btn = document.createElement('button');
+		btn.textContent = '刪除';
+		btn.classList.add('w3-button', 'w3-red', 'w3-round');
+		btn.onclick = function() {
+			const container = self.B.dom.parentNode;
+			self.B.R.destroy(); // destroy the render
+			container.parentNode.removeChild(container); // remove the container
+			self.setURL(); // update url state
+		}
+		btn.style.marginRight = '0.5em';
+		this.B.dom.appendChild(btn);
+
+		btn = document.createElement('button');
+		btn.textContent = '+';
+		btn.classList.add('w3-button', 'w3-circle', 'w3-deep-purple', 'w3-ripple', 'w3-large');
+		btn.onclick = async function() {
+			id01.style.display = 'block';
+			cat_name2.focus();
+			add.onclick = async function() {
+				if (await handle_input(cat_name2, self.B)) {
+					const parent = btn.parentNode;
+					parent.removeChild(btn.previousElementSibling);
+					parent.removeChild(btn.previousElementSibling);
+					parent.removeChild(btn.previousElementSibling);
+					parent.removeChild(btn);
+					id01.style.display = 'none';
+				}
+			}
+		}
+		this.B.dom.appendChild(btn);
+	}
+	createUI(graph) {
+		this.graph = graph;
+	}
+	setURL() {
+		const blocks = graph_container.getElementsByClassName('w3-panel'); // document.body.querySelectorAll('* [data-units]')
+		let all_units = [];
+
+		for (const elem of blocks) {
+			let units = elem.dataset.units;
+			if (units.endsWith(","))
+				units = units.slice(0, -1);
+
+			all_units.push(units);
+		}
+
+		const url = new URL(location.href);
+		if (all_units.length)
+			url.searchParams.set("units", all_units.join('|'));
+		else
+			url.searchParams.delete('units');
+		history.pushState({}, "", url);
+	}
+	applyLevels() {
+
+	}
+	getAtks() {
+
+	}
+}
+
+class CatDPSHelper extends UnitDPSHelper {
+	constructor(B, F) {
+		super(B, F);
+		B.dom.parentNode.dataset.units += `${F.id}-${F.lvc},`;
+		super.setURL();
+	}
+	createUI(graph) {
 		this.t_lv = [];
 		this.s_lv = [];
-		if (this.F.lvc >= 2 && C.talents) {
-			for (let i = 1; i < 113; i += 14) {
-				if (!C.talents[i]) break;
-				((C.talents[i + 13] == 1) ? this.s_lv : this.t_lv).push(C.talents[i + 1] || 1);
-				talent_types.add(C.talents[i]);
-			}
-		}
-		this.is_normal = !((this.F.atkType & ATK_LD) || (this.F.atkType & ATK_OMNI));
 
-		let x = document.createElement('h3');
-		x.textContent = this.title;
-		this.B.dom.appendChild(x);
-		let obj = '';
+		super.createUI(graph);
+		super.createAttackTypeUI();
+		this.createLevelInput();
+		this.createTalentInput();
+	}
+	createLevelInput() {
+		const self = this;
 
-		if (this.F.atkType & ATK_OMNI) {
-			obj += '全方位';
-		} else if (this.F.atkType & ATK_LD) {
-			obj += '遠方';
-		} else {
-			obj = '普通';
-		}
-
-		obj += (this.F.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
-
-		x = document.createElement('div');
-		if (this.abis.length > 1) {
-			x = document.createElement('div');
-			x.textContent = obj + getAbiString(this.F.abi);
-		} else {
-			x.textContent = obj;
-		}
-		this.B.dom.appendChild(x);
-
-		if (this.F.lds) {
-			const nums = '①②③';
-			obj = '';
-			for (let i = 0; i < this.F.lds.length; ++i) {
-				const x = this.F.lds[i];
-				const y = x + this.F.ldr[i];
-				if (x <= y)
-					obj += `${nums[i]}${x}～${y}`;
-				else
-					obj += `${nums[i]}${y}～${x}`;
-			}
-			x = document.createElement('div');
-			x.textContent = `接觸點${this.F.range}，範圍：${obj}`;
-		} else {
-			x = document.createElement('div');
-			x.textContent = '射程：' + this.F.range;
-		}
-		this.B.dom.appendChild(x);
-
-		obj = null;
-
-		x = document.createElement('p');
-		let y = document.createElement('label');
-		y.textContent = '等級';
-		x.appendChild(y);
+		const p = document.createElement('p');
+		const label = document.createElement('label');
+		label.textContent = '等級';
+		p.appendChild(label);
 		this.lv_c = document.createElement('input');
 		this.lv_c.classList.add('w3-input', 'w3-border', 'w3-round');
 		this.lv_c.title = '貓咪的總等級';
 		this.lv_c.inputMode = 'numeric';
-		x.appendChild(this.lv_c);
-		this.B.dom.appendChild(x);
-		this.F.level = (this.s_lv.length || this.F.lvc == 3) ? 60 : 50;
-		this.lv_c.value = this.F.level;
-		this.lvm = this.F.getLevelMulti();
+		p.appendChild(this.lv_c);
+		this.B.dom.appendChild(p);
 		this.lv_c.onblur = function() {
 			let num = this.value.match(/\d+/);
 			if (!num) {
 				this.value = '請輸入數字！';
 				return;
 			}
-			num = num[0];
-			self.F.level = num;
-			this.value = self.F.level;
-			self.lvm = self.F.getLevelMulti();
-			self.render();
-		}
-		this.options = {};
-		if (this.F.ab.hasOwnProperty(AB_MASSIVE)) {
-			this.options.massive = true;
-			obj = this.create_select('超大傷害', ['ON', 'OFF']);
-		} else if (talent_types.has(7)) {
-			this.options.massive = true;
-			obj = this.create_select('超大傷害', ['ON（本能解放)', 'OFF（無本能）']);
-		}
-		if (obj) {
-			obj.oninput = function() {
-				self.options.massive = !this.selectedIndex;
-				self.render();
-			};
-			obj = null;
+			self.cur_level = num[0];
+			self.graph.render();
 		}
 
-		if (this.F.ab.hasOwnProperty(AB_MASSIVES)) {
-			this.options.massives = true;
-			this.create_select('極度傷害', ['ON', 'OFF']).oninput = function() {
-				self.options.massives = !this.selectedIndex;
-				self.render();
-			};
+		// set initial level
+		this.cur_level = (this.s_lv.length || this.F.lvc == 3) ? 60 : 50;
+	}
+	createTalentInput() {
+		const self = this;
+
+		if (this.F.lvc >= 2 && this.F.talents) {
+			for (let i = 1; i < 113; i += 14) {
+				if (!this.F.talents[i]) break;
+				((this.F.talents[i + 13] == 1) ? this.s_lv : this.t_lv).push(this.F.talents[i + 1] || 1);
+				this.talent_types.add(this.F.talents[i]);
+			}
 		}
 
-		if (this.F.ab.hasOwnProperty(AB_GOOD)) {
-			this.options.good = true;
-			obj = this.create_select('善於攻擊', ['ON', 'OFF']);
-		} else if (talent_types.has(5)) {
-			this.options.good = true;
-			obj = this.create_select('善於攻擊', ['ON（本能解放)', 'OFF（無本能）']);
-		}
-		if (obj) {
-			obj.oninput = function() {
-				self.options.good = !this.selectedIndex;
-				self.render();
-			};
-			obj = null;
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_WKILL)) {
-			this.options.wkill = true;
-			obj = this.create_select('終結魔女', ['ON', 'OFF']);
-		} else if (talent_types.has(42)) {
-			this.options.wkill = true;
-			obj = this.create_select('終結魔女', ['ON（本能解放)', 'OFF（無本能）']);
-		}
-		if (obj) {
-			obj.oninput = function() {
-				self.options.wkill = !this.selectedIndex;
-				self.render();
-			};
-			obj = null;
-		}
-
-
-		if (this.F.ab.hasOwnProperty(AB_EKILL)) {
-			this.options.ekill = true;
-			obj = this.create_select('終結使徒', ['ON', 'OFF']);
-		} else if (talent_types.has(43)) {
-			this.options.ekill = true;
-			obj = this.create_select('終結使徒', ['ON（本能解放)', 'OFF（無本能）']);
-		}
-		if (obj) {
-			obj.oninput = function() {
-				self.options.ekill = !this.selectedIndex;
-				self.render();
-			};
-			obj = null;
-		}
-
-
-		if (this.F.ab.hasOwnProperty(AB_BSTHUNT)) {
-			this.options.beast = true;
-			obj = this.create_select('超獸特效', ['ON', 'OFF']);
-		} else if (talent_types.has(64)) {
-			this.options.beast = true;
-			obj = this.create_select('超獸特效', ['ON（本能解放)', 'OFF（無本能）']);
-		}
-		if (obj) {
-			obj.oninput = function() {
-				self.options.beast = !this.selectedIndex;
-				self.render();
-			};
-			obj = null;
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_BAIL)) {
-			this.options.bail = true;
-			obj = this.create_select('超生命體特效', ['ON', 'OFF']);
-		} else if (talent_types.has(63)) {
-			this.options.bail = true;
-			obj = this.create_select('超生命體特效', ['ON（本能解放)', 'OFF（無本能）']);
-		}
-		if (obj) {
-			obj.oninput = function() {
-				self.options.bail = !this.selectedIndex;
-				self.render();
-			};
-			obj = null;
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_SAGE)) {
-			this.options.sage = true;
-			obj = this.create_select('超賢者特效', ['ON', 'OFF']);
-		} else if (talent_types.has(66)) {
-			this.options.sage = true;
-			obj = this.create_select('超賢者特效', ['ON（本能解放)', 'OFF（無本能）']);
-		}
-		if (obj) {
-			obj.oninput = function() {
-				self.options.sage = !this.selectedIndex;
-				self.render();
-			};
-			obj = null;
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_STRENGTHEN)) {
-			this.options.strong = true;
-			obj = this.create_select('攻擊力上升', ['ON', 'OFF']);
-		} else if (talent_types.has(10)) {
-			this.options.strong = true;
-			obj = this.create_select('攻擊力上升', ['ON（本能解放)', 'OFF（無本能）']);
-		}
-		if (obj) {
-			obj.oninput = function() {
-				self.options.strong = !this.selectedIndex;
-				self.render();
-			};
-			obj = null;
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_ATKBASE)) {
-			this.options.base = true;
-			obj = this.create_select('善於攻城', ['ON', 'OFF']);
-		} else if (talent_types.has(12)) {
-			this.options.base = true;
-			obj = this.create_select('善於攻城', ['ON（本能解放)', 'OFF（無本能）']);
-		}
-		if (obj) {
-			obj.oninput = function() {
-				self.options.base = !this.selectedIndex;
-				self.render();
-			};
-			obj = null;
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_CRIT) || talent_types.has(13)) {
-			this.options.crit = 0;
-			this.create_select('會心一擊', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
-					self.options.crit = this.selectedIndex;
-					self.render();
-				};
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_S) || talent_types.has(50)) {
-			this.options.s = 0;
-			this.create_select('渾身一擊', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
-					self.options.s = this.selectedIndex;
-					self.render();
-				};
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_WAVE) || talent_types.has(17)) {
-			this.options.wave = 0;
-			this.create_select('波動', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
-					self.options.wave = this.selectedIndex;
-					self.render();
-				};
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_MINIWAVE) || talent_types.has(62)) {
-			this.options.wave = 0;
-			this.create_select('小波動', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
-					self.options.wave = this.selectedIndex;
-					self.render();
-				};
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_SURGE) || talent_types.has(56)) {
-			this.options.surge = 0;
-			this.create_select('烈波', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
-					self.options.surge = this.selectedIndex;
-					self.render();
-				};
-		}
-
-		if (this.F.ab.hasOwnProperty(AB_MINISURGE) || talent_types.has(65)) {
-			this.options.surge = 0;
-			this.create_select('小烈波', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
-					self.options.surge = this.selectedIndex;
-					self.render();
-				};
-		}
+		const dps_ralated_talents = new Set([
+			10, // 攻擊力上升
+			13, // 會心一擊
+			17, // 波動
+			31, // 基本攻擊力上升
+			50, // 渾身一擊
+			56, // 烈波攻擊
+			61, // 攻擊間隔縮短
+			62, // 小波動
+			65, // 小烈波
+		]);
 
 		if (this.F.lvc >= 2 && this.F.talents) {
 			for (let i = 1; i < 113 && this.F.talents[i]; i += 14) {
-				obj = units_scheme.talents.names[this.F.talents[i]];
-				if (!obj) continue;
+				const talent_index = this.F.talents[i];
+				if (!dps_ralated_talents.has(talent_index))
+					continue;
+				const name = units_scheme.talents.names[talent_index];
 				const div = document.createElement('p');
 				let p = div.appendChild(document.createElement('label'));
-				p.textContent = '本能 - ' + obj;
+				const talent_type = this.F.talents[i + 13] === 1 ? '超本能' : '本能';
+				p.textContent = `${talent_type} - ${name}`;
 				p = div.appendChild(document.createElement('input'));
 				p.classList.add('w3-input');
 				p.style.paddingLeft = '0';
@@ -430,7 +391,7 @@ class FormDPS {
 							} else {
 								self.t_lv[tal_cnt] = parseInt(this.value);
 							}
-							self.render();
+							self.graph.render();
 							return;
 						}
 						if (self.F.talents[j + 13] == 1)
@@ -443,77 +404,304 @@ class FormDPS {
 				this.B.dom.appendChild(div);
 			}
 		}
-
-		obj = document.createElement('button');
-		obj.textContent = '下載';
-		obj.classList.add('w3-button', 'w3-teal', 'w3-round');
-		obj.onclick = function() {
-			self.B.R.D();
+	}
+	applyLevels() {
+		const F = this.F.clone();
+		F.level = this.cur_level;
+		this.lv_c.value = F.level;
+		if (F.talents && F.lvc >= 2) {
+			F.applyTalents(this.t_lv);
+			F.applySuperTalents(this.s_lv);
 		}
-		obj.style.marginRight = '0.5em';
-		this.B.dom.appendChild(obj);
+		return F;
+	}
+	getAtks(F) {
+		const atks = [F.atk];
 
-		obj = document.createElement('button');
-		obj.textContent = '複製';
-		obj.classList.add('w3-button', 'w3-green', 'w3-round');
-		obj.onclick = function() {
-			navigator.clipboard.writeText(self.B.R.text());
-			this.textContent = '成功';
-			const u = this;
-			setTimeout(function() {
-				u.textContent = '複製';
-			}, 500);
+		if (F.info.atk1) atks.push(F.atk1);
+		if (F.info.atk2) atks.push(F.atk2);
+
+		return atks;
+	}
+}
+
+class EnemyDPSHelper extends UnitDPSHelper {
+	constructor(B, F) {
+		super(B, F);
+		B.dom.parentNode.dataset.units += `${F.id},`;
+		super.setURL();
+	}
+	createUI(graph) {
+		super.createUI(graph);
+		super.createAttackTypeUI();
+		this.createMultiInput();
+	}
+	createMultiInput() {
+		const self = this;
+
+		const p = document.createElement('p');
+		const label = document.createElement('label');
+		label.textContent = '倍率';
+		p.appendChild(label);
+		this.mul_c = document.createElement('input');
+		this.mul_c.classList.add('w3-input', 'w3-border', 'w3-round');
+		this.mul_c.title = '倍率';
+		this.mul_c.inputMode = 'numeric';
+		p.appendChild(this.mul_c);
+		this.B.dom.appendChild(p);
+		this.mul_c.onblur = function() {
+			let num = this.value.match(/\d+/);
+			if (!num) {
+				this.value = '請輸入數字！';
+				return;
+			}
+			self.cur_multi = num[0];
+			self.graph.render();
 		}
-		obj.style.marginRight = '0.5em';
-		this.B.dom.appendChild(obj);
 
-		obj = document.createElement('button');
-		obj.textContent = '刪除';
-		obj.classList.add('w3-button', 'w3-red', 'w3-round');
-		obj.onclick = function() {
-			const x = self.B.dom.parentNode;
-			self.B.R.destroy();
-			x.parentNode.removeChild(x);
-		}
-		obj.style.marginRight = '0.5em';
-		this.B.dom.appendChild(obj);
+		// set initial multiplier
+		this.cur_multi = 100;
+		this.mul_c.value = '100';
+	}
+	applyLevels() {
+		return this.F;
+	}
+	getAtks(F) {
+		const atks = [F.atk];
 
-		obj = document.createElement('button');
-		obj.textContent = '+';
-		obj.classList.add('w3-button', 'w3-circle', 'w3-deep-purple', 'w3-ripple', 'w3-large');
-		obj.onclick = function() {
-			id01.style.display = 'block';
-			adder = this;
-			cat_name2.focus();
-			add.onclick = function() {
-				const X = CL.options;
-				const Y = cat_name2.value;
-				for (let i = 0; i < X.length; ++i) {
-					if (X[i].value == Y) {
-						const X = cats[i].forms.length;
-						let m = CF.selectedIndex;
-						if (m <= 3) {
-							if (m >= X) {
-								alert('此貓咪沒有第' + (m + 1) + '型態');
-								return;
-							}
-						} else {
-							m = X - 1;
-						}
-						const x = adder.parentNode;
-						x.removeChild(adder.previousElementSibling);
-						x.removeChild(adder.previousElementSibling);
-						x.removeChild(adder.previousElementSibling);
-						x.removeChild(adder);
-						id01.style.display = 'none';
-						new FormDPS(self.B, cats[i], m);
-						cat_name2.value = '';
-						return;
-					}
-				}
+		if (F.info.atk1) atks.push(F.atk1);
+		if (F.info.atk2) atks.push(F.atk2);
+
+		if (this.cur_multi !== 100) {
+			const mul = this.cur_multi / 100;
+			for (let i = 0;i < atks.length;++i) {
+				atks[i] = floor(atks[i] * mul);
 			}
 		}
-		this.B.dom.appendChild(obj);
+
+		return atks;
+	}
+}
+
+class DPSGraph {
+	/**
+	 * @param {UnitDPSHelper} [helper] - an instance of UnitDPSHelper
+	 */
+	constructor(helper) {
+		const self = this;
+		const F = helper.F;
+
+		this.helper = helper;
+		this.abis = [];
+		this.H = helper.B.R.register(helper.title);
+		this.is_normal = !((F.atkType & ATK_LD) || (F.atkType & ATK_OMNI));
+		this.options = {};
+
+		for (let i = 0; i < (F.info.atk1 ? (F.info.atk2 ? 3 : 2) : 1); ++i)
+			this.abis.push(F.abEnabled(i) !== 0);
+
+		helper.createUI(this);
+
+		let select;
+		if (F.ab.hasOwnProperty(AB_MASSIVE)) {
+			this.options.massive = true;
+			select = this.create_select('超大傷害', ['ON', 'OFF']);
+		} else if (helper.talent_types.has(7)) {
+			this.options.massive = true;
+			select = this.create_select('超大傷害', ['ON（本能解放)', 'OFF（無本能）']);
+		}
+		if (select) {
+			select.oninput = function() {
+				self.options.massive = !this.selectedIndex;
+				self.render();
+			};
+			select = null;
+		}
+
+		if (F.ab.hasOwnProperty(AB_MASSIVES)) {
+			this.options.massives = true;
+			this.create_select('極度傷害', ['ON', 'OFF']).oninput = function() {
+				self.options.massives = !this.selectedIndex;
+				self.render();
+			};
+		}
+
+		if (F.ab.hasOwnProperty(AB_GOOD)) {
+			this.options.good = true;
+			select = this.create_select('善於攻擊', ['ON', 'OFF']);
+		} else if (helper.talent_types.has(5)) {
+			this.options.good = true;
+			select = this.create_select('善於攻擊', ['ON（本能解放)', 'OFF（無本能）']);
+		}
+		if (select) {
+			select.oninput = function() {
+				self.options.good = !this.selectedIndex;
+				self.render();
+			};
+			select = null;
+		}
+
+		if (F.ab.hasOwnProperty(AB_WKILL)) {
+			this.options.wkill = true;
+			select = this.create_select('終結魔女', ['ON', 'OFF']);
+		} else if (helper.talent_types.has(42)) {
+			this.options.wkill = true;
+			select = this.create_select('終結魔女', ['ON（本能解放)', 'OFF（無本能）']);
+		}
+		if (select) {
+			select.oninput = function() {
+				self.options.wkill = !this.selectedIndex;
+				self.render();
+			};
+			select = null;
+		}
+
+
+		if (F.ab.hasOwnProperty(AB_EKILL)) {
+			this.options.ekill = true;
+			select = this.create_select('終結使徒', ['ON', 'OFF']);
+		} else if (helper.talent_types.has(43)) {
+			this.options.ekill = true;
+			select = this.create_select('終結使徒', ['ON（本能解放)', 'OFF（無本能）']);
+		}
+		if (select) {
+			select.oninput = function() {
+				self.options.ekill = !this.selectedIndex;
+				self.render();
+			};
+			select = null;
+		}
+
+
+		if (F.ab.hasOwnProperty(AB_BSTHUNT)) {
+			this.options.beast = true;
+			select = this.create_select('超獸特效', ['ON', 'OFF']);
+		} else if (helper.talent_types.has(64)) {
+			this.options.beast = true;
+			select = this.create_select('超獸特效', ['ON（本能解放)', 'OFF（無本能）']);
+		}
+		if (select) {
+			select.oninput = function() {
+				self.options.beast = !this.selectedIndex;
+				self.render();
+			};
+			select = null;
+		}
+
+		if (F.ab.hasOwnProperty(AB_BAIL)) {
+			this.options.bail = true;
+			select = this.create_select('超生命體特效', ['ON', 'OFF']);
+		} else if (helper.talent_types.has(63)) {
+			this.options.bail = true;
+			select = this.create_select('超生命體特效', ['ON（本能解放)', 'OFF（無本能）']);
+		}
+		if (select) {
+			select.oninput = function() {
+				self.options.bail = !this.selectedIndex;
+				self.render();
+			};
+			select = null;
+		}
+
+		if (F.ab.hasOwnProperty(AB_SAGE)) {
+			this.options.sage = true;
+			select = this.create_select('超賢者特效', ['ON', 'OFF']);
+		} else if (helper.talent_types.has(66)) {
+			this.options.sage = true;
+			select = this.create_select('超賢者特效', ['ON（本能解放)', 'OFF（無本能）']);
+		}
+		if (select) {
+			select.oninput = function() {
+				self.options.sage = !this.selectedIndex;
+				self.render();
+			};
+			select = null;
+		}
+
+		if (F.ab.hasOwnProperty(AB_STRENGTHEN)) {
+			this.options.strong = true;
+			select = this.create_select('攻擊力上升', ['ON', 'OFF']);
+		} else if (helper.talent_types.has(10)) {
+			this.options.strong = true;
+			select = this.create_select('攻擊力上升', ['ON（本能解放)', 'OFF（無本能）']);
+		}
+		if (select) {
+			select.oninput = function() {
+				self.options.strong = !this.selectedIndex;
+				self.render();
+			};
+			select = null;
+		}
+
+		if (F.ab.hasOwnProperty(AB_ATKBASE)) {
+			this.options.base = true;
+			select = this.create_select('善於攻城', ['ON', 'OFF']);
+		} else if (helper.talent_types.has(12)) {
+			this.options.base = true;
+			select = this.create_select('善於攻城', ['ON（本能解放)', 'OFF（無本能）']);
+		}
+		if (select) {
+			select.oninput = function() {
+				self.options.base = !this.selectedIndex;
+				self.render();
+			};
+			select = null;
+		}
+
+		if (F.ab.hasOwnProperty(AB_CRIT) || helper.talent_types.has(13)) {
+			this.options.crit = 0;
+			this.create_select('會心一擊', [`期望值`, '最大值（100%）', '無'])
+				.oninput = function() {
+					self.options.crit = this.selectedIndex;
+					self.render();
+				};
+		}
+
+		if (F.ab.hasOwnProperty(AB_S) || helper.talent_types.has(50)) {
+			this.options.s = 0;
+			this.create_select('渾身一擊', [`期望值`, '最大值（100%）', '無'])
+				.oninput = function() {
+					self.options.s = this.selectedIndex;
+					self.render();
+				};
+		}
+
+		if (F.ab.hasOwnProperty(AB_WAVE) || helper.talent_types.has(17)) {
+			this.options.wave = 0;
+			this.create_select('波動', [`期望值`, '最大值（100%）', '無'])
+				.oninput = function() {
+					self.options.wave = this.selectedIndex;
+					self.render();
+				};
+		}
+
+		if (F.ab.hasOwnProperty(AB_MINIWAVE) || helper.talent_types.has(62)) {
+			this.options.wave = 0;
+			this.create_select('小波動', [`期望值`, '最大值（100%）', '無'])
+				.oninput = function() {
+					self.options.wave = this.selectedIndex;
+					self.render();
+				};
+		}
+
+		if (F.ab.hasOwnProperty(AB_SURGE) || helper.talent_types.has(56)) {
+			this.options.surge = 0;
+			this.create_select('烈波', [`期望值`, '最大值（100%）', '無'])
+				.oninput = function() {
+					self.options.surge = this.selectedIndex;
+					self.render();
+				};
+		}
+
+		if (F.ab.hasOwnProperty(AB_MINISURGE) || helper.talent_types.has(65)) {
+			this.options.surge = 0;
+			this.create_select('小烈波', [`期望值`, '最大值（100%）', '無'])
+				.oninput = function() {
+					self.options.surge = this.selectedIndex;
+					self.render();
+				};
+		}
+		helper.createButtons();
 
 		this.render();
 	}
@@ -531,7 +719,7 @@ class FormDPS {
 			select.appendChild(o);
 		}
 		D.appendChild(select);
-		this.B.dom.appendChild(D);
+		this.helper.B.dom.appendChild(D);
 		return select;
 	}
 	dps_at(x) {
@@ -609,24 +797,10 @@ class FormDPS {
 		return ~~(sum * 30 / this.E.attackF);
 	}
 	render() {
-		const F = this.F.clone();
-		this.E = F;
-		let x, Xs;
-		this.atks = [F.info.atk];
+		const F = this.E = this.helper.applyLevels();
+		this.atks = this.helper.getAtks(F);
 
-		if (F.talents && F.lvc >= 2) {
-			F.applyTalents(this.t_lv);
-			F.applySuperTalents(this.s_lv);
-		}
-
-		if (F.info.atk1) this.atks.push(F.info.atk1);
-		if (F.info.atk2) this.atks.push(F.info.atk2);
-
-		let T = F.trait & trait_treasure;
-
-		for (let i = 0; i < this.atks.length; ++i) this.atks[i] = ~~(
-			(
-				~~(Math.round(this.atks[i] * this.lvm) * 2.5)) * F.atkM);
+		let x, Xs, T = F.trait & trait_treasure;
 
 		if (this.options.base && F.ab.hasOwnProperty(AB_ATKBASE)) {
 			for (let i = 0; i < this.atks.length; ++i)
@@ -842,7 +1016,7 @@ class FormDPS {
 
 		this.H.D = this.dps_at.bind(this);
 
-		if (this.surge_data && this.B.R.C() == 1) {
+		if (this.surge_data && this.helper.B.R.C() == 1) {
 			const tmp = this.surge_data;
 			this.surge_data = null;
 			this.H.X2s = [];
@@ -867,49 +1041,85 @@ class FormDPS {
 			this.surge_data = tmp;
 			this.H.Xs = new_Xs;
 			this.H.Ys = new_Ys;
-			this.B.R.plot(this.H);
+			this.helper.B.R.plot(this.H);
 			this.H.X2s = null;
 			this.H.Y2s = null;
 			return;
 		}
 		this.H.Xs = new_Xs;
 		this.H.Ys = new_Ys;
-		this.B.R.plot(this.H);
+		this.helper.B.R.plot(this.H);
 	}
 }
 
 async function main(render) {
 	cat_name.focus();
 	document.getElementById('loader').hidden = true;
-	document.getElementById('ok').addEventListener('click', function() {
-		const X = CL.options;
-		const Y = cat_name.value;
-		for (let i = 0; i < X.length; ++i) {
-			if (X[i].value == Y) {
-				const X = cats[i].forms.length;
-				let m = CF.selectedIndex;
-				if (m <= 3) {
-					if (m >= X) {
-						alert('此貓咪沒有第' + (m + 1) + '型態');
-						return;
+
+	const catIdb = await CatIdb.open();
+	try {
+		const catGen = CatIdb.forEachValue(catIdb);
+		for await (const cat of catGen) {
+			const o = document.createElement('option');
+			o.value = cat.forms.map(CL => CL.name || CL.jp_name).join('/');
+			CL.appendChild(o);
+		}
+	} finally {
+		catIdb.close();
+	}
+	num_cats = CL.options.length;
+
+	const enemyIdb = await EnemyIdb.open();
+	try {
+		const enemyGen = EnemyIdb.forEachValue(enemyIdb);
+		for await (const enemy of enemyGen) {
+			const o = document.createElement('option');
+			o.value = enemy.name || enemy.jp_name;
+			CL.appendChild(o);
+		}
+	} finally {
+		enemyIdb.close();
+	}
+	num_enemies = CL.options.length - num_cats;
+
+	const units = new URLSearchParams(location.search).get('units');
+	if (units) {
+		for (const part of units.split('|')) {
+			let block;
+			for (const subpart of part.split(',')) {
+				if (subpart.indexOf('-') === -1) {
+					const id = parseInt(subpart, 10);
+					if (isFinite(id) && id < num_enemies) {
+						const enemy = await loadEnemy(id);
+						if (!block)
+							block = new DPSBlock(graph_container, render);
+						new DPSGraph(new EnemyDPSHelper(block, enemy));
 					}
 				} else {
-					m = X - 1;
+					const ints = subpart.split('-');
+					if (ints.length === 2) {
+						const id = parseInt(ints[0], 10);
+						const lvc = parseInt(ints[1], 10);
+						if (isFinite(id) && isFinite(lvc) && id < num_cats) {
+							const cat = await loadCat(id);
+							if (lvc < cat.forms.length) {
+								if (!block)
+									block = new DPSBlock(graph_container, render);
+								new DPSGraph(new CatDPSHelper(block, cat.forms[lvc]));
+							}
+						}
+					}
 				}
-				new FormDPS(new DPSBlock(document.body, render), cats[i], m);
-				cat_name.value = '';
-				return;
 			}
 		}
-		alert('無法識別輸入的貓咪！請檢查名稱是否正確！');
-	});
-
-	const cats = await loadAllCats();
-	for (const cat of cats) {
-		const o = document.createElement('option');
-		o.value = cat.forms.map(CL => CL.name || CL.jp_name).join('/');
-		CL.appendChild(o);
 	}
+
+	document.getElementById('switch_mode').addEventListener('click', function() {
+		location.assign(location.pathname.replace('svg', 'png').replace('png', 'svg') + location.search);
+	});
+	document.getElementById('ok').addEventListener('click', async function() {
+		await handle_input(cat_name, render);
+	});
 }
 
 export {
