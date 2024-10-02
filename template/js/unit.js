@@ -485,7 +485,17 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 			}
 			case 44: {
-				w1(`鋼鐵殺手（減敵方目前體力的 ${v}%）`, '9vLOiAm');
+				const p = document.createElement('div');
+				let s = new Image(40, 40);
+				s.src = 'https://i.imgur.com/9vLOiAm.png';
+				const a = document.createElement('a');
+				a.href = '/metal_killer.html?kill=' + v;
+				p.appendChild(s);
+				a.textContent = `${v}%`;
+				p.append('鋼鐵殺手（減敵方目前體力的 ');
+				p.appendChild(a);
+				p.append('）');
+				p1.appendChild(p);
 				break;
 			}
 			case 45:

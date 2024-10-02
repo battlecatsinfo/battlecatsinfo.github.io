@@ -3,6 +3,16 @@ const HP = document.getElementById('hp');
 const S = document.getElementById('S');
 let chart;
 
+(function () {
+	const url = new URL(location.href);	
+	const pkill = url.searchParams.get('kill');
+	if (pkill) {
+		const nkill = parseInt(pkill);
+		if (isFinite(nkill) && nkill > 0 && nkill < 100)
+			kill.value = nkill;
+	}
+})();
+
 (S.onclick = HP.oninput = kill.oninput = function () {
 	let hp = Math.max(parseInt(HP.value), 1);
 	let Ys = [{y: hp}];
