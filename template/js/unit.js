@@ -3187,28 +3187,28 @@ loadCat(my_id)
 		a.classList.add('w3-bar-item');
 		a.href = my_cat.animUrl;
 		a.textContent = '檢視動畫';
-		a.target = '_black';
+		a.target = '_blank';
 		abar.appendChild(a);
 
 		a = document.createElement('a');
 		a.classList.add('w3-bar-item');
 		a.href = `/dpsgraph_svg.html?units=${my_cat.id}-${my_cat.forms.length - 1}`;
 		a.textContent = 'DPS 曲線';
-		a.target = '_black';
+		a.target = '_blank';
 		abar.appendChild(a);
 
 		a = document.createElement('a');
 		a.classList.add('w3-bar-item');
 		a.textContent = 'UDP';
 		a.href = my_cat.udpUrl;
-		a.target = '_black';
+		a.target = '_blank';
 		abar.appendChild(a);
 
 		a = document.createElement('a');
 		a.classList.add('w3-bar-item');
 		a.textContent = 'Fandom';
 		a.href = my_cat.fandomUrl;
-		a.target = '_black';
+		a.target = '_blank';
 		abar.appendChild(a);
 
 		a = document.createElement('a');
