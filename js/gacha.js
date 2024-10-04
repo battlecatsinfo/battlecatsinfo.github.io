@@ -4,125 +4,6 @@ const {resolve} = require('node:path');
 const {OUTPUT_DIR,} = require('./base.js');
 const RewardSiteGenerator = require('./reward.js');
 
-const category_set = {
-	'常駐稀有貓': new Set([37, 38, 41, 46, 47, 48, 49, 50, 51, 52, 55, 56, 58, 145, 146, 147, 148, 149, 197, 198, 308, 325, 376, 495, 523]),
-	'常駐激稀有貓': new Set([30, 31, 32, 33, 35, 36, 39, 40, 61, 150, 151, 152, 153, 199, 307, 377, 522]),
-	'超激烈爆彈':new Set([42, 43, 44, 57, 59, 143, 427, 519, 617, 668, 763]),
-	'傳說中的不明貓一族': new Set([34, 168, 169, 170, 171, 240, 436, 546, 625, 712]),
-	'戰國武神巴薩拉斯': new Set([71, 72, 73, 124, 125, 158, 338, 496, 618, 649, 754]),
-	'電腦學園銀河美少女': new Set([75, 76, 105, 106, 107, 159, 351, 502, 619, 647, 733]),
-	'超破壞大帝龍皇因佩拉斯': new Set([83, 84, 85, 86, 87, 177, 396, 505, 620, 660, 760]),
-	'超古代勇者超級靈魂勇者': new Set([134, 135, 136, 137, 138, 203, 322, 525, 633, 692]),
-	'逆襲的戰士黑暗英雄': new Set([194, 195, 196, 212, 226, 261, 431, 533, 634, 698]),
-	'究極降臨巨神宙斯': new Set([257, 258, 259, 271, 272, 316, 439, 534, 642, 723]),
-	'革命軍隊鋼鐵戰團': new Set([304, 305, 306, 355, 417, 594, 632, 674, 715]),
-	'古靈精怪元素小精靈': new Set([359, 360, 361, 401, 569, 631, 655, 719]),
-	'絕命美少女怪物萌娘隊': new Set([334, 335, 336, 357, 358, 607, 682, 725]),
-	'土龍鑽部隊': new Set([443, 444, 445, 446, 447]),
-	'限定激稀有系列': new Set([129, 131, 144, 200]),
-	'貓咪軍團支援隊': new Set([237, 238, 239]),
-	'洗腦貓': new Set([629, 636, 645, 654, 662, 667, 684, 688, 694]),
-	'狂亂貓': new Set([91, 92, 93, 94, 95, 96, 97, 98, 99]),
-	'殺意貓': new Set([319, 695]),
-	'EX罐頭購買貓': new Set([18, 21, 20, 19, 14, 22, 12, 13, 10, 9, 23, 15, 11]),
-	'主章節掉落貓': new Set([16, 123, 24, 25, 437, 462, 622]),
-	"傳說關卡掉落貓": new Set([130, 172, 268, 323, 426, 464, 532, 613, 653, 691, 568]),
-	"風雲貓咪塔掉落貓": new Set([352, 383, 554]),
-	"降臨和漩渦關卡掉落": new Set([60, 78, 88, 126, 154, 201, 324, 379, 382, 442, 452, 507, 521, 527, 528, 531, 539, 545, 553, 581, 621, 623, 630, 260, 267, 284, 287, 273, 708, 718]),
-	"遠古的蛋": new Set([656, 658, 659, 663, 664, 665, 669, 670, 675, 676, 685, 691, 697, 700, 706, 707, 713, 716, 717, 720, 724, 730]),
-	"月份貓": new Set([79, 80, 81, 100, 104, 109, 122, 128, 132, 63, 70, 74])
-};
-const reward_order = {
-	0: 0,
-	1: 1,
-	2: 2,
-	3: 3,
-	4: 4,
-	5: 5,
-	6: 6,
-	7: 7,
-	8: 8,
-	9: 9,
-	10:	358,
-	11:	359,
-	12:	360,
-	13:	361,
-	14:	362,
-	15:	363,
-	16:	364,
-	17:	365,
-	18:	366,
-	19:	364,
-	30: 460,
-	31: 459,
-	32: 458,
-	33: 457,
-	34: 456,
-	35: 465,
-	36: 464,
-	37: 463,
-	38: 462,
-	39: 461,
-	40: 466,
-	50: 661,
-	51: 662,
-	52: 663,
-	53: 664,
-	54: 665,
-	55: 564,
-	56: 565,
-	57: 566,
-	58: 666,
-	78: 362,
-	159: 358,
-	197: 365
-};
-const reward_names = {
-	0: '加速',
-	1: '寶物雷達',
-	2: '土豪貓',
-	3: '貓型電腦',
-	4: '洞悉先機',
-	5: '狙擊手',
-	6: 'XP',
-	7: 'NP',
-	8: '未使用',
-	9: '未使用',
-	10:	'XP 5000',
-	11:	'XP 10000',
-	12:	'XP 30000',
-	13:	'XP 50000',
-	14:	'XP 100000',
-	15:	'XP 200000',
-	16:	'XP 500000',
-	17:	'XP 1000000',
-	18:	'XP 2000000',
-	19:	'XP 500000',
-	30: '紫色貓薄荷種子',
-	31: '紅色貓薄荷種子',
-	32: '藍色貓薄荷種子',
-	33: '綠色貓薄荷種子',
-	34: '黃色貓薄荷種子',
-	35: '紫色貓薄荷',
-	36: '紅色貓薄荷',
-	37: '藍色貓薄荷',
-	38: '綠色貓薄荷',
-	39: '黃色貓薄荷',
-	40: '彩虹貓薄荷',
-	50: '貓眼石【EX】',
-	51: '貓眼石【稀有】',
-	52: '貓眼石【激稀有】',
-	53: '貓眼石【超激稀有】',
-	54: '貓眼石【傳說】',
-	55: '喵力達A',
-	56: '喵力達B',
-	57: '喵力達C',
-	58: '貓眼石【闇】',
-	78: 'XP 100000',
-	159: 'XP 5000',
-	197: 'XP 1000000'
-};
-
 function to_path(s) {
 	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');
 }
@@ -186,6 +67,15 @@ module.exports = class extends RewardSiteGenerator {
 			if (e.code != 'EEXIST')
 				throw e;
 		}
+		for (const [key, value] of Object.entries(JSON.parse(this.load('gacha_scheme.json')))) {
+			if (key == 'categories')
+				this.category_set = Object.entries(value).reduce((rv, entry, i) => {
+					rv[entry[0]] = new Set(entry[1]);
+					return rv;
+				}, {});
+			else
+				this[key] = value;
+		}
 
 		const gacha_template = this.load_template('html/gacha.html');
 		const gachas = [];
@@ -200,6 +90,10 @@ module.exports = class extends RewardSiteGenerator {
 		}, {});
 		this.rewards[24].name = this.rewards[14].name;
 		this.rewards[25].name = this.rewards[15].name;
+		for (const [key, value] of Object.entries(this.gacha_special_reward_names)) {
+			this.rewards[key].name = value;
+		}
+
 		this.stage_rewards = this.parse_tsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp, energy, rand, drop} = entry;
 			id = parseInt(id, 36);
@@ -288,17 +182,9 @@ module.exports = class extends RewardSiteGenerator {
 		let exclusive_ids = [];
 		const self = this;
 		const units = O['units'];
-		const rarity_desc = [
-				"P.S. 基本貓於Lv60後成長幅度減半",
-				"P.S. EX貓於Lv60後成長幅度減半",
-				"P.S. 稀有貓於Lv70後成長幅度減半，於Lv90後成長幅度再次減半",
-				"P.S. 激稀有貓於Lv60後成長幅度減半，於Lv80後成長幅度再次減半",
-				"P.S. 超激稀有貓於Lv60後成長幅度減半，於Lv80後成長幅度再次減半",
-				"P.S. 傳說稀有貓於Lv60後成長幅度減半，於Lv80後成長幅度再次減半"
-		];
 		const colors = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'];
 		const S = {
-			rarity_descs: Array.from(new Set(units.map(x => rarity_desc[self.unit_rarity[x]]))),
+			rarity_descs: Array.from(new Set(units.map(x => this.rarity_desc[self.unit_rarity[x]]))),
 			summary: [],
 			item_free: null,
 			item_groups: [],
@@ -341,7 +227,7 @@ module.exports = class extends RewardSiteGenerator {
 					MUL[u] = 1;
 				}
 
-				for (const [name, idSet] of Object.entries(category_set)) {
+				for (const [name, idSet] of Object.entries(this.category_set)) {
 					if (name !== O['tw_name'] && idSet.has(u)) {
 						if (out[name]) {
 							out[name].push(u);
@@ -408,8 +294,6 @@ module.exports = class extends RewardSiteGenerator {
 		const S = [];
 		const units = O['units'];
 		const result = [];
-		const tech_names = ['貓咪砲攻擊力', '貓咪砲射程','貓咪砲充電','工作狂貓的工作效率','工作狂貓錢包','城堡體力','研究力','會計能力','學習力','統率力'];
-		const tech_links = ['TvNbDkW', 'xzUGr54', 'NwhDVgh', '1Uuos4y', 'DKyMbmd', 'UP3sYQ5', 'kClFt3L','lwKJIlC', 'osFMsUn', 'eToHyXp'];
 		for (let i = 0, I;i < 5;++i) {
 			let rate = O['rate'][i];
 			if (!rate)
@@ -435,12 +319,12 @@ module.exports = class extends RewardSiteGenerator {
 					]);
 					break;
 				case 1:
-					I = reward_order[x[1]];
+					I = this.reward_order[x[1]];
 					result.push([
 						~~(I / 100),
 						I,
 						`/img/r/${x[1]}.png`,
-						{name: reward_names[x[1]]},
+						{name: this.rewards[x[1]].name},
 						r,
 						'',
 						'128',
@@ -453,8 +337,8 @@ module.exports = class extends RewardSiteGenerator {
 					result.push([
 						-2,
 						I,
-						`https://i.imgur.com/${tech_links[I]}.png`,
-						{name: tech_names[I]},
+						`https://i.imgur.com/${this.tech_links[I]}.png`,
+						{name: this.tech_names[I]},
 						r,
 						'',
 						'128',
@@ -554,12 +438,12 @@ module.exports = class extends RewardSiteGenerator {
 					]);
 					gacha_units.add(I);
 				} else {
-					I = reward_order[x];
+					I = this.reward_order[x];
 					result.push([
 						~~(I / 100),
 						I,
 						`/img/r/${x}.png`,
-						{name: reward_names[x]},
+						{name: this.rewards[x].name},
 						r,
 						null,
 						rate,
@@ -678,7 +562,7 @@ module.exports = class extends RewardSiteGenerator {
 	}
 	get_category(O) {
 		const S = [];
-		const ids = Array.from(category_set[O['category']]).sort((a, b) => a - b);
+		const ids = Array.from(this.category_set[O['category']]).sort((a, b) => a - b);
 		let f;
 		let c = 0;
 
