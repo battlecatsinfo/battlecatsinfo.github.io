@@ -297,6 +297,7 @@ class DPSRender {
 				}
 			} else if (O.l2) {
 				O.l2.remove();
+				O.l2 = null;
 			}
 		}
 
