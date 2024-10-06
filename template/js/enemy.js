@@ -641,7 +641,7 @@ loadEnemy(my_id)
 		if (my_mult != 100) dbUrl.searchParams.set('mag', my_mult);
 		addBarItem('超絕', dbUrl.href).rel = 'noreferrer';
 		if (E.fandom)
-			addBarItem('Fandom', E.fandomUrl);
+			addBarItem('Miraheze Wiki', E.fandomUrl);
 		addBarItem('搜尋出現關卡', search_for);
 		addBarItem('檢視動畫', E.animUrl);
 		addBarItem('金寶科技設定', '/settings.html#treasure');

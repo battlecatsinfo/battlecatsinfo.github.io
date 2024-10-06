@@ -1835,7 +1835,7 @@ class Enemy extends Unit {
 		return value;
 	}
 	get fandomUrl() {
-		const value = `https://battle-cats.fandom.com/wiki/${this.fandom}`;
+		const value = `https://battlecats.miraheze.org/wiki/${this.fandom}`;
 		Object.defineProperty(this, 'fandomUrl', {value});
 		return value;
 	}
@@ -1984,7 +1984,7 @@ class Cat {
 		return value;
 	}
 	get fandomUrl() {
-		const value = `https://battle-cats.fandom.com/wiki/${this.info.fandom}`;
+		const value = `https://battlecats.miraheze.org/wiki/${this.info.fandom}`;
 		Object.defineProperty(this, 'fandomUrl', {value});
 		return value;
 	}

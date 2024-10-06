@@ -3206,7 +3206,7 @@ loadCat(my_id)
 
 		a = document.createElement('a');
 		a.classList.add('w3-bar-item');
-		a.textContent = 'Fandom';
+		a.textContent = 'Miraheze Wiki';
 		a.href = my_cat.fandomUrl;
 		a.target = '_blank';
 		abar.appendChild(a);
