@@ -810,7 +810,12 @@ document.getElementById('tab').onclick = function() {
 async function screenshot(filename) {
 	const fn = typeof filename === 'string' ? savePng : copyPng;
 	tbl.classList.add('export');
-	await fn(tbl, filename);
+	await fn(tbl, filename, {
+		'filter': elem => !(elem instanceof HTMLTableRowElement && elem.classList.contains('export-hide')),
+		'style': {
+			'margin': '0'
+		}
+	});
 	tbl.classList.remove('export');
 }
 
