@@ -558,9 +558,6 @@ loadEnemy(my_id)
 		chs[2].children[3].textContent = numStrT(E.backswing);
 		chs[2].children[5].textContent = numStrT(E.tba);
 		chs[2].children[7].textContent = numStrT(E.attackF);
-		X = new URL(E.bcdbUrl);
-		if (my_mult != 100) X.searchParams.set('mag', my_mult);
-		document.getElementById('open-db').href = X.href;
 		chs[1].children[5].textContent = E.range;
 		chs[1].children[7].textContent = E.earn;
 		if (config.unit === 'F')
@@ -576,9 +573,6 @@ loadEnemy(my_id)
 			X.appendChild(document.createElement('br'));
 		}
 		createAbIcons();
-		document.getElementById('search-appear').onclick = search_for;
-		document.getElementById('open-anim').href = E.animUrl;
-		document.getElementById('fandom').href = E.fandomUrl;
 		mult.addEventListener('focus', hfocus);
 		mult.addEventListener('blur', function() {
 			let num = mult.textContent.match(/\d+/);
@@ -626,4 +620,29 @@ loadEnemy(my_id)
 		window.onclick = function() {
 			abar.style.display = 'none';
 		}
+
+		function addBarItem(text, action) {
+			const a = document.createElement('a');
+			a.textContent = text;
+			if (action instanceof Function) {
+				a.addEventListener('click', action);
+			} else {
+				a.href = action;
+				a.target = '_blank';
+			}
+			a.classList.add('w3-bar-item');
+			abar.appendChild(a);
+			return a;
+		}
+		addBarItem('複製連結', function() {
+			navigator.clipboard.writeText(location.href);
+		}, false);
+		const dbUrl = new URL(E.bcdbUrl);
+		if (my_mult != 100) dbUrl.searchParams.set('mag', my_mult);
+		addBarItem('超絕', dbUrl.href).rel = 'noreferrer';
+		if (E.fandom)
+			addBarItem('Fandom', E.fandomUrl);
+		addBarItem('搜尋出現關卡', search_for);
+		addBarItem('檢視動畫', E.animUrl);
+		addBarItem('金寶科技設定', '/settings.html#treasure');
 	});
