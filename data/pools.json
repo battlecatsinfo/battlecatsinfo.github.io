@@ -322,6 +322,7 @@
 		"jp_name": "ハロウィンパーティ! スペシャル★イベントガチャ",
 		"en_name": "Halloween Party!(Event Gacha)",
 		"img": "https://i.imgur.com/jgC7ETc.png",
+		"rate": [2000, 0, 5000, 0, 3000, 0, 0, 0, 0, 0],
 		"stage": "11-68",
 		"ticket": "206",
 		"type": "event",
