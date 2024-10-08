@@ -2719,10 +2719,11 @@ function renderUnitPage() {
 		tables.push(['三階+本能數值表格', tf_tbl]);
 		mkTool(tf_tbl);
 		if (has_super) {
+			const F = TF.clone();
 			const [names, _] = rednerTalentInfos(my_cat.talents, true, true);
 			renderTalentCosts(names, my_cat.talents, true);
-			TF.applySuperTalents(custom_super_talents);
-			tf_tbl_s = renderForm(TF, '超本能完全升滿的數值表格', true, true);
+			F.applySuperTalents(custom_super_talents);
+			tf_tbl_s = renderForm(F, '超本能完全升滿的數值表格', true, true);
 			tables.push(['三階+超本能數值表格', tf_tbl_s]);
 			mkTool(tf_tbl_s);
 		}
