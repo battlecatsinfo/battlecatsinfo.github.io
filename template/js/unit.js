@@ -2599,7 +2599,7 @@ function renderCombos() {
 	}
 }
 
-function renderUintPage() {
+function renderUnitPage() {
 	if (layout === 2) {
 		for (let form of my_cat.forms) {
 			if (form.lvc == 2 && my_cat.evolReq) {
@@ -3161,7 +3161,7 @@ loadCat(my_id)
 			document.getElementById('jp_name').textContent = cat_names_jp;
 		}
 		lvMax = Math.min(my_cat.maxLevel, 50) / 10;
-		renderUintPage();
+		renderUnitPage();
 		document.getElementById('loader').style.display = 'none';
 		document.getElementById('main').style.display = 'block';
 		document.title = cat_names.replaceAll(' → ', ' ') + ' - 貓咪資訊';
