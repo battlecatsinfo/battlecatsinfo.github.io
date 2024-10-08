@@ -714,7 +714,7 @@ function getDropData(drops) {
 	if (sum == 1e3) {
 		for (let _b = 0, ints_2 = ints; _b < ints_2.length; _b++) {
 			const x = ints_2[_b];
-			res.push(numStr(x / 10));
+			res.push(x / 10);
 		}
 	} else if (info3.rand === -3) {
 		const c = Math.floor(100 / drops.length).toString();
@@ -725,34 +725,34 @@ function getDropData(drops) {
 	} else if (sum == 100) {
 		for (let _d = 0, ints_4 = ints; _d < ints_4.length; _d++) {
 			const x = ints_4[_d];
-			res.push(x.toString());
+			res.push(x);
 		}
 	} else if (sum > 100 && (info3.rand === 0 || info3.rand === 1)) {
 		let rest = 100;
 		if (ints[0] == 100) {
-			res.push("100");
+			res.push(100);
 			for (let i = 1; i < ints.length; ++i) {
 				const filter = rest * ints[i] / 100;
 				rest -= filter;
-				res.push(numStr(filter));
+				res.push(filter);
 			}
 		} else {
 			for (let _e = 0, ints_5 = ints; _e < ints_5.length; _e++) {
 				const x = ints_5[_e];
 				const filter = rest * x / 100;
 				rest -= filter;
-				res.push(numStr(filter));
+				res.push(filter);
 			}
 		}
 	} else if (info3.rand === -4) {
 		for (let _f = 0, ints_6 = ints; _f < ints_6.length; _f++) {
 			const x = ints_6[_f];
-			res.push(numStr(x * 100 / sum));
+			res.push(x * 100 / sum);
 		}
 	} else {
 		for (let _g = 0, ints_7 = ints; _g < ints_7.length; _g++) {
 			const x = ints_7[_g];
-			res.push(x.toString());
+			res.push(x);
 		}
 	}
 	return res;
@@ -890,13 +890,13 @@ async function render_stage() {
 		var chances = getDropData(drop_data);
 		var once = true;
 		for (var i = 0; i < drop_data.length; ++i) {
-			if (!parseInt(chances[i], 10))
+			if (!chances[i])
 				continue;
 			var v = drop_data[i];
 			var tr = rewards.appendChild(document.createElement("tr"));
 			createReward(tr, v);
 			var td1 = tr.appendChild(document.createElement("td"));
-			td1.appendChild(document.createTextNode(chances[i] + "%" + (i == 0 && v[0] !== 100 && info3.rand !== -4 ? " （寶雷）" : "")));
+			td1.appendChild(document.createTextNode(numStr(chances[i]) + "%" + (i == 0 && v[0] !== 100 && info3.rand !== -4 ? " （寶雷）" : "")));
 			var td2 = tr.appendChild(document.createElement("td"));
 			td2.textContent = i == 0 && (info3.rand === 1 || v[1] >= 1e3 && v[1] < 3e4) ? "一次" : "無";
 		}
