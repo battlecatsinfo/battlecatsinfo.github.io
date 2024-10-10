@@ -880,10 +880,10 @@ describe('unit.mjs', function () {
 
 			it('basic', async function () {
 				var cat = await Unit.loadCat(0);
-				assert.strictEqual(cat.fandomUrl, "https://battle-cats.fandom.com/wiki/Cat_(Normal_Cat)");
+				assert.strictEqual(cat.fandomUrl, "https://battlecats.miraheze.org/wiki/Cat_(Normal_Cat)");
 
 				var cat = await Unit.loadCat(305);
-				assert.strictEqual(cat.fandomUrl, "https://battle-cats.fandom.com/wiki/Mighty_Drednot_(Uber_Rare_Cat)");
+				assert.strictEqual(cat.fandomUrl, "https://battlecats.miraheze.org/wiki/Mighty_Drednot_(Uber_Rare_Cat)");
 			});
 
 		});
@@ -4486,10 +4486,10 @@ describe('unit.mjs', function () {
 
 			it('basic', async function () {
 				var enemy = await Unit.loadEnemy(0);
-				assert.strictEqual(enemy.fandomUrl, "https://battle-cats.fandom.com/wiki/Doge");
+				assert.strictEqual(enemy.fandomUrl, "https://battlecats.miraheze.org/wiki/Doge");
 
 				var enemy = await Unit.loadEnemy(205);
-				assert.strictEqual(enemy.fandomUrl, "https://battle-cats.fandom.com/wiki/Capy");
+				assert.strictEqual(enemy.fandomUrl, "https://battlecats.miraheze.org/wiki/Capy");
 			});
 
 		});
