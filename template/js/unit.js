@@ -77,7 +77,7 @@ import {getStage} from './stage.mjs';
 
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
-const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE]);
+const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const layout = config.layout;
 const maxLen = [0, 0];
@@ -499,7 +499,10 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 			}
 			case 45:
-				w2(`${v[0]}% 爆波攻撃（${v[1]}～${v[2]}）`, '4KshrNX');
+				func = w1;
+				if (layout === 2)
+					func = w3;
+				func(`${v[0]}% 爆波攻撃（${v[1]}～${v[2]}）`, '4KshrNX');
 				break;
 		}
 	}
@@ -629,6 +632,10 @@ function getAtk(form, line, theATK, parent, first, plus, attackS) {
 				mul(theATK, 1.2);
 				lines.push('超賢者');
 				t_ef = true;
+				break;
+			case AB_EXPLOSION:
+				mul(theATK, 2);
+				lines.push('爆波');
 				break;
 		}
 	}
@@ -972,6 +979,10 @@ function getATK0(form, m, S, W1, W2) {
 				case AB_SAGE:
 					mul(atks, 1.2);
 					mul(dps, 1.2);
+					break;
+				case AB_EXPLOSION:
+					mul(atks, 2);
+					mul(dps, 2);
 					break;
 			}
 		}

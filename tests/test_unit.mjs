@@ -1746,6 +1746,12 @@ describe('unit.mjs', function () {
 				assert.deepEqual(cf.tatks, [74844]);
 			});
 
+			it('explosion and sage slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(771)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(cf.tatks, [84240]);
+			});
+
 			it('savage should be counted', async function () {
 				var cf = (await Unit.loadCat(519)).forms[2];
 				cf.level = 50;
@@ -4326,6 +4332,11 @@ describe('unit.mjs', function () {
 			it('mini-wave should be counted', async function () {
 				var enemy = await Unit.loadEnemy(538);
 				assert.deepEqual(enemy.tatks, [28200]);
+			});
+
+			it('explosion should be counted', async function () {
+				var enemy = await Unit.loadEnemy(699);
+				assert.deepEqual(enemy.tatks, [199998]);
 			});
 
 			it('savage should be counted', async function () {

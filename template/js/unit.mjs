@@ -630,6 +630,10 @@ class Unit {
 						atk *= 1 + v[3] * v[0] / 500;
 				}
 
+				if (ab.hasOwnProperty(AB_EXPLOSION)) {
+					atk += atk;
+				}
+
 				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
 					if (mode === 'max')
 						atk *= 2;
@@ -678,6 +682,9 @@ class Unit {
 						}
 						if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
 							rv += (mode === 'max') ? 1 : v[0] / 100;
+						}
+						if (ab.hasOwnProperty(AB_EXPLOSION)) {
+							rv += 1;
 						}
 					}
 					return rv;
@@ -1218,6 +1225,10 @@ class CatForm extends Unit {
 						atk *= 1 + v[3] * v[0] / 500;
 				}
 
+				if (ab.hasOwnProperty(AB_EXPLOSION)) {
+					atk *= 2;
+				}
+
 				// specially exclude bases they all have IMU_WAVE
 				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
 					if (mode === 'max')
@@ -1293,7 +1304,9 @@ class CatForm extends Unit {
 						if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
 							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
 						}
-
+						if (ab.hasOwnProperty(AB_EXPLOSION)) {
+							rv += 1;
+						}
 						// specially exclude bases
 						if (!isBase && (v = ab[AB_WAVE] || ab[AB_MINIWAVE])) {
 							rv += (mode === 'max') ? 1 : v[0] / 100;
@@ -1325,6 +1338,8 @@ class CatForm extends Unit {
 						else
 							atk += buff * v[0] / 100;
 					}
+
+					// @TODO: check whether Attack Up Orb is effected by AB_EXPLOSION
 				}
 			}
 

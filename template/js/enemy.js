@@ -313,6 +313,10 @@ function calc() {
 				ATK(1 + v[3] / 5);
 				DPS *= (1 + v[3] * v[0] / 500);
 				break;
+			case AB_EXPLOSION:
+				DPS += DPS;
+				ATK(2);
+				break;
 			case AB_STRENGTHEN: {
 				const a = 1 + v[1] / 100;
 				ATK(a);
