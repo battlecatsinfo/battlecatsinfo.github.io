@@ -1,0 +1,390 @@
+jp	tw	en	kr
+角色攻擊力	キャラクターの攻撃力	Unit Attack	캐릭터의 공격력
+角色體力	キャラクターの体力	Unit Defense	캐릭터의 체력
+角色移動速度	キャラクターの移動速度	Unit Speed	캐릭터의 이동속도
+初期貓咪砲能量值	にゃんこ砲初期ゲージ	Cannon Start Level	냥코 대포의 초기 게이지
+初期工作狂貓等級	働きネコの初期レベル	Worker Cat Start Level	일 고양이의 초기 레벨
+初期所持金額	初期所持金	Starting Money	초기 소지금
+貓咪砲攻擊力	にゃんこ砲攻撃力	Cat Cannon Power	냥코 대포 공격력
+貓咪砲充電速度	にゃんこ砲チャージ速度	Cat Cannon Recharge	냥코 대포 충전 속도
+工作狂貓的工作效率	働きネコ仕事効率	Worker Cat Speed	일 고양이 일 효율
+工作狂貓錢包	働きネコお財布	Worker Cat Max	일 고양이 지갑
+城堡耐久力	お城耐久力	Cat Base Defense	성 내구력
+研究力	研究力	Research Power	연구력
+會計能力	会計力	Accounting Power	회계력
+學習力	勉強力	Study Power	공부력
+「善於攻擊」的效果	「めっぽう強い」効果	"Strong" Effect	「엄청 강하다」효과
+「超大傷害」的效果	「超ダメージ」効果	"Massive Damage" Effect	「초 데미지」효과
+「很耐打」的效果	「打たれ強い」効果	"Resistant" Effect	「맷집이 좋다」효과
+「打飛敵人」的效果	「ふっとばし」効果	"Knockback" Effect	「날려버린다」효과
+「使動作變慢」的效果	「遅くする」効果	"Slow" Effect	「느리게 한다」효과
+「使動作停止」的效果	「動きを止める」効果	"Freeze" Effect	「움직임을 멈춘다」효과
+「攻擊力下降」的效果	「攻撃力ダウン」効果	"Weaken" Effect	「공격력 다운」효과
+「攻擊力上升」的效果	「攻撃力上昇」効果	"Strengthen" Effect	「공격력 업」효과
+「終結魔女」的效果	「魔女キラー」効果	"Witch Killer" Effect	「마녀 킬러」효과
+「終結使徒」的效果	「使徒キラー」効果	"Eva Angel Killer" Effect	「사도 킬러」효과
+「會心一擊」的發動率	「クリティカル」発動率	"Critical" Rate	「크리티컬」발동률にゃんこ軍団	貓咪軍團	Cat Army	냥코군단
+進化！にゃんこ軍団	進化！貓咪軍團	Cat Army MkII	진화! 냥코군단
+アフター５	下班後的樂趣	Behind Closed Doors	수상한 관계
+スプリングパワー	彈簧魔力	Boing Boing	스프링 파워
+ホゲー	大鯨捕獲祭	Cap'n Ahab	고래잡이
+デスロック	DeathRock	Deathrock	데스메탈
+魔女っ娘	小魔女	Witch Please	위치즈
+ウイリアムテル	命中靶心	William Tell	윌리엄 텔
+ポクポクチーン	叩叩鏘ー	Dharma	나무아미타불
+少年ニャンプ	貓島少年	Shonen Manga	소년 냥프
+朝食セット	早安套餐	Breakfast	조식 세트
+ねこの館	貓咪占心館	Medium Cool	고양이 점집
+アイラブジャパン	I LOVE JAPAN	Cool Japan	재팬 코스프레
+ホームエレクトリック	家電一族	Electric Home	가전 제품
+日光浴	日光浴	Sunbathers	일광욕
+パタパタ	飛上青天	Sound of Wings	파닥파닥
+王子さまぁ	王子殿下❤	Princes Wanted	왕자님~
+４本の槍	四支槍	Valorous	4개의 창
+妖怪退散！	妖怪退散！	Bustin' Ghosts	요괴 퇴치!
+斧の達人	弄斧達人	Choppers	도끼의 달인
+みかんとリンゴ	橘子與蘋果	Apples and Oranges	귤과 사과
+O・ZI・GI	鐵・脖・功	Take a Bow	바른 인사
+アイドル志望	偶像志願	Sister Act	아이돌 지망생
+バイクツーリング	重機快感	Hecks Angels	바이크 투어링
+知能犯	智慧型罪犯	Cybercrimes	지능범
+眼帯ズ	眼帶們	Patched Up	안대 형제
+高みの見物	站在高崗上	With a View	높은 곳이 좋아
+ヘッドショット	爆頭一哥	Crackshot	헤드샷
+ブラパンツ	內在美小姐	Lingerie Special	속옷 세트
+金は天下の回りもの	錢乃身外之物	Get Rich	돈은 돌고 도는것
+スーパースター	超級巨星團	The Divas	슈퍼 스타
+オハナガサイタ	盛開的季節	In Bloom	ㅇㅇㅇ꽃이 피었습니다!
+北風と太陽	北風與太陽	Cool Breeze, Hot Day	북서풍과 태양
+フェイスペイント	我愛紋面	Face Paint	페이스 페인팅
+美女	美女組	Cover Girl	미녀
+月と太陽	月亮與太陽	Sun and Moon	달과 태양
+ヒーローズ	英雄們	Just Us League	히어로즈
+ダークヒーローズ	黑暗英雄	Revengers	다크 히어로즈
+西遊記	西遊記	Journey to the West	레드 옐로 블루
+カウボーイ	牛仔哥	Rawhide	카우보이
+ラスボス	最終頭目	Last Boss	라스트 보스
+定期メンテナンス	定期維修	Overhaul	정기 점검
+超進化！にゃんこ軍団	超進化！貓咪軍團	Maxed Out	초 진화! 냥코군단
+２人でぴょんぴょん	２人彈跳樂	Pyon Pyon for Two	둘이서 깡충깡충
+ビューティバスト	超完美比例	Curves	뷰티 바스트
+戦国ライバル	戰國死敵	Nemeses	바사라즈 커플
+サイエンスフィクション	科學怪象	X-Files	사이언스 픽션
+ビューティフルレッグス	美腿怪魔	Legs for Days	뷰티풀 레그
+美術教室	美術教室	Art History	미술 교실
+ホゲーー	超大鯨捕獲祭	Moby Dick	큰고래 잡이
+お魚天国	魚之天國	Back to School	생선 천국
+暴風一家	暴風一家	Eye of the Storm	스톰 일가족
+進撃の狂乱ネコ	進擊的狂亂貓	Crazy Hearts	진격의 광란의 고양이
+モヒカン愛好家	龐克頭愛好家	Mo' Hawks	모히칸 애호가
+未確認飛行物体	未確認飛行物體	Saucers	미확인 비행물체
+ロボトモ	機械友誼	Mecha	로봇친구
+マッチョマン	小鮮肉	Macho Man	마초맨
+風神雷神	風神雷神	Thunder and Lightning	풍신뇌신
+ノースリーブズ	健身俱樂部	Biceps	탱크탑
+銃撃戦	槍擊戰	Triggermen	총격전
+４人でぴょんぴょん	４人彈跳樂	Bouncing Four	넷이서 깡총깡총
+操り職人	操偶職人	Pulling Strings	부두술사의 저주
+うちわの使い手	舞扇達人	Big Fans	부채의 달인
+キング ＆ クイーン	國王與皇后	King and Queen	킹 앤 퀸
+古代勇者	古代勇者	Ancient Heroes	고대용사
+ウルトラソウルズ	超級靈魂勇者	Ultra Souls	울트라 소울즈
+伝説のネコルガ一族	傳說的不明貓一族	Legend of the Nekoluga	전설의 루가 일족
+大皇帝	大皇帝	Dragon Emperors	초 파괴 대제
+超激ダイナマイツ	超激烈爆彈	Dynamites	다이너마이트 군단
+初代・武神バサラーズ	初代・武神巴薩拉斯	The First Vajiras	바사라즈 삼총사
+ダブルデート	四人約會	Double Date	더블 데이트
+なまけ者たち	懶鬼一族	Lazing About	게으름쟁이들
+うーらーめーしーにゃ	幽魂來也	Curses!!!	원~망~스럽다~냥~
+進化！進撃の狂乱ネコ	進化！進擊的狂亂貓	The Crazening	진화! 진격의 광란의 고양이
+暗黒の力	黑暗的力量	Power of Darkness	암흑의 힘
+キモモモ	敲噁Derrrrr	Gross!!!	징글징글
+株式会社にゃんこ	貓咪有限公司	Nyanko, Inc.	주식회사 냥코
+恋の季節	戀愛季節	Seasons of Love	신록과 꽃의 계절
+セクシーバスタイム	美好入浴時光	Sexy Bathtime	섹시 바스타임
+露出狂	暴露狂	Flash in the Pan	노출광
+花見	賞花祭	Blossoming	꽃놀이
+和定食	日式定食	Bento Special	일식 요리
+ホラー映画	恐怖電影	Horror Movies	호러 영화
+鬼と呼ばれて	以鬼之名	Speak of the Devil	자칭 타칭 도깨비
+伝統芸能	傳統藝能	Classical Arts	전통 예능
+スポーツ女子	運動系女子	Sportswoman	여성 운동선수
+ジェントルマン	紳士風範	Gentlemen	젠틀맨
+風車	風車	Spinners	풍차
+ロングネック	長頸族	Longnecks	롱 넥
+ダンサーズ	舞力全開	Feel the Dance	댄서즈
+お薬出しておきますね	請小心服藥	Special Treatment	조금 따끔할거예요!
+驚愕のネコルガ一族	驚愕的不明貓一族	Nekoluganomicon	경악의 고양이 루가 일족
+ノスタルジー	懷舊古玩	Nostalgia	노스탈지
+グッジョブ	GJ	Good Jobs!	굳잡
+サーティーン	必殺13號	Thirteen	써틴
+ネーーーコボンボン	大土豪貓駕到	Itchy Riches	고양이 도련님
+地上の皇帝	大地之王	Lords of Earth	지상의 황제
+焼きリンゴ	烤蘋果	Roasted Apple	사과구이
+ウサギとカメ	兔與龜	Tortoise and Hare	토끼와 거북이
+運び屋と闇商人	運送者與黑暗商人	Merchant + Courier	운반자와 암상인
+人形師協会会員	人型師協會會員	Puppeteers Guild	인형사 협회 회원
+究極降臨	究極降臨	Advent of the Almighty	극강강림
+ラブアロー	愛之箭	Love and Romance	러브 얼로우
+冥界の力	冥界之力	Infernal Power	명계의 힘
+にゃんこ支援隊	貓咪支援隊	Reinforcements	냥코 지원부대
+コスプレイヤー	角色扮演者	Cosplayers	코스플레이어
+ぺろきゃん愛好家	最愛棒棒糖	Lolly Fanciers	막대 사탕이 짱이야
+ツンツンツン	刺刺刺	Pointy Bits	뾰족뾰족
+師範といっしょ	師徒同台	Master-Apprentice	사범님과 함께
+3匹の王	三王齊聚	Three Kings	3마리의 왕
+お子様セット	兒童餐	Childs Play	어린이 세트
+乙女	純情少女	Girlish Innocents	소녀
+チームヘッドバンギング	甩頭小隊	Headbanger's Ball	팀:헤드뱅잉
+金銀銅	金銀銅	Precious Metals	금은동
+ファイブハーツ	五心級服務	Five Hearts	파이브 하트
+絶対領域	絕對領域	Showing Leg	절대영역
+子だくさん	多子多孫	Baby on Board	자식부자
+大道芸猫	街頭藝貓	Showoffs	곡예 고양이
+食用	食用	Grocery Cart	식용
+スイーツ	甜點	Sweets	스위트
+ふんどし祭	兜襠布祭典	Immodest Modesty	팬티 페스티벌
+ヘルメット部隊	鋼盔部隊	Helmetheads	헬멧 부대
+スタジオニャブリ	喵卜力工作室	Jibbly Studio	스튜디오 냥브리
+百鬼夜行	百鬼夜行	Paranormal Activity	백귀야행
+湘南の海	湘南海岸	Summer by the Sea	섬머 비치!
+酒乱若人	酒瘋青年	Liver Trouble	주정뱅이
+にゃんこ軍団	貓咪軍團	Cat Army	냥코군단
+アフター５	下班後的樂趣	Behind Closed Doors	수상한 관계
+ホゲー	大鯨捕獲祭	Cap'n Ahab	고래잡이
+デスロック	DeathRock	Deathrock	데스메탈
+アイラブジャパン	I LOVE JAPAN	Cool Japan	재팬 코스프레
+日光浴	日光浴	Sunbathers	일광욕
+パタパタ	飛上青天	Sound of Wings	파닥파닥
+斧の達人	弄斧達人	Choppers	도끼의 달인
+みかんとリンゴ	橘子與蘋果	Apples and Oranges	귤과 사과
+O・ZI・GI	鐵・脖・功	Take a Bow	바른 인사
+アイドル志望	偶像志願	Sister Act	아이돌 지망생
+バイクツーリング	重機快感	Hecks Angels	바이크 투어링
+ブラパンツ	內在美小姐	Lingerie Special	속옷 세트
+オハナガサイタ	盛開的季節	In Bloom	ㅇㅇㅇ꽃이 피었습니다!
+子ネコの友情	小貓的友情	Childhood Friends	작은 고양이의 우정
+カウボーイ	牛仔哥	Rawhide	카우보이
+人形師協会会員	人型師協會會員	Puppeteers Guild	인형사 협회 회원
+２人でぴょんぴょん	２人彈跳樂	Pyon Pyon for Two	둘이서 깡충깡충
+救いの手	慈愛的臂膀	Helping Hand	보살&성모
+フォーリンラヴ	墜入愛河	Fall in Love	폴인러브
+カエルの王子様	青蛙王子	Frog Prince	개구리 왕자님
+孫という名の宝物	祖孫情	Treasured Grandchild	손자 만세
+舞台の上では平気なの	敬業女演員	No Stage Fright	무대위의 꽃
+バイオハザード	惡貓古堡	Biohazard	바이오하자드
+真夏の太陽	盛夏炎陽	Midsummer Sun	한여름날의 태양
+トナカイのプレゼント	馴鹿的禮物	Reindeer's Gift	순록의 선물
+銀幕のスター	銀幕大明星	Silver Screen	영화 스타
+アシナガおじさん	長腿大叔	Long-Legged	내다리는 길다냥
+宴会部長	宴會部長	Life of the Party	술상무
+グッジョブ	GJ	Good Jobs!	굳잡
+サーティーン	必殺13號	Thirteen	써틴
+ネーーーコボンボン	大土豪貓駕到	Itchy Riches	고양이 도련님
+進撃のちびネコ	小小貓大進擊	Attack of the Li'ls	진격의 미니 고양이
+サイエンスフィクション	科學怪象	X-Files	사이언스 픽션
+ビューティフルレッグス	美腿怪魔	Legs for Days	뷰티풀 레그
+美術教室	美術教室	Art History	미술 교실
+ホゲーー	超大鯨捕獲祭	Moby Dick	큰고래 잡이
+お魚天国	魚之天國	Back to School	생선 천국
+暴風一家	暴風一家	Eye of the Storm	스톰 일가족
+モヒカン愛好家	龐克頭愛好家	Mo' Hawks	모히칸 애호가
+未確認飛行物体	不明飛行物體	Saucers	미확인 비행물체
+ロボトモ	機械友誼	Mecha	로봇친구
+マッチョマン	小鮮肉	Macho Man	마초맨
+４人でぴょんぴょん	４人彈跳樂	Bouncing Four	넷이서 깡총깡총
+操り職人	操偶職人	Pulling Strings	부두술사의 저주
+キング ＆ クイーン	國王與皇后	King and Queen	킹 앤 퀸
+ザ・ニンジャ	THE・忍者	Enter The Ninja	더・닌자
+中二病	青春期妄想症	Troubled Youth	중2병
+デュエット	二重唱	Duet	듀엣
+火の用心	小心火燭	Firewatch	불 조심
+豚丼	豬肉蓋飯	Pork on Rice	돼지고기 덮밥
+ネコの前で見せる笑顔	在貓咪前才有的笑容	Smiles at Cats	고양이를 보면 행복해져
+獅子王	獅子王	Lion King	사자의 왕
+モモとバナナ	桃子與香蕉	Peach 'n Banana	복숭아와 바나나
+本能寺の怨念	本能寺的怨念	Honnoji's Curse	원령의 한
+暑い日も涼しく	熱天也涼爽	Cool in the Heat	뜨거운 날도 시원하게
+アポロ	阿波羅	Apollo Mission	아폴로
+ほねほねボーン	活骷髏	Bony Bone	네크로맨서
+騎士道と菓子道	騎士道與西點道	Chivalry and Candy	기사도와 과자도
+昼ドラで競演	午間連續劇共演	Ratings Competition	드라마에서 만났어요
+ネコ＆タンクネコ	貓咪與坦克貓	Cats 'n Tanks	고양이 앤 탱크 고양이
+はちまき	頭巾部隊	Headband	머리띠
+ムチ使い	舞鞭者	Watch Me Whip	왕누님들
+仮面舞踏会	假面舞蹈會	Masquerade	가면무도회
+進撃の狂乱ネコ	狂亂貓大進擊	Crazy Hearts	진격의 광란의 고양이
+暗黒の力	黑暗的力量	Power of Darkness	암흑의 힘
+キモモモ	敲噁Derrrrr	Gross!!!	징글징글
+株式会社にゃんこ	貓咪有限公司	Nyanko, Inc.	주식회사 냥코
+恋の季節	戀愛季節	Seasons of Love	신록과 꽃의 계절
+露出狂	暴露狂	Flash in the Pan	노출광
+花見	賞花祭	Blossoming	꽃놀이
+和定食	日式定食	Bento Special	일식 요리
+鬼と呼ばれて	以鬼之名	Speak of the Devil	자칭 타칭 도깨비
+伝統芸能	傳統藝能	Classical Arts	전통예능
+スポーツ女子	女運動員	Sportswoman	여성 운동선수
+ジェントルマン	紳士風範	Gentlemen	젠틀맨
+風車	風車	Spinners	풍차
+ロングネック	長頸族	Longnecks	롱 넥
+ダンサーズ	舞力全開	Feel the Dance	댄서즈
+お薬出しておきますね	請小心服藥	Special Treatment	조금 따끔할거예요!
+ホラー映画	恐怖電影	Horror Movies	호러 영화
+にゃんこ学園	貓咪學園	Cat High	냥코 학원
+槍試合	槍術對決	Spearfight	창 시합
+心がぴょんぴょん	心如兔躍	Heart Beat	마음이 깡총깡총
+ぺろきゃん愛好家	最愛棒棒糖	Lolly Fanciers	막대 사탕이 짱이야
+師範といっしょ	師徒同台	Master-Apprentice	사범님과 함께
+3匹の王	三王齊聚	Three Kings	3마리의 왕
+乙女	純情少女	Girlish Innocents	소녀
+チームヘッドバンギング	甩頭小隊	Headbanger's Ball	팀:헤드뱅잉
+大道芸猫	街頭藝貓	Showoffs	곡예 고양이
+スイーツ	甜點	Sweets	스위트
+ツンツンツン	刺刺刺	Pointy Bits	뾰족뾰족
+昨日の敵は今日の友	化敵為友	Yesterday's Enemy	어제의 적은 오늘의 동지
+パンチパンチパンチ！	拳拳拳拳	Punchpunchpunch!	펀치! 펀치! 펀치!
+戦闘狂の集い	狂戰士集團	Lust for Battle	전투광들의 모임
+変態紳士に天罰を	給變態紳士來個天譴	Punish the Lewd	변태신사에게는 천벌을
+二人一組	二人組	Team of Two	이인일조
+ダブルタイフーン	雙重颱風	Double Typhoon	태풍경고
+風のイタズラ	風的惡作劇	Trick of the Wind	바람의 장난
+IT系	IT系	IT Crowd	대세는 IT
+空中偵察部隊	空中偵察部隊	Aerial Recon	공중탐정 부대
+タイホしちゃうぞ☆	逮捕令	Under Arrest	체포하겠어☆
+にゃんこサーカス	貓咪馬戲團	Cat Circus	냥코 서커스
+チェックのスカート	格子裙	Checkered Skirt	체크 스커트
+ダブルデート	四人約會	Double Date	더블 데이트
+なまけ者たち	懶鬼一族	Lazing About	게으름쟁이들
+うーらーめーしーにゃ	幽魂來也	Curses!!!	원~망~스럽다~냥~
+ふんどし祭	兜襠布祭典	Immodest Modesty	팬티 페스티벌
+スタジオニャブリ	喵卜力工作室	Jibbly Studio	스튜디오 냥브리
+カボチャパンツ	南瓜褲	Pumpkinpants	호박 바지
+百鬼夜行	百鬼夜行	Paranormal Activity	백귀야행
+酒乱若人	酒瘋青年	Liver Trouble	주정뱅이
+恐竜時代	恐龍時代	Age of Dinosaurs	쥬라기 시대
+おもちゃのチャチャチャ	玩具鏘鏘鏘	Toying Around	장난감!?!
+庶民と金持ち	平民和有錢人	Rich and Poor	서민과 부유층
+コイの滝登り	鯉躍龍門	Koi And Dragon	개천에서 난 용
+龍退治ごっこ	勇者鬥惡龍	Playing Slayer	용사! 용을 물리쳐라!
+天地の怒り	天地之怒	As Above, So Below	천지의 분노
+お騒がせメカ	鬧事機械	Future of War	메카메카
+Wバズーカ	雙重火箭砲	Bazooka Bros.	W바주카
+ライバル宣言	你就是我的對手	Rivalry	라이벌 선언
+韋駄天トリオ	韋馱三人組	Heavenly Kings	위태천 트리오
+一斉掃射	同步掃射	Sweep the Area	일동 발사
+鋼の救世主	鋼鐵救世主	Steel Saviors	강철의 구세주
+銀河を駆ける	穿梭銀河	Galactic Travel	은하를 달리다
+雷に打たれて	天打雷劈	Struck by Lightning	번개를 맞아서
+首なしスタイル	無頭款式	Neckless Chic	목실종 스타일
+南国諸島	南國島嶼	Blue Lagoon	남국제도
+犬神様	犬神大仙	Dog Gods	개귀신님
+風林火山	風林火山	Volcanic Fury	풍림화산
+呪われた力	受詛咒的力量	Cursed Strength	저주받은 힘
+スパイ活動	間諜活動	Secret Agency	스파이 활동
+愛に生きる者	活在愛的人們	Living in Love	사랑으로 살아가는 자
+犬猿の仲	犬猿之仲	Jungle Women	견원지간
+空への憧れ	嚮往的天空	Dreams of Flying	하늘에의 동경
+神へのお供え	祭神供品	Offering to the Gods	신에게 바치는 제물
+聖なる力	神聖的力量	Blessed Strength	성스러운 힘
+暗殺者コンビ	暗殺者組合	Gang of Killers	암살자 콤비
+オシャレ笠	超時髦斗笠	Classic Headwear	김삿갓
+腕自慢	鐵臂神拳	Arm Day Everyday	삼두근 자랑
+ぐるぐる大回転	旋風大迴轉	Like a Record, Baby	빙빙 대회전
+商売繁盛祈願	祈求生意興隆	Blessed Business	대박번영기원
+最高の友達	最好的朋友	My Very Best Friend	베스트 프렌드
+飲食業	餐飲業	Hot, Fresh 'n' Fast	요식업
+出張辞令	出差指令	Commuter Life	출장명령
+真夏の甲子園	盛夏的甲子園	Take Me Out	한여름의 야구장
+ガーデニング	園藝花卉家	Green Thumb	가드닝
+名誉の負傷	光榮負傷	Purple Heart	명예의 부상
+魚群発見！！	發現魚群！！	Marine Tours	물고기떼 발견!
+ペダリング	踩…踏板	Pedal Powered	페달링
+全国大会出場	全國大會出賽	Nationals	전국대회출전
+撮り鉄	鐵道迷	Trainspotting	남는건 사진뿐
+純喫茶	純喝茶	Brunch Rush	브런치 러쉬
+ブラック＆ホワイト	黑貓白貓	Black & White	블랙 앤 화이트
+海底財宝発掘命令	皇家海底尋寳令	Royal Submariner	해저 보물 발굴 명령
+人工知能	人工智慧	Cutting Edge	인공지능
+最強格闘技決定戦	最強格鬪技決定戰	Contest of Champs	최강 격투기 결정전
+氷上競技	冰上競技	Put On Ice	빙상경기
+大剣両断	大劍兩斷	Greatswords	일도양단
+感謝御礼	感謝愛戴	Thanks for All	감사의 사례
+今度こそ君を幸せに	這次一定要讓你幸福	You Will Find Happiness	이번에야말로 너를 행복하게
+ミラクルライブ！	巨星同台！	Miracle Performance	미라클 라이브!
+焼きマシュマロ	火烤棉花糖	Roasted Marshmallow	구운 마시멜로
+土砂降りに唄えば	傾盆大雨中相見歡	Meowin' in the Rain	장대같은 비가 좋아
+爆風ときどき竜巻	時而暴風時而龍捲	Chance of Tornado	폭풍 때론 토네이도
+暴走高圧バッテリー	暴走的高壓電池	High Voltage	위험! 고전압 배터리
+完全一心同体	完全一心同體	Two As One	완전 일심동체
+温泉卵	溫泉蛋	Boiled Egg	온천 달걀
+浮気調査	外遇調查	Cheating Heart?	바람을 의심
+バイト仲間	打工族	Part-Time Coworkers	알바 동료
+まろはネコでおじゃる	戰國望族與女雛	Imperial Court	나는 고양이로소이다
+伸縮性と弾力性	伸縮性與彈性	Soft and Flexible	신축성과 탄력
+数の暴力	人多力量大	Power in Numbers	숫자의 위력
+薄着コーデ	今天穿的很清涼	Scantily Clad	가벼운 코디
+大炎上	隔著螢幕被噓爆	Cosplay Fans	악플러 전쟁
+終末世界	最後的世界	Post-Apocalypse	종말세계
+振袖選手権	和服選手權	Kimono Champs	긴 소매 선수권
+食べ盛り育ち盛り	吃多多長壯壯	Growth Spurt	한창 먹고 자랄 때
+古龍と子竜	古龍與嫩龍	Dragons Old and Young	아버지와 아들
+運命の車輪（ロンド）	命運的車輪	Wheels of Fate	운명의 수레바퀴
+インディペンデンスな日	星際終結日	Independence Day	인디펜던스 데이
+とれたてピッチピチ	新鮮尚青ㄟ	Fresh Catch	갓잡은 생선
+ほこ×たて	矛×盾	Shields of all Sizes	창과 방패
+相棒	同類夥伴	Co-op Mode	파트너
+悪に染まりし者達	沾滿邪惡的夥伴們	Bad Guys	악에 물든 자들
+猫耳は正義	貓耳就是正義	Cat Ears	고양이 귀는 진리
+先生になりたいでにゃ～る			
+回っております	運作中	Spinning Out	빙글빙글
+ボンボンネコボンネコボンボン	豪土土豪土土豪	Offshore Accounts	도련님 도련님
+忍法お色気の術	魅力忍法術	Ninjutsu Cute	둔갑술
+あした天気になーれ	明天好天氣	Clear Skies	내일은 맑음
+おさけは二十歳になってから	飲酒成年再開始	Drinking Age	술은 성인이 되고부터!
+魔女裁判	魔女裁判	Witch Trial	마녀재판
+モーニングパンツ	早晨三角褲	Breakfast in Undies	모닝 팬티
+さおだけ屋台	竹竿行動攤	Street Bazaar	대나무 장사
+ワーケーション	工作邊旅行	Working Vacation	워케이션
+ドリラゴン	挖洞小龍貓	Dragon Driller	드릴러래곤
+ウチコンボッチ	釘樁小巨人	Mythic Driver	드라이보치
+ユウチョキン	剪煮小勇者	Brave Cutter	커터용사
+クジラベリン	鏟挖小鯨貓	Whale Digger	포코래인
+ビキャッソ	割鋸小美腿	Sexy Sawer	직썬미
+ミニザウルス	迷你侏羅紀	Mini-Saurus	미니 사우루스
+リトル軍隊	我的小軍隊	Little Warriors	리틀 군단
+ミクロファイター	重量級小勇者	Micro Fighters	미크로 파이터
+ミニサロン	小小小太陽	Minicyclone	미니 살롱
+希少種ハンター	稀少種怪盜	Big Game Hunter	희귀종 헌터
+ミステリーサークル部	神秘驚悚部	Mystery Club	미스테리 동아리
+なめんなよ！	別和我作對！	Don't Mess With Me!	우습게 보지 말라냥!
+３連単			
+プチ踊り食い	佛朗明哥小鯨魚	Dance a Little, Eat a Little	춤추는 생선
+原始のちび戦士	原始馬賽小戰士	Tiny Ancient Hunt	원조 미니 전사
+ミニマムエトワール	巴黎時尚小巨人	Étoile minimum	미니멈 에투알
+生贄	召喚用的活祭品	Sacrifice	제물
+正義の戦士	正義的戰士	Warriors of Justice	정의의 전사
+地獄行き片道切符	往地獄的單程票	One-Way Ticket to Hell	지옥행 급행열차
+ゴーイングストーンズ	石頭衝衝衝	Going Stones	컬링 스톤즈
+(株)にゃんこ運輸	貓咪運輸股份有限公司	Cat Transport	주식회사 냥코택배
+夢の箱	夢想箱	Dream Box	꿈의 상자
+空陸連携作戦	空陸聯合作戰	Land-Air Assault	육공군 합동작전
+禁断の調合	禁忌的調配	Forbidden Compound	금단의 조합
+バーサーカーズ	瘋狂戰士們	Berserkers	광전사들
+サボったエンジェル	帶刺的墮天使	Truant Angel	가시돋친 천사
+暗黒の連休明け	連假結束心情灰暗	Dark End to the Holiday	바캉스 증후군
+エロイムエッサイム	眾神請聆聽我的請求	Elohim, Essaim	엘로힘 엣사임
+邪龍黒炎波	邪龍黑炎波	Wicked Flames	사룡흑염파
+妖怪バスターズ！	妖怪剋星	Bustin' Phantoms	요괴 바스터즈!
+けがれなき騎士道	純潔騎士精神	Violated Chivalry	고결한 기사도
+アンガーマネジメント	憤怒情緒管理	Anger Management	분노 조절
+かかってきやがれ！	放馬過來！	Bring it On!	덤벼라냥!
+ゴートゥーヘル！	Go to Hell!	Go to Hell!	Go to Hell!
+猟友会	狩獵同好	Hunting Club	사냥 친구
+これにてドロン	在下就先告辭了	Like the Wind	연막 은신술
+にゃんこ学園校歌斉唱	貓咪學園校歌齊唱	Catcademy Anthem	냥코 학교 교가 제창
+ありのままの	放開手	Full Transparency	렛잇고
+海龍館	海龍館	Dragon Aquarium	해룡관
+暴風林	暴風林	Windburst	강풍림
+無重力体験ツアー	零重力體驗之旅	Zero-Gravity Tour	무중력 체험 투어
+＃極秘任務	#機密任務	#TopSecret	#극비임무
+闇を秘めし契約者			

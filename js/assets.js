@@ -31,6 +31,7 @@ const sources = [
 	'gamatoto.html',
 	'medal.html',
 	'rank.html',
+	'translator.html',
 
 	'uni.png',
 	'favicon.ico',
@@ -67,6 +68,7 @@ const sources = [
 	'medal.js',
 	'metal_killer.js',
 	'unit.js',
+	'translator.js',
 
 	'gif.min.js',
 	'gif.worker.min.js',

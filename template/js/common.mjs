@@ -1,5 +1,6 @@
 const DB_NAME = 'battlecatsinfo';
 const DB_VERSION = {{{lookup (loadJSON "config.json") "db_ver"}}};
+const translatorStores = ["tstage", "tcat", "tenemy", "tterm", "tcombo", "titem", "tmedal"];
 
 class IdbBase {
 	static onUpgrade(event) {
@@ -54,6 +55,16 @@ class IdbBase {
 			if (stores.has("scheme"))
 				db.deleteObjectStore("scheme");
 			db.createObjectStore("scheme");
+		}
+
+		if (oldVersion < 1360010 || 1360010 < newVersion) {
+			for (const name of translatorStores) {
+				if (stores.has(name))
+					db.deleteObjectStore(name);
+				const store = db.createObjectStore(name, {keyPath: "i"});
+				for (const lang of ['jp', 'tw', 'en', 'kr'])
+					store.createIndex(lang, lang);
+			}
 		}
 
 		db._upgraded = true;
@@ -591,6 +602,7 @@ const config = new ConfigHandler();
 export {
 	DB_NAME,
 	DB_VERSION,
+	translatorStores,
 	IdbBase,
 	Idb,
 	AutoIdb,

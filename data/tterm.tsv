@@ -1,0 +1,96 @@
+jp	tw	en	kr
+属性を持たない敵	無屬性敵人	Traitless Enemies	무속성
+赤い敵	紅色敵人	Red Enemies	빨간 적
+浮いてる敵	飄浮敵人	Floating Enemies	떠있는 적
+黒い敵	黑色敵人	Black Enemies	검은 적
+メタルな敵	鋼鐵敵人	Metal Enemies	메탈
+天使	天使	Angel Enemies	천사
+エイリアン	異星戰士	Alien Enemies	에이리언
+ゾンビ	不死生物	Zombie Enemies	좀비
+悪魔	惡魔	Aku Enemies	악마
+古代種	古代種	Relic Enemies	고대종
+使徒	使徒	Eva Angel Enemies	사도
+魔女	魔女	Witch Enemies	마녀
+超生命体	超生命體	Colossal Enemies	초생명체
+超獣	超獸	Behemoth Enemies	초수
+超賢者	超賢者	Sage Enemies	초현자
+單体攻擊	單體攻擊	Single Target	개체 공격
+範囲攻擊	範圍攻擊	Area Attack	범위 공격
+連続攻撃	連續攻擊	Multi-Hit	연속 공격
+遠方攻撃	遠距攻擊	Long Distance(LD)	원거리 공격
+全方位攻撃	全方位攻擊	Omni Strike	전방위 공격
+1回攻撃	一次攻擊	Attack Once	1회 공격
+攻撃力ダウン	攻擊力下降	Weaken	공격력 다운
+動きを止める	使動作停止	Freeze	움직임을 멈춘다
+動きを遅くする	使動作變慢	Slow	움직임을 느리게 한다
+攻撃ターゲット限定	只能攻擊	Attacks Only	공격 타겟 한정
+めっぽう強い	善於攻擊	Strong Against	엄청 강하다
+打たれ強い	很耐打	Resistant	맷집이 좋다
+超打たれ強い	超級耐打	Insanely Tough	초 맷집이 좋다
+超ダメージ	超大傷害	Massive Damage	초 데미지
+極ダメージ	極度傷害	Insane Damage	극 데미지
+ふっとばす	打飛敵人	Knockback	날려버린다
+ワープ	傳送	Warp	워프
+呪い	詛咒	Curse	저주
+攻撃無効	攻擊無效	Dodge Attack	공격 무효
+毒撃	毒擊	Toxic	독 공격
+ダメージアップ	提升傷害	Attack Up	대미지 업
+ダメージ軽減	減輕傷害	Defense Up	데미지 경감
+めっぽう強い強化	強化善於攻擊	Strong Against Up	엄청 강하다 강화
+超ダメージ強化	強化超大傷害	Massive Damage Up	초 데미지 강화
+打たれ強い強化	強化很耐打	Resistance Up	맷집이 좋다 강화
+攻撃力アップ	攻擊力上升	Strengthen	공격력 업
+生き残る	死前存活	Survive	살아남는다
+城破壊が得意	善於攻城	Base Destroyer	성 파괴가 특기
+クリティカル	會心一擊	Critical	크리티컬
+メタルキラー	鋼鐵殺手	Metal Killer	메탈 킬러
+地中移動	鑽地	Burrow	버로우
+蘇生	復活	Revive	부활
+ゾンビキラー	終結不死	Zombie Killer	좀비 킬러
+魂攻撃	靈魂攻擊	Soulstrike	영혼 공격
+バリア	護盾	Barrier	배리어
+バリアブレイカー	破壞護盾	Barrier Breaker	베리어 브레이커
+悪魔シールド	惡魔盾	Shield	악마 쉴드
+シールドブレイカー 	破壞惡魔盾	Shield Piercing	쉴드 브레이커
+ダメージ無効	傷害無效	Guard	
+渾身の一撃	渾身一擊	Savage Blow	혼신의 일격
+撃破時お金アップ	得到很多金錢	Extra Money	격파시 머니 UP
+メタル	鋼鐵	Metal	메탈
+小波動	小波動	Mini-Wave	소파동
+波動	波動	Wave Attack	파동 공격
+小烈波	小烈波	Mini-Surge	소열파
+烈波攻擊	烈波	Surge Attacks	열파 공격
+デス烈波	遺留烈波	Death Surge	순교
+烈波カウンター	烈波反擊	Counter-Surge	열파 카운터
+波動ストッパー	波動滅止	Wave Shield	파동 스톱퍼
+召喚	召喚	Conjure	소환
+超生命体特効	超生命體特效	Colossus Slayer	초생명체 특효
+超獣特効	超獸特效	Behemoth Slayer	초수 특효
+超賢者特効	超賢者特效	Sage Slayer	초현자 특효
+攻撃力低下無効	攻擊力下降無效	Immune to Weaken	공격력 다운 무효
+動きを止める無効	動作停止無效	Immune to Freeze	움직임을 멈춘다 무효
+動きを遅くする無効	動作變慢無效	Immune to Slow	움직임을 느리게 한다 무효
+ふっとばす無効	打飛無效	Immune to Knockback	날려버린다 무효
+波動ダメージ無効	波動(傷害)無效	Immune to Waves	파동 데미지 무효
+烈波ダメージ無効	烈波(傷害)無效	Evade Surge	열파 데미지 무효
+ワープ無効	傳送無效	Warp Blocker	워프 무효
+古代の呪い無効	古代詛咒無效	Immune to Curse	고대의 저주 내성
+毒撃ダメージ無効	毒擊(傷害)無效	Immune to Toxic	독 데미지 무효
+攻撃力低下耐性	抗擊耐性	Resist Weaken	공격력 다운 내성
+動きを止める耐性	動止耐性	Resist Freeze	움직임을 멈춘다 내성
+動きを遅くする耐性	動慢耐性	Resist Slow	움직임을 느리게 한다 내성
+ふっとばす耐性	抗飛耐性	Resist Knockback	날려버린다 내성
+波動ダメージ耐性	抗波耐性	Resist Wave	파동 데미지 내성
+烈波ダメージ耐性	抗烈波耐性	Resist Surge	열파 데미지 내성
+ワープ耐性	抗傳耐性	Resist Warp	워프 내성
+古代の呪い耐性	抗古代詛咒耐性	Resist Curse	고대의 저주 내성
+毒撃ダメージ耐性	抗毒耐性	Resist Toxic	독 데미지 내성
+基本体力アップ	基本體力上升	Defense Buff	기본 체력 업
+基本攻撃力アップ	基本攻擊力上升	Attack Buff	기본 공격력 업
+移動速度上昇	移動加快	Move Speed Up	이동 속도 증가
+ノックバック回数増加	增加擊退	Improved Knockback	넉백 횟수 증가
+生産コスト割引	成本減少	Cost Down	생산 코스트 할인
+再生産時間短縮	生產加快	Recover Speed Up	생산 스피드 업
+攻撃間隔短縮	攻擊間隔短縮	Attack Frequency Up	공격 간격 단축
+魔女キラー	終結魔女	Witch Killer	마녀 킬러
+使徒キラー	終結使徒	Eva Angel Killer	사도 킬러

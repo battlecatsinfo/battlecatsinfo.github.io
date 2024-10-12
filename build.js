@@ -11,6 +11,7 @@ const modules = new Set([
 	'reward',
 	'collab',
 	'gacha',
+	'translator'
 ]);
 
 const args = parseArgs({
