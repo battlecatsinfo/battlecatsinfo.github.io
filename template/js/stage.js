@@ -1120,7 +1120,7 @@ async function render_stage() {
 			if (strs[4])
 				stageF ? makeTd(tr, TI(strs[3]) + '~' + TI(strs[4])) : makeTd(tr, strs[3] + '~' + strs[4]);
 			else
-				makeTd(tr, strs[3]);
+				makeTd(tr, TI(strs[3]));
 		} else {
 			makeTd(tr, '-');
 		}
