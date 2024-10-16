@@ -61,9 +61,7 @@ class IdbBase {
 			for (const name of translatorStores) {
 				if (stores.has(name))
 					db.deleteObjectStore(name);
-				const store = db.createObjectStore(name, {keyPath: "i"});
-				for (const lang of ['jp', 'tw', 'en', 'kr'])
-					store.createIndex(lang, lang);
+				db.createObjectStore(name, {keyPath: "i"});
 			}
 		}
 

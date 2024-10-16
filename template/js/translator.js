@@ -1,4 +1,4 @@
-import {AutoIdb, translatorStores} from './common.mjs';
+import {IdbBase, AutoIdb, translatorStores} from './common.mjs';
 
 let db;
 
@@ -34,51 +34,40 @@ document.getElementById('go').addEventListener('click', async function () {
 			storeNames = [target];
 
 		for (const storeName of storeNames) {
-			await new Promise((resolve, reject) => {
-				let first = true;
-				const tx = db.transaction(storeName);
-				const store = tx.objectStore(storeName);
-				const index = store.index(lang);
-				const req = index.openCursor();
-				req.onerror = (event) => reject(event.target.error);
-				req.onsuccess = function (event) {
-					const cursor = event.target.result;
-					if (cursor) {
-						if (cursor.value[lang].includes(v)) {
-							const tr = document.createElement('tr');
-							if (storeName === 'tcat' || storeName === 'tmedal') {
-								for (const lang of ['tw', 'jp', 'en', 'kr']) {
-									const td = document.createElement('td');
-									for (const s of cursor.value[lang].split('|'))
-										td.append(s), td.append(document.createElement('br'));
-									tr.appendChild(td);
-								}
-							} else {
-								for (const lang of ['tw', 'jp', 'en', 'kr']) {
-									const td = document.createElement('td');
-									td.textContent = cursor.value[lang];
-									tr.appendChild(td);
-								}
-							}
+			let first = true;
 
-							if (first && storeNames.length !== 1) {
-								first = false;
-								const tr = document.createElement('tr');
-								const td = document.createElement('td');
-								td.textContent = {'tstage': '關卡', 'tcat': '貓咪', 'tenemy': '敵人', 'tterm': '名詞', 'tcombo': '聯組', 'tmedal': '獎章', 'titem': '獎勵'}[storeName];
-								td.colSpan = 4;
-								tr.appendChild(td);
-								tr.classList.add('group');
-								results_body.appendChild(tr);
-							}
-							results_body.appendChild(tr);
-						}
-						cursor.continue();
-					} else {
-						resolve();
+			for await (const value of IdbBase.forEachValue(db, storeName)) {
+				if (!value[lang].includes(v))
+					continue;
+
+				const tr = document.createElement('tr');
+				if (storeName === 'tcat' || storeName === 'tmedal') {
+					for (const lang of ['tw', 'jp', 'en', 'kr']) {
+						const td = document.createElement('td');
+						for (const s of value[lang].split('|'))
+							td.append(s), td.append(document.createElement('br'));
+						tr.appendChild(td);
 					}
-				};
-			});
+				} else {
+					for (const lang of ['tw', 'jp', 'en', 'kr']) {
+						const td = document.createElement('td');
+						td.textContent = value[lang];
+						tr.appendChild(td);
+					}
+				}
+
+				if (first && storeNames.length !== 1) {
+					first = false;
+					const tr = document.createElement('tr');
+					const td = document.createElement('td');
+					td.textContent = {'tstage': '關卡', 'tcat': '貓咪', 'tenemy': '敵人', 'tterm': '名詞', 'tcombo': '聯組', 'tmedal': '獎章', 'titem': '獎勵'}[storeName];
+					td.colSpan = 4;
+					tr.appendChild(td);
+					tr.classList.add('group');
+					results_body.appendChild(tr);
+				}
+				results_body.appendChild(tr);
+			}
 		}
 	}
 	if (!results_body.children.length) {
