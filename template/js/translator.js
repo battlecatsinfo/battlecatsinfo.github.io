@@ -16,11 +16,12 @@ async function loadAllTranslations() {
 await loadAllTranslations();
 
 const search_text = document.getElementById('search-text');
+search_text.focus();
 const results_body = document.getElementById('results-body');
 const search_for = document.getElementById('search-for');
 const input_lang = document.getElementById('input-lang');
 
-document.getElementById('go').addEventListener('click', async function () {
+async function doSearch() {
 	const lang = input_lang.value;
 	const target = search_for.value;
 	const v = search_text.value.trim();
@@ -79,4 +80,10 @@ document.getElementById('go').addEventListener('click', async function () {
 		tr.appendChild(td);
 		results_body.appendChild(tr);
 	}
+}
+
+search_text.addEventListener('keypress', async function (event) {
+	if (event.key == 'Enter')
+		await doSearch();
 });
+document.getElementById('go').addEventListener('click', doSearch);
