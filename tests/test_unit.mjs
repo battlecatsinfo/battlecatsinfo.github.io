@@ -1950,6 +1950,12 @@ describe('unit.mjs', function () {
 				assert.strictEqual(round(cf.tdps), 8263);
 			});
 
+			it('explosion and sage slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(771)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(round(cf.tdps), 11540);
+			});
+
 		});
 
 		describe('CatForm.dpsAgainst', function () {
@@ -1992,6 +1998,13 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(99)).forms[2];
 				cf.level = 50;
 				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 9833);
+			});
+
+			it('explosion and sage slayer should be counted', async function () {
+				var cf = (await Unit.loadCat(771)).forms[1];
+				cf.level = 50;
+				assert.deepEqual(round(cf.dpsAgainst(Unit.TB_SAGE)), 11540);
+				assert.deepEqual(round(cf.dpsAgainst(Unit.TB_WHITE)), 9616);
 			});
 
 			it('savage should be counted', async function () {
@@ -4412,6 +4425,11 @@ describe('unit.mjs', function () {
 			it('attack base: ignore for tdps', async function () {
 				var enemy = await Unit.loadEnemy(34);
 				assert.strictEqual(round(enemy.tdps), 1400);
+			});
+
+			it('explosion should be counted', async function () {
+				var enemy = await Unit.loadEnemy(699);
+				assert.deepEqual(round(enemy.tdps), 27397);
 			});
 
 		});
