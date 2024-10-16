@@ -70,6 +70,11 @@ async function doSearch() {
 				results_body.appendChild(tr);
 			}
 		}
+		const url = new URL(location.pathname, location.href);
+		url.searchParams.set("q", v);
+		lang != 'tw' && url.searchParams.set("input", lang);
+		target != 'all' && url.searchParams.set("target", target);
+		history.pushState({}, "", url);
 	}
 	if (!results_body.children.length) {
 		const tr = document.createElement('tr');
@@ -80,6 +85,19 @@ async function doSearch() {
 		tr.appendChild(td);
 		results_body.appendChild(tr);
 	}
+}
+
+const searchParams = new URL(location.href).searchParams;
+const target = searchParams.get('target');
+if (target)
+	search_for.value = target;
+const input = searchParams.get('input');
+if (input)
+	input_lang.value = input;
+const q = searchParams.get('q');
+if (q) {
+	search_text.value = q;
+	doSearch();
 }
 
 search_text.addEventListener('keypress', async function (event) {
