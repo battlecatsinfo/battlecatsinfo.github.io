@@ -1705,6 +1705,7 @@ class CatForm extends Unit {
 		this.res ??= {};
 		const talents = this.talents;
 		let j = 0;
+		this.trait = this.trait | talents[0];
 		for (let i = 1; i < 113 && talents[i]; i += 14) {
 			if (type === null || type === talents[i + 13])
 				this.applyTalent(talents.subarray(i, i + 14), levels[j++]);
