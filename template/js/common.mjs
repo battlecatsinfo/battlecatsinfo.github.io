@@ -21,15 +21,11 @@ class IdbBase {
 			if (stores.has("cats"))
 				db.deleteObjectStore("cats");
 			db.createObjectStore("cats", {keyPath: "i"});
-		}
 
-		if (oldVersion < 1370002 || 1370010 < newVersion) {
 			if (stores.has("enemy"))
 				db.deleteObjectStore("enemy");
 			db.createObjectStore("enemy", {keyPath: "i"});
-		}
 
-		if (oldVersion < 1370002 || 1370010 < newVersion) {
 			if (stores.has("map"))
 				db.deleteObjectStore("map");
 			db.createObjectStore("map", {keyPath: "id"});
@@ -37,27 +33,19 @@ class IdbBase {
 			if (stores.has("stage"))
 				db.deleteObjectStore("stage");
 			db.createObjectStore("stage", {keyPath: "id"});
-		}
 
-		if (oldVersion < 1370002 || 1370010 < newVersion) {
 			if (stores.has("combo"))
 				db.deleteObjectStore("combo");
 			db.createObjectStore("combo");
-		}
 
-		if (oldVersion < 1370002 || 1370010 < newVersion) {
 			if (stores.has("reward"))
 				db.deleteObjectStore("reward");
 			db.createObjectStore("reward", {keyPath: "id"});
-		}
 
-		if (oldVersion < 1370002 || 1370010 < newVersion) {
 			if (stores.has("scheme"))
 				db.deleteObjectStore("scheme");
 			db.createObjectStore("scheme");
-		}
 
-		if (oldVersion < 1370002 || 1370010 < newVersion) {
 			for (const name of translatorStores) {
 				if (stores.has(name))
 					db.deleteObjectStore(name);
