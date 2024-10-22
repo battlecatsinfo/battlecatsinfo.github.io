@@ -1446,9 +1446,9 @@
 			]
 		},
 		{
-			"tw_name": "越南大戰DEFENSE",
-			"jp_name": "メタルスラッグディフェンス",
-			"en_name": "Metal Slug Defense",
+			"tw_name": "越南大戰進攻",
+			"jp_name": "メタルスラッグアタック",
+			"en_name": "Metal Slug Attack",
 			"stages": [
 				"2-21",
 				"2-22",
@@ -1461,7 +1461,7 @@
 				"官方": "https://game.snk-corp.co.jp/official/metalslug_attack/"
 			},
 			"pools": [
-				"越南大戰DEFENSE"
+				"越南大戰進攻"
 			],
 			"banners": [
 				"https://i.imgur.com/STOvhLl.png"
