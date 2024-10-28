@@ -331,7 +331,7 @@ class CatEnv {
 		return this._orbs.atk.reduce((rv, x) => rv + x, 0);
 	}
 	get orb_hp() {
-		return this._orbs.hp.reduce((rv, x) => rv * (1 - 0.04 * x), 1);
+		return 1 - this._orbs.hp.reduce((rv, x) => rv + (x << 2), 0) / 100;
 	}
 	get orb_good_hp() {
 		return this._orbs.good.reduce((rv, x) => rv - 0.02 * x, 1);
@@ -343,7 +343,7 @@ class CatEnv {
 		return this._orbs.massive.reduce((rv, x) => rv + x / 10, 0);
 	}
 	get orb_resist() {
-		return this._orbs.resist.reduce((rv, x) => rv * (1 - x / 20), 1);
+		return 1 - this._orbs.resist.reduce((rv, x) => rv + (x << 2) + x, 0) / 100;
 	}
 
 	// @TODO: rework this as a treasure?
