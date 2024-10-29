@@ -502,11 +502,11 @@ describe('unit.mjs', function () {
 					},
 				});
 				assert.strictEqual(env.orb_atk, 10);
-				assert.approximately(env.orb_hp, (1 - 0.04 * 4) * (1 - 0.04 * 2), Number.EPSILON);
+				assert.approximately(env.orb_hp, 1 - (0.04 * 4 + 0.04 * 2), Number.EPSILON);
 				assert.approximately(env.orb_good_hp, 1 - 0.02 * 8, Number.EPSILON);
 				assert.approximately(env.orb_good_atk, 0.06 * 8, Number.EPSILON);
 				assert.approximately(env.orb_massive, 4 / 10, Number.EPSILON);
-				assert.approximately(env.orb_resist, (1 - 1 / 20) * (1 - 4 / 20), Number.EPSILON);
+				assert.approximately(env.orb_resist, 1 - (1 / 20 + 4 / 20), Number.EPSILON);
 			});
 
 			it('others related', async function () {
@@ -1533,7 +1533,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.hpAgainst(Unit.TB_FLOAT), 2052000);
 
 				Unit.catEnv.setOrbs('resist', [2, 3]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 2011765);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 2052000);
 
 				// orb tough up shouldn't work for white
 				var stub = sinon.stub(cf.info, 'trait');
@@ -1662,15 +1662,15 @@ describe('unit.mjs', function () {
 				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WITCH)), 105300);
 
 				Unit.catEnv.setOrbs('hp', [2, 3]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 130064);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 130064);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_BLACK)), 130064);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_METAL)), 130064);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ANGEL)), 130064);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ALIEN)), 130064);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ZOMBIE)), 130064);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RELIC)), 130064);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_DEMON)), 130064);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_FLOAT)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_BLACK)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_METAL)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ANGEL)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ALIEN)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_ZOMBIE)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RELIC)), 131625);
+				assert.strictEqual(round(cf.hpAgainst(Unit.TB_DEMON)), 131625);
 				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WHITE)), 105300);
 				assert.strictEqual(round(cf.hpAgainst(Unit.TB_EVA)), 105300);
 				assert.strictEqual(round(cf.hpAgainst(Unit.TB_WITCH)), 105300);
