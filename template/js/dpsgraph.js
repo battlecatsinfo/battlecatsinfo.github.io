@@ -1252,9 +1252,9 @@ class DPSGraph {
 			}
 
 			// restore back data
-			if (this.surge_data)
+			if (this.options.hasOwnProperty('surge'))
 				this.surge_data = tmp;
-			else if (this.explosion_data)
+			else if (this.options.hasOwnProperty('explosion'))
 				this.explosion_data = tmp;
 			else
 				this.wave_pos = tmp;
