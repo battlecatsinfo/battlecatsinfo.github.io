@@ -692,6 +692,15 @@ class DPSGraph {
 				};
 		}
 
+		if (F.ab.hasOwnProperty(AB_EXPLOSION)) {
+			this.options.explosion = 0;
+			this.create_select('爆波', [`期望值`, '最大值（100%）', '無'])
+				.oninput = function() {
+					self.options.explosion = this.selectedIndex;
+					self.render();
+				};
+		}
+
 		if (F.ab.hasOwnProperty(AB_MINISURGE) || helper.talent_types.has(65)) {
 			this.options.surge = 0;
 			this.create_select('小烈波', [`期望值`, '最大值（100%）', '無'])
@@ -753,6 +762,46 @@ class DPSGraph {
 					}
 				}
 			}
+			if (this.explosion_data) {
+				const overlap = this.explosion_data[1] == this.explosion_data[2];
+				let dir = 1;
+				outer: do {
+					for (let i = 0;i < 3;++i) {
+						const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
+						let dis_0 = dir * ([0, 75, 175][i]);
+						let dis_1 = dir * (75 + 100 * i);
+						if (overlap) {
+							if (dis_0 > dis_1) {
+								let tmp = dis_0;
+								dis_0 = dis_1;
+								dis_1 = tmp;
+							}
+							const pos = x - this.explosion_data[1];
+							if (pos > dis_0 && pos <= dis_1) {
+								for (let i = 0; i < RAW.length; ++i)
+									if (this.abis[i]) RAW[i] += ~~(this.atks[i] * dmg);
+								break outer;
+							}
+						} else {
+							let min_range, max_range;
+							if (dir == 1) {
+								min_range = this.explosion_data[1] + dis_0;
+								max_range = this.explosion_data[2] + dis_1;
+							} else {
+								min_range = this.explosion_data[1] + dis_1;
+								max_range = this.explosion_data[2] + dis_0;
+							}
+							const interval = max_range - min_range;
+							if (x > min_range && x <= max_range) {
+								const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
+								for (let i = 0; i < RAW.length; ++i)
+									if (this.abis[i]) RAW[i] += ~~(this.atks[i] * multi);
+							}
+						}
+					}
+					dir -= 2;
+				} while (dir == -1);
+			}
 		} else {
 			for (let i = 0; i < this.E.lds.length; ++i) {
 				let a = this.E.lds[i];
@@ -790,6 +839,46 @@ class DPSGraph {
 						}
 					}
 				}
+			}
+			if (this.explosion_data) {
+				const overlap = this.explosion_data[1] == this.explosion_data[2];
+				let dir = 1;
+				outer: do {
+					for (let i = 0;i < 3;++i) {
+						const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
+						let dis_0 = dir * ([0, 75, 175][i]);
+						let dis_1 = dir * (75 + 100 * i);
+						if (overlap) {
+							if (dis_0 > dis_1) {
+								let tmp = dis_0;
+								dis_0 = dis_1;
+								dis_1 = tmp;
+							}
+							const pos = x - this.explosion_data[1];
+							if (pos > dis_0 && pos <= dis_1) {
+								for (let i = 0; i < RAW.length; ++i)
+									if (this.abis[i]) RAW[i] += ~~(this.atks[i] * dmg);
+								break outer;
+							}
+						} else {
+							let min_range, max_range;
+							if (dir == 1) {
+								min_range = this.explosion_data[1] + dis_0;
+								max_range = this.explosion_data[2] + dis_1;
+							} else {
+								min_range = this.explosion_data[1] + dis_1;
+								max_range = this.explosion_data[2] + dis_0;
+							}
+							const interval = max_range - min_range;
+							if (x > min_range && x <= max_range) {
+								const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
+								for (let i = 0; i < RAW.length; ++i)
+									if (this.abis[i]) RAW[i] += ~~(this.atks[i] * multi);
+							}
+						}
+					}
+					dir -= 2;
+				} while (dir == -1);
 			}
 		}
 		for (let i of RAW) sum += i;
@@ -908,6 +997,37 @@ class DPSGraph {
 		} else {
 			this.surge_data = null;
 		}
+		x = F.ab[AB_EXPLOSION];
+		if (x && this.options.explosion != 2) {
+			let dir = 1;
+			this.explosion_data = x;
+
+			do {
+				for (let i = 0;i < 3;++i) {
+					if (x[1] == x[2]) {
+						const p = [75, 175, 275][i];
+						Xs.push([x[1] + dir * p, false]);
+						Xs.push([x[1] + dir * p + 1, false]);
+					} else {
+						let dis_0 = dir * ([0, 75, 175][i]);
+						let dis_1 = dir * (75 + 100 * i);
+						let min_range, max_range;
+						if (dir == 1) {
+							min_range = this.explosion_data[1] + dis_0;
+							max_range = this.explosion_data[2] + dis_1;
+						} else {
+							min_range = this.explosion_data[1] + dis_1;
+							max_range = this.explosion_data[2] + dis_0;
+						}
+						Xs.push([min_range, false]);
+						Xs.push([min_range + 1, false]);
+						Xs.push([max_range, false]);
+						Xs.push([max_range + 1, false]);
+					}
+				}
+				dir -= 2;
+			} while (dir == -1);
+		}
 		x = -Infinity;
 		for (const e of Xs) x = Math.max(e[0], x);
 		Xs.push([x + 20, false]);
@@ -927,7 +1047,7 @@ class DPSGraph {
 			x = X[0];
 			if (last_x == x) continue;
 			RAW = this.atks.slice();
-			if (this.surge_data) SURGE_RAW = new Array(this.atks.length).fill(0);
+			if (this.surge_data || this.explosion_data) SURGE_RAW = new Array(this.atks.length).fill(0);
 			sum = 0;
 			surge_sum = 0;
 			if (this.is_normal) {
@@ -956,6 +1076,46 @@ class DPSGraph {
 							}
 						}
 					}
+				}
+				if (this.explosion_data) {
+					const overlap = this.explosion_data[1] == this.explosion_data[2];
+					let dir = 1;
+					outer: do {
+						for (let i = 0;i < 3;++i) {
+							const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
+							let dis_0 = dir * ([0, 75, 175][i]);
+							let dis_1 = dir * (75 + 100 * i);
+							if (overlap) {
+								if (dis_0 > dis_1) {
+									let tmp = dis_0;
+									dis_0 = dis_1;
+									dis_1 = tmp;
+								}
+								const pos = x - this.explosion_data[1];
+								if (pos > dis_0 && pos <= dis_1) {
+									for (let i = 0; i < RAW.length; ++i)
+										if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * dmg);
+									break outer;
+								}
+							} else {
+								let min_range, max_range;
+								if (dir == 1) {
+									min_range = this.explosion_data[1] + dis_0;
+									max_range = this.explosion_data[2] + dis_1;
+								} else {
+									min_range = this.explosion_data[1] + dis_1;
+									max_range = this.explosion_data[2] + dis_0;
+								}
+								const interval = max_range - min_range;
+								if (x > min_range && x <= max_range) {
+									const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
+									for (let i = 0; i < RAW.length; ++i)
+										if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * multi);
+								}
+							}
+						}
+						dir -= 2;
+					} while (dir == -1);
 				}
 			} else {
 				for (let i = 0; i < F.lds.length; ++i) {
@@ -995,10 +1155,50 @@ class DPSGraph {
 						}
 					}
 				}
+				if (this.explosion_data) {
+					const overlap = this.explosion_data[1] == this.explosion_data[2];
+					let dir = 1;
+					outer: do {
+						for (let i = 0;i < 3;++i) {
+							const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
+							let dis_0 = dir * ([0, 75, 175][i]);
+							let dis_1 = dir * (75 + 100 * i);
+							if (overlap) {
+								if (dis_0 > dis_1) {
+									let tmp = dis_0;
+									dis_0 = dis_1;
+									dis_1 = tmp;
+								}
+								const pos = x - this.explosion_data[1];
+								if (pos > dis_0 && pos <= dis_1) {
+									for (let i = 0; i < RAW.length; ++i)
+										if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * dmg);
+									break outer;
+								}
+							} else {
+								let min_range, max_range;
+								if (dir == 1) {
+									min_range = this.explosion_data[1] + dis_0;
+									max_range = this.explosion_data[2] + dis_1;
+								} else {
+									min_range = this.explosion_data[1] + dis_1;
+									max_range = this.explosion_data[2] + dis_0;
+								}
+								const interval = max_range - min_range;
+								if (x > min_range && x <= max_range) {
+									const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
+									for (let i = 0; i < RAW.length; ++i)
+										if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * multi);
+								}
+							}
+						}
+						dir -= 2;
+					} while (dir == -1);
+				}
 			}
 			for (let i of RAW) sum += i;
 			sum = ~~(sum * 30 / F.attackF);
-			if (this.surge_data) {
+			if (this.surge_data || this.explosion_data) {
 				surge_sum = 0;
 				for (let i of SURGE_RAW) surge_sum += i;
 				surge_sum = ~~(surge_sum * 30 / F.attackF)
@@ -1016,7 +1216,7 @@ class DPSGraph {
 		this.H.Ys = new_Ys;
 
 		this.H.D = this.dps_at.bind(this);
-		if (this.helper.B.R.C() == 1 && (this.surge_data || this.wave_pos)) {
+		if (this.helper.B.R.C() == 1 && (this.surge_data || this.wave_pos || this.explosion_data)) {
 			let tmp;
 
 			this.H.X2s = [];
@@ -1028,6 +1228,9 @@ class DPSGraph {
 			if (this.surge_data) {
 				tmp = this.surge_data;
 				this.surge_data = null;
+			} else if (this.explosion_data) {
+				tmp = this.explosion_data;
+				this.explosion_data = null;
 			} else {
 				tmp = this.wave_pos;
 				this.wave_pos = null;
@@ -1051,6 +1254,8 @@ class DPSGraph {
 			// restore back data
 			if (this.surge_data)
 				this.surge_data = tmp;
+			else if (this.explosion_data)
+				this.explosion_data = tmp;
 			else
 				this.wave_pos = tmp;
 
