@@ -1014,37 +1014,69 @@ class DPSGraph {
 		}
 
 		this.H.D = this.dps_at.bind(this);
+		if (this.helper.B.R.C() == 1) {
+			if (this.surge_data) {
+				const tmp = this.surge_data;
+				this.surge_data = null;
+				this.H.X2s = [];
+				this.H.Y2s = [];
 
-		if (this.surge_data && this.helper.B.R.C() == 1) {
-			const tmp = this.surge_data;
-			this.surge_data = null;
-			this.H.X2s = [];
-			this.H.Y2s = [];
+				last_x = last_y = 0;
 
-			last_x = last_y = 0;
-
-			for (const X of Xs) {
-				x = X[0];
-				if (last_x == x) continue;
-				sum = this.dps_at(x);
-				if (last_y != sum) {
-					this.H.X2s.push(X[1] ? x : last_x);
-					this.H.Y2s.push((X[1] ? last_y : sum) + surge_sum);
+				for (const X of Xs) {
+					x = X[0];
+					if (last_x == x) continue;
+					sum = this.dps_at(x);
+					if (last_y != sum) {
+						this.H.X2s.push(X[1] ? x : last_x);
+						this.H.Y2s.push((X[1] ? last_y : sum) + surge_sum);
+					}
+					this.H.X2s.push(x);
+					this.H.Y2s.push(sum + surge_sum);
+					last_x = x;
+					last_y = sum;
 				}
-				this.H.X2s.push(x);
-				this.H.Y2s.push(sum + surge_sum);
-				last_x = x;
-				last_y = sum;
-			}
 
-			this.surge_data = tmp;
-			this.H.Xs = new_Xs;
-			this.H.Ys = new_Ys;
-			this.helper.B.R.plot(this.H);
-			this.H.X2s = null;
-			this.H.Y2s = null;
-			return;
+				this.surge_data = tmp;
+				this.H.Xs = new_Xs;
+				this.H.Ys = new_Ys;
+				this.helper.B.R.plot(this.H);
+				this.H.X2s = null;
+				this.H.Y2s = null;
+				return;
+			}
+			if (this.wave_pos) {
+				const tmp = this.wave_pos;
+				this.wave_pos = null;
+				this.H.X2s = [];
+				this.H.Y2s = [];
+
+				last_x = last_y = 0;
+
+				for (const X of Xs) {
+					x = X[0];
+					if (last_x == x) continue;
+					sum = this.dps_at(x);
+					if (last_y != sum) {
+						this.H.X2s.push(X[1] ? x : last_x);
+						this.H.Y2s.push((X[1] ? last_y : sum));
+					}
+					this.H.X2s.push(x);
+					this.H.Y2s.push(sum);
+					last_x = x;
+					last_y = sum;
+				}
+
+				this.wave_pos = tmp;
+				this.H.Xs = new_Xs;
+				this.H.Ys = new_Ys;
+				this.helper.B.R.plot(this.H);
+				this.H.X2s = null;
+				this.H.Y2s = null;
+				return
+			}
 		}
+
 		this.H.Xs = new_Xs;
 		this.H.Ys = new_Ys;
 		this.helper.B.R.plot(this.H);
