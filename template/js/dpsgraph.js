@@ -1024,6 +1024,7 @@ class DPSGraph {
 
 			last_x = last_y = 0;
 
+			// disable surge/wave ability temporarily
 			if (this.surge_data) {
 				tmp = this.surge_data;
 				this.surge_data = null;
@@ -1032,6 +1033,7 @@ class DPSGraph {
 				this.wave_pos = null;
 			}
 
+			// calculate DPS-graph without surge/wave
 			for (const X of Xs) {
 				x = X[0];
 				if (last_x == x) continue;
@@ -1046,6 +1048,7 @@ class DPSGraph {
 				last_y = sum;
 			}
 
+			// restore back data
 			if (this.surge_data)
 				this.surge_data = tmp;
 			else
