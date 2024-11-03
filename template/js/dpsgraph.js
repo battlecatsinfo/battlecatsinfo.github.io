@@ -736,73 +736,6 @@ class DPSGraph {
 		buf ??= RAW;
 		if (this.is_normal) {
 			if (x < -320 || x > this.E.range) RAW.fill(0);
-			if (this.surge_data) {
-				const ab = this.E.ab[AB_SURGE] || this.E.ab[AB_MINISURGE];
-				const left_point = ab[1] - 250;
-				const right_point = ab[2] + 125;
-				if (x >= left_point && x <= right_point) {
-					const mul = this.surge_data[x - left_point] * this.surge_mul;
-					for (let i = 0; i < buf.length; ++i)
-						if (this.abis[i]) buf[i] += ~~(this.atks[i] * mul);
-				}
-			}
-			if (this.wave_pos) {
-				if (x >= -67.5 && x <= this.wave_pos) {
-					const ab = this.E.ab[AB_WAVE] || this.E.ab[AB_MINIWAVE];
-					const mini = this.E.ab[AB_MINIWAVE] ? 0.2 : 1;
-					for (let i = 0; i < RAW.length; ++i) {
-						if (this.options.wave) {
-							for (let i = 0; i < RAW.length; ++i) {
-								if (this.abis[i]) RAW[i] += (this.atks[i] * mini);
-							}
-						} else {
-							for (let i = 0; i < RAW.length; ++i) {
-								if (this.abis[i]) RAW[i] += (this.atks[i] * mini * ab[0] / 100);
-							}
-						}
-					}
-				}
-			}
-			if (this.explosion_data) {
-				const overlap = this.explosion_data[1] == this.explosion_data[2];
-				let dir = 1;
-				outer: do {
-					for (let i = 0;i < 3;++i) {
-						const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
-						let dis_0 = dir * ([0, 75, 175][i]);
-						let dis_1 = dir * (75 + 100 * i);
-						if (overlap) {
-							if (dis_0 > dis_1) {
-								let tmp = dis_0;
-								dis_0 = dis_1;
-								dis_1 = tmp;
-							}
-							const pos = x - this.explosion_data[1];
-							if (pos > dis_0 && pos <= dis_1) {
-								for (let i = 0; i < buf.length; ++i)
-									if (this.abis[i]) buf[i] += ~~(this.atks[i] * dmg);
-								break outer;
-							}
-						} else {
-							let min_range, max_range;
-							if (dir == 1) {
-								min_range = this.explosion_data[1] + dis_0;
-								max_range = this.explosion_data[2] + dis_1;
-							} else {
-								min_range = this.explosion_data[1] + dis_1;
-								max_range = this.explosion_data[2] + dis_0;
-							}
-							const interval = max_range - min_range;
-							if (x > min_range && x <= max_range) {
-								const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
-								for (let i = 0; i < buf.length; ++i)
-									if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
-							}
-						}
-					}
-					dir -= 2;
-				} while (dir == -1);
-			}
 		} else {
 			for (let i = 0; i < this.E.lds.length; ++i) {
 				let a = this.E.lds[i];
@@ -814,73 +747,73 @@ class DPSGraph {
 				}
 				if (x < a || x > b) RAW[i] = 0;
 			}
-			if (this.surge_data) {
-				const ab = this.E.ab[AB_SURGE] || this.E.ab[AB_MINISURGE];
-				const left_point = ab[1] - 250;
-				const right_point = ab[2] + 125;
-				if (x >= left_point && x <= right_point) {
-					const mul = this.surge_data[x - left_point] * this.surge_mul;
-					for (let i = 0; i < buf.length; ++i)
-						if (this.abis[i]) buf[i] += ~~(this.atks[i] * mul);
-				}
+		}
+		if (this.surge_data) {
+			const ab = this.E.ab[AB_SURGE] || this.E.ab[AB_MINISURGE];
+			const left_point = ab[1] - 250;
+			const right_point = ab[2] + 125;
+			if (x >= left_point && x <= right_point) {
+				const mul = this.surge_data[x - left_point] * this.surge_mul;
+				for (let i = 0; i < buf.length; ++i)
+					if (this.abis[i]) buf[i] += ~~(this.atks[i] * mul);
 			}
-			if (this.wave_pos) {
-				if (x >= -67.5 && x <= this.wave_pos) {
-					const ab = this.E.ab[AB_WAVE] || this.E.ab[AB_MINIWAVE];
-					const mini = this.E.ab[AB_MINIWAVE] ? 0.2 : 1;
-					for (let i = 0; i < RAW.length; ++i) {
-						if (this.options.wave) {
-							for (let i = 0; i < RAW.length; ++i) {
-								if (this.abis[i]) RAW[i] += (this.atks[i] * mini);
-							}
-						} else {
-							for (let i = 0; i < RAW.length; ++i) {
-								if (this.abis[i]) RAW[i] += (this.atks[i] * mini * ab[0] / 100);
-							}
+		}
+		if (this.wave_pos) {
+			if (x >= -67.5 && x <= this.wave_pos) {
+				const ab = this.E.ab[AB_WAVE] || this.E.ab[AB_MINIWAVE];
+				const mini = this.E.ab[AB_MINIWAVE] ? 0.2 : 1;
+				for (let i = 0; i < RAW.length; ++i) {
+					if (this.options.wave) {
+						for (let i = 0; i < RAW.length; ++i) {
+							if (this.abis[i]) RAW[i] += (this.atks[i] * mini);
+						}
+					} else {
+						for (let i = 0; i < RAW.length; ++i) {
+							if (this.abis[i]) RAW[i] += (this.atks[i] * mini * ab[0] / 100);
 						}
 					}
 				}
 			}
-			if (this.explosion_data) {
-				const overlap = this.explosion_data[1] == this.explosion_data[2];
-				let dir = 1;
-				outer: do {
-					for (let i = 0;i < 3;++i) {
-						const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
-						let dis_0 = dir * ([0, 75, 175][i]);
-						let dis_1 = dir * (75 + 100 * i);
-						if (overlap) {
-							if (dis_0 > dis_1) {
-								let tmp = dis_0;
-								dis_0 = dis_1;
-								dis_1 = tmp;
-							}
-							const pos = x - this.explosion_data[1];
-							if (pos > dis_0 && pos <= dis_1) {
-								for (let i = 0; i < buf.length; ++i)
-									if (this.abis[i]) buf[i] += ~~(this.atks[i] * dmg);
-								break outer;
-							}
+		}
+		if (this.explosion_data) {
+			const overlap = this.explosion_data[1] == this.explosion_data[2];
+			let dir = 1;
+			outer: do {
+				for (let i = 0;i < 3;++i) {
+					const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
+					let dis_0 = dir * ([0, 75, 175][i]);
+					let dis_1 = dir * (75 + 100 * i);
+					if (overlap) {
+						if (dis_0 > dis_1) {
+							let tmp = dis_0;
+							dis_0 = dis_1;
+							dis_1 = tmp;
+						}
+						const pos = x - this.explosion_data[1];
+						if (pos > dis_0 && pos <= dis_1) {
+							for (let i = 0; i < buf.length; ++i)
+								if (this.abis[i]) buf[i] += ~~(this.atks[i] * dmg);
+							break outer;
+						}
+					} else {
+						let min_range, max_range;
+						if (dir == 1) {
+							min_range = this.explosion_data[1] + dis_0;
+							max_range = this.explosion_data[2] + dis_1;
 						} else {
-							let min_range, max_range;
-							if (dir == 1) {
-								min_range = this.explosion_data[1] + dis_0;
-								max_range = this.explosion_data[2] + dis_1;
-							} else {
-								min_range = this.explosion_data[1] + dis_1;
-								max_range = this.explosion_data[2] + dis_0;
-							}
-							const interval = max_range - min_range;
-							if (x > min_range && x <= max_range) {
-								const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
-								for (let i = 0; i < buf.length; ++i)
-									if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
-							}
+							min_range = this.explosion_data[1] + dis_1;
+							max_range = this.explosion_data[2] + dis_0;
+						}
+						const interval = max_range - min_range;
+						if (x > min_range && x <= max_range) {
+							const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
+							for (let i = 0; i < buf.length; ++i)
+								if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
 						}
 					}
-					dir -= 2;
-				} while (dir == -1);
-			}
+				}
+				dir -= 2;
+			} while (dir == -1);
 		}
 		for (let i of RAW) sum += i;
 		return ~~(sum * 30 / this.E.attackF);
