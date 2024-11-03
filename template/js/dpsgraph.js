@@ -169,9 +169,9 @@ class UnitDPSHelper {
 	}
 	createAttackTypeUI() {
 		{
-			const h3 = document.createElement('h3');
-			h3.textContent = this.title;
-			this.B.dom.appendChild(h3);
+			const h2 = document.createElement('h2');
+			h2.textContent = this.title;
+			this.B.dom.appendChild(h2);
 		}
 
 		{
