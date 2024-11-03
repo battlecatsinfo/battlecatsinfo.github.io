@@ -468,7 +468,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func('超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、增傷 120 %、減傷 50 %）', 'Qq8vQTs');
+				func('超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、傷害 1.2 倍、減傷 50 %）', 'Qq8vQTs');
 				break;
 			case 43: {
 				const p = document.createElement('div');
