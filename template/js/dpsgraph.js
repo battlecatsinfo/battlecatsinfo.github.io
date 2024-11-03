@@ -730,9 +730,10 @@ class DPSGraph {
 		this.helper.B.dom.appendChild(D);
 		return select;
 	}
-	dps_at(x) {
+	dps_at(x, buf) {
 		let RAW = this.atks.slice();
 		let sum = 0;
+		buf ??= RAW;
 		if (this.is_normal) {
 			if (x < -320 || x > this.E.range) RAW.fill(0);
 			if (this.surge_data) {
@@ -741,8 +742,8 @@ class DPSGraph {
 				const right_point = ab[2] + 125;
 				if (x >= left_point && x <= right_point) {
 					const mul = this.surge_data[x - left_point] * this.surge_mul;
-					for (let i = 0; i < RAW.length; ++i)
-						if (this.abis[i]) RAW[i] += ~~(this.atks[i] * mul);
+					for (let i = 0; i < buf.length; ++i)
+						if (this.abis[i]) buf[i] += ~~(this.atks[i] * mul);
 				}
 			}
 			if (this.wave_pos) {
@@ -778,8 +779,8 @@ class DPSGraph {
 							}
 							const pos = x - this.explosion_data[1];
 							if (pos > dis_0 && pos <= dis_1) {
-								for (let i = 0; i < RAW.length; ++i)
-									if (this.abis[i]) RAW[i] += ~~(this.atks[i] * dmg);
+								for (let i = 0; i < buf.length; ++i)
+									if (this.abis[i]) buf[i] += ~~(this.atks[i] * dmg);
 								break outer;
 							}
 						} else {
@@ -794,8 +795,8 @@ class DPSGraph {
 							const interval = max_range - min_range;
 							if (x > min_range && x <= max_range) {
 								const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
-								for (let i = 0; i < RAW.length; ++i)
-									if (this.abis[i]) RAW[i] += ~~(this.atks[i] * multi);
+								for (let i = 0; i < buf.length; ++i)
+									if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
 							}
 						}
 					}
@@ -819,8 +820,8 @@ class DPSGraph {
 				const right_point = ab[2] + 125;
 				if (x >= left_point && x <= right_point) {
 					const mul = this.surge_data[x - left_point] * this.surge_mul;
-					for (let i = 0; i < RAW.length; ++i)
-						if (this.abis[i]) RAW[i] += ~~(this.atks[i] * mul);
+					for (let i = 0; i < buf.length; ++i)
+						if (this.abis[i]) buf[i] += ~~(this.atks[i] * mul);
 				}
 			}
 			if (this.wave_pos) {
@@ -856,8 +857,8 @@ class DPSGraph {
 							}
 							const pos = x - this.explosion_data[1];
 							if (pos > dis_0 && pos <= dis_1) {
-								for (let i = 0; i < RAW.length; ++i)
-									if (this.abis[i]) RAW[i] += ~~(this.atks[i] * dmg);
+								for (let i = 0; i < buf.length; ++i)
+									if (this.abis[i]) buf[i] += ~~(this.atks[i] * dmg);
 								break outer;
 							}
 						} else {
@@ -872,8 +873,8 @@ class DPSGraph {
 							const interval = max_range - min_range;
 							if (x > min_range && x <= max_range) {
 								const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
-								for (let i = 0; i < RAW.length; ++i)
-									if (this.abis[i]) RAW[i] += ~~(this.atks[i] * multi);
+								for (let i = 0; i < buf.length; ++i)
+									if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
 							}
 						}
 					}
@@ -1039,178 +1040,30 @@ class DPSGraph {
 		let new_Ys = [];
 		let last_x = 0;
 		let last_y = 0;
-		let sum;
 		let surge_sum;
-		let RAW;
 		let SURGE_RAW;
 		for (const X of Xs) {
 			x = X[0];
 			if (last_x == x) continue;
-			RAW = this.atks.slice();
+			
 			if (this.surge_data || this.explosion_data) SURGE_RAW = new Array(this.atks.length).fill(0);
-			sum = 0;
+
+			const y = this.dps_at(x, SURGE_RAW);
+
 			surge_sum = 0;
-			if (this.is_normal) {
-				if (x < -320 || x > F.range) RAW.fill(0);
-				if (this.surge_data) {
-					const ab = F.ab[AB_SURGE] || F.ab[AB_MINISURGE];
-					const left_point = ab[1] - 250;
-					const right_point = ab[2] + 125;
-					if (x >= left_point && x <= right_point) {
-						const mul = this.surge_data[x - left_point] * this.surge_mul;
-						for (let i = 0; i < RAW.length; ++i)
-							if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * mul);
-					}
-				}
-				if (this.wave_pos) {
-					if (x >= -67.5 && x <= this.wave_pos) {
-						const ab = F.ab[AB_WAVE] || F.ab[AB_MINIWAVE];
-						const mini = F.ab[AB_MINIWAVE] ? 0.2 : 1;
-						if (this.options.wave) {
-							for (let i = 0; i < RAW.length; ++i) {
-								if (this.abis[i]) RAW[i] += (this.atks[i] * mini);
-							}
-						} else {
-							for (let i = 0; i < RAW.length; ++i) {
-								if (this.abis[i]) RAW[i] += (this.atks[i] * mini * ab[0] / 100);
-							}
-						}
-					}
-				}
-				if (this.explosion_data) {
-					const overlap = this.explosion_data[1] == this.explosion_data[2];
-					let dir = 1;
-					outer: do {
-						for (let i = 0;i < 3;++i) {
-							const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
-							let dis_0 = dir * ([0, 75, 175][i]);
-							let dis_1 = dir * (75 + 100 * i);
-							if (overlap) {
-								if (dis_0 > dis_1) {
-									let tmp = dis_0;
-									dis_0 = dis_1;
-									dis_1 = tmp;
-								}
-								const pos = x - this.explosion_data[1];
-								if (pos > dis_0 && pos <= dis_1) {
-									for (let i = 0; i < RAW.length; ++i)
-										if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * dmg);
-									break outer;
-								}
-							} else {
-								let min_range, max_range;
-								if (dir == 1) {
-									min_range = this.explosion_data[1] + dis_0;
-									max_range = this.explosion_data[2] + dis_1;
-								} else {
-									min_range = this.explosion_data[1] + dis_1;
-									max_range = this.explosion_data[2] + dis_0;
-								}
-								const interval = max_range - min_range;
-								if (x > min_range && x <= max_range) {
-									const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
-									for (let i = 0; i < RAW.length; ++i)
-										if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * multi);
-								}
-							}
-						}
-						dir -= 2;
-					} while (dir == -1);
-				}
-			} else {
-				for (let i = 0; i < F.lds.length; ++i) {
-					let a = F.lds[i];
-					let b = a + F.ldr[i];
-					if (a > b) {
-						let tmp = a;
-						a = b;
-						b = tmp;
-					}
-					if (x < a || x > b) RAW[i] = 0;
-				}
-				if (this.surge_data) {
-					const ab = F.ab[AB_SURGE] || F.ab[AB_MINISURGE];
-					const left_point = ab[1] - 250;
-					const right_point = ab[2] + 125;
-					if (x >= left_point && x <= right_point) {
-						const mul = this.surge_data[x - left_point] * this.surge_mul;
-						for (let i = 0; i < RAW.length; ++i)
-							if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * mul);
-					}
-				}
-				if (this.wave_pos) {
-					if (x >= -67.5 && x <= this.wave_pos) {
-						const ab = F.ab[AB_WAVE] || F.ab[AB_MINIWAVE];
-						const mini = F.ab[AB_MINIWAVE] ? 0.2 : 1;
-						for (let i = 0; i < RAW.length; ++i) {
-							if (this.options.wave) {
-								for (let i = 0; i < RAW.length; ++i) {
-									if (this.abis[i]) RAW[i] += (this.atks[i] * mini);
-								}
-							} else {
-								for (let i = 0; i < RAW.length; ++i) {
-									if (this.abis[i]) RAW[i] += (this.atks[i] * mini * ab[0] / 100);
-								}
-							}
-						}
-					}
-				}
-				if (this.explosion_data) {
-					const overlap = this.explosion_data[1] == this.explosion_data[2];
-					let dir = 1;
-					outer: do {
-						for (let i = 0;i < 3;++i) {
-							const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
-							let dis_0 = dir * ([0, 75, 175][i]);
-							let dis_1 = dir * (75 + 100 * i);
-							if (overlap) {
-								if (dis_0 > dis_1) {
-									let tmp = dis_0;
-									dis_0 = dis_1;
-									dis_1 = tmp;
-								}
-								const pos = x - this.explosion_data[1];
-								if (pos > dis_0 && pos <= dis_1) {
-									for (let i = 0; i < RAW.length; ++i)
-										if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * dmg);
-									break outer;
-								}
-							} else {
-								let min_range, max_range;
-								if (dir == 1) {
-									min_range = this.explosion_data[1] + dis_0;
-									max_range = this.explosion_data[2] + dis_1;
-								} else {
-									min_range = this.explosion_data[1] + dis_1;
-									max_range = this.explosion_data[2] + dis_0;
-								}
-								const interval = max_range - min_range;
-								if (x > min_range && x <= max_range) {
-									const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
-									for (let i = 0; i < RAW.length; ++i)
-										if (this.abis[i]) SURGE_RAW[i] += ~~(this.atks[i] * multi);
-								}
-							}
-						}
-						dir -= 2;
-					} while (dir == -1);
-				}
-			}
-			for (let i of RAW) sum += i;
-			sum = ~~(sum * 30 / F.attackF);
 			if (this.surge_data || this.explosion_data) {
 				surge_sum = 0;
 				for (let i of SURGE_RAW) surge_sum += i;
 				surge_sum = ~~(surge_sum * 30 / F.attackF)
 			}
-			if (last_y != sum) {
+			if (last_y != y) {
 				new_Xs.push(X[1] ? x : last_x);
-				new_Ys.push((X[1] ? last_y : sum) + surge_sum);
+				new_Ys.push((X[1] ? last_y : y) + surge_sum);
 			}
 			new_Xs.push(x);
-			new_Ys.push(sum + surge_sum);
+			new_Ys.push(y + surge_sum);
 			last_x = x;
-			last_y = sum;
+			last_y = y;
 		}
 		this.H.Xs = new_Xs;
 		this.H.Ys = new_Ys;
@@ -1240,15 +1093,15 @@ class DPSGraph {
 			for (const X of Xs) {
 				x = X[0];
 				if (last_x == x) continue;
-				sum = this.dps_at(x);
-				if (last_y != sum) {
+				const y = this.dps_at(x);
+				if (last_y != y) {
 					this.H.X2s.push(X[1] ? x : last_x);
-					this.H.Y2s.push((X[1] ? last_y : sum));
+					this.H.Y2s.push((X[1] ? last_y : y));
 				}
 				this.H.X2s.push(x);
-				this.H.Y2s.push(sum);
+				this.H.Y2s.push(y);
 				last_x = x;
-				last_y = sum;
+				last_y = y;
 			}
 
 			// restore back data
