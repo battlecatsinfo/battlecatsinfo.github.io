@@ -98,14 +98,12 @@ async function handle_input(input, B) {
 					if (!(B instanceof DPSBlock))
 						B = new DPSBlock(graph_container, B);
 					new DPSGraph(new CatDPSHelper(B, cat.forms[lvc]));
-					input.value = '';
 					return true;
 				}
 				const enemy = await loadEnemy(i - num_cats);
 				if (!(B instanceof DPSBlock))
 					B = new DPSBlock(graph_container, B);
 				new DPSGraph(new EnemyDPSHelper(B, enemy));
-				input.value = '';
 				return true;
 			}
 		}
@@ -1127,6 +1125,9 @@ async function main(render) {
 	});
 	document.getElementById('ok').addEventListener('click', async function() {
 		await handle_input(cat_name, render);
+	});
+	cat_name.addEventListener('focus', function() {
+		this.select();
 	});
 }
 

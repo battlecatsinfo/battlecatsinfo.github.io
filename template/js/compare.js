@@ -841,3 +841,7 @@ document.getElementById('clear').onclick = function() {
 			tr.removeChild(y);
 	}
 }
+
+cat_name.addEventListener('focus', function() {
+	this.select();
+});
