@@ -130,10 +130,12 @@
 		font-family: Monaco, "Ubuntu Mono", "Source Code Pro", Menlo, Consolas, monospace;
 	}
 	input[type="number"] {
-		padding: 8px 0;
-		margin-bottom: 8px;
-		border: none;
+		width: 5em;
+		padding: 5px 10px;
+		margin-bottom: .4em;
+		border: 1px solid #ccc !important;
 		border-bottom: 1px solid #ccc;
+		border-radius: 4px;
 	}
 	input[type="button"] {
 		margin: 0px auto;
@@ -259,12 +261,12 @@
 			</ul>
 			<div class="may-hide" style="margin-top: 30px;margin-left: 50px;">
 				<label for="def-lv">預設基本等級</label>
-				<input style="width: 4em;" type="number" min="1" max="60" name="def-lv" id="def-lv" value="50" required>
+				<input type="number" min="1" max="60" name="def-lv" id="def-lv" value="50" required>
 				<br>
 				<label for="plus-lv">預設加值等級</label>
-				<input style="width: 4em;" type="number" min="0" max="90" name="plus-lv" id="plus-lv" value="0" required>
+				<input type="number" min="0" max="90" name="plus-lv" id="plus-lv" value="0" required>
 				<br>
-				<span class="w3-button w3-teal w3-round" id="filter-go" style="margin-right: 8px;">手動篩選</span>
+				<span class="w3-button w3-teal w3-round" id="filter-go" style="margin-right: .4em;">手動篩選</span>
 				<span class="w3-button w3-red w3-round" id="filter-clear">清除</span>
 			</div>
 			<div class="no-print may-hide" style="position: absolute;top: 1150px;left: 17px;">
