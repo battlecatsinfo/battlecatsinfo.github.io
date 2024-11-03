@@ -1029,10 +1029,10 @@ class DPSGraph {
 					sum = this.dps_at(x);
 					if (last_y != sum) {
 						this.H.X2s.push(X[1] ? x : last_x);
-						this.H.Y2s.push((X[1] ? last_y : sum) + surge_sum);
+						this.H.Y2s.push((X[1] ? last_y : sum));
 					}
 					this.H.X2s.push(x);
-					this.H.Y2s.push(sum + surge_sum);
+					this.H.Y2s.push(sum);
 					last_x = x;
 					last_y = sum;
 				}
