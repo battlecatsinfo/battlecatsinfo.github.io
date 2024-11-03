@@ -1114,7 +1114,12 @@ async function main(render) {
 	}
 
 	document.getElementById('switch_mode').addEventListener('click', function() {
-		location.assign(location.pathname.replace('svg', 'png').replace('png', 'svg') + location.search);
+		let path = location.pathname;
+		if (path.includes('png'))
+			path = '/dpsgraph_svg.html';
+		else
+			path = '/dpsgraph_png.html';
+		location.assign(path + location.search);
 	});
 	document.getElementById('ok').addEventListener('click', async function() {
 		await handle_input(cat_name, render);
