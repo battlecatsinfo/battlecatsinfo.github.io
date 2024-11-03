@@ -1016,63 +1016,45 @@ class DPSGraph {
 		this.H.Ys = new_Ys;
 
 		this.H.D = this.dps_at.bind(this);
-		if (this.helper.B.R.C() == 1) {
+		if (this.helper.B.R.C() == 1 && (this.surge_data || this.wave_pos)) {
+			let tmp;
+
+			this.H.X2s = [];
+			this.H.Y2s = [];
+
+			last_x = last_y = 0;
+
 			if (this.surge_data) {
-				const tmp = this.surge_data;
+				tmp = this.surge_data;
 				this.surge_data = null;
-				this.H.X2s = [];
-				this.H.Y2s = [];
-
-				last_x = last_y = 0;
-
-				for (const X of Xs) {
-					x = X[0];
-					if (last_x == x) continue;
-					sum = this.dps_at(x);
-					if (last_y != sum) {
-						this.H.X2s.push(X[1] ? x : last_x);
-						this.H.Y2s.push((X[1] ? last_y : sum));
-					}
-					this.H.X2s.push(x);
-					this.H.Y2s.push(sum);
-					last_x = x;
-					last_y = sum;
-				}
-
-				this.surge_data = tmp;
-				this.H.Xs = new_Xs;
-				this.H.Ys = new_Ys;
-				this.helper.B.R.plot(this.H);
-				return;
-			}
-			if (this.wave_pos) {
-				const tmp = this.wave_pos;
+			} else {
+				tmp = this.wave_pos;
 				this.wave_pos = null;
-				this.H.X2s = [];
-				this.H.Y2s = [];
-
-				last_x = last_y = 0;
-
-				for (const X of Xs) {
-					x = X[0];
-					if (last_x == x) continue;
-					sum = this.dps_at(x);
-					if (last_y != sum) {
-						this.H.X2s.push(X[1] ? x : last_x);
-						this.H.Y2s.push((X[1] ? last_y : sum));
-					}
-					this.H.X2s.push(x);
-					this.H.Y2s.push(sum);
-					last_x = x;
-					last_y = sum;
-				}
-
-				this.wave_pos = tmp;
-				this.helper.B.R.plot(this.H);
-				this.H.X2s = null;
-				this.H.Y2s = null;
-				return
 			}
+
+			for (const X of Xs) {
+				x = X[0];
+				if (last_x == x) continue;
+				sum = this.dps_at(x);
+				if (last_y != sum) {
+					this.H.X2s.push(X[1] ? x : last_x);
+					this.H.Y2s.push((X[1] ? last_y : sum));
+				}
+				this.H.X2s.push(x);
+				this.H.Y2s.push(sum);
+				last_x = x;
+				last_y = sum;
+			}
+
+			if (this.surge_data)
+				this.surge_data = tmp;
+			else
+				this.wave_pos = tmp;
+
+			this.helper.B.R.plot(this.H);
+			this.H.X2s = null;
+			this.H.Y2s = null;
+			return;
 		}
 
 		this.helper.B.R.plot(this.H);
