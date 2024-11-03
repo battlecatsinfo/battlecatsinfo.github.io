@@ -215,6 +215,7 @@ class UnitDPSHelper {
 	}
 	createButtons() {
 		const self = this;
+		const p = document.createElement('p');
 		let btn = document.createElement('button');
 		btn.textContent = '下載';
 		btn.classList.add('w3-button', 'w3-teal', 'w3-round');
@@ -222,7 +223,7 @@ class UnitDPSHelper {
 			self.B.R.D();
 		}
 		btn.style.marginRight = '0.5em';
-		this.B.dom.appendChild(btn);
+		p.appendChild(btn);
 
 		btn = document.createElement('button');
 		btn.textContent = '複製';
@@ -236,7 +237,7 @@ class UnitDPSHelper {
 			}, 500);
 		}
 		btn.style.marginRight = '0.5em';
-		this.B.dom.appendChild(btn);
+		p.appendChild(btn);
 
 		btn = document.createElement('button');
 		btn.textContent = '刪除';
@@ -248,7 +249,7 @@ class UnitDPSHelper {
 			self.setURL(); // update url state
 		}
 		btn.style.marginRight = '0.5em';
-		this.B.dom.appendChild(btn);
+		p.appendChild(btn);
 
 		btn = document.createElement('button');
 		btn.textContent = '+';
@@ -258,16 +259,14 @@ class UnitDPSHelper {
 			cat_name2.focus();
 			add.onclick = async function() {
 				if (await handle_input(cat_name2, self.B)) {
-					const parent = btn.parentNode;
-					parent.removeChild(btn.previousElementSibling);
-					parent.removeChild(btn.previousElementSibling);
-					parent.removeChild(btn.previousElementSibling);
-					parent.removeChild(btn);
+					const p = btn.parentNode;
+					p.parentNode.removeChild(p);
 					id01.style.display = 'none';
 				}
 			}
 		}
-		this.B.dom.appendChild(btn);
+		p.appendChild(btn);
+		this.B.dom.appendChild(p);
 	}
 	createUI(graph) {
 		this.graph = graph;
