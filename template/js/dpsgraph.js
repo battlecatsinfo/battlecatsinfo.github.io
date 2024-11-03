@@ -1012,6 +1012,8 @@ class DPSGraph {
 			last_x = x;
 			last_y = sum;
 		}
+		this.H.Xs = new_Xs;
+		this.H.Ys = new_Ys;
 
 		this.H.D = this.dps_at.bind(this);
 		if (this.helper.B.R.C() == 1) {
@@ -1041,8 +1043,6 @@ class DPSGraph {
 				this.H.Xs = new_Xs;
 				this.H.Ys = new_Ys;
 				this.helper.B.R.plot(this.H);
-				this.H.X2s = null;
-				this.H.Y2s = null;
 				return;
 			}
 			if (this.wave_pos) {
@@ -1068,8 +1068,6 @@ class DPSGraph {
 				}
 
 				this.wave_pos = tmp;
-				this.H.Xs = new_Xs;
-				this.H.Ys = new_Ys;
 				this.helper.B.R.plot(this.H);
 				this.H.X2s = null;
 				this.H.Y2s = null;
@@ -1077,8 +1075,6 @@ class DPSGraph {
 			}
 		}
 
-		this.H.Xs = new_Xs;
-		this.H.Ys = new_Ys;
 		this.helper.B.R.plot(this.H);
 	}
 }
