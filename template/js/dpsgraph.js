@@ -775,8 +775,7 @@ class DPSGraph {
 		}
 		if (this.explosion_data) {
 			const overlap = this.explosion_data[1] == this.explosion_data[2];
-			let dir = 1;
-			outer: do {
+			outer: for (const dir of [1, -1]) {
 				for (let i = 0;i < 3;++i) {
 					const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
 					let dis_0 = [0, 75, 175][i];
@@ -835,8 +834,7 @@ class DPSGraph {
 						}
 					}
 				}
-				dir -= 2;
-			} while (dir == -1);
+			}
 		}
 		for (let i of RAW) sum += i;
 		return ~~(sum * 30 / this.E.attackF);
@@ -956,10 +954,9 @@ class DPSGraph {
 		}
 		x = F.ab[AB_EXPLOSION];
 		if (x && this.options.explosion != 2) {
-			let dir = 1;
 			this.explosion_data = x;
 
-			do {
+			for (const dir of [1, -1]) {
 				for (let i = 0;i < 3;++i) {
 					const width = [150, 100, 100][i];
 					if (x[1] == x[2]) {
@@ -990,8 +987,7 @@ class DPSGraph {
 						Xs.push([max_range, false]);
 					}
 				}
-				dir -= 2;
-			} while (dir == -1);
+			}
 		}
 		x = -Infinity;
 		for (const e of Xs) x = Math.max(e[0], x);
