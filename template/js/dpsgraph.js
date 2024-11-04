@@ -739,9 +739,7 @@ class DPSGraph {
 				let a = this.E.lds[i];
 				let b = a + this.E.ldr[i];
 				if (a > b) {
-					let tmp = a;
-					a = b;
-					b = tmp;
+					[a, b] = [b, a];
 				}
 				if (x < a || x > b) RAW[i] = 0;
 			}
@@ -784,9 +782,7 @@ class DPSGraph {
 						dis_0 *= dir;
 						dis_1 *= dir;
 						if (dis_0 > dis_1) {
-							let tmp = dis_0;
-							dis_0 = dis_1;
-							dis_1 = tmp;
+							[dis_0, dis_1] = [dis_1, dis_0];
 						}
 						const pos = x - this.explosion_data[1];
 						if (pos > dis_0 && pos <= dis_1) {
