@@ -951,38 +951,12 @@ class DPSGraph {
 		x = F.ab[AB_EXPLOSION];
 		if (x && this.options.explosion != 2) {
 			this.explosion_data = x;
-
-			for (const dir of [1, -1]) {
-				for (let i = 0;i < 3;++i) {
-					const width = [150, 100, 100][i];
-					if (x[1] == x[2]) {
-						const p = [75, 175, 275][i];
-						Xs.push([x[1] + dir * p, false]);
-						Xs.push([x[1] + dir * p + 1, false]);
-					} else {
-						if (dir == -1 && !i)
-							continue;
-						let dis_0, dis_1, min_range, max_range;
-						if (!i) {
-							dis_0 = -75;
-							dis_1 = 75;
-						} else {
-							dis_0 = [0, 75, 175][i];
-							dis_1 = 75 + 100 * i;
-						}
-						if (dir == 1) {
-							min_range = this.explosion_data[1] + dis_0;
-							max_range = this.explosion_data[2] + dis_1;
-						} else {
-							min_range = this.explosion_data[1] - dis_1;
-							max_range = this.explosion_data[2] - dis_0;
-						}
-						Xs.push([min_range, false]);
-						Xs.push([min_range + width, false]);
-						Xs.push([max_range - width, false]);
-						Xs.push([max_range, false]);
-					}
-				}
+			const offsets = [-275, -175, -75, 75, 175, 275];
+			for (const offset of offsets) {
+				Xs.push([x[1] + offset, false]);
+				Xs.push([x[1] + offset + 1, false]);
+				Xs.push([x[2] + offset, false]);
+				Xs.push([x[2] + offset + 1, false]);
 			}
 		}
 		x = -Infinity;
