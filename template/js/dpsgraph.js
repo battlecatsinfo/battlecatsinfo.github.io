@@ -779,9 +779,11 @@ class DPSGraph {
 			outer: do {
 				for (let i = 0;i < 3;++i) {
 					const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
-					let dis_0 = dir * ([0, 75, 175][i]);
-					let dis_1 = dir * (75 + 100 * i);
+					let dis_0 = [0, 75, 175][i];
+					let dis_1 = 75 + 100 * i;
 					if (overlap) {
+						dis_0 *= dir;
+						dis_1 *= dir;
 						if (dis_0 > dis_1) {
 							let tmp = dis_0;
 							dis_0 = dis_1;
@@ -795,16 +797,39 @@ class DPSGraph {
 						}
 					} else {
 						let min_range, max_range;
+						if (dir == -1 && !i)
+							continue;
+						if (!i) {
+							dis_0 = -75;
+							dis_1 = 75;
+						}
 						if (dir == 1) {
 							min_range = this.explosion_data[1] + dis_0;
 							max_range = this.explosion_data[2] + dis_1;
 						} else {
-							min_range = this.explosion_data[1] + dis_1;
-							max_range = this.explosion_data[2] + dis_0;
+							min_range = this.explosion_data[1] - dis_1;
+							max_range = this.explosion_data[2] - dis_0;
 						}
-						const interval = max_range - min_range;
 						if (x > min_range && x <= max_range) {
-							const multi = dmg * (dir == 1 ? max_range - x : x - min_range) / interval;
+							const spawn_interval = this.explosion_data[2] - this.explosion_data[1];
+							const max_interval = max_range - min_range;
+							const width = [150, 100, 100][i];
+							const double_width = width + width;
+							let multi = dmg;
+
+							if (double_width > max_interval) {
+								const overlapped = double_width - max_interval;
+								if (x > (min_range + width))
+									multi *= (max_range - x) / (width - overlapped);
+								else if (x < (max_range - width))
+									multi *= (x - min_range) / (width - overlapped);
+							} else {
+								multi *= width / spawn_interval;
+								if (x < (min_range + width))
+									multi *= (x - min_range) / width;
+								else if (x > (max_range - width))
+									multi *= (max_range - x) / width;
+							}
 							for (let i = 0; i < buf.length; ++i)
 								if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
 						}
@@ -936,25 +961,33 @@ class DPSGraph {
 
 			do {
 				for (let i = 0;i < 3;++i) {
+					const width = [150, 100, 100][i];
 					if (x[1] == x[2]) {
 						const p = [75, 175, 275][i];
 						Xs.push([x[1] + dir * p, false]);
 						Xs.push([x[1] + dir * p + 1, false]);
 					} else {
-						let dis_0 = dir * ([0, 75, 175][i]);
-						let dis_1 = dir * (75 + 100 * i);
-						let min_range, max_range;
+						if (dir == -1 && !i)
+							continue;
+						let dis_0, dis_1, min_range, max_range;
+						if (!i) {
+							dis_0 = -75;
+							dis_1 = 75;
+						} else {
+							dis_0 = [0, 75, 175][i];
+							dis_1 = 75 + 100 * i;
+						}
 						if (dir == 1) {
 							min_range = this.explosion_data[1] + dis_0;
 							max_range = this.explosion_data[2] + dis_1;
 						} else {
-							min_range = this.explosion_data[1] + dis_1;
-							max_range = this.explosion_data[2] + dis_0;
+							min_range = this.explosion_data[1] - dis_1;
+							max_range = this.explosion_data[2] - dis_0;
 						}
 						Xs.push([min_range, false]);
-						Xs.push([min_range + 1, false]);
+						Xs.push([min_range + width, false]);
+						Xs.push([max_range - width, false]);
 						Xs.push([max_range, false]);
-						Xs.push([max_range + 1, false]);
 					}
 				}
 				dir -= 2;
