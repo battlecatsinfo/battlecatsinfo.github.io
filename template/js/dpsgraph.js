@@ -98,12 +98,14 @@ async function handle_input(input, B) {
 					if (!(B instanceof DPSBlock))
 						B = new DPSBlock(graph_container, B);
 					new DPSGraph(new CatDPSHelper(B, cat.forms[lvc]));
+					B.createButtons();
 					return true;
 				}
 				const enemy = await loadEnemy(i - num_cats);
 				if (!(B instanceof DPSBlock))
 					B = new DPSBlock(graph_container, B);
 				new DPSGraph(new EnemyDPSHelper(B, enemy));
+				B.createButtons();
 				return true;
 			}
 		}
@@ -130,7 +132,25 @@ function surge_model(min_spawn, max_spawn, Xs) {
 	return arr;
 }
 
+function setURL() {
+	const blocks = graph_container.getElementsByClassName('w3-panel'); // document.body.querySelectorAll('* [data-units]')
+	let all_units = [];
 
+	for (const elem of blocks) {
+		let units = elem.dataset.units;
+		if (units.endsWith(","))
+			units = units.slice(0, -1);
+
+		all_units.push(units);
+	}
+
+	const url = new URL(location.href);
+	if (all_units.length)
+		url.searchParams.set("units", all_units.join('|'));
+	else
+		url.searchParams.delete('units');
+	history.pushState({}, "", url);
+}
 
 
 class DPSBlock {
@@ -149,6 +169,61 @@ class DPSBlock {
 		container.appendChild(this.dom);
 		container.dataset.units = '';
 		parent.appendChild(container);;
+	}
+	createButtons() {
+		const self = this;
+		const p = document.createElement('p');
+		let btn = document.createElement('button');
+		btn.textContent = '下載';
+		btn.classList.add('w3-button', 'w3-teal', 'w3-round');
+		btn.onclick = function() {
+			self.R.D();
+		}
+		btn.style.marginRight = '0.5em';
+		p.appendChild(btn);
+
+		btn = document.createElement('button');
+		btn.textContent = '複製';
+		btn.classList.add('w3-button', 'w3-green', 'w3-round');
+		btn.onclick = function() {
+			navigator.clipboard.writeText(self.R.text());
+			this.textContent = '成功';
+			const u = this;
+			setTimeout(function() {
+				u.textContent = '複製';
+			}, 500);
+		}
+		btn.style.marginRight = '0.5em';
+		p.appendChild(btn);
+
+		btn = document.createElement('button');
+		btn.textContent = '刪除';
+		btn.classList.add('w3-button', 'w3-red', 'w3-round');
+		btn.onclick = function() {
+			const container = self.dom.parentNode;
+			self.R.destroy(); // destroy the render
+			container.parentNode.removeChild(container); // remove the container
+			setURL(); // update url state
+		}
+		btn.style.marginRight = '0.5em';
+		p.appendChild(btn);
+
+		btn = document.createElement('button');
+		btn.textContent = '+';
+		btn.classList.add('w3-button', 'w3-circle', 'w3-deep-purple', 'w3-ripple', 'w3-large');
+		btn.onclick = async function() {
+			id01.style.display = 'block';
+			cat_name2.focus();
+			add.onclick = async function() {
+				if (await handle_input(cat_name2, self)) {
+					const p = btn.parentNode;
+					p.parentNode.removeChild(p);
+					id01.style.display = 'none';
+				}
+			}
+		}
+		p.appendChild(btn);
+		this.dom.appendChild(p);
 	}
 }
 
@@ -211,82 +286,8 @@ class UnitDPSHelper {
 			this.B.dom.appendChild(div);
 		}
 	}
-	createButtons() {
-		const self = this;
-		const p = document.createElement('p');
-		let btn = document.createElement('button');
-		btn.textContent = '下載';
-		btn.classList.add('w3-button', 'w3-teal', 'w3-round');
-		btn.onclick = function() {
-			self.B.R.D();
-		}
-		btn.style.marginRight = '0.5em';
-		p.appendChild(btn);
-
-		btn = document.createElement('button');
-		btn.textContent = '複製';
-		btn.classList.add('w3-button', 'w3-green', 'w3-round');
-		btn.onclick = function() {
-			navigator.clipboard.writeText(self.B.R.text());
-			this.textContent = '成功';
-			const u = this;
-			setTimeout(function() {
-				u.textContent = '複製';
-			}, 500);
-		}
-		btn.style.marginRight = '0.5em';
-		p.appendChild(btn);
-
-		btn = document.createElement('button');
-		btn.textContent = '刪除';
-		btn.classList.add('w3-button', 'w3-red', 'w3-round');
-		btn.onclick = function() {
-			const container = self.B.dom.parentNode;
-			self.B.R.destroy(); // destroy the render
-			container.parentNode.removeChild(container); // remove the container
-			self.setURL(); // update url state
-		}
-		btn.style.marginRight = '0.5em';
-		p.appendChild(btn);
-
-		btn = document.createElement('button');
-		btn.textContent = '+';
-		btn.classList.add('w3-button', 'w3-circle', 'w3-deep-purple', 'w3-ripple', 'w3-large');
-		btn.onclick = async function() {
-			id01.style.display = 'block';
-			cat_name2.focus();
-			add.onclick = async function() {
-				if (await handle_input(cat_name2, self.B)) {
-					const p = btn.parentNode;
-					p.parentNode.removeChild(p);
-					id01.style.display = 'none';
-				}
-			}
-		}
-		p.appendChild(btn);
-		this.B.dom.appendChild(p);
-	}
 	createUI(graph) {
 		this.graph = graph;
-	}
-	setURL() {
-		const blocks = graph_container.getElementsByClassName('w3-panel'); // document.body.querySelectorAll('* [data-units]')
-		let all_units = [];
-
-		for (const elem of blocks) {
-			let units = elem.dataset.units;
-			if (units.endsWith(","))
-				units = units.slice(0, -1);
-
-			all_units.push(units);
-		}
-
-		const url = new URL(location.href);
-		if (all_units.length)
-			url.searchParams.set("units", all_units.join('|'));
-		else
-			url.searchParams.delete('units');
-		history.pushState({}, "", url);
 	}
 	applyLevels() {
 
@@ -300,7 +301,7 @@ class CatDPSHelper extends UnitDPSHelper {
 	constructor(B, F) {
 		super(B, F);
 		B.dom.parentNode.dataset.units += `${F.id}-${F.lvc},`;
-		super.setURL();
+		setURL();
 	}
 	createUI(graph) {
 		this.t_lv = [];
@@ -426,7 +427,7 @@ class EnemyDPSHelper extends UnitDPSHelper {
 	constructor(B, F) {
 		super(B, F);
 		B.dom.parentNode.dataset.units += `${F.id},`;
-		super.setURL();
+		setURL();
 	}
 	createUI(graph) {
 		super.createUI(graph);
@@ -707,7 +708,6 @@ class DPSGraph {
 					self.render();
 				};
 		}
-		helper.createButtons();
 
 		this.render();
 	}
@@ -1137,6 +1137,8 @@ async function main(render) {
 					}
 				}
 			}
+			if (block)
+				block.createButtons();
 		}
 	}
 
