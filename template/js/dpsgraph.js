@@ -779,42 +779,49 @@ class DPSGraph {
 				{min: 75, max: 175, mul: 0.7},
 				{min: 175, max: 275, mul: 0.4},
 			];
-			const spawn_interval = this.explosion_data[2] - this.explosion_data[1];
-			for (const {min, max, mul} of blasts) {
-				const dmg = mul * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
-				if (spawn_interval === 0) {
-					const offset = x - this.explosion_data[1];
-					if (min < offset && offset <= max) {
-						for (let i = 0; i < buf.length; ++i)
-							if (this.abis[i]) buf[i] += ~~(this.atks[i] * dmg);
-						break;
-					}
-				} else {
-					const min_range = this.explosion_data[1] + min;
-					const max_range = this.explosion_data[2] + max;
-					if (min_range < x && x <= max_range) {
-						const max_interval = max_range - min_range;
-						const width = max - min;
-						const double_width = width + width;
-						let multi = dmg;
+			const cases = this.explosion_data[2] - this.explosion_data[1] + 1;
 
-						if (double_width > max_interval) {
-							const overlapped = double_width - max_interval;
-							if (x > (min_range + width))
-								multi *= (max_range - x) / (width - overlapped);
-							else if (x < (max_range - width))
-								multi *= (x - min_range) / (width - overlapped);
-						} else {
-							multi *= width / spawn_interval;
-							if (x < (min_range + width))
-								multi *= (x - min_range) / width;
-							else if (x > (max_range - width))
-								multi *= (max_range - x) / width;
-						}
-						for (let i = 0; i < buf.length; ++i)
-							if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
+			// allow early break to improve performance,
+			// under the presumption that blasts never overlap
+			let canBreak = false;
+
+			for (const {min, max, mul} of blasts) {
+				const left = this.explosion_data[1] + min;
+				const right = this.explosion_data[2] + max;
+
+				if (!(left < x && x <= right))
+					continue;
+
+				let multi = mul * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
+
+				if (cases === 1) {
+					canBreak = true;
+				} else {
+					const leftMax = this.explosion_data[1] + max;
+					const rightMin = this.explosion_data[2] + min;
+
+					if (rightMin < x && x <= leftMax) {
+						// x within this blast for all cases
+						// implies: width = max - min >= cases
+						canBreak = true;
+					} else if (rightMin < x) {
+						// x within this blast for some rightmost cases
+						multi *= (right - x + 1) / cases;
+					} else if (x <= leftMax) {
+						// x within this blast for some leftmost cases
+						multi *= (x - left) / cases;
+					} else {
+						// x within this blast for some middle cases
+						// implies: width = max - min < cases
+						multi *= (max - min) / cases;
 					}
 				}
+
+				for (let i = 0; i < buf.length; ++i)
+					if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
+
+				if (canBreak)
+					break;
 			}
 		}
 		for (let i of RAW) sum += i;
