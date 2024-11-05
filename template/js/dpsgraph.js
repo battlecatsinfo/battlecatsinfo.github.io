@@ -772,62 +772,47 @@ class DPSGraph {
 			}
 		}
 		if (this.explosion_data) {
-			const overlap = this.explosion_data[1] == this.explosion_data[2];
-			outer: for (const dir of [1, -1]) {
-				for (let i = 0;i < 3;++i) {
-					const dmg = (1 - 0.3 * i) * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
-					let dis_0 = [0, 75, 175][i];
-					let dis_1 = 75 + 100 * i;
-					if (overlap) {
-						dis_0 *= dir;
-						dis_1 *= dir;
-						if (dis_0 > dis_1) {
-							[dis_0, dis_1] = [dis_1, dis_0];
-						}
-						const pos = x - this.explosion_data[1];
-						if (pos > dis_0 && pos <= dis_1) {
-							for (let i = 0; i < buf.length; ++i)
-								if (this.abis[i]) buf[i] += ~~(this.atks[i] * dmg);
-							break outer;
-						}
-					} else {
-						let min_range, max_range;
-						if (dir == -1 && !i)
-							continue;
-						if (!i) {
-							dis_0 = -75;
-							dis_1 = 75;
-						}
-						if (dir == 1) {
-							min_range = this.explosion_data[1] + dis_0;
-							max_range = this.explosion_data[2] + dis_1;
-						} else {
-							min_range = this.explosion_data[1] - dis_1;
-							max_range = this.explosion_data[2] - dis_0;
-						}
-						if (x > min_range && x <= max_range) {
-							const spawn_interval = this.explosion_data[2] - this.explosion_data[1];
-							const max_interval = max_range - min_range;
-							const width = [150, 100, 100][i];
-							const double_width = width + width;
-							let multi = dmg;
+			const blasts = [
+				{min: -275, max: -175, mul: 0.4},
+				{min: -175, max: -75, mul: 0.7},
+				{min: -75, max: 75, mul: 1},
+				{min: 75, max: 175, mul: 0.7},
+				{min: 175, max: 275, mul: 0.4},
+			];
+			const spawn_interval = this.explosion_data[2] - this.explosion_data[1];
+			for (const {min, max, mul} of blasts) {
+				const dmg = mul * (this.options.explosion ? 1 : (this.explosion_data[0] / 100));
+				if (spawn_interval === 0) {
+					const offset = x - this.explosion_data[1];
+					if (min < offset && offset <= max) {
+						for (let i = 0; i < buf.length; ++i)
+							if (this.abis[i]) buf[i] += ~~(this.atks[i] * dmg);
+						break;
+					}
+				} else {
+					const min_range = this.explosion_data[1] + min;
+					const max_range = this.explosion_data[2] + max;
+					if (min_range < x && x <= max_range) {
+						const max_interval = max_range - min_range;
+						const width = max - min;
+						const double_width = width + width;
+						let multi = dmg;
 
-							if (double_width > max_interval) {
-								const overlapped = double_width - max_interval;
-								if (x > (min_range + width))
-									multi *= (max_range - x) / (width - overlapped);
-								else if (x < (max_range - width))
-									multi *= (x - min_range) / (width - overlapped);
-							} else {
-								multi *= width / spawn_interval;
-								if (x < (min_range + width))
-									multi *= (x - min_range) / width;
-								else if (x > (max_range - width))
-									multi *= (max_range - x) / width;
-							}
-							for (let i = 0; i < buf.length; ++i)
-								if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
+						if (double_width > max_interval) {
+							const overlapped = double_width - max_interval;
+							if (x > (min_range + width))
+								multi *= (max_range - x) / (width - overlapped);
+							else if (x < (max_range - width))
+								multi *= (x - min_range) / (width - overlapped);
+						} else {
+							multi *= width / spawn_interval;
+							if (x < (min_range + width))
+								multi *= (x - min_range) / width;
+							else if (x > (max_range - width))
+								multi *= (max_range - x) / width;
 						}
+						for (let i = 0; i < buf.length; ++i)
+							if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
 					}
 				}
 			}
