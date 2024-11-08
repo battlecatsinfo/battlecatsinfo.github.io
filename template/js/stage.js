@@ -1,7 +1,7 @@
 import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
-import {EnemyIdb} from './unit.mjs';
+import {EnemyIdb, loadCat, catEnv} from './unit.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -25,7 +25,7 @@ const mM = document.getElementById("mM");
 const ex_stages = document.getElementById("ex-stages");
 const stageL = config.stagel;
 
-let info1, info2, info3, star, stage_extra, filter_page, stageF;
+let info1, info2, info3, star, stage_extra, filter_page, stageF, cur_stage_code;
 
 if (config.stagef == 's')
 	stageF = getNumFormatter(2);
@@ -64,6 +64,8 @@ function fromV(s) {
 			return 16;
 		case 36:
 			return 17;
+		case 37:
+			return 18;
 		default:
 			return 1;
 	}
@@ -145,6 +147,14 @@ function onStarAnchorClick(event) {
 	refresh_3();
 
 	return false;
+}
+
+function dialog(id, content) {
+	const modal = document.getElementById(id);
+	modal.hidden = false;
+	const dialogCtn = modal.getElementsByClassName('dialog-content')[0];
+	dialogCtn.textContent = '';
+	dialogCtn.appendChild(content);
 }
 
 async function search_guard() {
@@ -416,6 +426,11 @@ function initUI() {
 		}
 	};
 	handle_url();
+	for (const elem of document.getElementsByClassName('dialog-btn')) {
+		elem.addEventListener('click', function() {
+			this.parentNode.parentNode.hidden = true;
+		});
+	}
 }
 
 function fix_star(s) {
@@ -454,6 +469,17 @@ function handle_url() {
 	loader.hidden = true;
 	loader.previousElementSibling.hidden = true;
 	main_div.hidden = false;
+}
+
+function create_table(ctr, headers, cls) {
+	const tbl = ctr.appendChild(document.createElement('table'));
+	tbl.classList.add(...cls);
+	const tr = tbl.appendChild(document.createElement('thead')).appendChild(document.createElement('tr'));
+
+	for (const v of headers)
+		tr.appendChild(document.createElement('th')).textContent = v;
+
+	return tbl.appendChild(document.createElement('tbody'));
 }
 
 function getConditionHTML(obj) {
@@ -670,6 +696,7 @@ async function process_2(stageIdx) {
 		c += 1;
 	}
 	M3.selectedIndex = stageIdx;
+	cur_stage_code = start + stageIdx;
 	await refresh_3(_stage);
 }
 
@@ -768,7 +795,7 @@ async function refresh_3(stage) {
 	const base = info1.dataset.maps ?
 		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) * 1000 :
 		M1.selectedIndex * 1000000 + M2.selectedIndex * 1000;
-	info3 = await Stage.getStage(base + M3.selectedIndex);
+	info3 = await Stage.getStage(cur_stage_code = base + M3.selectedIndex);
 	await render_stage();
 }
 
@@ -872,6 +899,121 @@ async function render_stage() {
 			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('w');
 			span.textContent = "※速攻不可（城堡盾）※";
+		}
+		if (flags3 & 4) {
+			var span = th.appendChild(document.createElement('div'));
+			span.textContent = '查看固定編成';
+			span.style.cursor = 'pointer';
+			span.classList.add('I');
+			span.onclick = function() {
+				const ctn = document.createElement('div');
+				const leftCtn = ctn.appendChild(document.createElement('div'));
+				const rigjtCtn = ctn.appendChild(document.createElement('div'));
+				const {units, treasure, tech, cannon} = stage_extra.fixedLineup[cur_stage_code];
+				const promises = [];
+
+				ctn.classList.add('w3-cell-row');
+				leftCtn.classList.add('w3-cell', 'w3-mobile');
+				rigjtCtn.classList.add('w3-cell', 'w3-mobile');
+
+				if (treasure) {
+					if (treasure.empty_default)
+						catEnv.emptyTreasures();
+					else
+						catEnv.resetTreasures();
+					for (const [k, v] of Object.entries(treasure.raw))
+						catEnv.setTreasure(parseInt(k, 10), v);
+				} else {
+					catEnv.resetTreasures();
+				}
+
+				if (units) {
+					leftCtn.appendChild(document.createElement('h3')).textContent = '隊伍';
+					const tbody = create_table(leftCtn, ['圖示', '名稱', '等級', '體力', '攻擊力'], ['w3-table', 'w3-centered']);
+
+					for (const v of units) {
+						const tr = tbody.appendChild(document.createElement('tr'));
+						promises.push(loadCat(v[0]).then(
+							cat => {
+								const F = cat.forms[v[1]];
+								const img = new Image(104, 79);
+								img.classList.add('fixedln-img');
+								img.src = F.icon;
+								const a = document.createElement('a');
+								a.target = '_blank';
+								a.href = `/unit.html?id=${v[0]}`;
+								const a2 = a.cloneNode();
+								a.appendChild(img);
+								a2.textContent = F.name;
+								F.baseLv = v[2];
+								F.plusLv = v[3];
+								tr.appendChild(document.createElement('td')).textContent = v[3] ? `Lv. ${v[2]}+${v[3]}`: `Lv. ${v[2]}`;
+								tr.appendChild(document.createElement('td')).appendChild(a);
+								tr.appendChild(document.createElement('td')).appendChild(a2);
+								tr.appendChild(document.createElement('td')).textContent = F.hp;
+								tr.appendChild(document.createElement('td')).textContent = F.atk;
+							}
+						));
+					}
+				}
+
+				if (treasure) {
+					leftCtn.appendChild(document.createElement('h3')).textContent = '金寶';
+
+					const tbody = create_table(leftCtn, ['章節', '金寶'], ['w3-table', 'w3-centered']);
+					for (const [chapter, stages] of treasure.chapters) {
+						if (chapter == 9) continue; // skip aku realms because there is no treasure in aku realms
+						const tr = tbody.appendChild(document.createElement('tr'));
+						tr.appendChild(document.createElement('td')).textContent = stage_extra.mainChapters[chapter];
+						tr.appendChild(document.createElement('td')).textContent = numStr(stages / 0.48) + '%';
+					}
+				}
+
+				if (tech) {
+					rigjtCtn.appendChild(document.createElement('h3')).textContent = '科技';
+					const tbody = create_table(rigjtCtn, ['圖示', '名稱', '等級'], ['w3-table', 'w3-centered', 'noPad']);
+
+					for (let i = 0;i < tech.length;++i) {
+						const tr = tbody.appendChild(document.createElement('tr'));
+						const img = new Image(128, 128);
+						img.src = `https://i.imgur.com/${stage_extra.techLinks[i]}.png`;
+						img.classList.add('fixedln-img');
+						tr.appendChild(document.createElement('td')).appendChild(img);
+						tr.appendChild(document.createElement('td')).textContent = stage_extra.techNames[i];
+						tr.appendChild(document.createElement('td')).textContent = `Lv. ${tech[i][0]}+${tech[i][1]}`;
+					}
+				}
+
+				if (cannon) {
+					rigjtCtn.appendChild(document.createElement('h3')).textContent = '貓咪砲';
+					rigjtCtn.appendChild(document.createElement('p')).textContent = `${stage_extra.cannonNames[cannon.type]} Lv. ${cannon.level}`;
+				}
+
+				Promise.all(promises).then(() => dialog('fixedln-modal', ctn));
+			}
+		}
+		if (flags3 & 16) {
+			var span = th.appendChild(document.createElement('div'));
+			span.textContent = '查看提示';
+			span.style.cursor = 'pointer';
+			span.classList.add('W');
+			span.onclick = function() {
+				const ctn = document.createElement('div');
+				ctn.style.textAlign = 'center';
+				for (const part of stage_extra.stageTips[cur_stage_code]) {
+					if (part == '\n') {
+						ctn.appendChild(document.createElement('br'));
+					} else if (part.startsWith('<')) {
+						const span = ctn.appendChild(document.createElement('span'));
+						const idx = part.indexOf('>');
+						span.textContent = part.slice(idx + 1);
+						span.style.color = part.slice(1, idx);
+					} else {
+						ctn.append(part);
+					}
+				}
+				dialog("tips-modal", ctn);
+			}
 		}
 		if (info2.specialCond) {
 			var span = th.appendChild(document.createElement("div"));

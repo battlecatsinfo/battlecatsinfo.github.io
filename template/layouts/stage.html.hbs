@@ -169,6 +169,34 @@
 	[hidden] {
 		display: none !important;
 	}
+	.dialog-ctn {
+		margin: 0 auto;
+		max-width: max-content;
+		padding: 3vh 8vw;
+		color: black;
+		font-size: min(1.3em, 23px);
+		white-space: nowrap;
+	}
+	.dialog-ctn table {
+		background-color: inherit;
+	}
+	:root.dark .dialog-ctn {
+		background-color: #191a21;
+		color: white;
+	}
+	.dialog-header {
+		margin: .6em auto;
+		padding-bottom: 0;
+	}
+	.dialog-btn {
+		display: block;
+		margin: 0 auto;
+		margin-top: 1em;
+	}
+	.fixedln-img {
+		max-width: min(8vw, 8vh);
+		height: auto;
+	}
 	</style>
 {{/inline}}
 
@@ -305,6 +333,20 @@
 			</table>
 		</div>
 		<div id="search-result" hidden></div>
+		<div class="modal" id="tips-modal" style="display: flex;align-items: center;" hidden>
+			<div class="M dialog-ctn w3-animate-opacity">
+				<h2 class="w3-center dialog-header">關卡提示</h2>
+				<div class="dialog-content"></div>
+				<button class="w3-button w3-indigo w3-round dialog-btn">OK</button>
+			</div>
+		</div>
+		<div class="modal" id="fixedln-modal" hidden>
+			<div class="M dialog-ctn w3-animate-opacity">
+				<h2 class="w3-center dialog-header">固定編成</h2>
+				<div class="dialog-content"></div>
+				<button class="w3-button w3-indigo w3-round dialog-btn">OK</button>
+			</div>
+		</div>
 	</div>
 {{/inline}}
 

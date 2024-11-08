@@ -231,6 +231,10 @@ class CatEnv {
 		Object.assign(this._treasures, config.getDefaultTreasures());
 	}
 
+	emptyTreasures() {
+		this._treasures.fill(0);
+	}
+
 	resetOrbs() {
 		for (const arr of Object.values(this._orbs)) {
 			arr.length = 0;

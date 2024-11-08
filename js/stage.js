@@ -6,15 +6,18 @@ module.exports = class extends SiteGenerator {
 		const stageTable = this.parse_tsv(this.load('stage.tsv'));
 
 		const stageScheme = JSON.parse(this.load('stage_scheme.json'));
+		const gachaScheme = JSON.parse(this.load('gacha_scheme.json'));
+		const ototo = JSON.parse(this.load('ototo.json'));
+		const combos_scheme = JSON.parse(this.load('combos_scheme.json'));
 
-		this.generate_data_files({mapTable, stageTable, stageScheme});
+		this.generate_data_files({mapTable, stageTable, stageScheme, gachaScheme, ototo, combos_scheme});
 		this.generate_pages({stageScheme});
 		this.generate_crown({mapTable, stageScheme});
 		this.generate_materials({mapTable, stageTable});
 	}
 
-	generate_data_files({mapTable, stageTable, stageScheme}) {
-		const {categories, conditions, material_drops, reset_modes, limit_groups} = stageScheme;
+	generate_data_files({mapTable, stageTable, stageScheme, gachaScheme, ototo, combos_scheme}) {
+		const {categories, conditions, material_drops, reset_modes, limit_groups, fixed_lineup, stage_tips} = stageScheme;
 
 		const map = mapTable.reduce((rv, entry, i) => {
 			const id = parseInt(entry.id, 36);
@@ -63,6 +66,16 @@ module.exports = class extends SiteGenerator {
 			return rv;
 		}, {});
 
+		const cannonNames = ototo.castles.filter(x => x.name != '貓咪城').reduce((rv, entry, i) => {
+			rv.push(entry.name);
+			return rv;
+		}, []);
+
+		const mainChapters = Object.entries(combos_scheme.requirements)
+			.filter(x => Number(x[0]) < 10000)
+			.sort((a, b) => a[0] - b[0])
+			.map(x => x[1]);
+
 		this.write_json('stage.json', stage);
 
 		const scheme = {
@@ -71,6 +84,12 @@ module.exports = class extends SiteGenerator {
 			conditions,
 			matDrops: material_drops,
 			resetModes: reset_modes,
+			fixedLineup: fixed_lineup,
+			stageTips: stage_tips,
+			techNames: gachaScheme.tech_names,
+			techLinks: gachaScheme.tech_links,
+			cannonNames,
+			mainChapters,
 		};
 
 		this.write_json('stage_scheme.json', scheme);
