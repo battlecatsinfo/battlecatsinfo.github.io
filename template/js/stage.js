@@ -1087,7 +1087,7 @@ async function render_stage() {
 		st1[1].textContent = energy > 1000 ? numStr(energy) : energy;
 	}
 	st1[3].textContent = info3.max;
-	st1[5].textContent = info3.len;
+	st1[5].textContent = info3.diff;
 	if (info2.mapCond) {
 		st3[3].textContent = "";
 		st3[3].appendChild(getConditionHTML(info2.mapCond));
