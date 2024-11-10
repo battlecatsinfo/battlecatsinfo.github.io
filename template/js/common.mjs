@@ -34,10 +34,6 @@ class IdbBase {
 				db.deleteObjectStore("reward");
 			db.createObjectStore("reward", {keyPath: "id"});
 
-			if (stores.has("scheme"))
-				db.deleteObjectStore("scheme");
-			db.createObjectStore("scheme");
-
 			for (const name of translatorStores) {
 				if (stores.has(name))
 					db.deleteObjectStore(name);
@@ -53,6 +49,10 @@ class IdbBase {
 			if (stores.has("map"))
 				db.deleteObjectStore("map");
 			db.createObjectStore("map", {keyPath: "id"});
+
+			if (stores.has("scheme"))
+				db.deleteObjectStore("scheme");
+			db.createObjectStore("scheme");
 		}
 
 		db._upgraded = true;
