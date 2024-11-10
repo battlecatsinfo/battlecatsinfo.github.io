@@ -50,6 +50,7 @@ const sources = [
 	'combo.mjs',
 	'stage.mjs',
 	'reward.mjs',
+	'datatables.mjs',
 
 	'common.js',
 	'navbar.js',
