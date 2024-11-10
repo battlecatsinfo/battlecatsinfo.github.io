@@ -26,10 +26,6 @@ class IdbBase {
 				db.deleteObjectStore("enemy");
 			db.createObjectStore("enemy", {keyPath: "i"});
 
-			if (stores.has("map"))
-				db.deleteObjectStore("map");
-			db.createObjectStore("map", {keyPath: "id"});
-
 			if (stores.has("combo"))
 				db.deleteObjectStore("combo");
 			db.createObjectStore("combo");
@@ -49,10 +45,14 @@ class IdbBase {
 			}
 		}
 
-		if (oldVersion < 1400001 || 1400010 < newVersion) {
+		if (oldVersion < 1400002 || 1400010 < newVersion) {
 			if (stores.has("stage"))
 				db.deleteObjectStore("stage");
 			db.createObjectStore("stage", {keyPath: "id"});
+
+			if (stores.has("map"))
+				db.deleteObjectStore("map");
+			db.createObjectStore("map", {keyPath: "id"});
 		}
 
 		db._upgraded = true;
