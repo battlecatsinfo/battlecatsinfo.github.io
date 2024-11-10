@@ -969,6 +969,11 @@ async function render_stage() {
 					}
 				}
 
+				if (cannon) {
+					leftCtn.appendChild(document.createElement('h3')).textContent = '貓咪砲';
+					leftCtn.appendChild(document.createElement('p')).textContent = `${stage_extra.cannonNames[cannon.type]} Lv. ${cannon.level}`;
+				}
+
 				if (tech) {
 					rigjtCtn.appendChild(document.createElement('h3')).textContent = '科技';
 					const tbody = create_table(rigjtCtn, ['圖示', '名稱', '等級'], ['w3-table', 'w3-centered', 'noPad']);
@@ -982,11 +987,6 @@ async function render_stage() {
 						tr.appendChild(document.createElement('td')).textContent = stage_extra.techNames[i];
 						tr.appendChild(document.createElement('td')).textContent = `Lv. ${tech[i][0]}+${tech[i][1]}`;
 					}
-				}
-
-				if (cannon) {
-					rigjtCtn.appendChild(document.createElement('h3')).textContent = '貓咪砲';
-					rigjtCtn.appendChild(document.createElement('p')).textContent = `${stage_extra.cannonNames[cannon.type]} Lv. ${cannon.level}`;
 				}
 
 				Promise.all(promises).then(() => dialog('fixedln-modal', ctn));
