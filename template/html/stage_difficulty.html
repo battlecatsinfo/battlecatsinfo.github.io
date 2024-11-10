@@ -1,0 +1,42 @@
+{{#> static.html}}
+
+{{#*inline "title"}}關卡難度一覽{{/inline}}
+
+{{#*inline "styles"}}
+	<link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/rg-1.5.0/datatables.min.css" rel="stylesheet">
+{{/inline}}
+
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.8/rg-1.5.0/datatables.min.js"></script>
+	<script src="stage_difficulty.js" type="module"></script>
+{{/inline}}
+
+{{#*inline "styles-inline"}}
+	{{~> @partial-block}}
+	<style>
+	th img {
+		width: 22px;
+		height: auto;
+		vertical-align: middle;
+	}
+	</style>
+{{/inline}}
+
+{{#*inline "content"}}
+	<div style="width:92vw;margin: 0 auto;">
+		<table id="diff_table" class="display">
+			<thead>
+				<tr>
+					<th>關卡</th>
+					<th>日文</th>
+					<th>難易度</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+{{/inline}}
+
+{{/static.html}}

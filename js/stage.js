@@ -14,6 +14,7 @@ module.exports = class extends SiteGenerator {
 		this.generate_pages({stageScheme});
 		this.generate_crown({mapTable, stageScheme});
 		this.generate_materials({mapTable, stageTable});
+		this.generate_difficulty({stageTable});
 	}
 
 	generate_data_files({mapTable, stageTable, stageScheme, gachaScheme, ototo, combos_scheme}) {
@@ -291,5 +292,18 @@ module.exports = class extends SiteGenerator {
 		}
 
 		this.write_template('js/materials.js', 'materials.js', {materials: materialsFormatted});
+	}
+
+	generate_difficulty({stageTable}) {
+		for (const elem of stageTable)
+			elem.difficulty = Number(elem.difficulty ?? 0);
+
+		this.write_template('js/stage_difficulty.js', 'stage_difficulty.js', {
+			data: stageTable.sort((a, b) => b.difficulty - a.difficulty).map(entry => [
+				entry.name_tw,
+				entry.name_jp,
+				entry.difficulty,
+			])
+		});
 	}
 };

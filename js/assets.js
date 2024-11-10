@@ -32,6 +32,7 @@ const sources = [
 	'medal.html',
 	'rank.html',
 	'translator.html',
+	'stage_difficulty.html',
 
 	'uni.png',
 	'favicon.ico',
