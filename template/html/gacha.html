@@ -387,6 +387,38 @@
 	</table>
 	{{/if}}
 
+	{{#if data.featured_items}}
+	<p style="margin-top:2em;">主打道具（每 {{data.featured_guaranteed_count}} 抽必定獲得）</p>
+	<table class="w3-table Y" style="width:auto">
+		<tbody>
+		<tr>
+			<td>名稱</td>
+			{{#each data.featured_items as |item|}}
+			<td>{{item.name}}</td>
+			{{/each}}
+		</tr>
+		<tr>
+			<td>圖示</td>
+			{{#each data.featured_items as |item|}}
+			<td><img loading="lazy" width="128" height="128" src="/img/r/{{item.id}}.png"></td>
+			{{/each}}
+		</tr>
+		<tr>
+			<td>機率</td>
+			{{#each data.featured_items as |item|}}
+			<td>{{item.rate}}%</td>
+			{{/each}}
+		</tr>
+		<tr>
+			<td>上限</td>
+			{{#each data.featured_items as |item|}}
+			<td>{{item.max}}</td>
+			{{/each}}
+		</tr>
+		</tbody>
+	</table>
+	{{/if}}
+
 	{{/if}}
 	{{#if pool.history}}
 	<p style="margin-block-end:0;font-size:.8em;">

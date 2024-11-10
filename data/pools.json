@@ -327,6 +327,26 @@
 		"ticket": "206",
 		"type": "event",
 		"units": [[10], [0, 3, 11, 12], [2, 4, 5, 14], [], []],
+		"featured_items": {
+			"items": [
+				{
+					"id": 157,
+					"rate": 1.0,
+					"max": 1
+				},
+				{
+					"id": 21,
+					"rate": 1.0,
+					"max": 1
+				},
+				{
+					"id": 197,
+					"rate": 4.0,
+					"max": 3
+				}
+			],
+			"guaranteed_count": 30
+		},
 		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E034.html",
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E034.html"
 	},

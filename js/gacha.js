@@ -558,6 +558,16 @@ module.exports = class extends RewardSiteGenerator {
 		if (O.ticket)
 			S.ticket = this.rewards[O.ticket];
 
+		if (O.featured_items) {
+			S.featured_guaranteed_count = O.featured_items.guaranteed_count;
+			S.featured_items = O.featured_items.items.map(entry => ({
+				id: entry.id,
+				name: this.rewards[entry.id].name,
+				max: entry.max,
+				rate: entry.rate,
+			}));
+		}
+
 		return S;
 	}
 	get_category(O) {
