@@ -30,10 +30,6 @@ class IdbBase {
 				db.deleteObjectStore("map");
 			db.createObjectStore("map", {keyPath: "id"});
 
-			if (stores.has("stage"))
-				db.deleteObjectStore("stage");
-			db.createObjectStore("stage", {keyPath: "id"});
-
 			if (stores.has("combo"))
 				db.deleteObjectStore("combo");
 			db.createObjectStore("combo");
@@ -51,6 +47,12 @@ class IdbBase {
 					db.deleteObjectStore(name);
 				db.createObjectStore(name, {keyPath: "i"});
 			}
+		}
+
+		if (oldVersion < 1400001 || 1400010 < newVersion) {
+			if (stores.has("stage"))
+				db.deleteObjectStore("stage");
+			db.createObjectStore("stage", {keyPath: "id"});
 		}
 
 		db._upgraded = true;
