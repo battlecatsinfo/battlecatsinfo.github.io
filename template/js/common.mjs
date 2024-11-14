@@ -39,9 +39,13 @@ class IdbBase {
 					db.deleteObjectStore(name);
 				db.createObjectStore(name, {keyPath: "i"});
 			}
+
+			if (stores.has("scheme"))
+				db.deleteObjectStore("scheme");
+			db.createObjectStore("scheme");
 		}
 
-		if (oldVersion < 1400002 || 1400010 < newVersion) {
+		if (oldVersion < 1400003 || 1400003 < newVersion) {
 			if (stores.has("stage"))
 				db.deleteObjectStore("stage");
 			db.createObjectStore("stage", {keyPath: "id"});
@@ -49,10 +53,6 @@ class IdbBase {
 			if (stores.has("map"))
 				db.deleteObjectStore("map");
 			db.createObjectStore("map", {keyPath: "id"});
-
-			if (stores.has("scheme"))
-				db.deleteObjectStore("scheme");
-			db.createObjectStore("scheme");
 		}
 
 		db._upgraded = true;
