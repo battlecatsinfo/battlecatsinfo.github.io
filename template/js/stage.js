@@ -1170,7 +1170,9 @@ async function render_stage() {
 		if (ex_stage_data[0]) {
 			const [exChance, exMapID, exStageIDMin, exStageIDMax] = ex_stage_data[0].split(',');
 			const td = ex_stages.appendChild(document.createElement("div"));
-			if (exStageIDMin != exStageIDMax)
+			if (exChance === '?')
+				td.textContent = `對應緊急關卡（類似不死生物來襲）`;
+			else if (exStageIDMin != exStageIDMax)
 				td.textContent = (exChance == '100' ? "必定出現以下EX關卡：（各EX關卡平分出現機率）" : "EX關卡：（出現機率：" + exChance + "%，各EX關卡平分出現機率）");
 			else
 				td.textContent = (exChance == '100' ? "必定出現以下EX關卡：" : 'EX關卡：' + "（出現機率：" + exChance + "%）");
