@@ -70,9 +70,9 @@
 
 {{#*inline "content"}}
 	<div id="loader"></div>
-	<div style="margin: 0 auto;width: 100%;margin-top: 0.8em;text-align: center;">
+	<form action="javascript:void(0);" style="margin: 0 auto;width: 100%;margin-top: 0.8em;text-align: center;">
 		<datalist id="CL"></datalist>
-		<input type="text" id="cat-name" list="CL" name="add-cat">
+		<input type="text" id="cat-name" list="CL" name="add-cat" autocomplete="off">
 		<select class="w3-round" id="CF" style="width:6.2em;padding:2px;margin:0px 10px;">
 			<option>第一型態</option>
 			<option>第二型態</option>
@@ -82,7 +82,7 @@
 		</select>
 		<button id="tab" class="w3-button w3-teal w3-round" style="margin-left: 0.5em;">新增</button>
 		<button id="clear" class="w3-button w3-red w3-round" style="margin-left: 0.5em;">清除全部</button>
-	</div>
+	</form>
 
 	<table class="w3-table w3-centered" id="tbl" style="margin: 0 auto;width: initial;min-width: 80vw;">
 

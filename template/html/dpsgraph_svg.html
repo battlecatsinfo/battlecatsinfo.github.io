@@ -26,9 +26,9 @@
 
 {{#*inline "content"}}
 	<div id="loader"></div>
-	<div style="margin: 0 auto;width: 100%;margin-top: 0.8em;text-align: center;">
+	<form action="javascript:void(0);" style="margin: 0 auto;width: 100%;margin-top: 0.8em;text-align: center;">
 		<datalist id="CL"></datalist>
-		<input type="text" id="cat-name" list="CL" name="add-cat">
+		<input type="text" id="cat-name" list="CL" name="add-cat" autocomplete="off">
 		<select id="CF" style="width:6.2em;padding:2px;margin:0px 10px;">
 			<option>第一型態</option>
 			<option>第二型態</option>
@@ -37,13 +37,13 @@
 			<option selected>最高型態</option>
 		</select>
 	<button id="ok" class="w3-button w3-round w3-blue" style="margin-left: 0.5em;">OK</button>
-	</div>
+	</form>
 	<div id="id01" class="w3-modal">
 		<div class="w3-modal-content">
-			<div class="w3-container">
+			<form action="javascript:void(0);" class="w3-container">
 				<span onclick="id01.style.display='none'" class="w3-button w3-hover-red w3-display-topright">&times;</span>
 				<p>選取要新增的貓咪</p>
-				<input type="text" id="cat-name2" list="CL" name="add-cat2">
+				<input type="text" id="cat-name2" list="CL" name="add-cat2" autocomplete="off">
 				<select id="CF2" style="width:6.2em;padding:2px;margin:0px 10px;">
 					<option>第一型態</option>
 					<option>第二型態</option>
@@ -54,7 +54,7 @@
 				<p>
 					<button class="w3-button w3-round w3-purple" id="add">新增至圖表</button>
 				</p>
-			</div>
+			</form>
 		</div>
 	</div>
 	<a id="switch_mode" style="position: fixed;bottom: 1vh;right: 1vw;color: #0027ff !important;" href="#">切換至點陣圖模式</a>
