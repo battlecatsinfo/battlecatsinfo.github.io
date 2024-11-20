@@ -240,104 +240,23 @@ function createAbIcons() {
 }
 
 function calc() {
-	const _atk_mag = atk_mag / 100;
-	const _my_mult = my_mult / 100;
-	const _stageM = stageMag / 100;
-	let HP = E.info.hp;
-	let atk = E.info.atk;
-	let atk1 = E.info.atk1;
-	let atk2 = E.info.atk2;
-	if (E.trait & TB_ALIEN) {
-		const m = (E.star == 1) ? catEnv.alien_star_t : catEnv.alien_t;
-		HP *= m;
-		atk *= m;
-		atk1 *= m;
-		atk2 *= m;
-	} else if (E.star >= 2) {
-		let m;
-		switch (E.star) {
-			case 2:
-				m = catEnv.god1_t;
-				break;
-			case 3:
-				m = catEnv.god2_t;
-				break;
-			case 4:
-				m = catEnv.god3_t;
-				break;
-		}
-		HP *= m;
-		atk *= m;
-		atk1 *= m;
-		atk2 *= m;
-	}
-	atk = ~~(Math.round(atk * _atk_mag) * _stageM);
-	atk1 = ~~(Math.round(atk1 * _atk_mag) * _stageM);
-	atk2 = ~~(Math.round(atk2 * _atk_mag) * _stageM);
-	HP = ~~(Math.round(HP * _my_mult) * _stageM);
-	let DPS = atk + atk1 + atk2;
+	E.hpM = my_mult / 100;
+	E.atkM = atk_mag / 100;
+	E.stageM = stageMag / 100;
+	const filter = Array.from(set);
+	const isBase = set.has(AB_ATKBASE);
+	const tatks = E.gettatks({filter, mode: 'max', isBase});
+	const DPS = 30 * E.gettatks({filter, mode: 'expected', isBase}).reduce((rv, x) => rv + x) / E.attackF;
+	const HP = E.getthp({filter});
 
-	function ATK(x) {
-		atk *= x;
-		atk1 *= x;
-		atk2 *= x;
-	}
-	for (let k of set) {
-		const v = E.ab[k];
-		switch (k) {
-			case AB_CRIT:
-				DPS *= (1 + v / 100);
-				ATK(2);
-				break;
-			case AB_S:
-				DPS *= (1 + (v[0] * v[1] / 10000));
-				ATK(1 + v[1] / 100);
-				break;
-			case AB_ATKBASE:
-				DPS *= 4;
-				ATK(4);
-				break;
-			case AB_WAVE:
-				ATK(2);
-				DPS *= (1 + v[0] / 100);
-				break;
-			case AB_MINIWAVE:
-				ATK(1.2);
-				DPS *= (1 + v[0] / 500);
-				break;
-			case AB_SURGE:
-				ATK(1 + v[3]);
-				DPS *= (1 + v[3] * v[0] / 100);
-				break;
-			case AB_MINISURGE:
-				ATK(1 + v[3] / 5);
-				DPS *= (1 + v[3] * v[0] / 500);
-				break;
-			case AB_EXPLOSION:
-				DPS += DPS;
-				ATK(2);
-				break;
-			case AB_STRENGTHEN: {
-				const a = 1 + v[1] / 100;
-				ATK(a);
-				DPS *= a;
-				break;
-			}
-			case AB_DSHIELD: {
-				const s = ~~(Math.round(v[0] * _my_mult) * _stageM);
-				HP += ~~(s + s * (v[1] / 100) * (E.kb - 1));
-				break;
-			}
-		}
-	}
 	if (E.ab[AB_DSHIELD]) {
 		if (dst_g) {
-			dst_g.textContent = ~~(Math.round(E.ab[AB_DSHIELD][0] * _my_mult) * _stageM);
+			dst_g.textContent = ~~(Math.round(E.ab[AB_DSHIELD][0] * E.hpM) * E.stageM);
 		}
 	}
 	chs[0].children[2].textContent = numStr(HP);
-	chs[0].children[4].textContent = [atk, atk1, atk2].filter(x => x).map(numStr).join('/');
-	chs[1].children[3].textContent = numStr(~~(DPS * 30 / E.attackF));
+	chs[0].children[4].textContent = tatks.filter(x => x).map(numStr).join('/');
+	chs[1].children[3].textContent = numStr(DPS);
 }
 
 function hfocus() {
