@@ -17,7 +17,7 @@ class IdbBase {
 		// if updates of 1360008-1360010 don't involve a change of cats.
 		// newVersion is checked to force an update in case we forget to update the
 		// code in a future version.
-		if (oldVersion < 1400000 || 1400010 < newVersion) {
+		if (oldVersion < 1410000 || 1410010 < newVersion) {
 			if (stores.has("cats"))
 				db.deleteObjectStore("cats");
 			db.createObjectStore("cats", {keyPath: "i"});
@@ -43,9 +43,7 @@ class IdbBase {
 			if (stores.has("scheme"))
 				db.deleteObjectStore("scheme");
 			db.createObjectStore("scheme");
-		}
 
-		if (oldVersion < 1400003 || 1400003 < newVersion) {
 			if (stores.has("stage"))
 				db.deleteObjectStore("stage");
 			db.createObjectStore("stage", {keyPath: "id"});
