@@ -137,7 +137,7 @@ function createAbIcons(form, p1, p2, tbody) {
 
 	function w3(msg, icon) {
 		const p = document.createElement('div');
-		p.style.cursor = 'pointer';
+		p.classList.add('ab-select');
 		p._i = i;
 		if (tbody._s.has(i)) {
 			p.style.setProperty('background-color', '#5cabd273', 'important');

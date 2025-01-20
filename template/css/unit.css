@@ -148,3 +148,6 @@ pre {
 :root.dark .plus-btn:active {
 	background-color: #505050;
 }
+.ab-select {
+	cursor: pointer;
+}
