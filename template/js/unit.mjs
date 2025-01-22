@@ -100,7 +100,7 @@ const RES_WARP = 8;        // Resist Warp 抗傳耐性
 const TRAIT_ALL = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE
 								| TB_RELIC | TB_WHITE | TB_EVA | TB_WITCH | TB_DEMON
 								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE;
-const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_INFN | TB_BEAST | TB_BARON | TB_SAGE;
+const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
@@ -527,7 +527,7 @@ class Unit {
 	 */
 
 	/**
-	 * @typedef {(number[]|AbilityData)} AbilityFilter
+	 * @typedef {(Set|number[]|AbilityData)} AbilityFilter
 	 */
 
 	/**
@@ -540,6 +540,14 @@ class Unit {
 		// null or undefined
 		if (filter == null) {
 			return this.ab;
+		}
+
+		if (filter instanceof Set) {
+			const ab = {};
+			for (const id of filter) {
+				ab[id] = this.ab[id];
+			}
+			return ab;
 		}
 
 		if (Array.isArray(filter)) {
@@ -1153,8 +1161,7 @@ class CatForm extends Unit {
 				hp *= (4 + (buff_t ? this.env.resist_t : 0)) / ((buff_o ? this.env.orb_resist : 1) * (1 - this.env.combo_resist));
 			} else if (ab.hasOwnProperty(AB_RESISTS)) {
 				hp *= 6 + (buff_t ? this.env.resist_t : 0);
-			}
-			if (ab.hasOwnProperty(AB_GOOD)) {
+			} else if (ab.hasOwnProperty(AB_GOOD)) {
 				hp /= (buff_o ? this.env.orb_good_hp : 1) * (1 - this.env.combo_good) * (0.5 - (buff_t ? this.env.good_hp_t : 0));
 			}
 		}
@@ -1267,15 +1274,22 @@ class CatForm extends Unit {
 				atk *= 1 + (ab[AB_STRENGTHEN][1] + this.env.combo_strengthen) / 100;
 			}
 
-			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
-				atk *= 4;
+			if (isBase && ab.hasOwnProperty(AB_ATKBASE))
+				return atk *= 4;
+
+			if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
+				atk *= 2.5;
+			} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
+				atk *= 1.6;
+			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
+				atk *= 1.2;
 			}
-			if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL)) {
-				atk *= 5 * (1 + this.env.combo_eva);
-			}
-			if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL)) {
-				atk *= 5 * (1 + this.env.combo_witch);
-			}
+
+			if (ab.hasOwnProperty(AB_EKILL) && (traits & TB_EVA))
+				return atk * 5 * (1 + this.env.combo_eva);
+
+			if (ab.hasOwnProperty(AB_WKILL) && (traits & TB_WITCH))
+				return atk * 5 * (1 + this.env.combo_witch);
 
 			const t = this.trait & traits;
 			const buff_t = t & trait_treasure;
@@ -1285,18 +1299,9 @@ class CatForm extends Unit {
 					atk *= (1 + this.env.combo_massive) * (3 + (buff_t ? this.env.massive_t : 0)) + (buff_o ? this.env.orb_massive : 0);
 				} else if (ab.hasOwnProperty(AB_MASSIVES)) {
 					atk *= 5 + (buff_t ? this.env.massive_t : 0);
-				}
-				if (ab.hasOwnProperty(AB_GOOD)) {
+				} else if (ab.hasOwnProperty(AB_GOOD)) {
 					atk *= (1 + this.env.combo_good) * (1.5  + (buff_t ? this.env.good_atk_t : 0)) + (buff_o ? this.env.orb_good_atk : 0);
 				}
-			}
-
-			if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
-				atk *= 2.5;
-			} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
-				atk *= 1.6;
-			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
-				atk *= 1.2;
 			}
 
 			if (metalMode && isMetal) {
@@ -2130,6 +2135,7 @@ export {
 	TB_BEAST,
 	TB_BARON,
 	TB_SAGE,
+	TRAIT_ALL,
 	trait_no_treasure,
 	trait_treasure,
 

@@ -6,7 +6,9 @@ import {
 	ATK_OMNI,
 	ATK_KB_REVENGE,
 
+	TB_INFN,
 	TB_DEMON,
+	TRAIT_ALL,
 	trait_no_treasure,
 	trait_treasure,
 
@@ -524,506 +526,193 @@ function getCombinations(arr) {
 	return combi;
 }
 
-function getAtk(form, line, theATK, parent, first, plus, attackS) {
-	function mul(arr, s, ab = true) {
-		for (let i = 0; i < arr.length; ++i)
-			(ab || form.abEnabled(i)) && (arr[i] *= s)
-	}
-	const lines = [];
-	var spec = false;
-	var t_ef = false;
-	var eva_ef = false;
-	var treasure;
-	const lvc = form.lvc;
-	for (const ab of line) {
-		switch (parseInt(ab[0])) {
-			case AB_WAVE:
-				lines.push('波動');
-				if (attackS != undefined)
-					mul(theATK, 1 + ab[1] / 100, false);
-				else
-					mul(theATK, 2, false);
-				break;
-			case AB_MINIWAVE:
-				if (attackS != undefined)
-					mul(theATK, 1 + ab[1] / 500, false);
-				else
-					mul(theATK, 1.2, false);
-				lines.push('小波動');
-				break;
-			case AB_SURGE:
-				if (attackS != undefined)
-					mul(theATK, 1 + ab[4] * ab[1] / 100, false);
-				else
-					mul(theATK, 1 + ab[4], false);
-				lines.push('烈波');
-				break;
-			case AB_MINISURGE:
-				if (attackS != undefined)
-					mul(theATK, 1 + ab[4] * ab[1] / 500, false);
-				else
-					mul(theATK, 1 + ab[4] * 0.2, false);
-				lines.push('小烈波');
-				break;
-			case AB_GOOD:
-				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
-				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK,  (1 + catEnv.combo_good) * (1.5  + (treasure ? catEnv.good_atk_t : 0)) + (lvc >= 2 ? catEnv.orb_good_atk : 0));
-				lines.push('善攻');
-				t_ef = true;
-				break;
-			case AB_CRIT:
-				if (attackS != undefined)
-					mul(theATK, 1 + (ab[1] + catEnv.combo_crit) / 100, false);
-				else
-					mul(theATK, 2, false);
-				lines.push('爆');
-				break;
-			case AB_STRENGTHEN:
-				mul(theATK, 1 + (ab[2] + catEnv.combo_strengthen) / 100);
-				lines.push('增攻');
-				break;
-			case AB_S:
-				if (attackS != undefined)
-					mul(theATK, 1 + (ab[1] * ab[2] / 10000), false);
-				else
-					mul(theATK, 1 + (ab[2] / 100), false);
-				lines.push('渾身');
-				break;
-			case AB_ATKBASE:
-				mul(theATK, 4);
-				lines.push('塔');
-				break;
-			case AB_MASSIVE:
-				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
-				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, (1 + catEnv.combo_massive) * (3 + (treasure ? catEnv.massive_t : 0)) + (lvc >= 2 ? catEnv.orb_massive : 0));
-				lines.push('大傷');
-				t_ef = true;
-				break;
-			case AB_MASSIVES:
-				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
-				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, 5 + (treasure ? catEnv.massive_t : 0));
-				lines.push('極傷');
-				t_ef = true;
-				break;
-			case AB_EKILL:
-				lines.push('使徒');
-				mul(theATK, 5 * (1 + catEnv.combo_eva));
-				eva_ef = true;
-				break;
-			case AB_WKILL:
-				mul(theATK, 5 * (1 + catEnv.combo_witch));
-				lines.push('魔女');
-				eva_ef = true;
-				break;
-			case AB_BSTHUNT:
-				mul(theATK, 2.5);
-				lines.push('超獸');
-				t_ef = true;
-				break;
-			case AB_BAIL:
-				mul(theATK, 1.6);
-				lines.push('超生命體');
-				t_ef = true;
-				break;
-			case AB_SAGE:
-				mul(theATK, 1.2);
-				lines.push('超賢者');
-				t_ef = true;
-				break;
-			case AB_EXPLOSION:
-				mul(theATK, 2);
-				lines.push('爆波');
-				break;
-		}
-	}
+function getAbilityShortNames(abs) {
+	return abs.map(x => units_scheme.abilities.short_names[x]);
+}
 
-	if (lvc >= 2 && catEnv.orb_atk) {
-		const a = [my_cat.forms[lvc].info.atk, my_cat.forms[lvc].info.atk1, my_cat.forms[lvc].info.atk2];
-		for (let i = 0; i < theATK.length; ++i)
-			theATK[i] += catEnv.orb_atk * a[i];
-	}
-	if (eva_ef && t_ef) return false;
-	let s = lines.join('・');
-	s += ':';
-	let atkstr = '';
+function formatAtk(atks) {
+	return atks.map(x => numStr(floor(x))).join('/');
+}
+
+function formatAtk2(atks, attackF) {
+	return atks.map(x => numStr(floor(floor(x) / attackF))).join('/');
+}
+
+function formatDPS(atks, attackF) {
+	return numStr(floor(30 * atks.reduce((rv, x) => rv + floor(x), 0) / attackF));
+}
+
+function updateAtkBaha(form, Cs, parent, dpsMode, plus) {
+	const plus_s = plus ? '+' : '';
+	const fmt = dpsMode ? formatDPS : formatAtk2;
+	const mode = dpsMode ? 'expected' : 'max';
+	let attackF = dpsMode ? form.attackF : 1;
 	if (plus)
-		atkstr += '+';
-	if (attackS != undefined) {
-		let t = 0;
-		for (let x of theATK)
-			t += floor(x);
-		atkstr += numStr(floor(t / attackS));
-	} else {
-		const end = theATK.length;
-		for (let _a = 0; _a < end; ++_a) {
-			atkstr += numStr(floor(theATK[_a]));
-			if (_a != (end - 1))
-				atkstr += '/';
-		}
-	}
-	s += atkstr;
-	if (spec) {
-		if (!first) {
-			s = '/' + atkstr + '（' + get_trait_short_names(form.trait & trait_no_treasure) + '）';
-			maxLen[0] = Math.max(s.length + maxLen[1], maxLen[0]);
-			parent.appendChild(document.createTextNode(s));
-			parent.appendChild(document.createElement('br'));
-			return;
-		}
-		s += '（' + get_trait_short_names(form.trait & trait_treasure) + '）';
-		maxLen[1] = s.length;
-		parent.appendChild(document.createTextNode(s));
-		return true;
-	}
-	maxLen[0] = Math.max(s.length, maxLen[0]);
-	parent.appendChild(document.createTextNode(s));
-	parent.appendChild(document.createElement('br'));
-	return false;
-}
+		attackF *= 5;
 
-function getAtkString(form, atks, Cs, level, parent, plus, attackS) {
-	atks = atks.map(x => floor(floor(floor(Math.round(x * form.getLevelMulti(level)) * catEnv.atk_t) * (1 + catEnv.combo_atk)) * form.atkM));
 	parent.textContent = '';
-	let first;
-	let m1 = new Float64Array(atks);
-	if (form.lvc >= 2 && catEnv.orb_atk) {
-		const a = [my_cat.forms[2].info.atk, my_cat.forms[2].info.atk1, my_cat.forms[2].info.atk2];
-		for (let i = 0; i < m1.length; ++i)
-			m1[i] += catEnv.orb_atk * a[i];
-	}
-	if (attackS != undefined) {
-		let t = 0;
-		for (let x of m1)
-			t += floor(x);
-		first = numStr(floor(t / attackS));
-	} else {
-		first = '';
-		const end = m1.length;
-		for (let _a = 0; _a < end; ++_a) {
-			first += numStr(floor(m1[_a]));
-			if (_a != (end - 1))
-				first += '/';
+	parent.append(plus_s + 
+		fmt(
+			catEnv._orbs.atk ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(), attackF
+		)
+	);
+
+	if (plus) return;
+
+	parent.appendChild(document.createElement('br'));
+
+	for (const line of Cs) {
+		const filter = new Set(line);
+		if (
+			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
+			(filter.has(AB_GOOD) || filter.has(AB_MASSIVE) || filter.has(AB_MASSIVES))
+		)
+			continue;
+
+		if (
+			(filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE)) > 1
+		)
+			continue;
+
+		let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
+		let atks = fmt(form.gettatks({
+			traits,
+			filter,
+			mode,
+			metal: false,
+		}), attackF);
+		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${atks}`;
+
+		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
+			let atksNoTrea = fmt(form.gettatks({
+				traits: trait_no_treasure,
+				filter,
+				mode,
+				metal: false,
+			}), attackF);
+
+			if (atks !== atksNoTrea)
+				s += `（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${atksNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）`;
 		}
-	}
-	parent.appendChild(document.createTextNode(plus ? '+' + first : first));
-	if (!plus) {
+		maxLen[0] = Math.max(s.length, maxLen[0]);
+		parent.append(s);
 		parent.appendChild(document.createElement('br'));
-		for (let line of Cs)
-			getAtk(form, line, new Float64Array(atks), parent, true, plus, attackS) && getAtk(form, line, new Float64Array(atks), parent, false, plus, attackS);
 	}
 }
 
-function getHp(lvc, line, theHP, parent, first, trait, plus, KB) {
-	const lines = [];
-	var spec = false;
-	var t_ef = false;
-	var eva_ef = false;
-	var treasure;
-	for (const ab of line) {
-		switch (parseInt(ab[0])) {
-			case AB_GOOD:
-				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
-				treasure = spec ? first : (trait & trait_treasure);
-				theHP /= (lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - catEnv.combo_good) * (0.5 - (treasure ? catEnv.good_hp_t : 0));
-				lines.push('善攻');
-				t_ef = true;
-				break;
-			case AB_RESIST:
-				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
-				treasure = spec ? first : (trait & trait_treasure);
-				theHP *= (4 + (treasure ? catEnv.resist_t : 0)) / ((lvc >= 2 ? catEnv.orb_resist : 1) * (1 - catEnv.combo_resist));
-				lines.push('耐打');
-				t_ef = true;
-				break;
-			case AB_RESISTS:
-				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
-				treasure = spec ? first : (trait & trait_treasure);
-				theHP *= 6 + (treasure ? catEnv.resist_t : 0);
-				lines.push('超耐打');
-				t_ef = true;
-				break;
-			case AB_EKILL:
-				lines.push('使徒');
-				theHP *= 5 * (1 + catEnv.combo_eva);
-				eva_ef = true;
-				break;
-			case AB_WKILL:
-				theHP *= 10 * (1 + catEnv.combo_witch);
-				lines.push('魔女');
-				eva_ef = true;
-				break;
-			case AB_BSTHUNT:
-				theHP /= 0.6;
-				lines.push('超獸');
-				break;
-			case AB_BAIL:
-				theHP /= 0.7;
-				lines.push('超生命體');
-				t_ef = true;
-				break;
-			case AB_SAGE:
-				theHP += theHP;
-				t_ef = true;
-				lines.push('超賢者');
-				break;
-		}
-	}
-	if (t_ef && eva_ef) return false;
-	let s = lines.join('・');
-	s += ':';
-	theHP /= 1 - catEnv.base_resist;
-	if (lvc >= 2 && catEnv.orb_hp != 1)
-		theHP /= catEnv.orb_hp;
-	theHP = numStr(floor(theHP / KB));
-	const hps = plus ? '+' + theHP : theHP;
-	s += hps;
-	if (spec) {
-		if (!first) {
-			s = '/' + hps + '（' + get_trait_short_names(trait & trait_no_treasure) + '）';
-			maxLen[0] = Math.max(maxLen[1] + s.length, maxLen[0]);
-			parent.appendChild(document.createTextNode(s));
-			parent.appendChild(document.createElement('br'));
-			return;
-		}
-		s += '（' + get_trait_short_names(trait & trait_treasure) + '）';
-		parent.appendChild(document.createTextNode(s));
-		maxLen[1] = s.length;
-		return true;
-	}
-	maxLen[0] = Math.max(s.length, maxLen[0]);
-	parent.appendChild(document.createTextNode(s));
-	parent.appendChild(document.createElement('br'));
-	return false;
-}
+function updateHpBaha(form, Cs, parent, KB, plus) {
+	const plus_s = plus ? '+' : '';
 
-function getHpString(form, Cs, trait, level, parent, plus, KB) {
 	parent.textContent = '';
-	const hp = floor(floor(floor(Math.round(form.info.hp * form.getLevelMulti(level)) * catEnv.hp_t) * (1 + catEnv.combo_hp)) * form.hpM);
-	let theHP = hp;
-	theHP /= 1 - catEnv.base_resist;
-	if (form.lvc >= 2 && catEnv.orb_hp != 1)
-		theHP /= catEnv.orb_hp;
-	const s = numStr(floor(theHP / KB));
-	parent.appendChild(document.createTextNode(plus ? '+' + s : s));
+	parent.append(plus_s + numStr(floor((catEnv._orbs.hp ? form.getthp({filter: []}) : form.hp) / KB)));
+
+	if (plus)
+		return;
+
 	parent.appendChild(document.createElement('br'));
-	for (let line of Cs)
-		getHp(form.lvc, line, hp, parent, true, trait, plus, KB) && getHp(form.lvc, line, hp, parent, false, trait, plus, KB);
-}
-function getHP0(form, m, S, W) {
-	W.textContent = '';
-	let flag = false,
-		FG = 1;
-	let t = form.trait & trait_treasure;
-	let hp_x;
-	if (t && (form.trait & trait_no_treasure)) {
-		flag = true;
-		++FG;
+
+	for (const line of Cs) {
+		const filter = new Set(line);
+		if (
+			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
+			(filter.has(AB_GOOD) || filter.has(AB_RESIST) || filter.has(AB_RESISTS))
+		)
+			continue;
+
+		if (
+			(filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE)) > 1
+		)
+			continue;
+
+		let hp = numStr(floor(form.getthp({filter})) / KB);
+		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${hp}`;
+
+		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
+			let hpNoTrea = numStr(floor(form.getthp({filter, traits: trait_no_treasure})) / KB);
+
+			if (hp !== hpNoTrea)
+				s += `（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${hpNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）`;
+		}
+		maxLen[0] = Math.max(s.length, maxLen[0]);
+		parent.append(s);
+		parent.appendChild(document.createElement('br'));
 	}
-	let hp_o = floor(floor(floor(Math.round(form.info.hp * m) * catEnv.hp_t) * (1 + catEnv.combo_hp)) * form.hpM);
-	do {
-		if (flag) {
-			t = (FG == 2);
+}
+
+function updateHp(form, filter, W) {
+	let old_hp;
+	let traits = TRAIT_ALL;
+
+	for (let first = true;;first = false) {
+		const hp = numStr(floor(form.getthp({
+			traits,
+			filter,
+		})));
+
+		if (first) {
+			W.textContent = hp;
+			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
+				return;
 		} else {
-			t = (form.trait & trait_treasure);
-		}
-		let hp = hp_o;
-		for (let k of S) {
-			switch (k) {
-				case AB_GOOD:
-					hp /= (form.lvc >= 2 ? catEnv.orb_good_hp : 1) * (1 - catEnv.combo_good) * (0.5 - (t ? catEnv.good_hp_t : 0));
-					break;
-				case AB_RESIST:
-					hp *= (4 + (t ? catEnv.resist_t : 0)) / ((form.lvc >= 2 ? catEnv.orb_resist : 1) * (1 - catEnv.combo_resist));
-					break;
-				case AB_RESISTS:
-					hp *= 6 + (t ? catEnv.resist_t : 0);
-					break;
-				case AB_EKILL:
-					hp *= 5 * (1 + catEnv.combo_eva);
-					break;
-				case AB_WKILL:
-					hp *= 10 * (1 + catEnv.combo_witch);
-					break;
-				case AB_BSTHUNT:
-					hp /= 0.6;
-					break;
-				case AB_BAIL:
-					hp /= 0.7;
-					break;
-				case AB_SAGE:
-					hp += hp;
-					break;
-			}
-		}
-		hp /= 1 - catEnv.base_resist;
-		if (form.lvc >= 2 && catEnv.orb_hp != 1)
-			hp /= catEnv.orb_hp;
-		hp = numStr(floor(hp));
-		if (flag && FG == 1) {
-			if (hp_x == hp) return;
+			if (hp === old_hp)
+				return;
 			W.appendChild(document.createElement('br'));
-			const x = document.createElement('span');
-			x.style.fontSize = 'smaller';
-			x.textContent = hp;
-			W.appendChild(x);
+			const span = document.createElement('span');
+			span.style.fontSize = 'smaller';
+			span.textContent = hp;
+			W.appendChild(span);
 			return;
 		}
-		W.append(hp);
-		hp_x = hp;
-	} while (--FG);
+
+		traits = trait_no_treasure;
+		old_hp = hp;
+	}
 }
 
-function getATK0(form, m, S, W1, W2) {
+function updateAtk(form, filter, W1, W2) {
+	let old_atks;
+	let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
+
 	W1.textContent = W2.textContent = '';
-	let flag = false,
-		FG = 1;
-	let atk_s;
-	let dps_s;
-	let t = form.trait & trait_treasure;
-	if (t && (form.trait & trait_no_treasure)) {
-		flag = true;
-		++FG;
-	}
-	do {
-		if (flag) {
-			t = (FG == 2);
+
+	for (let first = true;;first = false) {
+		const atks = formatAtk(form.gettatks({
+			traits,
+			filter,
+			mode: 'max',
+			metal: false,
+		}));
+		const dps = formatDPS(form.gettatks({
+			traits,
+			filter,
+			mode: 'expected',
+			metal: false,
+		}), form.attackF);
+
+		if (first) {
+			W1.append(atks);
+			W2.append(dps);
+			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
+				return;
 		} else {
-			t = (form.trait & trait_treasure);
-		}
-		let atks = [form.info.atk];
-		if (form.info.atk1)
-			atks.push(form.info.atk1);
-		if (form.info.atk2)
-			atks.push(form.info.atk2);
-
-		for (let i = 0; i < atks.length; ++i)
-			atks[i] = floor(floor(floor(Math.round(atks[i] * m) * catEnv.atk_t) * (1 + catEnv.combo_atk)) * form.atkM);
-
-		let dps = new Float64Array(atks);
-
-		function mul(arr, s, ab = true) {
-			for (let i = 0; i < arr.length; ++i)
-				(ab || form.abEnabled(i)) && (arr[i] *= s)
-		}
-		let a;
-		for (let k of S) {
-			const v = form.ab[k];
-			switch (k) {
-				case AB_WAVE:
-					mul(dps, 1 + v[0] / 100, false);
-					mul(atks, 2, false);
-					break;
-				case AB_MINIWAVE:
-					mul(dps, 1 + v[0] / 500, false);
-					mul(atks, 1.2, false);
-					break;
-				case AB_SURGE:
-					mul(dps, 1 + v[3] * v[0] / 100, false);
-					mul(atks, 1 + v[3], false);
-					break;
-				case AB_MINISURGE:
-					mul(dps, 1 + v[3] * v[0] / 500, false);
-					mul(atks, 1 + v[3] * 0.2, false);
-					break;
-				case AB_GOOD:
-					a = (1 + catEnv.combo_good) * (1.5 + (t ? catEnv.good_atk_t : 0)) + (form.lvc >= 2 ? catEnv.orb_good_atk : 0);
-					mul(atks, a);
-					mul(dps, a);
-					break;
-				case AB_CRIT:
-					mul(dps, 1 + (catEnv.combo_crit + v) / 100, false);
-					mul(atks, 2, false);
-					break;
-				case AB_STRENGTHEN:
-					a = 1 + (v[1] + catEnv.combo_strengthen) / 100;
-					mul(atks, a);
-					mul(dps, a);
-					break;
-				case AB_S:
-					mul(dps, 1 + (v[0] * v[1] / 10000), false);
-					mul(atks, 1 + (v[1] / 100), false);
-					break;
-				case AB_ATKBASE:
-					mul(atks, 4);
-					mul(dps, 4);
-					break;
-				case AB_MASSIVE:
-					a = (1 + catEnv.combo_massive) * (3 + (t ? catEnv.resist_t : 0)) + (form.lvc >= 2 ? catEnv.orb_massive : 0);
-					mul(atks, a);
-					mul(dps, a);
-					break;
-				case AB_MASSIVES:
-					a = 5 + (t ? catEnv.resist_t : 0);
-					mul(atks, a);
-					mul(dps, a);
-					break;
-				case AB_EKILL:
-					mul(atks, 5 * (1 + catEnv.combo_eva));
-					mul(dps, 5 * (1 + catEnv.combo_eva));
-					break;
-				case AB_WKILL:
-					mul(atks, 5 * (1 + catEnv.combo_witch));
-					mul(dps, 5 * (1 + catEnv.combo_witch));
-					break;
-				case AB_BSTHUNT:
-					mul(atks, 2.5);
-					mul(dps, 2.5);
-					break;
-				case AB_BAIL:
-					mul(atks, 1.6);
-					mul(dps, 1.6);
-					break;
-				case AB_SAGE:
-					mul(atks, 1.2);
-					mul(dps, 1.2);
-					break;
-				case AB_EXPLOSION:
-					mul(atks, 2);
-					mul(dps, 2);
-					break;
-			}
-		}
-		if (form.lvc >= 2 && catEnv.orb_atk) {
-			const a = [my_cat.forms[2].info.atk, my_cat.forms[2].info.atk1, my_cat.forms[2].info.atk2];
-			for (let i = 0; i < atks.length; ++i) {
-				const x = floor(catEnv.orb_atk * a[i]);
-				atks[i] += x;
-				dps[i] += x;
-			}
-		}
-
-		let s = 0;
-		for (let a of dps)
-			s += floor(a);
-		dps = numStr(floor(30 * s / form.attackF));
-		for (let i = 0; i < atks.length; ++i)
-			atks[i] = numStr(floor(atks[i]));
-		atks = atks.join('/');
-
-		if (flag && FG == 1) {
-			if (atk_s == atks) return;
+			if (atks === old_atks)
+				return;
 			W1.appendChild(document.createElement('br'));
 			W2.appendChild(document.createElement('br'));
-			let x = document.createElement('span');
-			x.style.fontSize = 'smaller';
-			x.textContent = atks;
-			W1.appendChild(x);
-			x = document.createElement('span');
-			x.style.fontSize = 'smaller';
-			x.textContent = dps;
-			W2.appendChild(x);
+			let span = document.createElement('span');
+			span.style.fontSize = 'smaller';
+			span.textContent = atks;
+			W1.appendChild(span);
+			span = document.createElement('span');
+			span.style.fontSize = 'smaller';
+			span.textContent = dps;
+			W2.appendChild(span);
 			return;
 		}
 
-		W1.append(atks);
-		W2.append(dps);
-
-		atk_s = atks;
-		dps_s = dps;
-	} while (--FG);
+		traits = trait_no_treasure;
+		old_atks = atks;
+	}
 }
 
 function updateValues(form, tbl) {
@@ -1031,12 +720,12 @@ function updateValues(form, tbl) {
 	table_to_values.set(tbl, form);
 	if (layout === 2) {
 		let tr = chs[2].children;
-		const m = form.getLevelMulti(chs[1].children[1]._v);
-		getHP0(form, m, tbl._s, tr[1]);
+		form.level = chs[1].children[1]._v;
+		updateHp(form, tbl._s, tr[1]);
 		tr[3].textContent = form.kb;
 		tr[5].textContent = numStrT(form.attackF);
 		tr = chs[3].children;
-		getATK0(form, m, tbl._s, tr[1], chs[4].children[1]);
+		updateAtk(form, tbl._s, tr[1], chs[4].children[1]);
 		let t = catEnv.combo_speed;
 		tr[3].textContent = t ? floor((1 + t) * form.speed) : form.speed;
 		if (config.unit === 'F') {
@@ -1078,27 +767,36 @@ function updateValues(form, tbl) {
 	PRs[6].textContent = form.info.price * 2;
 	let levels = new Array(5);
 	let lvE = chs[0].children[1];
-	const attackS = form.attackF / 30;
 	for (i = 0; i < lvMax; ++i) {
 		levels[i] = parseInt(lvE.textContent.slice(2));
 		lvE = lvE.nextElementSibling;
 	}
-	const ABF = Object.entries(form.ab);
-	const HCs = getCombinations(ABF.filter(x => hp_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
-	for (i = 1; i <= 5; ++i)
-		(i > lvMax) ? (HPs[i].textContent = '-') : getHpString(form, HCs, form.trait, levels[i - 1], HPs[i], false, 1);
-	getHpString(form, HCs, form.trait, 1, HPs[i], true, 5);
-	for (i = 1; i <= 5; ++i)
-		(i > lvMax) ? (HPPKBs[i].textContent = '-') : getHpString(form, HCs, form.trait, levels[i - 1], HPPKBs[i], false, form.kb);
-	getHpString(form, HCs, form.trait, 1, HPPKBs[i], true, form.kb * 5);
-	const atks = [form.info.atk, form.info.atk1, form.info.atk2].filter(x => x);
-	const ACs = getCombinations(ABF.filter(x => atk_mult_abs.has(parseInt(x[0]))).map(x => Array.prototype.concat(x[0], x[1])));
-	for (i = 1; i <= 5; ++i)
-		(i > lvMax) ? (ATKs[i].textContent = '-') : getAtkString(form, atks, ACs, levels[i - 1], ATKs[i], false);
-	getAtkString(form, atks.map(x => x * 0.2), ACs, 1, ATKs[i], true);
-	for (i = 1; i <= 5; ++i)
-		(i > lvMax) ? (DPSs[i].textContent = '-') : getAtkString(form, atks, ACs, levels[i - 1], DPSs[i], false, attackS);
-	getAtkString(form, atks, ACs, 1, DPSs[i], true, attackS * 5);
+	const ABF = Object.keys(form.ab).map(Number);
+	const HCs = getCombinations(ABF.filter(x => hp_mult_abs.has(x)));
+	const ACs = getCombinations(ABF.filter(x => atk_mult_abs.has(x)));
+	i = 1;
+	form._plusLv = 0;
+	for (const lv of levels) {
+		form._baseLv = lv;
+		if (i > lvMax) {
+			HPs[i].textContent = '-';
+			HPPKBs[i].textContent = '-';
+			ATKs[i].textContent = '-';
+			DPSs[i].textContent = '-';
+		} else {
+			updateHpBaha(form, HCs, HPs[i], 1);
+			updateHpBaha(form, HCs, HPPKBs[i], form.kb);
+			updateAtkBaha(form, ACs, ATKs[i]);
+			updateAtkBaha(form, ACs, DPSs[i], true);
+		}
+		++i;
+	}
+	form._baseLv = 1;
+	updateHpBaha(form, HCs, HPs[i], 5, true);
+	updateHpBaha(form, HCs, HPPKBs[i], 5 * form.kb, true);
+	updateAtkBaha(form, ACs, ATKs[i], false, true);
+	updateAtkBaha(form, ACs, DPSs[i], true, true);
+
 	chs[6].children[1].textContent = numStrT(form.tba);
 	chs[6].children[3].textContent = numStrT(form.backswing);
 	chs[5].children[1].textContent = numStrT(form.attackF).replace('秒', '秒/下');
@@ -1335,7 +1033,8 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		tr.appendChild(td);
 		td = document.createElement('td');
 		td._l = form.lvc;
-		td._v = Math.min(form.lvc == 3 ? 60 : 50, my_cat.maxLevel);
+		form.level = form.lvc === 3 ? 60 : 50;
+		td._v = form.level;
 		td.textContent = 'Lv' + td._v;
 		td.contentEditable = true;
 		td.inputMode = 'numeric';
