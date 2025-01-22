@@ -1994,7 +1994,7 @@
 		"tw_name": "魔法少女小圓",
 		"jp_name": "魔法少女まどか☆マギカ",
 		"en_name": "Puella Magi Madoka Magica",
-		"img": "https://i.imgur.com/sKOYLIO.png",
+		"img": "https://i.imgur.com/ihkgs9r.png",
 		"rate": [7000, 2500, 500, 0],
 		"history": [
 			"2021/11/8(11:00)~2021/11/22(10:59) 魔法少女小圓合作轉蛋 5% [碎] [11/19(11:00)~11/22(10:59) 5% 必中]",
@@ -2005,9 +2005,9 @@
 			"/collab/Puella_Magi_Madoka_Magica.html"
 		],
 		"type": "rare",
-		"units": [440, 440, 440, 292, 292, 292, 291, 291, 291, 290, 290, 290, 289, 289, 289, 288, 288, 293, 293, 293, 293, 293, 293, 298, 298, 298, 298, 297, 297, 297, 297, 296, 296, 296, 296, 295, 295, 295, 295, 294, 294, 294, 294, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R621.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R621.html"
+		"units": [778, 440, 292, 291, 290, 289, 288, 293, 293, 293, 293, 293, 293, 298, 298, 298, 298, 297, 297, 297, 297, 296, 296, 296, 296, 295, 295, 295, 295, 294, 294, 294, 294, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R958.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R958.html"
 	},
 	{
 		"tag": "Crash",
