@@ -3,10 +3,7 @@ const fs = require('node:fs');
 const {resolve} = require('node:path');
 const {OUTPUT_DIR,} = require('./base.js');
 const RewardSiteGenerator = require('./reward.js');
-
-function to_path(s) {
-	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');
-}
+const {normalizePath} = require('./util.js');
 
 // calculate average reward per stage
 function average_reward(drop, rand) {
@@ -135,7 +132,7 @@ module.exports = class extends RewardSiteGenerator {
 				console.assert(false);
 			}
 
-			const path = 'gacha/' + to_path(pool.en_name) + '.html';
+			const path = 'gacha/' + normalizePath(pool.en_name) + '.html';
 
 			this.write_string(path, this.template(
 				gacha_template,

@@ -2,10 +2,7 @@ const fs = require('node:fs');
 const {resolve} = require('node:path');
 const {OUTPUT_DIR} = require('./base.js');
 const RewardSiteGenerator = require('./reward.js');
-
-function to_path(s) {
-	return s.replace(/[\s:\/&'!]/g, '_').replace(/\+/g, '');
-}
+const {normalizePath} = require('./util.js');
 
 module.exports = class extends RewardSiteGenerator {
 	run() {
@@ -76,7 +73,7 @@ module.exports = class extends RewardSiteGenerator {
 
 		for (let i = 0; i < collabs.length; i++) {
 			const collab = collabs[i];
-			const fn = 'collab/' + to_path(collab.en_name) + '.html';
+			const fn = 'collab/' + normalizePath(collab.en_name) + '.html';
 			nav_menu.push({
 				path: fn,
 				name: collab.tw_name,
@@ -102,7 +99,7 @@ module.exports = class extends RewardSiteGenerator {
 					return pools;
 				}
 				pool = Object.assign({}, pool);
-				pool.path = to_path(pool.en_name);
+				pool.path = normalizePath(pool.en_name);
 				[pool.width, pool.height] = pool.size ? pool.size.split('x') : [860, 240];
 				pools.push(pool);
 				return pools;
