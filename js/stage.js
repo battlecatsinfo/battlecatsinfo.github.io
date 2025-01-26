@@ -21,10 +21,17 @@ module.exports = class extends SiteGenerator {
 		const {categories, conditions, material_drops, reset_modes, limit_groups, fixed_lineup, stage_tips} = stageScheme;
 
 		const map = mapTable.reduce((rv, entry, i) => {
+			let name = entry.name_tw || undefined;
+
 			const id = parseInt(entry.id, 36);
+
+			// auto number map names
+			if (id >= 17000 && id < 18000) // Colosseum
+				name = name + ' ' + ((id % 1000) + 1).toString();
+
 			rv[id] = {
 				id,
-				name: entry.name_tw || undefined,
+				name,
 				nameJp: entry.name_jp || undefined,
 				stars: entry.stars ? entry.stars.split(',').map(x => parseInt(x, 10)) : undefined,
 				mapCond: entry.mapcond ? parseInt(entry.mapcond, 36) : undefined,

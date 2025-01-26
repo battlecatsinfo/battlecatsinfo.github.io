@@ -654,15 +654,25 @@ async function refresh_1(sts) {
 		const o = M2.appendChild(document.createElement('option'));
 		if (c === mapIdx)
 			_map = map;
+		let name;
 		if (stageL) {
 			const jp = map.nameJp;
 			if (stageL == 1)
-				o.textContent = jp || QQ;
+				name = jp || QQ;
 			else
-				o.textContent = [map.name, jp].filter(x => x).join('/');
+				name = [map.name, jp].filter(x => x).join('/');
 		} else {
-			o.textContent = map.name || map.nameJp || QQ;
+			name = map.name || map.nameJp || QQ;
 		}
+		// auto number map names
+		switch (M1.selectedIndex) {
+			case 0:       // SOL
+			case 9:       // UL
+			case 16:      // ZL
+				name = `${c + 1}. ${name}`;
+				break;
+		}
+		o.textContent = name;
 		c += 1;
 	}
 	M2.selectedIndex = mapIdx;
