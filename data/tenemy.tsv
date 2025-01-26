@@ -230,6 +230,12 @@ SV-001	SV-001	SV-001	SV-001
 ネコ棒倒し	倒棒貓	Rampage Cats	고양이 봉
 森の蜜子	森蜜子	Queen B	여왕벌
 ちびぶんぶん	小噴噴	Li'l Bun Bun	꼬마 맴매
+薔薇園の魔女	玫瑰園魔女	The Rose Garden Witch	장미원의 마녀
+お菓子の魔女・執着	零食的魔女・執著	Dessert Witch - Obsession	과자의 마녀・집착
+お菓子の魔女	零食的魔女	Dessert Witch	과자의 마녀
+ハコの魔女とその手下	箱的魔女和手下	Box Witch and Minions	박스의 마녀와 수하들
+ワルプルギスの夜	魔女之夜	Walpurgisnacht	발푸르기스의 밤
+キュゥべえ	丘比	Kyuubei	큐베
 ネコ火祭り	火舞貓	Ritual Cat	고양이 분노
 イノワール	黑暗野豬	Razorback	와일드 보어
 文化祭のカンバン娘	文化祭看板小妹	Festival Sign Girl	축제 간판 아가씨
@@ -330,6 +336,7 @@ SV-001	SV-001	SV-001	SV-001
 パワハラッコ部長	職權騷擾一族部長	CTO Seal	갑질 부장
 クマンケン	科熊怪人	Cadaver Bear	프랑켄슈타인 베어
 シノシシ	玉米鬚豬	Dread Bore	레게 보어
+くるみ割りの魔女	胡桃鉗魔女	Nutcracker Witch	호두 까기 마녀
 サタンクロース	宇宙聖誕老人	Satan Claus	사탄클로스
 ユメミちゃん	愛作夢的貘	Bakoo	꿈꾸는 맥
 獅子姉妹	獅子姐妹	Sister Lione	사자 자매
@@ -409,6 +416,7 @@ SV-001	SV-001	SV-001	SV-001
 大玉（白）	大球（白色）	Large White Ball	큰 구슬 (하양)
 大玉（赤）	大球（紅色）	Large Red Ball	큰 구슬 (빨강)
 大玉（鉄）	大球（鋼鐵）	Large Iron Ball	큰 구슬 (철)
+インキュベーター	孵化者	Incubator	인큐베이터
 風（白）	陣風（白色）	White Wind	바람 (하양)
 風（赤）	陣風（紅色）	Red Wind	바람 (빨강)
 風（黒）	陣風（黑色）	Black Wind	바람 (검정)
@@ -500,15 +508,17 @@ SV-001	SV-001	SV-001	SV-001
 生命の賢者Dr.ノーヴァ	生命賢者Dr. 諾瓦	Sage of Life Dr. Nova	생명의 현자 Dr.노바
 イディ:Ne	異弟:Ne	Idi:Ne	이디:Ne
 ネコ給食当番	打飯貓	Cafeteria Cat	고양이 급식당번
-足軽わんこ			
-武将カオル君			
-武将ニャンダム			
-武将般若我王			
-武将ぶんぶん			
-反逆の戦国魔王・織田信長			
+足軽わんこ	足輕狗仔	Bannerman Doge	졸병 멍뭉이
+武将カオル君	武將臉君	Commander Face	장수 대갈이군
+武将ニャンダム	武將貓彈	Commander Nyandam	장수 야옹마
+武将般若我王	武將般若我王	Commander Hannya	장수 반야아왕
+武将ぶんぶん	武將噴噴	Commander Bun Bun	장수 맴매 선생
+反逆の戦国魔王・織田信長	反叛的戰國魔王・織田信長	Revolutionary Nobunaga	반역의 마왕 하데스
 12周年記念ケーキわんこ			
-汎用周年木人城			
-にゃんこ検定城（仮）			
+巳わんこ	蛇年狗仔	Snache Doge	뱀 멍뭉이
+謎の雪山	神秘雪山	Mystery Snowmound	수수께끼의 설산
+ふくろう博士	眉毛角鴞博士	Prof. Owlbrowley	부엉이 박사
+超拳獣ブンナグリオス	超拳獸超派噴噴	Xenobeast Bunaglios	초권수 맴매테리우스
 			
 	9週年紀念蛋糕狗仔		
 	9週年紀念木人樁城堡		
