@@ -15,12 +15,15 @@
 		width: 100%;
 		margin: 0;
 		padding: 0;
-		font-size: min(2vw, 18px);
+		font-size: max(12px, 1.2vw);
+		white-space: nowrap;
 	}
 	table {
 		border-collapse: collapse;
 		margin-top: 50px;
 		box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+		overflow: auto;
+		max-width: 100%;
 	}
 	.MC {
 		margin: 0 auto;
@@ -54,6 +57,7 @@
 	.I {
 		display: block;
 		max-width: 100%;
+		height: auto;
 		margin: 0 auto;
 	}
 	</style>
@@ -106,7 +110,7 @@
 		{{/if}}
 		{{#if collab.enemies}}
 		<h2>敵人</h2>
-		<div style="margin-left:1em;">
+		<div style="margin-left:1em;white-space: normal;">
 		{{#each collab.enemies as |id|}}
 			<a href="/enemy.html?id={{id}}"><img src="/img/e/{{id}}/0.png" width="64" height="64" loading="lazy"></a>
 		{{/each}}
@@ -114,40 +118,42 @@
 		{{/if}}
 		{{#if collab.stages}}
 		<h2>關卡</h2>
-		<table style="margin-left:1em;" class="w3-table-all w3-centered">
-			<thead>
-				<tr>
-					<th>名稱</th>
-					<th>小關數</th>
-					<th>1冠</th>
-					<th>2冠</th>
-					<th>3冠</th>
-					<th>4冠</th>
-					<th>獎勵</th>
-				</tr>
-			</thead>
-			<tbody>
-			{{#each stages as |stage|}}
-				<tr>
-					<td><a href="/stage.html?s={{stage.stage}}" target="_blank">{{stage.name}}</a></td>
-					<td>{{stage.len}}</td>
-					<td>{{stage.stars.[0]}}</td>
-					<td>{{stage.stars.[1]}}</td>
-					<td>{{stage.stars.[2]}}</td>
-					<td>{{stage.stars.[3]}}</td>
-					<td>
-					{{~#each stage.rewards as |reward|~}}
-					{{~#if (op reward.cat_id '!==' undefined)~}}
-					<a href="/unit.html?id={{reward.cat_id}}"><img class="R" width="104" height="79" loading="lazy" src="{{reward.icon}}"></a>
-					{{~else~}}
-					<img class="R" width="128" height="128" loading="lazy" src="{{reward.icon}}">
-					{{~/if}}
-					{{~/each~}}
-					</td>
-				</tr>
-			{{/each}}
-			</tbody>
-		</table>
+		<div style="overflow: auto;">
+			<table class="w3-table-all w3-centered">
+				<thead>
+					<tr>
+						<th>名稱</th>
+						<th>小關數</th>
+						<th>1冠</th>
+						<th>2冠</th>
+						<th>3冠</th>
+						<th>4冠</th>
+						<th>獎勵</th>
+					</tr>
+				</thead>
+				<tbody>
+				{{#each stages as |stage|}}
+					<tr>
+						<td><a href="/stage.html?s={{stage.stage}}" target="_blank">{{stage.name}}</a></td>
+						<td>{{stage.len}}</td>
+						<td>{{stage.stars.[0]}}</td>
+						<td>{{stage.stars.[1]}}</td>
+						<td>{{stage.stars.[2]}}</td>
+						<td>{{stage.stars.[3]}}</td>
+						<td>
+						{{~#each stage.rewards as |reward|~}}
+						{{~#if (op reward.cat_id '!==' undefined)~}}
+						<a href="/unit.html?id={{reward.cat_id}}"><img class="R" width="104" height="79" loading="lazy" src="{{reward.icon}}"></a>
+						{{~else~}}
+						<img class="R" width="128" height="128" loading="lazy" src="{{reward.icon}}">
+						{{~/if}}
+						{{~/each~}}
+						</td>
+					</tr>
+				{{/each}}
+				</tbody>
+			</table>
+		</div>
 		{{/if}}
 		{{#if collab.links}}
 		<h2>外部鏈結</h2>
