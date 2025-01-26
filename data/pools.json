@@ -272,6 +272,10 @@
 		"img": "https://i.imgur.com/E7Z9RpW.png",
 		"tw_url": "",
 		"ticket": 24,
+		"collab": [
+			"魔物獵人大狩獵",
+			"/collab/Monster_Hunter_Big_Game_Hunting_Quest.html"
+		],
 		"type": "event",
 		"units": [[], [-210, -211, -212], [-206, -209], [-207, -208], []],
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E001.html"
