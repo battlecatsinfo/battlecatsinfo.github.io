@@ -1,0 +1,40 @@
+#menu_list {
+	border-radius: 0.4em;
+	background-color: #9b9b9b59;
+	padding: 0.7em;
+	text-align: left;
+}
+#menu_list a {
+	text-decoration: none;
+	padding: 0.2em 0.6em;
+}
+#menu_list li {
+	list-style-position: inside;
+	list-style-type: decimal;
+}
+#menu {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.2em;
+}
+@media (min-width: 768px) {
+	#menu_list {
+		width: 34%;
+	}
+}
+@media (min-width: 992px) {
+	#menu_list {
+		width: 36%;
+	}
+}
+@media (min-width: 1200px) {
+	#menu_list {
+		width: 38%;
+	}
+}
+@media (min-width: 1400px) {
+	#menu_list {
+		width: 40%;
+	}
+}

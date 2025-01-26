@@ -4,16 +4,18 @@
 
 {{#*inline "description"}}貓咪大戰爭合作活動一覽{{/inline}}
 
+{{#*inline "styles"}}
+	{{~> @partial-block}}
+	<link rel="stylesheet" href="menu.css">
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
 		width: 100%;
 		margin: 0;
 		padding: 0;
-		font-size: min(2vw, 18px);
-	}
-	h2 {
-		font-size: min(28px, 3vw);
+		font-size: max(12px, 1.2vw);
 	}
 	.B {
 		text-align: center;
@@ -31,22 +33,19 @@
 		font-weight: bold;
 		font-size: larger;
 	}
-	#nav a {
-		text-decoration: none;
-		display: block;
-		text-align: left;
-		padding: 0.2em 0.6em;
-		font-size: larger;
-	}
 	</style>
 {{/inline}}
 
 {{#*inline "content"}}
-	<h1 style="text-align:center;">合作一覽</h1>
-	<div id="nav" style="margin: 1vh auto;background-color: #9b9b9b59;width: max(40vw,200px);border-radius: 0.4em;padding: 0.7em;list-style-type:none;">
-		{{#each nav_menu as |menu|}}
-		<a href="{{menu.path}}">{{sum @index 1}}. {{menu.name}}</a>
-		{{/each}}
+	<h1>合作一覽</h1>
+	<div id="menu">
+		<ol id="menu_list">
+			{{#each nav_menu as |menu|}}
+			<li>
+				<a href="{{menu.path}}">{{menu.name}}</a>
+			</li>
+			{{/each}}
+		</ol>
 	</div>
 	<div style="margin: 0 auto;text-align: center;width: 100%;padding: 2vw 2vw;font-size: min(2.5vw, 18px);">
 		<h2>合作活動史</h2>

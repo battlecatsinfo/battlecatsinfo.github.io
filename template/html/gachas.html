@@ -4,16 +4,18 @@
 
 {{#*inline "description"}}貓咪大戰爭的各種合作和非合作轉蛋{{/inline}}
 
+{{#*inline "styles"}}
+	{{~> @partial-block}}
+	<link rel="stylesheet" href="menu.css">
+{{/inline}}
+
 {{#*inline "styles-inline"}}
 	<style>
 	body {
 		width: 100%;
 		margin: 0;
 		padding: 0;
-		font-size: min(2vw, 18px);
-	}
-	h2 {
-		font-size: min(28px, 3vw);
+		font-size: max(12px, 1.2vw);
 	}
 	.B {
 		text-align: center;
@@ -35,23 +37,20 @@
 	tr:hover {
 		background-color: #ccc !important;
 	}
-	#nav a {
-		text-decoration: none;
-		display: block;
-		text-align: left;
-		padding: 0.2em 0.6em;
-		font-size: larger;
-	}
 	</style>
 {{/inline}}
 
 {{#*inline "content"}}
 	<h1 style="text-align:center;padding-top:0.5em;">轉蛋一覽</h1>
 
-	<div id="nav" style="margin: 5vh auto;background-color: #cfcfcf59 !important;width: max(40vw,200px);border-radius:0.6vw;padding: 0.7em;list-style-type:none;">
-		{{#each gachas as |gacha|}}
-		<a href="#{{sum @index 1}}">{{sum @index 1}}. {{gacha.name}}</a>
-		{{/each}}
+	<div id="menu">
+		<ol id="menu_list">
+			{{#each gachas as |gacha|}}
+			<li>
+				<a href="#{{sum @index 1}}">{{gacha.name}}</a>
+			</li>
+			{{/each}}
+		</ol>
 	</div>
 
 	{{#each gachas as |gacha|}}
