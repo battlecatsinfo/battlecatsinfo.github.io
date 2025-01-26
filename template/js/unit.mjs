@@ -1957,6 +1957,9 @@ class Cat {
 	get maxPlusLv() {
 		return this.info.maxPlusLv;
 	}
+	get collab() {
+		return this.info.collab;
+	}
 	get maxLevel() {
 		return this.maxBaseLv + this.maxPlusLv;
 	}

@@ -75,7 +75,7 @@ import {loadAllCombos} from './combo.mjs';
 const units_scheme = await loadScheme('units');
 const combos = await loadAllCombos();
 const combos_scheme = await loadScheme('combos');
-import {getStage} from './stage.mjs';
+import {getMap} from './stage.mjs';
 
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
@@ -1861,11 +1861,49 @@ function renderOrbs() {
 	unit_content.appendChild(table);
 }
 
+function renderObtain(table, o, obtain, bg) {
+	const tr = document.createElement('tr');
+	const descs = units_scheme[obtain ? 'obtain_methods' : 'evol_methods'];
+
+	table.appendChild(tr);
+
+	makeTd(tr, obtain ? '取得方式' : '進化方式').classList.add('F');
+
+	if (typeof o === 'number' || typeof o === 'string' || o.length === 1) {
+		const td = makeTd(tr, typeof o === 'number' ? descs[o] : o);
+		if (bg)
+			td.classList.add('F');
+		return;
+	}
+
+	const parts = descs[o[0]].split('@');
+	const td = document.createElement('td');
+	const a = document.createElement('a');
+
+	if (o.length === 2) {
+		const ids = o[1];
+		a.href = '/stage.html?s=' + ids.join('-');
+		getMap(ids[0] * 1000 + ids[1]).then(stage => {
+			a.textContent = stage.name || stage.nameJp || '？？？';
+		});
+	} else {
+		a.href = `/gacha/${o[2]}.html`;
+		a.textContent = o[1];
+	}
+
+	if (bg)
+		td.classList.add('F');
+	td.textContent = parts[0];
+	td.appendChild(a);
+	td.append(parts[1]);
+	tr.appendChild(td);
+}
+
 function renderExtras() {
 	let
 		table = document.createElement('table'),
 		tr = document.createElement('tr'),
-		odd = true,
+		bg = false,
 		td = document.createElement('td');
 	td.colSpan = 2;
 	td.textContent = '其他資訊';
@@ -1874,7 +1912,7 @@ function renderExtras() {
 	table.appendChild(tr);
 	tr = document.createElement('tr');
 	makeTd(tr, '稀有度').classList.add('F');
-	makeTd(tr, ['基本', 'EX', '稀有', '激稀有', '超激稀有'][my_cat.rarity]);
+	makeTd(tr, units_scheme.rarities[my_cat.rarity]);
 	table.appendChild(tr);
 	tr = document.createElement('tr');
 	makeTd(tr, '最大基本等級').classList.add('F');
@@ -1885,56 +1923,28 @@ function renderExtras() {
 	makeTd(tr, '+' + my_cat.maxPlusLv.toString());
 	table.appendChild(tr);
 
-	tr = document.createElement('tr');
-	makeTd(tr, '取得方式').classList.add('F');
-	makeTd(tr, my_cat.obtn).classList.add('F');
-	table.appendChild(tr);
-
-	tr = document.createElement('tr');
-	makeTd(tr, '進化方式').classList.add('F');
-	makeTd(tr, my_cat.evol);
-	table.appendChild(tr);
-
-	if (my_cat.obtnStage) {
+	if (my_cat.collab) {
 		tr = document.createElement('tr');
-		td = makeTd(tr, '破關掉落').classList.add('F');
+		makeTd(tr, '合作活動').classList.add('F');
 		td = document.createElement('td');
-		td.textContent = '通過「';
 		const a = document.createElement('a');
-		td.classList.add('F');
-		const s = my_cat.obtnStage;
-		getStage(s.reduce((rv, i) => rv * 1000 + i)).then(stage => {
-			a.textContent = stage.name || stage.nameJp || '？？？';
-		});
-		a.href = '/stage.html?s=' + s.join('-');
+		a.textContent = my_cat.collab[0];
+		a.href = `/collab/${my_cat.collab[1]}.html`;
+		a.target = '_blank';
 		td.appendChild(a);
-		td.append('」');
 		tr.appendChild(td);
-		table.appendChild(tr);
-		if (odd)
-			td.classList.add('F');
-		odd = !odd;
-	}
-	if (my_cat.evolStage) {
-		tr = document.createElement('tr');
-		td = makeTd(tr, '進化條件');
 		td.classList.add('F');
-		td = document.createElement('td');
-		td.textContent = '通過「';
-		const a = document.createElement('a');
-		const s = my_cat.evolStage;
-		getStage(s.reduce((rv, i) => rv * 1000 + i)).then(stage => {
-			a.textContent = stage.name || stage.nameJp || '？？？';
-		});
-		a.href = '/stage.html?s=' + s.join('-');
-		td.appendChild(a);
-		td.append('」');
-		tr.appendChild(td);
+		bg = !bg;
 		table.appendChild(tr);
-		if (odd)
-			td.classList.add('F');
-		odd = !odd;
 	}
+
+	for (const obtn of my_cat.obtn) {
+		renderObtain(table, obtn, true, bg = !bg);
+	}
+
+	if (my_cat.evol !== undefined)
+		renderObtain(table, my_cat.evol, false, bg = !bg);
+
 	if (my_cat.ver) {
 		const div = document.createElement('div');
 		let x = my_cat.ver;
