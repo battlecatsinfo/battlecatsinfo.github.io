@@ -1583,35 +1583,7 @@ async function applyOrb() {
 		if (!s2)
 			continue;
 
-		switch (s3) {
-			case 1:
-				catEnv.addOrb('atk', s2);
-				break;
-			case 2:
-				catEnv.addOrb('hp', s2);
-				break;
-			case 3:
-				if (!my_cat.forms[2].ab.hasOwnProperty(AB_GOOD)) {
-					alert('提示：\n強化善於攻擊本能玉只能用在有「善於攻擊」效果的貓咪上');
-					break;
-				}
-				catEnv.addOrb('good', s2);
-				break;
-			case 4:
-				if (!my_cat.forms[2].ab.hasOwnProperty(AB_MASSIVE)) {
-					alert('提示：\n強化超大傷害只能用在有「超大傷害」效果的貓咪上');
-					break;
-				}
-				catEnv.addOrb('massive', s2);
-				break;
-			case 5:
-				if (!my_cat.forms[2].ab.hasOwnProperty(AB_RESIST)) {
-					alert('提示：\n強化很耐打本能玉只能用在有「很耐打」效果的貓咪上');
-					break;
-				}
-				catEnv.addOrb('resist', s2);
-				break;
-		}
+		catEnv.addOrb(['atk', 'hp', 'good', 'massive', 'resist'][s3 - 1], s2);
 	}
 	if (layout === 2) {
 		const TF = my_cat.forms[2].clone();
