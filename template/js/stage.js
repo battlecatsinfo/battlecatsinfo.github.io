@@ -1040,7 +1040,7 @@ async function render_stage() {
 			var td1 = tr.appendChild(document.createElement("td"));
 			td1.appendChild(document.createTextNode(numStr(chances[i]) + "%" + (i == 0 && v[0] !== 100 && info3.rand !== -4 ? " （寶雷）" : "")));
 			var td2 = tr.appendChild(document.createElement("td"));
-			td2.textContent = i == 0 && (info3.rand === 1 || v[1] >= 1e3 && v[1] < 3e4) ? "一次" : "無";
+			td2.textContent = (info3.rand === -3 || (!i && (info3.rand === 1 || v[1] >= 1e3 && v[1] < 3e4))) ? "一次" : "無";
 		}
 	}
 	rewards.parentNode.hidden = !rewards.children.length;
