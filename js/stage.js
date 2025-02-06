@@ -22,17 +22,22 @@ module.exports = class extends SiteGenerator {
 
 		const map = mapTable.reduce((rv, entry, i) => {
 			let name = entry.name_tw || undefined;
+			let nameJp = entry.name_jp || undefined;
 
 			const id = parseInt(entry.id, 36);
 
 			// auto number map names
-			if (id >= 17000 && id < 18000) // Colosseum
-				name = name + ' ' + ((id % 1000) + 1).toString();
+			if (id >= 17000 && id < 18000) {// Colosseum
+				if (name || nameJp) {
+					name = (name || nameJp) + ' ' + ((id % 1000) + 1).toString();
+					nameJp = (nameJp || name) + ' ' + ((id % 1000) + 1).toString();
+				}
+			}
 
 			rv[id] = {
 				id,
 				name,
-				nameJp: entry.name_jp || undefined,
+				nameJp,
 				stars: entry.stars ? entry.stars.split(',').map(x => parseInt(x, 10)) : undefined,
 				mapCond: entry.mapcond ? parseInt(entry.mapcond, 36) : undefined,
 				stageCond: entry.stagecond ? parseInt(entry.stagecond, 36) : undefined,
