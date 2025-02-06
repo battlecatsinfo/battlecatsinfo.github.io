@@ -822,6 +822,7 @@ function updateValues(form, tbl) {
 		p.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
 		specials.appendChild(p);
 	}
+	createTraitIcons(form.trait, specials);
 	var atkType = '';
 	if (form.atkType & ATK_OMNI) {
 		atkType += '全方位';
@@ -871,11 +872,9 @@ function makeTd(parent, text = '') {
 function updateTable(TF, tbl) {
 	updateValues(TF, tbl);
 	const chs = tbl.children;
-	chs[9].children[1].textContent = '';
 	chs[10].children[1].textContent = '';
 	chs[11].children[1].textContent = '';
 	chs[12].children[1].textContent = '';
-	createTraitIcons(TF.trait, chs[9].children[1]);
 	createImuIcons(TF.imu, chs[10].children[1]);
 	createResIcons(TF.res, chs[10].children[1]);
 	createAbIcons(TF, chs[11].children[1], chs[12].children[1]);
@@ -1494,7 +1493,6 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 	tbl.appendChild(tbodytr11);
 	tbl.appendChild(tbodytr12);
 	updateValues(form, tbl);
-	createTraitIcons(form.trait, tbodytr9.children[1]);
 	createImuIcons(form.imu, tbodytr10.children[1]);
 	if (form.res)
 		createResIcons(form.res, tbodytr10.children[1]);
