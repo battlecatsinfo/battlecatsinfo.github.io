@@ -190,7 +190,7 @@ module.exports = class extends RewardSiteGenerator {
 		for (let rarity = 5;rarity >= 2;--rarity) {
 			let c = units.filter(u => this.unit_rarity[u] === rarity).length;
 			let x = rarity - 2;
-			let rate = O['rate'][x];
+			let rate = O['rate']?.[x];
 			if (rate) {
 				S.summary.push({
 					bgColor: colors[x],
