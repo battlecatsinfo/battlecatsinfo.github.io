@@ -691,7 +691,7 @@ class DPSGraph {
 				};
 		}
 
-		if (F.ab.hasOwnProperty(AB_EXPLOSION)) {
+		if (F.ab.hasOwnProperty(AB_EXPLOSION) || helper.talent_types.has(67)) {
 			this.options.explosion = 0;
 			this.create_select('爆波', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
