@@ -1,7 +1,7 @@
 import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
-import {EnemyIdb, loadCat, catEnv} from './unit.mjs';
+import {EnemyIdb, loadCat, loadAllCats, catEnv} from './unit.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -547,7 +547,7 @@ function getRarityString(rare) {
 			strs.push(stage_extra.rars[y]);
 		++y;
 	}
-	return strs.join("，");
+	return strs.join("、");
 }
 class Limit {
 	constructor(x) {
@@ -812,6 +812,23 @@ async function refresh_3(stage) {
 M3.oninput = function (event) {
 	refresh_3();
 };
+
+async function formatGroup(ids) {
+	if (ids.length === 1) {
+		const cat = await loadCat(ids[0]);
+		const f1 = cat.forms[0];
+		const n1 = f1.name || f1.jp_name;
+		const f2 = cat.forms[1];
+		const n2 = f2.name || f2.jp_name;
+		return `${n1}（${n2}）`;
+	} else {
+		const cats = await loadAllCats();
+		return ids.map(i => {
+			const f1 = cats[i].forms[0];
+			return f1.name || f1.jp_name;
+		}).join('、');
+	}
+}
 
 async function render_stage() {
 	const flags2 = info2.flags;
@@ -1146,11 +1163,11 @@ async function render_stage() {
 				if (l.sid == -1 || l.sid == M3.selectedIndex)
 					lim.combine(l);
 		}
-		var limits_str = [];
+		const limits_str = [];
 		if (lim.rare)
-			limits_str.push("稀有度:" + getRarityString(lim.rare));
+			limits_str.push("稀有度：" + getRarityString(lim.rare));
 		if (lim.num)
-			limits_str.push("最多可出戰角色數量:" + lim.num);
+			limits_str.push("最多可出戰角色數量：" + lim.num);
 		if (lim.max && lim.min)
 			limits_str.push(`生產成本${lim.min}元與${lim.max}元之間`);
 		else if (lim.max)
@@ -1158,18 +1175,27 @@ async function render_stage() {
 		else if (lim.min)
 			limits_str.push(`生產成本${lim.min}元以上`);
 		if (lim.line)
-			limits_str.push("出陣列表:僅限第1頁");
-		if (lim.group && lim.group[1].length)
-			limits_str.push("可出擊角色的ID: " + lim.group[1].join("/"));
+			limits_str.push("出陣列表：僅限第1頁");
+		if (lim.group && lim.group[1].length) {
+			if (lim.group[0] === 2) {
+				limits_str.push("無法出擊的角色：" + await formatGroup(lim.group[1]));
+			} else {
+				limits_str.push("指定角色：" + await formatGroup(lim.group[1]));
+			}
+		}
 		if (limits_str.length) {
-			var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
+			const tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 			tr.id = "limit-bt";
 			tr.style.fontSize = "larger";
-			var th = tr.appendChild(document.createElement("th"));
+			const th = tr.appendChild(document.createElement("th"));
 			th.colSpan = 6;
-			var div = th.appendChild(document.createElement("div"));
-			div.textContent = "※出擊限制※：" + limits_str.join("、");
-			div.classList.add('W');
+			const div = th.appendChild(document.createElement("div"));
+			const span1 = div.appendChild(document.createElement('span'));
+			span1.classList.add('w');
+			span1.textContent = "※出擊限制※ ";
+			const span2 = div.appendChild(document.createElement('span'));
+			span2.classList.add('W');
+			span2.textContent = limits_str.join("，");
 		}
 	}
 	ex_stages.textContent = "";
