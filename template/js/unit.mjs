@@ -628,35 +628,39 @@ class Unit {
 			}
 
 			if (this.abEnabled(idx)) {
+				let rv = 1;
+
 				if (ab.hasOwnProperty(AB_SURGE)) {
 					v = ab[AB_SURGE];
 					if (mode === 'max')
-						atk *= 1 + v[3];
+						rv += v[3];
 					else
-						atk *= 1 + v[3] * v[0] / 100;
+						rv += v[3] * v[0] / 100;
 				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
 					v = ab[AB_MINISURGE];
 					if (mode === 'max')
-						atk *= 1 + v[3] * 0.2;
+						rv += v[3] * 0.2;
 					else
-						atk *= 1 + v[3] * v[0] / 500;
+						rv += v[3] * v[0] / 500;
 				}
 
 				if (ab.hasOwnProperty(AB_EXPLOSION)) {
-					atk += atk;
+					++rv;
 				}
 
 				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
 					if (mode === 'max')
-						atk *= 2;
+						++rv;
 					else
-						atk *= 1 + ab[AB_WAVE][0] / 100;
+						rv += ab[AB_WAVE][0] / 100;
 				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
 					if (mode === 'max')
-						atk *= 1.2;
+						rv += 0.2;
 					else
-						atk *= 1 + ab[AB_MINIWAVE][0] / 500;
+						rv += ab[AB_MINIWAVE][0] / 500;
 				}
+
+				atk *= rv;
 
 				if (ab.hasOwnProperty(AB_S)) {
 					v = ab[AB_S];
@@ -1222,36 +1226,40 @@ class CatForm extends Unit {
 			}
 
 			if (this.abEnabled(idx)) {
+				let rv = 1;
+
 				if (ab.hasOwnProperty(AB_SURGE)) {
 					v = ab[AB_SURGE];
 					if (mode === 'max')
-						atk *= 1 + v[3];
+						rv += v[3];
 					else
-						atk *= 1 + v[3] * v[0] / 100;
+						rv += v[3] * v[0] / 100;
 				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
 					v = ab[AB_MINISURGE];
 					if (mode === 'max')
-						atk *= 1 + v[3] * 0.2;
+						rv += v[3] * 0.2;
 					else
-						atk *= 1 + v[3] * v[0] / 500;
+						rv += v[3] * v[0] / 500;
 				}
 
 				if (ab.hasOwnProperty(AB_EXPLOSION)) {
-					atk *= 2;
+					++rv;
 				}
 
 				// specially exclude bases they all have IMU_WAVE
 				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
 					if (mode === 'max')
-						atk *= 2;
+						++rv;
 					else
-						atk *= 1 + ab[AB_WAVE][0] / 100;
+						rv += ab[AB_WAVE][0] / 100;
 				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
 					if (mode === 'max')
-						atk *= 1.2;
+						rv += 0.2;
 					else
-						atk *= 1 + ab[AB_MINIWAVE][0] / 500;
+						rv += ab[AB_MINIWAVE][0] / 500;
 				}
+
+				atk *= rv;
 
 				if (ab.hasOwnProperty(AB_S)) {
 					v = ab[AB_S];
