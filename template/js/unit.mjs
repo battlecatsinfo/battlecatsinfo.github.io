@@ -629,7 +629,7 @@ class Unit {
 
 			if (this.abEnabled(idx)) {
 				if (ab.hasOwnProperty(AB_SURGE)) {
-					v = v = ab[AB_SURGE];
+					v = ab[AB_SURGE];
 					if (mode === 'max')
 						atk *= 1 + v[3];
 					else
