@@ -1,4 +1,4 @@
-import {config, loadScheme, numStr, numStrT, floor, savePng, copyPng} from './common.mjs';
+import {config, loadScheme, numStr, numStrT, floor, savePng, copyPng, getCombinations} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -70,6 +70,11 @@ import {
 	createResIcons,
 
 	loadCat,
+
+	updateAtkBaha,
+	updateHpBaha,
+	updateHp,
+	updateAtk,
 } from './unit.mjs';
 import {loadAllCombos} from './combo.mjs';
 const units_scheme = await loadScheme('units');
@@ -82,7 +87,6 @@ let my_id = parseInt(my_params.get('id'));
 const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const layout = config.layout;
-const maxLen = [0, 0];
 var level_count = 0;
 var my_cat;
 var lvMax;
@@ -510,211 +514,6 @@ function createAbIcons(form, p1, p2, tbody) {
 	}
 }
 
-function getCombinations(arr) {
-	if (!arr.length) return [];
-	const combi = [];
-	var temp;
-	const slent = 2 << arr.length - 1;
-	for (var i = 0; i < slent; i++) {
-		temp = [];
-		for (var j = 0; j < arr.length; j++)
-			if (i & (j ? (2 << j - 1) : 1))
-				temp.push(arr[j]);
-		if (temp.length)
-			combi.push(temp);
-	}
-	return combi;
-}
-
-function getAbilityShortNames(abs) {
-	return abs.map(x => units_scheme.abilities.short_names[x]);
-}
-
-function formatAtk(atks) {
-	return atks.map(x => numStr(floor(x))).join('/');
-}
-
-function formatAtk2(atks, attackF) {
-	return atks.map(x => numStr(floor(floor(x) / attackF))).join('/');
-}
-
-function formatDPS(atks, attackF) {
-	return numStr(floor(30 * atks.reduce((rv, x) => rv + floor(x), 0) / attackF));
-}
-
-function updateAtkBaha(form, Cs, parent, dpsMode, plus) {
-	const plus_s = plus ? '+' : '';
-	const fmt = dpsMode ? formatDPS : formatAtk2;
-	const mode = dpsMode ? 'expected' : 'max';
-	let attackF = dpsMode ? form.attackF : 1;
-	if (plus)
-		attackF *= 5;
-
-	parent.textContent = '';
-	parent.append(plus_s + 
-		fmt(
-			catEnv._orbs.atk ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(), attackF
-		)
-	);
-
-	if (plus) return;
-
-	parent.appendChild(document.createElement('br'));
-
-	for (const line of Cs) {
-		const filter = new Set(line);
-		if (
-			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
-			(filter.has(AB_GOOD) || filter.has(AB_MASSIVE) || filter.has(AB_MASSIVES))
-		)
-			continue;
-
-		if (
-			(filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE)) > 1
-		)
-			continue;
-
-		let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
-		let atks = fmt(form.gettatks({
-			traits,
-			filter,
-			mode,
-			metal: false,
-		}), attackF);
-		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${atks}`;
-
-		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
-			let atksNoTrea = fmt(form.gettatks({
-				traits: trait_no_treasure,
-				filter,
-				mode,
-				metal: false,
-			}), attackF);
-
-			if (atks !== atksNoTrea)
-				s += `（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${atksNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）`;
-		}
-		maxLen[0] = Math.max(s.length, maxLen[0]);
-		parent.append(s);
-		parent.appendChild(document.createElement('br'));
-	}
-}
-
-function updateHpBaha(form, Cs, parent, KB, plus) {
-	const plus_s = plus ? '+' : '';
-
-	parent.textContent = '';
-	parent.append(plus_s + numStr(floor((catEnv._orbs.hp ? form.getthp({filter: []}) : form.hp) / KB)));
-
-	if (plus)
-		return;
-
-	parent.appendChild(document.createElement('br'));
-
-	for (const line of Cs) {
-		const filter = new Set(line);
-		if (
-			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
-			(filter.has(AB_GOOD) || filter.has(AB_RESIST) || filter.has(AB_RESISTS))
-		)
-			continue;
-
-		if (
-			(filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE)) > 1
-		)
-			continue;
-
-		let hp = numStr(floor(form.getthp({filter})) / KB);
-		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${hp}`;
-
-		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
-			let hpNoTrea = numStr(floor(form.getthp({filter, traits: trait_no_treasure})) / KB);
-
-			if (hp !== hpNoTrea)
-				s += `（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${hpNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）`;
-		}
-		maxLen[0] = Math.max(s.length, maxLen[0]);
-		parent.append(s);
-		parent.appendChild(document.createElement('br'));
-	}
-}
-
-function updateHp(form, filter, W) {
-	let old_hp;
-	let traits = TRAIT_ALL;
-
-	for (let first = true;;first = false) {
-		const hp = numStr(floor(form.getthp({
-			traits,
-			filter,
-		})));
-
-		if (first) {
-			W.textContent = hp;
-			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
-				return;
-		} else {
-			if (hp === old_hp)
-				return;
-			W.appendChild(document.createElement('br'));
-			const span = document.createElement('span');
-			span.style.fontSize = 'smaller';
-			span.textContent = hp;
-			W.appendChild(span);
-			return;
-		}
-
-		traits = trait_no_treasure;
-		old_hp = hp;
-	}
-}
-
-function updateAtk(form, filter, W1, W2) {
-	let old_atks;
-	let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
-
-	W1.textContent = W2.textContent = '';
-
-	for (let first = true;;first = false) {
-		const atks = formatAtk(form.gettatks({
-			traits,
-			filter,
-			mode: 'max',
-			metal: false,
-		}));
-		const dps = formatDPS(form.gettatks({
-			traits,
-			filter,
-			mode: 'expected',
-			metal: false,
-		}), form.attackF);
-
-		if (first) {
-			W1.append(atks);
-			W2.append(dps);
-			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
-				return;
-		} else {
-			if (atks === old_atks)
-				return;
-			W1.appendChild(document.createElement('br'));
-			W2.appendChild(document.createElement('br'));
-			let span = document.createElement('span');
-			span.style.fontSize = 'smaller';
-			span.textContent = atks;
-			W1.appendChild(span);
-			span = document.createElement('span');
-			span.style.fontSize = 'smaller';
-			span.textContent = dps;
-			W2.appendChild(span);
-			return;
-		}
-
-		traits = trait_no_treasure;
-		old_atks = atks;
-	}
-}
-
 function updateValues(form, tbl) {
 	const chs = tbl.children;
 	table_to_values.set(tbl, form);
@@ -776,6 +575,7 @@ function updateValues(form, tbl) {
 	const ACs = getCombinations(ABF.filter(x => atk_mult_abs.has(x)));
 	i = 1;
 	form._plusLv = 0;
+	let maxLen = 1;
 	for (const lv of levels) {
 		form._baseLv = lv;
 		if (i > lvMax) {
@@ -784,25 +584,25 @@ function updateValues(form, tbl) {
 			ATKs[i].textContent = '-';
 			DPSs[i].textContent = '-';
 		} else {
-			updateHpBaha(form, HCs, HPs[i], 1);
-			updateHpBaha(form, HCs, HPPKBs[i], form.kb);
-			updateAtkBaha(form, ACs, ATKs[i]);
-			updateAtkBaha(form, ACs, DPSs[i], true);
+			maxLen = updateHpBaha({form, Cs: HCs, parent: HPs[i]});
+			updateHpBaha({form, Cs: HCs, parent: HPPKBs[i], KB: form.kb});
+			maxLen = Math.max(updateAtkBaha({form, Cs: ACs, parent: ATKs[i]}));
+			updateAtkBaha({form, Cs: ACs, parent: DPSs[i], dpsMode: true});
 		}
 		++i;
 	}
 	form._baseLv = 1;
-	updateHpBaha(form, HCs, HPs[i], 5, true);
-	updateHpBaha(form, HCs, HPPKBs[i], 5 * form.kb, true);
-	updateAtkBaha(form, ACs, ATKs[i], false, true);
-	updateAtkBaha(form, ACs, DPSs[i], true, true);
+	updateHpBaha ({form, Cs: HCs, parent: HPs[i],    KB: 5,           plus: true});
+	updateHpBaha ({form, Cs: HCs, parent: HPPKBs[i], KB: 5 * form.kb, plus: true});
+	updateAtkBaha({form, Cs: ACs, parent: ATKs[i],   dpsMode: false,  plus: true});
+	updateAtkBaha({form, Cs: ACs, parent: DPSs[i],   dpsMode: true,   plus: true});
 
 	chs[6].children[1].textContent = numStrT(form.tba);
 	chs[6].children[3].textContent = numStrT(form.backswing);
 	chs[5].children[1].textContent = numStrT(form.attackF).replace('秒', '秒/下');
-	if (maxLen[0] > 38)
+	if (maxLen > 38)
 		tbl.style.fontSize = 'max(16px, 0.9vw)';
-	else if (maxLen[0] > 26)
+	else if (maxLen > 26)
 		tbl.style.fontSize = 'max(17px, 1vw)';
 	var preStr = numStrT(form.pre);
 	if (form.pre1)

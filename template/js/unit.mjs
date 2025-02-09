@@ -1,4 +1,4 @@
-import {AutoIdb, loadScheme, fetch, config, numStr, round} from './common.mjs';
+import {AutoIdb, loadScheme, fetch, config, numStr, round, floor} from './common.mjs';
 const units_scheme = await loadScheme('units');
 
 // Attack types
@@ -2122,6 +2122,206 @@ function getAbiString(abi) {
 		1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
 }
 
+function getAbilityShortNames(abs) {
+	return abs.map(x => units_scheme.abilities.short_names[x]);
+}
+
+function formatAtk(atks) {
+	return atks.map(x => numStr(floor(x))).join('/');
+}
+
+function formatAtk2(atks, attackF) {
+	return atks.map(x => numStr(floor(floor(x) / attackF))).join('/');
+}
+
+function formatDPS(atks, attackF) {
+	return numStr(floor(30 * atks.reduce((rv, x) => rv + floor(x), 0) / attackF));
+}
+
+function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTrait = true}) {
+	const plus_s = plus ? '+' : '';
+	const fmt = dpsMode ? formatDPS : formatAtk2;
+	const mode = dpsMode ? 'expected' : 'max';
+	let attackF = dpsMode ? form.attackF : 1;
+	if (plus)
+		attackF *= 5;
+
+	parent.textContent = '';
+	const firstLine = plus_s + fmt(
+		catEnv._orbs.atk ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(), attackF
+	);
+	parent.append(firstLine);
+	let maxLen = firstLine.length;
+
+	if (plus)
+		return maxLen;
+
+	parent.appendChild(document.createElement('br'));
+
+	for (const line of Cs) {
+		const filter = new Set(line);
+		if (
+			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
+			(filter.has(AB_GOOD) || filter.has(AB_MASSIVE) || filter.has(AB_MASSIVES))
+		)
+			continue;
+
+		if (
+			(filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE)) > 1
+		)
+			continue;
+
+		let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
+		let atks = fmt(form.gettatks({
+			traits,
+			filter,
+			mode,
+			metal: false,
+		}), attackF);
+		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${atks}`;
+
+		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
+			let atksNoTrea = fmt(form.gettatks({
+				traits: trait_no_treasure,
+				filter,
+				mode,
+				metal: false,
+			}), attackF);
+
+			if (atks !== atksNoTrea)
+				s += showTrait ? 
+					`（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${atksNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）` :
+					`（${atksNoTrea}）`;
+		}
+		maxLen = Math.max(s.length, maxLen);
+		parent.append(s);
+		parent.appendChild(document.createElement('br'));
+	}
+
+	return maxLen;
+}
+
+function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}) {
+	const plus_s = plus ? '+' : '';
+
+	parent.textContent = '';
+	const firstLine = plus_s + numStr(floor((catEnv._orbs.hp ? form.getthp({filter: []}) : form.hp) / KB));
+	parent.append(firstLine);
+	let maxLen = firstLine.length;
+
+	if (plus)
+		return maxLen;
+
+	parent.appendChild(document.createElement('br'));
+
+	for (const line of Cs) {
+		const filter = new Set(line);
+		if (
+			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
+			(filter.has(AB_GOOD) || filter.has(AB_RESIST) || filter.has(AB_RESISTS))
+		)
+			continue;
+
+		if (
+			(filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE)) > 1
+		)
+			continue;
+
+		let hp = numStr(floor(form.getthp({filter})) / KB);
+		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${hp}`;
+
+		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
+			let hpNoTrea = numStr(floor(form.getthp({filter, traits: trait_no_treasure})) / KB);
+
+			if (hp !== hpNoTrea)
+				s += showTrait ? 
+					`（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${hpNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）` :
+					`（${hpNoTrea}）`;
+		}
+		maxLen = Math.max(s.length, maxLen);
+		parent.append(s);
+		parent.appendChild(document.createElement('br'));
+	}
+
+	return maxLen;
+}
+
+function updateHp(form, filter, W) {
+	let old_hp;
+	let traits = TRAIT_ALL;
+
+	for (let first = true;;first = false) {
+		const hp = numStr(floor(form.getthp({
+			traits,
+			filter,
+		})));
+
+		if (first) {
+			W.textContent = hp;
+			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
+				return;
+		} else {
+			if (hp === old_hp)
+				return;
+			W.appendChild(document.createElement('br'));
+			const span = document.createElement('span');
+			span.style.fontSize = 'smaller';
+			span.textContent = hp;
+			W.appendChild(span);
+			return;
+		}
+
+		traits = trait_no_treasure;
+		old_hp = hp;
+	}
+}
+
+function updateAtk(form, filter, W1, W2) {
+	let old_atks;
+	let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
+
+	W1.textContent = W2.textContent = '';
+
+	for (let first = true;;first = false) {
+		const atks = formatAtk(form.gettatks({
+			traits,
+			filter,
+			mode: 'max',
+			metal: false,
+		}));
+		const dps = formatDPS(form.gettatks({
+			traits,
+			filter,
+			mode: 'expected',
+			metal: false,
+		}), form.attackF);
+
+		if (first) {
+			W1.append(atks);
+			W2.append(dps);
+			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
+				return;
+		} else {
+			if (atks === old_atks)
+				return;
+			W1.appendChild(document.createElement('br'));
+			W2.appendChild(document.createElement('br'));
+			let span = document.createElement('span');
+			span.style.fontSize = 'smaller';
+			span.textContent = atks;
+			W1.appendChild(span);
+			span = document.createElement('span');
+			span.style.fontSize = 'smaller';
+			span.textContent = dps;
+			W2.appendChild(span);
+			return;
+		}
+
+		traits = trait_no_treasure;
+		old_atks = atks;
+	}
+}
+
 const catEnv = new CatEnv({
 	treasures: config.getTreasures(),
 });
@@ -2244,4 +2444,9 @@ export {
 	loadAllCats,
 	loadEnemy,
 	loadAllEnemies,
+
+	updateHpBaha,
+	updateAtkBaha,
+	updateHp,
+	updateAtk,
 };

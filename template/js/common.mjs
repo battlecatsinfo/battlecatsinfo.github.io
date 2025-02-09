@@ -583,6 +583,22 @@ function pagination({
 	return rv;
 }
 
+function getCombinations(arr) {
+	if (!arr.length) return [];
+	const combi = [];
+	var temp;
+	const slent = 2 << arr.length - 1;
+	for (var i = 0; i < slent; i++) {
+		temp = [];
+		for (var j = 0; j < arr.length; j++)
+			if (i & (j ? (2 << j - 1) : 1))
+				temp.push(arr[j]);
+		if (temp.length)
+			combi.push(temp);
+	}
+	return combi;
+}
+
 const config = new ConfigHandler();
 
 export {
@@ -607,4 +623,5 @@ export {
 	round,
 	floor,
 	pagination,
+	getCombinations,
 };
