@@ -471,7 +471,7 @@ function numStrT(num) {
 }
 
 function numStrX(num) {
-	const fn = numStrT = (config.unit === 'F') ?
+	const fn = numStrX = (config.unit === 'F') ?
 		num => num.toString() + ' F' :
 		num => numStr(num / 30);
 	return fn(num);
