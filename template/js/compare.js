@@ -1,4 +1,4 @@
-import {loadScheme, config, numStr, numStrT, numStrX, floor, savePng, copyPng} from './common.mjs';
+import {loadScheme, config, numStr, numStrT, numStrX, floor, savePng, copyPng, getCombinations} from './common.mjs';
 import {
 	ATK_SINGLE,
 	ATK_RANGE,
@@ -62,6 +62,9 @@ import {
 	createResIcons,
 
 	loadAllCats,
+
+	updateAtkBaha,
+	updateHpBaha,
 } from './unit.mjs';
 const units_scheme = await loadScheme('units', ['talents']);
 
@@ -74,271 +77,6 @@ const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, 
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const cat_name = document.getElementById('cat-name');
 const CF = document.getElementById('CF');
-
-function getCombinations(arr) {
-	if (!arr.length) return [];
-	const combi = [];
-	var temp;
-	const slent = 2 << arr.length - 1;
-	for (var i = 0; i < slent; i++) {
-		temp = [];
-		for (var j = 0; j < arr.length; j++)
-			if (i & (j ? (2 << j - 1) : 1))
-				temp.push(arr[j]);
-		if (temp.length)
-			combi.push(temp);
-	}
-	return combi;
-}
-
-function getAtk(form, line, theATK, parent, first, attackS) {
-	function mul(arr, s, ab = true) {
-		for (let i = 0; i < arr.length; ++i)
-			(ab || form.abEnabled(i)) && (arr[i] *= s)
-	}
-	const lines = [];
-	var spec = false;
-	var t_ef = false;
-	var eva_ef = false;
-	var treasure;
-	const lvc = form.lvc;
-	for (const ab of line) {
-		switch (parseInt(ab[0], 10)) {
-			case AB_WAVE:
-				lines.push('波動');
-				if (attackS != undefined)
-					mul(theATK, 1 + ab[1] / 100, false);
-				else
-					mul(theATK, 2, false);
-				break;
-			case AB_MINIWAVE:
-				if (attackS != undefined)
-					mul(theATK, 1 + ab[1] / 500, false);
-				else
-					mul(theATK, 1.2, false);
-				lines.push('小波動');
-				break;
-			case AB_SURGE:
-				if (attackS != undefined)
-					mul(theATK, 1 + ab[4] * ab[1] / 100, false);
-				else
-					mul(theATK, 1 + ab[4], false);
-				lines.push('烈波');
-				break;
-			case AB_MINISURGE:
-				if (attackS != undefined)
-					mul(theATK, 1 + ab[5] * ab[1] / 500, false);
-				else
-					mul(theATK, 1 + ab[5] * 0.2, false);
-				lines.push('小烈波');
-				break;
-			case AB_GOOD:
-				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
-				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, treasure ? 1.8 : 1.5);
-				lines.push('善攻');
-				t_ef = true;
-				break;
-			case AB_CRIT:
-				if (attackS != undefined)
-					mul(theATK, 1 + ab[1] / 100, false);
-				else
-					mul(theATK, 2, false);
-				lines.push('爆');
-				break;
-			case AB_STRENGTHEN:
-				mul(theATK, 1 + ab[2] / 100);
-				lines.push('增攻');
-				break;
-			case AB_S:
-				if (attackS != undefined)
-					mul(theATK, 1 + (ab[1] * ab[2] / 10000), false);
-				else
-					mul(theATK, 1 + (ab[2] / 100), false);
-				lines.push('渾身');
-				break;
-			case AB_ATKBASE:
-				mul(theATK, 4);
-				lines.push('塔');
-				break;
-			case AB_MASSIVE:
-				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
-				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, treasure ? 4 : 3);
-				lines.push('大傷');
-				t_ef = true;
-				break;
-			case AB_MASSIVES:
-				spec = (form.trait & trait_treasure) && (form.trait & trait_no_treasure);
-				treasure = spec ? first : (form.trait & trait_treasure);
-				mul(theATK, treasure ? 6 : 5);
-				lines.push('極傷');
-				t_ef = true;
-				break;
-			case AB_EKILL:
-				lines.push('使徒');
-				mul(theATK, 5);
-				eva_ef = true;
-				break;
-			case AB_WKILL:
-				mul(theATK, 5);
-				lines.push('魔女');
-				eva_ef = true;
-				break;
-			case AB_BSTHUNT:
-				mul(theATK, 2.5);
-				lines.push('超獸');
-				t_ef = true;
-				break;
-			case AB_BAIL:
-				mul(theATK, 1.6);
-				lines.push('超生命體');
-				t_ef = true;
-				break;
-			case AB_SAGE:
-				mul(theATK, 1.2);
-				lines.push('超賢者');
-				t_ef = true;
-				break;
-		}
-	}
-	if (eva_ef && t_ef) return false;
-	let s = lines.join('・');
-	s += ':';
-	let atkstr = '';
-	if (attackS != undefined) {
-		let t = 0;
-		for (let x of theATK)
-			t += ~~x;
-		atkstr += numStr(~~(t / attackS));
-	} else {
-		const end = theATK.length;
-		for (let _a = 0; _a < end; ++_a) {
-			atkstr += numStr(~~theATK[_a]);
-			if (_a != (end - 1))
-				atkstr += '/';
-		}
-	}
-	if (spec) {
-		if (!first) {
-			parent.append('（' + atkstr + '）');
-			parent.appendChild(document.createElement('br'));
-			return;
-		}
-		parent.append(s + atkstr);
-		return true;
-	}
-	parent.append(s + atkstr);
-	parent.appendChild(document.createElement('br'));
-	return false;
-}
-
-function getAtkString(form, atks, Cs, level, parent, attackS) {
-	atks = atks.map(x => ~~((~~(Math.round(x * form.getLevelMulti(level)) * catEnv.atk_t)) * form.atkM));
-	parent.textContent = '';
-	let first;
-	let m1 = new Float64Array(atks);
-	if (attackS != undefined) {
-		let t = 0;
-		for (let x of m1)
-			t += ~~x;
-		first = numStr(~~(t / attackS));
-	} else {
-		first = '';
-		const end = m1.length;
-		for (let _a = 0; _a < end; ++_a) {
-			first += numStr(~~m1[_a]);
-			if (_a != (end - 1))
-				first += '/';
-		}
-	}
-	parent.append(first);
-	parent.appendChild(document.createElement('br'));
-	for (let line of Cs)
-		getAtk(form, line, new Float64Array(atks), parent, true, attackS) && getAtk(form, line, new Float64Array(atks), parent, false, attackS);
-}
-
-function getHp(lvc, line, theHP, parent, first, trait) {
-	const lines = [];
-	var spec = false;
-	var t_ef = false;
-	var eva_ef = false;
-	var treasure;
-	for (const ab of line) {
-		switch (parseInt(ab[0], 10)) {
-			case AB_GOOD:
-				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
-				treasure = spec ? first : (trait & trait_treasure);
-				theHP /= (treasure ? 0.4 : 0.5);
-				lines.push('善攻');
-				t_ef = true;
-				break;
-			case AB_RESIST:
-				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
-				treasure = spec ? first : (trait & trait_treasure);
-				theHP *= (treasure ? 5 : 4);
-				lines.push('耐打');
-				t_ef = true;
-				break;
-			case AB_RESISTS:
-				spec = (trait & trait_treasure) && (trait & trait_no_treasure);
-				treasure = spec ? first : (trait & trait_treasure);
-				theHP *= (treasure ? 7 : 6);
-				lines.push('超耐打');
-				t_ef = true;
-				break;
-			case AB_EKILL:
-				lines.push('使徒');
-				theHP *= 5;
-				eva_ef = true;
-				break;
-			case AB_WKILL:
-				theHP *= 10;
-				lines.push('魔女');
-				eva_ef = true;
-				break;
-			case AB_BSTHUNT:
-				theHP /= 0.6;
-				lines.push('超獸');
-				break;
-			case AB_BAIL:
-				theHP /= 0.7;
-				lines.push('超生命體');
-				t_ef = true;
-				break;
-			case AB_SAGE:
-				theHP += theHP;
-				t_ef = true;
-				lines.push('超賢者');
-				break;
-		}
-	}
-	if (t_ef && eva_ef) return false;
-	let s = lines.join('・');
-	s += ':';
-	theHP = numStr(~~(theHP));
-	if (spec) {
-		if (!first) {
-			parent.append('（' + theHP + '）');
-			parent.appendChild(document.createElement('br'));
-			return;
-		}
-		parent.append(s + theHP);
-		return true;
-	}
-	parent.append(s + theHP);
-	parent.appendChild(document.createElement('br'));
-	return false;
-}
-
-function getHpString(form, Cs, level, parent) {
-	parent.textContent = '';
-	const hp = ~~((~~(Math.round(form.info.hp * form.getLevelMulti(level)) * catEnv.hp_t)) * form.hpM);
-	parent.append(numStr(~~hp));
-	parent.appendChild(document.createElement('br'));
-	for (let line of Cs)
-		getHp(form.lvc, line, hp, parent, true, form.trait) && getHp(form.lvc, line, hp, parent, false, form.trait);
-}
 
 loadAllCats().then(s => {
 	let o, f;
@@ -384,7 +122,7 @@ function newTab() {
 	return tby[0].children.length - 1;
 }
 
-function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level */ ) {
+function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 	tby[5].children[I].textContent = `${F.kb} / ${F.speed}`;
 	var T = numStrX(F.pre);
 	if (F.pre1)
@@ -415,12 +153,30 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ , L /* level 
 	} else {
 		tby[8].children[I].textContent = F.range + ' / ' + T;
 	}
-	const c = Object.entries(F.ab);
-	getHpString(F, getCombinations(c.filter(x => hp_mult_abs.has(parseInt(x[0], 10))).map(x => Array.prototype.concat(x[0], x[1]))), L, tby[2].children[I]);
-	const a = [F.info.atk, F.info.atk1, F.info.atk2].filter(x => x);
-	const b = getCombinations(c.filter(x => atk_mult_abs.has(parseInt(x[0], 10))).map(x => Array.prototype.concat(x[0], x[1])));
-	getAtkString(F, a, b, L, tby[3].children[I]);
-	getAtkString(F, a, b, L, tby[4].children[I], F.attackF / 30);
+
+	const ABF = Object.keys(F.ab).map(Number);
+	const HCs = getCombinations(ABF.filter(x => hp_mult_abs.has(x)));
+	const ACs = getCombinations(ABF.filter(x => atk_mult_abs.has(x)));
+
+	updateHpBaha({
+		form: F,
+		Cs: HCs,
+		parent: tby[2].children[I],
+		showTrait: false,
+	});
+	updateAtkBaha({
+		form: F,
+		Cs: ACs,
+		parent: tby[3].children[I],
+		showTrait: false,
+	});
+	updateAtkBaha({
+		form: F,
+		Cs: ACs,
+		parent: tby[4].children[I],
+		dpsMode: true,
+		showTrait: false,
+	});
 
 	let M = tby[9].children[I];
 	M.textContent = '';
@@ -648,13 +404,13 @@ function addCat(id, I, FC = 0) {
 	M.appendChild(G);
 	M.style.border = 'none';
 	const span = document.createElement('span');
-	span.lv = Math.min(C.maxLevel,
-		(FL == 2) ? 60 : ((FC == 3) ? 60 : 50)
-	);
+	F.level = (FL === 2) ? 
+		60 : 
+		((FC === 3) ? 60 : 50);
+	span.textContent = (span.lv = F.level);
 	span.C = C;
 	span.F = F;
 	span.I = I;
-	span.textContent = span.lv;
 	span.contentEditable = true;
 	span.inputMode = 'numeric';
 	span.addEventListener('focus', handleFocus);
@@ -664,7 +420,8 @@ function addCat(id, I, FC = 0) {
 		if (num) {
 			num = parseInt(num[0], 10);
 			if (num) {
-				num = Math.min(num, this.C.maxLevel);
+				this.F.level = num;
+				num = this.F.level;
 				if (num != this.lv) {
 					let J = this.F;
 					if (this.X) {
@@ -683,7 +440,8 @@ function addCat(id, I, FC = 0) {
 					if (J.lvc == 3 && num < 60) {
 						alert('提醒：開放第四進化等級需求至少為 Lv60');
 					}
-					setStat(this.C, J, this.I, this.lv = num);
+					this.lv = num;
+					setStat(this.C, J, this.I);
 				}
 			}
 		}
@@ -699,7 +457,7 @@ function addCat(id, I, FC = 0) {
 			F.applySuperTalents();
 		}
 	}
-	setStat(C, F, I, span.lv);
+	setStat(C, F, I);
 	M = tby[11].children[I];
 	M.style.border = 'none';
 	G = document.createElement('span');
@@ -740,7 +498,8 @@ function addCat(id, I, FC = 0) {
 				span.textContent = span.lv;
 				H.applySuperTalents();
 			}
-			setStat(span.C, H, span.I, span.lv);
+			F.level = span.lv;
+			setStat(span.C, H, span.I);
 		}
 		G = document.createElement('label');
 		G.textContent = '本能';
@@ -766,7 +525,8 @@ function addCat(id, I, FC = 0) {
 					span.textContent = span.lv;
 					H.applySuperTalents();
 				}
-				setStat(span.C, H, span.I, span.lv);
+				F.level = span.lv;
+				setStat(span.C, H, span.I);
 			}
 			G = document.createElement('label');
 			G.textContent = '超本能';
