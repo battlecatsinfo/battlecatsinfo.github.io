@@ -1,6 +1,5 @@
-const my_params = new URLSearchParams(location.search);
-let cutfile = my_params.get('cutfile');
-let imgfile = my_params.get('imgfile');
+import { fetch } from "./common.mjs";
+
 const canvas = document.getElementById("imgcut");
 const ctx = canvas.getContext('2d');
 const edit = document.getElementById('edit');
@@ -10,37 +9,10 @@ const pctx = preview.getContext('2d');
 var last_t;
 var cut;
 var imgloaded = false;
-img.crossOrigin = "anonymous";
-img.onload = function() {
-	canvas.width = this.naturalWidth;
-	canvas.height = this.naturalHeight;
-	ctx.drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight);
-	imgloaded = true;
-};
-img.onerror = function() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.fillText("導入圖片失敗", canvas.width / 2, canvas.height / 2);
-	imgloaded = false;
-}
-if (imgfile) {
-	img.src = imgfile;
-} else {
-	ctx.font = "30px serif";
-	ctx.textAlign = 'center';
-	ctx.textBaseline = 'middle';
-	ctx.fillText("導入圖片以開始", canvas.width / 2, canvas.height / 2);
-}
-if (cutfile) {
-	fetch(cutfile)
-		.then(res => res.text())
-		.then(text => {
-			cut = new ImgCut(text);
-			for (let i = 0; i < cut.cuts.length; ++i)
-				edit.appendChild(createLine(cut.cuts[i], i));
-		});
-} else {
-	cutfile = '';
-}
+
+let imgfile;
+let cutfile;
+
 class ImgCut {
 	constructor(text) {
 		if (!text) {
@@ -416,18 +388,75 @@ async function pasteImg() {
 	}
 }
 
-document.getElementById('import-img-file').addEventListener('click', importImg);
-document.getElementById('import-img-url').addEventListener('click', importImgU);
-document.getElementById('import-img-paste').addEventListener('click', pasteImg);
-document.getElementById('import-cut-file').addEventListener('click', importCut);
-document.getElementById('import-cut-url').addEventListener('click', importCutU);
-document.getElementById('export-part').addEventListener('click', exportimg);
-document.getElementById('export-all').addEventListener('click', exportimga);
-document.getElementById('export-img').addEventListener('click', exportaimg);
-document.getElementById('export-cut').addEventListener('click', exportcut);
-document.getElementById('add-line').addEventListener('click', addline);
-document.getElementById('del-line').addEventListener('click', removeline);
-document.getElementById('color-select').addEventListener('change', function (event) {
-	ctx.strokeStyle = color.value;
-	draw();
-});
+(async function () {
+	img.crossOrigin = "anonymous";
+	img.onload = function() {
+		canvas.width = this.naturalWidth;
+		canvas.height = this.naturalHeight;
+		ctx.drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight);
+		imgloaded = true;
+	};
+	img.onerror = function() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.fillText("導入圖片失敗", canvas.width / 2, canvas.height / 2);
+		imgloaded = false;
+	}
+
+	const params = new URLSearchParams(location.search);
+	let id = params.get('unit');
+	if (id !== null && !Number.isNaN(id = parseInt(id, 10))) {
+		if (id < 0) {
+			id = -(id + 1);
+			fetch(`img/e/${id}/a`).then(res => res.json()).then(data => {
+				cut = new ImgCut(data[0]);
+				for (let i = 0; i < cut.cuts.length; ++i)
+					edit.appendChild(createLine(cut.cuts[i], i));
+			}).catch(e => alert(e.message));
+			img.src = `/img/e/${id}/c.png`;
+		} else {
+			const form = parseInt(params.get('form') ?? 0, 10);
+			fetch(`img/u/${id}/a`).then(res => res.json()).then(data => {
+				cut = new ImgCut(data[form][0]);
+				for (let i = 0; i < cut.cuts.length; ++i)
+					edit.appendChild(createLine(cut.cuts[i], i));
+			}).catch(e => alert(e.message));
+			img.src = `/img/u/${id}/c${form}.png`;
+		}
+	} else {
+		if (imgfile = params.get('imgfile')) {
+			img.src = imgfile;
+		} else {
+			ctx.font = "30px serif";
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.fillText("導入圖片以開始", canvas.width / 2, canvas.height / 2);
+		}
+		if (cutfile = params.get('cutfile')) {
+			fetch(cutfile)
+				.then(res => res.text())
+				.then(text => {
+					cut = new ImgCut(text);
+					for (let i = 0; i < cut.cuts.length; ++i)
+						edit.appendChild(createLine(cut.cuts[i], i));
+				});
+		} else {
+			cutfile = '';
+		}
+	}
+
+	document.getElementById('import-img-file').addEventListener('click', importImg);
+	document.getElementById('import-img-url').addEventListener('click', importImgU);
+	document.getElementById('import-img-paste').addEventListener('click', pasteImg);
+	document.getElementById('import-cut-file').addEventListener('click', importCut);
+	document.getElementById('import-cut-url').addEventListener('click', importCutU);
+	document.getElementById('export-part').addEventListener('click', exportimg);
+	document.getElementById('export-all').addEventListener('click', exportimga);
+	document.getElementById('export-img').addEventListener('click', exportaimg);
+	document.getElementById('export-cut').addEventListener('click', exportcut);
+	document.getElementById('add-line').addEventListener('click', addline);
+	document.getElementById('del-line').addEventListener('click', removeline);
+	document.getElementById('color-select').addEventListener('change', function (event) {
+		ctx.strokeStyle = color.value;
+		draw();
+	});
+})();

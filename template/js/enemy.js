@@ -566,6 +566,7 @@ loadEnemy(my_id)
 		if (E.fandom)
 			addBarItem('Miraheze Wiki', E.fandomUrl);
 		addBarItem('搜尋出現關卡', search_for);
+		addBarItem('ImgCut', `/imgcut.html?unit=${-(E.id + 1)}`);
 		addBarItem('檢視動畫', E.animUrl);
 		addBarItem('金寶科技設定', '/settings.html#treasure');
 		addBarItem('DPS 曲線', `/dpsgraph_svg.html?units=${E.id}`);

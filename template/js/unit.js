@@ -2528,6 +2528,37 @@ async function drawPNG(tbl) {
 	});
 }
 
+function openImgCut() {
+	modal_content.textContent = '';
+	const container = document.createElement('div');
+	container.style.padding = '1em';
+
+	const p = container.appendChild(document.createElement('p'));
+	p.textContent = 'ImgCut';
+	p.style.margin = '0em';
+
+	const select = container.appendChild(document.createElement('select'));
+	select.style.display = 'block';
+	select.style.margin = '1em auto';
+	select.style.padding = '.3em 1em';
+	for (const text of ['ㄧ', '二', '三', '四'].slice(0, my_cat.forms.length)) {
+		const option = select.appendChild(document.createElement('option'));
+		option.textContent = text + '階';
+	}
+
+	const btn = container.appendChild(document.createElement('button'));
+	btn.style.display = 'block';
+	btn.style.margin = '0 auto';
+	btn.classList.add('w3-btn', 'w3-cyan');
+	btn.textContent = '開啟';
+	btn.onclick = function() {
+		open(`/imgcut.html?unit=${my_id}&form=${select.selectedIndex}`);
+	}
+
+	modal_content.appendChild(container);
+	modal.style.display = 'block';
+}
+
 function openBBCode() {
 	modal_content.textContent = '';
 	let e = document.createElement('p');
@@ -2675,6 +2706,13 @@ loadCat(my_id)
 		};
 
 		let a = document.createElement('a');
+
+		a.classList.add('w3-bar-item');
+		a.textContent = 'ImgCut';
+		a.onclick = openImgCut;
+		abar.appendChild(a);
+
+		a = document.createElement('a');
 		a.classList.add('w3-bar-item');
 		a.href = my_cat.animUrl;
 		a.textContent = '檢視動畫';
