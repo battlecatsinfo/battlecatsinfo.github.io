@@ -833,7 +833,7 @@ class DPSGraph {
 
 		let x, Xs, T = F.trait & trait_treasure;
 
-		if (this.options.base && F.ab.hasOwnProperty(AB_ATKBASE)) {
+		if (this.options.base) {
 			for (let i = 0; i < this.atks.length; ++i)
 				this.atks[i] *= 4;
 		} else {
@@ -857,7 +857,7 @@ class DPSGraph {
 						if (this.abis[i]) this.atks[i] = this.atks[i] * (1 + x[1] / 100);
 				}
 			}
-			if (this.options.strong && F.ab.hasOwnProperty(AB_STRENGTHEN))
+			if (this.options.strong)
 				for (let i = 0; i < this.atks.length; ++i)
 					if (this.abis[i]) this.atks[i] = this.atks[i] * (1 + (F.ab[AB_STRENGTHEN][1] / 100));
 			if (this.options.good) {
