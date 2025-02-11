@@ -825,7 +825,7 @@ class DPSGraph {
 			}
 		}
 		for (let i of RAW) sum += i;
-		return ~~(sum * 30 / this.E.attackF);
+		return floor(sum * 30 / this.E.attackF);
 	}
 	render() {
 		const F = this.E = this.helper.applyLevels();
@@ -976,7 +976,7 @@ class DPSGraph {
 			if (this.surge_data || this.explosion_data) {
 				surge_sum = 0;
 				for (let i of SURGE_RAW) surge_sum += i;
-				surge_sum = ~~(surge_sum * 30 / F.attackF)
+				surge_sum = floor(surge_sum * 30 / F.attackF)
 			}
 			if (last_y != y) {
 				new_Xs.push(X[1] ? x : last_x);
