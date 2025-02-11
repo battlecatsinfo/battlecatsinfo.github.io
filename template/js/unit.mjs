@@ -2420,7 +2420,7 @@ export {
 	IMU_CURSE,
 	IMU_TOXIC,
 	IMU_BOSSWAVE,
-	IMU_EXPLOSION
+	IMU_EXPLOSION,
 
 	units_scheme,
 	catEnv,
