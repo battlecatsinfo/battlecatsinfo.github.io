@@ -751,7 +751,7 @@ class DPSGraph {
 			if (x >= left_point && x <= right_point) {
 				const mul = this.surge_data[x - left_point] * this.surge_mul;
 				for (let i = 0; i < buf.length; ++i)
-					if (this.abis[i]) buf[i] += ~~(this.atks[i] * mul);
+					if (this.abis[i]) buf[i] += this.atks[i] * mul;
 			}
 		}
 		if (this.wave_pos) {
@@ -818,7 +818,7 @@ class DPSGraph {
 				}
 
 				for (let i = 0; i < buf.length; ++i)
-					if (this.abis[i]) buf[i] += ~~(this.atks[i] * multi);
+					if (this.abis[i]) buf[i] += this.atks[i] * multi;
 
 				if (canBreak)
 					break;
@@ -841,7 +841,7 @@ class DPSGraph {
 			if (x) {
 				if (!this.options.crit) {
 					for (let i = 0; i < this.atks.length; ++i)
-						if (this.abis[i]) this.atks[i] += ~~(this.atks[i] * x / 100);
+						if (this.abis[i]) this.atks[i] += this.atks[i] * x / 100;
 				} else if (this.options.crit == 1) {
 					for (let i = 0; i < this.atks.length; ++i)
 						if (this.abis[i]) this.atks[i] *= 2;
@@ -851,18 +851,18 @@ class DPSGraph {
 			if (x) {
 				if (!this.options.s) {
 					for (let i = 0; i < this.atks.length; ++i)
-						if (this.abis[i]) this.atks[i] = ~~(this.atks[i] * (1 + x[0] * x[1] / 10000));
+						if (this.abis[i]) this.atks[i] = this.atks[i] * (1 + x[0] * x[1] / 10000);
 				} else if (this.options.s == 1) {
 					for (let i = 0; i < this.atks.length; ++i)
-						if (this.abis[i]) this.atks[i] = ~~(this.atks[i] * (1 + x[1] / 100));
+						if (this.abis[i]) this.atks[i] = this.atks[i] * (1 + x[1] / 100);
 				}
 			}
 			if (this.options.strong && F.ab.hasOwnProperty(AB_STRENGTHEN))
 				for (let i = 0; i < this.atks.length; ++i)
-					if (this.abis[i]) this.atks[i] = ~~(this.atks[i] * (1 + (F.ab[AB_STRENGTHEN][1] / 100)));
+					if (this.abis[i]) this.atks[i] = this.atks[i] * (1 + (F.ab[AB_STRENGTHEN][1] / 100));
 			if (this.options.good) {
 				for (let i = 0; i < this.atks.length; ++i) {
-					this.atks[i] = ~~(this.atks[i] * (T ? 1.8 : 1.5));
+					this.atks[i] = this.atks[i] * (T ? 1.8 : 1.5);
 				}
 			}
 			if (this.options.massive) {
@@ -887,17 +887,17 @@ class DPSGraph {
 			}
 			if (this.options.beast) {
 				for (let i = 0; i < this.atks.length; ++i) {
-					this.atks[i] = ~~(this.atks[i] * 2.5);
+					this.atks[i] *= 2.5;
 				}
 			}
 			if (this.options.bail) {
 				for (let i = 0; i < this.atks.length; ++i) {
-					this.atks[i] = ~~(this.atks[i] * 1.6);
+					this.atks[i] *= 1.6;
 				}
 			}
 			if (this.options.sage) {
 				for (let i = 0; i < this.atks.length; ++i) {
-					this.atks[i] = ~~(this.atks[i] * 1.2);
+					this.atks[i] *= 1.2;
 				}
 			}
 		}
