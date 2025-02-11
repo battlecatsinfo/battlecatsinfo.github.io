@@ -353,6 +353,9 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 			case 44:
 				W(`鋼鐵殺手（-${v}%）`, '9vLOiAm');
 				break;
+			case 45:
+				W(`${v[0]} % 爆波（${v[1]}～${v[2]}）`, "4KshrNX");
+				break;
 		}
 	}
 	F.res && createResIcons(F.res, M);
