@@ -359,6 +359,7 @@ class CatDPSHelper extends UnitDPSHelper {
 			61, // 攻擊間隔縮短
 			62, // 小波動
 			65, // 小烈波
+			67, // 爆波攻擊
 		]);
 
 		if (this.F.lvc >= 2 && this.F.talents) {

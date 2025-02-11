@@ -21,7 +21,7 @@ const TB_WHITE = 256;      // Traitless 無屬性敵人
 const TB_EVA = 512;        // EVA Angel 使徒
 const TB_WITCH = 1024;     // Witch 魔女
 const TB_DEMON = 2048;     // Aku 惡魔
-const TB_INFN = 4096;      // 道場塔 [UNOFFICIAL]
+const TB_INFN = 4096;      // Dojo Base 道場塔 [UNOFFICIAL]
 const TB_BEAST = 8192;     // Behemoth 超獸
 const TB_BARON = 16384;    // Colossus 超生命體
 const TB_SAGE = 32768;     // Sage 超賢者
@@ -1698,7 +1698,8 @@ class CatForm extends Unit {
 				this.ab[AB_SAGE] = null;
 				break;
 			case 67:
-				this.ab[AB_EXPLOSION] = [inc1, inc2 >> 2, (inc2 + inc3) >> 2];
+				t = this.ab[AB_EXPLOSION];
+				this.ab[AB_EXPLOSION] = [inc1 + (t ? t[0] : 0), inc2 >> 2, (inc2 + inc3) >> 2];
 				break;
 		}
 	}
@@ -2419,6 +2420,7 @@ export {
 	IMU_CURSE,
 	IMU_TOXIC,
 	IMU_BOSSWAVE,
+	IMU_EXPLOSION
 
 	units_scheme,
 	catEnv,
