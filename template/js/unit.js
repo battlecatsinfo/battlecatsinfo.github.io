@@ -75,6 +75,9 @@ import {
 	updateHpBaha,
 	updateHp,
 	updateAtk,
+
+	atk_mult_abs,
+	hp_mult_abs,
 } from './unit.mjs';
 import {loadAllCombos} from './combo.mjs';
 const units_scheme = await loadScheme('units');
@@ -84,8 +87,6 @@ import {getMap} from './stage.mjs';
 
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
-const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION]);
-const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const layout = config.layout;
 var level_count = 0;
 var my_cat;

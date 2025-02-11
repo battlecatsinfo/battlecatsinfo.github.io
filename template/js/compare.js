@@ -65,6 +65,9 @@ import {
 
 	updateAtkBaha,
 	updateHpBaha,
+
+	atk_mult_abs,
+	hp_mult_abs,
 } from './unit.mjs';
 const units_scheme = await loadScheme('units', ['talents']);
 
@@ -73,8 +76,6 @@ var targets = new Set();
 var CL;
 const tbl = document.getElementById('tbl');
 const tby = tbl.firstElementChild.children;
-const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE]);
-const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
 const cat_name = document.getElementById('cat-name');
 const CF = document.getElementById('CF');
 
