@@ -647,7 +647,11 @@ class Unit {
 				}
 
 				if (ab.hasOwnProperty(AB_EXPLOSION)) {
-					++rv;
+					v = ab[AB_EXPLOSION];
+					if (mode === 'max')
+						rv += 1;
+					else
+						rv += v[0] / 100;
 				}
 
 				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
@@ -702,7 +706,7 @@ class Unit {
 							rv += (mode === 'max') ? 1 : v[0] / 100;
 						}
 						if (ab.hasOwnProperty(AB_EXPLOSION)) {
-							rv += 1;
+							rv += (mode === 'max') ? 1 : v[0] / 100;
 						}
 					}
 					return rv;
@@ -1245,7 +1249,11 @@ class CatForm extends Unit {
 				}
 
 				if (ab.hasOwnProperty(AB_EXPLOSION)) {
-					++rv;
+					v = ab[AB_EXPLOSION];
+					if (mode === 'max')
+						rv += 1;
+					else
+						rv += v[0] / 100;
 				}
 
 				// specially exclude bases they all have IMU_WAVE
@@ -1324,7 +1332,11 @@ class CatForm extends Unit {
 							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
 						}
 						if (ab.hasOwnProperty(AB_EXPLOSION)) {
-							rv += 1;
+							v = ab[AB_EXPLOSION];
+							if (mode === 'max')
+								rv += 1;
+							else
+								rv += v[0] / 100;
 						}
 						// specially exclude bases
 						if (!isBase && (v = ab[AB_WAVE] || ab[AB_MINIWAVE])) {

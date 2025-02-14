@@ -509,7 +509,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(v[1] != v[2] ? `${v[0]}% 爆波攻撃（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 爆波攻撃（發生位置：${v[1]}）`, '4KshrNX');
+				func(v[1] != v[2] ? `${v[0]}% 爆波（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 爆波（發生位置：${v[1]}）`, '4KshrNX');
 				break;
 		}
 	}
