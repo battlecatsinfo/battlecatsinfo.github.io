@@ -234,7 +234,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 11:
-				w1("鋼鐵特性（爆擊、毒擊之外攻擊只會受1傷害）", "MzHKigD");
+				w1("鋼鐵特性（暴擊、毒擊之外攻擊只會受1傷害）", "MzHKigD");
 				break;
 
 			case 12:

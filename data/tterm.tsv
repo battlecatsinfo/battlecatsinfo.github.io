@@ -62,6 +62,7 @@ jp	tw	en	kr
 烈波攻擊	烈波	Surge Attacks	열파 공격
 デス烈波	遺留烈波	Death Surge	순교
 烈波カウンター	烈波反擊	Counter-Surge	열파 카운터
+爆波攻擊	爆波攻擊	Explosion	폭파 공격
 波動ストッパー	波動滅止	Wave Shield	파동 스톱퍼
 召喚	召喚	Conjure	소환
 超生命体特効	超生命體特效	Colossus Slayer	초생명체 특효
@@ -73,7 +74,8 @@ jp	tw	en	kr
 ふっとばす無効	打飛無效	Immune to Knockback	날려버린다 무효
 波動ダメージ無効	波動(傷害)無效	Immune to Waves	파동 데미지 무효
 烈波ダメージ無効	烈波(傷害)無效	Evade Surge	열파 데미지 무효
-ワープ無効	傳送無效	Warp Blocker	워프 무효
+爆波ダメージ無効	爆波(傷害)無效	Immmune to Explosions	폭파 데미지 무효
+ワープ無効	傳送無效	Immune to Warp	워프 무효
 古代の呪い無効	古代詛咒無效	Immune to Curse	고대의 저주 내성
 毒撃ダメージ無効	毒擊(傷害)無效	Immune to Toxic	독 데미지 무효
 攻撃力低下耐性	抗擊耐性	Resist Weaken	공격력 다운 내성
