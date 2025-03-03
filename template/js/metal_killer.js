@@ -14,7 +14,7 @@ let chart;
 })();
 
 (S.onclick = HP.oninput = kill.oninput = function () {
-	let hp = Math.max(parseInt(HP.value), 1);
+	let hp = Math.max(parseInt(HP.value) || 1, 1);
 	let Ys = [{y: hp}];
 	let m = parseInt(kill.value) / 100;
 	while (true) {
