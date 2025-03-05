@@ -1,0 +1,16 @@
+{
+	"lang.zh": "中文",
+	"lang.en": "English",
+	"lang.ja": "日本語",
+	"nav.home": "ホーム",
+	"nav.cats": "猫",
+	"nav.enemies": "敵",
+	"nav.gacha": "ガチャ",
+	"nav.stages": "ステージ",
+	"nav.schedule": "スケジュール",
+	"search.cats": "猫を検索",
+	"search.enemies": "敵を検索",
+	"search.stages": "ステージを検索",
+	"settings.title": "設定",
+	"theme.title": "テーマ"
+}

@@ -72,6 +72,9 @@ const sources = [
 	'metal_killer.js',
 	'unit.js',
 	'translator.js',
+	'i18n_zh.json',
+	'i18n_en.json',
+	'i18n_ja.json',
 
 	'gif.min.js',
 	'gif.worker.min.js',
@@ -142,6 +145,8 @@ module.exports = class extends SiteGenerator {
 						minifyCSS: true,
 						minifyJS: true,
 						removeComments: true,
+						removeOptionalTags: false,
+						removeEmptyElements: false
 					});
 				}
 			} else if (file.endsWith('.min.js')) {

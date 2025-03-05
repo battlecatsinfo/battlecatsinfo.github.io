@@ -8,12 +8,20 @@
 	const siteSearchInput = siteSearchForm.querySelector('input');
 	const siteSearchResult = document.getElementById('site-s-result');
 	const siteThemeAnchor = siteSearchForm.parentNode.previousElementSibling;
-
+	const languageSelect = document.getElementById('language-select');
+	
 	siteSearchForm.addEventListener('submit', onFormSubmit);
 	siteSearchInput.addEventListener('focus', onInputFocus);
 	siteSearchInput.addEventListener('blur', onInputBlur);
 	for (const elem of siteSearchResult.querySelectorAll('[data-search]')) {
 		elem.addEventListener('click', onResultClick);
+	}
+
+	if (languageSelect) {
+		languageSelect.value = window.currentLang;
+		languageSelect.addEventListener('change', function () {
+		window.setLanguage(languageSelect.value);
+		});
 	}
 
 	function onInputFocus(event) {
