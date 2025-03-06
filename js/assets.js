@@ -145,8 +145,6 @@ module.exports = class extends SiteGenerator {
 						minifyCSS: true,
 						minifyJS: true,
 						removeComments: true,
-						removeOptionalTags: false,
-						removeEmptyElements: false
 					});
 				}
 			} else if (file.endsWith('.min.js')) {

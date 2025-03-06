@@ -31,9 +31,9 @@
 	{{/styles}}
 	{{#> styles-inline}}
 	{{/styles-inline}}
-	{{#*inline "scripts"}}
+	{{#> scripts}}
 	<script src="/common.js"></script>
-	{{/inline}}
+	{{/scripts}}
 	{{#> scripts-inline}}
 	{{/scripts-inline}}
 </head>
@@ -136,7 +136,7 @@
 	{{/nav-bar-styles-search}}
 	</style>
 	{{/nav-bar-styles}}
-	{{#*inline "nav-bar-content"}}
+	{{#> nav-bar-content}}
 	<div class="topnav">
 		<a href="/index.html" data-i18n="nav.home" {{#if (op nav_bar_active "===" "index")}} class="active"{{/if}}>主頁</a>
 		<a href="/search.html" data-i18n="nav.cats" {{#if (op nav_bar_active "===" "cat")}} class="active"{{/if}}>貓咪</a>
@@ -151,21 +151,21 @@
 			<option value="ja" data-i18n="lang.ja">日本語</option>
 		</select>
 		{{/inline}}
-		{{#*inline "nav-bar-content-settings"}}
+		{{#> nav-bar-content-settings}}
 		<a title="設定" href="/settings.html" style="float:right;" data-i18n-attrs="title:settings.title">
 			<svg viewBox="0 0 24 24">
 				<path d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z" fill="white" />
 			</svg>
 		</a>
-		{{/inline}}
-		{{#*inline "nav-bar-content-theme"}}
-		<a title="佈景主題" style="float:right;" data-i18n-attrs="title:theme.title">
+		{{/nav-bar-content-settings}}
+		{{#> nav-bar-content-theme}}
+		<a title="佈景主題" style="float:right;">
 			<svg viewBox="0 0 24 24">
 				<path fill="white" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20 L12,4 C16.418278,4 20,7.581722 20,12 C20,16.418278 16.418278,20 12,20 Z" />
 			</svg>
 		</a>
-		{{/inline}}
-		{{#*inline "nav-bar-content-search"}}
+		{{/nav-bar-content-theme}}
+		{{#> nav-bar-content-search}}
 		<a style="position:relative;float:right;">
 			<form id="site-search">
 				<input autocomplete="off" type="text" placeholder="Search..." aria-label="search">
@@ -183,9 +183,9 @@
 				</div>
 			</div>
 		</a>
-		{{/inline}}
+		{{/nav-bar-content-search}}
 	</div>
-	{{/inline}}
+	{{/nav-bar-content}}
 	{{#> nav-bar-scripts}}
 	<script src="/navbar.js"></script>
 	{{/nav-bar-scripts}}
