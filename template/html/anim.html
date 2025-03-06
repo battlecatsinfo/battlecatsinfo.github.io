@@ -7,41 +7,46 @@
 {{#*inline "title"}}角色動畫{{/inline}}
 
 {{#*inline "scripts"}}
-	<script src="gif.min.js"></script>
 	<script src="anim.min.js" type="module"></script>
 {{/inline}}
 
 {{#*inline "styles-inline"}}
 	<style>
 body { width: 100%;height: 100%;padding: 0;margin: 0;overflow:hidden;user-select: none; }
-input, select { font-size: max(2vh, 12px);outline:none; }
+input, select { 
+	font-size: 1.2em;
+	outline: none;
+	text-align: center;
+}
+select, opiton, input[type="number"] {
+	padding: .15em .2em;
+}
+select, input[type="number"] {
+	border-radius: 5px;
+}
 .v-ctl {
-	width: max(min(3.5vw,3.5vh), 17px);
+	width: max(min(3.5vw,3.5vh), 22px);
 	height: auto;
 	stroke: #007AFF;
 	fill: #007AFF;
 }
 .P {
-	width: max(min(4.2vw,4.2vh), 20px);
-}
-.C {
-	display: flex;
-	align-items: center;
+	width: max(min(4.2vw,4.2vh), 26px);
 }
 #icons img {
 	float: left;
 	width: min(max(9vw,9vh), 128px);
 	height: auto;
 	padding: 5px;
+	cursor: pointer;
 }
 #icons img.active {
 	background-color: #ffffff36;
 }
 .dropdown {
-	display: none;
 	position: absolute;
-	bottom: 35px;
-	left: 0px;
+	bottom: 2.5em;
+	left: -4em;
 	white-space: nowrap;
 	background-color: gainsboro;
 	border-radius: 0.5em;
@@ -50,19 +55,18 @@ input, select { font-size: max(2vh, 12px);outline:none; }
 	list-style: none;
 }
 .dropdown input {
-	padding-right: 0.7vw;
+	margin-right: .2em;
 	float: right;
+	border: 1px solid gray;
 }
 .dropdown p {
-	display: inline-block;
-	vertical-align: middle;
-	padding-right: 0.5vw;
-	width: min(40vw, 200px);
-	padding-left: 0.5vw;
+	display: block;
+	min-width: 14em;
+	padding-left: 0.5em;
 	margin-block-start: 0;
 	margin-block-end: 0;
 	padding-top: 0.5em;
-	padding-bottom: 0.5vh;
+	padding-bottom: 0.5em;
 }
 .dropdown svg {
 	float: right;
@@ -71,6 +75,9 @@ input, select { font-size: max(2vh, 12px);outline:none; }
 .dropdown p:hover {
 	background-color: #cbcbcb;
 	border-radius: 0.4em;
+}
+.menu p {
+	cursor: pointer;
 }
 .side-ctl {
 	cursor: pointer;
@@ -82,9 +89,9 @@ input, select { font-size: max(2vh, 12px);outline:none; }
 }
 input.range {
 	-webkit-appearance: none;
+	appearance: none;
 	height: max(0.5vw, 5px);
 	border: none;
-	color: #fecb2e;
 	background-color: #595959;
 	display: block;
 	width: 95%;
@@ -94,11 +101,70 @@ input.range {
 	margin-bottom: 1vh;
 }
 input.range:disabled { background-color: #300000; }
+#canvas {
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	cursor: move;
+	overflow: hidden;
+}
+#start-play {
+	position: fixed;
+	z-index: 100;
+	top: calc(50vh - 2em);
+	right: calc(50vw - 2em);
+	width: 4em;
+	height: 4em;
+	cursor: pointer;
+}
+#progress-container {
+    text-align: center;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1em;
+}
+.export-progress {
+	font-family: monospace;
+    width: 25em;
+    background-color: #ddd;
+    border-radius: .4em;
+    overflow: hidden;
+    position: relative;
+    padding: .7em;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+    opacity: 1;
+    transition: opacity 1.5s;
+}
+.completed {
+    opacity: 0;
+}
+.export-progress > b {
+    font-size: 1.2em;
+    display: block;
+    margin-bottom: 1em;
+}
+.export-progress > div {
+    width: 0%;
+    height: 2.2em;
+    background-color: #659cef;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: .3em;
+}
 	</style>
 {{/inline}}
 
 {{#*inline "content"}}
-	<canvas id="canvas" style="width: 100vw;height: 100vh;margin: 0;padding: 0;"></canvas>
+	<canvas id="canvas"></canvas>
 	<div style="position: absolute;z-index: 1;top: 1vh;right: 0px;" id="icons">
 		<img data-i="0">
 		<img data-i="1">
@@ -106,7 +172,7 @@ input.range:disabled { background-color: #300000; }
 		<img data-i="3">
 	</div>
 
-	<svg viewBox="0 0 512 512" style="display: block;position: fixed;z-index: 100;top: 50%;right: 50%;transform: translateY(-50%);width: max(5vw, 5vh);height: max(5vw, 5vh);" id="start-play">
+	<svg viewBox="0 0 512 512" id="start-play" visibility="hidden">
 		<circle style="fill:#1FCFC1;" cx="256" cy="256" r="245.801" />
 		<polygon style="fill:#F2F2F2;" points="195.825,391.629 376.351,256 195.825,120.371 " />
 		<g>
@@ -127,21 +193,20 @@ input.range:disabled { background-color: #300000; }
 		</g>
 	</svg>
 
-
+	<div id="progress-container"></div>
 	<span class="side-ctl" style="left: 2vw;" id="prevu">❮</span>
 	<span class="side-ctl" style="right: 2vw;" id="nextu">❯</span>
-	<div style="position: absolute;left: 3vw;top: 3vh;background-color: rgba(0, 0, 0, 0.7);color: white;font-family: monospace;padding: 1em;">Frame <span id="nframe"></span></div>
 	<div id="loading" style="position: absolute;left: 50%;top: 50%;background-color: rgba(0, 0, 0, 0.7);color: white;font-family: monospace;padding: 1em;transform: translate(-50%, -50%);font-size: 2em;">載入中...</div>
-	<div style="background-color: #000000ba;position: fixed;width: 100vw;left: 0;bottom: 0px;">
+	<div style="background-color: #000000ba;position: absolute;width: 100vw;left: 0;bottom: 0px;">
 		<input type="range" name="range" id="range" value="0" min="0" class="range">
-		<div style="display: flex;justify-content: space-evenly;align-items: center;flex-wrap: nowrap;flex-direction: row;padding-bottom: 0.5vh;">
-			<select id="animtype" class="C" autocomplete="off">
+		<div style="display: flex;justify-content: space-evenly;align-items: center;flex-wrap: nowrap;flex-direction: row;">
+			<select id="animtype" autocomplete="off">
 				<option selected>移動</option>
 				<option>閒置</option>
 				<option>攻擊</option>
 				<option>擊退</option>
 			</select>
-			<a id="settings" style="position: relative;" title="設定" class="C">
+			<a id="settings" style="position: relative;" title="設定">
 				<svg class="v-ctl" viewBox="0 0 512 512">
 					<path style="fill:#847C7C;" d="M481.455,206.615h-36.934c-8.523,0-16.054-5.377-19.016-13.369
 						c-1.624-4.379-3.413-8.676-5.359-12.888c-3.563-7.712-1.823-16.841,4.184-22.848l26.011-26.011c7.945-7.945,7.945-20.828,0-28.773
@@ -206,30 +271,39 @@ input.range:disabled { background-color: #300000; }
 							C314.374,360.295,285.96,371.703,256,371.703z" />
 					</g>
 				</svg>
-				<ul class="dropdown">
+				<ul class="dropdown" hidden>
 					<li>
-						<p title="每1秒更新幾次螢幕，貓咪大戰爭大約是30">幀率
-							<input style="width: 3em;" type="number" value="30" name="fps" id="fps">
+						<p title="調整動畫速度">速度
+							<input style="width: 3em;" type="number" value="1" name="speed" id="speed" step=".25" min="0" autocomplete="off">
 						</p>
 					</li>
 					<li>
 						<p title="放大或縮小角色">縮放
-							<input style="width: 3em;" type="number" value="100" name="scale" id="zoom" step="5">
+							<input style="width: 3em;" type="number" value="100" name="scale" id="zoom" step="5" autocomplete="off">
 						</p>
 					</li>
 					<li>
 						<p title="選擇漸層的開始顏色">背景顏色1
-							<input type="color" value="#468ca0" name="color1" id="color1">
+							<input type="color" value="#468ca0" name="color1" id="color1" autocomplete="off">
 						</p>
 					</li>
 					<li>
 						<p title="選擇漸層的結束顏色">背景顏色2
-							<input type="color" value="#73e6fa" name="color2" id="color2">
+							<input type="color" value="#55B9CD" name="color2" id="color2" autocomplete="off">
+						</p>
+					</li>
+					<li>
+						<p>渲染方式
+							<select style="display: inline;float: right;" id="engine" autocomplete="off">
+								<option value="WebGL">WebGL</option>
+								<option value="Canvas2D">Canvas2D</option>
+								<option value="WebGPU">WebGPU</option>
+							</select>
 						</p>
 					</li>
 				</ul>
 			</a>
-			<a id="prev" title="上一幀" class="C">
+			<a id="prev" title="上一幀">
 				<svg class="v-ctl" viewBox="0 0 512 512">
 					<circle style="fill:#1FCFC1;" cx="256" cy="256" r="245.801" />
 					<g>
@@ -255,7 +329,7 @@ input.range:disabled { background-color: #300000; }
 					</g>
 				</svg>
 			</a>
-			<a id="pause" title="播放" class="C">
+			<a id="pause" title="播放" style="position: relative;">
 				<svg class="v-ctl P" viewBox="0 0 512 512">
 					<circle style="fill:#1FCFC1;" cx="256" cy="256" r="245.801" />
 					<rect x="168.287" y="120.371" style="fill:#F2F2F2;" width="62.215" height="271.258" />
@@ -277,7 +351,7 @@ input.range:disabled { background-color: #300000; }
 						c1.523-2.374,3.008-4.803,4.413-7.217c2.833-4.87,9.076-6.519,13.945-3.684c4.868,2.833,6.517,9.077,3.684,13.945
 						c-1.552,2.667-3.191,5.347-4.872,7.969C437.044,376.167,433.756,377.824,430.397,377.824z" />
 				</svg>
-				<svg class="v-ctl P" viewBox="0 0 512 512" style="display: none;">
+				<svg class="v-ctl P" viewBox="0 0 512 512" visibility="hidden" style="position: absolute;top: 0;left: 0;">
 					<circle style="fill:#1FCFC1;" cx="256" cy="256" r="245.801" />
 					<polygon style="fill:#F2F2F2;" points="195.825,391.629 376.351,256 195.825,120.371 " />
 					<g>
@@ -298,7 +372,7 @@ input.range:disabled { background-color: #300000; }
 					</g>
 				</svg>
 			</a>
-			<a id="next" title="下一幀" class="C">
+			<a id="next" title="下一幀">
 				<svg class="v-ctl" viewBox="0 0 512 512">
 					<circle style="fill:#1FCFC1;" cx="256" cy="256" r="245.801" />
 					<g>
@@ -324,7 +398,7 @@ input.range:disabled { background-color: #300000; }
 					</g>
 				</svg>
 			</a>
-			<a id="share" style="position: relative;" title="分享" class="C">
+			<a id="share" style="position: relative;" title="分享">
 				<svg class="v-ctl" viewBox="0 0 512 512">
 					<path style="fill:#FBB429;" d="M501.801,213.374L324.879,36.453V142.94h-59.905c-140.708,0-254.775,114.066-254.775,254.775v77.833
 						l92.966-101.742c52.389-57.335,126.474-89.996,204.14-89.996h17.574v106.487L501.801,213.374z" />
@@ -343,32 +417,24 @@ input.range:disabled { background-color: #300000; }
 						c22.329-16.37,47.27-27.846,74.131-34.11c5.49-1.279,10.97,2.131,12.249,7.616c1.279,5.486-2.131,10.97-7.616,12.249
 						c-24.164,5.635-46.607,15.963-66.704,30.696C144.962,227.558,142.85,228.2,140.757,228.2z" />
 				</svg>
-				<ul class="dropdown">
+				<ul class="dropdown menu" hidden>
 					<li>
-						<p title="複製網頁連結，分享給其他人" style="cursor:pointer;" onclick="navigator.clipboard.writeText(location.href)">複製連結
-							<svg viewBox="0 0 32 30" class="v-ctl">
-								<path d="M 17.05 20.4 L 10.29 27.14 C 9.15 28.05 7.53 28.05 6.39 27.14 L 3.79 24.55 C 2.95 23.44 2.95 21.9 3.79 20.79 L 12.89 11.69 C 14.01 10.85 15.55 10.87 16.66 11.72 L 19.44 14.57 M 16.01 18.71 C 17.25 19.22 18.67 18.87 19.55 17.86 L 28.1 9.25 C 29.05 7.97 28.88 6.18 27.71 5.1 L 25.37 2.77 C 24.16 1.95 22.53 2.08 21.47 3.08 L 15.23 9.25"
-								stroke="black" fill="none" stroke-width="1.74" />
-							</svg>
-						</p>
+						<p onclick="navigator.clipboard.writeText(location.href)">複製連結</p>
 					</li>
 					<li>
-						<p title="下載目前的圖片(PNG)" style="cursor: pointer;" id="downloadImg">下載圖片
-							<svg viewBox="0 0 32 30" class="v-ctl">
-								<path d="M 3.44 23.09 C 2.67 23.09 2.05 22.47 2.05 21.7 L 2.05 10.54 C 2.05 9.77 2.67 9.14 3.44 9.14 L 10.42 9.14 L 13.21 6.91 L 18.79 6.91 L 21.58 9.14 L 28.55 9.14 C 29.33 9.14 29.95 9.77 29.95 10.54 L 29.95 21.7 C 29.95 22.47 29.33 23.09 28.55 23.09 Z"
-								fill="none" stroke="black" stroke-width="1.86" />
-								<ellipse cx="16" cy="15.28" rx="6.138" ry="6.138" fill="none" stroke="white" stroke-width="9.86" visibility="hidden"></ellipse>
-								<ellipse stroke="black" cx="16" cy="15.28" rx="5.022" ry="5.22" fill="none" stroke-width="1.86"></ellipse>
-							</svg>
-						</p>
+						<p id="export-img">下載圖片</p>
 					</li>
 					<li>
-						<p title="下載整個動畫(GIF)" style="cursor: pointer;" id="downloadV">下載動畫
-							<svg viewBox="0 0 32 30" class="v-ctl">
-								<path d="M 2.05 9.42 C 2.05 8.65 2.67 8.03 3.44 8.03 L 20.14 8.03 C 20.91 8.03 21.53 8.65 21.53 9.42 L 21.53 13.61 L 28.76 9.84 C 29.05 9.73 29.38 9.78 29.62 9.99 C 29.85 10.19 29.95 10.51 29.88 10.82 L 29.88 19.19 C 29.95 19.49 29.85 19.81 29.62 20.01 C 29.38 20.22 29.05 20.27 28.76 20.16 L 21.53 16.39 L 21.53 20.58 C 21.53 21.35 20.91 21.98 20.14 21.98 L 3.44 21.98 C 2.67 21.98 2.05 21.35 2.05 20.58 Z M 21.53 12.21 L 21.53 17.79"
-								stroke="black" fill="none" stroke-width="1.86" />
-							</svg>
-						</p>
+						<p id="export-gif">下載GIF</p>
+					</li>
+					<li>
+						<p id="export-gif-trans">下載GIF（透明）</p>
+					</li>
+					<li>
+						<p id="export-mp4">下載影片</p>
+					</li>
+					<li>
+						<p id="export-mp4-60">下載影片（60 FPS）</p>
 					</li>
 				</ul>
 			</a>
