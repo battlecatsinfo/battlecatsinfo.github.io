@@ -144,13 +144,13 @@
 		<a href="/gachas.html" data-i18n="nav.gacha" {{#if (op nav_bar_active "===" "gacha")}} class="active"{{/if}}>轉蛋</a>
 		<a href="/stage.html" data-i18n="nav.stages" {{#if (op nav_bar_active "===" "stage")}} class="active"{{/if}}>關卡</a>
 		<a href="/schedule.html" data-i18n="nav.schedule" {{#if (op nav_bar_active "===" "schedule")}} class="active"{{/if}}>日程</a>
-		{{#*inline "nav-bar-content-language"}}
+		{{#> nav-bar-content-language}}
 		<select id="language-select" style="float:right;display:inline-block;">
 			<option value="zh" data-i18n="lang.zh">中文</option>
 			<option value="en" data-i18n="lang.en">English</option>
 			<option value="ja" data-i18n="lang.ja">日本語</option>
 		</select>
-		{{/inline}}
+		{{/nav-bar-content-language}}
 		{{#> nav-bar-content-settings}}
 		<a title="設定" href="/settings.html" style="float:right;" data-i18n-attrs="title:settings.title">
 			<svg viewBox="0 0 24 24">
