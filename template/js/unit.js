@@ -526,8 +526,7 @@ function updateValues(form, tbl) {
 		tr[5].textContent = numStrT(form.attackF);
 		tr = chs[3].children;
 		updateAtk(form, tbl._s, tr[1], chs[4].children[1]);
-		let t = catEnv.combo_speed;
-		tr[3].textContent = t ? floor((1 + t) * form.speed) : form.speed;
+		tr[3].textContent = floor(form.speed); // fix attempt: speed combo applied twice
 		if (config.unit === 'F') {
 			t = numStr(form.pre);
 			if (form.pre1)
@@ -547,7 +546,7 @@ function updateValues(form, tbl) {
 		tr[3].textContent = form.range;
 		tr[5].textContent = numStrT(form.backswing);
 		tr = chs[5].children;
-		tr[1].textContent = numStr(form.info.price * 1.5)
+		tr[1].textContent = numStr(form.info.price * 1.5);
 		tr[3].textContent = numStrT(getRes(form.info.cd));
 		tr[5].textContent = numStrT(form.tba);
 		return;
@@ -563,7 +562,7 @@ function updateValues(form, tbl) {
 	i = catEnv.combo_speed;
 	chs[7].children[3].textContent = i ? floor((1 + i) * form.speed) : form.speed;
 	PRs[2].textContent = form.info.price;
-	PRs[4].textContent = numStr(form.info.price * 1.5);
+	PRs[4].textContent = form.info.price * 1.5;
 	PRs[6].textContent = form.info.price * 2;
 	let levels = new Array(5);
 	let lvE = chs[0].children[1];
