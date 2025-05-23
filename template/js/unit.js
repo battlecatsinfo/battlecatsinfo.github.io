@@ -559,8 +559,7 @@ function updateValues(form, tbl) {
 	let CD = chs[7].children[5];
 	let KB = chs[7].children[1];
 	let i;
-	i = catEnv.combo_speed;
-	chs[7].children[3].textContent = i ? floor((1 + i) * form.speed) : form.speed;
+	chs[7].children[3].textContent = floor(form.speed);
 	PRs[2].textContent = form.info.price;
 	PRs[4].textContent = form.info.price * 1.5;
 	PRs[6].textContent = form.info.price * 2;
