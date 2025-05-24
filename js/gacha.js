@@ -483,12 +483,12 @@ module.exports = class extends RewardSiteGenerator {
 		};
 		for (const v of result) {
 			const r = v[4].n ? this.fmt.format(v[4].valueOf() / 100) + '%' : 'N/A';
-			if (must_drop_rate) {
+			if (must) { // OldAlgorithm: if (must_drop_rate) {
 				let a;
 				if (v[3].must)
-					a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
+					a = (0.9 * (v[6] / 100) + 0.1) / must_drop_group.length // OldAlgorithm: a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
 				else
-					a = v[4].mul(must_drop_rate).valueOf() / 1000000;
+					a = (v[4].valueOf() / 100) * 0.9 // OldAlgorithm: v[4].mul(must_drop_rate).valueOf() / 1000000;
 				S.items.push({
 					bgColor: v[1],
 					imgStyle: v[9],
