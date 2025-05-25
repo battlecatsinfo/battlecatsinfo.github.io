@@ -526,6 +526,7 @@ function updateValues(form, tbl) {
 		tr[5].textContent = numStrT(form.attackF);
 		tr = chs[3].children;
 		updateAtk(form, tbl._s, tr[1], chs[4].children[1]);
+		let t = catEnv.combo_speed;
 		tr[3].textContent = floor(form.speed); // fix attempt: speed combo applied twice
 		if (config.unit === 'F') {
 			t = numStr(form.pre);

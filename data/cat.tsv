@@ -634,7 +634,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	3			60	70		1000000!0|1!43|3!161			101000		1	第3進化後攻擊力上升！<br>還能夠將敵人的動作停止無效化！		2			Mighty_Deth-Troy-R_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|1!43|3!161			110000		1	第3進化後體力與攻擊力上升！<br>且必定能發射小波動！		2			Shitakiri_Sparrow_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|1!43|3!161			110000		1	第3進化後可以給予惡魔超大傷害<br>還能夠將敵人的動作停止無效化！<br>且有時候能破壞惡魔盾		2			White_Knight_Cyclops_(Uber_Rare_Cat)	70
-1	2	週年合作轉蛋中可獲得（日文版）、周年慶完成Q1Q5任務領取（繁中版）		50	15					110000		300|500|1400|2600|4100|5900|8000|10400|13100|16100			0			Million-Dollar_Cat_(Special_Cat)	10
+1	2	週年合作轉蛋中可獲得（日文版）、週年慶完成Q1Q5任務領取（繁中版）		50	15					110000		300|500|1400|2600|4100|5900|8000|10400|13100|16100			0			Million-Dollar_Cat_(Special_Cat)	10
 3	3			50	70					110000		2			2		1|351|0	Brainwashed_Tank_Cat_(Super_Rare_Cat)	70
 1	2			50	0					110100		5			0			Xiaoqiong_&_Cat_(Special_Cat)	0
 2	2			50	0					110100		4			3	2|183|4		Nana_&_Cat_(Rare_Cat)	0
@@ -739,7 +739,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					130300		1			2			Floral_Kalisa_(Uber_Rare_Cat)	70
 5	2			50	9					130300		1			2			Izanami_of_Dusk_(Legend_Rare_Cat)	9
 5	1	可由貓咪召喚出		50	0					130300		1			2			Special_Abilities#Summon	0
-1	2	繁中版、英文版投票結果，通關關卡後於貓咪任務領取		50	0					140300		5			0			Trash_Cat_(Special_Cat)	0
+1	2	繁中版、英文版投票結果，於浪貓活動期間領取		50	0					140300		5			0			Trash_Cat_(Special_Cat)	0
 4	2			60	70					130300		1			2			Voluptuous_Peony_-_Daji_(Uber_Rare_Cat)	70
 2	2			50	80					130300		3			3			Mollyanna_Cat_(Rare_Cat)	80
 2	2			50	0					130300		4			3	2|215|4		Madhead_(Rare_Cat)	0
@@ -770,7 +770,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					130700		1			2				70
 4	2			60	70					130700		1			2				70
 4	1	可由貓咪召喚出		60	0					130700		1			2				0
-1	2			50	0					130700		1			0	4|69|0			0
+1	2	通過真傳奇故事全部的關卡等級4關卡後於「古代神木 - 起源的覺醒」等級4關卡獲得		50	0					130700		1			0	4|69|0			0
 4	2			60	70					130700		1			2				70
 3	2			50	70					130700		2			2				70
 4	2			60	70					140000		1			2				70
@@ -787,7 +787,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 2	2			50	0					140200		400|700|1600|2800|4300|6100|8200|10600|13300|16300			3	11|64|9			0
 4	2			60	70					140200		1			2				70
 4	2			60	70					140300		1			2				70
-1	2	韓文版投票結果，通關關卡後於貓咪任務領取		50	0					140300		5			0				
+1	2	韓文版投票結果，於浪貓活動期間領取		50	0					140300		5			0				
 4	2			60	70					140300		1			2				70
 4	2			60	70					140300		1			2				70
 4	2			60	70					140300		1			2				70
