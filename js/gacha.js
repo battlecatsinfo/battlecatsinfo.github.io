@@ -406,6 +406,7 @@ module.exports = class extends RewardSiteGenerator {
 		const result = [];
 		let must_drop_group = 0;
 		let must_drop_rate = 0;
+		let contain_must_drop = false;
 		let gacha_units = new Set();
 
 		for (let i = 0, I;i < 9;i += 2) {
@@ -414,6 +415,7 @@ module.exports = class extends RewardSiteGenerator {
 			let R = new Fraction(rate, group.length || 1);
 			let must = d_rate[i + 1] ? '*' : '';
 			if (must) {
+				contain_must_drop = true;
 				must_drop_rate = Fraction(10000 - rate);
 				must_drop_group = group;
 			}
@@ -483,7 +485,7 @@ module.exports = class extends RewardSiteGenerator {
 		};
 		for (const v of result) {
 			const r = v[4].n ? this.fmt.format(v[4].valueOf() / 100) + '%' : 'N/A';
-			if (must) { // OldAlgorithm: if (must_drop_rate) {
+			if (contain_must_drop) { // OldAlgorithm: if (must_drop_rate) {
 				let a;
 				if (v[3].must)
 					a = (0.9 * (v[6] / 100) + 0.1) / must_drop_group.length // OldAlgorithm: a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
