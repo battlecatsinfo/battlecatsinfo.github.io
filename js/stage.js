@@ -64,6 +64,7 @@ module.exports = class extends SiteGenerator {
 				xp: parseInt(entry.xp, 36),
 				hp: parseInt(entry.health, 10),
 				energy: parseInt(entry.energy, 36),
+				len: parseInt(entry.len, 10),
 				diff: entry.difficulty ? Number(entry.difficulty) : undefined,
 				rand: parseInt(entry.rand, 10),
 				drop: entry.drop ? entry.drop.split('|').map(x => x.split(',').map(Number)) : undefined,

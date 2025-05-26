@@ -1152,7 +1152,7 @@ async function render_stage() {
 	}
 
 	st2[5].textContent = info3.bg;
-	st2[3].textContent = info3.minSpawn + 'F';
+	st2[3].textContent = info3.len;
 	if (info2.limit) {
 		const limits = info2.limit.map(x => new Limit(x));
 		const theStar = star - 1;
