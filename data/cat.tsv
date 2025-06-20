@@ -688,7 +688,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					111000		1			2			Goddess_of_Light_Sirius_(Uber_Rare_Cat)	70
 4	2			60	70					111000		1			2			Reindeer_Terun_(Uber_Rare_Cat)	70
 3	3			50	70					111000		2			2		1|357|0	Brainwashed_Lizard_Cat_(Super_Rare_Cat)	70
-1	2			50	15					111000		5			0			Meditation_Cat_(Special_Cat)	
+1	2			50	15					111000		5			0			Meditation_Cat_(Special_Cat)	10
 4	2			60	70					120000		1			2			Child_of_Destiny_Phono_(Uber_Rare_Cat)	70
 1	3			50	0	0,10	1000000!0|2!179|2!180|2!181|2!182|2!183			120000		1	第3進化後展現其真正面貌！<br>獲得了超獸特效，<br>還能使烈波傷害無效化！		0	9|48|0		Ancient_Egg:_N000_(Special_Cat)	0
 4	3			60	70		1000000!0|3!39|6!40			120100		1	第3進化後攻擊力上升！<br>同時移動速度也上升<br>還能夠將敵人的動作停止無效化！		2			Issun_Boshi_(Uber_Rare_Cat)	70
@@ -809,4 +809,4 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 2	2			50	0					140400		4			3	2|224|4		Battle_Cats_Wiki:Sandbox/Cat_Sonic_(Rare_Cat)	
 1	2			50	0					140400		5			0			Battle_Cats_Wiki:Sandbox/Cat_Tails_(Special_Cat)	
 2	2			50	80					140400		3			3			Battle_Cats_Wiki:Sandbox/Cat_Shadow_(Rare_Cat)	
-4	2			60	70							1			2				70
+4	2			60	70					140400		1			2				70
