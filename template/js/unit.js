@@ -230,7 +230,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 10:
-				w1("得到很多金錢", "aeG7OM3");
+				w1("得到很多金錢（擊敗敵人時獲得金錢×2）", "aeG7OM3");
 				break;
 
 			case 11:
