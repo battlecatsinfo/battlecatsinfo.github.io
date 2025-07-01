@@ -182,18 +182,18 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`體力 ${v[0]} % 以下攻擊力上升至 ${100 + v[1] + catEnv.combo_strengthen} %`, "IE6ihRp");
+				func(`體力 ${v[0]} % 以下時攻擊力上升至 ${100 + v[1] + catEnv.combo_strengthen} %`, "IE6ihRp");
 				break;
 
 			case 2:
-				w1(`${v} % 以 1 血存活一次`, "WcMDxXS");
+				w1(`遭到致命的攻擊時 ${d} % 以1體力存活1次`, "WcMDxXS");
 				break;
 
 			case 3:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`善於攻城（對塔傷害 4 倍）`, "xIcbDzl");
+				func(`善於攻城（攻擊傷害 × 4）`, "xIcbDzl");
 				break;
 
 			case 4:
@@ -230,7 +230,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 10:
-				w1("得到很多金錢（擊敗敵人時獲得金錢×2）", "aeG7OM3");
+				w1("得到很多金錢（擊敗敵人時獲得金錢 × 2）", "aeG7OM3");
 				break;
 
 			case 11:
@@ -241,14 +241,14 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[1]} 小波動${U}`, "W18c1hw");
+				func(`${v[0]} % 發射 Lv${v[1]} 小波動${U}（射程${132.5 + v[1]*200}）`, "W18c1hw");
 				break;
 
 			case 13:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[1]} 波動${U}`, "ZbPqGoj");
+				func(`${v[0]} % 發射 Lv${v[1]} 波動${U}（射程${132.5 + v[1]*200}）`, "ZbPqGoj");
 				break;
 
 			case 14:
@@ -273,14 +273,14 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func("超生命體特效（傷害 1.6 倍、受傷害減少 30 %)", "nGZanly");
+				func("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7)", "nGZanly");
 				break;
 
 			case 18:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`超獸特效（對超獸敵人傷害 2.5 倍、減傷 40%、${v[0]} % 發動攻擊無效持續 ${numStrT(v[1])}）`, "yCMsSbc");
+				func(`超獸特效（攻擊傷害 × 2.5 、所受傷害 × 0.6、${v[0]} % 發動攻擊無效持續 ${numStrT(v[1])}）`, "yCMsSbc");
 				break;
 
 			case 19:
@@ -378,7 +378,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('善於攻擊', 'dlZ8xNU');
 					break;
 				}
-				w2('善於攻擊（傷害 1.5 ~ 1.8 倍，受到傷害減少至 1/2 ~ 2/5）', "dlZ8xNU");
+				w2('善於攻擊（攻擊傷害 × 1.5 至 1.8 、所受傷害 × 0.5 至 0.4）', "dlZ8xNU");
 				break;
 
 			case 26:
@@ -386,7 +386,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('很耐打', '4em8Hzg');
 					break;
 				}
-				w2(`很耐打（受到傷害減少 1/4 ~ 1/5）`, "4em8Hzg");
+				w2(`很耐打（所受傷害 × 1/4 至 1/5）`, "4em8Hzg");
 				break;
 
 			case 27:
@@ -394,7 +394,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('超耐打', 'ck2nA1D');
 					break;
 				}
-				w2(`超耐打（受到傷害減少至 1/6 ~ 1/7）`, "ck2nA1D");
+				w2(`超耐打（所受傷害 × 1/6 至 1/7）`, "ck2nA1D");
 				break;
 
 			case 28:
@@ -402,7 +402,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3(`超大傷害`, "RbqsryO");
 					break;
 				}
-				w2(`超大傷害（3 ~ 4 倍傷害）`, "RbqsryO");
+				w2(`超大傷害（攻擊傷害 × 3 至 4）`, "RbqsryO");
 				break;
 
 			case 29:
@@ -410,7 +410,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					w3('極度傷害', 'whTrzG1');
 					break;
 				}
-				w2(`極度傷害（5 ~ 6 倍傷害）`, "whTrzG1");
+				w2(`極度傷害（攻擊傷害 × 5 至 6）`, "whTrzG1");
 				break;
 
 			case 30:
@@ -475,7 +475,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func('超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、傷害 1.2 倍、減傷 50 %）', 'Qq8vQTs');
+				func('超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、攻擊傷害 × 1.2、所受傷害 × 0.5）', 'Qq8vQTs');
 				break;
 			case 43: {
 				const p = document.createElement('div');
@@ -499,7 +499,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				a.href = '/metal_killer.html?kill=' + v;
 				p.appendChild(s);
 				a.textContent = `${v}%`;
-				p.append('鋼鐵殺手（減敵方目前體力的 ');
+				p.append('鋼鐵殺手（減少敵方當前體力的 ');
 				p.appendChild(a);
 				p.append('）');
 				p1.appendChild(p);
@@ -509,7 +509,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(v[1] != v[2] ? `${v[0]}% 爆波（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 爆波（發生位置：${v[1]}）`, '4KshrNX');
+				func(v[1] != v[2] ? `${v[0]}% 發出爆波（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 發出爆波（發生位置：${v[1]}）`, '4KshrNX');
 				break;
 		}
 	}

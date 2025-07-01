@@ -156,7 +156,7 @@ function createAbIcons() {
 				T(`${d} % 會心一擊${U}`, 'FV6We1L');
 				break;
 			case AB_ATKBASE:
-				T(`善於攻城（對塔傷害 4 倍）`, 'xIcbDzl');
+				T(`善於攻城（攻擊傷害 × 4）`, 'xIcbDzl');
 				break;
 			case AB_WAVE:
 				T(`${d[0]} % 發射 Lv${d[1]} 波動${U}（射程${267.5 + v[1]*200}）`, 'ZbPqGoj');
@@ -168,10 +168,10 @@ function createAbIcons() {
 				W(`${d[0]} % 降低攻擊力${U}至 ${d[1]} % 持續 ${numStrT(d[2])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[2])} %`, 'yRkhAHL');
 				break;
 			case AB_STRENGTHEN:
-				T(`血量 ${d[0]} % 以下攻擊力上升至 ${100 + d[1]} %`, 'IE6ihRp');
+				T(`體力 ${d[0]} % 以下時攻擊力上升至 ${100 + d[1]} %`, 'IE6ihRp');
 				break;
 			case AB_LETHAL:
-				W(`死後 ${d} % 以1血量復活`, 'WcMDxXS');
+				W(`遭到致命的攻擊時 ${d} % 以1體力存活1次`, 'WcMDxXS');
 				break;
 			case AB_WAVES:
 				W(`波動滅止`, 'BH3LOrK');
@@ -180,7 +180,7 @@ function createAbIcons() {
 				W(`進入射程範圍時鑽地 ${numStr(d[1])} 距離（${d[0] == -1 ? '無限' : d[0].toString() + ' '}次）`, 'j9psrEP');
 				break;
 			case AB_REVIVE:
-				W(`擊倒後 ${numStrT(d[1])} 以 ${d[2]} % 血量復活（${d[0] == -1 ? '無限' : d[0].toString() + ' '}次）`, 'BX2GLgu');
+				W(`擊倒後 ${numStrT(d[1])} 以 ${d[2]} % 體力復活（${d[0] == -1 ? '無限' : d[0].toString() + ' '}次）`, 'BX2GLgu');
 				break;
 			case AB_WARP:
 				W(`${d[0]} % 將目標向${d[2] < 0 ? '前' : '後'}傳送${U} ${Math.abs(d[2])} 距離持續 ${numStrT(d[1])}`, 'KkYm2Og');
@@ -224,7 +224,7 @@ function createAbIcons() {
 				W(`死後 ${d[0]} % 發射 Lv${d[3]}烈波（範圍 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'WmB7utZ');
 				break;
 			case AB_POIATK:
-				W(`${d[0]} % 毒擊（造成角色血量 ${(d[1])} % 傷害）`, '6O6zwrp');
+				W(`${d[0]} % 毒擊（造成角色最大生命值 ${(d[1])} % 的傷害）`, '6O6zwrp');
 				break;
 			case AB_SURGE:
 				T(`${d[0]} % 發射 Lv${d[3]} 烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'at4bW0n');
@@ -233,7 +233,7 @@ function createAbIcons() {
 				T(`${d[0]} % 發射 Lv${d[3]} 小烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'AEITK8t');
 				break;
 			case AB_EXPLOSION:
-				T(d[1] != d[2] ? `${d[0]}% 爆波（發生位置：${d[1]}～${d[2]}）` : `${d[0]}% 爆波（發生位置：${d[1]}）`, '4KshrNX');
+				T(d[1] != d[2] ? `${d[0]}% 發出爆波（發生位置：${d[1]}～${d[2]}）` : `${d[0]}% 發出爆波（發生位置：${d[1]}）`, '4KshrNX');
 				break;
 		}
 	}
