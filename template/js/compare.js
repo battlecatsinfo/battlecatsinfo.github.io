@@ -229,10 +229,10 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				W("鋼鐵", "MzHKigD");
 				break;
 			case 12:
-				W(`${v[0]} % Lv${v[1]} 小波動`, "W18c1hw");
+				W(`${v[0]} % 發射 Lv${v[1]} 小波動（射程${132.5 + v[1]*200}）`, "W18c1hw");
 				break;
 			case 13:
-				W(`${v[0]} % Lv${v[1]} 波動`, "ZbPqGoj");
+				W(`${v[0]} % 發射 Lv${v[1]} 波動（射程${132.5 + v[1]*200}）`, "ZbPqGoj");
 				break;
 			case 14:
 				W(`${v[0]} % Lv${v[4]} 小烈波（${v[1]}～${v[2]}）`, "AEITK8t");
