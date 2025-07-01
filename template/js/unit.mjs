@@ -777,6 +777,9 @@ class Unit {
 	get stopProb() {
 		return this.ab[AB_STOP]?.[0] ?? 0;
 	}
+	get knockbackProb() {
+		return this.ab[AB_KB]?.[0] ?? 0;
+	}
 	get weakTime() {
 		return this.ab[AB_WEAK]?.[2] ?? 0;
 	}
@@ -975,6 +978,9 @@ class Unit {
 	}
 	__stop_prob() {
 		return this.stopProb;
+	}
+	__knockback_prob() {
+		return this.knockbackProb;
 	}
 	__weak_time() {
 		return this.weakTime;

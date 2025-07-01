@@ -3055,6 +3055,21 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm.knockbackProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.knockbackProb, 0);
+
+				var cf = (await Unit.loadCat(51)).forms[0];
+				assert.strictEqual(cf.knockbackProb, 30);
+
+				var cf = (await Unit.loadCat(239)).forms[2];
+				assert.strictEqual(cf.knockbackProb, 100);
+			});
+
+		});
+
 		describe('CatForm.weakTime', function () {
 
 			it('basic', async function () {
@@ -3838,6 +3853,13 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(543)).forms[0];
 				var spy = sinon.spy(cf, 'curseCover', ['get']);
 				assert.strictEqual(cf.__curse_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
+			});
+
+			it('knockback_prob', async function () {
+				var cf = (await Unit.loadCat(239)).forms[2];
+				var spy = sinon.spy(cf, 'knockbackProb', ['get']);
+				assert.strictEqual(cf.__knockback_prob(), spy.get.returnValues[0]);
 				assert(spy.get.calledOnceWith());
 			});
 
@@ -4812,6 +4834,21 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('Enemy.knockbackProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.knockbackProb, 0);
+
+				var enemy = await Unit.loadEnemy(125);
+				assert.strictEqual(enemy.knockbackProb, 15);
+
+				var enemy = await Unit.loadEnemy(182);
+				assert.strictEqual(enemy.knockbackProb, 20);
+			});
+
+		});
+
 		describe('Enemy.weakTime', function () {
 
 			it('basic', async function () {
@@ -5352,6 +5389,13 @@ describe('unit.mjs', function () {
 				var enemy = await Unit.loadEnemy(407);
 				var spy = sinon.spy(enemy, 'curseCover', ['get']);
 				assert.strictEqual(enemy.__curse_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
+			});
+
+			it('knockback_prob', async function () {
+				var enemy = await Unit.loadEnemy(125);
+				var spy = sinon.spy(enemy, 'knockbackProb', ['get']);
+				assert.strictEqual(enemy.__knockback_prob(), spy.get.returnValues[0]);
 				assert(spy.get.calledOnceWith());
 			});
 

@@ -1645,6 +1645,7 @@
     	"curse_time",
     	"curse_prob",
     	"curse_prob",
+    	"knockback_prob",
     	"weak_time",
     	"weak_prob",
     	"weak_extent",
