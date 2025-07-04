@@ -213,7 +213,13 @@ Term4
 			}, head);
 		}
 Term5
-	= head:Factor tail:(("*" / "/" / "%") Factor)* {
+	= head:Term6 tail:(("*" / "/" / "%") Term6)* {
+			return tail.reduce(function(result, element) {
+				return result + element[0] + element[1];
+			}, head);
+		}
+Term6
+	= head:Factor tail:(("**") Factor)* {
 			return tail.reduce(function(result, element) {
 				return result + element[0] + element[1];
 			}, head);
