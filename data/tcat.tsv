@@ -75,7 +75,7 @@ KHM48|ダークKHM48|KHM46	KHM48|暗黑KHM48|KHM46	PPT48|Dark PPT48|PPT46	BCK48|
 織田信長|武神・織田信長|天魔・織田信長|夢幻天魔・織田信長	織田信長|武神・織田信長|天魔・織田信長|夢幻天魔・織田信長	Oda Nobunaga|Wargod Nobunaga|Immortal Nobunaga|Phantasmal Nobunaga	하데스|분노의 하데스|천마의 하데스|몽환천마 하데스
 トナカイフィッシュ|ネコ魚のお造り|フィッシュ・ド・ノエル	馴鹿魚|魚貓的刺身|聖誕樹幹蛋糕貓	Reindeer Fish Cat|Sashimi Cat|Xmas Pudding Cat	순록피쉬|고양이회 모듬|피쉬・더・노엘
 風神のウィンディ|風神のウィンディα|疾風神のウィンディα|アルティメットウィンディα	風神溫蒂|風神溫蒂α|疾風神溫蒂α|究極溫蒂α	Windy|Windy, type α|Divine Windy|Ultimate Windy	바람의 신・윈디|바람의 신・윈디α|질풍의 신・윈디α|얼티밋・윈디α
-雷神のサンディア|雷神のサンディアβ|迅雷神のサンディアβ	雷神珊迪亞|雷神珊迪亞β|迅雷神珊迪亞β	Thundia|Thundia, type β|Divine Thundia	번개의 신・산디아|번개의 신・산디아β|천둥의 신・산디아β
+雷神のサンディア|雷神のサンディアβ|迅雷神のサンディアβ|アルティメットサンディアβ	雷神珊迪亞|雷神珊迪亞β|迅雷神珊迪亞β|究極珊迪亞β	Thundia|Thundia, type β|Divine Thundia|Ultimate Thundia	번개의 신・산디아|번개의 신・산디아β|천둥의 신・산디아β|얼티밋・산디아β
 ドロイド|ニャンドロイド|ハルドロイド	Droid|Droid喵|Droid春	Droid Cat|Droid Cat Mk 2|SpringDroid	드로이드|야옹로이드|스프링 드로이드
 ネコと宇宙|ニャア少佐|駆動戦士ネコ	貓和宇宙|喵亞少校|驅動戰士貓咪	Space Cat|Major Space Cat|Space Marine Cat	고양이와 우주|냐앙소령|우주전사 고양이
 にゃんこ成人|にゃんこ病人|にゃんこ囚人	成人貓|病人貓|囚犯貓	Adult Cat|Sick Cat|Prisoner Cat	냥코 성인|냥코 환자|냥코 죄수
@@ -274,7 +274,7 @@ SV-001|SV-001CC	SV-001|SV-001CC	SV-001|SV-001 CC	SV-001|SV-001CC
 繁栄神ガネーシャ|ガネーシャエクサ|Gガネーシャエクサ	象頭神迦內薩|睿智神迦內薩|G睿智神迦內薩	Splendid Ganesha|Exalted Ganesha|Almighty Ganesha	번영신 가네샤|가네샤 엑사|G가네샤 엑사
 チアにゃんこ|ネコウエイトレス|にゃんこそば	啦啦隊貓|女侍應貓|送麵貓	Cheerleader Cat|Waitress Cat|Soba Cat	치어리더 냥코|웨이트리스 냥코|러브소바 냥코
 トロピカルカリファ|トロピカルXカリファ	熱帶卡莉法|熱帶卡莉法X	Tropical Kalisa|Tropical Kalisa, type X	트로피칼 칼리파|트로피칼X칼리파
-真夏のホワイトラビット|真夏のブラックキャット	盛夏白兔女俠|盛夏黑貓女俠	Midsummer Rabbit|Midsummer Cat	한여름의 화이트 래빗|한여름의 블랙 캣
+真夏のホワイトラビット|真夏のブラックキャット|ブライトサマーキャット	盛夏白兔女俠|盛夏黑貓女俠|盛夏黑貓女俠	Midsummer Rabbit|Midsummer Cat|Midsummer Cat	한여름의 화이트 래빗|한여름의 블랙 캣|한여름의 블랙 캣
 夏色ねねこ|海辺のねねこ|初夏・海辺のねねこ	夏色萌萌貓|海邊萌萌貓|初夏海邊萌萌貓	Sunny Neneko|Seaside Neneko|Early Summer Neneko	여름빛 귀요미|해변의 귀요미|초여름 해변의 귀요미
 なめこ|なめこ＆にゃんこ	菇菇|菇菇＆貓咪	Funghi|Funghi 'n' Cat	나메코|나메코＆냥코
 なめこタンク|なめこタンク＆にゃんこ	菇菇坦克|菇菇坦克＆貓咪	Tanky|Tanky 'n' Cat	나메코 탱크|나메코 탱크＆냥코
@@ -305,7 +305,7 @@ SV-001|SV-001CC	SV-001|SV-001CC	SV-001|SV-001 CC	SV-001|SV-001CC
 ネコ屋台|ネコの宅配便|ネコ給食当番	叫賣貓|宅配貓|打飯貓	Food Stall Cat|Delivery Cat|Cafeteria Cat	타코야끼냥|냥택배|고양이 급식당번
 帝国陸軍カタパルズ|撃滅戦車ギガパルド|超撃滅戦車ギガパルド|極撃滅戦車ギガパルド	帝國陸軍・石砲隊|擊滅戰車・陸王砲|超擊滅戰車・陸王砲|極擊滅戰車・陸王砲	Mighty Kat-A-Pult|CAT-6 Siege Engine|CAT-8 Behemoth|CAT-10 Gigapult	강철육군 카타바르스|격멸전차 기가파르도|초격멸전차 기가파르도|극격멸전차 기가파르도
 古代軍船ガレーズ|無敵艦隊シーガレオン|超無敵艦隊シーガレオン|極無敵艦隊シーガレオン	古代軍船・戰槳隊|無敵艦隊・海皇錐|超無敵艦隊・海皇錐|極無敵艦隊・海皇錐	Mighty Drednot|B.C.S. Lionheart|B.C.S. Tigerclaw|B.C.S. Beartooth	고대군함 가레스|무적함대 시갈레온|초무적함대 시갈레온|극무적함대 시갈레온
-飛空襲撃ボンバーズ|飛行戦艦ボルボンバー|超飛行戦艦ボルボンバー	飛空襲擊・轟炸隊|飛行戰艦・空帝雷|超飛行戰艦・空帝雷	Mighty Bomburr|NEK-0 Sky Fortress|NEK-02 Air Citadel	비행습격 바머스|비행전함 보르본|초비행전함 보르본바
+飛空襲撃ボンバーズ|飛行戦艦ボルボンバー|超飛行戦艦ボルボンバー|極飛行戦艦ボルボンバー	飛空襲擊・轟炸隊|飛行戰艦・空帝雷|超飛行戰艦・空帝雷	Mighty Bomburr|NEK-0 Sky Fortress|NEK-02 Air Citadel	비행습격 바머스|비행전함 보르본|초비행전함 보르본바
 ネコジャンパー|ネコボールター|ネコ奥様	業餘撐杆跳貓|職業撐杆跳貓|全職家庭主婦貓	Vaulter Cat|Polevaulter Cat |Housewife Cat 	고양이 점퍼|고양이 장대|고양이 빨래봉
 ネコバサミ|ネコチェーンソー|草刈りネコ	樹剪貓|電鋸貓|割草貓	Gardener Cat|Lumbercat|Weedwacker Cat	고양이 가위|고양이 톱|고양이 풀베기
 ネコ博士|ネコ博士＆ネコ	|	|	|
@@ -439,7 +439,7 @@ CPAC|PPAP	CPAC|PPAP	CPAC|PPAP	CPAC|PPAP
 激・神さま|超・神さま|超・神さまゴールデン	激・神|超・神|超・金光閃閃神	Cat God the Great|Cat God the Awesome|Cat God the Golden	격・신|초・신|초・신 골든
 灼熱のビーチクウ|灼熱のビーチクウγ	灼熱海灘悟空貓|灼熱海灘悟空貓γ	Waverider Kuu|Waverider Kuu, type γ	불타는 해변의 쿠우|불타는 해변의 쿠우γ
 時空神クロノス|クロノストリガー|Gクロノストリガー	時空神克羅諾絲|時空之鑰克羅諾絲|G時空之鑰克羅諾絲	Empress Chronos|Chronos the Infinite|Almighty Chronos	시간의 신 크로노스|크로노스 트리거|G크로노스 트리거
-ベベ|なぎさ&ネコ|円環の理の使者なぎさ	蓓蓓|小渚＆貓咪|圓環之理的使者渚	Bebe|Nagisa & Cat|Law of Cycles Nagisa	베베|나기사&고양이|원환의 이치의 사자 나기사
+ベベ|なぎさ＆ネコ|円環の理の使者なぎさ	蓓蓓|小渚＆貓咪|圓環之理的使者渚	Bebe|Nagisa & Cat|Law of Cycles Nagisa	베베|나기사&고양이|원환의 이치의 사자 나기사
 影傑ダークダルターニャ|黒傑ダークダルターニャ	影傑漆黑達太貓|闇傑漆黑達太貓	D'arktanyan|Valiant D'arktanyan	호걸 달타냥|흑걸 달타냥
 子連れにゃんこ|ネコワゴンサービス|ネコバケーション	帶子貓|推車攤販貓|行李推車貓	Lone Cat and Kitten|Vendor Cat and Kitten|Tourist Cat	유모차 고양이|음료 카트 고양이|바캉스 고양이
 戦隊ドリラ|戦隊パワードリラ|シン・パワードリラ	地底戰隊・地殼鑽|地底戰隊・強力地殼鑽|正宗・強力地殼鑽	Driller Cat|Power Driller Cat|Neo Driller Cat	전대 드릴러|전대 파워 드릴러|신 파워 드릴러
@@ -622,7 +622,7 @@ KAITO＆ネコ|KAITO＆ネコCC	KAITO＆貓咪|KAITO＆貓咪CC	KAITO & Cat|KAIT
 邪龍ヘヴィジャーク|邪龍王ヘヴィジャーク|邪龍皇帝ヘヴィジャーク	邪龍赫維賈克|邪龍王赫維賈克|邪龍皇帝赫維賈克	Hevijak the Wicked|Wicked King Hevijak|God-Emperor Hevijak	사룡 헤비저크|사룡왕 헤비저크|사룡황제 헤비저크
 悪魔研究家|邪悪な悪魔研究家|にゃんこ研究家	惡魔研究家|邪惡的惡魔研究家|貓咪研究家	Aku Researcher|Evil Aku Researcher|Cat Researcher	악마연구가|사악한 악마연구가|냥코 연구가
 ジャガンドーJr|破壊神ジャガンドーJr	邪根德Jr|破壞神邪根德Jr	Jagando Jr.|Lord of Ruin Jagando Jr.	자간드 Jr|파괴신 자간드 Jr
-ネコハーメルン|虚無僧ネコ	魔笛貓|虛無僧貓	Pied Piper Cat|Komuso Cat	고양이 하멜론|무소유 승려 고양이
+ネコハーメルン|虚無僧ネコ|ネコブラスバンド	魔笛貓|虛無僧貓|銅管樂隊貓	Pied Piper Cat|Komuso Cat|Brass Cat	고양이 하멜론|무소유 승려 고양이|고양이 브라스 밴드
 熱血硬派くにおくん|ドッジボール部くにおくん	熱血硬派國夫君|躲避球社國夫君	Kunio-kun|Dodgeball Kunio-kun	열혈경파 쿠니오군|피구부 쿠니오군
 オコルガ|オコランパサラン|ゲキオコパサラン	怒髮貓|髮鞭白骨貓|暴怒髮鞭白骨貓	Furiluga|Furilan Pasalan|Ragelan Pasalan	오코루가|오코란파사란|극대노 파사란
 ネコキリンモドキ|駿馬ネコキリンモドキ	|	|	|
@@ -638,7 +638,7 @@ KAITO＆ネコ|KAITO＆ネコCC	KAITO＆貓咪|KAITO＆貓咪CC	KAITO & Cat|KAIT
 洗脳されしタンクネコ|洗脳されしネコカベ|洗脳されしゴムネコ	遭洗腦的坦克貓|遭洗腦的牆貓|遭洗腦的橡皮貓	Brainwashed Tank Cat|Brainwashed Wall Cat|Brainwashed Eraser Cat	세뇌된 탱크 고양이|세뇌된 고양이 벽|세뇌된 고무 고양이
 シャオチョン＆ネコ|シャオチョン＆ネコCC	小穹&貓咪|小穹&貓咪CC	|	|
 ナナ＆ネコ|ナナ＆ネコCC	耐耐&貓咪|耐耐&貓咪CC	|	|
-エミリア＆ネコ|エミリア&ネコCC	艾米莉亞&貓咪|艾米莉亞&貓咪CC	|	|
+エミリア＆ネコ|エミリア＆ネコCC	艾米莉亞&貓咪|艾米莉亞&貓咪CC	|	|
 ジェアー＆ネコ|ジェアー＆ネコCC	婕兒&貓咪|婕兒&貓咪CC	|	|
 踊り子イズ|魅惑の舞姫イズ	歡笑揮舞孃|魅惑舞姬孃	Iz the Dancer|Iz the Alluring Dancer	무희 이즈|매혹의 무희 이즈
 堕天神ルシファー|グランドルシファー|Gグランドルシファー	墮天神路西法|崇高之神路西法|G崇高之神路西法	Lucifer the Fallen|Grand Lucifer|Almighty Lucifer	타락 천신 루시퍼|그랜드 루시퍼|G그랜드 루시퍼
@@ -688,7 +688,7 @@ KAITO＆ネコ|KAITO＆ネコCC	KAITO＆貓咪|KAITO＆貓咪CC	KAITO & Cat|KAIT
 光の女神シリウス|来光の女神シリウス	光之女神希莉烏斯|晨光女神希莉烏斯	Goddess of Light Sirius|Goddess of Sunrise Sirius	빛의 여신 시리우스|광명의 여신 시리우스
 トナカイ娘テルン|トナカイ娘テルンζ	馴鹿女孩媞倫|馴鹿女孩媞倫ζ	Reindeer Terun|Reindeer Terunζ	사슴뿔 테룬|사슴뿔 테룬ζ
 洗脳されしネコトカゲ|洗脳されしネコドラゴン|洗脳されしネコキングドラゴン	遭洗腦的蜥蜴貓|遭洗腦的龍貓|遭洗腦的龍王貓	Brainwashed Lizard Cat|Brainwashed Dragon Cat|Brainwashed King Dragon Cat	세뇌된 고양이 도마뱀|세뇌된 고양이 드래곤|세뇌된 고양이 킹드래곤
-石の上にも10年ネコ|石の上にも10年ネコ像	|	Meditation Cat|Paragon Cat	10년이면 고양이|10년이면 고양이 동상
+石の上にも10年ネコ|石の上にも10年ネコ像	石上10年貓|石上10年貓像	Meditation Cat|Paragon Cat	10년이면 고양이|10년이면 고양이 동상
 運命の子フォノ|天命の王フォノウ	命運之子佛諾|天命之王佛挪	Child of Destiny Phono|King of Destiny Phonoa	운명의 아이 포노|천명의 왕 포노아
 古びたタマゴ:N000|古のタマゴ:N000|猿人ネコルーザ	遠古的蛋：N000|古代的蛋：N000|猿人貓露薩	Ancient Egg: N000|Elder Egg: N000|Ape Lord Luza	오래된 알: N000|고대의 알: N000|에이프 고양이 루자
 いっすん法師|鬼襲艇コヅチマル|鬼襲戦艇コヅチマル	一寸法師|鬼襲艇小槌號|鬼襲戰艇小槌號	Issun Boshi|Oni Landshaker Kozuchimaru|Oni Battlepod Kozuchimaru	엄지 동자|귀습잠수함 방망-E|귀습전투함 방망-E
@@ -697,7 +697,7 @@ KAITO＆ネコ|KAITO＆ネコCC	KAITO＆貓咪|KAITO＆貓咪CC	KAITO & Cat|KAIT
 殺意のタンクネコ|真・殺意のタンクネコ	殺意坦克貓|真・殺意坦克貓	Killer Tank Cat|True Killer Tank Cat	살의의 탱크 고양이|독기의 탱크 고양이
 ネコ委員長|裏ネコ委員長	班長貓|叛逆班長貓	Class Rep Cat|Stealth Class Rep Cat	고양이 반장|불량 고양이 반장
 古びたタマゴ:N107|紫のタマゴ:N107|ネコ村長	遠古的蛋：N107|紫色的蛋：N107|村長貓	Ancient Egg: N107|Violet Egg: N107|Cat Chief	오래된 알: N107|보라색 알: N107|고양이 촌장
-サンダージャック|ブラッディージャック	閃電傑克|黑雷傑克	Thunder Jack|Bloody Jack	썬더 잭|블러디 잭
+サンダージャック|ブラッディージャック|ライトニングジャック	閃電傑克|黑雷傑克|黑雷傑克	Thunder Jack|Bloody Jack|Bloody Jack	썬더 잭|블러디 잭|블러디 잭
 決闘少年ラビットサトル|決闘王者ラビットサトル	決鬥少年兔裝小悟|決鬥王者兔裝小悟	Rabbit Satoru|Rabbit Champion Satoru	결투소년 래빗 사토루|결투왕 래빗 사토루
 古びたタマゴ:N005|謎のタマゴ:N005|ネコヒットマン	遠古的蛋：N005|謎樣的蛋：N005|殺手貓	Ancient Egg: N005|Mystic Egg: N005|Hitman Cat	오래된 알: N005|신비한 알: N005|고양이 히트맨
 にゃんこ仮面ライダー|シン・仮面ライダーにゃんこ	|	|	|
@@ -722,10 +722,10 @@ KAITO＆ネコ|KAITO＆ネコCC	KAITO＆貓咪|KAITO＆貓咪CC	KAITO & Cat|KAIT
 古びたタマゴ:N006|悪のタマゴ:N006|ネコアックマ	遠古的蛋：N006|邪惡的蛋：N006|惡魔熊熊貓	Ancient Egg: N006|Devil Egg: N006|Fallen Bear Cat	오래된 알: N006|악의 알: N006|고양이 악마 각하
 花園高校番長りき|ドッジボール部りき	花園高中老大阿力|躲避球社阿力	High School Kingpin Riki|Dodgeball Riki	화원고교 번장 리키|피구부 리키
 初音ミク 16th|初音ミクCC 16th	初音未來 16th|初音未來CC 16th	Hatsune Miku XVI|Hatsune Miku XVI CC	하츠네 미쿠 16th|하츠네 미쿠CC 16th
-光翼神イシス|ネフェルイシス	光翼神伊西絲|美翼神伊西絲	Lightmother Aset|Nefer Aset	광익신 이시스|네페르 이시스
+光翼神イシス|ネフェルイシス|Gネフェルイシス	光翼神伊西絲|美翼神伊西絲|G美翼神伊西絲	Lightmother Aset|Nefer Aset|Almighty Aset	광익신 이시스|네페르 이시스|G네페르 이시스
 古びたタマゴ:N112|謎のタマゴ:N112|ネコタマ号	遠古的蛋：N112|謎樣的蛋：N112|蛋蛋號貓	Ancient Egg: N112|Mystic Egg: N112|Cat Egg Pod	오래된 알: N112|신비한 알: N112|고양이 에그호
 忍者娘トモエ|食道楽忍者トモエ	忍者女孩多萌耶|響食忍者多萌耶	Ninja Girl Tomoe|Gourmand Ninja Girl Tomoe	닌자아가씨 토모에|식도락 닌자 토모에
-ネコメダル王|ネコメダル大王	|	|	|
+ネコメダル王|ネコメダル大王	|	|	고양이 메달왕|고양이 메달대왕
 ソル・デ・ロカ|ソル・デ・ロカCC	太陽神羅卡|太陽神羅卡CC	SOL DAE ROKKER|SOL DAE ROKKER CC	솔 데 로카|솔 데 로카CC
 論の賢者ソラクティス|論の賢者ネコラティス	論之賢者蘇拉格底|論之賢者貓拉格底	Master of Mind Soractes|Master of Mind Catcrates	논리의 현자 소라크테스|논리의 현자 냥코라테스
 730_1	730_1	730_1	730_1
@@ -775,7 +775,7 @@ KAITO＆ネコ|KAITO＆ネコCC	KAITO＆貓咪|KAITO＆貓咪CC	KAITO & Cat|KAIT
 スモウ・ザ・ミイラ|マミー・ザ・ハロウィン	木乃伊相撲貓|萬聖節變裝女士	Mummy Sumo|Mama Mummy Sumo	스모 더 미라|마미 더 할로윈
 特命機動アクセル|ダーティー・アクセル	特命交警阿酷賽爾|酷頑夜警阿酷賽爾	Mech Patrol Axel|Steel Sergeant Axel	특수기동대 엑셀|더티 엑셀
 776-1	776-1	776-1	776-1
-見習い武者ネコ|武将ネコ	|	|	|
+見習い武者ネコ|武将ネコ	|	Lieutenant Cat|Commander Cat	|
 冬将軍・成田甲斐|冬大将軍・成田甲斐	冬將軍・成田甲斐|冬大將軍・成田甲斐	Winter General Kaihime|Winter Commander Kaihime	동장군 미네르바|한파장군 미네르바
 ネコまどか＆ほむら|魔法結社にゃんこ☆マギカ	小圓貓＆小焰|魔法結社貓咪小圓	Madoka Cat & Homura|Magical Cat☆ Magica	고양이 마도카&호무라|마법결사 냥코☆마기카
 幼天女ルーナ|救済の天女ルナーシャ	幼天女露娜|救濟天女露娜夏	Celestial Child Luna|Salvation's Daughter Lunacia	꼬마선녀 루나|구제의 선녀 루나샤
@@ -798,3 +798,21 @@ KAITO＆ネコ|KAITO＆ネコCC	KAITO＆貓咪|KAITO＆貓咪CC	KAITO & Cat|KAIT
 ネコ刃牙|ネコ刃牙CC	刃牙貓|刃牙貓CC	Baki Cat|Baki Cat CC	고양이 바키|고양이 바키CC
 ネコ海王|ネコ海王CC	海王貓|海王貓CC	Kaioh Cat|Kaioh Cat CC	고양이 카이오|고양이 카이오CC
 ネコ独歩|ネコ独歩CC	獨步貓|獨步貓CC	Doppo Cat|Doppo Cat CC	고양이 돗포|고양이 돗포CC
+曲射砲台ランチャーズ|迎撃砲隊ガンハウザー	曲射砲台・砲擊團|迎擊砲隊・重砲團	Mighty Morta-Loncha|Grandiose Gunhauzer	곡사포대 런처즈|영격포대 건하우저
+801-1	801-1	801-1	801-1
+理の賢者ニュトーン|理の賢者ニャトーン	理之賢者扭頓|理之賢者喵頓	Master of Logic Newton|Master of Logic Mewton	이치의 현자 뉴톤|이치의 현자 냐톤
+802-1	802-1	802-1	802-1
+ソニック|ソニック＆ネコ	|	|	|
+テイルス|テイルス＆ネコ	|	|	|
+ナックルズ|ナックルズ＆ネコ	|	|	|
+シャドウ|シャドウ＆ネコ	|	|	|
+ネコソニック|ネコソニックCC	|	|	|
+ネコテイルス|ネコテイルスCC	|	|	|
+ネコシャドウ|ネコシャドウCC	|	|	|
+811_1|811_2	頂尖特務史塔爾|王牌特務史塔爾	|	에이전트 스탈|블레이드 마스터 스탈
+韋駄天スカンダ|スカンダゼタ			
+812-1			
+タスマニアオオガニ|タスマニアオオガニCC			
+エヴァ量産機|エヴァネコ量産機			
+月影の少年カヲル|落月のシ者カヲル			
+817-1			

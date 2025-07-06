@@ -129,7 +129,7 @@ Hyper Mr.	Hyper Mr.	Hyper Mr.	Hyper Mr.
 工房マンボウ	工房曼波魚	Young Man Mola	젊은이 개복치
 マンボ王	曼波魚王	Mola King	개복치 왕
 ハマンボ崎あゆみ	歌后曼波魚崎A・Y・U	Ayumi Manbosaki	미스 개복치
-カニ	螃蟹	Crab	게
+タスマニアオオガニ	螃蟹	Crab	게
 イワシ	沙丁魚	Sardine	정어리
 イカ	烏賊	Squid	오징어
 マーチン	快閃無尾熊	Marching Kory	마치알라
@@ -313,6 +313,10 @@ SV-001	SV-001	SV-001	SV-001
 ウルトラメェメェ	激動咩咩	UltraBaaBaa	울트라 메에메에
 合格野郎	及格野郎	Pigge Victorious	합격돼지
 だっふんと機関銃	臘腸狗與機關槍	Bang-Bang	핫도그와 기관총
+第４の使徒			
+第６の使徒			
+第９の使徒			
+第１０の使徒			
 狂乱のもねこ	狂亂萌貓	Crazed Moneko	광란의 귀여미
 狂乱のスターもねこ	狂亂偶像萌貓	Corrupted Moneko	광란의 스타 귀여미
 ペンライトなヤツ	螢光棒幫	Glowstick Guys	야광봉 놈놈놈
@@ -360,6 +364,7 @@ SV-001	SV-001	SV-001	SV-001
 ヘッドロココ			
 グミネコ	軟糖貓	Gummy Cat	젤리 고양이
 カノとソウマ	佳乃與蒼真	Kano ＆ Souma	카노와 소우마
+エヴァ第１３号機 疑似シン化			
 チキランラン	不死小雞	Zuche	치킨랄라
 スリラーズ	驚悚幫	The Thrillerz	스릴러즈
 フグ太くん	河潤豚	Mr. Puffington	복어양
@@ -465,6 +470,7 @@ SV-001	SV-001	SV-001	SV-001
 大魔王ニャンダム	大魔王貓彈	Infernal Tyrant Nyandam	대마왕 야옹마
 大魔道士ミモーン	大魔導士迷魔	Grand Mage Mimon	대마도사 미몬
 赤髪のビューティムキにゃん	紅髮小雪貓	Redhead Yuki Cat	빨간 머리 불끈 고양이 유키
+エヴァ第１３号機			
 聖天ゴクラッコ	聖天極破壞一族	Lutrinae Gokurakko	성천 두드리엘
 超暴獣イビルージョン	超爆獸恐暴約翰	Iguanidae Ibilujon	초공수 이블존
 超魚獣アンガブル	超魚獸不死燈魚	Lophiiformes Angaburu	초어수 아귀가블
@@ -482,9 +488,9 @@ SV-001	SV-001	SV-001	SV-001
 極悪なネコ島	極惡島貓	Malevolent Island Cat	극악의 고양이 섬
 極悪なネコキングドラゴン	極惡龍王貓	Malevolent King Dragon Cat	극악의 고양이 킹드래곤
 極悪なネコジャラミ	極惡賈拉米貓	Malevolent Jamiera Cat	극악의 고양이 쟈라미
-大王の化身			
-わんわん大王			
-ケーキわんこ			
+大王の化身			대왕의 화신
+わんわん大王			멍뭉 대왕
+ケーキわんこ			케이크 멍뭉이
 ネコ神面のウリル	貓咪神面烏嚕哩	Esoteric Uril	고양이 가면신 우리르
 ソル・デ・ロカ	太陽神羅卡	SOL DAE ROKKER	솔 데 로카
 論の賢者ソラクティス	論之賢者蘇拉格底	Sage of Mind Soractes	논리의 현자 소라크테스
@@ -533,7 +539,19 @@ SV-001	SV-001	SV-001	SV-001
 花山薫	花山薰	Kaoru Hanayama	하나야마 카오루
 愚地克巳	愚地克巳	Katsumi Orochi	오로치 카츠미
 ジャック・ハンマー	傑克・範馬	Jack Hammer	잭 한마
+理の賢者ニュトーン	理之賢者扭頓	Sage of Logic Newton	이치의 현자 뉴톤
+ソニック			
+テイルス			
+ナックルズ			
+シャドウ			
+ゴールプレート城			
+エンジェ・ルース			
+南国わんこ			
+南国ラッコ			
+嵐を呼ぶパラソル城（仮）			
+停止木人城			
+エヴァ量産機			
 	9週年紀念蛋糕狗仔		
 	9週年紀念木人樁城堡		
-		10th Anniv. Cake Doge	10주년 케이크 멍뭉이
-			10주년 목각 인형 성
+	10週年蛋糕狗仔	10th Anniv. Cake Doge	10주년 케이크 멍뭉이
+			항아리 성

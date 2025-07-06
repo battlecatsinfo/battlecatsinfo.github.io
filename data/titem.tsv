@@ -173,7 +173,7 @@ XP 5000	XP 5000	5000 XP	XP 5000
 シルバー勲章	白銀勳章	Silver Medal	실버 훈장
 ゴールド勲章	黃金勳章	Gold Medal	골드 훈장
 プラチナ勲章	白金勳章	Platinum Medal	플래티넘 훈장
-伝説のフリーパス		Legend Pass	전설의 프리패스
+伝説のフリーパス	傳說的入場券	Legend Pass	전설의 프리패스
 紫獣結晶	紫獸結晶	Purple B. Gem	자수석 결정
 紅獣結晶	紅獸結晶	Red B. Gem	홍수석 결정
 蒼獣結晶	蒼獸結晶	Blue B. Gem	청수석 결정
@@ -193,7 +193,7 @@ XP 5000	XP 5000	5000 XP	XP 5000
 伝説の聖水	傳說的聖水	Holy Water	전설의 성수
 伝説の虫取り網	傳說的捕蟲網	Legend Nets	전설의 벌레 채집망
 XP 1000000	XP 1000000	1000000 XP	XP 1000000
-伝説のちいさいメダル			
+伝説のちいさいメダル			전설의 작은 메달
 伝説の縁起物	傳說金元寶	Legendary Charm	전설의 복주머니
 伝説のラブレター	傳說的情書	Love Letter	전설의 러브레터
 経験値	經驗值	XP	경험치
@@ -202,7 +202,7 @@ XP 1000000	XP 1000000	1000000 XP	XP 1000000
 伝説の罠	傳說的陷阱	Legend Trap	전설의 트랩
 ビックリマンチョコ			
 伝説の魂	傳說的靈魂	Legendary Spirit	전설의 혼
-軍資金			
+軍資金		War Funds	
 伝説の縁起物			
 ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
 ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
@@ -211,3 +211,7 @@ XP 1000000	XP 1000000	1000000 XP	XP 1000000
 伝説のラブレター	傳說的情書	Love Letter	전설의 러브레터
 伝説の買い物かご	傳說的購物籃	Legendary Basket	전설의 장바구니
 伝説のダンベル	傳說的啞鈴	Legendary Dumbbell	전설의 덤벨
+伝説の罠			
+ふしぎな宝箱【銅】			
+ふしぎな宝箱【銀】			
+ふしぎな宝箱【金】			
