@@ -186,7 +186,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 2:
-				w1(`遭到致命的攻擊時 ${d} % 以1體力存活1次`, "WcMDxXS");
+				w1(`遭到致命的攻擊時 ${v} % 以1體力存活1次`, "WcMDxXS");
 				break;
 
 			case 3:
