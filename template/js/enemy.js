@@ -159,10 +159,10 @@ function createAbIcons() {
 				T(`善於攻城（攻擊傷害 × 4）`, 'xIcbDzl');
 				break;
 			case AB_WAVE:
-				T(`${d[0]} % 發射 Lv${d[1]} 波動${U}（射程${267.5 + v[1]*200}）`, 'ZbPqGoj');
+				T(`${d[0]} % 發射 Lv${d[1]} 波動${U}（射程 ${267.5 + v[1]*200}）`, 'ZbPqGoj');
 				break;
 			case AB_MINIWAVE:
-				T(`${d[0]} % 發射 Lv${d[1]} 小波動${U}（射程${267.5 + v[1]*200}）`, 'W18c1hw');
+				T(`${d[0]} % 發射 Lv${d[1]} 小波動${U}（射程 ${267.5 + v[1]*200}）`, 'W18c1hw');
 				break;
 			case AB_WEAK:
 				W(`${d[0]} % 降低攻擊力${U}至 ${d[1]} % 持續 ${numStrT(d[2])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[2])} %`, 'yRkhAHL');

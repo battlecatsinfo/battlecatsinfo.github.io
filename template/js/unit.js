@@ -241,14 +241,14 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[1]} 小波動${U}（射程${132.5 + v[1]*200}）`, "W18c1hw");
+				func(`${v[0]} % 發射 Lv${v[1]} 小波動${U}（射程 ${132.5 + v[1]*200}）`, "W18c1hw");
 				break;
 
 			case 13:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[1]} 波動${U}（射程${132.5 + v[1]*200}）`, "ZbPqGoj");
+				func(`${v[0]} % 發射 Lv${v[1]} 波動${U}（射程 ${132.5 + v[1]*200}）`, "ZbPqGoj");
 				break;
 
 			case 14:
