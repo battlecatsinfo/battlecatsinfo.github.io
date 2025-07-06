@@ -2181,9 +2181,11 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 	for (const line of Cs) {
 		const filter = new Set(line);
+		// exclude impossible combinations
 		if (
 			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
-			(filter.has(AB_GOOD) || filter.has(AB_MASSIVE) || filter.has(AB_MASSIVES))
+			(filter.has(AB_GOOD) || filter.has(AB_MASSIVE) || filter.has(AB_MASSIVES)
+			|| filter.has(AB_BSTHUNT) || filter.has(AB_BAIL) || filter.has(AB_SAGE))
 		)
 			continue;
 
@@ -2237,9 +2239,11 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 
 	for (const line of Cs) {
 		const filter = new Set(line);
+		// exclude impossible combinations
 		if (
 			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
-			(filter.has(AB_GOOD) || filter.has(AB_RESIST) || filter.has(AB_RESISTS))
+			(filter.has(AB_GOOD) || filter.has(AB_RESIST) || filter.has(AB_RESISTS)
+			|| filter.has(AB_BSTHUNT) || filter.has(AB_BAIL) || filter.has(AB_SAGE))
 		)
 			continue;
 
