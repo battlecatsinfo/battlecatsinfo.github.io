@@ -488,7 +488,7 @@ module.exports = class extends RewardSiteGenerator {
 			if (contain_must_drop) { // OldAlgorithm: if (must_drop_rate) {
 				let a;
 				if (v[3].must)
-					a = (0.9 * (v[4].valueOf() / 100) + 0.1) // OldAlgorithm: a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
+					a = 0.9 * (v[4].valueOf() / 100) + (10 / must_drop_group.length) // OldAlgorithm: a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
 				else
 					a = (v[4].valueOf() / 100) * 0.9 // OldAlgorithm: v[4].mul(must_drop_rate).valueOf() / 1000000;
 				S.items.push({
