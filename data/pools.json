@@ -2298,13 +2298,13 @@
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R012.html"
 	},
 	{
-		"tw_name": "音速小子",
+		"tw_name": "索尼克",
 		"jp_name": "ソニックシリーズ",
 		"en_name": "Sonic Series",
 		"img": "https://i.meee.com.tw/ypCntem.png",
 		"rate": [7000, 2500, 500, 0],
 		"collab": [
-			"音速小子",
+			"索尼克",
 			"/collab/Sonic_Series.html"
 		],
 		"type": "rare",
