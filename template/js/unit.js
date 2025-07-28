@@ -868,7 +868,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 			n.style.padding = '0';
 		tr = document.createElement('tr');
 		tbody.appendChild(tr);
-		add(['體力', '', '擊退', '', '攻擊頻率', '']);
+		add(['體力', '', '擊退', '', '攻擊週期', '']);
 		tr = document.createElement('tr');
 		tbody.appendChild(tr);
 		add(['攻擊力', '', '移動速度', '', '出招時間', '']);
@@ -1231,7 +1231,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		if ((i & 1))
 			x.classList.add('F');
 	}
-	makeTd(tbodytr5, '攻擊頻率').classList.add('f');
+	makeTd(tbodytr5, '攻擊週期').classList.add('f');
 	makeTd(tbodytr5);
 	makeTd(tbodytr5, '出招時間').classList.add('f');
 	makeTd(tbodytr5);
