@@ -807,7 +807,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					140400		1			2			Knuckles_(Uber_Rare_Cat)	70
 4	2			60	70					140400		1			2			Shadow_(Uber_Rare_Cat)	70
 2	2			50	0					140400		4			3	2|224|4		Cat_Sonic_(Rare_Cat)	0
-1	2			50	0					140400		5			0			Cat_Tails_(Special_Cat)	0
+1	2	通過索尼克合作活動登入章獲得		50	0					140400		5			0			Cat_Tails_(Special_Cat)	0
 2	2			50	80					140400		3			3			Cat_Shadow_(Rare_Cat)	80
 4	2			60	70					140400		1			2			810_(Uber_Rare_Cat)	70
 4	2			60	70					140500		1			2			811_(Uber_Rare_Cat)	70
