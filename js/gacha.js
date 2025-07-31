@@ -408,6 +408,7 @@ module.exports = class extends RewardSiteGenerator {
 		let must_drop_rate = 0;
 		let contain_must_drop = false;
 		let gacha_units = new Set();
+		let guaranteed_unit_count = 0;
 
 		for (let i = 0, I;i < 9;i += 2) {
 			let rate = d_rate[i];
@@ -418,6 +419,7 @@ module.exports = class extends RewardSiteGenerator {
 				contain_must_drop = true;
 				must_drop_rate = Fraction(10000 - rate);
 				must_drop_group = group;
+				guaranteed_unit_count += group.length;
 			}
 			for (const x of new Set(group)) {
 				let r = new Fraction(this.count(group, x)).mul(R);
@@ -488,7 +490,7 @@ module.exports = class extends RewardSiteGenerator {
 			if (contain_must_drop) { // OldAlgorithm: if (must_drop_rate) {
 				let a;
 				if (v[3].must)
-					a = 0.9 * (v[4].valueOf() / 100) + (10 / must_drop_group.length) // OldAlgorithm: a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
+					a = 0.9 * (v[4].valueOf() / 100) + (10 / guaranteed_unit_count) // OldAlgorithm: a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
 				else
 					a = (v[4].valueOf() / 100) * 0.9 // OldAlgorithm: v[4].mul(must_drop_rate).valueOf() / 1000000;
 				S.items.push({
