@@ -565,7 +565,7 @@ module.exports = class extends RewardSiteGenerator {
 				id: entry.id,
 				name: this.rewards[entry.id].name,
 				max: entry.max,
-				rate: entry.rate,
+				rate: this.fmt2.format(entry.rate),
 			}));
 		}
 
