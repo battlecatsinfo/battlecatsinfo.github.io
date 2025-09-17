@@ -9,15 +9,15 @@ jp	tw	en	kr
 ゾンビ	不死生物	Zombie Enemies	좀비
 悪魔	惡魔	Aku Enemies	악마
 古代種	古代種	Relic Enemies	고대종
-使徒	使徒	Eva Angel Enemies	사도
-魔女	魔女	Witch Enemies	마녀
-超生命体	超生命體	Colossal Enemies	초생명체
-超獣	超獸	Behemoth Enemies	초수
-超賢者	超賢者	Sage Enemies	초현자
+使徒	使徒	Eva Angel	사도
+魔女	魔女	Witch	마녀
+超生命体	超生命體	Colossus	초생명체
+超獣	超獸	Behemoth	초수
+超賢者	超賢者	Sage	초현자
 單体攻擊	單體攻擊	Single Target	개체 공격
 範囲攻擊	範圍攻擊	Area Attack	범위 공격
 連続攻撃	連續攻擊	Multi-Hit	연속 공격
-遠方攻撃	遠距攻擊	Long Distance(LD)	원거리 공격
+遠方攻撃	遠距攻擊	Long Distance (LD)	원거리 공격
 全方位攻撃	全方位攻擊	Omni Strike	전방위 공격
 1回攻撃	一次攻擊	Attack Once	1회 공격
 攻撃力ダウン	攻擊力下降	Weaken	공격력 다운
@@ -34,11 +34,6 @@ jp	tw	en	kr
 呪い	詛咒	Curse	저주
 攻撃無効	攻擊無效	Dodge Attack	공격 무효
 毒撃	毒擊	Toxic	독 공격
-ダメージアップ	提升傷害	Attack Up	대미지 업
-ダメージ軽減	減輕傷害	Defense Up	데미지 경감
-めっぽう強い強化	強化善於攻擊	Strong Against Up	엄청 강하다 강화
-超ダメージ強化	強化超大傷害	Massive Damage Up	초 데미지 강화
-打たれ強い強化	強化很耐打	Resistance Up	맷집이 좋다 강화
 攻撃力アップ	攻擊力上升	Strengthen	공격력 업
 生き残る	死前存活	Survive	살아남는다
 城破壊が得意	善於攻城	Base Destroyer	성 파괴가 특기
@@ -52,7 +47,7 @@ jp	tw	en	kr
 バリアブレイカー	破壞護盾	Barrier Breaker	베리어 브레이커
 悪魔シールド	惡魔盾	Shield	악마 쉴드
 シールドブレイカー 	破壞惡魔盾	Shield Piercing	쉴드 브레이커
-ダメージ無効	傷害無效	Guard	
+ダメージ無効	傷害無效	Dodge Attack	공격 무효
 渾身の一撃	渾身一擊	Savage Blow	혼신의 일격
 撃破時お金アップ	得到很多金錢	Extra Money	격파시 머니 UP
 メタル	鋼鐵	Metal	메탈
@@ -62,7 +57,7 @@ jp	tw	en	kr
 烈波攻擊	烈波	Surge Attacks	열파 공격
 デス烈波	遺留烈波	Death Surge	순교
 烈波カウンター	烈波反擊	Counter-Surge	열파 카운터
-爆波攻擊	爆波攻擊	Explosion		폭파 공격
+爆波攻擊	爆波攻擊	Explosion	폭파 공격
 波動ストッパー	波動滅止	Wave Shield	파동 스톱퍼
 召喚	召喚	Conjure	소환
 超生命体特効	超生命體特效	Colossus Slayer	초생명체 특효
@@ -81,18 +76,32 @@ jp	tw	en	kr
 攻撃力低下耐性	抗擊耐性	Resist Weaken	공격력 다운 내성
 動きを止める耐性	動止耐性	Resist Freeze	움직임을 멈춘다 내성
 動きを遅くする耐性	動慢耐性	Resist Slow	움직임을 느리게 한다 내성
-ふっとばす耐性	抗飛耐性	Resist Knockback	날려버린다 내성
+ふっとばし耐性	抗飛耐性	Resist Knockback	날려버린다 내성
 波動ダメージ耐性	抗波耐性	Resist Wave	파동 데미지 내성
 烈波ダメージ耐性	抗烈波耐性	Resist Surge	열파 데미지 내성
 ワープ耐性	抗傳耐性	Resist Warp	워프 내성
 古代の呪い耐性	抗古代詛咒耐性	Resist Curse	고대의 저주 내성
-毒撃ダメージ耐性	抗毒耐性	Resist Toxic	독 데미지 내성
+毒撃ダメージ耐性	抗毒擊耐性	Resist Toxic	독 데미지 내성
 基本体力アップ	基本體力上升	Defense Buff	기본 체력 업
 基本攻撃力アップ	基本攻擊力上升	Attack Buff	기본 공격력 업
 移動速度上昇	移動加快	Move Speed Up	이동 속도 증가
 ノックバック回数増加	增加擊退	Improved Knockback	넉백 횟수 증가
 生産コスト割引	成本減少	Cost Down	생산 코스트 할인
 再生産時間短縮	生產加快	Recover Speed Up	생산 스피드 업
-攻撃間隔短縮	攻擊間隔短縮	Attack Frequency Up	공격 간격 단축
+攻撃間隔短縮	攻擊間隔縮短	Attack Frequency Up	공격 간격 단축
 魔女キラー	終結魔女	Witch Killer	마녀 킬러
 使徒キラー	終結使徒	Eva Angel Killer	사도 킬러
+ダメージアップ	提升傷害	Attack Up	대미지 업
+ダメージ軽減	減輕傷害	Defense Up	데미지 경감
+めっぽう強い強化	強化善於攻擊	Strong Against Up	엄청 강하다 강화
+超ダメージ強化	強化超大傷害	Massive Damage Up	초 데미지 강화
+打たれ強い強化	強化很耐打	Resistance Up	맷집이 좋다 강화
+デス小烈波	遺留小烈波	Mini-Deathsurge	데스 소열파
+キャッシュバック	金錢回饋	Cash Back	캐시백
+レジェンドストーリー強化	傳奇故事強化	Boost Stories of Legend	레전드 스토리 강화
+にゃんこ砲チャージ	貓咪砲充電	Cat Cannon Charge	냥코 대포 충전
+全攻撃無効	全攻擊無效	Dodge Attack (All)	전 공격 무효
+真レジェンドストーリー強化	真傳奇故事強化	Boost Uncanny Legends	신 레전드 스토리 강화
+１回烈波カウンター			
+撃破時攻撃力アップ			
+生産時間短縮	生產加快	Recover Speed Up	생산 스피드 업
