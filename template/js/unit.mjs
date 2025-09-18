@@ -1035,6 +1035,8 @@ class CatForm extends Unit {
 			atkM: {value: props.atkM ?? 1, writable: true, configurable: true, enumerable: true},
 			_baseLv: {value: props._baseLv ?? 1, writable: true, configurable: true, enumerable: true},
 			_plusLv: {value: props._plusLv ?? 0, writable: true, configurable: true, enumerable: true},
+			res: {value: props.res ?? {}, writable: true, configurable: true, enumerable: true},
+			imu: {value: props.imu ?? 0, writable: true, configurable: true, enumerable: true},
 		});
 	}
 	clone() {
