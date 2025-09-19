@@ -116,8 +116,6 @@ function newTab() {
 	for (let i = 0, I = tby.length; i < I; i++) {
 		const tr = tby[i];
 		const t = document.createElement('td');
-		if (1 < i && i < I - 1)
-			t.contentEditable = true;
 		tr.appendChild(t);
 	}
 	return tby[0].children.length - 1;
@@ -407,53 +405,81 @@ function addCat(id, I, FC = 0) {
 	G.src = F.icon;
 	M.appendChild(G);
 	M.style.border = 'none';
-	const span = document.createElement('span');
+	const levelInput = document.createElement('input');
 	F.level = (FL === 2) ? 
 		60 : 
 		((FC === 3) ? 60 : 50);
-	span.textContent = (span.lv = F.level);
-	span.C = C;
-	span.F = F;
-	span.I = I;
-	span.contentEditable = true;
-	span.inputMode = 'numeric';
-	span.addEventListener('focus', handleFocus);
-	span.addEventListener('keydown', handleKW)
-	span.addEventListener('blur', function(e) {
-		let num = this.textContent.match(/\d+/);
-		if (num) {
-			num = parseInt(num[0], 10);
-			if (num) {
-				this.F.level = num;
-				num = this.F.level;
-				if (num != this.lv) {
-					let J = this.F;
-					if (this.X) {
-						J = J.clone();
-						if (this.X.checked) {
-							J.applyTalents();
-							if (num < 30)
-								alert('提醒：開放本能升級等級需求至少為 Lv30');
-						}
-						if (this.Y && this.Y.checked) {
-							J.applySuperTalents();
-							if (num < 60)
-								alert('提醒：開放超本能等級需求至少為 Lv60');
-						}
+	levelInput.type = 'number';
+	levelInput.min = '1';
+	levelInput.max = '60';
+	levelInput.value = F.level;
+	levelInput.lv = F.level;
+	levelInput.C = C;
+	levelInput.F = F;
+	levelInput.I = I;
+	levelInput.style.width = '60px';
+	levelInput.style.textAlign = 'center';
+	levelInput.style.border = '1px solid #ccc';
+	levelInput.style.borderRadius = '3px';
+	levelInput.style.padding = '2px';
+	levelInput.addEventListener('keydown', handleKW);
+	levelInput.addEventListener('input', function(e) {
+		let num = parseInt(this.value, 10);
+		if (num && num >= 1 && num <= 60) {
+			this.F.level = num;
+			num = this.F.level;
+			if (num != this.lv) {
+				let J = this.F;
+				if (this.X) {
+					J = J.clone();
+					if (this.X.checked) {
+						J.applyTalents();
+						if (num < 30)
+							alert('提醒：開放本能升級等級需求至少為 Lv30');
 					}
-					if (J.lvc == 3 && num < 60) {
-						alert('提醒：開放第四進化等級需求至少為 Lv60');
+					if (this.Y && this.Y.checked) {
+						J.applySuperTalents();
+						if (num < 60)
+							alert('提醒：開放超本能等級需求至少為 Lv60');
 					}
-					this.lv = num;
-					setStat(this.C, J, this.I);
 				}
+				if (J.lvc == 3 && num < 60) {
+					alert('提醒：開放第四進化等級需求至少為 Lv60');
+				}
+				this.lv = num;
+				setStat(this.C, J, this.I);
 			}
 		}
-		this.textContent = this.lv;
+	});
+	levelInput.addEventListener('blur', function(e) {
+		// Ensure value is within bounds and update display
+		let num = parseInt(this.value, 10);
+		if (!num || num < 1) {
+			this.value = 1;
+			num = 1;
+		} else if (num > 60) {
+			this.value = 60;
+			num = 60;
+		}
+		if (num != this.F.level) {
+			this.F.level = num;
+			this.lv = num;
+			let J = this.F;
+			if (this.X) {
+				J = J.clone();
+				if (this.X.checked) {
+					J.applyTalents();
+				}
+				if (this.Y && this.Y.checked) {
+					J.applySuperTalents();
+				}
+			}
+			setStat(this.C, J, this.I);
+		}
 	});
 	M = tby[1].children[I];
-	M.textContent = (F.name || F.jp_name) + ' Lv';
-	M.appendChild(span);
+	M.textContent = (F.name || F.jp_name) + ' Lv ';
+	M.appendChild(levelInput);
 	if (FL) {
 		F = F.clone();
 		F.applyTalents();
@@ -488,22 +514,21 @@ function addCat(id, I, FC = 0) {
 		G.checked = true;
 		G.id = 'T' + id + '-' + FC;
 		D.appendChild(G);
-		span.X = G;
+		levelInput.X = G;
 		G.onclick = function() {
-			const H = span.F.clone();
-			if (span.X.checked) {
-				if (span.lv < 30)
+			const H = levelInput.F.clone();
+			if (levelInput.X.checked) {
+				if (levelInput.lv < 30)
 					alert('提醒：開放本能升級等級需求至少為 Lv30');
 				H.applyTalents();
 			}
-			if (span.Y && span.Y.checked) {
-				if (span.lv < 60)
+			if (levelInput.Y && levelInput.Y.checked) {
+				if (levelInput.lv < 60)
 					alert('提醒：開放超本能等級需求至少為 Lv60');
-				span.textContent = span.lv;
 				H.applySuperTalents();
 			}
-			F.level = span.lv;
-			setStat(span.C, H, span.I);
+			F.level = levelInput.lv;
+			setStat(levelInput.C, H, levelInput.I);
 		}
 		G = document.createElement('label');
 		G.textContent = '本能';
@@ -511,26 +536,25 @@ function addCat(id, I, FC = 0) {
 		D.appendChild(G);
 		if (FL == 2) {
 			G = document.createElement('input');
-			span.Y = G;
+			levelInput.Y = G;
 			G.type = 'checkbox';
 			G.checked = true;
 			G.id = 'S' + id + '-' + FC;
 			D.appendChild(G);
 			G.onclick = function() {
-				const H = span.F.clone();
-				if (span.X.checked) {
-					if (span.lv < 30)
+				const H = levelInput.F.clone();
+				if (levelInput.X.checked) {
+					if (levelInput.lv < 30)
 						alert('提醒：開放本能升級等級需求至少為 Lv30');
 					H.applyTalents();
 				}
-				if (span.Y.checked) {
-					if (span.lv < 60)
+				if (levelInput.Y.checked) {
+					if (levelInput.lv < 60)
 						alert('提醒：開放超本能等級需求至少為 Lv60');
-					span.textContent = span.lv;
 					H.applySuperTalents();
 				}
-				F.level = span.lv;
-				setStat(span.C, H, span.I);
+				F.level = levelInput.lv;
+				setStat(levelInput.C, H, levelInput.I);
 			}
 			G = document.createElement('label');
 			G.textContent = '超本能';
