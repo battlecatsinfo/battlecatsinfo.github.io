@@ -497,6 +497,9 @@ class Unit {
 	get ab() {
 		return this.info.ab;
 	}
+	get res() {
+		return this.info.res;
+	}
 
 	abEnabled(atkIdx) {
 		return this.abi & (1 << (2 - atkIdx));
@@ -1035,8 +1038,6 @@ class CatForm extends Unit {
 			atkM: {value: props.atkM ?? 1, writable: true, configurable: true, enumerable: true},
 			_baseLv: {value: props._baseLv ?? 1, writable: true, configurable: true, enumerable: true},
 			_plusLv: {value: props._plusLv ?? 0, writable: true, configurable: true, enumerable: true},
-			res: {value: props.res ?? {}, writable: true, configurable: true, enumerable: true},
-			imu: {value: props.imu ?? 0, writable: true, configurable: true, enumerable: true},
 		});
 	}
 	clone() {
@@ -1094,6 +1095,9 @@ class CatForm extends Unit {
 	}
 	set imu(value) {
 		this.info.imu = value;
+	}
+	get res() {
+		return super.res;
 	}
 	get ab() {
 		return super.ab;
@@ -1745,7 +1749,6 @@ class CatForm extends Unit {
 	 */
 	_applyTalents(levels, type = null) {
 		levels ??= this.maxTalentLevels(type);
-		this.res ??= {};
 		const talents = this.talents;
 		let j = 0;
 		this.trait = this.trait | talents[0];
