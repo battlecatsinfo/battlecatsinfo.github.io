@@ -82,6 +82,7 @@ module.exports = class extends SiteGenerator {
 				imu: Number(form.immunity),
 				ab: this.parse_abilities(form.ability),
 				cd: Number(form.cd),
+				res: {},
 			});
 		}
 

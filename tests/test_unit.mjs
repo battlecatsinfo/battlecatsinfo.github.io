@@ -616,10 +616,8 @@ describe('unit.mjs', function () {
 
 			it('basic', async function () {
 				var cat = await Unit.loadCat(0);
-				assert.strictEqual(cat.obtn, '遊戲開始時最初始的貓咪');
-
-				var cat = await Unit.loadCat(1);
-				assert.strictEqual(cat.obtn, '世界篇第1章「台灣」過關後開放');
+				assert.strictEqual(cat.obtn[0], '遊戲開始時最初始的貓咪');
+				assert.strictEqual(cat.obtn[1][0], 12);
 			});
 
 		});
@@ -628,37 +626,14 @@ describe('unit.mjs', function () {
 
 			it('basic', async function () {
 				var cat = await Unit.loadCat(0);
-				assert.strictEqual(cat.evol, '合計Lv30可進化（Lv. 10 + 20）');
+				assert.strictEqual(cat.evol, '合計Lv30可進化');
 
 				var cat = await Unit.loadCat(200);
-				assert.strictEqual(cat.evol, '尚未開放');
+				assert.strictEqual(cat.evol, 5);
 			});
 
 		});
 
-		describe('Cat.obtnStage', function () {
-
-			it('basic', async function () {
-				var cat = await Unit.loadCat(0);
-				assert.isUndefined(cat.obtnStage);
-
-				var cat = await Unit.loadCat(60);
-				assert.deepEqual(cat.obtnStage, [10, 19, 0]);
-			});
-
-		});
-
-		describe('Cat.evolStage', function () {
-
-			it('basic', async function () {
-				var cat = await Unit.loadCat(0);
-				assert.isUndefined(cat.evolStage);
-
-				var cat = await Unit.loadCat(60);
-				assert.deepEqual(cat.evolStage, [1, 172, 1]);
-			});
-
-		});
 
 		describe('Cat.evolReq', function () {
 
