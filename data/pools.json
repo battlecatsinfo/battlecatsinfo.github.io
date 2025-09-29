@@ -292,9 +292,9 @@
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E041.html"
 	},
 	{
-		"tw_name": "萬聖節派對活動轉蛋",
+		"tw_name": "萬聖節派對活動轉蛋（舊）",
 		"jp_name": "ハロウィンパーティ! スペシャル★イベントガチャ",
-		"en_name": "Halloween Party!",
+		"en_name": "Halloween Party! (Old)",
 		"img": "https://i.imgur.com/OVfJ9eV.png",
 		"rate": [2000, 0, 5000, 0, 3000, 0, 0, 0, 0, 0],
 		"stage": "11-68",
@@ -1495,7 +1495,7 @@
 		"tw_name": "絕命美少女怪物萌娘隊",
 		"jp_name": "絶命美少女ギャルズモンスターズ",
 		"en_name": "Girls & Monsters: Angels of Terror",
-		"img": "https://i.imgur.com/JnjKq2b.png",
+		"img": "https://i.meee.com.tw/1BHz3nZ.png",
 		"rate": [6970, 2500, 500, 30],
 		"history": [
 			"2023/9/4(11:00)~9/6(10:59) 絕命美少女 5%/0.3%",
@@ -1558,9 +1558,9 @@
 			"/collab/GirlsMons.html"
 		],
 		"type": "rare",
-		"units": [725, 682, 607, 544, 523, 522, 495, 447, 446, 445, 444, 443, 377, 376, 358, 357, 336, 335, 334, 200, 144, 131, 129, 237, 238, 239, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R950.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R950.html"
+		"units": [824, 725, 682, 607, 544, 523, 522, 495, 447, 446, 445, 444, 443, 377, 376, 358, 357, 336, 335, 334, 200, 144, 131, 129, 237, 238, 239, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1016.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1016.html"
 	},
 	{
 		"tag": "情人節淑女們",
@@ -2221,7 +2221,7 @@
 		"tw_name": "快打旋風V CE合作轉蛋 BLUE TEAM",
 		"jp_name": "ストリートファイターVガチャ BLUE TEAM",
 		"en_name": "Street Fighter V BLUE TEAM",
-		"img": "https://i.imgur.com/lleQPVM.png",
+		"img": "https://i.meee.com.tw/4iGlAAP.png",
 		"rate": [6970, 2500, 500, 30, 0],
 		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R777.html",
 		"history": [
@@ -2232,15 +2232,15 @@
 			"/collab/Street_Fighter_V.html"
 		],
 		"type": "rare",
-		"units": [510, 680, 574, 573, 517, 516, 514, 512, 576, 576, 576, 576, 576, 576, 580, 580, 580, 579, 579, 579, 578, 578, 578, 577, 577, 577, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R763.html"
+		"units": [510, 827, 681, 575, 574, 571, 517, 516, 515, 828, 828, 829, 829, 576, 576, 580, 580, 580, 579, 579, 579, 578, 578, 578, 577, 577, 577, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1017.html"
 	},
 	{
 		"tag": "RED TEAM",
 		"tw_name": "快打旋風V CE合作轉蛋 RED TEAM",
 		"jp_name": "ストリートファイターVガチャ RED TEAM",
 		"en_name": "Street Fighter V RED TEAM",
-		"img": "https://i.imgur.com/gWWYI7A.png",
+		"img": "https://i.meee.com.tw/SYh2LEE.png",
 		"rate": [6970, 2500, 500, 30, 0],
 		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R778.html",
 		"history": [
@@ -2251,8 +2251,8 @@
 			"/collab/Street_Fighter_V.html"
 		],
 		"type": "rare",
-		"units": [510, 681, 575, 572, 571, 515, 513, 511, 576, 576, 576, 576, 576, 576, 580, 580, 580, 579, 579, 579, 578, 578, 578, 577, 577, 577, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R764.html"
+		"units": [510, 826, 680, 573, 572, 514, 513, 512, 511, 828, 828, 829, 829, 576, 576, 580, 580, 580, 579, 579, 579, 578, 578, 578, 577, 577, 577, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1018.html"
 	},
 	{
 		"tag": "初音",

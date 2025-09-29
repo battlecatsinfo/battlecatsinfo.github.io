@@ -359,7 +359,7 @@ CPAC|PPAP	CPAC|PPAP	CPAC|PPAP	CPAC|PPAP
 狼娘ディル|虚飾の狼姫ディル|道化の狼姫ディル	狼來妹迪兒|虛榮小狼女迪兒|小丑女狼迪兒		Wolfchild Deale|Wolf Princess Deale|Jester Queen Deale	늑대아가씨 딜|늑대공주 딜|도화의 늑대공주 딜
 ゾンビ娘ヴェルヴェーヌ|死霊の花嫁ヴェルヴェーヌ|満腹の花嫁ヴェルヴェーヌ	不死女薇薇|死靈新嫁娘薇薇|滿腹新嫁娘薇薇	Graveflower Verbena|Verbena the Bride|Opulent Verbena 	좀비아가씨 버베나|사령의 신부 버베나|행복한 신부 버베나
 火の精霊メララ|火炎の精霊メラバーン|火炎の精霊王メラバーニング|火炎の大精霊メラフェニックス	火精靈梅拉|火焰精靈梅拉邦|火焰精靈王猛火梅拉邦|火焰大精靈浴火梅拉邦	Bora|Bazibon|Bazibastra|Bazifenix	불의 정령 메라라|불꽃의 정령 메라란|불꽃의 정령왕 메라버닝|불꽃의 대정령 메라피닉스
-水の精霊ミズリィ|流水の精霊ミズマリン|流水の精霊王ミズマリリン	水精靈密茲|流水精靈密茲曼|流水精靈王激流密茲曼	Mizli|Marinmizu|Mizuririn	물의 정령 마리|유수의 정령 마리린|유수의 정령왕 마리리린
+水の精霊ミズリィ|流水の精霊ミズマリン|流水の精霊王ミズマリリン|流水の大精霊ミズマリナーデ	水精靈密茲|流水精靈密茲曼|流水精靈王激流密茲曼	Mizli|Marinmizu|Mizuririn	물의 정령 마리|유수의 정령 마리린|유수의 정령왕 마리리린
 風の精霊エアル|嵐の精霊エアフワン|嵐の精霊王エアフワンテ|嵐の大精霊エアフワンティ	風精靈艾爾|暴風精靈艾爾方|暴風精靈王艾爾方帝|暴風大精靈艾爾方大帝	Aer|Erphuan|Aervanta|Aervantex	바람의 정령 에어리|폭풍의 정령 에어린|폭풍의 정령왕 에어리린|폭풍의 대정령 에어리얼 
 セイバー|セイバーCC|セイバーオルタCC	Saber|Saber CC|Saber Alter CC	Saber|Saber CC|Saber Alter CC	세이버|세이버 CC|세이버 오르타CC
 遠坂 凛|遠坂 凛CC	遠坂凜|遠坂凜CC	Rin Tohsaka|Rin Tohsaka CC	토오사카 린|토오사카 린CC
@@ -516,7 +516,7 @@ majimeow（仮）|majimeow（仮）進化	麻吉貓＆貓咪旅行團|麻吉貓�
 ザンギエフ|ザンギエフCC	桑吉爾夫|桑吉爾夫CC	Zangief|Zangief CC	장기에프|장기에프CC
 ブランカ|ブランカCC	布蘭卡|布蘭卡CC	Blanka|Blanka CC	블랑카|블랑카CC
 ダルシム|ダルシムCC	塔爾錫|塔爾錫CC	Dhalsim|Dhalsim CC	달심|달심CC
-ケン|ケンCC	肯|肯CC	Ken|Ken CC	켄|켄CC
+ケン|ケンCC|紅蓮の格闘王ケン	肯|肯CC|肯CC	Ken|Ken CC|Ken CC	켄|켄CC|켄CC
 ゴウキリン|ゴウキライオン	豪鬼長頸鹿|豪鬼獅子	Akuma Giraffe|Akuma Lion	고우키 기린|고우키 라이온
 ラスヴォース|ファイナルラスヴォース|シン・ラスヴォース	拉斯沃斯|終極拉斯沃斯|真・拉斯沃斯	Lasvoss|Ultimate Lasvoss|Lasvoss Reborn	라스트 보스|파이널 라스트 보스|신 라스트 보스
 ネコ七福神|ネコ七福邪神	貓咪七福神|貓咪七福邪神	Good-Luck Ebisu|Bad-Luck Ebisu	고양이 칠복신|고양이 칠복사신
@@ -822,3 +822,10 @@ KAITO＆ネコ|KAITO＆ネコCC	KAITO＆貓咪|KAITO＆貓咪CC	KAITO & Cat|KAIT
 シーサイドペガサ|シーサイドペガサν	海濱姵卡薩|海濱姵卡薩ν	Seaside Pegasa|Seaside Pegasa v	시사이드 페가사|시사이드 페가사ν
 822_1	822_1	822_1	822_1
 ネココンサルタント|ネコビジネスパートナー	顧問貓|經營夥伴貓	Consultant Cat|Business Partner Cat	고양이 컨설턴트|고양이 비즈니스 파트너
+ネコ店長＆ネコ店員|ネコ店長＆ネコ店員CC			
+魔導師シドミ|炎の大魔導師シドミ			
+826-1			
+キャミィ|キャミィCC			
+ジュリ|ジュリCC			
+ネコザンギエフ|ネコザンギエフCC			
+ネコジェイミー|ネコジェイミーCC			
