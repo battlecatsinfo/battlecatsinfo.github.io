@@ -457,7 +457,7 @@ function addCat(id, I, FC = 0) {
 					if (this.X.checked) {
 						J.applyTalents();
 						if (num < 30) {
-							showWarning(this, '提示：開放本能升級等級需求至少為 Lv30');
+							showWarning(this, '提示：開放本能的等級需求為 Lv30');
 						} else {
 							hideWarning(this);
 						}
@@ -465,14 +465,14 @@ function addCat(id, I, FC = 0) {
 					if (this.Y && this.Y.checked) {
 						J.applySuperTalents();
 						if (num < 60) {
-							showWarning(this, '提示：開放超本能等級需求至少為 Lv60');
+							showWarning(this, '提示：開放超本能的等級需求為 Lv60');
 						} else {
 							hideWarning(this);
 						}
 					}
 				}
 				if (J.lvc == 3 && num < 60) {
-					showWarning(this, '提示：開放第四進化等級需求至少為 Lv60');
+					showWarning(this, '提示：開放第四進化的等級需求為 Lv60');
 				} else if (J.lvc == 3) {
 					hideWarning(this);
 				}
@@ -551,7 +551,7 @@ function addCat(id, I, FC = 0) {
 			const H = levelInput.F.clone();
 			if (levelInput.X.checked) {
 				if (levelInput.lv < 30) {
-					showWarning(levelInput, '提示：開放本能升級等級需求至少為 Lv30');
+					showWarning(levelInput, '提示：開放本能的等級需求為 Lv30');
 				} else {
 					hideWarning(levelInput);
 				}
@@ -561,7 +561,7 @@ function addCat(id, I, FC = 0) {
 			}
 			if (levelInput.Y && levelInput.Y.checked) {
 				if (levelInput.lv < 60) {
-					showWarning(levelInput, '提示：開放超本能等級需求至少為 Lv60');
+					showWarning(levelInput, '提示：開放超本能的等級需求為 Lv60');
 				} else {
 					hideWarning(levelInput);
 				}
@@ -587,7 +587,7 @@ function addCat(id, I, FC = 0) {
 				const H = levelInput.F.clone();
 				if (levelInput.X.checked) {
 					if (levelInput.lv < 30) {
-						showWarning(levelInput, '提示：開放本能升級等級需求至少為 Lv30');
+						showWarning(levelInput, '提示：開放本能的等級需求為 Lv30');
 					} else {
 						hideWarning(levelInput);
 					}
@@ -595,7 +595,7 @@ function addCat(id, I, FC = 0) {
 				}
 				if (levelInput.Y && levelInput.Y.checked) {
 					if (levelInput.lv < 60) {
-						showWarning(levelInput, '提示：開放超本能等級需求至少為 Lv60');
+						showWarning(levelInput, '提示：開放超本能的等級需求為 Lv60');
 					} else {
 						hideWarning(levelInput);
 					}
