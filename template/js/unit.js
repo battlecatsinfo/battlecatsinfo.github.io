@@ -812,6 +812,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		tr = document.createElement('tr');
 		tbody.appendChild(tr);
 		td = document.createElement('td');
+		td.style.cursor = 'pointer';
 		td.textContent = `${form.id} - ${form.lvc + 1}`;
 		td.contentEditable = true;
 		td.inputMode = 'numeric';
@@ -836,6 +837,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		td._v = form.level;
 		td.textContent = 'Lv' + td._v;
 		td.contentEditable = true;
+		td.style.cursor = 'pointer';
 		td.inputMode = 'numeric';
 		td.addEventListener('focus', handleFocus);
 		td.addEventListener('keydown', handleKW);
@@ -1188,6 +1190,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 			e.inputMode = 'numeric';
 			e._form = form;
 			e._val = i * 10;
+			e.style.cursor = 'pointer';
 			e.addEventListener('focus', handleFocus);
 			e.addEventListener('keydown', handleKW);
 			e.addEventListener('blur', function(event) {
