@@ -598,31 +598,31 @@ zz	ダミー	ダミー								-1
 1nb	快打旋風EASY	ストリートファイター EASY								1			
 1nc	快打旋風NORMAL	ストリートファイター NORMAL								1			
 1nd	快打旋風HARD	ストリートファイター HARD								1			
-1ne	New Challenger	New Challenger(旧)								-1			
-1nf	New Challenger	New Challenger(旧)								-1			
-1ng	New Challenger	New Challenger(旧)								-1			
-1nh	New Challenger	New Challenger(旧)								-1			
-1ni	New Challenger	New Challenger(旧)								-1			
-1nj	New Challenger	New Challenger(旧)								-1			
-1nk	New Challenger	New Challenger(旧)								-1			
-1nl	New Challenger	New Challenger(旧)								-1			
-1nm	New Challenger	New Challenger(旧)								-1			
-1nn	New Challenger	New Challenger(旧)								-1			
-1no	New Challenger	New Challenger(旧)								-1			
-1np	New Challenger	New Challenger(旧)								-1			
-1nq	New Challenger	New Challenger(旧)								-1			
-1nr	New Challenger	New Challenger(旧)								-1			
-1ns	New Challenger	New Challenger(旧)								-1			
-1nt	New Challenger	New Challenger(旧)								-1			
-1nu	New Challenger	New Challenger(旧)								-1			
-1nv	New Challenger	New Challenger(旧)								-1			
-1nw	New Challenger	New Challenger(旧)								-1			
-1nx	New Challenger	New Challenger(旧)								-1			
-1ny	New Challenger	New Challenger(旧)								-1			
-1nz	New Challenger	New Challenger(旧)								-1			
-1o0	New Challenger	New Challenger(旧)								-1			
-1o1	New Challenger	New Challenger(旧)								-1			
-1o2	New Challenger	New Challenger(旧)		l	l					1			
+1ne		New Challenger(旧)								-1			
+1nf		New Challenger(旧)								-1			
+1ng		New Challenger(旧)								-1			
+1nh		New Challenger(旧)								-1			
+1ni		New Challenger(旧)								-1			
+1nj		New Challenger(旧)								-1			
+1nk		New Challenger(旧)								-1			
+1nl		New Challenger(旧)								-1			
+1nm		New Challenger(旧)								-1			
+1nn		New Challenger(旧)								-1			
+1no		New Challenger(旧)								-1			
+1np		New Challenger(旧)								-1			
+1nq		New Challenger(旧)								-1			
+1nr		New Challenger(旧)								-1			
+1ns		New Challenger(旧)								-1			
+1nt		New Challenger(旧)								-1			
+1nu		New Challenger(旧)								-1			
+1nv		New Challenger(旧)								-1			
+1nw		New Challenger(旧)								-1			
+1nx		New Challenger(旧)								-1			
+1ny		New Challenger(旧)								-1			
+1nz		New Challenger(旧)								-1			
+1o0		New Challenger(旧)								-1			
+1o1		New Challenger(旧)								-1			
+1o2		New Challenger(旧)		l	l					1			
 1o3	SNOW MIKU	SNOW MIKU	100,150,200							1			
 1o4	波亂！天道道場	波乱！天道道場	100,150,200,300							1			3,-1,6,0,0,0,0,0
 1o5	傳說的咒泉鄉	伝説の呪泉郷	100,150,200,300							1			3,-1,6,0,0,0,0,0
@@ -649,10 +649,10 @@ zz	ダミー	ダミー								-1
 1oq	對決！玉狛第2的隊長	対決！玉狛第２のリーダー	100,150,200,300							-1			3,-1,6,0,0,0,0,0
 1or	對決！玉狛第2的王牌	対決！玉狛第２のエース	100,150,200,300							-1			3,-1,6,0,0,0,0,0
 1os	VS訓練用莫爾默德	VS訓練用モールモッド								-1			-1,-1,0,0,0,0,0,7
-1ot	New Challenger	New Challenger(旧)								-1			
-1ou	New Challenger	New Challenger(旧)								-1			
-1ov	New Challenger	New Challenger(旧)								-1			
-1ow	New Challenger	New Challenger(旧)								-1			
+1ot		New Challenger(旧)								-1			
+1ou		New Challenger(旧)								-1			
+1ov		New Challenger(旧)								-1			
+1ow		New Challenger(旧)								-1			
 1ox	快打旋風  VERY HARD	ストリートファイター VERY HARD		26wm	26wm					1			
 1oy	激鬥！Saber來襲！	激闘！セイバー襲来！	100,200,300,300							-1			3,-1,6,0,0,0,0,0
 1oz	激鬥！Lancer來襲！	激闘！ランサー襲来！	100,200,300,300							-1			3,-1,6,0,0,0,0,0
@@ -687,9 +687,9 @@ zz	ダミー	ダミー								-1
 1ps	碧山	グリーンヒルゾーン	100,150,200,200							-1			3,-1,6,0,0,0,0,0
 1pt	化工廠	ケミカルプラントゾーン	100,150							-1			
 1pu	天空聖所	スカイサンクチュアリ	100,150							-1			
-1pv		第９の使徒、襲来	100,200,300,300							-1			3,-1,6,0,0,0,0,0
-1pw		第１０の使徒、襲来	100,200,300							-1			
-1px		エヴァ第１３号機、襲来	100,200,300							-1			
+1pv	第9使徒，來襲	第９の使徒、襲来	100,200,300,300							-1			3,-1,6,0,0,0,0,0
+1pw	第10使徒，來襲	第１０の使徒、襲来	100,200,300							-1			
+1px	EVA第13號機，來襲	エヴァ第１３号機、襲来	100,200,300							-1			
 1py		New Challenger								-1			
 1pz		New Challenger								-1			
 1q0		New Challenger								-1			
@@ -850,7 +850,7 @@ zz	ダミー	ダミー								-1
 5ev	排行賽會場	ランキングの間								-1			
 5ew	排行賽會場	ランキングの間								-1			
 5ex	超・排行賽會場	超・ランキングの間		1	6					-1			
-5ey	排行賽會場	ランキングの間(旧)								-1			
+5ey		ランキングの間(旧)								-1			
 5ez	排行賽會場	ランキングの間								-1			
 5f0	排行賽會場【外傳】	ランキングの間【外伝】								-1			0,-1,9,0,0,0,0,0
 5f1	排行賽會場【外傳】	ランキングの間【外伝】								-1			0,-1,6,0,0,0,0,0
@@ -868,7 +868,7 @@ zz	ダミー	ダミー								-1
 5fd	極排行賽會場	極ランキングの間		2f6w	2f6w					-1			
 5fe	超排行賽會場	超ランキングの間								-1			
 5ff	極排行賽會場	極ランキングの間		2f6w	2f6w					-1			
-5fg		極ランキングの間		2f6w	2f6w					-1			
+5fg	極排行賽會場	極ランキングの間		2f6w	2f6w					-1			
 5fh		ランキングの間								-1			
 668	挑戰賽	チャレンジバトル		1	1					-1			
 6y0	真・傳說的開始	真・伝説のはじまり	100,150,200,100			x,8,8,8,8,8,8,8,8	0.75,1,1.25,1.25			-1			3,-1,6,0,0,0,0,0
@@ -1144,7 +1144,7 @@ a1o	VS烈海王	VS烈海王							30分鐘	1
 a1p	VS傑克・範馬	VSジャック・ハンマー							30分鐘	1			
 a1q	VS範馬刃牙	VS範馬刃牙							30分鐘	1			
 a1r	激進高速公路	ラジカルハイウェイ			1				30分鐘	1			
-a1s		エヴァ量産機強襲		3	4				30分鐘	1			
+a1s	EVA量產機強襲	エヴァ量産機強襲		3	4				30分鐘	1			
 asw	甲普拉密林	ガープラ密林		3	3					2			
 asx	亞蜥比沙漠	アシビニ砂漠		4	4					2			
 asy	將弗裂火山	ジャンフォレ火山		6	6					2			
@@ -1172,8 +1172,8 @@ ccz	引誘萬物真理的大渦	万物誘う真理の大渦				x,0,0,0,0,0,0,0,0
 cd0	嶄新旅途的啟程	新たな時を刻む旅路				x,0,0,0,0,0,0,0,0,f,f,c,7,0,h,0,0	1,1.25,1.5,1.5			-1			
 cd1	甜味自然公園	甘味自然公園				x,0,0,0,0,0,0,0,0,5,3,5,8,r,8,b,0	1,1.25,1.5,1.5			-1			
 cd2	顛倒聖墓	リバース聖墓				x,0,0,0,0,0,0,0,0,g,7,5,0,7,n,9,0	1,1.25,1.5,1.5			-1			
-cd3		眠りの深淵				x,0,0,0,0,0,0,0,0,7,a,k,0,7,f,7,0	1,1.25,1.5,1.5			-1			
-cd4		忘却共和国				x,0,0,0,0,0,0,0,0,c,6,c,0,g,c,a,0	1,1.25,1.5,1.5			-1			
+cd3	睡眠的深淵	眠りの深淵				x,0,0,0,0,0,0,0,0,7,a,k,0,7,f,7,0	1,1.25,1.5,1.5			-1			
+cd4	失憶共和國	忘却共和国				x,0,0,0,0,0,0,0,0,c,6,c,0,g,c,a,0	1,1.25,1.5,1.5			-1			
 d48	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【零用錢制度】：一開始就可以獲得大量金錢（50,000元），但相反地，隨著時間經過或打倒敵人時都無法增加金錢	無效聯組：初期工作狂貓等級、初期所持金額、工作狂貓的工作效率、工作狂貓錢包、會計能力	
 d49	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【生產速度一致】：所有我方角色都會固定成相同的生產速度（500F）	無效聯組：研究力	
 d4a	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【稀有度代表隊】：各稀有度皆只能同時出擊1隻，隊伍編成則沒有限制		
@@ -1188,9 +1188,9 @@ d4i	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【貓�
 d4j	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【等速直線運動】：可移動的敵我方所有角色，都會變成相同的移動速度	無效聯組：角色移動速度	
 d4k	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【好事成雙　EX】：生產EX角色時，出現的數量會變2隻		
 d4l	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【限定超特賣　超激稀有】：場上我方的超激稀有角色只能有1隻，生產成本打0.5折，生產速度變成2倍		
-d4m	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【庫存有限】：1次的戰鬥中最多只能生產50隻角色，所有我方角色都會固定成相同的生產速度	無效聯組：研究力	
-d4n		異次元コロシアム	100,120	2f6w	2f6w					-1	【發薪日】：一開始就能獲得大量金錢（266,730元），但持有金錢將不會隨著時間或擊敗敵人增加	無效聯組：初期工作狂貓等級、初期所持金額、工作狂貓的工作效率、工作狂貓錢包、會計能力	
-d4o		異次元コロシアム	100,120	2f6w	2f6w					-1	【二束三文】：所有我方角色都將以 10 元生產		
+d4m	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【只有現貨】：1次的戰鬥中最多只能生產50隻角色，所有我方角色都會變成相同的生產速度	無效聯組：研究力	
+d4n	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【發薪日】：一開始獲得大量金錢（266,730元），但持有金錢將不會隨著時間或擊敗敵人增加；超激稀有角色CD減少80%	無效聯組：初期工作狂貓等級、初期所持金額、工作狂貓的工作效率、工作狂貓錢包、會計能力	
+d4o	異次元競技場	異次元コロシアム	100,120	2f6w	2f6w					-1	【一律銅板價】：所有我方角色的生產成本都變成10元		
 dw0	貓咪道檢定 一段	にゃんこ道検定 初段								-1			
 dw1	貓咪道檢定 二段	にゃんこ道検定 二段		2xpk	2xpk					-1			
 dw2	貓咪道檢定 三段	にゃんこ道検定 三段		2xpl	2xpl					-1			
