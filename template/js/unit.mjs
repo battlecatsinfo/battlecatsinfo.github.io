@@ -25,6 +25,7 @@ const TB_INFN = 4096;      // Dojo Base 道場塔 [UNOFFICIAL]
 const TB_BEAST = 8192;     // Behemoth 超獸
 const TB_BARON = 16384;    // Colossus 超生命體
 const TB_SAGE = 32768;     // Sage 超賢者
+const TB_WEIRDO = 65536;   // 怪人
 
 // Immunities
 const IMU_WAVE = 1;        // Immune to Wave 波動傷害無效
@@ -85,6 +86,7 @@ const AB_SAGE = 42;        // Sage Slayer 超賢者特效
 const AB_SUMMON = 43;      // Conjure(Summon) 召喚
 const AB_MK = 44;          // Metal Killer 鋼鐵殺手
 const AB_EXPLOSION = 45;   // Explosion 爆波
+const AB_WEIRDO = 46;      // 怪人特效
 
 // Resist
 const RES_WEAK = 0;        // Resist to Weaken 抗擊耐性

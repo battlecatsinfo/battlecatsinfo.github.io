@@ -80,6 +80,9 @@
 				{{#if combo.requirement}}
 				<p style="font-size:smaller;">{{combo.requirement}}</p>
 				{{/if}}
+				{{#if combo.category}}
+				<p style="font-size:smaller;">{{combo.category}}</p>
+				{{/if}}
 			</td>
 			{{#each (range 5) as |idx|}}
 				{{#with (lookup combo.units idx) as |unit|}}

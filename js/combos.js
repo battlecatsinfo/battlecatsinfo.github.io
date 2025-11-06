@@ -8,7 +8,7 @@ module.exports = class extends SiteGenerator {
 		// format combos
 		for (let i = 0, I = combos.length; i < I; i++) {
 			const combo = combos[i];
-			const {name, type, level, units: unitsStr, requirement} = combo;
+			const {name, type, level, units: unitsStr, requirement, category} = combo;
 
 			const _units = unitsStr.split(',');
 			const units = [];
@@ -23,6 +23,9 @@ module.exports = class extends SiteGenerator {
 				units,
 				parseInt(requirement, 10),
 			];
+
+			if (category != '-1')
+				combos[i].push(parseInt(category, 10));
 		}
 
 		this.write_json('combos.json', combos);
@@ -35,14 +38,16 @@ module.exports = class extends SiteGenerator {
 		for (const name of combos_scheme.names)
 			combosFormatted[name] = [];
 
-		for (const [name, type, level, units, req] of combos) {
+		for (const [name, type, level, units, req, cat] of combos) {
 			const desc = `${combos_scheme.descriptions[type].replace('#', combos_scheme.values[type][level])} 【${combos_scheme.levels[level]}】`;
 			const requirement = req > 1 ? combos_scheme.requirements[req] : null;
+			const category = combos_scheme.categories[cat ?? '-1'];
 			combosFormatted[combos_scheme.names[type]].push({
 				name,
 				desc,
 				requirement,
 				units,
+				category,
 			});
 		}
 

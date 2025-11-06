@@ -442,6 +442,18 @@
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E030.html"
 	},
 	{
+		"tw_name": "13週年貓咪戰隊活動轉蛋",
+		"jp_name": "にゃんこレンジャー",
+		"en_name": "13th Anniversary",
+		"img": "https://i.meee.com.tw/wUZr001.png",
+		"ticket": 231,
+		"stage": "1-412",
+		"type": "event",
+		"units": [[], [0, 3, 11, 12], [2, 4, 5, 14], [-185, -376, -727, -832], [197]],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E045.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E045.html"
+	},
+	{
 		"tw_name": "下載紀念活動轉蛋",
 		"jp_name": "ダウンロード記念スペシャルイベントガチャ",
 		"en_name": "DL Special Event Gacha",
@@ -507,15 +519,26 @@
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1007.html"
 	},
 	{
-		"tw_name": "超極貓咪祭",
-		"jp_name": "超極ネコ祭",
-		"en_name": "Superfest",
-		"img": "https://i.imgur.com/TavukDL.png",
-		"rate": [6470, 2500, 1000, 30],
+		"tw_name": "超選拔祭",
+		"jp_name": "超選拔祭",
+		"en_name": "Superfest_1",
+		"img": "https://i.meee.com.tw/cF4T0LK.png",
+		"rate": [7000, 2500, 500, 0],
 		"type": "rare",
-		"units": [779, 774, 769, 763, 760, 758, 754, 520, 484, 435, 738, 733, 731, 723, 719, 715, 712, 705, 698, 692, 690, 674, 668, 660, 657, 655, 649, 647, 642, 641, 634, 633, 632, 631, 625, 620, 619, 618, 617, 609, 594, 585, 569, 546, 543, 534, 533, 529, 525, 519, 505, 502, 496, 441, 439, 436, 431, 427, 417, 401, 396, 380, 378, 361, 360, 359, 355, 351, 338, 333, 322, 318, 316, 306, 305, 304, 272, 271, 269, 261, 259, 258, 257, 240, 226, 212, 203, 196, 195, 194, 177, 171, 170, 169, 168, 159, 158, 143, 138, 137, 136, 135, 134, 125, 124, 107, 106, 105, 87, 86, 85, 84, 83, 76, 75, 73, 72, 71, 59, 57, 44, 43, 42, 34, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R956.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R956.html"
+		"units": [781, 42, 73, 75, 660, 138, 261, 271, 632, 725, 817, 758, 435, 520, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1026.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1026.html"
+	},
+	{
+		"tw_name": "極選拔祭",
+		"jp_name": "極選拔祭",
+		"en_name": "Superfest_2",
+		"img": "https://i.meee.com.tw/0hn1pNc.png",
+		"rate": [7000, 2500, 500, 0],
+		"type": "rare",
+		"units": [169, 617, 71, 107, 505, 135, 226, 316, 799, 682, 361, 810, 484, 520, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1027.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1027.html"
 	},
 	{
 		"tw_name": "白金轉蛋",
@@ -858,7 +881,7 @@
 		"tw_name": "電腦學園銀河美少女",
 		"jp_name": "電脳学園ギャラクシーギャルズ",
 		"en_name": "Cyber Academy Galaxy Gals",
-		"img": "https://i.imgur.com/Wi3zVvf.png",
+		"img": "https://i.meee.com.tw/FegqfN4.png",
 		"size": "860x240",
 		"rate": [6970, 2500, 500, 30],
 		"history": [
@@ -943,9 +966,9 @@
 			"2014/11/22~2014/11/28 電腦學園"
 		],
 		"type": "rare",
-		"units": [733, 647, 619, 449, 502, 351, 159, 107, 106, 105, 76, 75, 447, 446, 445, 444, 443, 200, 144, 131, 129, 237, 238, 239, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R944.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R944.html"
+		"units": [830, 733, 647, 619, 449, 502, 351, 159, 107, 106, 105, 76, 75, 447, 446, 445, 444, 443, 200, 144, 131, 129, 237, 238, 239, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1022.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1022.html"
 	},
 	{
 		"tag": "龍族系列",
@@ -2347,7 +2370,7 @@
 		"tw_name": "龍族撲克",
 		"jp_name": "ドラゴンポーカーコラボガチャ",
 		"en_name": "Dragon Poker",
-		"img": "https://i.imgur.com/4PtV8GA.png",
+		"img": "https://i.meee.com.tw/wSaciss.png",
 		"rate": [7000, 2500, 500, 0],
 		"collab": [
 			"龍族撲克",
