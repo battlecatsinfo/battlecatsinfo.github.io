@@ -511,6 +511,9 @@ function createAbIcons(form, p1, p2, tbody) {
 					func = w3;
 				func(v[1] != v[2] ? `${v[0]}% 發出爆波（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 發出爆波（發生位置：${v[1]}）`);
 				break;
+			case 46:
+				w1("怪人特效");
+				break;
 		}
 	}
 }

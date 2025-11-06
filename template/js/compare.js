@@ -356,6 +356,9 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 			case 45:
 				W(`${v[0]} % 爆波（${v[1]}～${v[2]}）`);
 				break;
+			case 46:
+				W('怪人特效');
+				break;
 		}
 	}
 	F.res && createResIcons(F.res, M);

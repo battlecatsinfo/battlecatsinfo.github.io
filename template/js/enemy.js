@@ -422,6 +422,8 @@ loadEnemy(my_id)
 			traits.push('道場塔');
 		if (E.trait & TB_SAGE)
 			traits.push('超賢者');
+		if (E.trait & TB_WEIRDO)
+			traits.push('怪人');
 		chs[0].children[8].textContent = traits.join('・');
 		if (E.info.atk1 || E.info.atk2) {
 			const atkNum = E.info.atk2 ? 3 : 2;
