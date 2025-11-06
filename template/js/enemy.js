@@ -195,7 +195,7 @@ function createAbIcons() {
 				W(`${d[0]} % 發動攻擊無效持續 ${numStrT(d[1])}`);
 				break;
 			case AB_SUICIDE:
-				W('一次攻擊(自殺)');
+				W('一次攻擊');
 				break;
 			case AB_BARRIER:
 				W(`護盾 ${numStr(d[0])} HP`);
