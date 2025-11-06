@@ -57,6 +57,7 @@ import {
 	AB_SUMMON,
 	AB_MK,
 	AB_EXPLOSION,
+	AB_WEIRDO,
 
 	catEnv,
 
@@ -134,7 +135,7 @@ function createAbIcons(form, p1, p2, tbody) {
 		p1.appendChild(p);
 	}
 
-	function w2(msg, icon) {
+	function w2(msg) {
 		const p = document.createElement('div');
 		let s = new Image(40, 40);
 		s.src = `/img/i/a/${ab_no}.png`;
@@ -512,7 +513,10 @@ function createAbIcons(form, p1, p2, tbody) {
 				func(v[1] != v[2] ? `${v[0]}% 發出爆波（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 發出爆波（發生位置：${v[1]}）`);
 				break;
 			case 46:
-				w1("怪人特效");
+				func = w1;
+				if (layout === 2)
+					func = w3;
+				func("怪人特效（對怪人攻擊力和體力 2.5 倍）");
 				break;
 		}
 	}
@@ -1453,7 +1457,8 @@ const def_options = [
 	['「攻擊力下降」的效果', ["【小】: +10%", "【中】: +20%", '【大】: +30%']],
 	['「攻擊力上升」的效果', ["【小】: +20%", "【中】: +30%"]],
 	['「終結魔女」的效果', '【究極】: +400%'],
-	['「終結使徒」的效果', '【究極】: +400%']
+	['「終結使徒」的效果', '【究極】: +400%'],
+	['「怪人特效」的效果', '【賦予】: 2500%'],
 ];
 const def_options_eff = [
 	1,                // 0: None
@@ -1472,9 +1477,11 @@ const def_options_eff = [
 	[20, 30],         // 13: Strong
 	[400],            // 14: Witch
 	[400],            // 15: EVA
+	[2500],           // 16: Weirdo
 ];
 function calc_def(table) {
 	catEnv.resetOthers();
+	let weirdo = false;
 	for (const tr of table.children) {
 		const chs = tr.children;
 		if (chs.length == 3) {
@@ -1484,10 +1491,15 @@ function calc_def(table) {
 				catEnv.addOther(idx, eff[chs[1].firstElementChild.selectedIndex]);
 			else
 				catEnv.setOthers(idx, [eff]);
+			weirdo |= (idx === 16);
 		}
 	}
 	if (layout === 2) {
 		for (const [tbody, form] of table_to_values) {
+			if (weirdo)
+				form.ab[AB_WEIRDO] = {};
+			else
+				delete form.ab[AB_WEIRDO];
 			let td = tbody.children[7].children[1];
 			td.textContent = '';
 			createImuIcons(form.imu, td);
@@ -1498,6 +1510,10 @@ function calc_def(table) {
 		}
 	} else {
 		for (const [tbl, form] of table_to_values) {
+			if (weirdo)
+				form.ab[AB_WEIRDO] = {};
+			else
+				delete form.ab[AB_WEIRDO];
 			updateValues(form, tbl);
 			let td1 = tbl.children[11].children[1];
 			let td2 = tbl.children[12].children[1];

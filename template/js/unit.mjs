@@ -101,8 +101,8 @@ const RES_WARP = 8;        // Resist Warp 抗傳耐性
 
 const TRAIT_ALL = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE
 								| TB_RELIC | TB_WHITE | TB_EVA | TB_WITCH | TB_DEMON
-								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE;
-const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE;
+								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE | TB_WEIRDO;
+const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE | TB_WEIRDO;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
@@ -401,6 +401,9 @@ class CatEnv {
 	get combo_eva() {
 		return (this._others[15] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+	get combo_weirdo() {
+		return (this._others[16] ?? []).reduce((rv, x) => rv + x / 100, 0);
+	}
 }
 
 class Unit {
@@ -552,7 +555,9 @@ class Unit {
 		if (filter instanceof Set) {
 			const ab = {};
 			for (const id of filter) {
-				ab[id] = this.ab[id];
+				if (this.ab.hasOwnProperty(id)) {
+					ab[id] = this.ab[id];
+				}
 			}
 			return ab;
 		}
@@ -1195,6 +1200,8 @@ class CatForm extends Unit {
 			hp /= 0.7;
 		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
 			hp /= 0.5;
+		} else if ((traits & TB_WEIRDO) && ab.hasOwnProperty(AB_WEIRDO)) {
+			hp *= this.env.combo_weirdo;
 		}
 
 		if (traits & TRAIT_BASE)
@@ -1315,6 +1322,8 @@ class CatForm extends Unit {
 				atk *= 1.6;
 			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
 				atk *= 1.2;
+			} else if ((traits & TB_WEIRDO) && ab.hasOwnProperty(AB_WEIRDO)) {
+				atk *= this.env.combo_weirdo;
 			}
 
 			if (ab.hasOwnProperty(AB_EKILL) && (traits & TB_EVA))
@@ -2176,7 +2185,9 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 	parent.textContent = '';
 	const firstLine = plus_s + fmt(
-		catEnv._orbs.atk ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(), attackF
+		(catEnv.getOthers(2).length || catEnv.getOthers(16).length) ?
+			form.gettatks({traits: TRAIT_ALL, filter: [AB_WEIRDO], mode, metal: false}) : form.getatks(),
+		attackF
 	);
 	parent.append(firstLine);
 	let maxLen = firstLine.length;
@@ -2202,6 +2213,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 			continue;
 
 		let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
+		filter.add(AB_WEIRDO);
 		let atks = fmt(form.gettatks({
 			traits,
 			filter,
@@ -2235,7 +2247,7 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 	const plus_s = plus ? '+' : '';
 
 	parent.textContent = '';
-	const firstLine = plus_s + numStr(floor((catEnv._orbs.hp ? form.getthp({filter: []}) : form.hp) / KB));
+	const firstLine = plus_s + numStr(floor((catEnv._orbs.hp ? form.getthp({filter: [AB_WEIRDO]}) : form.hp) / KB));
 	parent.append(firstLine);
 	let maxLen = firstLine.length;
 
@@ -2259,6 +2271,8 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 		)
 			continue;
 
+		filter.add(AB_WEIRDO);
+
 		let hp = numStr(floor(form.getthp({filter})) / KB);
 		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${hp}`;
 
@@ -2281,6 +2295,8 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 function updateHp(form, filter, W) {
 	let old_hp;
 	let traits = TRAIT_ALL;
+
+	filter.add(AB_WEIRDO);
 
 	for (let first = true;;first = false) {
 		const hp = numStr(floor(form.getthp({
@@ -2312,6 +2328,7 @@ function updateAtk(form, filter, W1, W2) {
 	let old_atks;
 	let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
 
+	filter.add(AB_WEIRDO);
 	W1.textContent = W2.textContent = '';
 
 	for (let first = true;;first = false) {
@@ -2430,6 +2447,7 @@ export {
 	AB_SUMMON,
 	AB_MK,
 	AB_EXPLOSION,
+	AB_WEIRDO,
 
 	RES_WEAK,
 	RES_STOP,
