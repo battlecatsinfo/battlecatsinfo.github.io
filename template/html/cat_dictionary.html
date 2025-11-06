@@ -471,7 +471,7 @@
 					</fieldset>
 				</form>
 				<div class="ok">
-					<button onclick="ok()">篩選</button>
+					<button class="filter">篩選</button>
 				</div>
 			</div>
 		</div>
@@ -507,8 +507,8 @@
 				</div>
 			</div>
 		</div>
-		<button class="btn" onclick="this.classList.toggle('selected');ok();" id="fav-only">我的最愛</button>
-		<button class="btn selected" onclick="this.classList.toggle('selected');ok();" id="ex-only">限定角色</button>
+		<button class="btn filter" id="fav-only">我的最愛</button>
+		<button class="btn selected filter" id="ex-only">限定角色</button>
 		<button class="btn" id="clear-all">清除全部</button>
 		<div class="modal" id="not-f">
 			<div class="M" style="text-align: center;font-weight: bold;max-width: 25em;font-size: larger;">進行篩選的結果，找不到

@@ -340,11 +340,17 @@ for (let C of main.getElementsByClassName('C'))
 	C.onclick = ot;
 for (let B of main.querySelectorAll('.M button')) {
 	if (!B.value) continue;
-	B.onclick = function() {
+	B.addEventListener('click', function() {
 		this.classList.toggle('selected');
 		undo.push(this);
-	}
+	});
 }
+ex_only.addEventListener('click', function () {
+	this.classList.toggle('selected');
+});
+fav_only.addEventListener('click', function () {
+	this.classList.toggle('selected');
+});
 ab_e[0].onclick = trait.previousElementSibling.onclick = function() {
 	if (this.src.endsWith('or.png'))
 		this.src = 'and.png';
