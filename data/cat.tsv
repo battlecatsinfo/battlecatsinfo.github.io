@@ -829,10 +829,10 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					140700		1			2			Juri_(Uber_Rare_Cat)	
 3	2			50	70					140700		2			2			Zangief_Cat_(Super_Rare_Cat)	
 3	2			50	70					140700		2			2			Jamie_Cat_(Super_Rare_Cat)	
-4	2			60	70					150000		1			2				
-1	2			50	20					150000		5			0				
-1	2			50	0					150000		5			0				
-1	2	日文版13週年任務取得		50	0					150000		5			0				
-1	2			50	0					150000		5			0				
-1	2			50	0					150000		5			0				
-4	2	日文版13週年任務取得		60	0					150000		1			2				
+4	2			60	70					150000		1			2			Rakles_(Super_Rare_Cat)	
+1	2			50	20					150000		5			0			Scarf_Cat_(Special_Cat)	
+1	2			50	0					150000		5			0			Hat_Cat_(Special_Cat)	
+1	2	日文版13週年任務取得		50	0					150000		5			0			Helmet_Cat_(Special_Cat)	
+1	2			50	0					150000		5			0			Goggle_Cat_(Special_Cat)	
+1	2			50	0					150000		5			0			Ribbon_Cat_(Special_Cat)	
+4	2	日文版13週年任務取得		60	0					150000		1			2			Nyankooh_(Uber_Rare_Cat)	
