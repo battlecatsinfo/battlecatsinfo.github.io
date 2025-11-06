@@ -2077,6 +2077,11 @@ function renderCombos() {
 				p3.style.fontSize = 'smaller';
 				p3.textContent = combos_scheme.requirements[req];
 			}
+			if (C[5]) {
+				const p3 = td.appendChild(document.createElement('p'));
+				p3.style.fontSize = 'smaller';
+				p3.textContent = combos_scheme.categories[C[5]];
+			}
 			for (const [id, lvc] of units) {
 				const td = tr.appendChild(document.createElement('td'));
 				const a = td.appendChild(document.createElement('a'));
