@@ -359,24 +359,25 @@ function initUI() {
 				//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
 			];
 			const images = [
-				['4rrfKiE', 66, 65, '速攻不可', search_guard],
-				['JWSKik7', 80, 80, '掃盪不可', search_gold],
-				['Rfuh0jk', 64, 64, '惡魔塔', search_enemy, 'fy'],
-				['BMGIONq', 64, 64, '損毀的波動塔', search_enemy, '8o'],
-				['Z2DvobY', 64, 64, '波動塔', search_enemy, '8r'],
-				['osLQ4tt', 64, 64, '詛咒塔', search_enemy, 'ei'],
-				['aE0Z02o', 64, 64, '烈波塔', search_enemy, 'ek']
+				[66, 65, '速攻不可', search_guard],
+				[80, 80, '掃盪不可', search_gold],
+				[64, 64, '惡魔塔', search_enemy, 'fy'],
+				[64, 64, '損毀的波動塔', search_enemy, '8o'],
+				[64, 64, '波動塔', search_enemy, '8r'],
+				[64, 64, '詛咒塔', search_enemy, 'ei'],
+				[64, 64, '烈波塔', search_enemy, 'ek']
 			];
 			const div = filter_page.appendChild(document.createElement('div'));
 			div.classList.add('V');
-			for (const i of images) {
-				const img = div.appendChild(new Image(i[1], i[2]));
+			for (const i in images) {
+				const elem = images[i];
+				const img = div.appendChild(new Image(elem[0], elem[1]));
 				img.loading = 'lazy';
 				img.classList.add('S');
-				img.src = `https://i.imgur.com/${i[0]}.png`;
-				img.title = i[3];
-				img.onclick = i[4];
-				img.i = i[5];
+				img.src = `/img/i/o/s${i}.png`;
+				img.title = elem[2];
+				img.onclick = elem[3];
+				img.elem = elem[4];
 			}
 			for (let i = 0, I = items.length; i < I; i++) {
 				const list = items[i];
@@ -1008,7 +1009,7 @@ async function render_stage() {
 					for (let i = 0;i < tech.length;++i) {
 						const tr = tbody.appendChild(document.createElement('tr'));
 						const img = new Image(128, 128);
-						img.src = `https://i.imgur.com/${stage_extra.techLinks[i]}.png`;
+						img.src = `/img/i/o/tech${i}.png`;
 						img.classList.add('fixedln-img');
 						tr.appendChild(document.createElement('td')).appendChild(img);
 						tr.appendChild(document.createElement('td')).textContent = stage_extra.techNames[i];

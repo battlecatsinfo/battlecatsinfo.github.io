@@ -122,10 +122,13 @@ function getTraitNames(trait) {
 }
 
 function createAbIcons(form, p1, p2, tbody) {
-	function w1(msg, icon) {
+	let treasure = !1,
+		tn, du, cv, func, i, v, ab_no;
+
+	function w1(msg) {
 		const p = document.createElement('div');
 		let s = new Image(40, 40);
-		s.src = 'https://i.imgur.com/' + icon + '.png';
+		s.src = `/img/i/a/${ab_no}.png`;
 		p.appendChild(s);
 		p.append(msg);
 		p1.appendChild(p);
@@ -134,15 +137,13 @@ function createAbIcons(form, p1, p2, tbody) {
 	function w2(msg, icon) {
 		const p = document.createElement('div');
 		let s = new Image(40, 40);
-		s.src = 'https://i.imgur.com/' + icon + '.png';
+		s.src = `/img/i/a/${ab_no}.png`;
 		p.appendChild(s);
 		p.append(msg);
 		p2.appendChild(p);
 	}
-	let treasure = !1,
-		tn, du, cv, func, i, v;
 
-	function w3(msg, icon) {
+	function w3(msg) {
 		const p = document.createElement('div');
 		p.classList.add('ab-select');
 		p._i = i;
@@ -167,7 +168,7 @@ function createAbIcons(form, p1, p2, tbody) {
 			updateValues(form, tbody);
 		}
 		let s = new Image(40, 40);
-		s.src = 'https://i.imgur.com/' + icon + '.png';
+		s.src = `/img/i/a/${ab_no}.png`;
 		p.appendChild(s);
 		p.append(msg);
 		p1.appendChild(p);
@@ -175,25 +176,24 @@ function createAbIcons(form, p1, p2, tbody) {
 	form.trait && (tn = getTraitNames(form.trait), treasure = form.trait & trait_treasure);
 	const U = form.pre1 ? '*' : '';
 	let tmp;
-	for ([i, v] of Object.entries(form.ab)) {
-		i = parseInt(i);
-		switch (i) {
+	for (const [i, v] of Object.entries(form.ab)) {
+		switch (ab_no = parseInt(i, 10)) {
 			case 1:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`體力 ${v[0]} % 以下時攻擊力上升至 ${100 + v[1] + catEnv.combo_strengthen} %`, "IE6ihRp");
+				func(`體力 ${v[0]} % 以下時攻擊力上升至 ${100 + v[1] + catEnv.combo_strengthen} %`);
 				break;
 
 			case 2:
-				w1(`遭到致命的攻擊時 ${v} % 以1體力存活1次`, "WcMDxXS");
+				w1(`遭到致命的攻擊時 ${v} % 以1體力存活1次`);
 				break;
 
 			case 3:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`善於攻城（攻擊傷害 × 4）`, "xIcbDzl");
+				func(`善於攻城（攻擊傷害 × 4）`);
 				break;
 
 			case 4:
@@ -203,98 +203,98 @@ function createAbIcons(form, p1, p2, tbody) {
 				tmp = catEnv.combo_crit;
 				if (tmp)
 					v += tmp;
-				func(`${v} % 會心一擊${U}`, "FV6We1L");
+				func(`${v} % 會心一擊${U}`);
 				break;
 
 			case 5:
-				w1("終結不死", "ssOFAtR");
+				w1("終結不死");
 				break;
 
 			case 6:
-				w1("靈魂攻擊", "z3SPEqA");
+				w1("靈魂攻擊");
 				break;
 
 			case 7:
-				w1(`${v[0]} % 破壞護盾${U}`, "LfRDAkg");
+				w1(`${v[0]} % 破壞護盾${U}`);
 				break;
 
 			case 8:
-				w1(`${v[0]} % 破壞惡魔盾${U}`, "6wjIaUE");
+				w1(`${v[0]} % 破壞惡魔盾${U}`);
 				break;
 
 			case 9:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 渾身一擊${U}（攻擊力增加至${100 + v[1]} %）`, "KDpH72p");
+				func(`${v[0]} % 渾身一擊${U}（攻擊力增加至${100 + v[1]} %）`);
 				break;
 
 			case 10:
-				w1("得到很多金錢（擊敗敵人時獲得金錢 × 2）", "aeG7OM3");
+				w1("得到很多金錢（擊敗敵人時獲得金錢 × 2）");
 				break;
 
 			case 11:
-				w1("鋼鐵特性（暴擊、毒擊之外攻擊只會受1傷害）", "MzHKigD");
+				w1("鋼鐵特性（暴擊、毒擊之外攻擊只會受1傷害）");
 				break;
 
 			case 12:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[1]} 小波動${U}（射程 ${132.5 + v[1]*200}）`, "W18c1hw");
+				func(`${v[0]} % 發射 Lv${v[1]} 小波動${U}（射程 ${132.5 + v[1]*200}）`);
 				break;
 
 			case 13:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[1]} 波動${U}（射程 ${132.5 + v[1]*200}）`, "ZbPqGoj");
+				func(`${v[0]} % 發射 Lv${v[1]} 波動${U}（射程 ${132.5 + v[1]*200}）`);
 				break;
 
 			case 14:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[3]} 小烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`, "AEITK8t");
+				func(`${v[0]} % 發射 Lv${v[3]} 小烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`);
 				break;
 
 			case 15:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`${v[0]} % 發射 Lv${v[3]} 烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`, "at4bW0n");
+				func(`${v[0]} % 發射 Lv${v[3]} 烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`);
 				break;
 
 			case 16:
-				w1('波動滅止', "BH3LOrK");
+				w1('波動滅止');
 				break;
 
 			case 17:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7)", "nGZanly");
+				func("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7)");
 				break;
 
 			case 18:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(`超獸特效（攻擊傷害 × 2.5 、所受傷害 × 0.6、${v[0]} % 發動攻擊無效持續 ${numStrT(v[1])}）`, "yCMsSbc");
+				func(`超獸特效（攻擊傷害 × 2.5 、所受傷害 × 0.6、${v[0]} % 發動攻擊無效持續 ${numStrT(v[1])}）`);
 				break;
 
 			case 19:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func('終結魔女', "ktlyJ15");
+				func('終結魔女');
 				break;
 
 			case 20:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func("終結使徒", "y5JJJnJ");
+				func("終結使徒");
 				break;
 
 			case 21:
@@ -315,10 +315,10 @@ function createAbIcons(form, p1, p2, tbody) {
 					cv = getCoverUnit(form, v[0], tmp) + ' %';
 				}
 				if (layout === 2) {
-					w2(`${v[0]} % 使攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`, 'yRkhAHL');
+					w2(`${v[0]} % 使攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`);
 					break;
 				}
-				w2(`${v[0]} % 使${tn}攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`, "yRkhAHL");
+				w2(`${v[0]} % 使${tn}攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`);
 				break;
 
 			case 22:
@@ -339,10 +339,10 @@ function createAbIcons(form, p1, p2, tbody) {
 					cv = getCoverUnit(form, v[0], tmp) + ' %';
 				}
 				if (layout === 2) {
-					w2(`${v[0]} % 使動作停止持續 ${du} ${U}，覆蓋率 ${cv}`, 'i1pP3Mi');
+					w2(`${v[0]} % 使動作停止持續 ${du} ${U}，覆蓋率 ${cv}`);
 					break;
 				}
-				w2(`${v[0]} % 使 ${tn} 動作停止${U}持續 ${du}，覆蓋率 ${cv}`, "i1pP3Mi");
+				w2(`${v[0]} % 使 ${tn} 動作停止${U}持續 ${du}，覆蓋率 ${cv}`);
 				break;
 
 			case 23:
@@ -363,70 +363,70 @@ function createAbIcons(form, p1, p2, tbody) {
 					cv = getCoverUnit(form, v[0], tmp) + ' %';
 				}
 				if (layout === 2) {
-					w2(`${v[0]} % 使動作變慢${U}持續 ${du}，覆蓋率 ${cv}`, 'MyoCUMu');
+					w2(`${v[0]} % 使動作變慢${U}持續 ${du}，覆蓋率 ${cv}`);
 					break;
 				}
-				w2(`${v[0]} % 使${tn}動作變慢${U}持續 ${du}，覆蓋率 ${cv}`, "MyoCUMu");
+				w2(`${v[0]} % 使${tn}動作變慢${U}持續 ${du}，覆蓋率 ${cv}`);
 				break;
 
 			case 24:
-				w2("只能攻擊" + tn, "fe5k3Hw");
+				w2("只能攻擊" + tn);
 				break;
 
 			case 25:
 				if (layout === 2) {
-					w3('善於攻擊', 'dlZ8xNU');
+					w3('善於攻擊');
 					break;
 				}
-				w2('善於攻擊（攻擊傷害 × 1.5 至 1.8 、所受傷害 × 0.5 至 0.4）', "dlZ8xNU");
+				w2('善於攻擊（攻擊傷害 × 1.5 至 1.8 、所受傷害 × 0.5 至 0.4）');
 				break;
 
 			case 26:
 				if (layout === 2) {
-					w3('很耐打', '4em8Hzg');
+					w3('很耐打');
 					break;
 				}
-				w2(`很耐打（所受傷害 × 1/4 至 1/5）`, "4em8Hzg");
+				w2(`很耐打（所受傷害 × 1/4 至 1/5）`);
 				break;
 
 			case 27:
 				if (layout === 2) {
-					w3('超耐打', 'ck2nA1D');
+					w3('超耐打');
 					break;
 				}
-				w2(`超耐打（所受傷害 × 1/6 至 1/7）`, "ck2nA1D");
+				w2(`超耐打（所受傷害 × 1/6 至 1/7）`);
 				break;
 
 			case 28:
 				if (layout === 2) {
-					w3(`超大傷害`, "RbqsryO");
+					w3(`超大傷害`);
 					break;
 				}
-				w2(`超大傷害（攻擊傷害 × 3 至 4）`, "RbqsryO");
+				w2(`超大傷害（攻擊傷害 × 3 至 4）`);
 				break;
 
 			case 29:
 				if (layout === 2) {
-					w3('極度傷害', 'whTrzG1');
+					w3('極度傷害');
 					break;
 				}
-				w2(`極度傷害（攻擊傷害 × 5 至 6）`, "whTrzG1");
+				w2(`極度傷害（攻擊傷害 × 5 至 6）`);
 				break;
 
 			case 30:
 				if (layout === 2) {
-					w2(v[0] + " % 打飛" + U, "cLZsanQ");
+					w2(v[0] + " % 打飛" + U);
 					break;
 				}
-				w2(v[0] + " % 打飛" + U + tn, "cLZsanQ");
+				w2(v[0] + " % 打飛" + U + tn);
 				break;
 
 			case 31:
 				if (layout === 2) {
-					w2(v[0] + " % 傳送" + U, "KkYm2Og");
+					w2(v[0] + " % 傳送" + U);
 					break;
 				}
-				w2(v[0] + " % 傳送" + U + tn, "KkYm2Og");
+				w2(v[0] + " % 傳送" + U + tn);
 				break;
 
 			case 32:
@@ -439,7 +439,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				} else {
 					du = numStrT(v[1]);
 				}
-				w2(`${v[0]} % 發動攻擊無效持續 ${du}`, "8Eq6vPV");
+				w2(`${v[0]} % 發動攻擊無效持續 ${du}`);
 				break;
 
 			case 33:
@@ -459,28 +459,28 @@ function createAbIcons(form, p1, p2, tbody) {
 					cv = getCoverUnit(form, v[0], tmp) + ' %';
 				}
 				if (layout === 2) {
-					w2(`${v[0]} % 詛咒${U}持續 ${du}，覆蓋率 ${cv}`, "0Rraywl");
+					w2(`${v[0]} % 詛咒${U}持續 ${du}，覆蓋率 ${cv}`);
 					break;
 				}
-				w2(`${v[0]} % 詛咒${U}${tn}持續 ${du}，覆蓋率 ${cv}`, "0Rraywl");
+				w2(`${v[0]} % 詛咒${U}${tn}持續 ${du}，覆蓋率 ${cv}`);
 				break;
 
 			case 37:
-				w1("一次攻擊", "VY93npj");
+				w1("一次攻擊");
 				break;
 			case 40:
-				w1('烈波反擊', 'tchDtAr');
+				w1('烈波反擊');
 				break;
 			case 42:
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func('超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、攻擊傷害 × 1.2、所受傷害 × 0.5）', 'Qq8vQTs');
+				func('超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、攻擊傷害 × 1.2、所受傷害 × 0.5）');
 				break;
 			case 43: {
 				const p = document.createElement('div');
 				let s = new Image(40, 40);
-				s.src = 'https://i.imgur.com/AJYPM6p.png';
+				s.src = '/img/i/a/43.png';
 				const a = document.createElement('a');
 				a.href = '/unit.html?id=' + v;
 				p.appendChild(s);
@@ -494,7 +494,7 @@ function createAbIcons(form, p1, p2, tbody) {
 			case 44: {
 				const p = document.createElement('div');
 				let s = new Image(40, 40);
-				s.src = 'https://i.imgur.com/9vLOiAm.png';
+				s.src = '/img/i/a/44.png';
 				const a = document.createElement('a');
 				a.href = '/metal_killer.html?kill=' + v;
 				p.appendChild(s);
@@ -509,7 +509,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func(v[1] != v[2] ? `${v[0]}% 發出爆波（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 發出爆波（發生位置：${v[1]}）`, '4KshrNX');
+				func(v[1] != v[2] ? `${v[0]}% 發出爆波（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 發出爆波（發生位置：${v[1]}）`);
 				break;
 		}
 	}
@@ -617,7 +617,7 @@ function updateValues(form, tbl) {
 		const atksPre = [form.info.atk, form.info.atk1, form.info.atk2].slice(0, atkNum).map(x => numStr((x / (form.info.atk + form.info.atk1 + form.info.atk2)) * 100) + ' %');
 		const p = document.createElement('div');
 		const img = new Image(40, 40);
-		img.src = 'https://i.imgur.com/veNQ90x.png';
+		img.src = '/img/i/o/5.png';
 		p.appendChild(img);
 		p.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
 		specials.appendChild(p);
@@ -634,7 +634,7 @@ function updateValues(form, tbl) {
 	if (form.atkType & ATK_KB_REVENGE) {
 		const p = document.createElement('div');
 		const img = new Image(40, 40);
-		img.src = 'https://i.imgur.com/KqtrO2b.png';
+		img.src = '/img/i/o/4.png';
 		p.appendChild(img);
 		p.append('擊退反擊');
 		specials.appendChild(p);
@@ -888,7 +888,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 		td.style.textAlign = 'left';
 		if (form.info.atk1 || form.info.atk2) {
 			const i = new Image(40, 40);
-			i.src = 'https://i.imgur.com/veNQ90x.png';
+			i.src = '/img/i/o/5.png';
 			td.appendChild(i);
 			const atkNum = form.info.atk2 ? 3 : 2;
 			const atksPre = [form.info.atk, form.info.atk1, form.info.atk2].slice(0, atkNum).map(x => numStr((x / (form.info.atk + form.info.atk1 + form.info.atk2)) * 100) + ' %');
@@ -904,26 +904,26 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 			atkType += '・遠距攻擊';
 		if (form.atkType & ATK_RANGE) {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/BeuHYlZ.png';
+			s.src = '/img/i/o/0.png';
 			tr.appendChild(s);
 		} else {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/CZwFP3H.png';
+			s.src = '/img/i/o/1.png';
 			tr.appendChild(s);
 		}
 		if (form.atkType & ATK_LD) {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/fYILfa8.png';
+			s.src = '/img/i/o/2.png';
 			tr.appendChild(s);
 		}
 		if (form.atkType & ATK_OMNI) {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/rvGrwIL.png';
+			s.src = '/img/i/o/3.png';
 			tr.appendChild(s);
 		}
 		if (form.atkType & ATK_KB_REVENGE) {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/KqtrO2b.png';
+			s.src = '/img/i/o/4.png';
 			tr.appendChild(s);
 		}
 		tr.append(atkType);
@@ -1316,7 +1316,7 @@ async function applyOrb() {
 	} else {
 		orb_attr = new Image();
 		orb_attr.crossOrigin = 'anonymous';
-		orb_attr.src = 'https://i.imgur.com/F8xZ3zT.png';
+		orb_attr.src = '/img/i/o/orb_attr.png';
 		orb_attr.onload = function() {
 			this._loaded = true;
 			applyOrb();
@@ -1327,7 +1327,7 @@ async function applyOrb() {
 	} else {
 		orb_eff = new Image();
 		orb_eff.crossOrigin = 'anonymous';
-		orb_eff.src = 'https://i.imgur.com/hE0WvKA.png';
+		orb_eff.src = '/img/i/o/orb_eff.png';
 		orb_eff.onload = function() {
 			this._loaded = true;
 			applyOrb();
@@ -1338,7 +1338,7 @@ async function applyOrb() {
 	} else {
 		orb_gradle = new Image();
 		orb_gradle.crossOrigin = 'anonymous';
-		orb_gradle.src = 'https://i.imgur.com/fvctas6.png';
+		orb_gradle.src = '/img/i/o/orb_gradle.png';
 		orb_gradle.onload = function() {
 			this._loaded = true;
 			applyOrb();

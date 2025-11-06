@@ -2114,7 +2114,7 @@ function createTraitIcons(trait, parent) {
 	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
 		if (!(trait & x)) { continue; }
 		const e = E.appendChild(new Image(40, 40));
-		e.src = 'https://i.imgur.com/' + units_scheme.traits.icons[i] + '.png';
+		e.src = `/img/i/e/${i}.png`;
 	}
 	parent.appendChild(E);
 }
@@ -2126,8 +2126,8 @@ function createImuIcons(imu, parent) {
 	for (let x = 1, i = 0; x <= 1024; x <<= 1, ++i) {
 		if (!(imu & x)) { continue; }
 		const e = p.appendChild(new Image(40, 40));
-		e.src = 'https://i.imgur.com/' + units_scheme.immunes.icons[i] + '.png';
-		names.push(units_scheme.immunes.names[i]);
+		e.src = `/img/i/m/${i}.png`;
+		names.push(units_scheme.immunes[i]);
 	}
 	const text = (names.length === 1) ? `${names.join('')}無效` : `無效（${names.join('、')}）`;
 	p.append(text);
@@ -2139,8 +2139,8 @@ function createResIcons(res, p) {
 		k = parseInt(k, 10);
 		const c = p.appendChild(document.createElement('div'));
 		const e = c.appendChild(new Image(40, 40));
-		e.src = 'https://i.imgur.com/' + units_scheme.resists.icons[k] + '.png';
-		c.append(units_scheme.resists.descs[k].replace('$', v));
+		e.src = `/img/i/r/${k}.png`;
+		c.append(units_scheme.resists[k].replace('$', v));
 	}
 }
 

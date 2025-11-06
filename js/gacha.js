@@ -334,7 +334,7 @@ module.exports = class extends RewardSiteGenerator {
 					result.push([
 						-2,
 						I,
-						`https://i.imgur.com/${this.tech_links[I]}.png`,
+						`/img/i/o/tech${I}.png`,
 						{name: this.tech_names[I]},
 						r,
 						'',

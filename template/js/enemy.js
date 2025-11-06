@@ -94,7 +94,7 @@ var atk_mag = my_params.get('atkMag');
 var stageMag = my_params.get('stageMag');
 var enemy_content = document.getElementById('ctn');
 var set = new Set();
-var E, I, dst_g, modal;
+var E, dst_g, modal, ab_no;
 if (isNaN(my_id))
 	my_id = 0;
 
@@ -113,23 +113,23 @@ function hClick(event) {
 	calc();
 }
 
-function T(s, icon) {
+function T(s) {
 	let p = document.createElement('div');
 	p.style.cursor = 'pointer';
 	let U = new Image(40, 40);
-	U.src = 'https://i.imgur.com/' + icon + '.png';
+	U.src = `/img/i/a/${ab_no}.png`;
 	p.appendChild(U);
 	p.append(s);
-	p.i = I;
+	p.i = ab_no;
 	p.s = false;
 	p.onclick = hClick;
 	specials.appendChild(p);
 }
 
-function W(s, icon) {
+function W(s) {
 	let p = document.createElement('div');
 	let i = document.createElement('img');
-	i.src = 'https://i.imgur.com/' + icon + '.png';
+	i.src = `/img/i/a/${ab_no}.png`;
 	p.appendChild(i);
 	p.append(s);
 	specials.appendChild(p);
@@ -141,99 +141,99 @@ function createAbIcons() {
 	if (E.trait & TB_SAGE) {
 		W(`超賢者：受到我方的所有妨害減少 70%`, 'ERkdLLP');
 	}
-	for ([I, d] of Object.entries(E.ab)) {
-		switch (I = parseInt(I)) {
+	for (const [i, d] of Object.entries(E.ab)) {
+		switch (ab_no = parseInt(i, 10)) {
 			case AB_KB:
-				W(`${d[0]} % 打飛敵人${U}`, 'cLZsanQ');
+				W(`${d[0]} % 打飛敵人${U}`);
 				break;
 			case AB_STOP:
-				W(`${d[0]} % 使動作停止${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`, 'i1pP3Mi');
+				W(`${d[0]} % 使動作停止${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`);
 				break;
 			case AB_SLOW:
-				W(`${d[0]} % 使動作變慢${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`, 'MyoCUMu');
+				W(`${d[0]} % 使動作變慢${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`);
 				break;
 			case AB_CRIT:
-				T(`${d} % 會心一擊${U}`, 'FV6We1L');
+				T(`${d} % 會心一擊${U}`);
 				break;
 			case AB_ATKBASE:
-				T(`善於攻城（攻擊傷害 × 4）`, 'xIcbDzl');
+				T(`善於攻城（攻擊傷害 × 4）`);
 				break;
 			case AB_WAVE:
-				T(`${d[0]} % 發射 Lv${d[1]} 波動${U}（射程 ${267.5 + d[1]*200}）`, 'ZbPqGoj');
+				T(`${d[0]} % 發射 Lv${d[1]} 波動${U}（射程 ${267.5 + d[1]*200}）`);
 				break;
 			case AB_MINIWAVE:
-				T(`${d[0]} % 發射 Lv${d[1]} 小波動${U}（射程 ${267.5 + d[1]*200}）`, 'W18c1hw');
+				T(`${d[0]} % 發射 Lv${d[1]} 小波動${U}（射程 ${267.5 + d[1]*200}）`);
 				break;
 			case AB_WEAK:
-				W(`${d[0]} % 降低攻擊力${U}至 ${d[1]} % 持續 ${numStrT(d[2])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[2])} %`, 'yRkhAHL');
+				W(`${d[0]} % 降低攻擊力${U}至 ${d[1]} % 持續 ${numStrT(d[2])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[2])} %`);
 				break;
 			case AB_STRENGTHEN:
-				T(`體力 ${d[0]} % 以下時攻擊力上升至 ${100 + d[1]} %`, 'IE6ihRp');
+				T(`體力 ${d[0]} % 以下時攻擊力上升至 ${100 + d[1]} %`);
 				break;
 			case AB_LETHAL:
-				W(`遭到致命的攻擊時 ${d} % 以1體力存活1次`, 'WcMDxXS');
+				W(`遭到致命的攻擊時 ${d} % 以1體力存活1次`);
 				break;
 			case AB_WAVES:
-				W(`波動滅止`, 'BH3LOrK');
+				W(`波動滅止`);
 				break;
 			case AB_BURROW:
-				W(`進入射程範圍時鑽地 ${numStr(d[1])} 距離（${d[0] == -1 ? '無限' : d[0].toString() + ' '}次）`, 'j9psrEP');
+				W(`進入射程範圍時鑽地 ${numStr(d[1])} 距離（${d[0] == -1 ? '無限' : d[0].toString() + ' '}次）`);
 				break;
 			case AB_REVIVE:
-				W(`擊倒後 ${numStrT(d[1])} 以 ${d[2]} % 體力復活（${d[0] == -1 ? '無限' : d[0].toString() + ' '}次）`, 'BX2GLgu');
+				W(`擊倒後 ${numStrT(d[1])} 以 ${d[2]} % 體力復活（${d[0] == -1 ? '無限' : d[0].toString() + ' '}次）`);
 				break;
 			case AB_WARP:
-				W(`${d[0]} % 將目標向${d[2] < 0 ? '前' : '後'}傳送${U} ${Math.abs(d[2])} 距離持續 ${numStrT(d[1])}`, 'KkYm2Og');
+				W(`${d[0]} % 將目標向${d[2] < 0 ? '前' : '後'}傳送${U} ${Math.abs(d[2])} 距離持續 ${numStrT(d[1])}`);
 				break;
 			case AB_CURSE:
-				W(`${d[0]} % 詛咒${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`, '0Rraywl');
+				W(`${d[0]} % 詛咒${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`);
 				break;
 			case AB_S:
-				T(`${d[0]} % 渾身一擊${U}（攻擊力增加至 ${100 + d[1]} %）`, 'KDpH72p');
+				T(`${d[0]} % 渾身一擊${U}（攻擊力增加至 ${100 + d[1]} %）`);
 				break;
 			case AB_IMUATK:
-				W(`${d[0]} % 發動攻擊無效持續 ${numStrT(d[1])}`, '8Eq6vPV');
+				W(`${d[0]} % 發動攻擊無效持續 ${numStrT(d[1])}`);
 				break;
 			case AB_SUICIDE:
-				W('一次攻擊(自殺)', 'VY93npj');
+				W('一次攻擊(自殺)');
 				break;
 			case AB_BARRIER:
-				W(`護盾 ${numStr(d[0])} HP`, 'l2VfcmX');
+				W(`護盾 ${numStr(d[0])} HP`);
 				break;
 			case AB_DSHIELD: {
 				let p = document.createElement('div');
 				p.style.cursor = 'pointer';
 				let U = new Image(40, 40);
-				U.src = 'https://i.imgur.com/LESVycw.png';
+				U.src = '/img/i/a/39.png';
 				p.appendChild(U);
 				dst_g = document.createElement('span');
 				dst_g.textContent = ~~(Math.round(d[0] * (my_mult / 100)) * (stageMag / 100));
 				p.append('惡魔盾 ');
 				p.appendChild(dst_g);
 				p.append(` HP，KB時惡魔盾恢復 ${d[1]} %`);
-				p.i = I;
+				p.i = ab_no;
 				p.s = false;
 				p.onclick = hClick;
 				specials.appendChild(p);
 			}
 			break;
 			case AB_COUNTER:
-				W('烈波反擊', 'tchDtAr');
+				W('烈波反擊');
 				break;
 			case AB_DEATHSURGE:
-				W(`死後 ${d[0]} % 發射 Lv${d[3]}烈波（範圍 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'WmB7utZ');
+				W(`死後 ${d[0]} % 發射 Lv${d[3]}烈波（範圍 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`);
 				break;
 			case AB_POIATK:
-				W(`${d[0]} % 毒擊（造成角色最大生命值 ${(d[1])} % 的傷害）`, '6O6zwrp');
+				W(`${d[0]} % 毒擊（造成角色最大生命值 ${(d[1])} % 的傷害）`);
 				break;
 			case AB_SURGE:
-				T(`${d[0]} % 發射 Lv${d[3]} 烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'at4bW0n');
+				T(`${d[0]} % 發射 Lv${d[3]} 烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`);
 				break;
 			case AB_MINISURGE:
-				T(`${d[0]} % 發射 Lv${d[3]} 小烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, 'AEITK8t');
+				T(`${d[0]} % 發射 Lv${d[3]} 小烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`);
 				break;
 			case AB_EXPLOSION:
-				T(d[1] != d[2] ? `${d[0]}% 發出爆波（發生位置：${d[1]}～${d[2]}）` : `${d[0]}% 發出爆波（發生位置：${d[1]}）`, '4KshrNX');
+				T(d[1] != d[2] ? `${d[0]}% 發出爆波（發生位置：${d[1]}～${d[2]}）` : `${d[0]}% 發出爆波（發生位置：${d[1]}）`);
 				break;
 		}
 	}
@@ -452,26 +452,26 @@ loadEnemy(my_id)
 		}
 		if (E.atkType & ATK_RANGE) {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/BeuHYlZ.png';
+			s.src = '/img/i/o/0.png';
 			specials.appendChild(s);
 		} else {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/CZwFP3H.png';
+			s.src = '/img/i/o/1.png';
 			specials.appendChild(s);
 		}
 		if (E.atkType & ATK_LD) {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/fYILfa8.png';
+			s.src = '/img/i/o/2.png';
 			specials.appendChild(s);
 		}
 		if (E.atkType & ATK_OMNI) {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/rvGrwIL.png';
+			s.src = '/img/i/o/3.png';
 			specials.appendChild(s);
 		}
 		if (E.atkType & ATK_KB_REVENGE) {
 			const s = new Image(40, 40);
-			s.src = 'https://i.imgur.com/KqtrO2b.png';
+			s.src = '/img/i/o/4.png';
 			specials.appendChild(s);
 		}
 		specials.append(X);

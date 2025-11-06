@@ -101,7 +101,6 @@ module.exports = class extends SiteGenerator {
 			fixedLineup: fixed_lineup,
 			stageTips: stage_tips,
 			techNames: gachaScheme.tech_names,
-			techLinks: gachaScheme.tech_links,
 			cannonNames,
 			mainChapters,
 		};
