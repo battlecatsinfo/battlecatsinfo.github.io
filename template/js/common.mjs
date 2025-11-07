@@ -366,7 +366,7 @@ class ConfigHandler {
 			localStorage.setItem('stagel', value);
 	}
 	get stagef() {
-		return localStorage.getItem('stagef') ?? 'F';
+		return localStorage.getItem('stagef') ?? 'f';
 	}
 	set stagef(value) {
 		if (value === null)
