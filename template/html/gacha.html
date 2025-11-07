@@ -299,14 +299,14 @@
 	<table class="w3-table N" style="position: relative;width:auto;margin-top:3em;">
 		<thead>
 			<tr class="w3-black">
-				<th colSpan="{{#if data.must_drop_rate}}5{{else}}4{{/if}}">轉蛋詳細</th>
+				<th colSpan="{{#if data.guaranteed}}5{{else}}4{{/if}}">轉蛋詳細</th>
 			</tr>
 			<tr class="w3-light-gray">
 				<th>圖示</th>
 				<th>項目</th>
 				<th>機率</th>
 				<th>總和</th>
-				{{#if data.must_drop_rate}}
+				{{#if data.guaranteed}}
 				<th>實際機率</th>
 				{{/if}}
 			</tr>
@@ -331,7 +331,7 @@
 				<td rowSpan="{{info.count}}">{{info.value}}</td>
 				{{/with}}
 				{{/if}}
-				{{#if data.must_drop_rate}}
+				{{#if data.guaranteed}}
 				<td>{{item.rateActual}}</td>
 				{{/if}}
 			</tr>

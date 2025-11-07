@@ -398,29 +398,22 @@ module.exports = class extends RewardSiteGenerator {
 	}
 	get_event(O) {
 		const S = {
-				must_drop_rate: null,
+				guaranteed: false,
 				items: [],
 		};
 		const units = O['units'];
 		const d_rate = O['rate'] || [0,0,0,0,0,0,0,0,0,0];
 		const result = [];
-		let must_drop_group = 0;
-		let must_drop_rate = 0;
-		let contain_must_drop = false;
+		let must_drop_group = undefined;
 		let gacha_units = new Set();
-		let guaranteed_unit_count = 0;
 
 		for (let i = 0, I;i < 9;i += 2) {
 			let rate = d_rate[i];
 			let group = units[i >> 1];
 			let R = new Fraction(rate, group.length || 1);
 			let must = d_rate[i + 1] ? '*' : '';
-			if (must) {
-				contain_must_drop = true;
-				must_drop_rate = Fraction(10000 - rate);
+			if (must)
 				must_drop_group = group;
-				guaranteed_unit_count += group.length;
-			}
 			for (const x of new Set(group)) {
 				let r = new Fraction(this.count(group, x)).mul(R);
 				if (x < 0) {
@@ -485,14 +478,15 @@ module.exports = class extends RewardSiteGenerator {
 			count,
 			value: rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A',
 		};
+		S.guaranteed = typeof must_drop_group !== 'undefined';
 		for (const v of result) {
 			const r = v[4].n ? this.fmt.format(v[4].valueOf() / 100) + '%' : 'N/A';
-			if (contain_must_drop) { // OldAlgorithm: if (must_drop_rate) {
+			if (S.guaranteed) {
 				let a;
 				if (v[3].must)
-					a = 0.9 * (v[4].valueOf() / 100) + (10 / guaranteed_unit_count) // OldAlgorithm: a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
+					a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
 				else
-					a = (v[4].valueOf() / 100) * 0.9 // OldAlgorithm: v[4].mul(must_drop_rate).valueOf() / 1000000;
+					a = 0.9 * v[4].valueOf() / 100;
 				S.items.push({
 					bgColor: v[1],
 					imgStyle: v[9],
@@ -517,8 +511,6 @@ module.exports = class extends RewardSiteGenerator {
 				});
 			}
 		}
-
-		S.must_drop_rate = must_drop_rate;
 
 		if (gacha_units.size) {
 			S.max = [];
