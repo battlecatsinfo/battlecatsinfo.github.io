@@ -20,7 +20,7 @@ function onTabLinkClick(event) {
 function onStarCatDeleteClick(event) {
 	event.preventDefault();
 	const tr = event.target.parentNode.parentNode;
-	const id = parseInt(tr.children[0].children[0].innerText);
+	const id = parseInt(tr.children[0].children[0].innerText.slice(1));
 	my_stars_list = my_stars_list.filter(x => x.id != id);
 	config.starCats = my_stars_list;
 	tr.remove();
@@ -99,7 +99,7 @@ if (!my_stars_list.length) {
 		const td1 = tr.appendChild(document.createElement('td'));
 		const a = td1.appendChild(document.createElement('a'));
 		a.href = './unit.html?id=' + cat.id;
-		a.innerText = cat.id;
+		a.innerText = `#${cat.id}`;
 		const td2 = tr.appendChild(document.createElement('td'));
 		const a2 = td2.appendChild(document.createElement('a'));
 		a2.href = a.href;
@@ -109,7 +109,7 @@ if (!my_stars_list.length) {
 		td3.innerText = cat.name;
 		const td4 = tr.appendChild(document.createElement('td'));
 		const a3 = td4.appendChild(document.createElement('a'));
-		a3.innerText = '刪除';
+		a3.innerText = '移除';
 		a3.style.setProperty('color', '#ff5722', 'important');
 		a3.style.cursor = 'pointer';
 		a3.onclick = onStarCatDeleteClick;

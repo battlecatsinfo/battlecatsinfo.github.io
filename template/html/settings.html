@@ -63,8 +63,15 @@
 		padding: 0.5em;
 		margin-bottom: 4em;
 	}
+	#my-stars img {
+		max-width: 6em;
+		height: auto;
+	}
 	#my-stars tr:nth-child(even) {
 		background-color: rgb(241, 241, 241);
+	}
+	:root.dark #my-stars tr:nth-child(even) {
+		background-color: #323541;
 	}
 	#s-trea .w3-input {
 		background-color: transparent;
@@ -108,11 +115,23 @@
 		position:relative;
 		top:0.25em;
 	}
+	#settings {
+		margin: 0.5em;
+		padding-left: 13.5vw;
+	}
+	@media screen and (max-width: 800px) {
+		.w3-sidebar {
+			display: none;
+		}
+		#settings {
+			padding-left: 0.5em;
+		}
+	}
 	</style>
 {{/inline}}
 
 {{#*inline "content"}}
-	<div class="w3-sidebar w3-bar-block w3-card" style="width: max(6em,10vw);background-color: #8080803d !important;">
+	<div class="w3-sidebar w3-bar-block w3-card" style="width: 12vw;background-color: #8080803d !important;">
 		<p class="w3-bar-item" style="background-color: transparent !important;">
 			<svg viewBox="0 0 24 24" style="width: 80%;background-color: transparent !important;">
 				<path style="fill: var(--color);background-color: transparent !important;" d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z" />
@@ -123,14 +142,14 @@
 		<a href="#treasure" class="w3-bar-item w3-button w3-border-bottom">金寶設定</a>
 	</div>
 
-	<form id="settings" style="margin: 0.5em;padding-left: max(6.2em,11vw);">
+	<form id="settings">
 		<h1 style="margin: 10px;text-align: center;">設定</h1>
 
 		<h2 id="general" style="text-align: center;">一般</h2>
 
 		<div class="w3-row w3-section">
 			<h3>時間單位</h3>
-			<div class="form w3-card-4">
+			<div class="form w3-card">
 				<p>
 					<label><input type="radio" name="unit" value="S" checked>秒</label>
 				</p>
@@ -143,7 +162,7 @@
 
 		<div class="w3-row w3-section odds">
 			<h3>小數點</h3>
-			<div class="form w3-card-4">
+			<div class="form w3-card">
 				<p>
 					<label><input type="radio" name="prec" value="1">1 位</label>
 				</p>
@@ -162,7 +181,7 @@
 
 		<div class="w3-row w3-section">
 			<h3>佈景主題</h3>
-			<div class="form w3-card-4">
+			<div class="form w3-card">
 				<p>
 					<label><input type="radio" name="theme" value="light">淺色主題</label>
 				</p>
@@ -177,7 +196,7 @@
 
 		<div class="w3-row w3-section">
 			<h3>關卡資訊語言</h3>
-			<div class="form w3-card-4">
+			<div class="form w3-card">
 				<p>
 					<label><input type="radio" name="stagel" value="0" checked>繁體中文</label>
 				</p>
@@ -193,7 +212,7 @@
 
 		<div class="w3-row w3-section">
 			<h3>關卡資訊時間單位</h3>
-			<div class="form w3-card-4">
+			<div class="form w3-card">
 				<p>
 					<label><input type="radio" name="stagef" value="f" checked>F（幀數）</label>
 				</p>
@@ -206,7 +225,7 @@
 
 		<div class="w3-row w3-section">
 			<h3>表格</h3>
-			<div class="form w3-card-4">
+			<div class="form w3-card">
 				<p>
 					<label><input type="radio" name="layout" value="1" checked>巴哈精華區表格風格（複雜）</label>
 				</p>
