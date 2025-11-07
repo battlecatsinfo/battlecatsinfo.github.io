@@ -124,7 +124,7 @@ function getTraitNames(trait) {
 
 function createAbIcons(form, p1, p2, tbody) {
 	let treasure = !1,
-		tn, du, cv, func, i, v, ab_no;
+		tn, du, cv, func, ab_no;
 
 	function w1(msg) {
 		const p = document.createElement('div');
@@ -147,8 +147,8 @@ function createAbIcons(form, p1, p2, tbody) {
 	function w3(msg) {
 		const p = document.createElement('div');
 		p.classList.add('ab-select');
-		p._i = i;
-		if (tbody._s.has(i)) {
+		p._i = ab_no;
+		if (tbody._s.has(ab_no)) {
 			p.style.setProperty('background-color', '#5cabd273', 'important');
 			p.s = true;
 		} else {
@@ -516,6 +516,8 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
+				else
+					p1.parentNode.style.display = '';
 				func("怪人特效（對怪人攻擊力和體力 2.5 倍）");
 				break;
 		}
@@ -1496,10 +1498,13 @@ function calc_def(table) {
 	}
 	if (layout === 2) {
 		for (const [tbody, form] of table_to_values) {
-			if (weirdo)
+			if (weirdo) {
+				tbody._s.add(AB_WEIRDO);
 				form.ab[AB_WEIRDO] = {};
-			else
+			} else {
+				tbody._s.delete(AB_WEIRDO);
 				delete form.ab[AB_WEIRDO];
+			}
 			let td = tbody.children[7].children[1];
 			td.textContent = '';
 			createImuIcons(form.imu, td);

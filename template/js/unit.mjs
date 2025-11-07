@@ -107,8 +107,8 @@ const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_Z
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
 
-const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION]);
-const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
+const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_WEIRDO]);
+const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_WEIRDO]);
 
 function combineChances(count, chance) {
 	let x = 1;
@@ -2185,8 +2185,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 	parent.textContent = '';
 	const firstLine = plus_s + fmt(
-		(catEnv.getOthers(2).length || catEnv.getOthers(16).length) ?
-			form.gettatks({traits: TRAIT_ALL, filter: [AB_WEIRDO], mode, metal: false}) : form.getatks(),
+		catEnv.getOthers(2).length ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(),
 		attackF
 	);
 	parent.append(firstLine);
@@ -2213,7 +2212,6 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 			continue;
 
 		let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
-		filter.add(AB_WEIRDO);
 		let atks = fmt(form.gettatks({
 			traits,
 			filter,
@@ -2247,7 +2245,7 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 	const plus_s = plus ? '+' : '';
 
 	parent.textContent = '';
-	const firstLine = plus_s + numStr(floor((catEnv._orbs.hp ? form.getthp({filter: [AB_WEIRDO]}) : form.hp) / KB));
+	const firstLine = plus_s + numStr(floor((catEnv._orbs.hp ? form.getthp({filter: []}) : form.hp) / KB));
 	parent.append(firstLine);
 	let maxLen = firstLine.length;
 
@@ -2271,7 +2269,6 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 		)
 			continue;
 
-		filter.add(AB_WEIRDO);
 
 		let hp = numStr(floor(form.getthp({filter})) / KB);
 		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${hp}`;
@@ -2295,8 +2292,6 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 function updateHp(form, filter, W) {
 	let old_hp;
 	let traits = TRAIT_ALL;
-
-	filter.add(AB_WEIRDO);
 
 	for (let first = true;;first = false) {
 		const hp = numStr(floor(form.getthp({
@@ -2328,7 +2323,6 @@ function updateAtk(form, filter, W1, W2) {
 	let old_atks;
 	let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
 
-	filter.add(AB_WEIRDO);
 	W1.textContent = W2.textContent = '';
 
 	for (let first = true;;first = false) {
@@ -2398,6 +2392,7 @@ export {
 	TB_BEAST,
 	TB_BARON,
 	TB_SAGE,
+	TB_WEIRDO,
 	TRAIT_ALL,
 	trait_no_treasure,
 	trait_treasure,
