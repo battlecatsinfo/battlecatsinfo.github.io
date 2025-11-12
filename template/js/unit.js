@@ -518,7 +518,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					func = w3;
 				else
 					p1.parentNode.style.display = '';
-				func("怪人特效（對怪人攻擊力和體力 2.5 倍）");
+				func("怪人特效（對怪人攻擊力和體力 25 倍）");
 				break;
 		}
 	}
