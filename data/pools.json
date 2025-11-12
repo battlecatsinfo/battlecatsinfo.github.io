@@ -448,6 +448,7 @@
 		"img": "https://i.meee.com.tw/wUZr001.png",
 		"ticket": 231,
 		"stage": "1-412",
+		"rate": [0, 0, 7000, 0, 2300, 0, 500, 1, 200, 0],
 		"type": "event",
 		"units": [[], [0, 3, 11, 12], [2, 4, 5, 14], [-185, -376, -727, -832], [197]],
 		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E045.html",
