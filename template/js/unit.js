@@ -274,7 +274,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				func = w1;
 				if (layout === 2)
 					func = w3;
-				func("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7)");
+				func("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7）");
 				break;
 
 			case 18:
