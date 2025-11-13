@@ -401,9 +401,6 @@ class CatEnv {
 	get combo_eva() {
 		return (this._others[15] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
-	get combo_weirdo() {
-		return (this._others[16] ?? []).reduce((rv, x) => rv + x / 100, 0);
-	}
 }
 
 class Unit {
@@ -1201,7 +1198,7 @@ class CatForm extends Unit {
 		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
 			hp /= 0.5;
 		} else if ((traits & TB_WEIRDO) && ab.hasOwnProperty(AB_WEIRDO)) {
-			hp *= this.env.combo_weirdo;
+			hp /= 0.4;
 		}
 
 		if (traits & TRAIT_BASE)
@@ -1323,7 +1320,7 @@ class CatForm extends Unit {
 			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
 				atk *= 1.2;
 			} else if ((traits & TB_WEIRDO) && ab.hasOwnProperty(AB_WEIRDO)) {
-				atk *= this.env.combo_weirdo;
+				atk *= 2.5;
 			}
 
 			if (ab.hasOwnProperty(AB_EKILL) && (traits & TB_EVA))
