@@ -1211,6 +1211,9 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 					num = form.level;
 					t._val = num;
 					t.textContent = `Lv${num}`;
+					t._form.applyTalents(custom_talents);
+					if (_super)
+						t._form.applySuperTalents(custom_super_talents);
 					updateValues(t._form, tbl);
 				} else {
 					t.textContent = t._val;
@@ -1977,6 +1980,11 @@ function calcCost(event) {
 	if (t._super)
 		TF.applySuperTalents(custom_super_talents);
 	tf_tbl_s && updateTable(TF, tf_tbl_s);
+	if (tf4_tbl) {
+		const TF4 = my_cat.forms[3].clone();
+		TF4.applyTalents(custom_talents);
+		updateTable(TF4, tf4_tbl);
+	}
 }
 
 function renderTalentCosts(talent_names, talents, _super = false) {
