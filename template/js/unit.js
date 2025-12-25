@@ -1211,7 +1211,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 					num = form.level;
 					t._val = num;
 					t.textContent = `Lv${num}`;
-					t._form.applyTalents(custom_talents);
+					my_cat.talents && t._form.applyTalents(custom_talents);
 					if (_super)
 						t._form.applySuperTalents(custom_super_talents);
 					updateValues(t._form, tbl);
