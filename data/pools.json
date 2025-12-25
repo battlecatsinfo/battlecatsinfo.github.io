@@ -403,6 +403,18 @@
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E015.html"
 	},
 	{
+		"tw_name": "13週年貓咪戰隊活動轉蛋",
+		"jp_name": "にゃんこレンジャー",
+		"en_name": "13th Anniversary",
+		"img": "https://i.meee.com.tw/wUZr001.png",
+		"ticket": 231,
+		"stage": "1-412",
+		"type": "event",
+		"units": [[], [0, 3, 11, 12], [2, 4, 5, 14], [-185, -376, -727, -832], [197]],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E045.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E045.html"
+	},
+	{
 		"tw_name": "下載紀念活動轉蛋",
 		"jp_name": "ダウンロード記念スペシャルイベントガチャ",
 		"en_name": "DL Special Event Gacha",
