@@ -186,6 +186,7 @@
 	<div id="loader"></div>
 	<div id="main" class="An">
 		<div class="w3-container">
+			<!-- trait searcher -->
 			<ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: auto;" id="trait-s">
 				<li><span class="w3-button or-and w3-pale-red">AND</span></li>
 				<li data-expr="trait&RED">
@@ -243,7 +244,8 @@
 					<button><img src="/img/i/e/12.png" width="40" height="40">道場塔</button>
 				</li>
 			</ul>
-			<ul class="w3-ul may-hide" style="width: 150px;" id="atk-s">
+			<!-- atk searcher -->
+			<!-- <ul class="w3-ul may-hide" style="width: 150px;" id="atk-s">
 				<li><span class="w3-button or-and w3-blue-gray">AND</span></li>
 				<li data-expr="atktype&ATK_SINGLE">
 					<button><img src="/img/i/o/1.png" width="40" height="40">單體攻擊</button>
@@ -263,11 +265,13 @@
 				<li data-expr="pre1">
 					<button><img src="/img/i/o/5.png" width="40" height="40">連續攻擊</button>
 				</li>
-			</ul>
+			</ul> -->
+			<!-- clear/reset buttons -->
 			<form action="javascript:void(0);" onsubmit="return false;" class="may-hide" style="width: 150px;">
 				<span class="w3-button w3-teal w3-round" id="filter-go">篩選</span>
 				<span class="w3-button w3-red w3-round" id="filter-clear">清除</span>
 			</form>
+			<!-- regex? idk -->
 			<div class="no-print may-hide" style="position: absolute;top: 1047px;left: 17px;">
 				<div>篩選表達式</div>
 				<textarea class="w3-code" rows="3" cols="60" name="filter-expr" id="filter-expr" spellcheck="false"></textarea>
@@ -277,7 +281,8 @@
 				<br>
 				<a href="/help.html" style="display: block;text-align: center;">使用說明</a>
 			</div>
-			<ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: auto;width: 190px;" id="ab-s">
+			<!-- abilities searcher -->
+			<!-- <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: auto;width: 190px;" id="ab-s">
 				<li><span class="w3-button or-and w3-green">AND</span></li>
 				<li style="text-align: center;">能力</li>
 				<li data-expr="hasab(AB_STRENGTHEN)">
@@ -387,8 +392,9 @@
 				<li data-expr="imu&IMU_TOXIC">
 					<button><img src="/img/i/m/8.png" width="40" height="40">毒擊傷害無效</button>
 				</li>
-			</ul>
-			<ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="kind-s">
+			</ul> -->
+			<!-- species searcher -->
+			<!-- <ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="kind-s">
 				{{#each (loadTSV "enemy_species.tsv") as |sp|}}
 				<li data-expr="
 					{{~#each (split sp.id_list ",") as |id|~}}
@@ -399,8 +405,41 @@
 					<button>{{sp.name}}</button>
 				</li>
 				{{/each}}
-			</ul>
-			<div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
+			</ul> -->
+			<!-- stages selector -->
+			<div id="stages" class="w3-bar may-hide stage-buttons"
+				style="margin:20px 0; position:absolute; top:0; left:390px;">
+
+				<li class="w3-button o-selected">
+					<input type="radio" name="stage" value="EOC" checked> 世界篇
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value="ITF1"> 未來一
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value="ITF2"> 未來二
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value="ITF3"> 未來三
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value="ITC1"> 宇宙一
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value="ITC2"> 宇宙二
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value="ITC3"> 宇宙三
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value="SL"> 傳奇關卡
+				</li>
+			</div>
+
+
+
+			<!-- search bar & results -->
+			<div id="tables" style="margin: 20px 0px;position: absolute;top: 45px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
 				<div class="may-hide">
 					<input type="search" placeholder="搜尋名稱或敵人id" id="name-search">
 				</div>

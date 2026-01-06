@@ -11,18 +11,21 @@ var hide_seach = false;
 const tables = document.getElementById('tables');
 const toggle_s = document.getElementById('toggle-s');
 const trait_s = document.getElementById('trait-s');
-const atk_s = document.getElementById('atk-s');
-const ab_s = document.getElementById('ab-s');
-const kind_s = document.getElementById('kind-s');
-const atkBtn = atk_s.firstElementChild.firstElementChild;
+// const atk_s = document.getElementById('atk-s');
+// const ab_s = document.getElementById('ab-s');
+// const kind_s = document.getElementById('kind-s');
+// const atkBtn = atk_s.firstElementChild.firstElementChild;
 const traitBtn = trait_s.firstElementChild.firstElementChild;
-const abBtn = ab_s.firstElementChild.firstElementChild;
+// const abBtn = ab_s.firstElementChild.firstElementChild;
 const name_search = document.getElementById('name-search');
 var last_forms;
 var per_page = 10;
 let results;
 
 let enemyQueue = []; // store {id, name, icon} objects
+// let activeQueue = []; // store {id, name, icon} objects
+let selected_chapter = "EOC";
+
 
 function renderQueue() {
     const ul = document.getElementById('queue-list');
@@ -48,6 +51,24 @@ document.getElementById('queue-clear').onclick = function() {
 	enemyQueue.length = 0;
 	renderQueue();
 }
+
+const radios = document.querySelectorAll('#stages input[type="radio"]');
+
+radios.forEach(radio => {
+	radio.addEventListener('change', () => {
+		selected_chapter = radio.value;
+		radios.forEach(r => {
+			r.parentElement.classList.toggle(
+				'o-selected',
+				r.checked
+			);
+			console.log(r.checked, selected_chapter);
+
+		});
+	});
+});
+
+
 
 
 function rerender(page) {
@@ -152,32 +173,32 @@ function calculate(code = '', noUpdateUrl) {
 				codes.push(M.join('&&'));
 			}
 		}
-		const kinds = Array.from(kind_s.querySelectorAll('.o-selected'));
-		if (kinds.length) {
-			let M = kinds.map(x => x.getAttribute('data-expr'));
-			url.searchParams.set('kinds', M.join(' '));
-			codes.push(M.join('||'));
-		}
-		const atks = Array.from(atk_s.querySelectorAll('.o-selected'));
-		if (atks.length) {
-			let M = atks.map(x => x.getAttribute('data-expr'));
-			url.searchParams.set('atks', M.join(' '));
-			if (atkBtn.textContent == 'OR') {
-				codes.push(M.join('||'));
-			} else {
-				codes.push(M.join('&&'));
-			}
-		}
-		const abs = Array.from(ab_s.querySelectorAll('.o-selected'));
-		if (abs.length) {
-			let M = abs.map(x => x.getAttribute('data-expr'));
-			url.searchParams.set('abs', M.join(' '));
-			if (abBtn.textContent == 'OR') {
-				codes.push(M.join('||'));
-			} else {
-				codes.push(M.join('&&'));
-			}
-		}
+		// const kinds = Array.from(kind_s.querySelectorAll('.o-selected'));
+		// if (kinds.length) {
+		// 	let M = kinds.map(x => x.getAttribute('data-expr'));
+		// 	url.searchParams.set('kinds', M.join(' '));
+		// 	codes.push(M.join('||'));
+		// }
+		// const atks = Array.from(atk_s.querySelectorAll('.o-selected'));
+		// if (atks.length) {
+		// 	let M = atks.map(x => x.getAttribute('data-expr'));
+		// 	url.searchParams.set('atks', M.join(' '));
+		// 	if (atkBtn.textContent == 'OR') {
+		// 		codes.push(M.join('||'));
+		// 	} else {
+		// 		codes.push(M.join('&&'));
+		// 	}
+		// }
+		// const abs = Array.from(ab_s.querySelectorAll('.o-selected'));
+		// if (abs.length) {
+		// 	let M = abs.map(x => x.getAttribute('data-expr'));
+		// 	url.searchParams.set('abs', M.join(' '));
+		// 	if (abBtn.textContent == 'OR') {
+		// 		codes.push(M.join('||'));
+		// 	} else {
+		// 		codes.push(M.join('&&'));
+		// 	}
+		// }
 		if (codes.length) {
 			code = (filter_expr.value = codes.map(x => `(${x})`).join('&&'));
 		} else
@@ -220,10 +241,11 @@ function calculate(code = '', noUpdateUrl) {
 	renderTable(results);
 	if (sortCode.length && sortCode != '1')
 		url.searchParams.set('sort', sortCode);
-	const a = atkBtn.textContent == 'OR' ? '1' : '0';
+	// const a = atkBtn.textContent == 'OR' ? '1' : '0';
 	const b = traitBtn.textContent == 'OR' ? '1' : '0';
-	const c = abBtn.textContent == 'OR' ? '1' : '0';
-	const ao = a + b + c;
+	// const c = abBtn.textContent == 'OR' ? '1' : '0';
+	// const ao = a + b + c;
+	const ao = '0' + b + '0';
 	if (ao != '000') // AND/AND/AND (default)
 		url.searchParams.set('ao', ao);
 	if (location.href != url.href && !noUpdateUrl)
@@ -264,10 +286,10 @@ loadAllEnemies()
 			traitBtn.textContent = ao[1] == '1' ? 'OR' : 'AND';
 			abBtn.textContent = ao[2] == '1' ? 'OR' : 'AND';
 		}
-		addBtns(atk_s, params.get('atks'));
-		addBtns(ab_s, params.get('abs'));
+		// addBtns(atk_s, params.get('atks'));
+		// addBtns(ab_s, params.get('abs'));
 		addBtns(trait_s, params.get('traits'));
-		addBtns(kind_s, params.get('kinds'));
+		// addBtns(kind_s, params.get('kinds'));
 		calculate(filter ? filter : '', true);
 	});
 document.querySelectorAll('button').forEach(elem => {
@@ -302,9 +324,9 @@ document.getElementById('filter-clear').onclick = function() {
 		x.classList.remove('o-selected');
 	};
 	trait_s.querySelectorAll('.o-selected').forEach(fn);
-	atk_s.querySelectorAll('.o-selected').forEach(fn);
-	ab_s.querySelectorAll('.o-selected').forEach(fn);
-	kind_s.querySelectorAll('.o-selected').forEach(fn);
+	// atk_s.querySelectorAll('.o-selected').forEach(fn);
+	// ab_s.querySelectorAll('.o-selected').forEach(fn);
+	// kind_s.querySelectorAll('.o-selected').forEach(fn);
 	filter_expr.value = '';
 	sort_expr.value = '';
 	calculate();
