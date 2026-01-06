@@ -243,6 +243,27 @@
 					<button><img src="/img/i/e/12.png" width="40" height="40">道場塔</button>
 				</li>
 			</ul>
+			<ul class="w3-ul may-hide" style="width: 150px;" id="atk-s">
+				<li><span class="w3-button or-and w3-blue-gray">AND</span></li>
+				<li data-expr="atktype&ATK_SINGLE">
+					<button><img src="/img/i/o/1.png" width="40" height="40">單體攻擊</button>
+				</li>
+				<li data-expr="atktype&ATK_RANGE">
+					<button><img src="/img/i/o/0.png" width="40" height="40">範圍攻擊</button>
+				</li>
+				<li data-expr="atktype&ATK_LD">
+					<button><img src="/img/i/o/2.png" width="40" height="40">遠距攻擊</button>
+				</li>
+				<li data-expr="atktype&ATK_OMNI">
+					<button><img src="/img/i/o/3.png" width="40" height="40">全方位攻擊</button>
+				</li>
+				<li data-expr="atktype&ATK_KB_REVENGE">
+					<button><img src="/img/i/o/4.png">擊退反擊</button>
+				</li>
+				<li data-expr="pre1">
+					<button><img src="/img/i/o/5.png" width="40" height="40">連續攻擊</button>
+				</li>
+			</ul>
 			<form action="javascript:void(0);" onsubmit="return false;" class="may-hide" style="width: 150px;">
 				<span class="w3-button w3-teal w3-round" id="filter-go">篩選</span>
 				<span class="w3-button w3-red w3-round" id="filter-clear">清除</span>
@@ -256,6 +277,117 @@
 				<br>
 				<a href="/help.html" style="display: block;text-align: center;">使用說明</a>
 			</div>
+			<ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: auto;width: 190px;" id="ab-s">
+				<li><span class="w3-button or-and w3-green">AND</span></li>
+				<li style="text-align: center;">能力</li>
+				<li data-expr="hasab(AB_STRENGTHEN)">
+					<button><img src="/img/i/a/1.png" width="40" height="40">攻擊力上升</button>
+				</li>
+				<li data-expr="hasab(AB_LETHAL)">
+					<button><img src="/img/i/a/2.png" width="40" height="40">死前存活</button>
+				</li>
+				<li data-expr="hasab(AB_ATKBASE)">
+					<button><img src="/img/i/a/3.png" width="40" height="40">善於攻城</button>
+				</li>
+				<li data-expr="hasab(AB_CRIT)">
+					<button><img src="/img/i/a/4.png" width="40" height="40">會心一擊</button>
+				</li>
+				<li data-expr="hasab(AB_S)">
+					<button><img src="/img/i/a/9.png" width="40" height="40">渾身一擊</button>
+				</li>
+				<li data-expr="hasab(AB_MINIWAVE)">
+					<button><img src="/img/i/a/12.png" width="40" height="40">小波動</button>
+				</li>
+				<li data-expr="hasab(AB_WAVE)">
+					<button><img src="/img/i/a/13.png" width="40" height="40">波動</button>
+				</li>
+				<li data-expr="hasab(AB_MINISURGE)">
+					<button><img src="/img/i/a/14.png" width="40" height="40">小烈波</button>
+				</li>
+				<li data-expr="hasab(AB_SURGE)">
+					<button><img src="/img/i/a/15.png" width="40" height="40">烈波攻擊</button>
+				</li>
+				<li data-expr="hasab(AB_DEATHSURGE)">
+					<button><img src="/img/i/a/41.png" width="40" height="40">遺留烈波</button>
+				</li>
+				<li data-expr="hasab(AB_COUNTER)">
+					<button><img src="/img/i/a/40.png" width="40" height="40">烈波反擊</button>
+				</li>
+				<li data-expr="hasab(AB_EXPLOSION)">
+					<button><img src="/img/i/a/45.png" width="40" height="40">爆波攻擊</button>
+				</li>
+				<li data-expr="hasab(AB_BURROW)">
+					<button><img src="/img/i/a/34.png" width="40" height="40">鑽地</button>
+				</li>
+				<li data-expr="hasab(AB_REVIVE)">
+					<button><img src="/img/i/a/35.png" width="40" height="40">復活</button>
+				</li>
+				<li data-expr="hasab(AB_BARRIER)">
+					<button><img src="/img/i/a/38.png" width="40" height="40">護盾</button>
+				</li>
+				<li data-expr="hasab(AB_DSHIELD)">
+					<button><img src="/img/i/a/39.png" width="40" height="40">惡魔盾</button>
+				</li>
+				<li data-expr="hasab(AB_SUICIDE)">
+					<button><img src="/img/i/a/37.png" width="40" height="40">一次攻擊</button>
+				</li>
+				<li style="text-align: center;">效果</li>
+				<li data-expr="hasab(AB_WEAK)">
+					<button><img src="/img/i/a/21.png" width="40" height="40">攻擊力下降</button>
+				</li>
+				<li data-expr="hasab(AB_STOP)">
+					<button><img src="/img/i/a/22.png" width="40" height="40">使動作停止</button>
+				</li>
+				<li data-expr="hasab(AB_SLOW)">
+					<button><img src="/img/i/a/23.png" width="40" height="40">使動作變慢</button>
+				</li>
+				<li data-expr="hasab(AB_KB)">
+					<button><img src="/img/i/a/30.png" width="40" height="40">打飛敵人</button>
+				</li>
+				<li data-expr="hasab(AB_WARP)">
+					<button><img src="/img/i/a/31.png" width="40" height="40">傳送</button>
+				</li>
+				<li data-expr="hasab(AB_CURSE)">
+					<button><img src="/img/i/a/33.png" width="40" height="40">詛咒</button>
+				</li>
+				<li data-expr="hasab(AB_IMUATK)">
+					<button><img src="/img/i/a/32.png" width="40" height="40">攻擊無效</button>
+				</li>
+				<li data-expr="hasab(AB_POIATK)">
+					<button><img src="/img/i/a/36.png" width="40" height="40">毒擊</button>
+				</li>
+				<li style="text-align: center;">抗性</li>
+				<li data-expr="imu&IMU_WEAK">
+					<button><img src="/img/i/m/5.png" width="40" height="40">攻擊力下降無效</button>
+				</li>
+				<li data-expr="imu&IMU_STOP">
+					<button><img src="/img/i/m/1.png" width="40" height="40">動作停止無效</button>
+				</li>
+				<li data-expr="imu&IMU_SLOW">
+					<button><img src="/img/i/m/2.png" width="40" height="40">動作變慢無效</button>
+				</li>
+				<li data-expr="imu&IMU_KB">
+					<button><img src="/img/i/m/3.png" width="40" height="40">打飛敵人無效</button>
+				</li>
+				<li data-expr="imu&IMU_WAVE">
+					<button><img src="/img/i/m/0.png" width="40" height="40">波動傷害無效</button>
+				</li>
+				<li data-expr="imu&IMU_SURGE">
+					<button><img src="/img/i/m/4.png" width="40" height="40">烈波傷害無效</button>
+				</li>
+				<li data-expr="imu&IMU_EXPLOSION">
+					<button><img src="/img/i/m/10.png" width="40" height="40">爆波傷害無效</button>
+				</li>
+				<li data-expr="imu&IMU_WARP">
+					<button><img src="/img/i/m/6.png" width="40" height="40">傳送無效</button>
+				</li>
+				<li data-expr="imu&IMU_CURSE">
+					<button><img src="/img/i/m/7.png" width="40" height="40">詛咒無效</button>
+				</li>
+				<li data-expr="imu&IMU_TOXIC">
+					<button><img src="/img/i/m/8.png" width="40" height="40">毒擊傷害無效</button>
+				</li>
+			</ul>
 			<ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="kind-s">
 				{{#each (loadTSV "enemy_species.tsv") as |sp|}}
 				<li data-expr="
@@ -316,6 +448,7 @@
 					<button id="queue-clear" class="w3-button w3-red" style="margin-top: 5px;">清空隊列</button>
 				</div>
 			</div>
+			
 		</div>
 	</div>
 {{/inline}}

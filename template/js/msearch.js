@@ -44,6 +44,11 @@ function renderQueue() {
     });
 }
 
+document.getElementById('queue-clear').onclick = function() {
+	enemyQueue.length = 0;
+	renderQueue();
+}
+
 
 function rerender(page) {
 	renderTable(last_forms, page);
@@ -109,16 +114,14 @@ function renderTable(forms, page = 1) {
 			e.textContent = texts[j].toString();
 			tr.appendChild(e);
 		}
-		// const a = document.createElement('a');
-		// const img = new Image(64, 64);
-		// img.src = F.icon;
-		// a.href = './enemy.html?id=' + F.id;
-		// a.appendChild(img);
-		// tr.children[1].appendChild(a);
-		// tbody.appendChild(tr);
+		const a = document.createElement('a');
 		const img = new Image(64, 64);
 		img.src = F.icon;
-		img.style.cursor = 'pointer';
+		a.href = './enemy.html?id=' + F.id;
+		a.appendChild(img);
+		tr.children[1].appendChild(a);
+		tbody.appendChild(tr);
+		
 		img.onclick = () => {
 			// Avoid duplicates
 			if (!enemyQueue.find(e => e.id === F.id)) {
