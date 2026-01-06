@@ -1,0 +1,323 @@
+{{#> common.html nav_bar_active="enemy"}}
+
+{{#*inline "viewport"}}{{/inline}}
+
+{{#*inline "title"}}敵人搜尋{{/inline}}
+
+{{#*inline "description"}}篩選和排序敵人{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
+	<meta property="og:image" content="/img/i/o/enemy.png">
+{{/inline}}
+
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="parser.js"></script>
+	<script src="msearch.js" type="module"></script>
+{{/inline}}
+
+{{#*inline "styles-inline"}}
+	<style>
+	body {
+		font-size: 16px;
+		padding: 0;
+		margin: 0;
+		width: 100%;
+	}
+	#loader {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		z-index: 1;
+		width: 120px;
+		height: 120px;
+		margin: -76px 0 0 -76px;
+		border: 16px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 16px solid #3498db;
+		-webkit-animation: spin 2s linear infinite;
+		animation: spin 2s linear infinite;
+	}
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+	.An {
+		position: relative;
+		display: none;
+		animation-name: An;
+		animation-duration: 0.7s;
+	}
+	@keyframes An {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	table,
+	th,
+	td {
+		border: 1px solid #d1d5d5;
+	}
+	.w3-centered td {
+		vertical-align: middle;
+	}
+	.w3-ul li {
+		padding: 0px;
+		cursor: default;
+		border-radius: 1px;
+	}
+	li img {
+		vertical-align: bottom;
+	}
+	li.o-selected {
+		box-shadow: 0 0 2px black;
+		background-color: #7fdbff;
+	}
+	span.o-selected > button {
+		background-color: #795548;
+	}
+	.w3-ul {
+		border-radius: 3px;
+		border: 1.5px solid #818181;
+		margin-top: 4px;
+		margin-bottom: 4px;
+	}
+	button {
+		display: block;
+		text-align: left;
+		width: 100%;
+		cursor: default;
+		transition: opacity 0s;
+		border: 0px;
+		background-color: inherit;
+		padding: 5px;
+	}
+	ul::-webkit-scrollbar {
+		width: 10px;
+	}
+	ul::-webkit-scrollbar-button {
+		background: #ebebeb;
+		border-radius: 4px;
+	}
+	ul::-webkit-scrollbar-track-piece {
+		background: #ebebeb;
+	}
+	ul::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background-color: gray;
+		border: 1px solid darkgray;
+	}
+	.w3-table tr:hover td,
+	li:hover {
+		background-color: lightcyan;
+	}
+	:root.dark .w3-table tr:hover td {
+		background-color: #638593;
+	}
+	:root.dark li:hover {
+		background-color: steelblue;
+	}
+	textarea {
+		font-size: 20px;
+		font-family: Monaco, "Ubuntu Mono", "Source Code Pro", Menlo, Consolas,
+			monospace;
+	}
+	input[type="button"] {
+		margin: 0px auto;
+		margin-top: 20px;
+		border-radius: 5px;
+		width: 90px;
+		padding: 3px 10px;
+	}
+	#pages-a > td {
+		font-size: 1.2em;
+		width: 50px;
+		text-align: center;
+		border: none;
+		cursor: pointer;
+	}
+	#pages-a > td:hover {
+		background-color: #ccc;
+	}
+	.w3-table td {
+		padding: 0px;
+	}
+	:root {
+		--mhide: block;
+	}
+	.may-hide {
+		display: var(--mhide);
+	}
+	.or-and {
+		margin-top: 0px;
+		width: 100%;
+	}
+	#name-search {
+		width: 100%;
+		padding: 6px 20px;
+		border: 3px solid #ddd;
+		border-radius: 7px;
+		outline: none;
+		transition: 0.2s;
+		margin: 0 auto;
+	}
+	#name-search:focus {
+		border-color: #bbb;
+	}
+	td.N {
+		background-color: var(--spans);
+	}
+	p {
+		margin-block-start: 5px;
+		margin-block-end: 5px;
+	}
+	</style>
+{{/inline}}
+
+{{#*inline "content"}}
+	<div id="loader"></div>
+	<div id="main" class="An">
+		<div class="w3-container">
+			<ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: auto;" id="trait-s">
+				<li><span class="w3-button or-and w3-pale-red">AND</span></li>
+				<li data-expr="trait&RED">
+					<button><img src="/img/i/e/0.png" width="40" height="40">紅色敵人</button>
+				</li>
+				<li data-expr="trait&FLOAT">
+					<button><img src="/img/i/e/1.png" width="40" height="40">飄浮敵人</button>
+				</li>
+				<li data-expr="trait&BLACK">
+					<button><img src="/img/i/e/2.png" width="40" height="40">黑色敵人</button>
+				</li>
+				<li data-expr="trait&METAL">
+					<button><img src="/img/i/e/3.png" width="40" height="40">鋼鐵敵人</button>
+				</li>
+				<li data-expr="trait&ANGEL">
+					<button><img src="/img/i/e/4.png" width="40" height="40">天使敵人</button>
+				</li>
+				<li data-expr="trait&ALIEN">
+					<button><img src="/img/i/e/5.png" width="40" height="40">異星戰士</button>
+				</li>
+				<li data-expr="trait&ZOMBIE">
+					<button><img src="/img/i/e/6.png" width="40" height="40">不死生物</button>
+				</li>
+				<li data-expr="trait&WHITE">
+					<button><img src="/img/i/e/8.png" width="40" height="40">無屬性敵人</button>
+				</li>
+				<li data-expr="trait&RELIC">
+					<button><img src="/img/i/e/7.png" width="40" height="40">古代種</button>
+				</li>
+				<li data-expr="trait&DEMON">
+					<button><img src="/img/i/e/11.png" width="40" height="40">惡魔</button>
+				</li>
+				<li data-expr="trait&BARON">
+					<button><img src="/img/i/e/14.png" width="40" height="40">超生命體</button>
+				</li>
+				<li data-expr="trait&BEAST">
+					<button><img src="/img/i/e/13.png" width="40" height="40">超獸</button>
+				</li>
+				<li data-expr="trait&EVA">
+					<button><img src="/img/i/e/9.png" width="40" height="40">使徒</button>
+				</li>
+				<li data-expr="trait&WITCH">
+					<button><img src="/img/i/e/10.png" width="40" height="40">魔女</button>
+				</li>
+				<li data-expr="trait&SAGE">
+					<button><img src="/img/i/e/15.png" width="40" height="40">超賢者</button>
+				</li>
+				<li data-expr="trait&WEIRDO">
+					<button><img src="/img/i/e/16.png" width="40" height="40">怪人</button>
+				</li>
+				<li data-expr="speed == 0 && trait == 0">
+					<button><img src="/img/i/e/animated.png" width="41" height="41">動畫塔</button>
+				</li>
+				<li data-expr="trait&INFN">
+					<button><img src="/img/i/e/12.png" width="40" height="40">道場塔</button>
+				</li>
+			</ul>
+			<form action="javascript:void(0);" onsubmit="return false;" class="may-hide" style="width: 150px;">
+				<span class="w3-button w3-teal w3-round" id="filter-go">篩選</span>
+				<span class="w3-button w3-red w3-round" id="filter-clear">清除</span>
+			</form>
+			<div class="no-print may-hide" style="position: absolute;top: 1047px;left: 17px;">
+				<div>篩選表達式</div>
+				<textarea class="w3-code" rows="3" cols="60" name="filter-expr" id="filter-expr" spellcheck="false"></textarea>
+				<br>
+				<div>排序表達式</div>
+				<textarea class="w3-code" rows="3" cols="60" name="sort-expr" id="sort-expr" spellcheck="false"></textarea>
+				<br>
+				<a href="/help.html" style="display: block;text-align: center;">使用說明</a>
+			</div>
+			<ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="kind-s">
+				{{#each (loadTSV "enemy_species.tsv") as |sp|}}
+				<li data-expr="
+					{{~#each (split sp.id_list ",") as |id|~}}
+					id=={{id}}
+					{{~#unless @last}}||{{/unless~}}
+					{{~/each~}}
+				">
+					<button>{{sp.name}}</button>
+				</li>
+				{{/each}}
+			</ul>
+			<div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
+				<div class="may-hide">
+					<input type="search" placeholder="搜尋名稱或敵人id" id="name-search">
+				</div>
+				<p>
+					<span id="search-result"></span><a href="#" id="toggle-s" style="padding-left: 1em;">隱藏搜尋器</a>
+					<span style="float: right;">
+						每頁顯示
+						<select id="per_page">
+							<option value="10">10個</option>
+							<option value="25">25個</option>
+							<option value="50">50個</option>
+							<option value="100">100個</option>
+							<option value="9999">全部</option>
+						</select>
+					</span>
+				</p>
+				<table class="w3-table w3-centered" style="width: 100%;margin-bottom: 0px;">
+					<thead>
+						<tr id="th" style="cursor: pointer;">
+							<td title="id">ID</td>
+							<td style="width: 110px;">圖示</td>
+							<td>名稱</td>
+							<td title="hp">HP</td>
+							<td title="atk">攻擊力</td>
+							<td title="dps">DPS</td>
+							<td title="kb">KB</td>
+							<td title="range">射程</td>
+							<td title="attackf">攻擊週期</td>
+							<td title="speed">跑速</td>
+							<td title="cost">獎金</td>
+							<td>排序值</td>
+						</tr>
+					</thead>
+					<tbody id="tbody"></tbody>
+				</table>
+				<table style="margin: 1em auto;">
+					<tbody>
+						<tr id="pages-a"></tr>
+					</tbody>
+				</table>
+				<!-- Enemy Queue Section -->
+				<div id="enemy-queue" style="margin-top: 20px; min-width: 300px;">
+					<h3>已選擇的敵人隊列</h3>
+					<ul id="queue-list" class="w3-ul" style="height: 200px; overflow-y: auto;"></ul>
+					<button id="queue-clear" class="w3-button w3-red" style="margin-top: 5px;">清空隊列</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{{/inline}}
+
+{{/common.html}}
