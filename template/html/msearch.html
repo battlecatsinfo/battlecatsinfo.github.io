@@ -100,6 +100,19 @@
 		background-color: inherit;
 		padding: 5px;
 	}
+	delete_button {
+		display: inline-block;
+		text-align: left;
+		width: max-content;
+		/* float: right; */
+		/* margin-left: auto;
+		margin-right: 0; */
+		cursor: default;
+		transition: opacity 0s;
+		border: 0px;
+		background-color: inherit;
+		padding: 5px;
+	}
 	ul::-webkit-scrollbar {
 		width: 10px;
 	}
@@ -179,6 +192,44 @@
 		margin-block-start: 5px;
 		margin-block-end: 5px;
 	}
+	.enemy-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, 130px);
+		gap: 12px;
+		justify-content: center;
+	}
+
+	.enemy-card {
+		width: 130px;
+		height: 170px;
+		border: 1px solid #ccc;
+		border-radius: 6px;
+		text-align: center;
+		background: #fff;
+		cursor: pointer;
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+
+		padding: 6px;
+		box-sizing: border-box;
+	}
+
+	.enemy-card img {
+		width: 110px;
+		height: 110px;
+		margin-top: 6px;
+	}
+
+	.enemy-name {
+		font-size: 14px;
+		line-height: 1.2;
+		margin-bottom: 6px;
+		word-break: break-word;
+	}
+
 	</style>
 {{/inline}}
 
@@ -456,21 +507,11 @@
 						</select>
 					</span>
 				</p>
-				<table class="w3-table w3-centered" style="width: 100%;margin-bottom: 0px;">
+				<!-- <table class="w3-table w3-centered" style="width: 100%;margin-bottom: 0px;">
 					<thead>
 						<tr id="th" style="cursor: pointer;">
-							<td title="id">ID</td>
 							<td style="width: 110px;">圖示</td>
 							<td>名稱</td>
-							<td title="hp">HP</td>
-							<td title="atk">攻擊力</td>
-							<td title="dps">DPS</td>
-							<td title="kb">KB</td>
-							<td title="range">射程</td>
-							<td title="attackf">攻擊週期</td>
-							<td title="speed">跑速</td>
-							<td title="cost">獎金</td>
-							<td>排序值</td>
 						</tr>
 					</thead>
 					<tbody id="tbody"></tbody>
@@ -479,7 +520,17 @@
 					<tbody>
 						<tr id="pages-a"></tr>
 					</tbody>
-				</table>
+				</table> -->
+				<div id="enemy-grid" class="enemy-grid"></div>
+
+				<div style="margin: 1em auto; text-align: center;">
+					<table>
+						<tbody>
+							<tr id="pages-a"></tr>
+						</tbody>
+					</table>
+				</div>
+
 				<!-- Enemy Queue Section -->
 				<div id="enemy-queue" style="margin-top: 20px; min-width: 300px;">
 					<h3>已選擇的敵人隊列</h3>

@@ -19,11 +19,10 @@ const traitBtn = trait_s.firstElementChild.firstElementChild;
 // const abBtn = ab_s.firstElementChild.firstElementChild;
 const name_search = document.getElementById('name-search');
 var last_forms;
-var per_page = 10;
+var per_page = 8*3;
 let results;
 
-let enemyQueue = []; // store {id, name, icon} objects
-// let activeQueue = []; // store {id, name, icon} objects
+let enemyQueue = []; // store {id, name, icon, activebool} objects
 let selected_chapter = "EOC";
 
 
@@ -36,13 +35,33 @@ function renderQueue() {
         const img = new Image(32, 32);
         img.src = enemy.icon;
         img.style.marginRight = '5px';
+		if (enemyQueue[i].active) {
+			li.classList.add("o-selected");
+		}
         li.prepend(img);
 
-        // optional: click to remove from queue
+		// create a delete button
+		const delete_enemy_button = document.createElement("delete_enemy_button");
+		delete_enemy_button.textContent = "刪除";
+		delete_enemy_button.classList.add("w3-red");
+		delete_enemy_button.onclick = () => {
+			enemyQueue.splice(i, 1);
+			renderQueue();
+		}
+
+		li.prepend(delete_enemy_button);
+
+        // optional: click to toggle active/deactive
         li.onclick = () => {
-            enemyQueue.splice(i, 1);
-            renderQueue();
+            
+			li.classList.toggle("o-selected");
+
+			enemyQueue[i].active = !enemyQueue[i].active;
         };
+
+
+		
+
         ul.appendChild(li);
     });
 }
@@ -101,7 +120,10 @@ function renderTable(forms, page = 1) {
 	forms = filterByNameOrId(forms);
 	let H = page * per_page;
 	let display_forms = forms.slice(H - per_page, H);
-	tbody.textContent = '';
+	// tbody.textContent = '';
+	const grid = document.getElementById('enemy-grid');
+	grid.textContent = '';
+
 	search_result.textContent = `顯示第${H - per_page + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
 	if (forms.length == 0) {
 		tbody.innerHTML =
@@ -124,34 +146,63 @@ function renderTable(forms, page = 1) {
 		}
 	}
 
+	// for (let i = 0; i < display_forms.length; ++i) {
+	// 	const tr = document.createElement('tr');
+	// 	const F = display_forms[i][1];
+	// 	const texts = [
+	// 		'', 
+	// 		F.name || F.jp_name || '?'
+	// 	];
+	// 	for (let j = 0; j < texts.length; ++j) {
+	// 		const e = document.createElement('td');
+	// 		e.textContent = texts[j].toString();
+	// 		tr.appendChild(e);
+	// 	}
+	// 	const a = document.createElement('a');
+	// 	const img = new Image(64, 64);
+	// 	img.src = F.icon;
+		
+	// 	img.onclick = () => {
+	// 		// Avoid duplicates
+	// 		if (!enemyQueue.find(e => e.id === F.id)) {
+	// 			enemyQueue.push({id: F.id, name: F.name || F.jp_name, icon: F.icon});
+	// 			renderQueue();
+	// 		}
+	// 	};
+	// 	tr.children[0].appendChild(img);
+	// 	tbody.appendChild(tr);
+
+	// }
 	for (let i = 0; i < display_forms.length; ++i) {
-		const tr = document.createElement('tr');
 		const F = display_forms[i][1];
-		const texts = [F.id, '', F.name || F.jp_name || '?', F.hp, F.atkm,
-			round(F.dps), F.kb, F.range, numStrT(F.attackF).replace('秒', '秒/下'), F.speed, F.earn, numStr(display_forms[i][0])
-		];
-		for (let j = 0; j < texts.length; ++j) {
-			const e = document.createElement('td');
-			e.textContent = texts[j].toString();
-			tr.appendChild(e);
-		}
-		const a = document.createElement('a');
+
+		const card = document.createElement('div');
+		card.className = 'enemy-card';
+
 		const img = new Image(64, 64);
 		img.src = F.icon;
-		a.href = './enemy.html?id=' + F.id;
-		a.appendChild(img);
-		tr.children[1].appendChild(a);
-		tbody.appendChild(tr);
-		
+
 		img.onclick = () => {
-			// Avoid duplicates
 			if (!enemyQueue.find(e => e.id === F.id)) {
-				enemyQueue.push({id: F.id, name: F.name || F.jp_name, icon: F.icon});
+				enemyQueue.push({
+					id: F.id,
+					name: F.name || F.jp_name,
+					icon: F.icon,
+					active: true
+				});
 				renderQueue();
 			}
 		};
-		tr.children[1].appendChild(img);
+
+		const name = document.createElement('div');
+		name.className = 'enemy-name';
+		name.textContent = F.name || F.jp_name || '?';
+
+		card.appendChild(img);
+		card.appendChild(name);
+		grid.appendChild(card);
 	}
+
 }
 
 function simplify(code) {
@@ -261,6 +312,7 @@ function addBtns(parent, s) {
 		}
 	}
 }
+
 loadAllEnemies()
 	.then(_cats => {
 		cats = _cats;
