@@ -27,24 +27,9 @@ let enemyQueue = []; // store {id, name, icon, active, stageIds} objects
 let selected_chapter = 3009; // EOC
 const found_stages = document.getElementById('found-stages');
 
-// async function loadAllEnemies() {
-// 	const eName = [];
-// 	const db = await EnemyIdb.open();
-// 	try {
-// 		const gen = db._data ?? EnemyIdb.forEachValue(db);
-// 		for await (const e of gen) {
-// 			eName[e.i] = e.name;
-// 		}
-// 	} finally {
-// 		db.close();
-// 	}
-// 	return eName;
-// }
-let eName;
 
 
 import * as Stage from './stage.mjs';
-import * as Enemy from './unit.mjs';
 
 function renderQueue() {
     const ul = document.getElementById('queue-list');
@@ -194,7 +179,7 @@ function filterByNameOrId(results) {
 
 
 
-function renderStages(forms){
+function renderStages(){
 	// get intersection of stages
 	console.log("rendering stages", selected_chapter);
 	const activeEnemies = enemyQueue.filter(e => e.active);
@@ -241,6 +226,7 @@ function renderStages(forms){
 			map.name;
 
 			const tr = document.createElement('tr');
+			tr.classList.add('no-hover');
 
 			// 篇章 (st)
 			const tdSt = document.createElement('td');
@@ -315,17 +301,9 @@ function renderStages(forms){
 			// for (const group of filteredEnemyLines) {
 			for (const [enemyId, { group, time, tower }] of bestEnemy) {
 				console.log(group);
-				const strs = group.split(",");
-				// const enemyId = parseInt(strs[0], 36);
-
-				// const enemyData = document.createElement('div');
+				
 				const tdName = document.createElement('td');
-				// enemyData.style.width = '40px';
-				// enemyData.className = 'enemy-card';
-				// enemyData.style.display = 'flex';
-				// enemyData.style.alignItems = 'center';
-				// enemyData.style.gap = '6px';
-
+				
 				const img = new Image(32, 32);
 				img.src = `/img/e/${enemyId}/0.png`;
 				
@@ -336,16 +314,12 @@ function renderStages(forms){
 				tdName.append(img, enemyName);
 
 				const firstSpawn = document.createElement('td');
-				// firstSpawn.textContent = strs[2];
 				firstSpawn.textContent = Math.ceil(time/30);
-				// firstSpawn.textContent = ~~(time/30);
-
+				
 
 				const towerSpawn = document.createElement('td');
 				towerSpawn.textContent = tower + "%";
 
-				// enemyData.append(img, enemyName, firstSpawn, towerSpawn);
-				// tdEnemy.appendChild(enemyData);
 				rowName.appendChild(tdName);
 				rowTime.appendChild(firstSpawn);
 				rowTower.appendChild(towerSpawn);
@@ -356,16 +330,6 @@ function renderStages(forms){
     		tbody.appendChild(tr);
 
 		});
-
-		// `/stage.html?s=${mc}-${sm}-${st}`
-
-
-		// display content
-		// const tr = document.createElement("tr");
-		// const text = [
-
-		// ]
-		// found_stages.appendChild(tr);
 	}
 }
 

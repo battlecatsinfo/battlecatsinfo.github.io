@@ -202,7 +202,7 @@
 		border: 1px solid #ccc;
 		border-radius: 6px;
 		text-align: center;
-		background: #fff;
+		/* background: #fff; */
 		cursor: pointer;
 
 		display: flex;
@@ -212,6 +212,14 @@
 
 		padding: 6px;
 		box-sizing: border-box;
+	}
+	.enemy-card:hover {
+		background-color: lightcyan;
+	}
+	
+	:root.dark .enemy-card:hover {
+		background-color: steelblue;
+
 	}
 
 	.enemy-card img {
@@ -227,23 +235,29 @@
 		word-break: break-word;
 	}
 	.enemy-subtable {
-	border-collapse: collapse;
-	font-size: 12px;
+		border-collapse: collapse;
+		font-size: 12px;
 	}
 
 	.enemy-subtable td {
-	border: 1px solid #ccc;
-	padding: 4px;
-	text-align: center;
-	vertical-align: top;
+		border: 1px solid #ccc;
+		padding: 4px;
+		text-align: center;
+		vertical-align: top;
 	}
 
 	.enemy-label {
-	font-weight: bold;
-	background: #f3f3f3;
-	white-space: nowrap;
+		font-weight: bold;
+		/* background: #f3f3f3; */
+		white-space: nowrap;
+	}
+	.w3-table tr.no-hover:hover td {
+		background-color: transparent;
 	}
 
+	:root.dark .w3-table tr.no-hover:hover td {
+		background-color: transparent;
+	}
 	</style>
 {{/inline}}
 
@@ -331,10 +345,10 @@
 			<!-- regex? idk -->
 			<div class="no-print may-hide" style="position: absolute;top: 1047px;left: 17px;">
 				<div>篩選表達式</div>
-				<textarea class="w3-code" rows="3" cols="60" name="filter-expr" id="filter-expr" spellcheck="false"></textarea>
+				<textarea class="w3-code" rows="3" cols="60" name="filter-expr" id="filter-expr" spellcheck="false" style="width: 400px;"></textarea>
 				<br>
 				<div>排序表達式</div>
-				<textarea class="w3-code" rows="3" cols="60" name="sort-expr" id="sort-expr" spellcheck="false"></textarea>
+				<textarea class="w3-code" rows="3" cols="60" name="sort-expr" id="sort-expr" spellcheck="false" style="width: 400px;"></textarea>
 				<br>
 				<a href="/help.html" style="display: block;text-align: center;">使用說明</a>
 			</div>
