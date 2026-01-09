@@ -2274,8 +2274,8 @@ function renderUnitPage() {
 
 			const F_talent = F.clone();
 			F_talent.applyTalents(custom_talents);
-			tf4_tbl = renderForm(F_talent, '四階：', true, false, my_cat.forms[3]);
-			tables.push(['四階+本能數值表格', tf4_tbl]);
+			tf4_tbl = renderForm(F_talent, '超本能完全升滿的數值表格', true, false, my_cat.forms[3]);
+			tables.push(['四階+超本能數值表格', tf4_tbl]);
 			mkTool(tf4_tbl);
 		}
 	}
