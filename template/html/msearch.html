@@ -258,6 +258,23 @@
 	:root.dark .w3-table tr.no-hover:hover td {
 		background-color: transparent;
 	}
+	/* Highlighted cells */
+	.w3-table td.highlight {
+		background-color: #7fdbff;
+	}
+
+	:root.dark .w3-table td.highlight {
+		background-color: steelblue;
+	}
+
+	/* Keep highlight during hover */
+	.w3-table tr.no-hover:hover td.highlight {
+		background-color: #7fdbff;
+	}
+
+	:root.dark .w3-table tr.no-hover:hover td.highlight {
+		background-color: steelblue;
+	}
 	</style>
 {{/inline}}
 

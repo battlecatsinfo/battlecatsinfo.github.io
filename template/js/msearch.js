@@ -183,6 +183,9 @@ function renderStages(){
 	// get intersection of stages
 	console.log("rendering stages", selected_chapter);
 	const activeEnemies = enemyQueue.filter(e => e.active);
+	const activeIds = new Set(
+		enemyQueue.filter(e => e.active).map(e => e.id)
+	);
 	tbody.textContent = '';
 	if (activeEnemies.length == 0) {
 		// TODO: empty
@@ -319,6 +322,12 @@ function renderStages(){
 
 				const towerSpawn = document.createElement('td');
 				towerSpawn.textContent = tower + "%";
+
+				if (activeIds.has(enemyId)){
+					tdName.classList.add("highlight");
+					firstSpawn.classList.add("highlight");
+					towerSpawn.classList.add("highlight");
+				}
 
 				rowName.appendChild(tdName);
 				rowTime.appendChild(firstSpawn);
