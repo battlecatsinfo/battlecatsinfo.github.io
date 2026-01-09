@@ -1334,6 +1334,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 	tbl.appendChild(tbodytr10);
 	tbl.appendChild(tbodytr11);
 	tbl.appendChild(tbodytr12);
+	tbl._baseForm = form.clone(); // latest change: talentAccumulationFix
 	updateValues(form, tbl);
 	createImuIcons(form.imu, tbodytr10.children[1]);
 	if (form.res)
