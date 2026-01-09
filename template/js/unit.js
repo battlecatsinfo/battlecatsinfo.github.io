@@ -1207,14 +1207,18 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 				const tbl = t.parentNode.parentNode;
 				let num = t.textContent.match(/\d+/);
 				if (num) {
-					form.level = parseInt(num[0]);
-					num = form.level;
-					t._val = num;
-					t.textContent = `Lv${num}`;
-					my_cat.talents && t._form.applyTalents(custom_talents);
+					// latest change: talentAccumulationFix
+					const newLevel = parseInt(num[0]);
+					const tempForm = tbl._baseForm.clone();
+					tempForm.level = newLevel;
+
+					my_cat.talents && tempForm.applyTalents(custom_talents);
 					if (_super)
-						t._form.applySuperTalents(custom_super_talents);
-					updateValues(t._form, tbl);
+						tempForm.applySuperTalents(custom_super_talents);
+
+					t._val = newLevel;
+					t.textContent = `Lv${newLevel}`;
+					updateValues(tempForm, tbl);
 				} else {
 					t.textContent = t._val;
 				}
@@ -1307,6 +1311,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 	tbl.appendChild(tbodytr10);
 	tbl.appendChild(tbodytr11);
 	tbl.appendChild(tbodytr12);
+	tbl._baseForm = form.clone(); // latest change: talentAccumulationFix
 	updateValues(form, tbl);
 	createImuIcons(form.imu, tbodytr10.children[1]);
 	if (form.res)
