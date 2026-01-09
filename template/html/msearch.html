@@ -2,7 +2,7 @@
 
 {{#*inline "viewport"}}{{/inline}}
 
-{{#*inline "title"}}敵人搜尋{{/inline}}
+{{#*inline "title"}}月間搜尋{{/inline}}
 
 {{#*inline "description"}}篩選和排序敵人{{/inline}}
 
@@ -100,13 +100,10 @@
 		background-color: inherit;
 		padding: 5px;
 	}
-	delete_button {
+	delete_enemy_button {
 		display: inline-block;
 		text-align: left;
 		width: max-content;
-		/* float: right; */
-		/* margin-left: auto;
-		margin-right: 0; */
 		cursor: default;
 		transition: opacity 0s;
 		border: 0px;
@@ -229,6 +226,23 @@
 		margin-bottom: 6px;
 		word-break: break-word;
 	}
+	.enemy-subtable {
+	border-collapse: collapse;
+	font-size: 12px;
+	}
+
+	.enemy-subtable td {
+	border: 1px solid #ccc;
+	padding: 4px;
+	text-align: center;
+	vertical-align: top;
+	}
+
+	.enemy-label {
+	font-weight: bold;
+	background: #f3f3f3;
+	white-space: nowrap;
+	}
 
 	</style>
 {{/inline}}
@@ -238,90 +252,82 @@
 	<div id="main" class="An">
 		<div class="w3-container">
 			<!-- trait searcher -->
-			<ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: auto;" id="trait-s">
-				<li><span class="w3-button or-and w3-pale-red">AND</span></li>
-				<li data-expr="trait&RED">
-					<button><img src="/img/i/e/0.png" width="40" height="40">紅色敵人</button>
-				</li>
-				<li data-expr="trait&FLOAT">
-					<button><img src="/img/i/e/1.png" width="40" height="40">飄浮敵人</button>
-				</li>
-				<li data-expr="trait&BLACK">
-					<button><img src="/img/i/e/2.png" width="40" height="40">黑色敵人</button>
-				</li>
-				<li data-expr="trait&METAL">
-					<button><img src="/img/i/e/3.png" width="40" height="40">鋼鐵敵人</button>
-				</li>
-				<li data-expr="trait&ANGEL">
-					<button><img src="/img/i/e/4.png" width="40" height="40">天使敵人</button>
-				</li>
-				<li data-expr="trait&ALIEN">
-					<button><img src="/img/i/e/5.png" width="40" height="40">異星戰士</button>
-				</li>
-				<li data-expr="trait&ZOMBIE">
-					<button><img src="/img/i/e/6.png" width="40" height="40">不死生物</button>
-				</li>
-				<li data-expr="trait&WHITE">
-					<button><img src="/img/i/e/8.png" width="40" height="40">無屬性敵人</button>
-				</li>
-				<li data-expr="trait&RELIC">
-					<button><img src="/img/i/e/7.png" width="40" height="40">古代種</button>
-				</li>
-				<li data-expr="trait&DEMON">
-					<button><img src="/img/i/e/11.png" width="40" height="40">惡魔</button>
-				</li>
-				<li data-expr="trait&BARON">
-					<button><img src="/img/i/e/14.png" width="40" height="40">超生命體</button>
-				</li>
-				<li data-expr="trait&BEAST">
-					<button><img src="/img/i/e/13.png" width="40" height="40">超獸</button>
-				</li>
-				<li data-expr="trait&EVA">
-					<button><img src="/img/i/e/9.png" width="40" height="40">使徒</button>
-				</li>
-				<li data-expr="trait&WITCH">
-					<button><img src="/img/i/e/10.png" width="40" height="40">魔女</button>
-				</li>
-				<li data-expr="trait&SAGE">
-					<button><img src="/img/i/e/15.png" width="40" height="40">超賢者</button>
-				</li>
-				<li data-expr="trait&WEIRDO">
-					<button><img src="/img/i/e/16.png" width="40" height="40">怪人</button>
-				</li>
-				<li data-expr="speed == 0 && trait == 0">
-					<button><img src="/img/i/e/animated.png" width="41" height="41">動畫塔</button>
-				</li>
-				<li data-expr="trait&INFN">
-					<button><img src="/img/i/e/12.png" width="40" height="40">道場塔</button>
-				</li>
-			</ul>
-			<!-- atk searcher -->
-			<!-- <ul class="w3-ul may-hide" style="width: 150px;" id="atk-s">
-				<li><span class="w3-button or-and w3-blue-gray">AND</span></li>
-				<li data-expr="atktype&ATK_SINGLE">
-					<button><img src="/img/i/o/1.png" width="40" height="40">單體攻擊</button>
-				</li>
-				<li data-expr="atktype&ATK_RANGE">
-					<button><img src="/img/i/o/0.png" width="40" height="40">範圍攻擊</button>
-				</li>
-				<li data-expr="atktype&ATK_LD">
-					<button><img src="/img/i/o/2.png" width="40" height="40">遠距攻擊</button>
-				</li>
-				<li data-expr="atktype&ATK_OMNI">
-					<button><img src="/img/i/o/3.png" width="40" height="40">全方位攻擊</button>
-				</li>
-				<li data-expr="atktype&ATK_KB_REVENGE">
-					<button><img src="/img/i/o/4.png">擊退反擊</button>
-				</li>
-				<li data-expr="pre1">
-					<button><img src="/img/i/o/5.png" width="40" height="40">連續攻擊</button>
-				</li>
-			</ul> -->
+			<!-- <ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: auto;" id="trait-s"> -->
+			<div>
+				<ul class="w3-ul may-hide" style="position: absolute;left: 230px;top: 50px;height: 600px;overflow: auto;width: 190px;" id="trait-s">
+					<li><span class="w3-button or-and w3-pale-red">AND</span></li>
+					<li data-expr="trait&RED">
+						<button><img src="/img/i/e/0.png" width="40" height="40">紅色敵人</button>
+					</li>
+					<li data-expr="trait&FLOAT">
+						<button><img src="/img/i/e/1.png" width="40" height="40">飄浮敵人</button>
+					</li>
+					<li data-expr="trait&BLACK">
+						<button><img src="/img/i/e/2.png" width="40" height="40">黑色敵人</button>
+					</li>
+					<li data-expr="trait&METAL">
+						<button><img src="/img/i/e/3.png" width="40" height="40">鋼鐵敵人</button>
+					</li>
+					<li data-expr="trait&ANGEL">
+						<button><img src="/img/i/e/4.png" width="40" height="40">天使敵人</button>
+					</li>
+					<li data-expr="trait&ALIEN">
+						<button><img src="/img/i/e/5.png" width="40" height="40">異星戰士</button>
+					</li>
+					<li data-expr="trait&ZOMBIE">
+						<button><img src="/img/i/e/6.png" width="40" height="40">不死生物</button>
+					</li>
+					<li data-expr="trait&WHITE">
+						<button><img src="/img/i/e/8.png" width="40" height="40">無屬性敵人</button>
+					</li>
+					<li data-expr="trait&RELIC">
+						<button><img src="/img/i/e/7.png" width="40" height="40">古代種</button>
+					</li>
+					<li data-expr="trait&DEMON">
+						<button><img src="/img/i/e/11.png" width="40" height="40">惡魔</button>
+					</li>
+					<li data-expr="trait&BARON">
+						<button><img src="/img/i/e/14.png" width="40" height="40">超生命體</button>
+					</li>
+					<li data-expr="trait&BEAST">
+						<button><img src="/img/i/e/13.png" width="40" height="40">超獸</button>
+					</li>
+					<li data-expr="trait&EVA">
+						<button><img src="/img/i/e/9.png" width="40" height="40">使徒</button>
+					</li>
+					<li data-expr="trait&WITCH">
+						<button><img src="/img/i/e/10.png" width="40" height="40">魔女</button>
+					</li>
+					<li data-expr="trait&SAGE">
+						<button><img src="/img/i/e/15.png" width="40" height="40">超賢者</button>
+					</li>
+					<li data-expr="trait&WEIRDO">
+						<button><img src="/img/i/e/16.png" width="40" height="40">怪人</button>
+					</li>
+					<li data-expr="speed == 0 && trait == 0">
+						<button><img src="/img/i/e/animated.png" width="41" height="41">動畫塔</button>
+					</li>
+					<li data-expr="trait&INFN">
+						<button><img src="/img/i/e/12.png" width="40" height="40">道場塔</button>
+					</li>
+				</ul>
+				<form action="javascript:void(0);" onsubmit="return false;" class="may-hide" style="position: absolute;left: 230px; top: 0px; width: 150px;">
+					<span class="w3-button w3-teal w3-round" id="filter-go">篩選</span>
+					<span class="w3-button w3-red w3-round" id="filter-clear">清除</span>
+				</form>
+			</div>
+			<!-- Enemy Queue Section -->
+			<div id="enemy-queue" style="width: 200px;height: 800px;overflow: auto;">
+			<!-- <div id="enemy-queue" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: auto;width: 190px;"> -->
+				<h3>已選擇的敵人隊列</h3>
+				<ul id="queue-list" class="w3-ul" style="height: 600px; overflow-y: auto;"></ul>
+				<button id="queue-clear" class="w3-button w3-red" style="margin-top: 5px;">清空隊列</button>
+			</div>
 			<!-- clear/reset buttons -->
-			<form action="javascript:void(0);" onsubmit="return false;" class="may-hide" style="width: 150px;">
+			<!-- <form action="javascript:void(0);" onsubmit="return false;" class="may-hide" style="width: 150px;">
 				<span class="w3-button w3-teal w3-round" id="filter-go">篩選</span>
 				<span class="w3-button w3-red w3-round" id="filter-clear">清除</span>
-			</form>
+			</form> -->
 			<!-- regex? idk -->
 			<div class="no-print may-hide" style="position: absolute;top: 1047px;left: 17px;">
 				<div>篩選表達式</div>
@@ -458,40 +464,41 @@
 				{{/each}}
 			</ul> -->
 			<!-- stages selector -->
-			<div id="stages" class="w3-bar may-hide stage-buttons"
-				style="margin:20px 0; position:absolute; top:0; left:390px;">
+			<div id="stages" class="w3-bar stage-buttons"
+				style="margin:20px 0; position:absolute; top:0; left:440px;">
 
 				<li class="w3-button o-selected">
-					<input type="radio" name="stage" value="EOC" checked> 世界篇
+					<input type="radio" name="stage" value=3009 checked> 世界篇
 				</li>
 				<li class="w3-button">
-					<input type="radio" name="stage" value="ITF1"> 未來一
+					<input type="radio" name="stage" value=3003> 未來一
 				</li>
 				<li class="w3-button">
-					<input type="radio" name="stage" value="ITF2"> 未來二
+					<input type="radio" name="stage" value=3004> 未來二
 				</li>
 				<li class="w3-button">
-					<input type="radio" name="stage" value="ITF3"> 未來三
+					<input type="radio" name="stage" value=3005> 未來三
 				</li>
 				<li class="w3-button">
-					<input type="radio" name="stage" value="ITC1"> 宇宙一
+					<input type="radio" name="stage" value=3006> 宇宙一
 				</li>
 				<li class="w3-button">
-					<input type="radio" name="stage" value="ITC2"> 宇宙二
+					<input type="radio" name="stage" value=3007> 宇宙二
 				</li>
 				<li class="w3-button">
-					<input type="radio" name="stage" value="ITC3"> 宇宙三
+					<input type="radio" name="stage" value=3008> 宇宙三
 				</li>
 				<li class="w3-button">
-					<input type="radio" name="stage" value="SL"> 傳奇關卡
+					<input type="radio" name="stage" value=114514> 傳奇關卡
 				</li>
 			</div>
 
 
 
 			<!-- search bar & results -->
-			<div id="tables" style="margin: 20px 0px;position: absolute;top: 45px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
-				<div class="may-hide">
+			<div id="tables" style="margin: 20px 0px;position: absolute;top: 45px;left: 440px;vertical-align: middle;min-width: 800px;width: calc(100% - 450px);">
+				<div>
+				<!-- <div class="may-hide"> -->
 					<input type="search" placeholder="搜尋名稱或敵人id" id="name-search">
 				</div>
 				<p>
@@ -530,12 +537,25 @@
 						</tbody>
 					</table>
 				</div>
+				<!-- show searched stages -->
+				<div>
+					<table class="w3-table w3-centered" style="width: 100%;margin-bottom: 0px;">
+						<thead>
+							<tr id="th" style="cursor: pointer;">
+								<td title="st" style="width: 150px;">篇章</td>
+								<td title="sm" style="width: 150px;">關卡</td>
+								<td title="energy" style="width: 50px;">統帥力</td>
+								<td title="enemy">敵人</td>
+							</tr>
+						</thead>
+						<tbody id="tbody"></tbody>
+					</table>
 
-				<!-- Enemy Queue Section -->
-				<div id="enemy-queue" style="margin-top: 20px; min-width: 300px;">
-					<h3>已選擇的敵人隊列</h3>
-					<ul id="queue-list" class="w3-ul" style="height: 200px; overflow-y: auto;"></ul>
-					<button id="queue-clear" class="w3-button w3-red" style="margin-top: 5px;">清空隊列</button>
+					<table style="margin: 1em auto;">
+						<tbody>
+							<tr id="found-stages"></tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			
