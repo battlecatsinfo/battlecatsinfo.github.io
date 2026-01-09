@@ -769,7 +769,7 @@ function mkTool(tbl) {
 	tbl.appendChild(node);
 }
 
-function renderForm(form, lvc_text, _super = false, hide = false) {
+function renderForm(form, lvc_text, _super = false, hide = false, baseForm = null) {
 	const info = my_cat.info;
 	if (layout === 2) {
 		const tbl = document.createElement('table');
@@ -1311,7 +1311,7 @@ function renderForm(form, lvc_text, _super = false, hide = false) {
 	tbl.appendChild(tbodytr10);
 	tbl.appendChild(tbodytr11);
 	tbl.appendChild(tbodytr12);
-	tbl._baseForm = form.clone(); // latest change: talentAccumulationFix
+	tbl._baseForm = (baseForm || form).clone(); // latest change: talentAccumulationFix
 	updateValues(form, tbl);
 	createImuIcons(form.imu, tbodytr10.children[1]);
 	if (form.res)
@@ -2214,7 +2214,7 @@ function renderUnitPage() {
 				container.appendChild(tr1);
 				unit_content.appendChild(container);
 			}
-			const tbl = renderForm(form);
+			const tbl = renderForm(form, baseForm = my_cat.forms[form.lvc]);
 			if (form.lvc == 2) tf_tbl_s = tbl;
 			else if (form.lvc == 3) tf4_tbl = tbl;
 			tables.push([
@@ -2241,7 +2241,7 @@ function renderUnitPage() {
 	const zh = ['一', '二', '三'];
 	for (let i = 0; i < my_cat.forms.length; ++i) {
 		if (i == 3) break;
-		const tbl = renderForm(my_cat.forms[i], zh[i] + '階：');
+		const tbl = renderForm(my_cat.forms[i], zh[i] + '階：', false, false, my_cat.forms[i]);
 		tables.push([`${zh[i]}階數值表格`, tbl]);
 		mkTool(tbl);
 	}
@@ -2250,7 +2250,7 @@ function renderUnitPage() {
 		const [names, has_super] = rednerTalentInfos(my_cat.talents);
 		renderTalentCosts(names, my_cat.talents);
 		TF.applyTalents(custom_talents);
-		tf_tbl = renderForm(TF, '本能完全升滿的數值表格', false, true);
+		tf_tbl = renderForm(TF, '本能完全升滿的數值表格', false, true, my_cat.forms[2]);
 		tables.push(['三階+本能數值表格', tf_tbl]);
 		mkTool(tf_tbl);
 		if (has_super) {
@@ -2258,14 +2258,14 @@ function renderUnitPage() {
 			const [names, _] = rednerTalentInfos(my_cat.talents, true, true);
 			renderTalentCosts(names, my_cat.talents, true);
 			F.applySuperTalents(custom_super_talents);
-			tf_tbl_s = renderForm(F, '超本能完全升滿的數值表格', true, true);
+			tf_tbl_s = renderForm(F, '超本能完全升滿的數值表格', true, true, my_cat.forms[2]);
 			tables.push(['三階+超本能數值表格', tf_tbl_s]);
 			mkTool(tf_tbl_s);
 		}
 		if (my_cat.forms.length == 4) {
 			const F = my_cat.forms[3].clone();
 			F.applyTalents(custom_talents);
-			tf4_tbl = renderForm(F, '四階：', true);
+			tf4_tbl = renderForm(F, '四階：', true, false, my_cat.forms[3]);
 			tables.push(['四階+本能數值表格', tf4_tbl]);
 			mkTool(tf4_tbl);
 		}
