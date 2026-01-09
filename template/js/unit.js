@@ -2264,8 +2264,13 @@ function renderUnitPage() {
 		}
 		if (my_cat.forms.length == 4) {
 			const F = my_cat.forms[3].clone();
-			F.applyTalents(custom_talents);
-			tf4_tbl = renderForm(F, '四階：', true, false, my_cat.forms[3]);
+			tf4_raw_tbl = renderForm(F, '四階：', false, false, my_cat.forms[3]);
+			tables.push(['四階數值表格', tf4_raw_tbl]);
+			mkTool(tf4_raw_tbl);
+
+			const F_talent = F.clone();
+			F_talent.applyTalents(custom_talents);
+			tf4_tbl = renderForm(F_talent, '四階：', true, false, my_cat.forms[3]);
 			tables.push(['四階+本能數值表格', tf4_tbl]);
 			mkTool(tf4_tbl);
 		}
