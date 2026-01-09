@@ -94,6 +94,7 @@ var my_cat;
 var lvMax;
 var tf_tbl;
 var tf_tbl_s;
+var tf4_raw_tbl;
 var tf4_tbl;
 var tf4_tbl_t;
 var tf4_tbl_s;
@@ -2257,7 +2258,10 @@ function renderUnitPage() {
 			}
 			const tbl = renderForm(form, baseForm = my_cat.forms[form.lvc]);
 			if (form.lvc == 2) tf_tbl_s = tbl;
-			else if (form.lvc == 3) tf4_tbl = tbl;
+			else if (form.lvc == 3) {
+				tf4_raw_tbl = tbl;
+				tf4_tbl = tbl;
+			}
 			tables.push([
 				['一', '二', '三', '四'][form.lvc] + "階數值表格", tbl
 			]);
