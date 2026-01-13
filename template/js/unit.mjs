@@ -1421,13 +1421,7 @@ class CatForm extends Unit {
 	}
 
 	applyTalent(talent, level) {
-		if (!level) {
-			if (talent[0] == 31)
-				this.atkM = 1;
-			else if (talent[0] == 32)
-				this.hpM = 1;
-			return;
-		}
+		if (!level) return;
 		var t, x, y, z;
 		level -= 1;
 		const maxLv = talent[1] - 1;
