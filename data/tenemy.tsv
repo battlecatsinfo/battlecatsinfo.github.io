@@ -40,7 +40,7 @@ jp	tw	en	kr
 殺意のわんこ	殺意狗	Doge Dark	살의의 멍뭉이
 メタルカバちゃん	鋼鐵河馬將	Metal Hippoe	메탈 하마양
 エリザベス2世	伊麗莎白2世	St. Pigge the 2nd	엘리자베스 2세
-赤井ブン太郎	赤井噴太郎	J.K Bun Bun	셰익스피망
+赤井ブン太郎	赤井噴太郎	J.K. Bun Bun	셰익스피망
 ブラックブンブン	黑色噴噴	Bun Bun Black	블랙 맴매
 ブラッゴリ	黑猩猩	Gory Black	블랙 고릴라저씨
 シャドウボクサー	影子拳擊手	Shadow Boxer K	쉐도우 복서
@@ -159,7 +159,7 @@ Hyper Mr.	Hyper Mr.	Hyper Mr.	Hyper Mr.
 サイバーX	CyberX	Cyberhorn	사이버 X
 プドール夫人	異星貴賓	Mistress Celeboodle	푸들 귀부인
 教授	豪豬教授	Professor A.	교수님
-1億1000万DL記念ケーキわんこ			
+1億1000万DL記念ケーキわんこ	1億1000萬下載紀念蛋糕狗仔	110M DL Anniv. Doge Cake	1억 1000만 DL 기념 케이크 멍뭉이
 マーズピープル	火星人	MARS PEOPLE	마즈 피플
 モーデン元帥	惡魔化身・莫丁	DONALD MORDEN	모덴 원수
 アレン・オニール	艾倫‧歐尼爾	ALLEN O'NEIL	알렌 오닐
@@ -370,14 +370,14 @@ SV-001	SV-001	SV-001	SV-001
 フグ太くん	河潤豚	Mr. Puffington	복어양
 ちびケーキわんこ	小蛋糕狗仔	Li'l Cake Doge	꼬마 케이크 멍뭉이
 超新星テッサー	超新星鐵砲	Puffsley's Comet	초신성 텟사
-リュウ			
-春麗			
-ガイル			
-ザンギエフ			
-ブランカ			
-ダルシム			
-ケン			
-豪鬼			
+リュウ	隆	Ryu	류
+春麗	春麗	Chun-Li	춘리
+ガイル	蓋爾	Guile	가일
+ザンギエフ	桑吉爾夫	Zangief	장기에프
+ブランカ	布蘭卡	Blanka	블랑카
+ダルシム	塔爾錫	Dhalsim	달심
+ケン	肯	Ken	켄
+豪鬼	豪鬼	Akuma	고우키
 阿亀我王	阿龜我王	Black Okame	오카메왕
 聖者ポプウ	聖者波普	Heavenly Herald Papuu	성자 뚱땡이
 太古の蜜江	太古蜜江	Queen Mother V	태고의 왕비
@@ -403,11 +403,11 @@ SV-001	SV-001	SV-001	SV-001
 デッカーバチャン	巨大河馬星人	Super Hyppoh	빅 하앜마양
 イディ:Re	異弟:Re	Idi:Re	이디:Re
 テバムラサキホネツバメ	紫骨不死燕	Zollow	좀비 제비
-エドモンド本田			
-バイソン			
-バルログ			
-サガット			
-ベガ			
+エドモンド本田	E. HONDA	E. Honda	E. Honda
+バイソン	拜森	Balrog	바이슨
+バルログ	巴洛克	Vega	발로그
+サガット	沙卡特	Sagat	사가트
+ベガ	貝卡	M. Bison	베가
 悪のネコ帝王	惡之貓帝王	Evil Emperor Cat	악의 고양이 제왕
 ウリボーイ	飛機頭豬	Bore Jr.	보이 보어
 チョコわんこ	巧克力狗仔	Chocolate Doge	초코 멍뭉이
@@ -466,8 +466,8 @@ SV-001	SV-001	SV-001	SV-001
 超爆獣アリアント	超爆獸不死蟻	Formicidaean Ariant	초폭수 아리앤트
 大天使チビネル	大天使小海蝶	Great Angel Chibinel	대천사 꼬마넬
 ネコ神面のウララー	貓神面烏拉拉	Spiritual Yulala	고양이 가면신 우라라
-さくら			
-ルーク			
+さくら	櫻	Sakura	카스가노 사쿠라
+ルーク	路克	Luke	루크
 超翼獣ピヨルーツ	超翼獸起源小雞	Cumulus Gallus	초익수 뼝아루츠
 超古獣マガモジョー	超古獸摩鴨喬	Ancient Magamojoe	초고대수 오리야크
 超猿獣ルーザ	超猿獸露薩	Great Ape Luza	초원수 루자
@@ -569,8 +569,8 @@ SV-001	SV-001	SV-001	SV-001
 ダッフンデッド	拉腸不死狗	Deathshund	데스도그
 クロマジロ	漆黑犰狳	Darkmadillo	다크마딜로
 ネコ店長＆ネコ店員			
-キャミィ			
-ジュリ			
+キャミィ	倩咪	Cammy	캐미
+ジュリ	蛛俐	Juri	주리
 怪人わんこ			
 ワルザベス			
 ミセス・ペン			
@@ -581,19 +581,12 @@ SV-001	SV-001	SV-001	SV-001
 極悪大帝ワルモーン			
 超極悪大帝ワルモーン			
 13周年記念ケーキわんこ			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+午わんこ	馬年狗仔	Horse Doge	말 멍뭉이
+累			
+魘夢			
+猗窩座			
+鬼化わんこ			
+鬼化ゴリさん			
+鬼化クマ先生			
+	龍年狗仔	Dragon Doge	용 멍뭉이
 		Jar Base	항아리 성

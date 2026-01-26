@@ -1861,6 +1861,37 @@
 			]
 		},
 		{
+			"tw_name": "鬼滅之刃",
+			"jp_name": "鬼滅の刃",
+			"en_name": "Demon Slayer: Kimetsu No Yaiba",
+			"pools": [
+				"鬼滅之刃"
+			],
+			"banners": [
+				"https://i.meee.com.tw/reVFEYM.png"
+			],
+			"img": "https://i.meee.com.tw/reVFEYM.png",
+			"stages": [
+				"2-263",
+				"2-264",
+				"2-265",
+				"2-266",
+				"2-267",
+				"2-268",
+				"2-269",
+				"13-25"
+			],
+			"enemies": [
+				761,
+				762,
+				763,
+				764,
+				765,
+				766,
+				767
+			]
+		},
+		{
 			"tw_name": "初音未來",
 			"jp_name": "初音ミク",
 			"en_name": "Hatsune Miku",
