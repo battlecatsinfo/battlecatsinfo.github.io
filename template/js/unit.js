@@ -982,7 +982,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide = fal
 			tr.appendChild(td);
 			tbody.appendChild(tr);
 			let N, O;
-			const sums = [95, 75, 50, 165, 125, 75, 235, 175, 100, 150, 250, 285, 215, 325];
+			const sums = [95, 75, 50, 165, 125, 75, 235, 175, 100, 150, 250, 285, 215, 225, 355];
 			const T = my_cat.talents;
 			let I = 0;
 			custom_talents = [];
