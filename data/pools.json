@@ -355,7 +355,7 @@
 		"ticket": 24,
 		"collab": [
 			"魔物獵人大狩獵",
-			"/collab/Monster_Hunter_Big_Game_Hunting_Quest.html"
+			"/collab/Monster_Hunter_Collaboration_Event.html"
 		],
 		"type": "event",
 		"units": [[], [-210, -211, -212], [-206, -209], [-207, -208], []],
@@ -1522,7 +1522,7 @@
 			"2017/5/27~2017/5/31 絕命美少女 4%必中"
 		],
 		"collab": [
-			"絕命美少女(怪物女孩)",
+			"絕命美少女",
 			"/collab/GirlsMons.html"
 		],
 		"type": "rare",
@@ -2338,14 +2338,14 @@
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R012.html"
 	},
 	{
-		"tw_name": "索尼克",
-		"jp_name": "ソニックシリーズ",
+		"tw_name": "音速小子",
+		"jp_name": "ソニック・ザ・ヘッジホッグ",
 		"en_name": "Sonic the Hedgehog",
 		"img": "https://i.meee.com.tw/XYpWydY.png",
 		"rate": [7000, 2500, 500, 0],
 		"collab": [
-			"索尼克",
-			"/collab/Sonic_Series.html"
+			"音速小子",
+			"/collab/Sonic_the_Hedgehog.html"
 		],
 		"type": "rare",
 		"units": [803, 804, 805, 806, 809, 809, 809, 809, 809, 809, 809, 809, 809, 809, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],

@@ -1363,427 +1363,41 @@
 	},
 	"collabs": [
 		{
-			"tw_name": "公主踢騎士Sweets",
-			"jp_name": "ケリ姫スイーツ",
-			"en_name": "Princess Punt Sweets",
-			"stages": [
-				"2-1",
-				"2-2",
-				"2-43",
-				"2-44",
-				"2-80",
-				"7-8"
-			],
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Princess_Punt_Sweets_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_003.html",
-				"公主踢騎士哈啦板": "https://forum.gamer.com.tw/B.php?bsn=21781",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=1176"
-			},
+			"tw_name": "鬼滅之刃",
+			"jp_name": "鬼滅の刃",
+			"en_name": "Demon Slayer: Kimetsu No Yaiba",
 			"pools": [
-				"公主踢騎士Sweets"
+				"鬼滅之刃"
 			],
 			"banners": [
-				"https://i.imgur.com/n2EuEMW.png",
-				"https://i.imgur.com/u3t8GaZ.png",
-				"https://i.imgur.com/60xtq8U.png"
+				"https://i.meee.com.tw/reVFEYM.png"
 			],
-			"img": "https://i.imgur.com/u3t8GaZ.png",
+			"img": "https://i.meee.com.tw/reVFEYM.png",
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Demon_Slayer_Collaboration_Event",
+				"鬼滅之刃 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=46988"
+			},
+			"stages": [
+				"2-263",
+				"2-264",
+				"2-265",
+				"2-266",
+				"2-267",
+				"2-268",
+				"2-269",
+				"13-25"
+			],
 			"enemies": [
-				25,
-				26,
-				27,
-				28,
-				29,
-				30,
-				60,
-				61,
-				334,
-				335,
-				462,
-				463
+				761,
+				762,
+				763,
+				764,
+				765,
+				766,
+				767
 			],
 			"stamp": [
-				26
-			]
-		},
-		{
-			"tw_name": "梅露可物語",
-			"jp_name": "メルクストーリア",
-			"en_name": "Merc Storia",
-			"stages": [
-				"2-8",
-				"2-86",
-				"2-7",
-				"2-85",
-				"2-18",
-				"2-46",
-				"2-47"
-			],
-			"links": {
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_008.html",
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Merc_Storia_Collaboration_Event",
-				"梅露可物語系列哈啦板": "https://forum.gamer.com.tw/B.php?bsn=25482",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=946"
-			},
-			"pools": [
-				"梅露可物語"
-			],
-			"stamp": [
-				191,
-				121
-			],
-			"banners": [
-				"https://i.imgur.com/NLSMqGo.png",
-				"https://i.imgur.com/QOk6Tr7.png"
-			],
-			"img": "https://i.imgur.com/NLSMqGo.png",
-			"enemies": [
-				88,
-				89,
-				90,
-				91,
-				92,
-				93,
-				94,
-				95,
-				96,
-				97,
-				98,
-				163,
-				164,
-				165,
-				166,
-				346,
-				347,
-				348,
-				349,
-				350
-			]
-		},
-		{
-			"tw_name": "活下去！曼波魚！",
-			"jp_name": "生きろ！マンボウ！",
-			"en_name": "Survive! Mola Mola!",
-			"stages": [
-				"2-88",
-				"2-89",
-				"13-13"
-			],
-			"links": {
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_013.html",
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Survive!_Mola_Mola!_Collaboration_Event",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5233"
-			},
-			"pools": [
-				"活下去！曼波魚！"
-			],
-			"banners": [
-				"https://i.imgur.com/tIP8lj8.png"
-			],
-			"img": "https://i.imgur.com/tIP8lj8.png",
-			"enemies": [
-				150,
-				151,
-				152,
-				153,
-				154,
-				155
-			]
-		},
-		{
-			"tw_name": "消滅都市",
-			"jp_name": "消滅都市",
-			"en_name": "Shoumetsu Toshi",
-			"stamp": [
-				181
-			],
-			"stages": [
-				"2-166",
-				"2-168",
-				"2-169",
-				"2-170",
-				"2-167",
-				"2-204",
-				"13-0"
-			],
-			"pools": [
-				"消滅都市"
-			],
-			"banners": [
-				"https://i.imgur.com/NJ1HBeL.png",
-				"https://i.imgur.com/ui9QSYu.png"
-			],
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Shoumetsu_Toshi_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_015.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=2162"
-			},
-			"img": "https://i.imgur.com/NJ1HBeL.png",
-			"alt": "https://i.imgur.com/ui9QSYu.png",
-			"enemies": [
-				158,
-				159,
-				259,
-				339,
-				408,
-				461,
-				507,
-				646
-			]
-		},
-		{
-			"tw_name": "越南大戰進攻",
-			"jp_name": "メタルスラッグアタック",
-			"en_name": "Metal Slug Attack",
-			"stages": [
-				"2-21",
-				"2-22",
-				"13-15"
-			],
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Metal_Slug_Defense_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_021.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=947",
-				"官方": "https://game.snk-corp.co.jp/official/metalslug_attack/"
-			},
-			"pools": [
-				"越南大戰"
-			],
-			"banners": [
-				"https://i.imgur.com/STOvhLl.png"
-			],
-			"img": "https://i.imgur.com/STOvhLl.png",
-			"enemies": [
-				189,
-				190,
-				191,
-				192,
-				193,
-				194,
-				195,
-				196,
-				675
-			]
-		},
-		{
-			"tw_name": "魔法少女小圓",
-			"jp_name": "魔法少女まどか☆マギカ",
-			"en_name": "Puella Magi Madoka Magica",
-			"stages": [
-				"2-173",
-				"2-174",
-				"2-178",
-				"13-9",
-				"2-220",
-				"2-221",
-				"2-222"
-			],
-			"stamp": [
-				300
-			],
-			"pools": [
-				"魔法少女小圓"
-			],
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Puella_Magi_Madoka_Magica_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_029.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=2166"
-			},
-			"banners": [
-				"https://i.imgur.com/SVgCez4.png",
-				"https://i.imgur.com/hkAkKv8.png"
-			],
-			"img": "https://i.imgur.com/SVgCez4.png",
-			"enemies": [
-				273,
-				274,
-				275,
-				276,
-				277,
-				278,
-				429,
-				579
-			]
-		},
-		{
-			"tw_name": "Crash Fever",
-			"jp_name": "クラッシュフィーバー",
-			"en_name": "Crash Fever",
-			"stages": [
-				"2-41",
-				"2-42",
-				"2-82"
-			],
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Crash_Fever_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_033.html",
-				"Crash Fever哈啦板": "https://forum.gamer.com.tw/B.php?bsn=28611",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5235",
-				"Facebook(TW)": "https://www.facebook.com/CrashFeverTW/",
-				"Facebook(EN)": "https://www.facebook.com/CrashFeverEN/"
-			},
-			"pools": [
-				"Crash Fever"
-			],
-			"banners": [
-				"https://i.imgur.com/dQWg8xl.png",
-				"https://i.imgur.com/boyxhJl.png"
-			],
-			"stamp": [
-				328
-			],
-			"img": "https://i.imgur.com/dQWg8xl.png",
-			"enemies": [
-				319,
-				320,
-				321
-			]
-		},
-		{
-			"tw_name": "劇場版 Fate/stay night",
-			"jp_name": "劇場版 Fate/stay night",
-			"en_name": "Fate/Stay Night: Heaven's Feel",
-			"stages": [
-				"2-52",
-				"2-194",
-				"2-195",
-				"2-196",
-				"2-197",
-				"2-198",
-				"2-87",
-				"13-14"
-			],
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Fate/Stay_Night:_Heaven%27s_Feel_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_036.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=3047"
-			},
-			"pools": [
-				"Fate/stay night [HF]"
-			],
-			"stamp": [
-				374,
-				457
-			],
-			"banners": [
-				"https://i.imgur.com/gqWdZTF.png",
-				"https://i.imgur.com/USHZu7s.png"
-			],
-			"img": "https://i.imgur.com/USHZu7s.png"
-		},
-		{
-			"tw_name": "實況野球",
-			"jp_name": "実況パワフルプロ野球",
-			"en_name": "Power Pro Baseball",
-			"stages": [
-				"2-58",
-				"2-59",
-				"2-60",
-				"2-61",
-				"2-62",
-				"2-63"
-			],
-			"pools": [
-				"實況野球"
-			],
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Power_Pro_Baseball_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_037.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=3048"
-			},
-			"stamp": [
-				384
-			],
-			"banners": [
-				"https://i.imgur.com/Ax7ybte.png"
-			],
-			"img": "https://i.imgur.com/Ax7ybte.png",
-			"enemies": [
-				381,
-				382,
-				383,
-				384,
-				385,
-				386
-			]
-		},
-		{
-			"tw_name": "新世紀福音戰士",
-			"jp_name": "エヴァンゲリオン",
-			"en_name": "Neon Genesis Evangelion",
-			"stages": [
-				"2-65",
-				"2-66",
-				"2-208",
-				"2-209",
-				"2-227",
-				"2-228",
-				"2-229",
-				"13-7",
-				"13-24"
-			],
-			"stamp": [
-				405
-			],
-			"pools": [
-				"福音戰士合作轉蛋",
-				"福音戰士合作轉蛋2nd"
-			],
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Neon_Genesis_Evangelion_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_040.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=3141"
-			},
-			"banners": [
-				"https://i.imgur.com/9gWICiv.png",
-				"https://i.imgur.com/fsA32l7.png"
-			],
-			"img": "https://i.meee.com.tw/YYj82gM.png",
-			"enemies": [
-				392,
-				393,
-				394,
-				395,
-				464,
-				647,
-				651
-			]
-		},
-		{
-			"tw_name": "聖魔大戰",
-			"jp_name": "ビックリマン",
-			"en_name": "Bikkuriman",
-			"stages": [
-				"2-92",
-				"2-93",
-				"2-94",
-				"2-95",
-				"13-2",
-				"13-3"
-			],
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Bikkuriman_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_044.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=4010"
-			},
-			"pools": [
-				"聖魔大戰",
-				"聖魔大戰活動轉蛋"
-			],
-			"banners": [
-				"https://i.imgur.com/4r31hQh.png"
-			],
-			"img": "https://i.imgur.com/4r31hQh.png",
-			"enemies": [
-				452,
-				453,
-				454,
-				455,
-				456,
-				518,
-				519,
-				520
+				849
 			]
 		},
 		{
@@ -1828,9 +1442,10 @@
 				"2-262"
 			],
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Street_Fighter_V_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Street_Fighter_V_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_046.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=4764"
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=4764",
+				"快打旋風 系列 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=173"
 			},
 			"pools": [
 				"快打旋風V CE合作轉蛋 BLUE TEAM",
@@ -1861,34 +1476,408 @@
 			]
 		},
 		{
-			"tw_name": "鬼滅之刃",
-			"jp_name": "鬼滅の刃",
-			"en_name": "Demon Slayer: Kimetsu No Yaiba",
+			"tw_name": "公主踢騎士Sweets",
+			"jp_name": "ケリ姫スイーツ",
+			"en_name": "Princess Punt Sweets",
+			"stages": [
+				"2-1",
+				"2-2",
+				"2-43",
+				"2-44",
+				"2-80",
+				"7-8"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Princess_Punt_Sweets_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_003.html",
+				"公主踢騎士 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=21781",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=1176"
+			},
 			"pools": [
-				"鬼滅之刃"
+				"公主踢騎士Sweets"
 			],
 			"banners": [
-				"https://i.meee.com.tw/reVFEYM.png"
+				"https://i.imgur.com/n2EuEMW.png",
+				"https://i.imgur.com/u3t8GaZ.png",
+				"https://i.imgur.com/60xtq8U.png"
 			],
-			"img": "https://i.meee.com.tw/reVFEYM.png",
+			"img": "https://i.imgur.com/u3t8GaZ.png",
+			"enemies": [
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				60,
+				61,
+				334,
+				335,
+				462,
+				463
+			],
+			"stamp": [
+				26
+			]
+		},
+		{
+			"tw_name": "新世紀福音戰士",
+			"jp_name": "エヴァンゲリオン",
+			"en_name": "Neon Genesis Evangelion",
 			"stages": [
-				"2-263",
-				"2-264",
-				"2-265",
-				"2-266",
-				"2-267",
-				"2-268",
-				"2-269",
-				"13-25"
+				"2-65",
+				"2-66",
+				"2-208",
+				"2-209",
+				"2-227",
+				"2-228",
+				"2-229",
+				"13-7",
+				"13-24"
+			],
+			"stamp": [
+				405
+			],
+			"pools": [
+				"福音戰士合作轉蛋",
+				"福音戰士合作轉蛋2nd"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Neon_Genesis_Evangelion_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_040.html",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=3141",
+				"福音戰士 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=2150"
+			},
+			"banners": [
+				"https://i.imgur.com/9gWICiv.png",
+				"https://i.imgur.com/fsA32l7.png"
+			],
+			"img": "https://i.meee.com.tw/YYj82gM.png",
+			"enemies": [
+				392,
+				393,
+				394,
+				395,
+				464,
+				647,
+				651
+			]
+		},
+		{
+			"tw_name": "活下去！曼波魚！",
+			"jp_name": "生きろ！マンボウ！",
+			"en_name": "Survive! Mola Mola!",
+			"stages": [
+				"2-88",
+				"2-89",
+				"13-13"
+			],
+			"links": {
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_013.html",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Survive!_Mola_Mola!_Collaboration_Event",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5233"
+			},
+			"pools": [
+				"活下去！曼波魚！"
+			],
+			"banners": [
+				"https://i.imgur.com/tIP8lj8.png"
+			],
+			"img": "https://i.imgur.com/tIP8lj8.png",
+			"enemies": [
+				150,
+				151,
+				152,
+				153,
+				154,
+				155
+			]
+		},
+		{
+			"tw_name": "範馬刃牙",
+			"en_name": "Hanma Baki: Son of Ogre",
+			"jp_name": "範馬刃牙",
+			"stamp": [
+				795
 			],
 			"enemies": [
-				761,
-				762,
-				763,
-				764,
-				765,
-				766,
-				767
+				724,
+				725,
+				726,
+				727,
+				728
+			],
+			"stages": [
+				"2-223",
+				"13-18",
+				"13-19",
+				"13-20",
+				"13-21",
+				"13-22",
+				"7-31"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Baki_Hanma_Collaboration_Event",
+				"刃牙 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=313",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_061.html"
+			},
+			"pools": [
+				"範馬刃牙",
+				"範馬刃牙活動轉蛋"
+			],
+			"img": "https://i.imgur.com/ltiJNqh.png"
+		},
+		{
+			"tw_name": "音速小子",
+			"en_name": "Sonic the Hedgehog",
+			"jp_name": "ソニック・ザ・ヘッジホッグ",
+			"enemies": [
+				730,
+				731,
+				732,
+				733,
+				734
+			],
+			"stages": [
+				"2-224",
+				"2-225",
+				"2-226",
+				"7-32",
+				"13-23"
+			],
+			"links": {
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_062.html",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Sonic_the_Hedgehog_Collaboration_Event",
+				"音速小子 系列 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=4"
+			},
+			"pools": [
+				"音速小子"
+			],
+			"img": "https://i.meee.com.tw/1HeBuq7.png"
+		},
+		{
+			"tw_name": "梅露可物語",
+			"jp_name": "メルクストーリア",
+			"en_name": "Merc Storia",
+			"stages": [
+				"2-8",
+				"2-86",
+				"2-7",
+				"2-85",
+				"2-18",
+				"2-46",
+				"2-47"
+			],
+			"links": {
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_008.html",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Merc_Storia_Collaboration_Event",
+				"梅露可物語 系列 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=25482",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=946"
+			},
+			"pools": [
+				"梅露可物語"
+			],
+			"stamp": [
+				191,
+				121
+			],
+			"banners": [
+				"https://i.imgur.com/NLSMqGo.png",
+				"https://i.imgur.com/QOk6Tr7.png"
+			],
+			"img": "https://i.imgur.com/NLSMqGo.png",
+			"enemies": [
+				88,
+				89,
+				90,
+				91,
+				92,
+				93,
+				94,
+				95,
+				96,
+				97,
+				98,
+				163,
+				164,
+				165,
+				166,
+				346,
+				347,
+				348,
+				349,
+				350
+			]
+		},
+		{
+			"tw_name": "魔法少女小圓",
+			"jp_name": "魔法少女まどか☆マギカ",
+			"en_name": "Puella Magi Madoka Magica",
+			"stages": [
+				"2-173",
+				"2-174",
+				"2-178",
+				"13-9",
+				"2-220",
+				"2-221",
+				"2-222"
+			],
+			"stamp": [
+				300
+			],
+			"pools": [
+				"魔法少女小圓"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Puella_Magi_Madoka_Magica_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_029.html",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=2166"
+			},
+			"banners": [
+				"https://i.imgur.com/SVgCez4.png",
+				"https://i.imgur.com/hkAkKv8.png"
+			],
+			"img": "https://i.imgur.com/SVgCez4.png",
+			"enemies": [
+				273,
+				274,
+				275,
+				276,
+				277,
+				278,
+				429,
+				579
+			]
+		},
+		{
+			"tw_name": "熱血高校",
+			"jp_name": "熱血！大運動会ガチャ",
+			"en_name": "River City Clash",
+			"stages": [
+				"1-260",
+				"1-261",
+				"1-262",
+				"1-263",
+				"1-264",
+				"1-359"
+			],
+			"pools": [
+				"熱血！大運動會 紅隊",
+				"熱血！大運動會 白隊"
+			],
+			"banners": [
+				"https://i.imgur.com/SkmensQ.png",
+				"https://i.imgur.com/1ZhOTpV.png"
+			],
+			"img": "https://i.imgur.com/1ZhOTpV.png",
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/River_City_Stages",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5237",
+				"熱血高校 系列 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=6100",
+				"熱血高校 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=30367"
+			}
+		},
+		{
+			"tw_name": "越南大戰進攻",
+			"jp_name": "メタルスラッグアタック",
+			"en_name": "Metal Slug Attack",
+			"stages": [
+				"2-21",
+				"2-22",
+				"13-15"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Metal_Slug_Defense_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_021.html",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=947",
+				"官方": "https://game.snk-corp.co.jp/official/metalslug_attack/"
+			},
+			"pools": [
+				"越南大戰"
+			],
+			"banners": [
+				"https://i.imgur.com/STOvhLl.png"
+			],
+			"img": "https://i.imgur.com/STOvhLl.png",
+			"enemies": [
+				189,
+				190,
+				191,
+				192,
+				193,
+				194,
+				195,
+				196,
+				675
+			]
+		},
+		{
+			"tw_name": "神劍闖江湖－明治劍客浪漫譚－",
+			"en_name": "Rurouni Kenshin: Meiji Swordsman Romantic Story",
+			"jp_name": "るろうに剣心 －明治剣客浪漫譚－",
+			"stamp": [
+				753
+			],
+			"enemies": [
+				688,
+				689,
+				690,
+				691
+			],
+			"stages": [
+				"2-216",
+				"2-217",
+				"2-218",
+				"2-219",
+				"13-17",
+				"7-27"
+			],
+			"pools": [
+				"神劍闖江湖－明治劍客浪漫譚－"
+			],
+			"img": "https://i.imgur.com/qmc8Iw1.png",
+			"links": {
+				"官方網站": "https://rurouni-kenshin.com/",
+				"神劍闖江湖 系列 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=9845",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_060.html",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Rurouni_Kenshin_Collaboration_Event"
+			},
+			"tw_history": [
+				"2024/8/5~2024/8/19"
+			],
+			"jp_history": [
+				"2024/5/23~2024/6/6"
+			]
+		},
+		{
+			"tw_name": "神魔之塔",
+			"en_name": "Tower of Saviors",
+			"jp_name": "神魔之塔",
+			"stamp": [
+				744
+			],
+			"enemies": [
+				686,
+				687
+			],
+			"stages": [
+				"2-214",
+				"2-215",
+				"13-16"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Tower_of_Saviors_Collaboration_Event",
+				"神魔之塔 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=23805"
+			},
+			"pools": [
+				"神魔之塔"
+			],
+			"img": "https://i.imgur.com/9cn3YSS.png",
+			"tw_history": [
+				"2024/5/6~2024/5/19"
+			],
+			"buy": [
+				745
 			]
 		},
 		{
@@ -1913,9 +1902,10 @@
 				"https://i.imgur.com/5cmX2Ym.png"
 			],
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Hatsune_Miku_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Hatsune_Miku_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_048.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=4695"
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=4695",
+				"VOCALOID 虛擬人聲 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=60499"
 			},
 			"img": "https://i.imgur.com/RG1UK3Q.png",
 			"alt": "https://i.imgur.com/5cmX2Ym.png",
@@ -1932,6 +1922,187 @@
 			]
 		},
 		{
+			"tw_name": "消滅都市",
+			"jp_name": "消滅都市",
+			"en_name": "Shoumetsu Toshi",
+			"stamp": [
+				181
+			],
+			"stages": [
+				"2-166",
+				"2-168",
+				"2-169",
+				"2-170",
+				"2-167",
+				"2-204",
+				"13-0"
+			],
+			"pools": [
+				"消滅都市"
+			],
+			"banners": [
+				"https://i.imgur.com/NJ1HBeL.png",
+				"https://i.imgur.com/ui9QSYu.png"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Shoumetsu_Toshi_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_015.html",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=2162"
+			},
+			"img": "https://i.imgur.com/NJ1HBeL.png",
+			"alt": "https://i.imgur.com/ui9QSYu.png",
+			"enemies": [
+				158,
+				159,
+				259,
+				339,
+				408,
+				461,
+				507,
+				646
+			]
+		},
+		{
+			"tw_name": "Crash Fever",
+			"jp_name": "クラッシュフィーバー",
+			"en_name": "Crash Fever",
+			"stages": [
+				"2-41",
+				"2-42",
+				"2-82"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Crash_Fever_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_033.html",
+				"Crash Fever 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=28611",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5235",
+				"Facebook(TW)": "https://www.facebook.com/CrashFeverTW/",
+				"Facebook(EN)": "https://www.facebook.com/CrashFeverEN/"
+			},
+			"pools": [
+				"Crash Fever"
+			],
+			"banners": [
+				"https://i.imgur.com/dQWg8xl.png",
+				"https://i.imgur.com/boyxhJl.png"
+			],
+			"stamp": [
+				328
+			],
+			"img": "https://i.imgur.com/dQWg8xl.png",
+			"enemies": [
+				319,
+				320,
+				321
+			]
+		},
+		{
+			"tw_name": "劇場版 Fate/stay night",
+			"jp_name": "劇場版 Fate/stay night",
+			"en_name": "Fate/Stay Night: Heaven's Feel",
+			"stages": [
+				"2-52",
+				"2-194",
+				"2-195",
+				"2-196",
+				"2-197",
+				"2-198",
+				"2-87",
+				"13-14"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Fate/Stay_Night:_Heaven%27s_Feel_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_036.html",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=3047",
+				"TYPE-MOON 系列 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=9009"
+			},
+			"pools": [
+				"Fate/stay night [HF]"
+			],
+			"stamp": [
+				374,
+				457
+			],
+			"banners": [
+				"https://i.imgur.com/gqWdZTF.png",
+				"https://i.imgur.com/USHZu7s.png"
+			],
+			"img": "https://i.imgur.com/USHZu7s.png"
+		},
+		{
+			"tw_name": "實況野球",
+			"jp_name": "実況パワフルプロ野球",
+			"en_name": "Power Pro Baseball",
+			"stages": [
+				"2-58",
+				"2-59",
+				"2-60",
+				"2-61",
+				"2-62",
+				"2-63"
+			],
+			"pools": [
+				"實況野球"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Power_Pro_Baseball_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_037.html",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=3048"
+			},
+			"stamp": [
+				384
+			],
+			"banners": [
+				"https://i.imgur.com/Ax7ybte.png"
+			],
+			"img": "https://i.imgur.com/Ax7ybte.png",
+			"enemies": [
+				381,
+				382,
+				383,
+				384,
+				385,
+				386
+			]
+		},
+		{
+			"tw_name": "聖魔大戰",
+			"jp_name": "ビックリマン",
+			"en_name": "Bikkuriman",
+			"stages": [
+				"2-92",
+				"2-93",
+				"2-94",
+				"2-95",
+				"13-2",
+				"13-3"
+			],
+			"links": {
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Bikkuriman_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_044.html",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=4010",
+				"聖魔大戰 奇幻收藏 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=79423"
+			},
+			"pools": [
+				"聖魔大戰",
+				"聖魔大戰活動轉蛋"
+			],
+			"banners": [
+				"https://i.imgur.com/4r31hQh.png"
+			],
+			"img": "https://i.imgur.com/4r31hQh.png",
+			"enemies": [
+				452,
+				453,
+				454,
+				455,
+				456,
+				518,
+				519,
+				520
+			]
+		},
+		{
 			"tw_name": "亂馬1/2",
 			"jp_name": "らんま1/2",
 			"en_name": "Ranma 1/2",
@@ -1944,9 +2115,10 @@
 				"亂馬1/2"
 			],
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Ranma_1/2_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Ranma_1/2_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_050.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=4514"
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=4514",
+				"亂馬 1/2 系列 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=9841"
 			},
 			"banners": [
 				"https://i.imgur.com/qAMY6b0.png"
@@ -1972,7 +2144,7 @@
 			],
 			"links": {
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_032.html",
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Nazousagi_Collaboration_Event"
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Nazousagi_Collaboration_Event"
 			}
 		},
 		{
@@ -1991,8 +2163,9 @@
 			],
 			"links": {
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_024.html",
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Castle_%26_Dragon_Collaboration_Event",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=2169"
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Castle_%26_Dragon_Collaboration_Event",
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=2169",
+				"城與龍 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=27787"
 			},
 			"banners": [
 				"https://i.imgur.com/g2hCbEp.png"
@@ -2021,32 +2194,6 @@
 			]
 		},
 		{
-			"tw_name": "熱血高校",
-			"jp_name": "熱血！大運動会ガチャ",
-			"en_name": "River City Clash",
-			"stages": [
-				"1-260",
-				"1-261",
-				"1-262",
-				"1-263",
-				"1-264",
-				"1-359"
-			],
-			"pools": [
-				"熱血！大運動會 紅隊",
-				"熱血！大運動會 白隊"
-			],
-			"banners": [
-				"https://i.imgur.com/SkmensQ.png",
-				"https://i.imgur.com/1ZhOTpV.png"
-			],
-			"img": "https://i.imgur.com/1ZhOTpV.png",
-			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/River_City_Stages",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5237"
-			}
-		},
-		{
 			"tw_name": "高捷少女",
 			"en_name": "Kaohsiung Rapid Transit",
 			"jp_name": "たかめ少女コラボ",
@@ -2058,9 +2205,8 @@
 			"links": {
 				"高潔少女詳細（繁中）": "https://www.krtc.com.tw/information/mascot",
 				"高捷少女詳細（日文）": "https://www.krtc.com.tw/jp/Information/mascot",
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Kaohsiung_Rapid_Transit_Collaboration_Event",
-				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_054.html",
-				"合作敵人（超絕）": "https://battlecats-db.com/enemy/collabo_054.html"
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Kaohsiung_Rapid_Transit_Collaboration_Event",
+				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_054.html"
 			},
 			"stamp": [
 				640
@@ -2074,6 +2220,10 @@
 			"stages": [
 				"2-183",
 				"2-184"
+			],
+			"enemies": [
+				596,
+				597
 			]
 		},
 		{
@@ -2090,7 +2240,7 @@
 				466
 			],
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Kaohsiung_Rapid_Transit_Collaboration_Event/2019_Collab",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Kaohsiung_Rapid_Transit_Collaboration_Event/2019_Collab",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5869"
 			},
 			"stamp": [
@@ -2106,7 +2256,7 @@
 			"en_name": "Hikakin",
 			"links": {
 				"合作詳細": "https://www.ponos.jp/news/2018/11/%E3%80%8C%E3%83%92%E3%82%AB%E3%82%AD%E3%83%B3%E3%80%8Dx%E3%80%8C%E3%81%AB%E3%82%83%E3%82%93%E3%81%93%E5%A4%A7%E6%88%A6%E4%BA%89%E3%80%8D-%E6%9C%9F%E9%96%93%E9%99%90%E5%AE%9A%E3%82%B3%E3%83%A9/",
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Hikakin_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Hikakin_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_009.html",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5735"
 			},
@@ -2129,7 +2279,7 @@
 			"jp_name": "ゴジラ",
 			"en_name": "Godzilla",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Godzilla_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Godzilla_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_051.html",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5755"
 			},
@@ -2153,7 +2303,7 @@
 			"en_name": "Shakurel Planet",
 			"jp_name": "シャクレルプラネット",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Shakurel_Planet_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Shakurel_Planet_Collaboration_Event",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5872"
 			},
 			"stamp": [
@@ -2187,7 +2337,7 @@
 			"en_name": "Betakkuma",
 			"jp_name": "",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Betakkuma_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Betakkuma_Collaboration_Event",
 				"LINE貼圖": "https://store.line.me/stickershop/product/1349679/zh-Hant",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5859"
 			},
@@ -2210,7 +2360,7 @@
 			"en_name": "Chocolate",
 			"jp_name": "",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Chocolate_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Chocolate_Collaboration_Event",
 				"Youtube": "https://www.youtube.com/channel/UCgL6J6oL8F69vm-GcPScmwg",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5864"
 			},
@@ -2236,7 +2386,7 @@
 				347
 			],
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Gudetama_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Gudetama_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_034.html",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5236"
 			},
@@ -2268,7 +2418,7 @@
 			"jp_name": "おさわり探偵 なめこ栽培キット",
 			"en_name": "Neo Mushroom Garden",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Neo_Mushroom_Garden_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Neo_Mushroom_Garden_Collaboration_Event",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=1489"
 			},
 			"stages": [
@@ -2290,9 +2440,9 @@
 		{
 			"tw_name": "魔物獵人大狩獵",
 			"jp_name": "モンハン 大狩猟クエスト",
-			"en_name": "Monster Hunter Big Game Hunting Quest",
+			"en_name": "Monster Hunter Collaboration Event",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Monster_Hunter_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Monster_Hunter_Collaboration_Event",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5238"
 			},
 			"img": "https://i.imgur.com/LuZCxsC.png",
@@ -2316,7 +2466,7 @@
 			"en_name": "Mentori",
 			"jp_name": "めんトリ",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Mentori_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Mentori_Collaboration_Event",
 				"LINE 貼圖": "https://store.line.me/stickershop/product/5557/zh-Hant",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5748"
 			},
@@ -2336,7 +2486,7 @@
 			"jp_name": "京都市営地下鉄",
 			"en_name": "Kyoto City Subway",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Get_On!_Kyoto_City_Subway_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Get_On!_Kyoto_City_Subway_Collaboration_Event",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5750"
 			},
 			"img": "https://i.imgur.com/J0ZMmpO.png",
@@ -2350,7 +2500,7 @@
 			"jp_name": "ゆる～いゲゲゲの鬼太郎 妖怪ドタバタ大戦争",
 			"en_name": "Yuru-i GeGeGe no Kitarou: Youkai Dotabata Daisensou",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Yuru-i_GeGeGe_no_Kitarou:_Youkai_Dotabata_Daisensou_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Yuru-i_GeGeGe_no_Kitarou:_Youkai_Dotabata_Daisensou_Collaboration_Event",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5751"
 			},
 			"other": [
@@ -2368,12 +2518,14 @@
 			"jp_name": "にゃんこ大泥棒",
 			"en_name": "The Burgle Cats",
 			"links": {
-				"貓咪大怪盜哈啦板": "https://forum.gamer.com.tw/B.php?bsn=37509",
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/The_Burgle_Cats",
+				"貓咪大怪盜 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=37509",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/The_Burgle_Cats",
 				"PONOS | 貓咪大怪盜": "https://battlecats.club/tw/series/odorobo/",
-				"貓大叔【店主】": "https://battle-cats.fandom.com/wiki/Fatherly_Cat_(Shopkeeper)_(Special_Cat)",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5845"
 			},
+			"other": [
+				504
+			],
 			"jp_history": [
 				"2020/7/6~2020/7/13",
 				"2020/10/9~2020/10/16",
@@ -2389,7 +2541,7 @@
 			"jp_name": "拡散性ミリオンアーサー",
 			"en_name": "Million Arthur",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Million_Arthur_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Million_Arthur_Collaboration_Event",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5230"
 			},
 			"//pools": [
@@ -2404,7 +2556,7 @@
 			"jp_name": "ドラゴンポーカー",
 			"en_name": "Dragon Poker",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Dragon_Poker_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Dragon_Poker_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_006.html",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5231"
 			},
@@ -2424,7 +2576,7 @@
 			"jp_name": "小林幸子",
 			"en_name": "Sachiko Kobayashi",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Final_Boss_Strikes%3F!_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Final_Boss_Strikes%3F!_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_007.html",
 				"『にゃんこ大戦争』で驚愕のイベント開催！ まさかのラスボスの正体は？（動画あり） | ファミ通App【スマホゲーム情報サイト】": "https://app.famitsu.com/20140428_365308/",
 				"YouTube": "https://www.youtube.com/@tvcm155",
@@ -2462,7 +2614,7 @@
 			"jp_name": "チュートリアル",
 			"en_name": "Tutorial",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Tutorial_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Tutorial_Collaboration_Event",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5736"
 			},
 			"other": [
@@ -2477,7 +2629,7 @@
 			"jp_name": "ドラゴンリーグ",
 			"en_name": "Dragon League X/A",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Dragon_League_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Dragon_League_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_011.html"
 			},
 			"stages": [
@@ -2497,7 +2649,7 @@
 			"en_name": "Kishidan",
 			"links": {
 				"合作詳細": "http://www.ponos.co.jp/iphone/jp/appli/battlecats/collabo/kishidan.html",
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Kishidan_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Kishidan_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_012.html",
 				"YouTube": "https://www.youtube.com/channel/UCQFgtm9J2296BXZ39Dyr1bA",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5737"
@@ -2528,7 +2680,7 @@
 			"jp_name": "極道大戦争",
 			"en_name": "Yakuza Apocalypse",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Yakuza_Apocalypse_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Yakuza_Apocalypse_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_014.html"
 			},
 			"enemies": [
@@ -2547,7 +2699,7 @@
 			"jp_name": "",
 			"en_name": "Cuckoo Crew",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Cuckoo_Crew_12_(Special_Cat)",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Cuckoo_Crew_12_(Special_Cat)",
 				"YouTube": "https://www.youtube.com/@realcuckoocrew",
 				"X (Twitter)": "https://twitter.com/cuckoocrew"
 			},
@@ -2561,7 +2713,7 @@
 			"jp_name": "ミスターニンジャ！！フィーバー",
 			"en_name": "Mr. Ninja!! Fever",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Mr.Ninja!!_Fever_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Mr.Ninja!!_Fever_Collaboration_Event",
 				"巴哈姆特": "https://forum.gamer.com.tw/C.php?bsn=23772&snA=4351",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5740"
 			},
@@ -2579,9 +2731,10 @@
 			"jp_name": "キャットバスターズ",
 			"en_name": "Cat Busters",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Cat_Busters_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Cat_Busters_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_030.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5743"
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5743",
+				"貓咪破壞者 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=31491"
 			},
 			"stages": [
 				"2-36"
@@ -2602,7 +2755,7 @@
 			"en_name": "Daimaou Kosaka",
 			"img": "https://i.imgur.com/T1AYUcT.png",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Pikotaro_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Pikotaro_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_031.html",
 				"Cat Pineapple Apple Cat CPAC [PIKO TARO] - YouTube": "https://youtu.be/m2BQxKLwn8c",
 				"The Battle Cats & Pikotaro - \"CPAC\" (OFFICIAL) - YouTube": "https://youtu.be/-ykbKaiUTBE",
@@ -2623,13 +2776,13 @@
 			]
 		},
 		{
-			"tw_name": "絕命美少女(怪物女孩)",
+			"tw_name": "絕命美少女",
 			"jp_name": "ガルズモンズ",
 			"en_name": "GirlsMons",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/GirlsMons",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/GirlsMons",
 				"X (Twitter)": "https://twitter.com/girlsmons",
-				"半死半活貓": "https://battle-cats.fandom.com/wiki/Undead_Cat_(Special_Cat)",
+				"半死半活貓": "https://battlecats.miraheze.org/wiki/Undead_Cat_(Special_Cat)",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=6095"
 			},
 			"pools": [
@@ -2641,7 +2794,7 @@
 			"jp_name": "三原慧悟",
 			"en_name": "Hiroshi Mihara",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Hiroshi_Mihara_(Rare_Cat)",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Hiroshi_Mihara_(Rare_Cat)",
 				"YouTube": "https://www.youtube.com/channel/UCCBq7s8VOCyek275uvq5lYQ",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5857"
 			},
@@ -2665,7 +2818,7 @@
 			"jp_name": "ナゾウサギ",
 			"en_name": "Nazousagi",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Nazousagi_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Nazousagi_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_032.html",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5745"
 			},
@@ -2685,7 +2838,7 @@
 			"jp_name": "にゃんこ大戦争～日本侵略秘録～",
 			"en_name": "Battle Cats Great War ~Japan Secret Invasion~",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Nyanko_Daisensou_~Nippon_Shinryaku_Hiroku~",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Nyanko_Daisensou_~Nippon_Shinryaku_Hiroku~",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5746"
 			},
 			"img": "https://i.imgur.com/zF0Y5Ff.png",
@@ -2701,7 +2854,7 @@
 			"jp_name": "シン・ジャパン・ヒーローズ・ユニバース",
 			"en_name": "Shin Japan Heroes Universe",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Shin_Japan_Heroes_Universe_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Shin_Japan_Heroes_Universe_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_059.html",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=6512"
 			},
@@ -2723,7 +2876,7 @@
 			"jp_name": "日清焼そばU.F.O.",
 			"en_name": "Nissin U.F.O",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Nissin_U.F.O._Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Nissin_U.F.O._Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_049.html",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5754"
 			},
@@ -2745,7 +2898,7 @@
 			"jp_name": "ドットヒーローズコ",
 			"en_name": "Dot Heroes",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Dot_Heroes_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Dot_Heroes_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_045.html"
 			},
 			"stages": [
@@ -2764,10 +2917,10 @@
 			"jp_name": "ゆるドラシル",
 			"en_name": "Yurudrasil",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Yurudrasil_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Yurudrasil_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_022.html",
 				"巴哈姆特": "https://acg.gamer.com.tw/acgDetail.php?s=68012",
-				"悠閒世界樹哈啦板": "https://forum.gamer.com.tw/B.php?bsn=25852",
+				"悠閒世界樹 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=25852",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5234"
 			},
 			"stages": [
@@ -2790,11 +2943,11 @@
 			]
 		},
 		{
-			"tw_name": "Google",
-			"jp_name": "Google",
-			"en_name": "Google",
+			"tw_name": "Google Android",
+			"jp_name": "Google Android",
+			"en_name": "Google Android",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/Google_Android_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/Google_Android_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_004.html",
 				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=5733"
 			},
@@ -2824,9 +2977,10 @@
 			"jp_name": "ワールドトリガー",
 			"en_name": "World Trigger",
 			"links": {
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/World_Trigger_Collaboration_Event",
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/World_Trigger_Collaboration_Event",
 				"合作關卡（超絕）": "https://battlecats-db.com/stage/index_collabo_056.html",
-				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=6511"
+				"角色資料（巴哈姆特精華區）": "https://forum.gamer.com.tw/G1.php?bsn=23772&parent=6511",
+				"境界觸發者 哈啦板": "https://forum.gamer.com.tw/B.php?bsn=45837"
 			},
 			"stamp": [
 				679
@@ -2860,7 +3014,7 @@
 			],
 			"links": {
 				"BitSummit": "https://bitsummit.org/",
-				"Battle Cats Wiki": "https://battle-cats.fandom.com/wiki/BitSummit_Collaboration_Event"
+				"Battle Cats Wiki": "https://battlecats.miraheze.org/wiki/BitSummit_Collaboration_Event"
 			},
 			"jp_history": [
 				"2016/",
@@ -2871,120 +3025,6 @@
 				"2023/7/14~2023/7/16",
 				"2024/7/18~2024/7/21"
 			]
-		},
-		{
-			"tw_name": "神魔之塔",
-			"en_name": "Tower of Saviors",
-			"jp_name": "神魔之塔",
-			"stamp": [
-				744
-			],
-			"enemies": [
-				686,
-				687
-			],
-			"stages": [
-				"2-214",
-				"2-215",
-				"13-16"
-			],
-			"pools": [
-				"神魔之塔"
-			],
-			"img": "https://i.imgur.com/9cn3YSS.png",
-			"tw_history": [
-				"2024/5/6~2024/5/19"
-			],
-			"buy": [
-				745
-			]
-		},
-		{
-			"tw_name": "神劍闖江湖－明治劍客浪漫譚－",
-			"en_name": "Rurouni Kenshin: Meiji Swordsman Romantic Story",
-			"jp_name": "るろうに剣心 －明治剣客浪漫譚－",
-			"stamp": [
-				753
-			],
-			"enemies": [
-				688,
-				689,
-				690,
-				691
-			],
-			"stages": [
-				"2-216",
-				"2-217",
-				"2-218",
-				"2-219",
-				"13-17",
-				"7-27"
-			],
-			"pools": [
-				"神劍闖江湖－明治劍客浪漫譚－"
-			],
-			"img": "https://i.imgur.com/qmc8Iw1.png",
-			"links": {
-				"TVアニメ「るろうに剣心 －明治剣客浪漫譚－ 京都動乱」公式サイト": "https://rurouni-kenshin.com/"
-			},
-			"tw_history": [
-				"2024/8/5~2024/8/19"
-			],
-			"jp_history": [
-				"2024/5/23~2024/6/6"
-			]
-		},
-		{
-			"tw_name": "範馬刃牙",
-			"en_name": "Hanma Baki: Son of Ogre",
-			"jp_name": "範馬刃牙",
-			"stamp": [
-				795
-			],
-			"enemies": [
-				724,
-				725,
-				726,
-				727,
-				728
-			],
-			"stages": [
-				"2-223",
-				"13-18",
-				"13-19",
-				"13-20",
-				"13-21",
-				"13-22",
-				"7-31"
-			],
-			"pools": [
-				"範馬刃牙",
-				"範馬刃牙活動轉蛋"
-			],
-			"img": "https://i.imgur.com/ltiJNqh.png"
-		},
-		{
-			"tw_name": "索尼克",
-			"en_name": "Sonic Series",
-			"jp_name": "ソニックシリーズ",
-			"enemies": [
-				730,
-				731,
-				732,
-				733,
-				734
-			],
-			"stages": [
-				"2-224",
-				"2-225",
-				"2-226",
-				"7-32",
-				"13-23"
-			],
-			"pools": [
-				"索尼克"
-			],
-			"img": "https://i.meee.com.tw/1HeBuq7.png"
 		}
 	]
 }
