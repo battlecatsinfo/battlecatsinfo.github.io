@@ -62,7 +62,7 @@ const sources = [
 	"parser.js",
 	"esearch.js",
 	"search.js",
-	'cat_dict.js',
+	'cat_guide.js',
 	'settings.js',
 	'dom-to-image.min.js',
 	'compare.js',

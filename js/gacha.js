@@ -155,7 +155,7 @@ module.exports = class extends RewardSiteGenerator {
 		this.write_template('html/gachas.html', 'gachas.html', {
 			gachas,
 		});
-		this.write_template('html/cat_dictionary.html', 'cat_dictionary.html', {
+		this.write_template('html/cat_guide.html', 'cat_guide.html', {
 			'categories': [
 				{
 					'name': '特殊',
