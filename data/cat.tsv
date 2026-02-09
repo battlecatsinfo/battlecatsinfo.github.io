@@ -248,8 +248,8 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 1	3			50	60				0|58|10|1|10|0|0|0|0|0|0|78|4|-1|0|25|10|20|200|0|0|0|0|0|0|31|5|-1|0|55|0|0|0|0|0|0|0|0|0|67|6|-1|0|32|10|2|20|0|0|0|0|0|0|27|5|-1|0|31|10|2|20|0|0|0|0|0|0|28|5|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0		1	560|1050|1680|2520|3570|4830|6300|7980|9870|11970			0		1|134|0	Li'l_Cow_Cat_(Special_Cat)	60
 1	3			50	60				0|40|0|0|0|0|0|0|0|0|0|40|6|-1|0|29|0|0|0|0|0|0|0|0|0|25|6|-1|0|60|10|20|20|24|60|0|0|0|0|80|4|-1|0|32|10|2|20|0|0|0|0|0|0|27|5|-1|0|31|10|2|20|0|0|0|0|0|0|28|5|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0		1	630|1400|2240|3360|4760|6440|8400|10640|13160|15960			0		1|135|0	Li'l_Bird_Cat_(Special_Cat)	60
 1	3	https://youtu.be/HyDjm-vdL88		50	10		20000!0|5!33|5!30|5!31					5	第3進化後體力上升！<br>同時取得靈魂攻擊的能力！		0			Undead_Cat_(Special_Cat)	10
-2	3			50	0							5			3	2|24|1	2|25|0	C&D_Swordsman_(Rare_Cat)	0
-2	3			50	0							5			3	2|24|2	2|25|1	Horsemen_Cavalry_(Rare_Cat)	0
+2	3			50	0							5			3	2|24|1	2|25|0	Castle_Guard_(Rare_Cat)	0
+2	3			50	0							5			3	2|24|2	2|25|1	Castle_Horseman_(Rare_Cat)	0
 2	3			50	0							5			3	2|24|3	2|25|2	Ashura_(Rare_Cat)	0
 2	3			50	0							5			3	2|24|4	2|25|3	Battle_Balloon_(Rare_Cat)	0
 2	3			50	0							5			3	2|24|5	2|25|4	Dragon_Rider_(Rare_Cat)	0
@@ -338,7 +338,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	3			60	70		1000000!0|6!35|4!36|6!37|2!39|3!40		0|40|0|0|0|0|0|0|0|0|0|40|9|-1|0|29|0|0|0|0|0|0|0|0|0|25|9|-1|0|20|10|16|70|0|0|0|0|0|0|20|8|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	60000	1	1	第3進化後<br>增加擊退次數與攻擊速度獲得提升！		2			Queen_Reika_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|3!40		0|11|10|28|100|0|0|0|0|0|0|11|7|-1|0|44|0|0|0|0|0|0|0|0|0|53|9|-1|0|48|0|0|0|0|0|0|0|0|0|57|9|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	60000	1	1	第3進化後體力、<br>移動速度與攻擊力上升！		2			HMS_Princess_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|4!38|7!35|3!36|4!39|3!40		0|57|0|0|0|0|0|0|0|0|0|77|9|-1|0|11|10|28|100|0|0|0|0|0|0|11|7|-1|0|19|10|16|70|0|0|0|0|0|0|19|8|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	60100	1	1	第3進化後<br>體力與射程皆會獲得提升！<br>還會使黑色敵人攻擊力下降的時間增長！		2			Imagawa_Yoshimoto_(Uber_Rare_Cat)	70
-1	1	鐵壁砲		1	0							3			0			Ototo_Development_Team#Base_Upgrade_Materials/Information	0
+1	1	鐵壁砲		1	0							3			0			Ototo_Corps#Base_Upgrade_Materials/Information	0
 2	3			50	0					60100		3			3	2|168|2	2|204|1	Redhead_Yuki_Cat_(Rare_Cat)	0
 4	3			60	70		1000000!0|3!37|3!39|1!40		0|57|0|0|0|0|0|0|0|0|0|77|9|-1|0|54|10|5|50|0|0|0|0|0|0|66|8|-1|0|49|0|0|0|0|0|0|0|0|0|58|9|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	60100	1	1	第3進化後體力、攻擊力上升！<br>還能夠將敵人的打飛效果無效化<br>同時取得破壞護盾能力！		2			Lost_World_Yuki_(Uber_Rare_Cat)	70
 1	2			50	40					60100		3			0			Maneki_Cat_(Special_Cat)	30
@@ -397,7 +397,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	3			60	70		1000000!0|3!38|3!37|1!40			60800		1	第3進化後<br>體力與攻擊力皆會獲得提升！<br>並且能不受波動傷害！		2			Miyabi_Oyama_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|3!38|6!36|6!37|3!39|3!40		0|1|10|50|50|39|120|50|50|0|0|1|7|-1|0|44|0|0|0|0|0|0|0|0|0|53|9|-1|0|20|10|16|70|0|0|0|0|0|0|20|8|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	60800	1	1	第3進化後<br>體力與增加擊退次數獲得提升！		2			Ganglion_(Uber_Rare_Cat)	70
 4	4			60	70		1000000!0|15!35|1!40	1000000!0|2!179|2!180|1!43	0|48|0|0|0|0|0|0|0|0|0|57|9|-1|0|55|0|0|0|0|0|0|0|0|0|67|9|-1|0|11|10|28|100|0|0|0|0|0|0|11|7|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	60800	1	1	第3進化後<br>對上鋼鐵敵人很耐打的能力<br>將提升為超耐打！	第4進化後變成了全方位攻擊<br>體力、攻擊力和會心一擊率上升！<br>對鋼鐵敵人的妨害時間也增長！	2			Sakura_Sonic_(Uber_Rare_Cat)	70
-1	2	https://youtu.be/ZsdqsxrQX_w		50	0					60800		5			0			Honeyto-Kun_(Special_Cat)	
+1	2	https://youtu.be/ZsdqsxrQX_w		50	0					60800		5			0			Honeyto-kun_(Special_Cat)	
 2	2			50	0					60900		5			3	2|64|1		Mentori_(Rare_Cat)	0
 1	2			50	0					60900		5			0			Imoto_(Special_Cat)	0
 4	3			60	70		1000000!0|4!38|4!35|7!37|3!39|3!40		0|29|0|0|0|0|0|0|0|0|0|25|9|-1|0|46|0|0|0|0|0|0|0|0|0|55|9|-1|0|45|0|0|0|0|0|0|0|0|0|54|9|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	60900	1	1	第3進化後<br>體力與攻擊力上升！<br>同時延長使異星戰士動作停止的時間！		2			Voli_(Uber_Rare_Cat)	70
@@ -411,9 +411,9 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 3	3			50	70		500000!0|3!39			61000		2	第3進化後體力上升！<br>並且善於攻擊天使敵人，<br>有時候可使其攻擊無效化！		2			Rei_Ayanami_(Super_Rare_Cat)	70
 3	3			50	70		500000!0|3!36			61000		2	第3進化後<br>體力與攻擊力上升！<br>同時取得有時候會打飛紅色敵人的能力！		2			Asuka_Langley_(Super_Rare_Cat)	70
 3	2			50	70					61000		2			2			Mari_Illustrious_(Super_Rare_Cat)	70
-4	2			60	70					61000		1			2			Eva_Unit-00_(Uber_Rare_Cat)	70
-4	3			60	70		1000000!0|1!43|1!161			61000		1	第3進化後能發射小烈波！<br>而且轉變為死前可以存活一次<br>體力下降時攻擊力上升會再增加！		2			Eva_Unit-01_(Uber_Rare_Cat)	70
-4	3			60	70		1000000!0|3!38|3!36|1!40			61000		1	第3進化後攻擊速度獲得提升！<br>同時加快發出攻擊的速度、且取得<br>體力下降時攻擊力上升的能力！		2			Eva_Unit-02_(Uber_Rare_Cat)	70
+4	2			60	70					61000		1			2			EVA_Unit-00_(Uber_Rare_Cat)	70
+4	3			60	70		1000000!0|1!43|1!161			61000		1	第3進化後能發射小烈波！<br>而且轉變為死前可以存活一次<br>體力下降時攻擊力上升會再增加！		2			EVA_Unit-01_(Uber_Rare_Cat)	70
+4	3			60	70		1000000!0|3!38|3!36|1!40			61000		1	第3進化後攻擊速度獲得提升！<br>同時加快發出攻擊的速度、且取得<br>體力下降時攻擊力上升的能力！		2			EVA_Unit-02_(Uber_Rare_Cat)	70
 4	2			60	70					61000		1			2			Shinji_Cat_(Uber_Rare_Cat)	70
 4	2			60	70					61000		1			2			Moon_Operators_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|7!38|3!35|4!36|4!39|3!40		0|10|10|50|50|5|50|0|0|0|0|10|7|-1|0|29|0|0|0|0|0|0|0|0|0|25|9|-1|0|19|10|16|70|0|0|0|0|0|0|19|8|-1|0|59|0|0|0|0|0|0|0|0|0|79|9|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	61000	1	1	第3進化後攻擊力上升！		2			Mighty_Thermae_D-Lux_(Uber_Rare_Cat)	70
@@ -486,7 +486,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					90000		1			2			Li'l_Valkyrie_Dark_(Uber_Rare_Cat)	70
 4	2			60	70					80700		1			2			Calette_(Uber_Rare_Cat)	70
 3	2			50	70					80700		2			2			Hina_(Super_Rare_Cat)	70
-4	2			60	70					80700		1			2			Eva_Unit-08_(Uber_Rare_Cat)	70
+4	2			60	70					80700		1			2			EVA_Unit-08_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|3!35|3!39|1!40			80700		1	第3進化後體力、移動速度<br>攻擊速度皆會獲得提升！<br>同時還能將敵人的動作變慢效果無效化！		2			AAA_Wunder_(Uber_Rare_Cat)	70
 3	2			50	70					80700		2			2			Misato_Katsuragi_(Super_Rare_Cat)	70
 3	2			50	70					80700		2			2			Ritsuko_Akagi_(Super_Rare_Cat)	70
@@ -636,7 +636,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	3			60	70		1000000!0|1!43|3!161		0|10|10|34|34|10|100|0|0|0|0|46|7|-1|0|48|0|0|0|0|0|0|0|0|0|57|9|-1|0|25|10|70|700|0|0|0|0|0|0|31|8|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	110000	1	1	第3進化後可以給予惡魔超大傷害<br>還能夠將敵人的動作停止無效化！<br>且有時候能破壞惡魔盾		2			White_Knight_Cyclops_(Uber_Rare_Cat)	70
 1	2	週年活動轉蛋可獲取		50	20					110000		300|500|1400|2600|4100|5900|8000|10400|13100|16100			0			Million-Dollar_Cat_(Special_Cat)	10
 3	3			50	70					110000		2			2		1|351|0	Brainwashed_Tank_Cat_(Super_Rare_Cat)	70
-1	2			50	0					110100		5			0			Xiaoqiong_&_Cat_(Special_Cat)	0
+1	2			50	0					110100		5			0			Sora_&_Cat_(Special_Cat)	0
 2	2			50	0					110100		4			3	2|183|4		Nana_&_Cat_(Rare_Cat)	0
 2	2			50	0					110100		4			3	2|184|4		Emilia_&_Cat_(Rare_Cat)	0
 1	2			50	0					110100		5			0			Ann_&_Cat_(Special_Cat)	0
@@ -709,7 +709,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 2	3	超獸討伐關卡通過45關後可於貓咪任務領取		50	0	0,9	200000!0|15!167|15!168|1!171			120300		4	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		3			Ancient_Egg:_N109_(Rare_Cat)	0
 2	2			50	0					120300		4			3	1|340|3		Jetpack_Cat_(Rare_Cat)	0
 4	2			60	70					120400		1			2			One-Eyed_Asuka_(Uber_Rare_Cat)	70
-4	2			60	70					120400		1			2			Eva_Unit-13_(Uber_Rare_Cat)	70
+4	2			60	70					120400		1			2			EVA_Unit-13_(Uber_Rare_Cat)	70
 4	2			60	70					120400		1			2			Betrothed_Balaluga_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|4!35|4!37|4!38|6!39|5!40			120400		1	第3進化後體力上升！<br>能發射較久的小烈波，<br>且打飛敵人的機率上升！		2			Kaoluga_(Uber_Rare_Cat)	70
 1	3			50	20	0,8	200000!0|10!167|10!168			120400		5	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		0			Ancient_Egg:_N203_(Special_Cat)	20
@@ -725,20 +725,20 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	3			60	70		1000000!0|1!43|5!39			120700		1	第3進化後全體能力皆會增加！<br>發射波動可傳達至更遠處並能使<br>敵人的動作停止與毒擊無效化！		2			Lightmother_Aset_(Uber_Rare_Cat)	70
 2	3	超獸討伐關卡通過60關後可於貓咪任務領取		50	0	0,1	200000!0|15!168|15!170|2!179|2!181			120700		4	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		3			Ancient_Egg:_N112_(Rare_Cat)	0
 4	2			60	70					130000		1			2			Ninja_Girl_Tomoe_(Uber_Rare_Cat)	70
-1	2	週年活動轉蛋可獲取		50	15					130000		5			0			Medal_King_Cat_(Special_Cat)	
-4	2			60	70					130100		1			2			Sol_Dae_Rokker_(Uber_Rare_Cat)	70
+1	2	週年活動轉蛋可獲取		50	15					130000		5			0			Medal_King_(Special_Cat)	
+4	2			60	70					130100		1			2			SOL_DAE_ROKKER_(Uber_Rare_Cat)	70
 1	2			50	0					130100		1			0	16|8|5		Master_of_Mind_Soractes_(Special_Cat)	0
-1	1	可由貓咪召喚出		50	0					130100		1			0			Special_Abilities#Summon	0
+1	1	可由貓咪召喚出		50	0					130100		1			0			Special_Abilities#Conjure	0
 1	3			50	20	0,2	200000!0|10!167|10!168			130100		5	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		0			Ancient_Egg:_N204_(Special_Cat)	20
 5	2			50	9					130100		1			2			Daybreaker_Izanagi_(Legend_Rare_Cat)	9
-5	1	可由貓咪召喚出		50	0					130100		1			2			Special_Abilities#Summon	0
+5	1	可由貓咪召喚出		50	0					130100		1			2			Special_Abilities#Conjure	0
 4	2			60	70					130200		1			2			Pegasa_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					130200		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					130200		1			2			Special_Abilities#Conjure	0
 1	2	情人節活動時透過販賣（課金）可購買		50	0					130200		300|500|1400|2600|4100|5900|8000|10400|13100|16100			6			Principal_Cat_(Special_Cat)	0
 4	2			60	70					130200		1			2			Frozen_Rose_Cat_(Uber_Rare_Cat)	70
 4	2			60	70					130300		1			2			Floral_Kalisa_(Uber_Rare_Cat)	70
 5	2			50	9					130300		1			2			Izanami_of_Dusk_(Legend_Rare_Cat)	9
-5	1	可由貓咪召喚出		50	0					130300		1			2			Special_Abilities#Summon	0
+5	1	可由貓咪召喚出		50	0					130300		1			2			Special_Abilities#Conjure	0
 1	2	繁中版、英文版投票結果，於浪貓活動期間領取		50	0					140300		5			0			Trash_Cat_(Special_Cat)	0
 4	2			60	70					130300		1			2			Voluptuous_Peony_-_Daji_(Uber_Rare_Cat)	70
 2	2			50	80					130300		3			3			Mollyanna_Cat_(Rare_Cat)	80
@@ -754,40 +754,40 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 2	2			50	0					130400		4			3	2|216|4		Kenshin_Cat_(Rare_Cat)	0
 1	2			50	0					130400		5			0			Kaoru_Cat_(Special_Cat)	0
 4	2			60	70					130400		1			2			Akechi_Mitsuhide_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					130400		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					130400		1			2			Special_Abilities#Conjure	0
 4	2			60	70					130400		1			2			Cake_Machine_(Uber_Rare_Cat)	70
 1	3			50	10	0,8	200000!0|10!167|10!168			130400		5	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		0			Ancient_Egg:_N205_(Special_Cat)	10
 4	2			60	70					140000		1			2			Trixi_the_Merc_(Uber_Rare_Cat)	70
 4	2			60	70					130500		1			2			Music_Fest_Thundia_(Uber_Rare_Cat)	70
 4	2			60	70					130500		1			2			Gunduros_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					130500		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					130500		1			2			Special_Abilities#Conjure	0
 4	2			60	70					130600		1			2			Heavenly_God_Super_Zeus_(Uber_Rare_Cat)	
 4	2			60	70					130600		1			2			Dynasaurus_Cat_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					130600		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					130600		1			2			Special_Abilities#Conjure	0
 1	3			50	20	0,2	200000!0|10!167|10!168			130600		5	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		0			Ancient_Egg:_N206_(Special_Cat)	20
 1	2			50	20					130600		5			0			Sardine_(Special_Cat)	20
 1	2			50	20					130600		5			0			Squid_(Special_Cat)	20
 4	2			60	70					130700		1			2			Taitenki_(Uber_Rare_Cat)	70
 4	2			60	70					130700		1			2			Hanasaka_Cat_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					130700		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					130700		1			2			Special_Abilities#Conjure	0
 1	2	通過真傳奇故事全部的關卡等級4關卡後於「古代神木 - 起源的覺醒」等級4關卡獲得		50	0					130700		1			0	4|69|0		Master_of_Life_Dr._Nova_(Special_Cat)	0
 4	2			60	70					130700		1			2			Pumpkin_Sodom_(Uber_Rare_Cat)	70
 3	2			50	70					130700		2			2			Mummy_Sumo_(Super_Rare_Cat)	70
 4	2			60	70					140000		1			2			Mech_Patrol_Axel_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					140000		1			2			Special_Abilities#Summon	0
-1	2	日文版12週年特別任務（天下統一への道①④）或英文版限時活動"Road to Unification"完成後於貓咪任務領取		50	0					140000		5			0			Lieutenant_Cat_(Special_Cat)	
+4	1	可由貓咪召喚出		60	0					140000		1			2			Special_Abilities#Conjure	0
+1	2	日文版12週年特別任務（天下統一への道①④）或英文版限時活動"Road to Unification"完成後於貓咪任務領取		50	0					140000		5			0			Lieutenant_Cat_(Special_Cat)	0
 4	2			60	70					140000		1			2			Winter_General_Kaihime_(Uber_Rare_Cat)	70
 4	2			60	70					140100		1			2			Madoka_Cat_&_Homura_(Uber_Rare_Cat)	70
 4	2			60	70					140100		1			2			Celestial_Child_Luna_(Uber_Rare_Cat)	70
 2	2			50	0					140100		4			3	1|391|3		Bowler_Cat_(Rare_Cat)	0
 4	2			60	70					140200		1			2			Mamoluga_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					140200		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					140200		1			2			Special_Abilities#Conjure	0
 4	2			60	70					140200		1			2			Koneko_(Uber_Rare_Cat)	70
-1	2			50	0					140200		300|500|1400|2600|4100|5900|8000|10400|13100|16100			7			ChocoSurp_Cat_C_(Special_Cat)	0
+1	2			50	0					140200		300|500|1400|2600|4100|5900|8000|10400|13100|16100			7			Choco_Capsule_(Special_Cat)	0
 2	2			50	0					140200		400|700|1600|2800|4300|6100|8200|10600|13300|16300			3	11|64|9		Killer_Gross_Cat_(Rare_Cat)	0
 4	2			60	70					140200		1			2			The_Amazing_Catman_(Uber_Rare_Cat)	70
 4	2			60	70					140300		1			2			Netherworld_Nymph_Lunacia_(Uber_Rare_Cat)	70
-1	2	韓文版投票結果，於浪貓活動期間領取		50	0					140300		5			0			788_(Special_Cat)	
+1	2	韓文版投票結果，於浪貓活動期間領取		50	0					140300		5			0			Stealth_Cat_(Special_Cat)	
 4	2			60	70					140300		1			2			Baki_Hanma_(Uber_Rare_Cat)	70
 4	2			60	70					140300		1			2			Retsu_Kaioh_(Uber_Rare_Cat)	70
 4	2			60	70					140300		1			2			Kaoru_Hanayama_(Uber_Rare_Cat)	70
@@ -799,9 +799,9 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 1	2			50	20					140300		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Kaioh_Cat_(Special_Cat)	20
 1	2			50	20					140300		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Doppo_Cat_(Special_Cat)	20
 4	2			60	70					140400		1			2			Mighty_Morta-Loncha_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					140400		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					140400		1			2			Special_Abilities#Conjure	0
 1	2			50	0					140400		1			0	16|19|5		Master_of_Logic_Newton_(Special_Cat)	0
-1	1	可由貓咪召喚出		50	0					140400		1			0			Special_Abilities#Summon	0
+1	1	可由貓咪召喚出		50	0					140400		1			0			Special_Abilities#Conjure	0
 4	2			60	70					140400		1			2			Sonic_(Uber_Rare_Cat)	70
 4	2			60	70					140400		1			2			Tails_(Uber_Rare_Cat)	70
 4	2			60	70					140400		1			2			Knuckles_(Uber_Rare_Cat)	70
@@ -811,20 +811,20 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 2	2			50	80					140400		3			3			Shadow_Cat_(Rare_Cat)	80
 4	2			60	70					150000		1			2			Agent_Staal_(Uber_Rare_Cat)	70
 4	2			60	70					140500		1			2			Victorious_Skanda_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					140500		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					140500		1			2			Special_Abilities#Conjure	0
 1	2			50	10					140500		5			0			Tasmanian_Giant_Crab_(Special_Cat)	10
 4	2			60	70					140500		1			2			Mass_Production_EVA_(Uber_Rare_Cat)	70
 5	2			50	9					140500		1			2			Moonshade_Kaworu_(Legend_Rare_Cat)	9
-5	1	可由貓咪召喚出		50	0					140500		1			2			Special_Abilities#Summon	0
+5	1	可由貓咪召喚出		50	0					140500		1			2			Special_Abilities#Conjure	0
 4	2			60	70					140600		1			2			Komori_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					140600		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					140600		1			2			Special_Abilities#Conjure	0
 2	2			50	0					140600		4			3	1|406|3		Carpenter_Cat_(Rare_Cat)	0
 4	2			60	70					140600		1			2			Seaside_Pegasa_(Uber_Rare_Cat)	70
-4	1	可由貓咪召喚出		60	0					140600		1			2			Special_Abilities#Summon	0
+4	1	可由貓咪召喚出		60	0					140600		1			2			Special_Abilities#Conjure	0
 1	2			50	10					140600		5			0			Consultant_Cat_(Special_Cat)	10
-1	2	於貓咪大商店網站註冊後於遊戲內信箱領取（日版限定）		50	0					140700		5			0			Cat_Manager_&_Cat_Clerk_(Special_Cat)	
+1	2	於貓咪大商店網站註冊後於遊戲內信箱領取（日版限定）		50	0					140700		5			0			Manager_Cat_&_Clerk_Cat_(Special_Cat)	
 4	2			60	70					140700		1			2			Sorceress_Sidmi_(Uber_Rare_Cat)	70
-4	1			60	0					140700		1			2			Special_Abilities#Summon	0
+4	1			60	0					140700		1			2			Special_Abilities#Conjure	0
 4	2			60	70					140700		1			2			Cammy_(Uber_Rare_Cat)	70
 4	2			60	70					140700		1			2			Juri_(Uber_Rare_Cat)	70
 3	2			50	70					140700		2			2			Zangief_Cat_(Super_Rare_Cat)	70
@@ -835,17 +835,17 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 1	2	日文版13週年活動：任務獲得		50	0					150000		5			0			Helmet_Cat_(Special_Cat)	
 1	2	日文版13週年活動：貓咪圖鑑獲得		50	0					150000		5			0			Goggle_Cat_(Special_Cat)	
 1	2	日文版13週年活動：點擊蛋糕獲得		50	0					150000		5			0			Ribbon_Cat_(Special_Cat)	
-4	2	日文版13週年任務：取得其他貓咪戰隊後獲得		60	0					150000		1			2			Nyankooh_(Uber_Rare_Cat)	
-4	2			60	70					150100		1			2			Young_Knight_Luno_(Uber_Rare_Cat)	70
-4	1			60	0					150100		1			2			Special_Abilities#Summon	0
-4	1			60	0					150100		1			2			Special_Abilities#Summon	0
-4	2			60	70					150101		1			2				
-4	2			60	70					150101		1			2				
-4	2			60	70					150101		1			2				
-4	2			60	70					150101		1			2				
-4	2			60	70					150101		1			2				
-4	2			60	70					150101		1			2				
-4	2			60	70					150101		1			2				
-3	2			50	70					150101		2			2				
-2	2			50	0					150101		4			3	2|263|4			
-1	2	鬼滅之刃合作活動獲得		50	0					150101		5			0				
+4	2	日文版13週年任務：取得其他貓咪戰隊後獲得		60	0					150000		1			2			Nyanko-Oh_(Uber_Rare_Cat)	
+4	2			60	70					150100		1			2			Squire_Luno_(Uber_Rare_Cat)	70
+4	1			60	0					150100		1			2			Special_Abilities#Conjure	0
+4	1			60	0					150100		1			2			Special_Abilities#Conjure	0
+4	2			60	70					150101		1			2			Tanjiro_Kamado_(Uber_Rare_Cat)	
+4	2			60	70					150101		1			2			Nezuko_Kamado_(Uber_Rare_Cat)	
+4	2			60	70					150101		1			2			Zenitsu_Agatsuma_(Uber_Rare_Cat)	
+4	2			60	70					150101		1			2			Inosuke_Hashibira_(Uber_Rare_Cat)	
+4	2			60	70					150101		1			2			Giyu_Tomioka_(Uber_Rare_Cat)	
+4	2			60	70					150101		1			2			Shinobu_Kocho_(Uber_Rare_Cat)	
+4	2			60	70					150101		1			2			Kyojuro_Rengoku_(Uber_Rare_Cat)	
+3	2			50	70					150101		2			2			Li'l_Sakonji_Urokodaki_(Super_Rare_Cat)	
+2	2			50	0					150101		4			3	2|263|4		Tanjiro_Cat_(Rare_Cat)	
+1	2			50	0					150101		5			0			Nezuko_Cat_(Special_Cat)	
