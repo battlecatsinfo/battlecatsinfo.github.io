@@ -16,6 +16,7 @@ const not_e = document.getElementById('not-f');
 const fav_only = document.getElementById('fav-only');
 const ex_only = document.getElementById('ex-only');
 let fav_setting = false;
+let last_rarity = null;
 
 function onClick(event) {
 	const t = event.currentTarget;
@@ -42,7 +43,10 @@ function onClick(event) {
 	}
 }
 
-function add_unit(c) {
+function add_unit(c, gap=true) {
+	if (gap && last_rarity !== c.rarity && last_rarity !== null)
+		cats_e.appendChild(document.createElement('p'));
+	last_rarity = c.rarity;
 	const img = new Image(104, 79);
 	const a = document.createElement('a');
 	img.loading = 'lazy';
@@ -285,6 +289,7 @@ function filter() {
 				results.delete(x);
 
 	cats_e.textContent = '';
+	last_rarity = null;
 	if (!results.size) {
 		not_e.style.display = 'block';
 		return;
@@ -298,7 +303,7 @@ function filter() {
 		sorted.sort((x, y) => {
 			x.rarity - y.rarity
 		});
-		sorted.forEach(add_unit);
+		sorted.forEach(x => add_unit(x, false));
 		return;
 	}
 	let sorted = [];
@@ -328,6 +333,7 @@ function clearAll(event) {
 		for (let n of Array.from(x.getElementsByClassName('selected')))
 			n.classList.remove('selected');
 	cats_e.textContent = '';
+	last_rarity = null;
 	cats.map(add_unit);
 }
 document.onclick = function(event) {
@@ -382,6 +388,7 @@ document.getElementById('search-name').onclick = function(event) {
 			break;
 		}
 	cats_e.textContent = '';
+	last_rarity = null;
 	if (!q) return;
 	let digit = q.length >= 1;
 	for (const c of q) {
@@ -390,13 +397,13 @@ document.getElementById('search-name').onclick = function(event) {
 	}
 	if (digit) {
 		const x = cats[parseInt(q)];
-		x && (found = true, add_unit(x));
+		x && (found = true, add_unit(x, false));
 	}
 	for (let i = 0; i < cats.length; ++i) {
 		const c = cats[i];
 		for (let f of c.forms) {
 			if (f.name.includes(q) || f.jp_name.includes(q)) {
-				add_unit(c);
+				add_unit(c, false);
 				found = true;
 				break;
 			}
