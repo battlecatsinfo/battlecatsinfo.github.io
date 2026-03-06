@@ -95,6 +95,8 @@ var lvMax;
 var tf_tbl;
 var tf_tbl_s;
 var tf4_tbl;
+var tf4_tbl_t;
+var tf4_tbl_s;
 var super_talent = false;
 var custom_talents;
 var custom_super_talents;
@@ -1411,13 +1413,20 @@ async function applyOrb() {
 				TF.applySuperTalents(custom_super_talents);
 			updateValues(TF, tf_tbl_s.firstChild);
 		}
-		if (tf4_tbl) {
+		if (tf4_tbl_t) {
+			const F4 = my_cat.forms[3].clone();
+			if (my_cat.talents) {
+				F4.applyTalents(custom_talents);
+				updateValues(F4, tf4_tbl_t.firstChild);
+			}
+		}
+		if (tf4_tbl_s) {
 			const F4 = my_cat.forms[3].clone();
 			if (my_cat.talents) {
 				F4.applyTalents(custom_talents);
 				if (super_talent)
 					F4.applySuperTalents(custom_super_talents);
-				updateValues(F4, tf4_tbl.firstChild);
+				updateValues(F4, tf4_tbl_s.firstChild);
 			}
 		}
 	} else {
@@ -1428,10 +1437,15 @@ async function applyOrb() {
 			TF.applySuperTalents(custom_super_talents);
 			updateTable(TF, tf_tbl_s);
 		}
-		if (tf4_tbl) {
+		if (tf4_tbl_t) {
 			const F4 = my_cat.forms[3].clone();
 			F4.applyTalents(custom_talents);
-			updateTable(F4, tf4_tbl);
+			updateTable(F4, tf4_tbl_t);
+		}
+		if (tf4_tbl_s) {
+			const F4 = my_cat.forms[3].clone();
+			F4.applySuperTalents(custom_super_talents);
+			updateTable(F4, tf4_tbl_s);
 		}
 	}
 }
@@ -1986,10 +2000,15 @@ function calcCost(event) {
 		TF.applySuperTalents(custom_super_talents);
 		updateTable(TF, tf_tbl_s);
 	}
-	if (tf4_tbl) {
+	if (tf4_tbl_t) {
 		const TF4 = my_cat.forms[3].clone();
 		TF4.applyTalents(custom_talents);
-		updateTable(TF4, tf4_tbl);
+		updateTable(TF4, tf4_tbl_t);
+	}
+	if (tf4_tbl_s) {
+		const TF4 = my_cat.forms[3].clone();
+		TF4.applySuperTalents(custom_super_talents);
+		updateTable(TF4, tf4_tbl_s);
 	}
 }
 
@@ -2265,11 +2284,23 @@ function renderUnitPage() {
 			mkTool(tf_tbl_s);
 		}
 		if (my_cat.forms.length == 4) {
-			const F = my_cat.forms[3].clone();
-			F.applyTalents(custom_talents);
-			tf4_tbl = renderForm(F, '四階：', true, true, false, my_cat.forms[3]);
-			tables.push(['四階+本能數值表格', tf4_tbl]);
+			const F4 = my_cat.forms[3].clone();
+			tf4_tbl = renderForm(F4, '四階：', false, false, false, my_cat.forms[3]);
+			tables.push(['四階數值表格', tf4_tbl]);
 			mkTool(tf4_tbl);
+
+			const F4_talent = F4.clone();
+			if (!has_super) {
+				F4_talent.applyTalents(custom_talents);
+				tf4_tbl_t = renderForm(F4_talent, '四階本能完全升滿的數值表格', true, false, true, my_cat.forms[3]);
+				tables.push(['四階+本能數值表格', tf4_tbl_t]);
+				mkTool(tf4_tbl_t);
+			} else {
+				F4_talent.applySuperTalents(custom_super_talents);
+				tf4_tbl_s = renderForm(F4_talent, '四階超本能完全升滿的數值表格', true, true, true, my_cat.forms[3]);
+				tables.push(['四階+超本能數值表格', tf4_tbl_s]);
+				mkTool(tf4_tbl_s);
+			}
 		}
 	}
 	renderDef();
