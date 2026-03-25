@@ -1081,6 +1081,9 @@ class CatForm extends Unit {
 	}
 	set tba(value) {
 		this.info.tba = value;
+
+		if (value <= 12)
+			this.info.atkType |= ATK_KB_REVENGE;
 	}
 	get attackF() {
 		return super.attackF;
