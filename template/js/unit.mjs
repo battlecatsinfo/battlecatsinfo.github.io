@@ -1735,6 +1735,9 @@ class CatForm extends Unit {
 				t = this.ab[AB_EXPLOSION];
 				this.ab[AB_EXPLOSION] = [inc1 + (t ? t[0] : 0), inc2 >> 2, (inc2 + inc3) >> 2];
 				break;
+			case 68:
+				this.ab[AB_COUNTER] = null;
+				break;
 		}
 	}
 
