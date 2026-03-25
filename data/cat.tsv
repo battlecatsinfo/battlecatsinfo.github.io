@@ -448,7 +448,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 3	3			50	70		500000!0|1!43|10!34			80000		2	第3進化後<br>取得烈波攻擊！		2			Backhoe_Cat_(Super_Rare_Cat)	70
 3	3			50	70		500000!0|1!43|10!32			80000		2	第3進化後<br>體力與攻擊力上升！<br>同時取得破壞護盾的能力！		2			Miter_Saw_Cat_(Super_Rare_Cat)	70
 5	3			50	9		3000000!0|5!37|1!181			80000		1	第3進化後體力與攻擊力上升！<br>取得超生命體特效能力，可將敵人的<br>動作變慢效果和攻擊力下降無效化！		2			Musashi_Miyamoto_(Legend_Rare_Cat)	9
-5	3			50	9		3000000!0|5!36|3!38|1!182			80000		1	第３形態への進化で体力と攻撃力が上昇！<br>攻撃範囲が拡大し、超生命体特効を取得！<br>動きを止めると爆波のダメージも無効化！		2			Headmistress_Jeanne_(Legend_Rare_Cat)	9
+5	3			50	9		3000000!0|5!36|3!38|1!182			80000		1	第3進化後體力和攻擊力上升！<br>攻擊範圍擴大並取得超生命體特效能力！<br>還能使敵人的動作停止和爆波傷害無效化！		2			Jeanne_(Legend_Rare_Cat)	9
 5	3			50	9		3000000!0|5!38|5!36|1!180|1!182			80000		1	第3進化後體力上升！<br>可使敵人的打飛效果和毒擊傷害<br>無效化，還取得了超生命體特效能力！		2			High_Lord_Babel_(Legend_Rare_Cat)	9
 5	2			50	9					80100		1			2			Ushiwakamaru_(Legend_Rare_Cat)	9
 2	3			50	0					80100		3			3	10|37|0	1|247|1	Primordial_Cat_(Rare_Cat)	0
@@ -617,7 +617,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 1	2			50	40					100700		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Kabuto_Cat_(Special_Cat)	40
 1	2			50	40					100700		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Kuwagata_Cat_(Special_Cat)	40
 4	3			60	70		1000000!0|1!43|3!161		0|11|10|28|100|0|0|0|0|0|0|11|7|-1|0|29|0|0|0|0|0|0|0|0|0|25|9|-1|0|47|0|0|0|0|0|0|0|0|0|56|9|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	100900	1	1	第3進化後體力上升！<br>破壞惡魔盾的機率上升，<br>且必定能打飛敵人！		2			Summoner_Satoru_(Uber_Rare_Cat)	70
-4	3			60	70		1000000!0|1!43|3!161		0|51|10|20|20|24|60|0|0|0|0|60|7|-1|0|45|0|0|0|0|0|0|0|0|0|54|9|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|26|10|30|300|0|0|0|0|0|0|32|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	100800	1	1	第3進化後<br>體力與攻擊速度上升！		2			Shiro_Amakusa_(Uber_Rare_Cat)	70
+4	3			60	70		1000000!0|1!43|3!161		0|51|10|20|20|24|60|0|0|0|0|60|7|-1|0|45|0|0|0|0|0|0|0|0|0|54|9|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|26|10|30|300|0|0|0|0|0|0|32|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	100800	1	1	第3進化後<br>體力與攻擊速度上升！		2			Amakusa_Shiro_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|1!43|3!161		0|2|10|50|50|15|60|0|0|0|0|2|7|-1|0|44|0|0|0|0|0|0|0|0|0|53|9|-1|0|20|10|16|70|0|0|0|0|0|0|20|8|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	100800	1	1	第3進化後體力上升！<br>同時取得烈波攻擊！		2			Lilin_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|1!43|3!161		0|10|10|67|67|5|50|0|0|0|0|10|7|-1|0|48|0|0|0|0|0|0|0|0|0|57|9|-1|0|47|0|0|0|0|0|0|0|0|0|56|9|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	100900	1	1	第3進化後體力、攻擊力與<br>射程上升！同時必定能<br>打飛紅色敵人與惡魔！		2			Hevijak_the_Wicked_(Uber_Rare_Cat)	70
 2	3			50	0					100800		4			3	10|38|0	1|342|1	Aku_Researcher_(Rare_Cat)	0
@@ -649,9 +649,9 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	3			60	70		1000000!0|2!38|6!36|6!37|2!40			110200		1	第3進化後變得善於攻擊<br>紅色敵人與異星戰士！		2			Huntress_Terun_(Uber_Rare_Cat)	70
 4	2			60	70					110300		1			2			Lovestruck_Lesser_Demon_(Uber_Rare_Cat)	70
 4	3			60	70		1000000!0|6!38|4!40			110300		1	第3進化後體力與攻擊力上升！<br>使敵人動作停止的時間也增長！		2			Hattori_Hanzo_(Uber_Rare_Cat)	70
-1	2			1	55					110300		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Secret_Crush_Cat_(Special_Cat)	50
-1	2			1	55					110300		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Tomboy_Lion_Cat_(Special_Cat)	50
-1	2			1	55					110300		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Chalkboard_Eraser_Cat_(Special_Cat)	50
+1	2			1	55					110300		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Secret_Crush_Cat_(Special_Cat)	55
+1	2			1	55					110300		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Tomboy_Lion_Cat_(Special_Cat)	55
+1	2			1	55					110300		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Chalkboard_Eraser_Cat_(Special_Cat)	55
 1	3			50	0		1000000!0|10!171|3!184			110300		1	第3進化後體力上升！<br>給予古代種的妨害效果獲得強化，<br>更獲得了超生命體和超獸特效！		0	9|42|5		Elder_Beast_Naala_(Special_Cat)	0
 3	3			50	70					110400		2			2		1|353|0	Brainwashed_Gross_Cat_(Super_Rare_Cat)	70
 4	3			60	70		1000000!0|6!35|6!37|3!40			110400		1	第3進化後體力與攻擊力上升！<br>且動作變慢時間增長<br>還可使毒擊傷害無效化！		2			Bliza_(Uber_Rare_Cat)	70
@@ -695,7 +695,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					120100		1			2			White_Butler_Vigler_(Uber_Rare_Cat)	70
 3	3			50	70					120100		2			2		1|358|0	Brainwashed_Titan_Cat_(Super_Rare_Cat)	70
 2	2			50	0					120100		400|700|1600|2800|4300|6100|8200|10600|13300|16300			3	11|78|7		Killer_Tank_Cat_(Rare_Cat)	0
-1	2			1	45					120100		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Class_Rep_Cat_(Special_Cat)	40
+1	2			1	45					120100		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Class_Rep_Cat_(Special_Cat)	45
 2	3	超獸討伐關卡通過35關後可於貓咪任務領取		50	0	0,8	200000!0|15!167|13!169|1!171			120100		4	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		3			Ancient_Egg:_N107_(Rare_Cat)	0
 4	3			60	70		1000000!0|1!43|5!37|1!161			120200		1	第3進化後能打飛<br>異星戰士和惡魔<br>還能使烈波傷害無效化！		2			Thunder_Jack_(Uber_Rare_Cat)	70
 4	2			60	70					120200		1			2			Rabbit_Satoru_(Uber_Rare_Cat)	70
@@ -829,7 +829,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					140700		1			2			Juri_(Uber_Rare_Cat)	70
 3	2			50	70					140700		2			2			Zangief_Cat_(Super_Rare_Cat)	70
 3	2			50	70					140700		2			2			Jamie_Cat_(Super_Rare_Cat)	70
-4	2			60	70					150000		1			2			Raclesa_the_Lioness_(Uber_Rare_Cat)	70
+4	2			60	70					150000		1			2			Raclesa_(Uber_Rare_Cat)	70
 1	2			50	20					150000		5			0			Scarf_Cat_(Special_Cat)	
 1	2	日文版13週年活動：加碼多多「射撃訓練場」獲得		50	0					150000		5			0			Hat_Cat_(Special_Cat)	
 1	2	日文版13週年活動：任務獲得		50	0					150000		5			0			Helmet_Cat_(Special_Cat)	
@@ -839,17 +839,17 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					150100		1			2			Squire_Luno_(Uber_Rare_Cat)	70
 4	1			60	0					150100		1			2			Special_Abilities#Conjure	0
 4	1			60	0					150100		1			2			Special_Abilities#Conjure	0
-4	2			60	70					150101		1			2			Tanjiro_Kamado_(Uber_Rare_Cat)	
-4	2			60	70					150101		1			2			Nezuko_Kamado_(Uber_Rare_Cat)	
-4	2			60	70					150101		1			2			Zenitsu_Agatsuma_(Uber_Rare_Cat)	
-4	2			60	70					150101		1			2			Inosuke_Hashibira_(Uber_Rare_Cat)	
-4	2			60	70					150101		1			2			Giyu_Tomioka_(Uber_Rare_Cat)	
-4	2			60	70					150101		1			2			Shinobu_Kocho_(Uber_Rare_Cat)	
-4	2			60	70					150101		1			2			Kyojuro_Rengoku_(Uber_Rare_Cat)	
-3	2			50	70					150101		2			2			Li'l_Sakonji_Urokodaki_(Super_Rare_Cat)	
-2	2			50	0					150101		4			3	2|263|4		Tanjiro_Cat_(Rare_Cat)	
-1	2			50	0					150101		5			0			Nezuko_Cat_(Special_Cat)	
-4	2			60	70					150200		1			2			850_(Uber_Rare_Cat)	
-2	2			50	0					150200		4			3	1|421|3		851_(Rare_Cat)	
-2	2			50	0					150200		400|700|1600|2800|4300|6100|8200|10600|13300|16300			3	11|78|11		852_(Rare_Cat)	
-1	2			1	20					150200		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			853_(Special_Cat)	
+4	2			60	70					150101		1			2			Tanjiro_Kamado_(Uber_Rare_Cat)	70
+4	2			60	70					150101		1			2			Nezuko_Kamado_(Uber_Rare_Cat)	70
+4	2			60	70					150101		1			2			Zenitsu_Agatsuma_(Uber_Rare_Cat)	70
+4	2			60	70					150101		1			2			Inosuke_Hashibira_(Uber_Rare_Cat)	70
+4	2			60	70					150101		1			2			Giyu_Tomioka_(Uber_Rare_Cat)	70
+4	2			60	70					150101		1			2			Shinobu_Kocho_(Uber_Rare_Cat)	70
+4	2			60	70					150101		1			2			Kyojuro_Rengoku_(Uber_Rare_Cat)	70
+3	2			50	70					150101		2			2			Li'l_Sakonji_Urokodaki_(Super_Rare_Cat)	70
+2	2			50	0					150101		4			3	2|263|4		Tanjiro_Cat_(Rare_Cat)	0
+1	2			50	0					150101		5			0			Nezuko_Cat_(Special_Cat)	0
+4	2			60	70					150200		1			2			Fuma_Kotaro_(Uber_Rare_Cat)	70
+2	2			50	0					150200		4			3	1|421|3		Paperboy_Cat_(Rare_Cat)	0
+2	2			50	0					150200		400|700|1600|2800|4300|6100|8200|10600|13300|16300			3	11|78|11		Killer_Cowbird_Cat_(Rare_Cat)	0
+1	2			1	20					150200		3500|5600|8540|12460|17360|23240|30100|37940|46760|56560			0			Occultist_Cat_(Special_Cat)	20
