@@ -69,6 +69,7 @@ import {
 	AB_SUMMON,
 	AB_MK,
 	AB_EXPLOSION,
+	AB_RESET,
 
 	catEnv,
 
@@ -127,10 +128,10 @@ function T(s) {
 	specials.appendChild(p);
 }
 
-function W(s) {
+function W(s, img) {
 	let p = document.createElement('div');
 	let i = document.createElement('img');
-	i.src = `/img/i/a/${ab_no}.png`;
+	i.src = img || `/img/i/a/${ab_no}.png`;
 	p.appendChild(i);
 	p.append(s);
 	specials.appendChild(p);
@@ -140,7 +141,7 @@ function createAbIcons() {
 	createImuIcons(E.imu, specials);
 	let d, U = E.pre1 ? '*' : '';
 	if (E.trait & TB_SAGE) {
-		W(`超賢者：受到我方的所有妨害減少 70%`, 'ERkdLLP');
+		W(`超賢者：受到我方的所有妨害減少 70%`, `/img/i/e/15.png`);
 	}
 	for (const [i, d] of Object.entries(E.ab)) {
 		switch (ab_no = parseInt(i, 10)) {
@@ -235,6 +236,9 @@ function createAbIcons() {
 				break;
 			case AB_EXPLOSION:
 				T(d[1] != d[2] ? `${d[0]}% 發出爆波（發生位置：${d[1]}～${d[2]}）` : `${d[0]}% 發出爆波（發生位置：${d[1]}）`);
+				break;
+			case AB_RESET:
+				W(`${d[0]} % 重置我方角色經過的再生產時間至 ${d[1]} %`);
 				break;
 		}
 	}

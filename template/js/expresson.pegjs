@@ -96,6 +96,8 @@ const constants = {
 	ab_summon: 43,
 	ab_mk: 44,
 	ab_explosion: 45,
+	ab_weirdo: 46,
+	ab_reset: 47,
 
 	res_weak: 0,
 	res_stop: 1,
