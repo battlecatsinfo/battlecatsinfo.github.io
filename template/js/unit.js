@@ -94,7 +94,6 @@ var my_cat;
 var lvMax;
 var tf_tbl;
 var tf_tbl_s;
-var tf4_raw_tbl;
 var tf4_tbl;
 var tf4_tbl_t;
 var tf4_tbl_s;
@@ -1335,7 +1334,6 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 	tbl.appendChild(tbodytr10);
 	tbl.appendChild(tbodytr11);
 	tbl.appendChild(tbodytr12);
-	tbl._baseForm = (baseForm || form).clone(); // latest change: talentAccumulationFix
 	updateValues(form, tbl);
 	createImuIcons(form.imu, tbodytr10.children[1]);
 	if (form.res)
@@ -2256,7 +2254,7 @@ function renderUnitPage() {
 				container.appendChild(tr1);
 				unit_content.appendChild(container);
 			}
-			const tbl = renderForm(form, baseForm = my_cat.forms[form.lvc]);
+			const tbl = renderForm(form);
 			if (form.lvc == 2) tf_tbl_s = tbl;
 			else if (form.lvc == 3) {
 				tf4_raw_tbl = tbl;
@@ -2286,7 +2284,7 @@ function renderUnitPage() {
 	const zh = ['一', '二', '三'];
 	for (let i = 0; i < my_cat.forms.length; ++i) {
 		if (i == 3) break;
-		const tbl = renderForm(my_cat.forms[i], zh[i] + '階：', false, false, my_cat.forms[i]);
+		const tbl = renderForm(my_cat.forms[i], zh[i] + '階：');
 		tables.push([`${zh[i]}階數值表格`, tbl]);
 		mkTool(tbl);
 	}
