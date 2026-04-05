@@ -2256,10 +2256,7 @@ function renderUnitPage() {
 			}
 			const tbl = renderForm(form);
 			if (form.lvc == 2) tf_tbl_s = tbl;
-			else if (form.lvc == 3) {
-				tf4_raw_tbl = tbl;
-				tf4_tbl = tbl;
-			}
+			else if (form.lvc == 3) tf4_tbl = tbl;
 			tables.push([
 				['一', '二', '三', '四'][form.lvc] + "階數值表格", tbl
 			]);
