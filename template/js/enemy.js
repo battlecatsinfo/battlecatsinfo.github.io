@@ -69,7 +69,7 @@ import {
 	AB_SUMMON,
 	AB_MK,
 	AB_EXPLOSION,
-	AB_RESET,
+	AB_DRAIN,
 
 	catEnv,
 
@@ -237,7 +237,7 @@ function createAbIcons() {
 			case AB_EXPLOSION:
 				T(d[1] != d[2] ? `${d[0]}% 發出爆波（發生位置：${d[1]}～${d[2]}）` : `${d[0]}% 發出爆波（發生位置：${d[1]}）`);
 				break;
-			case AB_RESET:
+			case AB_DRAIN:
 				W(`${d[0]} % 重置我方角色經過的再生產時間至 ${d[1]} %`);
 				break;
 		}

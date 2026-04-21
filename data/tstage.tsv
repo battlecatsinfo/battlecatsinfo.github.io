@@ -145,11 +145,11 @@ EN１	EN１	Minced Meet-Up	EN１
 開眼のトナカイフィッシュ襲来！	開眼的馴鹿魚來襲！	Reindeer Fish Awakens!	각성한 순록피쉬의 습격!
 断罪天使クオリネル降臨	斷罪天使海蝶降臨	Clionel Ascendant	단죄천사 쿠오리넬 강림
 緊急爆風警報	緊急暴風警報	Red Sky at Morning	긴급 폭풍 경보
-進化の緑マタタビ(旧)	進化的綠色貓薄荷	Growing Green	진화의 초록 개다래 열매
-進化の紫マタタビ(旧)	進化的紫色貓薄荷	Growing Purple	진화의 보라 개다래 열매
-進化の赤マタタビ(旧)	進化的紅色貓薄荷	Growing Red	진화의 빨강 개다래 열매
-進化の青マタタビ(旧)	進化的藍色貓薄荷	Growing Blue	진화의 파랑 개다래 열매
-進化の黄マタタビ(旧)	進化的黃色貓薄荷	Growing Yellow	진화의 노랑 개다래 열매
+進化の緑マタタビ(旧)			
+進化の紫マタタビ(旧)			
+進化の赤マタタビ(旧)			
+進化の青マタタビ(旧)			
+進化の黄マタタビ(旧)			
 大狂乱のネコ降臨	大狂亂貓咪降臨	Cat Maniac	대광란의 고양이 강림
 大狂乱のタンク降臨	大狂亂坦克貓降臨	Tank Maniac	대광란의 탱크 강림
 大狂乱のバトル降臨	大狂亂戰鬥貓降臨	Axe Maniac	대광란의 배틀 강림
@@ -845,7 +845,7 @@ New Challenger	New Challenger	New Challenger	New Challenger
 ニコニコの間	ニコニコの間	ニコニコの間	ニコニコの間
 風雲にゃんこ塔	風雲貓咪塔	Heavenly Tower	풍운 냥코탑
 にゃんこ別塔【赤】	喵別塔【紅】	Red Citadel	빨강 냥코별탑
-にゃんこ別塔【黒】	喵別塔【黑】	Black Citadel	검정 냥코별탑
+にゃんこ別塔【黒】	喵別塔【黑】	Dark Citadel	검정 냥코별탑
 にゃんこ別塔【天】	喵別塔【天】	Angel Citadel	천사 냥코별탑
 にゃんこ別塔【蒼】	喵別塔【異】	Alien Citadel	에이리언 냥코별탑
 にゃんこ別塔【屍】	喵別塔【死】	Zombie Citadel	좀비 냥코별탑
@@ -899,8 +899,8 @@ New Challenger	New Challenger	New Challenger	New Challenger
 極ランキングの間	極排行賽會場	Arena of Destiny	하이퍼 랭킹의 방
 ランキングの間	排行賽會場	Arena of Honor	랭킹의 방
 極ランキングの間	極排行賽會場	Arena of Destiny	하이퍼 랭킹의 방
-極ランキングの間			
-極ランキングの間			
+極ランキングの間	極排行賽會場	Arena of Destiny	하이퍼 랭킹의 방
+極ランキングの間	極排行賽會場	Arena of Destiny	하이퍼 랭킹의 방
 チャレンジバトル	挑戰賽	Challenge Battle	챌린지 배틀
 真・伝説のはじまり	真・傳說的開始	A New Legend	신・전설의 시작
 まんぷく秘境	滿腹秘境	Here Be Dragons	배부른 비경
@@ -951,11 +951,11 @@ DNA果樹園	DNA果樹園	DNA Plantation	DNA 과수원
 真なる虚実を紡ぐ道	虛虛實實的道路	Between Truth and Lies	허실을 자아내는 길
 人類ネコ化計画	人類貓咪化計劃	Humanity Catified	인류 고양이화 계획
 古代神樹	古代神木	Sacred Forest	고대 신단수
-進化の黄マタタビ(旧)	進化的黃色貓薄荷	Growing Yellow	진화의 노랑 개다래 열매
-進化の青マタタビ(旧)	進化的藍色貓薄荷	Growing Blue	진화의 파랑 개다래 열매
-進化の赤マタタビ(旧)	進化的紅色貓薄荷	Growing Red	진화의 빨강 개다래 열매
-進化の紫マタタビ(旧)	進化的紫色貓薄荷	Growing Purple	진화의 보라 개다래 열매
-進化の緑マタタビ(旧)	進化的綠色貓薄荷	Growing Green	진화의 초록 개다래 열매
+進化の黄マタタビ(旧)	進化的黃色貓薄荷 (旧)	Growing Yellow (旧)	진화의 노랑 개다래 열매 (旧)
+進化の青マタタビ(旧)	進化的藍色貓薄荷 (旧)	Growing Blue (旧)	진화의 파랑 개다래 열매 (旧)
+進化の赤マタタビ(旧)	進化的紅色貓薄荷 (旧)	Growing Red (旧)	진화의 빨강 개다래 열매 (旧)
+進化の紫マタタビ(旧)	進化的紫色貓薄荷 (旧)	Growing Purple (旧)	진화의 보라 개다래 열매 (旧)
+進化の緑マタタビ(旧)	進化的綠色貓薄荷 (旧)	Growing Green (旧)	진화의 초록 개다래 열매 (旧)
 逆襲のカオル君	逆襲的臉君	Facing Danger	역습의 대갈이군
 逆襲のカバちゃん	逆襲的河馬將	Siege of Hippoe!	역습의 하마양
 にゃんチケ★チャンス！	貓咪券★機會！	Cat Ticket Chance!	냥코티켓★찬스!
@@ -1078,7 +1078,7 @@ Season1 ～学園生活～	Season1～學園生活～	Season 1: School Days	Seaso
 オーメンズ強襲	巨大三惡魔強襲	Attack of the Omens	오멘즈 강습
 第1章 ネコたちの冒険		Part 1: Adventurer Cats	제1장 고양이의 모험
 ことよろにゃ強襲！(ΦωΦ)	今年也請多指教強襲！	A Colossal New Year!	고양이의 해 강습!
-ネコたちの大逆襲(旧)	貓咪們的大逆襲	Horde of Cats	고양이들의 대역습
+ネコたちの大逆襲(旧)	貓咪們的大逆襲 (旧)	Horde of Cats (旧)	고양이들의 대역습 (旧)
 大型土器ダイハニワン強襲	大型陶器埴輪巨犬強襲	Gigahaniwan Strikes!	그레이트 토용뭉이 강습
 わんわん王国の異変	わんわん王国の異変	Shadows over Doge Kingdom	멍뭉 왕국의 이변
 ねこのなつやすみ サバイバル (旧)	貓咪的暑假 野外求生	Summer Break Cats Castaway	고양이의 여름 방학 서바이벌
@@ -1110,9 +1110,9 @@ Season1 ～学園生活～	Season1～學園生活～	Season 1: School Days	Seaso
 浮ける本能の起源	飄浮本能的起源	Sky Cradle	들뜬 본능의 기원
 浮ける本能の頂	飄浮本能的頂點	Sky Summit	들뜬 본능의 정점
 浮ける本能の秘境	飄浮本能的秘境	Sky Frontier	들뜬 본능의 비경
-黒き本能の起源	黑色本能的起源	Black Cradle	검은 본능의 기원
-黒き本能の頂	黑色本能的頂點	Black Summit	검은 본능의 정점
-黒き本能の秘境	黑色本能的秘境	Black Frontier	검은 본능의 비경
+黒き本能の起源	黑色本能的起源	Dark Cradle	검은 본능의 기원
+黒き本能の頂	黑色本能的頂點	Dark Summit	검은 본능의 정점
+黒き本能の秘境	黑色本能的秘境	Dark Frontier	검은 본능의 비경
 聖なる本能の起源	神聖本能的起源	Holy Cradle	성스러운 본능의 기원
 聖なる本能の頂	神聖本能的頂點	Holy Summit	성스러운 본능의 정점
 聖なる本能の秘境	神聖本能的秘境	Holy Frontier	성스러운 본능의 비경
@@ -1134,9 +1134,9 @@ Season1 ～学園生活～	Season1～學園生活～	Season 1: School Days	Seaso
 浮ける本能の起源	飄浮本能的起源	Sky Cradle	들뜬 본능의 기원
 浮ける本能の頂	飄浮本能的頂點	Sky Summit	들뜬 본능의 정점
 浮ける本能の秘境	飄浮本能的秘境	Sky Frontier	들뜬 본능의 비경
-黒き本能の起源	黑色本能的起源	Black Cradle	검은 본능의 기원
-黒き本能の頂	黑色本能的頂點	Black Summit	검은 본능의 정점
-黒き本能の秘境	黑色本能的秘境	Black Frontier	검은 본능의 비경
+黒き本能の起源	黑色本能的起源	Dark Cradle	검은 본능의 기원
+黒き本能の頂	黑色本能的頂點	Dark Summit	검은 본능의 정점
+黒き本能の秘境	黑色本能的秘境	Dark Frontier	검은 본능의 비경
 聖なる本能の起源	神聖本能的起源	Holy Cradle	성스러운 본능의 기원
 聖なる本能の頂	神聖本能的頂點	Holy Summit	성스러운 본능의 정점
 聖なる本能の秘境	神聖本能的秘境	Holy Frontier	성스러운 본능의 비경
@@ -1228,8 +1228,8 @@ VS範馬刃牙	VS範馬刃牙	Vs Baki Hanma	VS한마 바키
 虚栄カンパニー	虛榮無限公司	Vainglorious Venture	버그체 컴퍼니
 マジカ幻想郷	驚奇幻想鄉	Phantasmagoria	매지컬 환상국
 マッスルエンパイア	肌肉帝國	Muscle Empire	머슬 엠파이어
-美術工房アートリエ			
-変異を伴う継承の楽園			
+美術工房アートリエ	美術工房藝術坊	Artisan's Sanctum	미술 공방전
+変異を伴う継承の楽園	繼承伴隨變異的樂園	Eden of Evolution	변이를 수반하는 계승의 낙원
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
@@ -1252,7 +1252,7 @@ VS範馬刃牙	VS範馬刃牙	Vs Baki Hanma	VS한마 바키
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
-異次元コロシアム			
+異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
 にゃんこ道検定 初段	貓咪道檢定 一段	Catclaw Championships Rank 1	냥코도 승단 시험 초단
 にゃんこ道検定 二段	貓咪道檢定 二段	Catclaw Championships Rank 2	냥코도 승단 시험 2단
 にゃんこ道検定 三段	貓咪道檢定 三段	Catclaw Championships Rank 3	냥코도 승단 시험 3단
@@ -1429,7 +1429,7 @@ VS範馬刃牙	VS範馬刃牙	Vs Baki Hanma	VS한마 바키
 魔王の寝室	魔王的寢室	Satan’s Bedroom	마왕의 침실
 裏切りの宴	背叛之宴	Feast of Betrayal	배신의 연회
 終焉のカタルシス	終焉的淨化	Catharsis’ End	종연의 카타르시스
-黒い予感	黑色預感	Black Premonition	검은 예감
+黒い予感	黑色預感	Dark Premonition	검은 예감
 砕けた仮面	破碎的面具	Broken Mask	부서진 가면
 アガペーの檻	神愛之籠	Agape’s Cage	아가페의 우리
 赤いきつねの聖者	紅狐之聖者	Saint Red Fox	적여우의 성자
@@ -2226,13 +2226,13 @@ N-1グランプリ 極ムズ	N-1盃 極難	N-1 Grand Prix (Deadly)	N-1 그랑프
 よくがんばったで賞	最佳努力獎	Good Effort	열심히 노력했다 상
 VS白組	VS白隊	VS Team White	VS 백팀
 VS赤組	VS紅隊	VS Team Red	VS 홍팀
-VS黒組	VS黑隊	VS Team Black	VS 흑팀
+VS黒組	VS黑隊	VS Team Dark	VS 흑팀
 VS白組	VS白隊	VS Team White	VS 백팀
 VS赤組	VS紅隊	VS Team Red	VS 홍팀
-VS黒組	VS黑隊	VS Team Black	VS 흑팀
+VS黒組	VS黑隊	VS Team Dark	VS 흑팀
 VS白組	VS白隊	VS Team White	VS 백팀
 VS赤組	VS紅隊	VS Team Red	VS 홍팀
-VS黒組	VS黑隊	VS Team Black	VS 흑팀
+VS黒組	VS黑隊	VS Team Dark	VS 흑팀
 凍てつき閉ざされた知恵	凍結封閉的智慧	Frozen Wisdom	얼어붙은 지혜
 呪いを湛えた湖	充滿詛咒的湖泊	Cursed Lake	저주로 가득 찬 호수
 霊力の宿る洞窟	有靈能力的洞窟	Cave of Magics	영력이 깃든 동굴
@@ -4105,8 +4105,8 @@ in MOON	in THE MOON	in THE MOON	in THE MOON
 闘争本能大会	鬥爭本能大會	Talent Tournament	투쟁 본능 대회
  特別招集！最強隊士決定戦	特別召集！決定最強隊士之戰	Demon Slayer Elites	특별 소집! 최강 대원 결정전
 闘争本能大会	鬥爭本能大會	Talent Tournament	투쟁 본능 대회
-闘争本能大会			
-闘争本能大会			
+闘争本能大会	鬥爭本能大會	Talent Tournament	투쟁 본능 대회
+闘争本能大会	鬥爭本能大會	Talent Tournament	투쟁 본능 대회
 挑戰賽	チャレンジバトル	Challenge Battle	챌린지 배틀
 ハイスコアに挑戦！	挑戰得高分！	Higher Score	하이스코어 도전!
 真傳奇故事	真レジェンドステージ	Uncanny Legends	신 레전드 스테이지
@@ -6462,18 +6462,18 @@ Lv.MAX これが究極の力だ！	Lv.MAX 這就是終極的力量！	Lv. MAX Ul
 欺きのムキムキ	精美的詐肌	Synthol Swamp	물근육 벌크업
 肩乗りユンボ	健人的肩膀	Boulder Shoulder	어깨가 좁은 깡패
 サイドチェス島	展示胸肌島	Side Chest Isle	조상님 강림!
-前衛的な印象派			
-ちぐはぐタイポグラフィ			
-コラージュ畑			
-オマージュとパロディ			
-グロッキークロッキー			
-彩りトリミング			
-シュノキ原野			
-トータル自然淘汰			
-信仰と科学の狭間			
-ガッツリライフツリー			
-適者生存処刑場			
-最も美しき無限の形			
+前衛的な印象派	前衛的印象派	Aquatic Avant-garde	아방가르드한 인상파
+ちぐはぐタイポグラフィ	凌亂排版設計	Cluttered Calligraphy	뒤죽박죽 타이포그래피
+コラージュ畑	拼貼式的旱田	Mosaic Meadow	콜라 주말농장
+オマージュとパロディ	論致敬與翻玩	Grave Mockery	오마주와 패러디
+グロッキークロッキー	秒速完成素描	Sluggish Sketching	크롭 티 크로키
+彩りトリミング	裁切彩切拆切	Crested Colors	스트리트리밍
+シュノキ原野	演化樹的原野	Origin Outback	종 위기 원림
+トータル自然淘汰	全數自然淘汰	Natural Rejection	자연 선택 선탁
+信仰と科学の狭間	宗教遇上科學	The Dogma Divide	신앙과 과학 사이
+ガッツリライフツリー	茂盛的生命樹	Tree of Strife	테크트리 오브 라이프
+適者生存処刑場	適者生存刑場	The Cullosseum	적자생존 처형장
+最も美しき無限の形	無限演化之美	Endless Forms Most Beautiful	끝없이 아름답고 경이로운 형태
 異次元競技場	異次元コロシアム	Otherworld Colosseum	이차원 콜로세움
 Round 1	Round 1	Round 1	Round 1
 Round 2	Round 2	Round 2	Round 2
@@ -6585,11 +6585,11 @@ Round 2	Round 2	Round 2	Round 2
 Round 3	Round 3	Round 3	Round 3
 Round 4	Round 4	Round 4	Round 4
 Round 5	Round 5	Round 5	Round 5
-Round 1			
-Round 2			
-Round 3			
-Round 4			
-Round 5			世界篇	日本編	Empire of Cats	세계편
+Round 1	Round 1	Round 1	Round 1
+Round 2	Round 2	Round 2	Round 2
+Round 3	Round 3	Round 3	Round 3
+Round 4	Round 4	Round 4	Round 4
+Round 5	Round 5	Round 5	Round 5世界篇	日本編	Empire of Cats	세계편
 台灣	長崎県	Korea	한국
 香港	佐賀県	Mongolia	몽골
 泰國	鹿児島県	China	중국

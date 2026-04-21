@@ -63,7 +63,7 @@ MH大狩猟チケット
 働きネコお財布	工作狂貓錢包	Worker Cat Wallet	일 고양이의 지갑
 お城体力	城堡體力	Base Defense	성 체력
 研究力	研究力	Research	연구력
-会計力	會計能力	Accountant	회계력
+会計力	會計能力	Bounty Up	회계력
 勉強力	學習力	Study	공부력
 統率力	統率力	Cat Energy	통솔력
 受取BOX用：ダミー1	貓咪隊員：未定1	Cat Ally: Dummy 1	냥코 대원:더미1
@@ -244,9 +244,9 @@ XP25000	XP 25000	25000 XP	XP 25000
 ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
 経費			
 伝説の正義の心			
-ふしぎな宝箱【銅】			
-ふしぎな宝箱【銀】			
-ふしぎな宝箱【金】			
-ふしぎな宝箱【銅】			
-ふしぎな宝箱【銀】			
-ふしぎな宝箱【金】			
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)

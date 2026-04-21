@@ -87,7 +87,7 @@ const AB_SUMMON = 43;      // Conjure(Summon) 召喚
 const AB_MK = 44;          // Metal Killer 鋼鐵殺手
 const AB_EXPLOSION = 45;   // Explosion 爆波
 const AB_WEIRDO = 46;      // 怪人特效
-const AB_RESET = 47;       // 重製再生產時間
+const AB_DRAIN = 47;       // 延遲
 
 // Resist
 const RES_WEAK = 0;        // Resist to Weaken 抗擊耐性
@@ -2447,7 +2447,7 @@ export {
 	AB_MK,
 	AB_EXPLOSION,
 	AB_WEIRDO,
-	AB_RESET,
+	AB_DRAIN,
 
 	RES_WEAK,
 	RES_STOP,
