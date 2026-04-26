@@ -34,6 +34,7 @@ const sources = [
 	'rank.html',
 	'translator.html',
 	'stage_difficulty.html',
+	'enemy_stage_search.html',
 
 	'uni.png',
 	'favicon.ico',
@@ -79,6 +80,7 @@ const sources = [
 	'gif.worker.min.js',
 	'imgcut.js',
 	'stage.js',
+	'enemy_stage_search.js',
 	'anim.min.js',
 	'imgcut.js'
 ];
