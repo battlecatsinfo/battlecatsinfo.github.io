@@ -48,7 +48,7 @@ function getSortedHits() {
 }
 
 function updateSortHeaders() {
-	colEnergy.textContent = '消費統率力 ' + (sortCol === 'energy' ? (sortDir === 'asc' ? '▲' : '▼') : '⇅');
+	colEnergy.textContent = '統率力 ' + (sortCol === 'energy' ? (sortDir === 'asc' ? '▲' : '▼') : '⇅');
 }
 
 function renderTable() {
@@ -74,16 +74,15 @@ function renderTable() {
 		a.target = '_blank';
 
 		const tdEnemies = tr.appendChild(document.createElement('td'));
+		tdEnemies.className = 'matched-enemy';
 		for (const id of matched) {
 			const e = lastById[id];
 			const span = tdEnemies.appendChild(document.createElement('span'));
-			span.className = 'matched-enemy';
 			if (e) {
 				const img = span.appendChild(new Image(32, 32));
 				img.src = e.icon;
 				img.style.cssText = 'width:32px;height:32px;object-fit:contain';
 				img.onerror = () => { img.hidden = true; };
-				span.appendChild(document.createTextNode(e.name || e.jp_name || QQ));
 			} else {
 				span.textContent = `#${id}`;
 			}
