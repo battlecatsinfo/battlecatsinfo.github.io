@@ -71,6 +71,7 @@ function renderTable() {
 		const a = tdName.appendChild(document.createElement('a'));
 		a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 		a.textContent = stage.name || stage.nameJp || QQ;
+		a.target = '_blank';
 
 		const tdEnemies = tr.appendChild(document.createElement('td'));
 		for (const id of matched) {
