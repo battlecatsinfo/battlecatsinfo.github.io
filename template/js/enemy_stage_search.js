@@ -3,7 +3,6 @@ import {loadAllEnemies} from './unit.mjs';
 
 const chapterSel = document.getElementById('chapter');
 const slotsDiv = document.getElementById('enemy-slots');
-const searchBtn = document.getElementById('do-search-btn');
 const resultsDiv = document.getElementById('results');
 const resultsBody = document.getElementById('results-body');
 const colMap = document.getElementById('col-map');
@@ -154,6 +153,7 @@ function makeSlot(index) {
 		searchBox.hidden = true;
 		picked.hidden = false;
 		dropdown.hidden = true;
+		doSearch(); // async
 	}
 
 	function clear() {
@@ -232,7 +232,7 @@ function parseStageEnemyIds(enemyLines) {
 	return ids;
 }
 
-searchBtn.addEventListener('click', async () => {
+async function doSearch() {
 	const slots = Array.from(slotsDiv.children);
 	const ids = [...new Set(slots.map(s => s.getEnemyId()).filter(id => id !== null))];
 
@@ -246,7 +246,6 @@ searchBtn.addEventListener('click', async () => {
 	const starAttr = chapterSel.selectedOptions[0].dataset.star;
 	const starIndex = starAttr !== undefined ? parseInt(starAttr) : -1;
 
-	searchBtn.disabled = true;
 	statusEl.textContent = '搜尋中…';
 	resultsDiv.hidden = true;
 	resultsBody.innerHTML = '';
@@ -265,8 +264,6 @@ searchBtn.addEventListener('click', async () => {
 
 	hits.sort((a, b) => b.matched.length - a.matched.length || a.stage.id - b.stage.id);
 
-	searchBtn.disabled = false;
-
 	if (!hits.length) { statusEl.textContent = '找不到符合的關卡'; return; }
 	statusEl.textContent = `找到 ${hits.length} 個關卡`;
 
@@ -279,7 +276,7 @@ searchBtn.addEventListener('click', async () => {
 	renderTable();
 
 	resultsDiv.hidden = false;
-});
+};
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 
@@ -287,10 +284,10 @@ searchBtn.addEventListener('click', async () => {
 	try {
 		allEnemies = await loadAllEnemies();
 		statusEl.textContent = '';
+		chapterSel.addEventListener('change', doSearch);
 	} catch (err) {
 		statusEl.textContent = `載入敵人資料失敗：${err.message}`;
 	} finally {
 		for (let i = 0; i < 4; i++) slotsDiv.appendChild(makeSlot(i));
-		searchBtn.disabled = false;
 	}
 })();
