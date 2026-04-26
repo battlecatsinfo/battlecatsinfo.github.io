@@ -11,6 +11,7 @@ const statusEl = document.getElementById('status');
 const QQ = '？？？';
 
 let allEnemies = [];
+let candidates = [];
 
 // ── Sort state ────────────────────────────────────────────────────────────────
 
@@ -165,20 +166,19 @@ function makeSlot(index) {
 		picked.hidden = true;
 	}
 
-	input.addEventListener('input', () => {
+	function suggestInput() {
 		const q = input.value.trim().toLowerCase();
 		dropdown.textContent = '';
-		if (!q) { dropdown.hidden = true; return; }
 		const usedIds = new Set(
 			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null)
 		);
-		const hits = allEnemies.filter(e =>
+		const hits = (q ? candidates.filter(e =>
 			!usedIds.has(e.id) && (
 				(e.name || '').toLowerCase().includes(q) ||
 				(e.jp_name || '').toLowerCase().includes(q) ||
 				(e.fandom || '').toLowerCase().includes(q)
 			)
-		).slice(0, 12);
+		) : candidates.filter(e => !usedIds.has(e.id)));
 		if (!hits.length) { dropdown.hidden = true; return; }
 		for (const e of hits) {
 			const li = dropdown.appendChild(document.createElement('li'));
@@ -197,7 +197,10 @@ function makeSlot(index) {
 			});
 		}
 		dropdown.hidden = false;
-	});
+	}
+
+	input.addEventListener('input', suggestInput);
+	input.addEventListener('focus', suggestInput);
 
 	input.addEventListener('keydown', ev => {
 		if (ev.key === 'ArrowDown' && !dropdown.hidden) { ev.preventDefault(); dropdown.firstElementChild?.focus(); }
@@ -282,7 +285,10 @@ async function doSearch() {
 
 (async () => {
 	try {
+		const ids = [
+			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 22, 23, 24, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56, 58, 59, 103, 104, 105, 113, 114, 115, 116, 117, 118, 119, 123, 124, 125, 146, 147, 148, 149, 160, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 180, 181, 182, 183, 184, 185, 205, 206, 207, 208, 209, 210, 211, 212, 235, 254, 255, 256, 258, 261, 266, 272, 280, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 303, 304, 309, 310, 315, 316, 318, 340, 355, 360, 361, 362, 363, 364, 365, 366, 367, 375, 379, 387, 388, 405, 417, 418, 419, 443, 444, 445, 446];
 		allEnemies = await loadAllEnemies();
+		candidates = ids.map(i => allEnemies[i]);
 		statusEl.textContent = '';
 		chapterSel.addEventListener('change', doSearch);
 	} catch (err) {
