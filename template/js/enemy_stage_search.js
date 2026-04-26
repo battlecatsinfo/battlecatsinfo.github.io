@@ -3,7 +3,6 @@ import {loadAllEnemies} from './unit.mjs';
 
 const chapterSel = document.getElementById('chapter');
 const slotsDiv = document.getElementById('enemy-slots');
-const addSlotBtn = document.getElementById('add-slot-btn');
 const searchBtn = document.getElementById('do-search-btn');
 const resultsDiv = document.getElementById('results');
 const resultsBody = document.getElementById('results-body');
@@ -60,6 +59,8 @@ function makeSlot(index) {
 
 	function clear() {
 		picked.dataset.id = '';
+		pickedImg.src = '';
+		pickedImg.hidden = true;
 		input.value = '';
 		searchBox.hidden = false;
 		picked.hidden = true;
@@ -90,18 +91,6 @@ function makeSlot(index) {
 	input.addEventListener('blur', () => setTimeout(() => { dropdown.hidden = true; }, 150));
 	clearBtn.addEventListener('click', clear);
 
-	if (index >= 2) {
-		const rmBtn = slot.appendChild(document.createElement('button'));
-		rmBtn.type = 'button';
-		rmBtn.className = 'remove-btn';
-		rmBtn.textContent = '移除';
-		rmBtn.addEventListener('click', () => {
-			slot.remove();
-			refreshLabels();
-			addSlotBtn.disabled = slotsDiv.children.length >= 4;
-		});
-	}
-
 	slot.getEnemyId = () => {
 		const v = picked.dataset.id;
 		return v !== '' ? parseInt(v) : null;
@@ -109,19 +98,6 @@ function makeSlot(index) {
 
 	return slot;
 }
-
-function refreshLabels() {
-	Array.from(slotsDiv.children).forEach((s, i) => {
-		s.querySelector('.slot-label').textContent = `敵人 ${i + 1}`;
-	});
-}
-
-addSlotBtn.addEventListener('click', () => {
-	if (slotsDiv.children.length < 4) {
-		slotsDiv.appendChild(makeSlot(slotsDiv.children.length));
-		addSlotBtn.disabled = slotsDiv.children.length >= 4;
-	}
-});
 
 // ── Search ────────────────────────────────────────────────────────────────────
 
@@ -142,13 +118,15 @@ searchBtn.addEventListener('click', async () => {
 	const slots = Array.from(slotsDiv.children);
 	const ids = [...new Set(slots.map(s => s.getEnemyId()).filter(id => id !== null))];
 
-	if (ids.length < 2) {
-		statusEl.textContent = '請至少選擇 2 個不同的敵人';
+	if (!ids.length) {
+		statusEl.textContent = '請至少選擇 1 個敵人';
 		return;
 	}
 
 	const chapterVal = chapterSel.value;
 	const isLegend = chapterVal === 'legend';
+	const starAttr = chapterSel.selectedOptions[0].dataset.star;
+	const starIndex = starAttr !== undefined ? parseInt(starAttr) : -1;
 
 	searchBtn.disabled = true;
 	statusEl.textContent = '搜尋中…';
@@ -218,7 +196,9 @@ searchBtn.addEventListener('click', async () => {
 		}
 
 		const tdEnergy = tr.appendChild(document.createElement('td'));
-		tdEnergy.textContent = stage.energy ?? '-';
+		const energy = stage.energy ?? null;
+		tdEnergy.textContent = energy === null ? '-' :
+			starIndex >= 0 ? energy + starIndex * 10 : energy;
 	}
 
 	resultsDiv.hidden = false;
@@ -233,9 +213,7 @@ searchBtn.addEventListener('click', async () => {
 	} catch (err) {
 		statusEl.textContent = `載入敵人資料失敗：${err.message}`;
 	} finally {
-		slotsDiv.appendChild(makeSlot(0));
-		slotsDiv.appendChild(makeSlot(1));
-		addSlotBtn.disabled = false;
+		for (let i = 0; i < 4; i++) slotsDiv.appendChild(makeSlot(i));
 		searchBtn.disabled = false;
 	}
 })();

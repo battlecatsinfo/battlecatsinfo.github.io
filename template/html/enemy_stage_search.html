@@ -72,6 +72,7 @@
 	:root.dark .enemy-dropdown li:hover { background: steelblue; }
 	.enemy-dropdown img { width: 36px; height: 36px; object-fit: contain; }
 	.slot-selected { display: flex; align-items: center; gap: 8px; }
+	.slot-selected[hidden] { display: none; }
 	.slot-selected img { width: 44px; height: 44px; object-fit: contain; }
 	.deselect-btn {
 		background: none;
@@ -82,20 +83,7 @@
 		padding: 2px 6px;
 		font-size: 0.9em;
 	}
-	.remove-btn {
-		display: block;
-		margin-top: 6px;
-		font-size: 0.8em;
-		padding: 2px 8px;
-		cursor: pointer;
-		border: 1px solid #aaa;
-		border-radius: 4px;
-		background: none;
-		color: inherit;
-	}
-	.remove-btn:hover { background: #fee; }
-	:root.dark .remove-btn:hover { background: #422; }
-	#status { margin: 8px 0; font-size: 0.95em; color: #555; }
+#status { margin: 8px 0; font-size: 0.95em; color: #555; }
 	:root.dark #status { color: #aaa; }
 	#results table { width: 100%; border-collapse: collapse; margin-top: 12px; }
 	#results td { border: 1px solid #575757; padding: 6px 8px; vertical-align: middle; }
@@ -112,9 +100,9 @@
 	<div class="row">
 		<label for="chapter">章節：</label>
 		<select id="chapter">
-			<option value="3009">世界篇 第一章</option>
-			<option value="3009">世界篇 第二章</option>
-			<option value="3009">世界篇 第三章</option>
+			<option value="3009" data-star="0">世界篇 第一章</option>
+			<option value="3009" data-star="1">世界篇 第二章</option>
+			<option value="3009" data-star="2">世界篇 第三章</option>
 			<option value="3003">未來篇 第一章</option>
 			<option value="3004">未來篇 第二章</option>
 			<option value="3005">未來篇 第三章</option>
@@ -125,8 +113,7 @@
 		</select>
 	</div>
 	<div class="row">
-		<label>選擇敵人（2–4個）：</label>
-		<button id="add-slot-btn" class="w3-button w3-light-grey w3-round" type="button" disabled>+ 新增敵人</button>
+		<label>選擇敵人：</label>
 	</div>
 	<div id="enemy-slots"></div>
 	<div class="row">
