@@ -52,7 +52,7 @@ function updateSortHeaders() {
 
 function renderTable() {
 	updateSortHeaders();
-	resultsBody.innerHTML = '';
+	resultsBody.textContent = '';
 	for (const {stage, matched} of getSortedHits()) {
 		const tr = resultsBody.appendChild(document.createElement('tr'));
 
@@ -167,7 +167,7 @@ function makeSlot(index) {
 
 	input.addEventListener('input', () => {
 		const q = input.value.trim().toLowerCase();
-		dropdown.innerHTML = '';
+		dropdown.textContent = '';
 		if (!q) { dropdown.hidden = true; return; }
 		const usedIds = new Set(
 			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null)
@@ -248,7 +248,7 @@ async function doSearch() {
 
 	statusEl.textContent = '搜尋中…';
 	resultsDiv.hidden = true;
-	resultsBody.innerHTML = '';
+	resultsBody.textContent = '';
 	colMap.hidden = !isLegend;
 
 	const hits = [];
