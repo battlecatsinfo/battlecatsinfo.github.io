@@ -7,10 +7,109 @@ const searchBtn = document.getElementById('do-search-btn');
 const resultsDiv = document.getElementById('results');
 const resultsBody = document.getElementById('results-body');
 const colMap = document.getElementById('col-map');
+const colEnergy = document.getElementById('col-energy');
 const statusEl = document.getElementById('status');
 const QQ = '？？？';
 
 let allEnemies = [];
+
+// ── Sort state ────────────────────────────────────────────────────────────────
+
+let lastHits = [];
+let lastIsLegend = false;
+let lastStarIndex = -1;
+let lastById = {};
+const mapNameCache = {};
+let sortCol = null; // null | 'map' | 'energy'
+let sortDir = 'asc';
+
+async function getMapName(mapId) {
+	if (mapId in mapNameCache) return mapNameCache[mapId];
+	const map = await Stage.getMap(mapId);
+	return (mapNameCache[mapId] = map ? (map.name || map.nameJp || QQ) : QQ);
+}
+
+function computeEnergy(stage) {
+	const e = stage.energy ?? null;
+	return e === null ? null : lastStarIndex >= 0 ? e + lastStarIndex * 10 : e;
+}
+
+function getSortedHits() {
+	const arr = [...lastHits];
+	if (sortCol === 'energy') {
+		arr.sort((a, b) => {
+			const ea = computeEnergy(a.stage) ?? 0;
+			const eb = computeEnergy(b.stage) ?? 0;
+			return sortDir === 'asc' ? ea - eb || a.stage.id - b.stage.id
+			                         : eb - ea || a.stage.id - b.stage.id;
+		});
+	}
+	return arr;
+}
+
+function updateSortHeaders() {
+	colEnergy.textContent = '消費統率力 ' + (sortCol === 'energy' ? (sortDir === 'asc' ? '▲' : '▼') : '⇅');
+}
+
+function renderTable() {
+	updateSortHeaders();
+	resultsBody.innerHTML = '';
+	for (const {stage, matched} of getSortedHits()) {
+		const tr = resultsBody.appendChild(document.createElement('tr'));
+
+		const mc = Math.floor(stage.id / 1000000);
+		const sm = Math.floor((stage.id % 1000000) / 1000);
+		const st = stage.id % 1000;
+		const mapId = mc * 1000 + sm;
+
+		if (lastIsLegend) {
+			const tdMap = tr.appendChild(document.createElement('td'));
+			getMapName(mapId).then(n => { tdMap.textContent = `${sm + 1}. ${n}`; });
+		}
+
+		const tdName = tr.appendChild(document.createElement('td'));
+		const a = tdName.appendChild(document.createElement('a'));
+		a.href = `/stage.html?s=${mc}-${sm}-${st}`;
+		a.textContent = stage.name || stage.nameJp || QQ;
+
+		const tdEnemies = tr.appendChild(document.createElement('td'));
+		for (const id of matched) {
+			const e = lastById[id];
+			const span = tdEnemies.appendChild(document.createElement('span'));
+			span.className = 'matched-enemy';
+			if (e) {
+				const img = span.appendChild(new Image(32, 32));
+				img.src = e.icon;
+				img.style.cssText = 'width:32px;height:32px;object-fit:contain';
+				img.onerror = () => { img.hidden = true; };
+				span.appendChild(document.createTextNode(e.name || e.jp_name || QQ));
+			} else {
+				span.textContent = `#${id}`;
+			}
+		}
+
+		const tdEnergy = tr.appendChild(document.createElement('td'));
+		const energy = computeEnergy(stage);
+		tdEnergy.textContent = energy === null ? '-' : energy;
+	}
+}
+
+function onSortClick(col) {
+	if (!lastHits.length) return;
+	if (sortCol !== col) {
+		sortCol = col;
+		sortDir = 'asc';
+	} else if (col === 'energy' && sortDir === 'asc') {
+		sortDir = 'desc';
+	} else {
+		sortCol = null;
+	}
+	renderTable();
+}
+
+colEnergy.classList.add('sortable');
+colEnergy.addEventListener('click', () => onSortClick('energy'));
+updateSortHeaders();
 
 // ── Enemy slot UI ─────────────────────────────────────────────────────────────
 
@@ -171,54 +270,13 @@ searchBtn.addEventListener('click', async () => {
 	if (!hits.length) { statusEl.textContent = '找不到符合的關卡'; return; }
 	statusEl.textContent = `找到 ${hits.length} 個關卡`;
 
-	const byId = Object.fromEntries(allEnemies.map(e => [e.id, e]));
-	const mapNameCache = {};
-
-	async function getMapName(mapId) {
-		if (mapId in mapNameCache) return mapNameCache[mapId];
-		const map = await Stage.getMap(mapId);
-		return (mapNameCache[mapId] = map ? (map.name || map.nameJp || QQ) : QQ);
-	}
-
-	for (const {stage, matched} of hits) {
-		const tr = resultsBody.appendChild(document.createElement('tr'));
-
-		const mc = Math.floor(stage.id / 1000000);
-		const sm = Math.floor((stage.id % 1000000) / 1000);
-		const st = stage.id % 1000;
-		const mapId = mc * 1000 + sm;
-
-		if (isLegend) {
-			const tdMap = tr.appendChild(document.createElement('td'));
-			getMapName(mapId).then(n => { tdMap.textContent = `${sm + 1}. ${n}`; });
-		}
-
-		const tdName = tr.appendChild(document.createElement('td'));
-		const a = tdName.appendChild(document.createElement('a'));
-		a.href = `/stage.html?s=${mc}-${sm}-${st}`;
-		a.textContent = stage.name || stage.nameJp || QQ;
-
-		const tdEnemies = tr.appendChild(document.createElement('td'));
-		for (const id of matched) {
-			const e = byId[id];
-			const span = tdEnemies.appendChild(document.createElement('span'));
-			span.className = 'matched-enemy';
-			if (e) {
-				const img = span.appendChild(new Image(32, 32));
-				img.src = e.icon;
-				img.style.cssText = 'width:32px;height:32px;object-fit:contain';
-				img.onerror = () => { img.hidden = true; };
-				span.appendChild(document.createTextNode(e.name || e.jp_name || QQ));
-			} else {
-				span.textContent = `#${id}`;
-			}
-		}
-
-		const tdEnergy = tr.appendChild(document.createElement('td'));
-		const energy = stage.energy ?? null;
-		tdEnergy.textContent = energy === null ? '-' :
-			starIndex >= 0 ? energy + starIndex * 10 : energy;
-	}
+	lastHits = hits;
+	lastIsLegend = isLegend;
+	lastStarIndex = starIndex;
+	lastById = Object.fromEntries(allEnemies.map(e => [e.id, e]));
+	sortCol = null;
+	sortDir = 'asc';
+	renderTable();
 
 	resultsDiv.hidden = false;
 });

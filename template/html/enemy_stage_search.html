@@ -86,6 +86,9 @@
 #status { margin: 8px 0; font-size: 0.95em; color: #555; }
 	:root.dark #status { color: #aaa; }
 	#results table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+	.sortable { cursor: pointer; user-select: none; }
+	.sortable:hover { background: #bbb8a34d; }
+	:root.dark .sortable:hover { background: #9191914d; }
 	#results td { border: 1px solid #575757; padding: 6px 8px; vertical-align: middle; }
 	#results thead td { background: #9d9a834d; font-weight: bold; }
 	:root.dark #results thead td { background: #7171714d; }
@@ -127,7 +130,7 @@
 					<td id="col-map" hidden>地圖</td>
 					<td>關卡</td>
 					<td>包含的指定敵人</td>
-					<td>消費統率力</td>
+					<td id="col-energy">消費統率力</td>
 				</tr>
 			</thead>
 			<tbody id="results-body"></tbody>
