@@ -70,25 +70,44 @@ function makeSlot(index) {
 		const q = input.value.trim().toLowerCase();
 		dropdown.innerHTML = '';
 		if (!q) { dropdown.hidden = true; return; }
+		const usedIds = new Set(
+			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null)
+		);
 		const hits = allEnemies.filter(e =>
-			(e.name || '').toLowerCase().includes(q) ||
-			(e.jp_name || '').toLowerCase().includes(q) ||
-			(e.fandom || '').toLowerCase().includes(q)
+			!usedIds.has(e.id) && (
+				(e.name || '').toLowerCase().includes(q) ||
+				(e.jp_name || '').toLowerCase().includes(q) ||
+				(e.fandom || '').toLowerCase().includes(q)
+			)
 		).slice(0, 12);
 		if (!hits.length) { dropdown.hidden = true; return; }
 		for (const e of hits) {
 			const li = dropdown.appendChild(document.createElement('li'));
+			li.tabIndex = -1;
 			const img = li.appendChild(new Image(36, 36));
 			img.src = e.icon;
 			img.style.cssText = 'width:36px;height:36px;object-fit:contain';
 			img.onerror = () => { img.hidden = true; };
 			li.appendChild(document.createTextNode(e.name || e.jp_name || QQ));
 			li.addEventListener('mousedown', ev => { ev.preventDefault(); pick(e); });
+			li.addEventListener('keydown', ev => {
+				if (ev.key === 'Enter') { ev.preventDefault(); pick(e); }
+				else if (ev.key === 'ArrowDown') { ev.preventDefault(); (li.nextElementSibling || dropdown.firstElementChild)?.focus(); }
+				else if (ev.key === 'ArrowUp') { ev.preventDefault(); li.previousElementSibling ? li.previousElementSibling.focus() : input.focus(); }
+				else if (ev.key === 'Escape') { dropdown.hidden = true; input.focus(); }
+			});
 		}
 		dropdown.hidden = false;
 	});
 
-	input.addEventListener('blur', () => setTimeout(() => { dropdown.hidden = true; }, 150));
+	input.addEventListener('keydown', ev => {
+		if (ev.key === 'ArrowDown' && !dropdown.hidden) { ev.preventDefault(); dropdown.firstElementChild?.focus(); }
+		else if (ev.key === 'Escape') { dropdown.hidden = true; }
+	});
+
+	slot.addEventListener('focusout', ev => {
+		if (!slot.contains(ev.relatedTarget)) dropdown.hidden = true;
+	});
 	clearBtn.addEventListener('click', clear);
 
 	slot.getEnemyId = () => {
