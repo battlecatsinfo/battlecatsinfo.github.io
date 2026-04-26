@@ -1,0 +1,152 @@
+{{#> common.html nav_bar_active="enemy_stage_search"}}
+
+{{#*inline "title"}}敵人關卡查詢{{/inline}}
+
+{{#*inline "description"}}查詢章節中包含指定敵人的關卡{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
+{{/inline}}
+
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="enemy_stage_search.js" type="module"></script>
+{{/inline}}
+
+{{#*inline "styles-inline"}}
+	<style>
+	body { padding: 12px; font-size: 16px; }
+	#page { max-width: 900px; margin: 0 auto; }
+	h2 { margin-bottom: 12px; }
+	.row { margin: 10px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+	select {
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		padding: 4px 8px;
+		font-size: 1em;
+	}
+	:root.dark select { background: #282a36; color: #f8f8f2; border-color: #555; }
+	#enemy-slots { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0; }
+	.enemy-slot {
+		border: 1px solid #aaa;
+		border-radius: 6px;
+		padding: 8px;
+		min-width: 200px;
+		position: relative;
+	}
+	:root.dark .enemy-slot { border-color: #555; }
+	.slot-label { font-size: 0.85em; color: #888; margin-bottom: 6px; }
+	:root.dark .slot-label { color: #aaa; }
+	.enemy-input {
+		width: 162px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		padding: 4px 8px;
+		font-size: 1em;
+	}
+	:root.dark .enemy-input { background: #282a36; color: #f8f8f2; border-color: #555; }
+	.enemy-dropdown {
+		position: absolute;
+		z-index: 10;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		background: white;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		width: 230px;
+		max-height: 230px;
+		overflow-y: auto;
+		box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+	}
+	:root.dark .enemy-dropdown { background: #282a36; border-color: #555; }
+	.enemy-dropdown li {
+		padding: 5px 8px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.95em;
+	}
+	.enemy-dropdown li:hover { background: lightcyan; }
+	:root.dark .enemy-dropdown li:hover { background: steelblue; }
+	.enemy-dropdown img { width: 36px; height: 36px; object-fit: contain; }
+	.slot-selected { display: flex; align-items: center; gap: 8px; }
+	.slot-selected img { width: 44px; height: 44px; object-fit: contain; }
+	.deselect-btn {
+		background: none;
+		border: 1px solid #d00;
+		color: #d00;
+		border-radius: 4px;
+		cursor: pointer;
+		padding: 2px 6px;
+		font-size: 0.9em;
+	}
+	.remove-btn {
+		display: block;
+		margin-top: 6px;
+		font-size: 0.8em;
+		padding: 2px 8px;
+		cursor: pointer;
+		border: 1px solid #aaa;
+		border-radius: 4px;
+		background: none;
+		color: inherit;
+	}
+	.remove-btn:hover { background: #fee; }
+	:root.dark .remove-btn:hover { background: #422; }
+	#status { margin: 8px 0; font-size: 0.95em; color: #555; }
+	:root.dark #status { color: #aaa; }
+	#results table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+	#results td { border: 1px solid #575757; padding: 6px 8px; vertical-align: middle; }
+	#results thead td { background: #9d9a834d; font-weight: bold; }
+	:root.dark #results thead td { background: #7171714d; }
+	.matched-enemy { display: inline-flex; align-items: center; gap: 4px; margin: 2px 4px; vertical-align: middle; }
+	.matched-enemy img { width: 32px; height: 32px; object-fit: contain; }
+	</style>
+{{/inline}}
+
+{{#*inline "content"}}
+<div id="page">
+	<h2>敵人關卡查詢</h2>
+	<div class="row">
+		<label for="chapter">章節：</label>
+		<select id="chapter">
+			<option value="3009">世界篇 第一章</option>
+			<option value="3009">世界篇 第二章</option>
+			<option value="3009">世界篇 第三章</option>
+			<option value="3003">未來篇 第一章</option>
+			<option value="3004">未來篇 第二章</option>
+			<option value="3005">未來篇 第三章</option>
+			<option value="3006">宇宙篇 第一章</option>
+			<option value="3007">宇宙篇 第二章</option>
+			<option value="3008">宇宙篇 第三章</option>
+			<option value="legend">傳奇關卡</option>
+		</select>
+	</div>
+	<div class="row">
+		<label>選擇敵人（2–4個）：</label>
+		<button id="add-slot-btn" class="w3-button w3-light-grey w3-round" type="button" disabled>+ 新增敵人</button>
+	</div>
+	<div id="enemy-slots"></div>
+	<div class="row">
+		<button id="do-search-btn" class="w3-button w3-teal w3-round" type="button" disabled>搜尋</button>
+	</div>
+	<div id="status">載入中…</div>
+	<div id="results" hidden>
+		<table>
+			<thead id="results-head">
+				<tr>
+					<td id="col-map" hidden>地圖</td>
+					<td>關卡</td>
+					<td>包含的指定敵人</td>
+					<td>消費統率力</td>
+				</tr>
+			</thead>
+			<tbody id="results-body"></tbody>
+		</table>
+	</div>
+</div>
+{{/inline}}
+
+{{/common.html}}
