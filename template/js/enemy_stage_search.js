@@ -6,6 +6,7 @@ const slotsDiv = document.getElementById('enemy-slots');
 const resultsDiv = document.getElementById('results');
 const resultsBody = document.getElementById('results-body');
 const colMap = document.getElementById('col-map');
+const colStage = document.getElementById('col-stage');
 const colEnergy = document.getElementById('col-energy');
 const statusEl = document.getElementById('status');
 const QQ = '？？？';
@@ -20,8 +21,7 @@ let lastIsLegend = false;
 let lastStarIndex = -1;
 let lastById = {};
 const mapNameCache = {};
-let sortCol = null; // null | 'map' | 'energy'
-let sortDir = 'asc';
+let sortCol = null; // null | 'energy'
 
 async function getMapName(mapId) {
 	if (mapId in mapNameCache) return mapNameCache[mapId];
@@ -40,15 +40,25 @@ function getSortedHits() {
 		arr.sort((a, b) => {
 			const ea = computeEnergy(a.stage) ?? 0;
 			const eb = computeEnergy(b.stage) ?? 0;
-			return sortDir === 'asc' ? ea - eb || a.stage.id - b.stage.id
-			                         : eb - ea || a.stage.id - b.stage.id;
+			return b.matched.length - a.matched.length || ea - eb || a.stage.id - b.stage.id;
 		});
 	}
 	return arr;
 }
 
 function updateSortHeaders() {
-	colEnergy.textContent = '統率力 ' + (sortCol === 'energy' ? (sortDir === 'asc' ? '▲' : '▼') : '⇅');
+	const energyActive = sortCol === 'energy';
+	if (colMap.hidden) {
+		colStage.textContent = '推薦關卡 ' + (energyActive ? '△' : '▲');
+		colStage.classList.toggle('sortable', energyActive);
+	} else {
+		colStage.textContent = '推薦關卡';
+		colStage.classList.remove('sortable');
+	}
+	colMap.textContent = '地圖 ' + (energyActive ? '△' : '▲');
+	colMap.classList.toggle('sortable', energyActive);
+	colEnergy.textContent = '統率力 ' + (energyActive ? '▲' : '△');
+	colEnergy.classList.toggle('sortable', !energyActive);
 }
 
 function renderTable() {
@@ -96,18 +106,14 @@ function renderTable() {
 
 function onSortClick(col) {
 	if (!lastHits.length) return;
-	if (sortCol !== col) {
-		sortCol = col;
-		sortDir = 'asc';
-	} else if (col === 'energy' && sortDir === 'asc') {
-		sortDir = 'desc';
-	} else {
-		sortCol = null;
-	}
+	const next = col === 'energy' ? 'energy' : null;
+	if (sortCol === next) return;
+	sortCol = next;
 	renderTable();
 }
 
-colEnergy.classList.add('sortable');
+colMap.addEventListener('click', () => onSortClick('map'));
+colStage.addEventListener('click', () => onSortClick('map'));
 colEnergy.addEventListener('click', () => onSortClick('energy'));
 updateSortHeaders();
 
@@ -164,6 +170,7 @@ function makeSlot(index) {
 		input.value = '';
 		searchBox.hidden = false;
 		picked.hidden = true;
+		doSearch(); // async
 	}
 
 	function suggestInput() {
@@ -240,7 +247,8 @@ async function doSearch() {
 	const ids = [...new Set(slots.map(s => s.getEnemyId()).filter(id => id !== null))];
 
 	if (!ids.length) {
-		statusEl.textContent = '請至少選擇 1 個敵人';
+		statusEl.textContent = '';
+		resultsDiv.hidden = true;
 		return;
 	}
 
@@ -275,7 +283,6 @@ async function doSearch() {
 	lastStarIndex = starIndex;
 	lastById = Object.fromEntries(allEnemies.map(e => [e.id, e]));
 	sortCol = null;
-	sortDir = 'asc';
 	renderTable();
 
 	resultsDiv.hidden = false;
