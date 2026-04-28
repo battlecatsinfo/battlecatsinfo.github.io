@@ -7,6 +7,7 @@ const sources = [
 	'w3.css',
 	'dracula.css',
 	'gh.css',
+	'gh-navbar.css',
 	'menu.css',
 
 	'index.html',

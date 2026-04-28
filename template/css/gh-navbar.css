@@ -1,0 +1,9 @@
+body { padding-top: 0; }
+.topnav { display: inline-block !important; margin: 0 -45px !important; width: calc(100% + 90px) !important; }
+@media (max-width: 767px) { .topnav { margin: 0 -15px !important; width: calc(100% + 30px) !important; } }
+.topnav > a { background-color: #fff !important; }
+.topnav > a:visited { background-color: #fff !important; color: #f2f2f2 !important; }
+.topnav > a:hover { text-decoration: none !important; }
+.topnav > a > svg { width: 2em !important; }
+.topnav #site-s-result * { box-sizing: border-box; }
+#site-search input { box-sizing: border-box !important; line-height: normal !important; }
