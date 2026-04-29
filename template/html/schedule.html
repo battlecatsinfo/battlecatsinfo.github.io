@@ -1,10 +1,15 @@
-{{#> gh.html}}
+{{#> gh.html nav_bar_active="schedule"}}
 
 {{#*inline "title"}}貓咪大戰爭 關卡表{{/inline}}
+
+{{#*inline "styles-inline"}}
+{{#> styles-inline}}<link rel="stylesheet" href="/gh-navbar.css">{{/styles-inline}}
+{{/inline}}
 
 {{#*inline "content"}}
 	<div class="E">
 	<h3>參考資料：<a href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=20534">【情報】貓咪大戰爭本家常駐&非常駐活動日程</a></h3>
+	<h5>資訊版本：15.2 (2026-03-06)</h5>
 	<h2>月份關卡</h2>
 	<table>
 		<thead>
@@ -109,8 +114,8 @@
 		<li><a href="stage.html?s=1-140">日進斗金 淘金夢</a>（約4月底開始）</li>
 		<li><a href="stage.html?s=1-164">濕濕黏黏大進擊！</a>（約5月底開始）</li>
 		<li><a href="stage.html?s=1-149">暑修課程</a>（約8月底開始）</li>
-		<li><a href="stage.html?s=1-154">秋季白金週</a>（約10/16開始）</li>
-		<li><a href="stage.html?s=1-174">文化祭美食戰爭</a>（約11/13開始）</li>
+		<li><a href="stage.html?s=1-154">秋季白金週</a>（約9月/10月開始）</li>
+		<li><a href="stage.html?s=1-174">文化祭美食戰爭</a>（約11月開始）</li>
 		<li><a href="stage.html?s=1-125">貓咪雪祭</a>（約12月底開始）</li>
 	</ul>
 
@@ -155,23 +160,17 @@
 	<table>
 		<thead>
 			<tr>
-				<th>星期一</th>
-				<th>星期二</th>
-				<th>星期三</th>
-				<th>星期四</th>
-				<th>星期五</th>
-				<th>周末限時開放</th>
+				<th>無限期開放</th>
+				<th>星期三限時開放<br>週末不定期限時開放</th>
+				<th>週末限時開放</th>
 				<th>每天限時開放</th>
 				<th>每天限時開放</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td><a href="stage.html?s=1-97">進化的綠色貓薄荷</a></td>
-				<td><a href="stage.html?s=1-98">進化的紫色貓薄荷</a></td>
-				<td><a href="stage.html?s=1-99">進化的紅色貓薄荷</a></td>
-				<td><a href="stage.html?s=1-100">進化的藍色貓薄荷</a></td>
-				<td><a href="stage.html?s=1-101">進化的黃色貓薄荷</a></td>
+				<td><a href="stage.html?s=1-422">進化的貓薄荷</a></td>
+				<td><a href="stage.html?s=1-118">貓薄荷挑戰</a></td>
 				<td><a href="stage.html?s=1-222">進化的彩虹貓薄荷</a></td>
 				<td><a href="stage.html?s=1-162">進化的古代貓薄荷</a></td>
 				<td><a href="stage.html?s=1-274">進化的惡貓薄荷</a></td>
@@ -236,6 +235,11 @@
 	</table>
 	<h2>城堡素材關卡</h2>
 	<table>
+		<thead>
+			<tr>
+				<th colspan="3">每天限時開放</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
 				<td><a href="stage.html?s=1-150">紅磚與宇宙石的洞窟</a></td>
@@ -244,13 +248,14 @@
 			</tr>
 		</tbody>
 	</table>
+	<img src="/img/misc/schedule_WeeklyEvents_v6.0.2_bcinfo.png" width=auto height=auto style="max-height: 700px;" loading="lazy">
 	<h2>雙渦關卡</h2>
 	<table>
 		<thead>
 			<tr>
-				<th>每月6、7、19、20日</th>
-				<th>每月9、10、23、24日</th>
-				<th>每月13、14、27、28日</th>
+				<th>每月6、7日</th>
+				<th>每月13、14日</th>
+				<th>每月20、21日</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -262,7 +267,7 @@
 		</tbody>
 	</table>
 
-	<h2>極難關卡</h2>
+	<h2>極難（降臨）關卡</h2>
 	<table>
 		<thead>
 			<tr>
@@ -298,7 +303,7 @@
 				<td>-</td>
 			</tr>
 			<tr>
-				<th>掉落</th>
+				<th>獎勵</th>
 				<td><a href="unit.html?id=287">貓咪球兒</a></td>
 				<td><a href="unit.html?id=324">冰壺貓</a></td>
 				<td><a href="unit.html?id=382">玻璃貓</a></td>
@@ -309,7 +314,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<h2>超極難關卡</h2>
+	<h2>超極難（降臨）關卡</h2>
 	<table>
 		<thead>
 			<tr>
@@ -345,15 +350,15 @@
 				<td><a href="stage.html?s=1-338">絕・綺羅星汪汪降臨</a></td>
 				<td><a href="stage.html?s=1-393">絕・死靈妖精海蝶降臨</a></td>
 				<td><a href="stage.html?s=1-375">絕・第一次的差事</a></td>
+				<td><a href="stage.html?s=1-404">絕・誘惑的交響曲</a></td>
 				<td>無</td>
 				<td><a href="stage.html?s=1-296">絕・奈落門</a></td>
-				<td>無</td>
 				<td>無</td>
 				<td>無</td>
 				<td><a href="stage.html?s=1-243">絕・暗沼幽靈</a></td>
 			</tr>
 			<tr>
-				<td>掉落</td>
+				<td>獎勵</td>
 				<td><a href="unit.html?id=527">史萊姆貓</a></td>
 				<td><a href="unit.html?id=528">哥薩克貓</a></td>
 				<td><a href="unit.html?id=539">英式橄欖球貓</a></td>
@@ -369,23 +374,29 @@
 		</tbody>
 	</table>
 
-	<h2>神難（大降臨）關卡</h2>
+	<h2>神難/無敵困難（大降臨）關卡</h2>
 	<table>
 		<thead>
 			<tr>
+				<th>每月1、2、15、16日</th>
 				<th>每月3、4、17、18日</th>
+				<th>每月5、6、19、20日</th>
 				<th>每月7、8、21、22日</th>
 				<th>每月13、14、27、28日</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
+				<td><a href="stage.html?s=1-421">トリニティ大降臨</a></td>
 				<td><a href="stage.html?s=1-340">大魔王貓彈大降臨</a></td>
+				<td><a href="stage.html?s=1-406">巨大生化魚鈴木大降臨</a></td>
 				<td><a href="stage.html?s=1-391">超拳獸超派噴噴大降臨</a></td>
 				<td><a href="stage.html?s=1-348">三途沼澤之王大降臨</a></td>
 			</tr>
 			<tr>
+				<td><a href="unit.html?id=851">ネコ新聞</a></td>
 				<td><a href="unit.html?id=708">噴射貓</a></td>
+				<td><a href="unit.html?id=819">木工貓</a></td>
 				<td><a href="unit.html?id=780">保齡球選手貓</a></td>
 				<td><a href="unit.html?id=718">玉蜀黍貓</a></td>
 			</tr>
@@ -601,6 +612,24 @@
 			</tr>
 		</tbody>
 	</table>
+	<table>
+		<thead>
+			<tr>
+				<th>5月21日至5月28日</th>
+				<th>8月21日至8月28日</th>
+				<th>11月21日至11月28日</th>
+				<th>2月21日至2月28日</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><a href="stage.html?s=1-234">大亂鬪 春季特別活動</a></td>
+				<td><a href="stage.html?s=1-235">大亂鬪 夏季特別活動</a></td>
+				<td><a href="stage.html?s=1-236">大亂鬪 秋季特別活動</a></td>
+				<td><a href="stage.html?s=1-237">大亂鬪 冬季特別活動</a></td>
+			</tr>
+		</tbody>
+	</table>
 	
 	<h2>貓咪券關卡</h2>
 	<table>
@@ -621,25 +650,27 @@
 	<table>
 		<tbody>
 			<tr>
-				<td><a href="stage.html?s=1-59">超級游擊經驗值喵！</a></td>
 				<td><a href="stage.html?s=1-27">週末關卡</a></td>
+				<td><a href="stage.html?s=1-28">游擊經驗值喵！</a></td>
+				<td><a href="stage.html?s=1-59">超級游擊經驗值喵！</a></td>
 				<td><a href="stage.html?s=1-124">終極游擊經驗值喵！</a></td>
 				<td><a href="stage.html?s=1-155">超終極游擊經驗值喵！</a></td>
 				<td><a href="stage.html?s=1-319">超終極惡游擊經驗值喵！</a></td>
 				<td><a href="stage.html?s=11-49">月間活動全明星 眾星雲集大感謝祭！</a></td>
 			</tr>
 			<tr>
-				<td>72萬</td>
-				<td>126萬</td>
-				<td>210萬</td>
+				<td>78萬</td>
+				<td>78萬</td>
+				<td>186萬</td>
+				<td>243萬</td>
 				<td>307萬</td>
 				<td>461萬</td>
-				<td>全10關，共3000萬（不需保雷、洞悉先機）</td>
+				<td>全10關，共3000萬（無需寶物雷達與洞悉先機）</td>
 			</tr>
 		</tbody>
 	</table>
-	<p>※各關都是消耗500統帥力，經驗值以尾關開寶物雷達及洞悉先機(1.5倍)計算</p>
-	<p>※推薦打「超終極游擊經驗值喵！」、「超終極惡游擊經驗值喵！」兩關，或靠傳說關卡、真傳說關卡獲取XP</p>
+	<p>※經驗值以尾關開寶物雷達及洞悉先機(1.5倍)計算</p>
+	<p>※推薦打「超終極游擊經驗值喵！」、「超終極惡游擊經驗值喵！」、「月間活動全明星 眾星雲集大感謝祭！」三個地圖，或靠傳奇關卡、真傳奇關卡、傳奇故事0獲取XP</p>
 	<p>※解月間任務可打「週末關卡」的第一關或<a href="stage.html?s=10-11">使用一個喵力達A</a></p>
 	<h2>超生命體強襲</h2>
 	<table>
@@ -688,7 +719,7 @@
 		<tbody>
 			<tr>
 				<td><a href="stage.html?s=1-173">大逆襲的鋼鐵熊</a></td>
-				<td><a href="stage.html?s=1-118">貓薄荷挑戰</a></td>
+				<td></td>
 				<td><a href="stage.html?s=1-69">極難祭！</a></td>
 				<td><a href="stage.html?s=1-120">極難祭2！</a></td>
 				<td><a href="stage.html?s=1-190">極難祭3！</a></td>
@@ -731,15 +762,6 @@
 				<td></td>
 				<td></td>
 			</tr>
-			<tr>
-				<td><a href="stage.html?s=1-234">大亂鬪 春季特別活動</a></td>
-				<td><a href="stage.html?s=1-235">大亂鬪 夏季特別活動</a></td>
-				<td><a href="stage.html?s=1-236">大亂鬪 秋季特別活動</a></td>
-				<td><a href="stage.html?s=1-237">大亂鬪 冬季特別活動</a></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
 		</tbody>
 	</table>
 
@@ -749,7 +771,7 @@
 		<li><a href="stage.html?s=1-256">異界的僕人</a> → <a href="stage.html?s=1-258">解放的坦克貓</a></li>
 		<li><a href="stage.html?s=1-265">惡魔園</a> → <a href="stage.html?s=1-266">解放的戰鬥貓</a></li>
 	</ul>
-	<p>上面三關都通關後出現 <a href="stage.html?s=1-268">解放的貓咪們</a>，打完後解鎖以下關卡：女王的研究報告（5章，掉落各式資源）、女王的挖掘調查（5章，掉落遠古的蛋）、<a href="stage.html?s=3-14">魔界篇</a>、<a href="stage.html?s=9-38">真傳奇關卡 第39章 - 大災難的開始</a>、<a href="stage.html?s=1-272">誘惑的交響曲</a>、 <a href="stage.html?s=1-273">羅生門</a>、
+	<p>上面三關都通關後出現 <a href="stage.html?s=1-268">解放的貓咪們</a>，打完後解鎖以下關卡：女王的研究報告（5章，掉落各式資源）、女王的挖掘調查（5章，獎勵遠古的蛋）、<a href="stage.html?s=3-14">魔界篇</a>、<a href="stage.html?s=9-38">真傳奇關卡 第39章 - 大災難的開始</a>、<a href="stage.html?s=1-272">誘惑的交響曲</a>、 <a href="stage.html?s=1-273">羅生門</a>、
 		<a href="stage.html?s=1-350">極惡貓咪降臨</a>等關卡</p>
 	<table>
 		<tbody>
@@ -763,14 +785,15 @@
 			</tr>
 			<tr>
 				<td>女王的挖掘調查</td>
-				<td><a href="stage.html?s=1-277">女王的挖掘調查1</a>掉落<a href="unit.html?id=656">埴輪貓</a></td>
-				<td><a href="stage.html?s=1-278">女王的挖掘調查2</a>掉落<a href="unit.html?id=669">仙人掌貓</a></td>
-				<td><a href="stage.html?s=1-279">女王的挖掘調查3</a>掉落<a href="unit.html?id=685">小鴨車車貓</a></td>
-				<td><a href="stage.html?s=1-280">女王的挖掘調查4</a>掉落<a href="unit.html?id=700">殺手貓</a></td>
-				<td><a href="stage.html?s=1-281">女王的挖掘調查5</a>掉落<a href="unit.html?id=720">惡魔熊熊貓</a></td>
+				<td><a href="stage.html?s=1-277">女王的挖掘調查1</a>獎勵<a href="unit.html?id=656">埴輪貓</a></td>
+				<td><a href="stage.html?s=1-278">女王的挖掘調查2</a>獎勵<a href="unit.html?id=669">仙人掌貓</a></td>
+				<td><a href="stage.html?s=1-279">女王的挖掘調查3</a>獎勵<a href="unit.html?id=685">小鴨車車貓</a></td>
+				<td><a href="stage.html?s=1-280">女王的挖掘調查4</a>獎勵<a href="unit.html?id=700">殺手貓</a></td>
+				<td><a href="stage.html?s=1-281">女王的挖掘調查5</a>獎勵<a href="unit.html?id=720">惡魔熊熊貓</a></td>
 			</tr>
 		</tbody>
 	</table>
+	<img src="/img/misc/schedule_AkuEvents_v6.0.2_bcinfo.png" width=auto height=auto style="max-height: 700px;" loading="lazy">
 	<h2>挖掘地圖/超獸討伐/獸石關卡</h2>
 
 	<table>
@@ -841,6 +864,9 @@
 			</tr>
 		</tbody>
 	</table>
+	<img src="/img/misc/schedule_BehemothEvents_v6.0.2_bcinfo.png" width=auto height=auto style="max-height: 700px;" loading="lazy">
+	<img src="/img/misc/schedule_Enigma_12.4.0_bcinfo.png" width=auto height=auto style="max-height: 700px;" loading="lazy">
+
 	<h2>本能玉地圖</h2>
 	<table>
 		<tbody>
@@ -858,15 +884,15 @@
 			</tr>
 			<tr>
 				<td>普通</td>
-				<td><a href="stage.html?s=12-34">紅色本能的頂點</a>
-					<td><a href="stage.html?s=12-13">飄浮本能的頂點</a>
-						<td><a href="stage.html?s=12-16">黑色本能的頂點</a>
-							<td><a href="stage.html?s=12-19">神聖本能的頂點</a>
-								<td><a href="stage.html?s=12-22">蒼藍本能的頂點</a>
-									<td><a href="stage.html?s=12-25">腐朽本能的頂點</a>
-										<td><a href="stage.html?s=12-28">強硬本能的頂點</a>
-											<td><a href="stage.html?s=12-64">惡意本能的頂點</a>
-												<td><a href="stage.html?s=12-68">古代本能的頂點</a></td>
+				<td><a href="stage.html?s=12-34">紅色本能的頂點</a></td>
+				<td><a href="stage.html?s=12-13">飄浮本能的頂點</a></td>
+				<td><a href="stage.html?s=12-16">黑色本能的頂點</a></td>
+				<td><a href="stage.html?s=12-19">神聖本能的頂點</a></td>
+				<td><a href="stage.html?s=12-22">蒼藍本能的頂點</a></td>
+				<td><a href="stage.html?s=12-25">腐朽本能的頂點</a></td>
+				<td><a href="stage.html?s=12-28">強硬本能的頂點</a></td>
+				<td><a href="stage.html?s=12-64">惡意本能的頂點</a></td>
+				<td><a href="stage.html?s=12-68">古代本能的頂點</a></td>
 			</tr>
 			<tr>
 				<td>最棒</td>
@@ -888,13 +914,13 @@
 	<ul>
 		<li><a href="stage.html?s=1-125">貓咪雪祭</a></li>
 	</ul>
-	<h2>日本“大學入學共通考試”活動</h2>
+	<h2>日本大學入試活動</h2>
 	<p>通常於1月/2月開始</p>
 	<ul>
 		<li><a href="stage.html?s=1-160">加油！入考大戰爭</a></li>
 	</ul>
 	<h2>農曆新年活動</h2>
-	<p>通常在1月／2月開始</p>
+	<p>通常在1月/2月開始</p>
 	<ul>
 		<li><a href="stage.html?s=11-41">貓咪歡慶佳節～過年篇～</a></li>
 	</ul>
@@ -910,7 +936,7 @@
 	<h2>殺意貓活動</h2>
 	<p>日文版通常於2/22左右開始（其他版本可能要到8/8才開始）</p>
 	<ul>
-		<li><a href="stage.html?s=11-64">貓咪們的大逆襲</a></li>
+		<li><a href="stage.html?s=11-78">貓咪們的大逆襲</a></li>
 	</ul>
 	<h2>白色情人節活動</h2>
 	<p>通常於3/14左右開始</p>
@@ -959,7 +985,7 @@
 		<li><a href="stage.html?s=1-374">週末蜜月最後一週</a></li>
 	</ul>
 	<h2>貓咪的暑假</h2>
-	<p>通常於暑假期間舉行，每週可能舉辦刮刮樂，部份積分獎勵關卡只能使用<a target="_blank" href="/gacha/Summer_Break_Cats.html">活動轉蛋</a>取得的角色（蟲）出場</p>
+	<p>通常於7月/8月舉行，每週可能舉辦刮刮樂，部份積分獎勵關卡只能使用<a target="_blank" href="/gacha/Summer_Break_Cats.html">活動轉蛋</a>取得的角色（蟲）出場</p>
 	<ul>
 		<li><a href="stage.html?s=11-19">貓咪的暑假</a></li>
 		<li><a href="stage.html?s=1-380">夏夜回家路</a></li>
@@ -971,17 +997,25 @@
 		<li><a href="stage.html?s=1-149">暑修課程</a></li>
 		<li><a href="stage.html?s=1-344">暑假的最後趕作業</a></li>
 	</ul>
-	<h2>貓咪的暑假（續）</h2>
-	<p>通常接續貓咪的暑假，與<a target="_blank" href="/collab/Survive__Mola_Mola_.html">活下去！曼波魚！</a>合作活動一起舉開，活動轉蛋的角色（魚）為曼波魚合作關卡的敵人，並有需要用<a target="_blank" href="/gacha/Summer_Break_Cats__Survival.html">活動轉蛋</a>取得的角色來通關合作關卡的任務，和貓咪的暑假類似，每週可能舉辦刮刮樂</p>
+	<h2>貓咪的暑假 野外求生</h2>
+	<p>通常接續貓咪的暑假，與<a target="_blank" href="/collab/Survive__Mola_Mola_.html">活下去！曼波魚！</a>合作活動一起舉辦，活動轉蛋的角色（魚）為曼波魚合作關卡的敵人，並有需要用<a target="_blank" href="/gacha/Summer_Break_Cats__Survival.html">活動轉蛋</a>取得的角色來通關合作關卡的任務，和貓咪的暑假類似，每週可能舉辦刮刮樂</p>
 	<ul>
-		<li><a href="stage.html?s=11-67">貓咪的暑假 野外求生</a></li>
+		<li><a href="stage.html?s=11-71">貓咪的暑假 野外求生</a></li>
 		<li><a href="stage.html?s=1-382">叢林求生記</a></li>
+		<li><a href="stage.html?s=1-405">天氣無法預測</a></li>
 	</ul>
 	<p>⮕活下去！曼波魚！合作活動關卡</p>
 	<ul>
 		<li><a href="stage.html?s=2-88">活下去！曼波魚！</a></li>
 		<li><a href="stage.html?s=2-89">3億條的夥伴都死掉了</a></li>
 		<li><a href="stage.html?s=13-13">歌后曼波魚崎A・Y・U 強襲！</a></li>
+	</ul>
+	<h2>貓咪的暑假 享樂天堂</h2>
+	<p>通常接續貓咪的暑假 野外求生且與之類似</p>
+	<ul>
+		<li><a href="stage.html?s=11-73">ねこのなつやすみ パラダイス</a></li>
+		<li><a href="stage.html?s=1-407">豪遊リゾートランド</a></li>
+		<li><a href="stage.html?s=1-408">サウナスパで極楽</a></li>
 	</ul>
 	<h2>日本白金週活動</h2>
 	<p>通常於9月/10月開始</p>
@@ -1001,7 +1035,7 @@
 		<li><a href="stage.html?s=1-174">文化祭美食戰爭</a></li>
 	</ul>
 	<h2>熱血運動會</h2>
-	<p>日版通常於10月開始，台版於通常於12月開始</p>
+	<p>日版通常於10月開始，其他版本通常於12月開始</p>
 	<ul>
 		<li><a href="stage.html?s=1-260">熱血！滾大球比賽</a></li>
 		<li><a href="stage.html?s=1-261">熱血！障礙物競走</a></li>
@@ -1018,16 +1052,38 @@
 		<li><a href="stage.html?s=1-364">第三晚 聖誕禮物二次投遞</a></li>
 	</ul>
 
-	<h2>排行賽會議</h2>
+	<h2>排行賽會場</h2>
 
 	<table>
 		<ul>
-			<li><a href="stage.html?s=7-20">排行賽會場【外傳】 - 紅天使大會</a></li>
-			<li><a href="stage.html?s=7-21">排行賽會場【外傳】 - 黑星人大會</a></li>
-			<li><a href="stage.html?s=7-22">排行賽會場【外傳】 - 不死鳥大會</a></li>
-			<li><a href="stage.html?s=7-11">排行賽會場 - 吸血伯爵大賽</a></li>
-			<li><a href="stage.html?s=7-12">排行賽會場 - 天空舞蹈大賽</a></li>
-			<li><a href="stage.html?s=7-13">排行賽會場 - 宇宙亡者大賽</a></li>
+			<li><a href="stage.html?s=7-11">排行賽會場（吸血伯爵大賽）</a></li>
+			<li><a href="stage.html?s=7-12">排行賽會場（天空舞蹈大賽）</a></li>
+			<li><a href="stage.html?s=7-13">排行賽會場（宇宙亡者大賽）</a></li>
+			<li><a href="stage.html?s=7-0">排行賽會場（紅天使大會）</a></li>
+			<li><a href="stage.html?s=7-1">排行賽會場（黑星人大會）</a></li>
+			<li><a href="stage.html?s=7-2">排行賽會場（不死鳥大會）</a></li>
+			<li><a href="stage.html?s=7-20">排行賽會場【外傳】（紅天使大會）</a></li>
+			<li><a href="stage.html?s=7-21">排行賽會場【外傳】（黑星人大會）</a></li>
+			<li><a href="stage.html?s=7-22">排行賽會場【外傳】（不死鳥大會）</a></li>
+			<li><a href="stage.html?s=7-26">超排行賽會場（小心射程大會）</a></li>
+			<li><a href="stage.html?s=7-28">超排行賽會場（小心波動大會）</a></li>
+			<li><a href="stage.html?s=7-34">超排行賽會場（小心停止大會）</a></li>
+			<li><a href="stage.html?s=7-30">極排行賽會場（鬥爭本能大會）【攻擊力下降】</a></li>
+			<li><a href="stage.html?s=7-32">極排行賽會場（鬥爭本能大會）【打飛敵人】</a></li>
+			<li><a href="stage.html?s=7-35">極排行賽會場（鬥爭本能大會）【善於攻擊】</a></li>
+			<li><a href="stage.html?s=7-36">極排行賽會場（鬥爭本能大會）【使動作停止】</a></li>
+			<li><a href="stage.html?s=7-38">極排行賽會場（鬥爭本能大會）【超大傷害】</a></li>
+			<li><a href="stage.html?s=7-40">極排行賽會場（鬥爭本能大會）【使動作變慢】</a></li>
+			<li><a href="stage.html?s=7-41">極排行賽會場（鬥爭本能大會）【打飛敵人】</a></li>
+		</ul>
+		<p>極排行賽會場（鬥爭本能大會）結算階段根據玩家的排名區間獎勵不同階級的神秘寶箱，打開後可獲得以下本能珠珠的隨機一種</p>
+		<ul>
+			<li>1次烈波反擊、生產成本折扣、全攻擊無效、縮短生產時間</li>
+			<li>打倒敵人攻擊力上升、得到很多金錢（限一次）</li>
+			<li>遺留小烈波、金錢回饋、貓咪砲充電</li>
+			<li>抗波耐性、抗飛耐性、抗毒擊耐性、動慢耐性、抗古代詛咒耐性、動止耐性、抗擊耐性、抗烈波耐性、爆波傷害耐性</li>
+			<li>傳奇故事強化、真傳奇故事強化</li>
+			<li>超生命體特效</li>
 		</ul>
 	</table>
 

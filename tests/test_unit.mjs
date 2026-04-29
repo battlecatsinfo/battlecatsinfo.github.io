@@ -616,10 +616,8 @@ describe('unit.mjs', function () {
 
 			it('basic', async function () {
 				var cat = await Unit.loadCat(0);
-				assert.strictEqual(cat.obtn, '遊戲開始時最初始的貓咪');
-
-				var cat = await Unit.loadCat(1);
-				assert.strictEqual(cat.obtn, '世界篇第1章「台灣」過關後開放');
+				assert.strictEqual(cat.obtn[0], '遊戲開始時最初始的貓咪');
+				assert.strictEqual(cat.obtn[1][0], 12);
 			});
 
 		});
@@ -628,37 +626,14 @@ describe('unit.mjs', function () {
 
 			it('basic', async function () {
 				var cat = await Unit.loadCat(0);
-				assert.strictEqual(cat.evol, '合計Lv30可進化（Lv. 10 + 20）');
+				assert.strictEqual(cat.evol, '合計Lv30可進化');
 
 				var cat = await Unit.loadCat(200);
-				assert.strictEqual(cat.evol, '尚未開放');
+				assert.strictEqual(cat.evol, 5);
 			});
 
 		});
 
-		describe('Cat.obtnStage', function () {
-
-			it('basic', async function () {
-				var cat = await Unit.loadCat(0);
-				assert.isUndefined(cat.obtnStage);
-
-				var cat = await Unit.loadCat(60);
-				assert.deepEqual(cat.obtnStage, [10, 19, 0]);
-			});
-
-		});
-
-		describe('Cat.evolStage', function () {
-
-			it('basic', async function () {
-				var cat = await Unit.loadCat(0);
-				assert.isUndefined(cat.evolStage);
-
-				var cat = await Unit.loadCat(60);
-				assert.deepEqual(cat.evolStage, [1, 172, 1]);
-			});
-
-		});
 
 		describe('Cat.evolReq', function () {
 
@@ -3055,6 +3030,21 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('CatForm.knockbackProb', function () {
+
+			it('basic', async function () {
+				var cf = (await Unit.loadCat(0)).forms[2];
+				assert.strictEqual(cf.knockbackProb, 0);
+
+				var cf = (await Unit.loadCat(51)).forms[0];
+				assert.strictEqual(cf.knockbackProb, 30);
+
+				var cf = (await Unit.loadCat(239)).forms[2];
+				assert.strictEqual(cf.knockbackProb, 100);
+			});
+
+		});
+
 		describe('CatForm.weakTime', function () {
 
 			it('basic', async function () {
@@ -3838,6 +3828,13 @@ describe('unit.mjs', function () {
 				var cf = (await Unit.loadCat(543)).forms[0];
 				var spy = sinon.spy(cf, 'curseCover', ['get']);
 				assert.strictEqual(cf.__curse_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
+			});
+
+			it('knockback_prob', async function () {
+				var cf = (await Unit.loadCat(239)).forms[2];
+				var spy = sinon.spy(cf, 'knockbackProb', ['get']);
+				assert.strictEqual(cf.__knockback_prob(), spy.get.returnValues[0]);
 				assert(spy.get.calledOnceWith());
 			});
 
@@ -4812,6 +4809,21 @@ describe('unit.mjs', function () {
 
 		});
 
+		describe('Enemy.knockbackProb', function () {
+
+			it('basic', async function () {
+				var enemy = await Unit.loadEnemy(0);
+				assert.strictEqual(enemy.knockbackProb, 0);
+
+				var enemy = await Unit.loadEnemy(125);
+				assert.strictEqual(enemy.knockbackProb, 15);
+
+				var enemy = await Unit.loadEnemy(182);
+				assert.strictEqual(enemy.knockbackProb, 20);
+			});
+
+		});
+
 		describe('Enemy.weakTime', function () {
 
 			it('basic', async function () {
@@ -5352,6 +5364,13 @@ describe('unit.mjs', function () {
 				var enemy = await Unit.loadEnemy(407);
 				var spy = sinon.spy(enemy, 'curseCover', ['get']);
 				assert.strictEqual(enemy.__curse_cover(), spy.get.returnValues[0]);
+				assert(spy.get.calledOnceWith());
+			});
+
+			it('knockback_prob', async function () {
+				var enemy = await Unit.loadEnemy(125);
+				var spy = sinon.spy(enemy, 'knockbackProb', ['get']);
+				assert.strictEqual(enemy.__knockback_prob(), spy.get.returnValues[0]);
 				assert(spy.get.calledOnceWith());
 			});
 

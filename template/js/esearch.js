@@ -37,13 +37,13 @@ document.getElementById('per_page').oninput = function setRange(e) {
 };
 
 function filterByNameOrId(results) {
-	const key = name_search.value.trim();
+	const key = name_search.value.toLowerCase().trim();
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
 	return results.filter(result => {
 		const f = result[1];
-		return (f.id === qid) || f.name.includes(key) || f.jp_name.includes(key);
+		return (f.id === qid) || f.name.toLowerCase().includes(key) || f.jp_name.toLowerCase().includes(key);
 	});
 }
 

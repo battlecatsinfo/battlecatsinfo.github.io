@@ -337,10 +337,7 @@ function initUI() {
 				[0, 1, 2, 3, 4, 5, /* 戰鬥道具 */ 55, 56, 57 /*貓力達*/ ],
 				[22, 6, 105, 157, 20, 21, 155, 156], // 罐頭、金券
 				[
-					203, /* 傳說的捕蟲網 */
 					202, /* 傳說的聖水 */
-					185, /* 傳說的金元寶 */
-					200, /* 傳說的情書 */
 					163, /* 9週年 */
 					178, /* 10週年 */
 					198, /* 11週年 */
@@ -349,6 +346,14 @@ function initUI() {
 					162, /* 伝説のにんじん（傳說中的胡蘿蔔）*/
 					204, /* 傳說中的捕魚網 */
 					205, /* 聖魔大戰巧克力 */
+					208,
+					212,
+					213,
+					214,
+					215,
+					226,
+					221,
+					231, /* 日13週年活動 */
 				], // 活動券
 				[50, 51, 52, 53, 54, 58], // 貓眼石
 				[30, 31, 32, 33, 34, /* 5 種子 */ 41 /* 古種 */ , 43 /* 虹種 */ , 160 /* 惡種 */ , 164 /* 金種 */ ],
@@ -359,24 +364,25 @@ function initUI() {
 				//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
 			];
 			const images = [
-				['4rrfKiE', 66, 65, '速攻不可', search_guard],
-				['JWSKik7', 80, 80, '掃盪不可', search_gold],
-				['Rfuh0jk', 64, 64, '惡魔塔', search_enemy, 'fy'],
-				['BMGIONq', 64, 64, '損毀的波動塔', search_enemy, '8o'],
-				['Z2DvobY', 64, 64, '波動塔', search_enemy, '8r'],
-				['osLQ4tt', 64, 64, '詛咒塔', search_enemy, 'ei'],
-				['aE0Z02o', 64, 64, '烈波塔', search_enemy, 'ek']
+				[66, 65, '速攻不可', search_guard],
+				[80, 80, '掃盪不可', search_gold],
+				[64, 64, '惡魔塔', search_enemy, 'fy'],
+				[64, 64, '損毀的波動塔', search_enemy, '8o'],
+				[64, 64, '波動塔', search_enemy, '8r'],
+				[64, 64, '詛咒塔', search_enemy, 'ei'],
+				[64, 64, '烈波塔', search_enemy, 'ek']
 			];
 			const div = filter_page.appendChild(document.createElement('div'));
 			div.classList.add('V');
-			for (const i of images) {
-				const img = div.appendChild(new Image(i[1], i[2]));
+			for (const i in images) {
+				const elem = images[i];
+				const img = div.appendChild(new Image(elem[0], elem[1]));
 				img.loading = 'lazy';
 				img.classList.add('S');
-				img.src = `https://i.imgur.com/${i[0]}.png`;
-				img.title = i[3];
-				img.onclick = i[4];
-				img.i = i[5];
+				img.src = `/img/i/o/s${i}.png`;
+				img.title = elem[2];
+				img.onclick = elem[3];
+				img.elem = elem[4];
 			}
 			for (let i = 0, I = items.length; i < I; i++) {
 				const list = items[i];
@@ -1008,7 +1014,7 @@ async function render_stage() {
 					for (let i = 0;i < tech.length;++i) {
 						const tr = tbody.appendChild(document.createElement('tr'));
 						const img = new Image(128, 128);
-						img.src = `https://i.imgur.com/${stage_extra.techLinks[i]}.png`;
+						img.src = `/img/i/o/tech${i}.png`;
 						img.classList.add('fixedln-img');
 						tr.appendChild(document.createElement('td')).appendChild(img);
 						tr.appendChild(document.createElement('td')).textContent = stage_extra.techNames[i];
@@ -1152,7 +1158,7 @@ async function render_stage() {
 	}
 
 	st2[5].textContent = info3.bg;
-	st2[3].textContent = info3.minSpawn + 'F';
+	st2[3].textContent = info3.len;
 	if (info2.limit) {
 		const limits = info2.limit.map(x => new Limit(x));
 		const theStar = star - 1;

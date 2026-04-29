@@ -1,6 +1,6 @@
 import {loadScheme, config} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
-const {limited_cats} = await loadScheme('units', ['limited_cats']);
+const {limited_cats, cat_guide_ids} = await loadScheme('units', ['limited_cats', 'cat_guide_ids']);
 
 var cats;
 var tooltip;
@@ -16,6 +16,7 @@ const not_e = document.getElementById('not-f');
 const fav_only = document.getElementById('fav-only');
 const ex_only = document.getElementById('ex-only');
 let fav_setting = false;
+let last_rarity = null;
 
 function onClick(event) {
 	const t = event.currentTarget;
@@ -42,7 +43,10 @@ function onClick(event) {
 	}
 }
 
-function add_unit(c) {
+function add_unit(c, gap=true) {
+	if (gap && last_rarity !== c.rarity && last_rarity !== null)
+		cats_e.appendChild(document.createElement('p'));
+	last_rarity = c.rarity;
 	const img = new Image(104, 79);
 	const a = document.createElement('a');
 	img.loading = 'lazy';
@@ -91,12 +95,14 @@ loadAllCats().then(_cs => {
 			TF.applyAllTalents();
 		}
 	}
+	cat_guide_ids.map(i => cats[i]).forEach(add_unit);
 });
 const rarity = document.getElementById('rarity');
 const trait = document.getElementById('trait-f');
 const G0 = document.getElementById('G0');
 const G1 = document.getElementById('G1');
 const G2 = document.getElementById('G2');
+const displayOrder = document.getElementById('display-order');
 
 function filter() {
 	undo.length = 0;
@@ -283,18 +289,28 @@ function filter() {
 				results.delete(x);
 
 	cats_e.textContent = '';
+	last_rarity = null;
 	if (!results.size) {
 		not_e.style.display = 'block';
 		return;
 	}
 
-	let sorted = new Array(results.size);
-	i = 0;
-	for (const x of results)
-		sorted[i++] = cats[x];
-	sorted.sort((x, y) => {
-		x.rarity - y.rarity
-	});
+	if (displayOrder.classList.contains('selected')) {
+		let sorted = new Array(results.size);
+		i = 0;
+		for (const x of results)
+			sorted[i++] = cats[x];
+		sorted.sort((x, y) => {
+			x.rarity - y.rarity
+		});
+		sorted.forEach(x => add_unit(x, false));
+		return;
+	}
+	let sorted = [];
+	for (const id of cat_guide_ids) {
+		if (results.has(id))
+			sorted.push(cats[id]);
+	}
 	sorted.forEach(add_unit);
 }
 
@@ -317,6 +333,7 @@ function clearAll(event) {
 		for (let n of Array.from(x.getElementsByClassName('selected')))
 			n.classList.remove('selected');
 	cats_e.textContent = '';
+	last_rarity = null;
 	cats.map(add_unit);
 }
 document.onclick = function(event) {
@@ -340,11 +357,20 @@ for (let C of main.getElementsByClassName('C'))
 	C.onclick = ot;
 for (let B of main.querySelectorAll('.M button')) {
 	if (!B.value) continue;
-	B.onclick = function() {
+	B.addEventListener('click', function() {
 		this.classList.toggle('selected');
 		undo.push(this);
-	}
+	});
 }
+
+function toggleSelected() {
+	this.classList.toggle('selected');
+}
+
+ex_only.addEventListener('click', toggleSelected);
+fav_only.addEventListener('click', toggleSelected);
+displayOrder.addEventListener('click', toggleSelected);
+
 ab_e[0].onclick = trait.previousElementSibling.onclick = function() {
 	if (this.src.endsWith('or.png'))
 		this.src = 'and.png';
@@ -362,6 +388,7 @@ document.getElementById('search-name').onclick = function(event) {
 			break;
 		}
 	cats_e.textContent = '';
+	last_rarity = null;
 	if (!q) return;
 	let digit = q.length >= 1;
 	for (const c of q) {
@@ -370,13 +397,13 @@ document.getElementById('search-name').onclick = function(event) {
 	}
 	if (digit) {
 		const x = cats[parseInt(q)];
-		x && (found = true, add_unit(x));
+		x && (found = true, add_unit(x, false));
 	}
 	for (let i = 0; i < cats.length; ++i) {
 		const c = cats[i];
 		for (let f of c.forms) {
 			if (f.name.includes(q) || f.jp_name.includes(q)) {
-				add_unit(c);
+				add_unit(c, false);
 				found = true;
 				break;
 			}

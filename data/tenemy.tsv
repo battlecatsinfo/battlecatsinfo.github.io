@@ -40,9 +40,9 @@ jp	tw	en	kr
 殺意のわんこ	殺意狗	Doge Dark	살의의 멍뭉이
 メタルカバちゃん	鋼鐵河馬將	Metal Hippoe	메탈 하마양
 エリザベス2世	伊麗莎白2世	St. Pigge the 2nd	엘리자베스 2세
-赤井ブン太郎	赤井噴太郎	J.K Bun Bun	셰익스피망
+赤井ブン太郎	赤井噴太郎	J.K. Bun Bun	셰익스피망
 ブラックブンブン	黑色噴噴	Bun Bun Black	블랙 맴매
-ブラッゴリ	黑猩猩	Gory Black	블랙 고릴라저씨
+ブラッゴリ	黑猩猩	Gory Dark	블랙 고릴라저씨
 シャドウボクサー	影子拳擊手	Shadow Boxer K	쉐도우 복서
 クロサワ監督	黑澤導演	Director Kurosawah	쿠로사와 감독
 超メタルカバちゃん	超級鋼鐵河馬將	Super Metal Hippoe	슈퍼 메탈 하마양
@@ -57,7 +57,7 @@ jp	tw	en	kr
 福の神	福神	Lucky Sloth	오컬트늘보보
 クマトーク	熊熊敢死隊	Bears Be Bare	곰 다섯마리
 ホワイトサイクロン	白色旋風	White Cyclone	화이트 사이클론
-ブラックサイクロン	黑色旋風	Black Cyclone	블랙 사이클론
+ブラックサイクロン	黑色旋風	Dark Cyclone	블랙 사이클론
 メタルサイクロン	鋼鐵旋風	Metal Cyclone	메탈 사이클론
 狂乱のネコ	狂亂貓	Crazed Cat	광란의 고양이
 狂乱のタンクネコ	狂亂坦克貓	Crazed Tank Cat	광란의 탱크 고양이
@@ -129,7 +129,7 @@ Hyper Mr.	Hyper Mr.	Hyper Mr.	Hyper Mr.
 工房マンボウ	工房曼波魚	Young Man Mola	젊은이 개복치
 マンボ王	曼波魚王	Mola King	개복치 왕
 ハマンボ崎あゆみ	歌后曼波魚崎A・Y・U	Ayumi Manbosaki	미스 개복치
-カニ	螃蟹	Crab	게
+タスマニアオオガニ	巨大擬濱蟹	Tasmanian Giant Crab	태즈메이니아 대게
 イワシ	沙丁魚	Sardine	정어리
 イカ	烏賊	Squid	오징어
 マーチン	快閃無尾熊	Marching Kory	마치알라
@@ -159,7 +159,7 @@ Hyper Mr.	Hyper Mr.	Hyper Mr.	Hyper Mr.
 サイバーX	CyberX	Cyberhorn	사이버 X
 プドール夫人	異星貴賓	Mistress Celeboodle	푸들 귀부인
 教授	豪豬教授	Professor A.	교수님
-1億DL記念ケーキわんこ			
+1億1111万DL記念ケーキわんこ	1億1111萬下載紀念蛋糕狗仔	111M DL Anniv. Doge Cake	1억 1111만 DL 기념 케이크 멍뭉이
 マーズピープル	火星人	MARS PEOPLE	마즈 피플
 モーデン元帥	惡魔化身・莫丁	DONALD MORDEN	모덴 원수
 アレン・オニール	艾倫‧歐尼爾	ALLEN O'NEIL	알렌 오닐
@@ -313,6 +313,10 @@ SV-001	SV-001	SV-001	SV-001
 ウルトラメェメェ	激動咩咩	UltraBaaBaa	울트라 메에메에
 合格野郎	及格野郎	Pigge Victorious	합격돼지
 だっふんと機関銃	臘腸狗與機關槍	Bang-Bang	핫도그와 기관총
+第４の使徒	第4使徒	The 4th Angel	제4사도
+第６の使徒	第6使徒	The 6th Angel	제6사도
+第９の使徒	第9使徒	The 9th Angel	제9사도
+第１０の使徒	第10使徒	The 10th Angel	제10사도
 狂乱のもねこ	狂亂萌貓	Crazed Moneko	광란의 귀여미
 狂乱のスターもねこ	狂亂偶像萌貓	Corrupted Moneko	광란의 스타 귀여미
 ペンライトなヤツ	螢光棒幫	Glowstick Guys	야광봉 놈놈놈
@@ -360,12 +364,21 @@ SV-001	SV-001	SV-001	SV-001
 ヘッドロココ			
 グミネコ	軟糖貓	Gummy Cat	젤리 고양이
 カノとソウマ	佳乃與蒼真	Kano ＆ Souma	카노와 소우마
+エヴァ第１３号機 疑似シン化	EVA第13號機 疑似進化	Unit-13's False Evolution	에바 13호기 유사신화
 チキランラン	不死小雞	Zuche	치킨랄라
 スリラーズ	驚悚幫	The Thrillerz	스릴러즈
 フグ太くん	河潤豚	Mr. Puffington	복어양
 ちびケーキわんこ	小蛋糕狗仔	Li'l Cake Doge	꼬마 케이크 멍뭉이
 超新星テッサー	超新星鐵砲	Puffsley's Comet	초신성 텟사
-阿亀我王	阿龜我王	Black Okame	오카메왕
+リュウ	隆	Ryu	류
+春麗	春麗	Chun-Li	춘리
+ガイル	蓋爾	Guile	가일
+ザンギエフ	桑吉爾夫	Zangief	장기에프
+ブランカ	布蘭卡	Blanka	블랑카
+ダルシム	塔爾錫	Dhalsim	달심
+ケン	肯	Ken	켄
+豪鬼	豪鬼	Akuma	고우키
+阿亀我王	阿龜我王	Masked Okame	오카메왕
 聖者ポプウ	聖者波普	Heavenly Herald Papuu	성자 뚱땡이
 太古の蜜江	太古蜜江	Queen Mother V	태고의 왕비
 かわわっぱJr.	妖怪河童Jr.	Kappy Jr.	가아아파Jr.
@@ -390,6 +403,11 @@ SV-001	SV-001	SV-001	SV-001
 デッカーバチャン	巨大河馬星人	Super Hyppoh	빅 하앜마양
 イディ:Re	異弟:Re	Idi:Re	이디:Re
 テバムラサキホネツバメ	紫骨不死燕	Zollow	좀비 제비
+エドモンド本田	E. HONDA	E. Honda	E. Honda
+バイソン	拜森	Balrog	바이슨
+バルログ	巴洛克	Vega	발로그
+サガット	沙卡特	Sagat	사가트
+ベガ	貝卡	M. Bison	베가
 悪のネコ帝王	惡之貓帝王	Evil Emperor Cat	악의 고양이 제왕
 ウリボーイ	飛機頭豬	Bore Jr.	보이 보어
 チョコわんこ	巧克力狗仔	Chocolate Doge	초코 멍뭉이
@@ -420,7 +438,7 @@ SV-001	SV-001	SV-001	SV-001
 インキュベーター	孵化者	Incubator	인큐베이터
 風（白）	陣風（白色）	White Wind	바람 (하양)
 風（赤）	陣風（紅色）	Red Wind	바람 (빨강)
-風（黒）	陣風（黑色）	Black Wind	바람 (검정)
+風（黒）	陣風（黑色）	Dark Wind	바람 (검정)
 マデューさん	魚尾石惡魔	Medu-san	마두군
 シスターデビル	惡魔接待員	Miz Devil	미스터 데빌
 サタンカーメン8号	惡魔法老8號	Sathankhamun VIII	사탄 가면 8호
@@ -448,6 +466,8 @@ SV-001	SV-001	SV-001	SV-001
 超爆獣アリアント	超爆獸不死蟻	Formicidaean Ariant	초폭수 아리앤트
 大天使チビネル	大天使小海蝶	Great Angel Chibinel	대천사 꼬마넬
 ネコ神面のウララー	貓神面烏拉拉	Spiritual Yulala	고양이 가면신 우라라
+さくら	櫻	Sakura	카스가노 사쿠라
+ルーク	路克	Luke	루크
 超翼獣ピヨルーツ	超翼獸起源小雞	Cumulus Gallus	초익수 뼝아루츠
 超古獣マガモジョー	超古獸摩鴨喬	Ancient Magamojoe	초고대수 오리야크
 超猿獣ルーザ	超猿獸露薩	Great Ape Luza	초원수 루자
@@ -465,6 +485,7 @@ SV-001	SV-001	SV-001	SV-001
 大魔王ニャンダム	大魔王貓彈	Infernal Tyrant Nyandam	대마왕 야옹마
 大魔道士ミモーン	大魔導士迷魔	Grand Mage Mimon	대마도사 미몬
 赤髪のビューティムキにゃん	紅髮小雪貓	Redhead Yuki Cat	빨간 머리 불끈 고양이 유키
+エヴァ第１３号機	EVA第13號機	EVA Unit-13	에바 13호기
 聖天ゴクラッコ	聖天極破壞一族	Lutrinae Gokurakko	성천 두드리엘
 超暴獣イビルージョン	超爆獸恐暴約翰	Iguanidae Ibilujon	초공수 이블존
 超魚獣アンガブル	超魚獸不死燈魚	Lophiiformes Angaburu	초어수 아귀가블
@@ -482,9 +503,9 @@ SV-001	SV-001	SV-001	SV-001
 極悪なネコ島	極惡島貓	Malevolent Island Cat	극악의 고양이 섬
 極悪なネコキングドラゴン	極惡龍王貓	Malevolent King Dragon Cat	극악의 고양이 킹드래곤
 極悪なネコジャラミ	極惡賈拉米貓	Malevolent Jamiera Cat	극악의 고양이 쟈라미
-大王の化身			
-わんわん大王			
-ケーキわんこ			
+大王の化身		King's Mimic	대왕의 화신
+わんわん大王		King Doge	멍뭉 대왕
+ケーキわんこ		11th Anniv. Doge Cake	11주년 기념 케이크 멍뭉이
 ネコ神面のウリル	貓咪神面烏嚕哩	Esoteric Uril	고양이 가면신 우리르
 ソル・デ・ロカ	太陽神羅卡	SOL DAE ROKKER	솔 데 로카
 論の賢者ソラクティス	論之賢者蘇拉格底	Sage of Mind Soractes	논리의 현자 소라크테스
@@ -492,8 +513,8 @@ SV-001	SV-001	SV-001	SV-001
 天使メガミエル	天使眼鏡猴人	Tarsiriel	천사 글래시엘
 ドヴェルダーク	黑暗杜賓	Dark Dober	도베르 다크
 大型土器ダイハニワン	大型陶器埴輪巨犬	Gigahaniwan	그레이트 토용뭉이
-謎の厄災			
-操られしわんわん大王			
+謎の厄災		Mysterious Calamity	수수께끼의 재앙
+操られしわんわん大王		Possessed King Doge	조종당하는 멍뭉 대왕
 染香綺狐 ‧ 妲己	染香綺狐 ‧ 妲己	Voluptuous Peony - Daji	염향기호 다지
 瘋頭	瘋頭	Madhead	미친머리
 緋村剣心	緋村劍心	Kenshin Himura	히무라 켄신
@@ -520,13 +541,64 @@ SV-001	SV-001	SV-001	SV-001
 謎の雪山	神秘雪山	Mystery Snowmound	수수께끼의 설산
 ふくろう博士	眉毛角鴞博士	Prof. Owlbrowley	부엉이 박사
 超拳獣ブンナグリオス	超拳獸超派噴噴	Xenobeast Bunaglios	초권수 맴매테리우스
-シャチコ			
-ネコヴァルキリー・聖			
-覚醒のネコムート			
-チョコサプネコカプセル			
-殺意のキモネコ			
+シャチコ	遠古虎鯨	Shachiko	범자
+ネコヴァルキリー・聖	瓦爾基麗貓・聖	Holy Valkyrie Cat	고양이 발키리・성
+覚醒のネコムート	覺醒姆特貓	Awakened Bahamut Cat	각성의 고양이 무트
+チョコサプネコカプセル	巧克力驚奇蛋貓	Choco Capsule	초코서프 고양이 캡슐
+殺意のキモネコ	殺意噁心貓	Killer Gross Cat	살의의 징글 고양이
+ペリ艦長	培鴨艦長	Perry Duche	페리 함장
+テッポー	赤臉河豚	Puffzerker	텟포
+アンドロメ・ダ長官	仙女鴕鳥長	Commander Ostromeda	안드로메 타조
+範馬刃牙	範馬刃牙	Baki Hanma	한마 바키
+烈海王	烈海王	Retsu Kaioh	레츠 카이오
+花山薫	花山薰	Kaoru Hanayama	하나야마 카오루
+愚地克巳	愚地克巳	Katsumi Orochi	오로치 카츠미
+ジャック・ハンマー	傑克・範馬	Jack Hammer	잭 한마
+理の賢者ニュトーン	理之賢者扭頓	Sage of Logic Newton	이치의 현자 뉴톤
+ソニック	索尼克	Sonic	소닉
+テイルス	塔爾斯	Tails	테일즈
+ナックルズ	納克魯斯	Knuckles	너클즈
+シャドウ	夏特	Shadow	섀도우
+エンジェ・ルース	天使魯斯	Ange Lackey	엔제 루스
+南国わんこ	熱帶狗仔	South Seas Doge	남국 멍뭉이
+南国ラッコ	熱帶海獺	South Seas Otter	남국 두드리
+エヴァ量産機	EVA量產機	Mass Production EVA	에바 양산기
+ウィスキングマイスター	桑拿達人無尾熊	Whiskingmeister	사우나 마이스터
+大花火職人	大煙火職人	Fireworks Gang	대형 폭죽 장인
+ジャンボーグ鈴木	巨大生化魚鈴木	Jumbo Jones	대천사 개복치
+ダッフンデッド	拉腸不死狗	Deathshund	데스도그
+クロマジロ	漆黑犰狳	Darkmadillo	다크마딜로
+ネコ店長＆ネコ店員			
+キャミィ	倩咪	Cammy	캐미
+ジュリ	蛛俐	Juri	주리
+怪人わんこ			
+ワルザベス			
+ミセス・ペン			
+カオ男爵			
+ビッグカオ男爵			
+コワラッキョ夫人			
+ダイコワラッキョ夫人			
+極悪大帝ワルモーン			
+超極悪大帝ワルモーン			
+13周年記念ケーキわんこ			
+午わんこ	馬年狗仔	Horse Doge	말 멍뭉이
+累	累	Rui	루이
+魘夢	魘夢	Enmu	엔무
+猗窩座	猗窩座	Akaza	아카자
+鬼化わんこ	鬼化狗仔	Demon Doge	혈귀 멍뭉이
+鬼化ゴリさん	鬼化大猩猩	Demon Gory	혈귀 고릴라저씨
+鬼化クマ先生	鬼化熊熊老師	Demon Teacher Bear	혈귀 곰 선생
+アカンゾウ	臉紅澎湃	Le'Prude	압수다옹
+トリニティ	三頭鴕鳥	Poultrio	삼위일조
+殺意のウシネコノトリ	殺意牛鳥貓	Killer Cowbird Cat	살의의 황소 고양이 새
+金のカオル君	黃金臉君	The Golden Face	황금 대갈이군
+淘の賢者ダーヴィン	淘之賢者達而文	Sage of Selection Darvin	도태의 현자 다뷘
+にゃんこ村のネコ			
+操られしシルバーにゃんこ			
+操られしゴールドにゃんこ			
+魅惑の魔導士ヴィボーン			
 			
-	9週年紀念蛋糕狗仔		
-	9週年紀念木人樁城堡		
-		10th Anniv. Cake Doge	10주년 케이크 멍뭉이
-			10주년 목각 인형 성
+			
+			
+	龍年狗仔	Dragon Doge	용 멍뭉이
+		Jar Base	항아리 성

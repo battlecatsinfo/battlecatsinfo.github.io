@@ -6,7 +6,7 @@
 
 {{#*inline "og"}}
 	{{~> @partial-block}}
-	<meta property="og:image" content="https://i.imgur.com/F2yiAC3.png">
+	<meta property="og:image" content="/img/i/o/combos.png">
 {{/inline}}
 
 {{#*inline "styles-inline"}}
@@ -79,6 +79,9 @@
 				<p>{{combo.desc}}</p>
 				{{#if combo.requirement}}
 				<p style="font-size:smaller;">{{combo.requirement}}</p>
+				{{/if}}
+				{{#if combo.category}}
+				<p style="font-size:smaller;">{{combo.category}}</p>
 				{{/if}}
 			</td>
 			{{#each (range 5) as |idx|}}

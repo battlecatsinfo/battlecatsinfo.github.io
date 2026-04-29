@@ -116,8 +116,6 @@ function newTab() {
 	for (let i = 0, I = tby.length; i < I; i++) {
 		const tr = tby[i];
 		const t = document.createElement('td');
-		if (1 < i && i < I - 1)
-			t.contentEditable = true;
 		tr.appendChild(t);
 	}
 	return tby[0].children.length - 1;
@@ -182,10 +180,11 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 	let M = tby[9].children[I];
 	M.textContent = '';
 	createTraitIcons(F.trait, M);
+	let ab_no;
 
-	function W(m, c) {
+	function W(m) {
 		const u = new Image(40, 40);
-		u.src = 'https://i.imgur.com/' + c + '.png';
+		u.src = `/img/i/a/${ab_no}.png`;
 		const d = document.createElement('div');
 		d.appendChild(u);
 		d.append(m);
@@ -193,67 +192,67 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 	}
 	const has_treasure = F.trait & trait_treasure;
 	let du;
-	for (let [i, v] of Object.entries(F.ab)) {
-		switch (parseInt(i, 10)) {
+	for (const [i, v] of Object.entries(F.ab)) {
+		switch (ab_no = parseInt(i, 10)) {
 			case 1:
-				W(`體力 ${v[0]} % 以下攻擊力增加至 ${100 + v[1]} %`, "IE6ihRp");
+				W(`體力 ${v[0]} % 以下攻擊力增加至 ${100 + v[1]} %`);
 				break;
 			case 2:
-				W(`${v} % 死前存活`, "WcMDxXS");
+				W(`${v} % 死前存活`);
 				break;
 			case 3:
-				W(`對塔傷害 ${v[0]} % （${numStr(1 + v[0] / 100)}）`, "xIcbDzl");
+				W(`對塔傷害 ${v[0]} % （${numStr(1 + v[0] / 100)}）`);
 				break;
 			case 4:
-				W(`${v} % 會心一擊`, "FV6We1L");
+				W(`${v} % 會心一擊`);
 				break;
 			case 5:
-				W("終結不死", "ssOFAtR");
+				W("終結不死");
 				break;
 			case 6:
-				W("靈魂攻擊", "z3SPEqA");
+				W("靈魂攻擊");
 				break;
 			case 7:
-				W(`${v[0]} % 破壞護盾`, "LfRDAkg");
+				W(`${v[0]} % 破壞護盾`);
 				break;
 			case 8:
-				W(`${v[0]} % 破壞惡魔盾`, "6wjIaUE");
+				W(`${v[0]} % 破壞惡魔盾`);
 				break;
 			case 9:
-				W(`${v[0]} % 渾身一擊（至${100 + v[1]} %）`, "KDpH72p");
+				W(`${v[0]} % 渾身一擊（至${100 + v[1]} %）`);
 				break;
 			case 10:
-				W("得到很多金錢", "aeG7OM3");
+				W("得到很多金錢");
 				break;
 			case 11:
-				W("鋼鐵", "MzHKigD");
+				W("鋼鐵");
 				break;
 			case 12:
-				W(`${v[0]} % Lv${v[1]} 小波動`, "W18c1hw");
+				W(`${v[0]} % Lv${v[1]} 小波動`);
 				break;
 			case 13:
-				W(`${v[0]} % Lv${v[1]} 波動`, "ZbPqGoj");
+				W(`${v[0]} % Lv${v[1]} 波動`);
 				break;
 			case 14:
-				W(`${v[0]} % Lv${v[4]} 小烈波（${v[1]}～${v[2]}）`, "AEITK8t");
+				W(`${v[0]} % Lv${v[4]} 小烈波（${v[1]}～${v[2]}）`);
 				break;
 			case 15:
-				W(`${v[0]} % Lv${v[4]}烈波（${v[1]}～${v[2]}）`, "at4bW0n");
+				W(`${v[0]} % Lv${v[4]} 烈波（${v[1]}～${v[2]}）`);
 				break;
 			case 16:
-				W('波動滅止', "BH3LOrK");
+				W('波動滅止');
 				break;
 			case 17:
-				W("超生命體特效", "nGZanly");
+				W("超生命體特效");
 				break;
 			case 18:
-				W('超獸特效', "yCMsSbc");
+				W('超獸特效');
 				break;
 			case 19:
-				W('終結魔女', "ktlyJ15");
+				W('終結魔女');
 				break;
 			case 20:
-				W("終結使徒", "y5JJJnJ");
+				W("終結使徒");
 				break;
 			case 21:
 				if (has_treasure) {
@@ -265,7 +264,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				} else {
 					du = numStrT(v[2]);
 				}
-				W(`${v[0]} % 降攻 ${du}`, "yRkhAHL");
+				W(`${v[0]} % 降攻 ${du}`);
 				break;
 			case 22:
 				if (has_treasure) {
@@ -277,7 +276,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				} else {
 					du = numStrT(v[1]);
 				}
-				W(`${v[0]} % 暫停 ${du}`, 'i1pP3Mi');
+				W(`${v[0]} % 暫停 ${du}`);
 				break;
 			case 23:
 				if (has_treasure) {
@@ -289,31 +288,31 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				} else {
 					du = numStrT(v[1]);
 				}
-				W(`${v[0]} % 緩速 ${du}`, "MyoCUMu");
+				W(`${v[0]} % 緩速 ${du}`);
 				break;
 			case 24:
-				W("只能攻擊", "fe5k3Hw");
+				W("只能攻擊");
 				break;
 			case 25:
-				W('善於攻擊', 'dlZ8xNU');
+				W('善於攻擊');
 				break;
 			case 26:
-				W('很耐打', '4em8Hzg');
+				W('很耐打');
 				break;
 			case 27:
-				W('超耐打', 'ck2nA1D');
+				W('超耐打');
 				break;
 			case 28:
-				W(`超大傷害`, "RbqsryO");
+				W(`超大傷害`);
 				break;
 			case 29:
-				W('極度傷害', 'whTrzG1');
+				W('極度傷害');
 				break;
 			case 30:
-				W(v[0] + " % 打飛敵人", "cLZsanQ");
+				W(v[0] + " % 打飛敵人");
 				break;
 			case 31:
-				W(v[0] + " % 傳送敵人", "KkYm2Og");
+				W(v[0] + " % 傳送敵人");
 				break;
 			case 32:
 				if (has_treasure) {
@@ -325,7 +324,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				} else {
 					du = numStrT(v[1]);
 				}
-				W(`${v[0]} % 攻擊無效 ${du}`, "8Eq6vPV");
+				W(`${v[0]} % 攻擊無效 ${du}`);
 				break;
 			case 33:
 				if (has_treasure) {
@@ -337,31 +336,56 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				} else {
 					du = numStrT(v[1]);
 				}
-				W(`${v[0]} % 詛咒 ${du}`, "0Rraywl");
+				W(`${v[0]} % 詛咒 ${du}`);
 				break;
 			case 37:
-				W("一次攻擊", "VY93npj");
+				W("一次攻擊");
 				break;
 			case 40:
-				W('烈波反擊', 'tchDtAr');
+				W('烈波反擊');
 				break;
 			case 42:
-				W('超賢者特效', 'Qq8vQTs');
+				W('超賢者特效');
 				break;
 			case 43:
-				W(`召喚精靈 No. ${v}`, 'AJYPM6p');
+				W(`召喚精靈 No. ${v}`);
 				break;
 			case 44:
-				W(`鋼鐵殺手（-${v}%）`, '9vLOiAm');
+				W(`鋼鐵殺手（-${v}%）`);
 				break;
 			case 45:
-				W(`${v[0]} % 爆波（${v[1]}～${v[2]}）`, "4KshrNX");
+				W(`${v[0]} % 爆波（${v[1]}～${v[2]}）`);
+				break;
+			case 46:
+				W('怪人特效');
 				break;
 		}
 	}
 	F.res && createResIcons(F.res, M);
 	F.imu && createImuIcons(F.imu, M);
 	M.style.setProperty('text-align', 'left', 'important');
+}
+
+function showWarning(inputElement, message) {
+	let warningDiv = inputElement.parentElement.querySelector('.level-warning');
+	if (!warningDiv) {
+		warningDiv = document.createElement('div');
+		warningDiv.className = 'level-warning';
+		warningDiv.style.color = '#ff4444';
+		warningDiv.style.fontSize = '12px';
+		warningDiv.style.marginTop = '2px';
+		warningDiv.style.display = 'none';
+		inputElement.parentElement.appendChild(warningDiv);
+	}
+	warningDiv.textContent = message;
+	warningDiv.style.display = 'block';
+}
+
+function hideWarning(inputElement) {
+	const warningDiv = inputElement.parentElement.querySelector('.level-warning');
+	if (warningDiv) {
+		warningDiv.style.display = 'none';
+	}
 }
 
 function handleKW(event) {
@@ -397,7 +421,7 @@ function addCat(id, I, FC = 0) {
 				FL = 2;
 			}
 			const I = D.appendChild(new Image(40, 40));
-			I.src = 'https://i.imgur.com/' + units_scheme.talents.icons[G[i]] + '.png';
+			I.src = `/img/i/t/${G[i]}.png`;
 			D.append(units_scheme.talents.names[G[i]]);
 			M.appendChild(D);
 		}
@@ -407,53 +431,91 @@ function addCat(id, I, FC = 0) {
 	G.src = F.icon;
 	M.appendChild(G);
 	M.style.border = 'none';
-	const span = document.createElement('span');
+	const levelInput = document.createElement('input');
 	F.level = (FL === 2) ? 
 		60 : 
 		((FC === 3) ? 60 : 50);
-	span.textContent = (span.lv = F.level);
-	span.C = C;
-	span.F = F;
-	span.I = I;
-	span.contentEditable = true;
-	span.inputMode = 'numeric';
-	span.addEventListener('focus', handleFocus);
-	span.addEventListener('keydown', handleKW)
-	span.addEventListener('blur', function(e) {
-		let num = this.textContent.match(/\d+/);
-		if (num) {
-			num = parseInt(num[0], 10);
-			if (num) {
-				this.F.level = num;
-				num = this.F.level;
-				if (num != this.lv) {
-					let J = this.F;
-					if (this.X) {
-						J = J.clone();
-						if (this.X.checked) {
-							J.applyTalents();
-							if (num < 30)
-								alert('提醒：開放本能升級等級需求至少為 Lv30');
-						}
-						if (this.Y && this.Y.checked) {
-							J.applySuperTalents();
-							if (num < 60)
-								alert('提醒：開放超本能等級需求至少為 Lv60');
+	levelInput.type = 'number';
+	levelInput.min = '1';
+	levelInput.max = '130';
+	levelInput.value = F.level;
+	levelInput.lv = F.level;
+	levelInput.C = C;
+	levelInput.F = F;
+	levelInput.I = I;
+	levelInput.style.width = '60px';
+	levelInput.style.textAlign = 'center';
+	levelInput.style.border = '1px solid #ccc';
+	levelInput.style.borderRadius = '3px';
+	levelInput.style.padding = '2px';
+	levelInput.addEventListener('keydown', handleKW);
+	levelInput.addEventListener('input', function(e) {
+		let num = parseInt(this.value, 10);
+		if (num && num >= parseInt(this.min) && num <= parseInt(this.max)) {
+			this.F.level = num;
+			num = this.F.level;
+			if (num != this.lv) {
+				let J = this.F;
+				if (this.X) {
+					J = J.clone();
+					if (this.X.checked) {
+						J.applyTalents();
+						if (num < 30) {
+							showWarning(this, '提示：開放本能的等級需求為 Lv30');
+						} else {
+							hideWarning(this);
 						}
 					}
-					if (J.lvc == 3 && num < 60) {
-						alert('提醒：開放第四進化等級需求至少為 Lv60');
+					if (this.Y && this.Y.checked) {
+						J.applySuperTalents();
+						if (num < 60) {
+							showWarning(this, '提示：開放超本能的等級需求為 Lv60');
+						} else {
+							hideWarning(this);
+						}
 					}
-					this.lv = num;
-					setStat(this.C, J, this.I);
 				}
+				if (J.lvc == 3 && num < 60) {
+					showWarning(this, '提示：開放第四進化的等級需求為 Lv60');
+				} else if (J.lvc == 3) {
+					hideWarning(this);
+				}
+				this.lv = num;
+				setStat(this.C, J, this.I);
 			}
 		}
-		this.textContent = this.lv;
+	});
+	levelInput.addEventListener('blur', function(e) {
+		// Ensure value is within bounds and update display
+		let num = parseInt(this.value, 10);
+		let maxLv = parseInt(this.max);
+		let minLv = parseInt(this.min);
+		if (!num || num < minLv) {
+			this.value = minLv;
+			num = minLv;
+		} else if (num > maxLv) {
+			this.value = maxLv;
+			num = maxLv;
+		}
+		if (num != this.F.level) {
+			this.F.level = num;
+			this.lv = num;
+			let J = this.F;
+			if (this.X) {
+				J = J.clone();
+				if (this.X.checked) {
+					J.applyTalents();
+				}
+				if (this.Y && this.Y.checked) {
+					J.applySuperTalents();
+				}
+			}
+			setStat(this.C, J, this.I);
+		}
 	});
 	M = tby[1].children[I];
-	M.textContent = (F.name || F.jp_name) + ' Lv';
-	M.appendChild(span);
+	M.textContent = (F.name || F.jp_name) + ' Lv ';
+	M.appendChild(levelInput);
 	if (FL) {
 		F = F.clone();
 		F.applyTalents();
@@ -488,22 +550,31 @@ function addCat(id, I, FC = 0) {
 		G.checked = true;
 		G.id = 'T' + id + '-' + FC;
 		D.appendChild(G);
-		span.X = G;
+		levelInput.X = G;
 		G.onclick = function() {
-			const H = span.F.clone();
-			if (span.X.checked) {
-				if (span.lv < 30)
-					alert('提醒：開放本能升級等級需求至少為 Lv30');
+			const H = levelInput.F.clone();
+			if (levelInput.X.checked) {
+				if (levelInput.lv < 30) {
+					showWarning(levelInput, '提示：開放本能的等級需求為 Lv30');
+				} else {
+					hideWarning(levelInput);
+				}
 				H.applyTalents();
+			} else {
+				hideWarning(levelInput);
 			}
-			if (span.Y && span.Y.checked) {
-				if (span.lv < 60)
-					alert('提醒：開放超本能等級需求至少為 Lv60');
-				span.textContent = span.lv;
+			if (levelInput.Y && levelInput.Y.checked) {
+				if (levelInput.lv < 60) {
+					showWarning(levelInput, '提示：開放超本能的等級需求為 Lv60');
+				} else {
+					hideWarning(levelInput);
+				}
 				H.applySuperTalents();
+			} else if (!levelInput.X.checked) {
+				hideWarning(levelInput);
 			}
-			F.level = span.lv;
-			setStat(span.C, H, span.I);
+			F.level = levelInput.lv;
+			setStat(levelInput.C, H, levelInput.I);
 		}
 		G = document.createElement('label');
 		G.textContent = '本能';
@@ -511,26 +582,33 @@ function addCat(id, I, FC = 0) {
 		D.appendChild(G);
 		if (FL == 2) {
 			G = document.createElement('input');
-			span.Y = G;
+			levelInput.Y = G;
 			G.type = 'checkbox';
 			G.checked = true;
 			G.id = 'S' + id + '-' + FC;
 			D.appendChild(G);
 			G.onclick = function() {
-				const H = span.F.clone();
-				if (span.X.checked) {
-					if (span.lv < 30)
-						alert('提醒：開放本能升級等級需求至少為 Lv30');
+				const H = levelInput.F.clone();
+				if (levelInput.X.checked) {
+					if (levelInput.lv < 30) {
+						showWarning(levelInput, '提示：開放本能的等級需求為 Lv30');
+					} else {
+						hideWarning(levelInput);
+					}
 					H.applyTalents();
 				}
-				if (span.Y.checked) {
-					if (span.lv < 60)
-						alert('提醒：開放超本能等級需求至少為 Lv60');
-					span.textContent = span.lv;
+				if (levelInput.Y && levelInput.Y.checked) {
+					if (levelInput.lv < 60) {
+						showWarning(levelInput, '提示：開放超本能的等級需求為 Lv60');
+					} else {
+						hideWarning(levelInput);
+					}
 					H.applySuperTalents();
+				} else {
+					hideWarning(levelInput);
 				}
-				F.level = span.lv;
-				setStat(span.C, H, span.I);
+				F.level = levelInput.lv;
+				setStat(levelInput.C, H, levelInput.I);
 			}
 			G = document.createElement('label');
 			G.textContent = '超本能';

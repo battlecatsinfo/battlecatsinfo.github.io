@@ -311,7 +311,7 @@ function importImg() {
 }
 
 function importImgU() {
-	let url = prompt('圖片網址', 'https://i.imgur.com/h6hRnwn.png');
+	let url = prompt('圖片網址', '/img/i/o/icons.png');
 	if (url) {
 		img.src = url;
 		imgfile = url;
@@ -339,7 +339,7 @@ function importCut() {
 }
 
 function importCutU() {
-	let url = prompt('ImgCut網址', '');
+	let url = prompt('ImgCut網址', '/img/i/o/icons.imgcut');
 	if (url) {
 		fetch(url)
 			.then(res => res.text())

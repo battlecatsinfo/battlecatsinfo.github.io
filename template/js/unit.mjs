@@ -25,6 +25,7 @@ const TB_INFN = 4096;      // Dojo Base 道場塔 [UNOFFICIAL]
 const TB_BEAST = 8192;     // Behemoth 超獸
 const TB_BARON = 16384;    // Colossus 超生命體
 const TB_SAGE = 32768;     // Sage 超賢者
+const TB_WEIRDO = 65536;   // 怪人
 
 // Immunities
 const IMU_WAVE = 1;        // Immune to Wave 波動傷害無效
@@ -85,6 +86,8 @@ const AB_SAGE = 42;        // Sage Slayer 超賢者特效
 const AB_SUMMON = 43;      // Conjure(Summon) 召喚
 const AB_MK = 44;          // Metal Killer 鋼鐵殺手
 const AB_EXPLOSION = 45;   // Explosion 爆波
+const AB_WEIRDO = 46;      // 怪人特效
+const AB_DRAIN = 47;       // 延遲
 
 // Resist
 const RES_WEAK = 0;        // Resist to Weaken 抗擊耐性
@@ -99,14 +102,14 @@ const RES_WARP = 8;        // Resist Warp 抗傳耐性
 
 const TRAIT_ALL = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE
 								| TB_RELIC | TB_WHITE | TB_EVA | TB_WITCH | TB_DEMON
-								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE;
-const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE;
+								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE | TB_WEIRDO;
+const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE | TB_WEIRDO;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
 
-const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION]);
-const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE]);
+const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_WEIRDO]);
+const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_WEIRDO]);
 
 function combineChances(count, chance) {
 	let x = 1;
@@ -497,6 +500,9 @@ class Unit {
 	get ab() {
 		return this.info.ab;
 	}
+	get res() {
+		return this.info.res;
+	}
 
 	abEnabled(atkIdx) {
 		return this.abi & (1 << (2 - atkIdx));
@@ -547,7 +553,9 @@ class Unit {
 		if (filter instanceof Set) {
 			const ab = {};
 			for (const id of filter) {
-				ab[id] = this.ab[id];
+				if (this.ab.hasOwnProperty(id)) {
+					ab[id] = this.ab[id];
+				}
 			}
 			return ab;
 		}
@@ -777,6 +785,9 @@ class Unit {
 	get stopProb() {
 		return this.ab[AB_STOP]?.[0] ?? 0;
 	}
+	get knockbackProb() {
+		return this.ab[AB_KB]?.[0] ?? 0;
+	}
 	get weakTime() {
 		return this.ab[AB_WEAK]?.[2] ?? 0;
 	}
@@ -976,6 +987,9 @@ class Unit {
 	__stop_prob() {
 		return this.stopProb;
 	}
+	__knockback_prob() {
+		return this.knockbackProb;
+	}
 	__weak_time() {
 		return this.weakTime;
 	}
@@ -1068,6 +1082,9 @@ class CatForm extends Unit {
 	}
 	set tba(value) {
 		this.info.tba = value;
+
+		if (value <= 12)
+			this.info.atkType |= ATK_KB_REVENGE;
 	}
 	get attackF() {
 		return super.attackF;
@@ -1086,6 +1103,9 @@ class CatForm extends Unit {
 	}
 	set imu(value) {
 		this.info.imu = value;
+	}
+	get res() {
+		return super.res;
 	}
 	get ab() {
 		return super.ab;
@@ -1181,6 +1201,8 @@ class CatForm extends Unit {
 			hp /= 0.7;
 		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
 			hp /= 0.5;
+		} else if ((traits & TB_WEIRDO) && ab.hasOwnProperty(AB_WEIRDO)) {
+			hp /= 0.4;
 		}
 
 		if (traits & TRAIT_BASE)
@@ -1301,6 +1323,8 @@ class CatForm extends Unit {
 				atk *= 1.6;
 			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
 				atk *= 1.2;
+			} else if ((traits & TB_WEIRDO) && ab.hasOwnProperty(AB_WEIRDO)) {
+				atk *= 2.5;
 			}
 
 			if (ab.hasOwnProperty(AB_EKILL) && (traits & TB_EVA))
@@ -1715,6 +1739,9 @@ class CatForm extends Unit {
 				t = this.ab[AB_EXPLOSION];
 				this.ab[AB_EXPLOSION] = [inc1 + (t ? t[0] : 0), inc2 >> 2, (inc2 + inc3) >> 2];
 				break;
+			case 68:
+				this.ab[AB_COUNTER] = null;
+				break;
 		}
 	}
 
@@ -1737,7 +1764,6 @@ class CatForm extends Unit {
 	 */
 	_applyTalents(levels, type = null) {
 		levels ??= this.maxTalentLevels(type);
-		this.res ??= {};
 		const talents = this.talents;
 		let j = 0;
 		this.trait = this.trait | talents[0];
@@ -2101,7 +2127,7 @@ function createTraitIcons(trait, parent) {
 	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
 		if (!(trait & x)) { continue; }
 		const e = E.appendChild(new Image(40, 40));
-		e.src = 'https://i.imgur.com/' + units_scheme.traits.icons[i] + '.png';
+		e.src = `/img/i/e/${i}.png`;
 	}
 	parent.appendChild(E);
 }
@@ -2113,8 +2139,8 @@ function createImuIcons(imu, parent) {
 	for (let x = 1, i = 0; x <= 1024; x <<= 1, ++i) {
 		if (!(imu & x)) { continue; }
 		const e = p.appendChild(new Image(40, 40));
-		e.src = 'https://i.imgur.com/' + units_scheme.immunes.icons[i] + '.png';
-		names.push(units_scheme.immunes.names[i]);
+		e.src = `/img/i/m/${i}.png`;
+		names.push(units_scheme.immunes[i]);
 	}
 	const text = (names.length === 1) ? `${names.join('')}無效` : `無效（${names.join('、')}）`;
 	p.append(text);
@@ -2126,8 +2152,8 @@ function createResIcons(res, p) {
 		k = parseInt(k, 10);
 		const c = p.appendChild(document.createElement('div'));
 		const e = c.appendChild(new Image(40, 40));
-		e.src = 'https://i.imgur.com/' + units_scheme.resists.icons[k] + '.png';
-		c.append(units_scheme.resists.descs[k].replace('$', v));
+		e.src = `/img/i/r/${k}.png`;
+		c.append(units_scheme.resists[k].replace('$', v));
 	}
 }
 
@@ -2163,7 +2189,8 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 	parent.textContent = '';
 	const firstLine = plus_s + fmt(
-		catEnv._orbs.atk ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(), attackF
+		catEnv.getOthers(2).length ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(),
+		attackF
 	);
 	parent.append(firstLine);
 	let maxLen = firstLine.length;
@@ -2175,9 +2202,11 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 	for (const line of Cs) {
 		const filter = new Set(line);
+		// exclude impossible combinations
 		if (
 			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
-			(filter.has(AB_GOOD) || filter.has(AB_MASSIVE) || filter.has(AB_MASSIVES))
+			(filter.has(AB_GOOD) || filter.has(AB_MASSIVE) || filter.has(AB_MASSIVES)
+			|| filter.has(AB_BSTHUNT) || filter.has(AB_BAIL) || filter.has(AB_SAGE))
 		)
 			continue;
 
@@ -2231,9 +2260,11 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 
 	for (const line of Cs) {
 		const filter = new Set(line);
+		// exclude impossible combinations
 		if (
 			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
-			(filter.has(AB_GOOD) || filter.has(AB_RESIST) || filter.has(AB_RESISTS))
+			(filter.has(AB_GOOD) || filter.has(AB_RESIST) || filter.has(AB_RESISTS)
+			|| filter.has(AB_BSTHUNT) || filter.has(AB_BAIL) || filter.has(AB_SAGE))
 		)
 			continue;
 
@@ -2241,6 +2272,7 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 			(filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE)) > 1
 		)
 			continue;
+
 
 		let hp = numStr(floor(form.getthp({filter})) / KB);
 		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${hp}`;
@@ -2364,6 +2396,7 @@ export {
 	TB_BEAST,
 	TB_BARON,
 	TB_SAGE,
+	TB_WEIRDO,
 	TRAIT_ALL,
 	trait_no_treasure,
 	trait_treasure,
@@ -2413,6 +2446,8 @@ export {
 	AB_SUMMON,
 	AB_MK,
 	AB_EXPLOSION,
+	AB_WEIRDO,
+	AB_DRAIN,
 
 	RES_WEAK,
 	RES_STOP,

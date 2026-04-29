@@ -12,12 +12,7 @@ class IdbBase {
 
 		const stores = new Set(db.objectStoreNames);
 
-		// Selectively update object stores.
-		// e.g. `oldVersion < 1360008 || 1360010 < newVersion`
-		// if updates of 1360008-1360010 don't involve a change of cats.
-		// newVersion is checked to force an update in case we forget to update the
-		// code in a future version.
-		if (oldVersion < 1420000 || 1420010 < newVersion) {
+		if (oldVersion < DB_VERSION) {
 			if (stores.has("cats"))
 				db.deleteObjectStore("cats");
 			db.createObjectStore("cats", {keyPath: "i"});
@@ -371,7 +366,7 @@ class ConfigHandler {
 			localStorage.setItem('stagel', value);
 	}
 	get stagef() {
-		return localStorage.getItem('stagef') ?? 'F';
+		return localStorage.getItem('stagef') ?? 'f';
 	}
 	set stagef(value) {
 		if (value === null)

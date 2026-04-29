@@ -63,7 +63,7 @@ MH大狩猟チケット
 働きネコお財布	工作狂貓錢包	Worker Cat Wallet	일 고양이의 지갑
 お城体力	城堡體力	Base Defense	성 체력
 研究力	研究力	Research	연구력
-会計力	會計能力	Accountant	회계력
+会計力	會計能力	Bounty Up	회계력
 勉強力	學習力	Study	공부력
 統率力	統率力	Cat Energy	통솔력
 受取BOX用：ダミー1	貓咪隊員：未定1	Cat Ally: Dummy 1	냥코 대원:더미1
@@ -173,7 +173,7 @@ XP 5000	XP 5000	5000 XP	XP 5000
 シルバー勲章	白銀勳章	Silver Medal	실버 훈장
 ゴールド勲章	黃金勳章	Gold Medal	골드 훈장
 プラチナ勲章	白金勳章	Platinum Medal	플래티넘 훈장
-伝説のフリーパス		Legend Pass	전설의 프리패스
+伝説のフリーパス	傳說的入場券	Legend Pass	전설의 프리패스
 紫獣結晶	紫獸結晶	Purple B. Gem	자수석 결정
 紅獣結晶	紅獸結晶	Red B. Gem	홍수석 결정
 蒼獣結晶	蒼獸結晶	Blue B. Gem	청수석 결정
@@ -193,7 +193,7 @@ XP 5000	XP 5000	5000 XP	XP 5000
 伝説の聖水	傳說的聖水	Holy Water	전설의 성수
 伝説の虫取り網	傳說的捕蟲網	Legend Nets	전설의 벌레 채집망
 XP 1000000	XP 1000000	1000000 XP	XP 1000000
-伝説のちいさいメダル			
+伝説のちいさいメダル		Small Medal	전설의 작은 메달
 伝説の縁起物	傳說金元寶	Legendary Charm	전설의 복주머니
 伝説のラブレター	傳說的情書	Love Letter	전설의 러브레터
 経験値	經驗值	XP	경험치
@@ -202,7 +202,51 @@ XP 1000000	XP 1000000	1000000 XP	XP 1000000
 伝説の罠	傳說的陷阱	Legend Trap	전설의 트랩
 ビックリマンチョコ			
 伝説の魂	傳說的靈魂	Legendary Spirit	전설의 혼
-軍資金			
+軍資金	軍事資金	War Funds	
 伝説の縁起物			
-1億DL記念チケット			
-伝説のラブレター			
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+1億DL記念チケット	1億下載紀念轉蛋券	100M DL Celebration Ticket	1억 다운로드 기념 티켓
+伝説のラブレター	傳說的情書	Love Letter	전설의 러브레터
+伝説の買い物かご	傳說的購物籃	Legendary Basket	전설의 장바구니
+伝説のダンベル	傳說的啞鈴	Legendary Dumbbell	전설의 덤벨
+伝説の罠	傳說的陷阱	Legend Trap	전설의 트랩
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+伝説の札束	傳說的鈔票	Legendary Banknote	전설의 돈다발
+伝説のきらめき	傳說的亮晶晶	Legendary Starshine	전설의 반짝임
+XP2000	XP 2000	2000 XP	XP 2000
+XP25000	XP 25000	25000 XP	XP 25000
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+伝説の魂	傳說的靈魂	Legendary Spirit	전설의 혼
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+伝説の正義の心			
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+伝説の縁起物	傳說金元寶	Legendary Charm	전설의 복주머니
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+伝説のラブレター	傳說的情書	Love Letter	전설의 러브레터
+伝説のきらめき	傳說的亮晶晶	Legendary Starshine	전설의 반짝임
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+経費			
+伝説の正義の心			
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)
+ふしぎな宝箱【銅】	神秘寶箱【銅】	Treasure Chest (Bronze)	미스터리 보물상자 (브론즈)
+ふしぎな宝箱【銀】	神秘寶箱【銀】	Treasure Chest (Silver)	미스터리 보물상자 (실버)
+ふしぎな宝箱【金】	神秘寶箱【金】	Treasure Chest (Gold)	미스터리 보물상자 (골드)

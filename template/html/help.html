@@ -2,6 +2,10 @@
 
 {{#*inline "title"}}使用說明{{/inline}}
 
+{{#*inline "styles-inline"}}
+{{#> styles-inline}}<link rel="stylesheet" href="/gh-navbar.css">{{/styles-inline}}
+{{/inline}}
+
 {{#*inline "content"}}
 	<h2>篩選表達式、排序表達式</h2>
 	<p>如<code>1 + 1</code>、<code>2 * 3</code>等，是用來篩選和排序貓咪的運算式，類似數學的表達式，在程式語言裡通常稱作 <i>expression</i>。</p>
@@ -50,7 +54,7 @@
 			</tr>
 			<tr>
 				<td><code>hp</code></td>
-				<td>血量</td>
+				<td>體力</td>
 			</tr>
 			<tr>
 				<td><code>atk</code></td>
@@ -66,11 +70,11 @@
 			</tr>
 			<tr>
 				<td><code>attacks</code></td>
-				<td>攻擊頻率（單位為秒）</td>
+				<td>攻擊週期（單位為秒）</td>
 			</tr>
 			<tr>
 				<td><code>attackf</code></td>
-				<td>攻擊頻率（單位為F）</td>
+				<td>攻擊週期（單位為F）</td>
 			</tr>
 			<tr>
 				<td><code>dps</code></td>
@@ -130,7 +134,7 @@
 			</tr>
 			<tr>
 				<td><code>thp</code></td>
-				<td>加上最多可能的能力、效果的血量（不含對使徒、魔女）</td>
+				<td>加上最多可能的能力、效果的體力（不含對使徒、魔女）</td>
 			</tr>
 			<tr>
 				<td><code>tatk</code></td>
@@ -192,6 +196,10 @@
 			<tr>
 				<td><code>curse_prob</code></td>
 				<td>詛咒機率</td>
+			</tr>
+			<tr>
+				<td><code>knockback_prob</code></td>
+				<td>打飛敵人發動機率</td>
 			</tr>
 			<tr>
 				<td><code>weak_time</code></td>
@@ -691,6 +699,14 @@
 				<td>會心一擊</td>
 			</tr>
 			<tr>
+				<td><code>hasab(AB_S)</code></td>
+				<td>渾身一擊</td>
+			</tr>
+			<tr>
+				<td><code>hasab(MK)</code></td>
+				<td>鋼鐵殺手</td>
+			</tr>
+			<tr>
 				<td><code>hasab(AB_ZKILL)</code></td>
 				<td>終結不死</td>
 			</tr>
@@ -705,10 +721,6 @@
 			<tr>
 				<td><code>hasab(AB_SHIELDBREAK)</code></td>
 				<td>破壞惡魔盾</td>
-			</tr>
-			<tr>
-				<td><code>hasab(AB_S)</code></td>
-				<td>渾身一擊</td>
 			</tr>
 			<tr>
 				<td><code>hasab(AB_BOUNTY)</code></td>
@@ -735,6 +747,14 @@
 				<td>烈波攻擊</td>
 			</tr>
 			<tr>
+				<td><code>hasab(AB_DEATHSURGE)</code></td>
+				<td>遺留烈波</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_COUNTER)</code></td>
+				<td>烈波反擊</td>
+			</tr>
+			<tr>
 				<td><code>hasab(AB_EXPLOSION)</code></td>
 				<td>爆波攻擊</td>
 			</tr>
@@ -749,6 +769,10 @@
 			<tr>
 				<td><code>hasab(AB_BSTHUNT)</code></td>
 				<td>超獸特效</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_SAGE)</code></td>
+				<td>超賢者特效</td>
 			</tr>
 			<tr>
 				<td><code>hasab(AB_WKILL)</code></td>
@@ -775,8 +799,16 @@
 				<td>使動作變慢</td>
 			</tr>
 			<tr>
+				<td><code>hasab(AB_KB)</code></td>
+				<td>打飛</td>
+			</tr>
+			<tr>
 				<td><code>hasab(AB_CURSE)</code></td>
 				<td>詛咒</td>
+			</tr>
+			<tr>
+				<td><code>hasab(AB_IMUATK)</code></td>
+				<td>攻擊無效</td>
 			</tr>
 			<tr>
 				<td><code>hasab(AB_ONLY)</code></td>
@@ -803,12 +835,8 @@
 				<td>極度傷害</td>
 			</tr>
 			<tr>
-				<td><code>hasab(AB_KB)</code></td>
-				<td>打飛</td>
-			</tr>
-			<tr>
-				<td><code>hasab(AB_IMUATK)</code></td>
-				<td>攻擊無效</td>
+				<td><code>hasab(AB_SUMMON)</code></td>
+				<td>召喚</td>
 			</tr>
 			<tr>
 				<td><code>hasab(AB_POIATK)</code></td>
@@ -831,12 +859,8 @@
 				<td>惡魔盾</td>
 			</tr>
 			<tr>
-				<td><code>hasab(AB_DEATHSURGE)</code></td>
-				<td>遺留烈波</td>
-			</tr>
-			<tr>
-				<td><code>hasab(AB_COUNTER)</code></td>
-				<td>烈波反擊</td>
+				<td><code>hasab(AB_DRAIN)</code></td>
+				<td>延遲</td>
 			</tr>
 		</tbody>
 	</table>
@@ -873,7 +897,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<p>小知識： 如果想要知道是否有<img src="https://i.imgur.com/veNQ90x.png" loading="lazy">連續攻擊，可以用<code>pre1</code>(第二個前搖)，如果非零就是有二、三次連續攻擊</p>
+	<p>小知識： 如果想要知道是否有<img src="/img/i/o/5.png" loading="lazy">連續攻擊，可以用<code>pre1</code>(第二個前搖)，如果非零就是有二、三次連續攻擊</p>
 
 	<h3 id="rarity"><a class="anchor" href="#rarity"><span class="octicon octicon-link"></span></a>稀有度</h3>
 	<p>以下是可以和<code>rarity</code>（稀有度）變數一起使用的常數，如<code>rarity == 0</code>代表貓咪的稀有度是基本</p>
@@ -919,34 +943,39 @@
 			<tr>
 				<th>運算子</th>
 				<th>解釋</th>
-				<th>最先結合順序(最高1)</th>
+				<th>最先結合順序(最高6)</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
+				<td><code>**</code></td>
+				<td>指數</td>
+				<td>6</td>
+			</tr>
+			<tr>
 				<td><code>*</code></td>
 				<td>乘法</td>
-				<td>1</td>
+				<td>5</td>
 			</tr>
 			<tr>
 				<td><code>/</code></td>
 				<td>除法</td>
-				<td>1</td>
+				<td>5</td>
 			</tr>
 			<tr>
 				<td><code>%</code></td>
 				<td>取餘數</td>
-				<td>1</td>
+				<td>5</td>
 			</tr>
 			<tr>
 				<td><code>+</code></td>
 				<td>加法</td>
-				<td>2</td>
+				<td>4</td>
 			</tr>
 			<tr>
 				<td><code>-</code></td>
 				<td>減法</td>
-				<td>2</td>
+				<td>4</td>
 			</tr>
 			<tr>
 				<td><code>&gt;</code></td>
@@ -971,37 +1000,37 @@
 			<tr>
 				<td><code>==</code></td>
 				<td>等於</td>
-				<td>4</td>
+				<td>2</td>
 			</tr>
 			<tr>
 				<td><code>!=</code></td>
 				<td>不等於</td>
-				<td>4</td>
+				<td>2</td>
 			</tr>
 			<tr>
 				<td><code>&amp;</code></td>
 				<td>位元AND</td>
-				<td>4</td>
+				<td>2</td>
 			</tr>
 			<tr>
 				<td><code>|</code></td>
 				<td>位元OR</td>
-				<td>4</td>
+				<td>2</td>
 			</tr>
 			<tr>
 				<td><code>^</code></td>
 				<td>位元XOR</td>
-				<td>4</td>
+				<td>2</td>
 			</tr>
 			<tr>
 				<td><code>&amp;&amp;</code></td>
 				<td>邏輯AND</td>
-				<td>5</td>
+				<td>1</td>
 			</tr>
 			<tr>
 				<td><code>||</code></td>
 				<td>邏輯OR</td>
-				<td>5</td>
+				<td>1</td>
 			</tr>
 		</tbody>
 	</table>
@@ -1091,7 +1120,7 @@
 		</tbody>
 	</table>
 	<p><code>dpsagainst(METAL)</code> 比較特殊，它是計算對鋼鐵敵人造成的每秒傷害，所以沒有爆擊的機率會以1來計算(所以攻擊頻率高的貓有會有一點)，爆擊機率(含大傷、超傷、善攻)以雙倍計算，dps為兩者之和</p>
-	<p><code>hpagainst(攻擊對象)</code> 可以用在排序表達式上，用來表示對某攻擊對象的血量</p>
+	<p><code>hpagainst(攻擊對象)</code> 可以用在排序表達式上，用來表示對某攻擊對象的體力</p>
 	<table>
 		<thead>
 			<tr>
@@ -1102,67 +1131,67 @@
 		<tbody>
 			<tr>
 				<td><code>hpagainst(RED)</code></td>
-				<td>對紅色敵人血量</td>
+				<td>對紅色敵人體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(FLOAT)</code></td>
-				<td>對飄浮敵人血量</td>
+				<td>對飄浮敵人體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(BLACK)</code></td>
-				<td>對黑色敵人血量</td>
+				<td>對黑色敵人體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(METAL)</code></td>
-				<td>對鋼鐵敵人血量</td>
+				<td>對鋼鐵敵人體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(ANGEL)</code></td>
-				<td>對天使敵人血量</td>
+				<td>對天使敵人體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(ALIEN)</code></td>
-				<td>對異星戰士血量</td>
+				<td>對異星戰士體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(ZOMBIE)</code></td>
-				<td>對不死生物血量</td>
+				<td>對不死生物體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(WHITE)</code></td>
-				<td>對無屬性敵人血量</td>
+				<td>對無屬性敵人體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(RELIC)</code></td>
-				<td>對古代種血量</td>
+				<td>對古代種體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(DEMON)</code></td>
-				<td>對惡魔血量</td>
+				<td>對惡魔體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(BEAST)</code></td>
-				<td>對超獸血量</td>
+				<td>對超獸體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(INFN)</code></td>
-				<td>對道場塔血量</td>
+				<td>對道場塔體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(BARON)</code></td>
-				<td>對超生命體血量</td>
+				<td>對超生命體體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(EVA)</code></td>
-				<td>對使徒血量</td>
+				<td>對使徒體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(WITCH)</code></td>
-				<td>對魔女血量</td>
+				<td>對魔女體力</td>
 			</tr>
 			<tr>
 				<td><code>hpagainst(SAGE)</code></td>
-				<td>對超賢者血量</td>
+				<td>對超賢者體力</td>
 			</tr>
 		</tbody>
 	</table>

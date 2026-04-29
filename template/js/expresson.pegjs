@@ -96,6 +96,8 @@ const constants = {
 	ab_summon: 43,
 	ab_mk: 44,
 	ab_explosion: 45,
+	ab_weirdo: 46,
+	ab_drain: 47,
 
 	res_weak: 0,
 	res_stop: 1,
@@ -150,6 +152,7 @@ const known_identifiers = new Set([
 	"curse_time",
 	"curse_prob",
 	"curse_prob",
+	"knockback_prob",
 	"weak_time",
 	"weak_prob",
 	"weak_extent",
@@ -212,7 +215,13 @@ Term4
 			}, head);
 		}
 Term5
-	= head:Factor tail:(("*" / "/" / "%") Factor)* {
+	= head:Term6 tail:(("*" / "/" / "%") Term6)* {
+			return tail.reduce(function(result, element) {
+				return result + element[0] + element[1];
+			}, head);
+		}
+Term6
+	= head:Factor tail:(("**") Factor)* {
 			return tail.reduce(function(result, element) {
 				return result + element[0] + element[1];
 			}, head);

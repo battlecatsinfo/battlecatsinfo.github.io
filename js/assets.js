@@ -7,6 +7,7 @@ const sources = [
 	'w3.css',
 	'dracula.css',
 	'gh.css',
+	'gh-navbar.css',
 	'menu.css',
 
 	'index.html',
@@ -34,6 +35,7 @@ const sources = [
 	'rank.html',
 	'translator.html',
 	'stage_difficulty.html',
+	'enemy_stage_search.html',
 
 	'uni.png',
 	'favicon.ico',
@@ -62,7 +64,7 @@ const sources = [
 	"parser.js",
 	"esearch.js",
 	"search.js",
-	'cat_dict.js',
+	'cat_guide.js',
 	'settings.js',
 	'dom-to-image.min.js',
 	'compare.js',
@@ -79,6 +81,7 @@ const sources = [
 	'gif.worker.min.js',
 	'imgcut.js',
 	'stage.js',
+	'enemy_stage_search.js',
 	'anim.min.js',
 	'imgcut.js'
 ];

@@ -141,6 +141,8 @@ Handlebars.registerHelper('lookupRankReward', function (table, rank) {
 			return '貓罐頭';
 		if (rank.reward_id === '21')
 			return '稀有券';
+		if (rank.reward_id === '20')
+			return '貓咪券';
 
 		return Handlebars.Utils.escapeExpression(table.find(x => x.id === rank.reward_id).reward);
 	}
