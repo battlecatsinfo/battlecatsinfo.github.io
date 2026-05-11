@@ -2,6 +2,113 @@
 
 {{#*inline "title"}}貓咪大戰爭 關卡表{{/inline}}
 
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script>
+		document.querySelectorAll('.image-box').forEach(img => {
+			img.loading = 'lazy';
+		});
+
+		const imageModal = document.getElementById('imageModal');
+		const modalImage = document.getElementById('modalImage');
+		const closeBtn = document.querySelector('.image-modal-close');
+
+		document.querySelectorAll('.resource-image-box').forEach(img => {
+			img.addEventListener('click', () => {
+				modalImage.src = img.src;
+				modalImage.alt = img.alt;
+				imageModal.classList.add('active');
+			});
+		});
+
+		closeBtn.addEventListener('click', () => {
+			imageModal.classList.remove('active');
+		});
+
+		imageModal.addEventListener('click', (e) => {
+			if (e.target === imageModal) {
+				imageModal.classList.remove('active');
+			}
+		});
+	</script>
+{{/inline}}
+
+{{#*inline "styles-inline"}}
+	<style>
+		.image-box {
+			max-width: 90%;
+			max-height: 600px;
+			width: auto;
+			border-radius: 10px;
+			border: 2px solid var(--border-color);
+			margin: 20px auto;
+			display: block;
+			cursor: pointer;
+		}
+
+		.image-box:hover {
+			border-color: var(--secondary-color);
+			box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+		}
+
+		.image-modal {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.8);
+			z-index: 2000;
+			justify-content: center;
+			align-items: center;
+			padding: 20px;
+		}
+
+		.image-modal.active {
+			display: flex;
+		}
+
+		.image-modal-content {
+			position: relative;
+			max-width: 90vw;
+			max-height: 90vh;
+			overflow: auto;
+		}
+
+		.image-modal img {
+			max-width: 100%;
+			max-height: 100%;
+			border-radius: 10px;
+		}
+
+		.image-modal-close {
+			position: absolute;
+			top: -40px;
+			right: 0;
+			background: white;
+			border: none;
+			font-size: 32px;
+			color: var(--primary-color);
+			cursor: pointer;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.075s ease;
+		}
+
+		.image-modal-close:hover {
+			background: var(--secondary-color);
+			color: white;
+			transform: scale(1.1);
+		}
+
+	</style>
+{{/inline}}
+
 {{#*inline "content"}}
 	<div class="E">
 	<h3>參考資料：<a href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=20534">【情報】貓咪大戰爭本家常駐&非常駐活動日程</a></h3>
@@ -1093,7 +1200,13 @@
 		{{/each}}
 	</ul>
 	{{/each}}
+	</div>
 
+	<div class="image-modal" id="imageModal">
+		<div class="image-modal-content">
+			<button class="image-modal-close">&times;</button>
+			<img id="modalImage" src="" alt="">
+		</div>
 	</div>
 {{/inline}}
 
