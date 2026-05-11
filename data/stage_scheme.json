@@ -4,100 +4,119 @@
 			{
 				"name": "傳奇關卡",
 				"name_jp": "レジェンドストーリー",
+				"name_en": "Stories of Legend",
 				"group": 0
 			},
 			{
 				"name": "特別關卡",
 				"name_jp": "イベントステージ",
+				"name_en": "Special Stages",
 				"group": 1
 			},
 			{
 				"name": "期間限定合作關卡",
 				"name_jp": "コラボステージ",
+				"name_en": "Collaboration Stages",
 				"group": 2
 			},
 			{
 				"name": "主篇章",
-				"name_jp": "日本編",
+				"name_jp": "ストーリー",
+				"name_en": "Main Chapters",
 				"group": 3
 			},
 			{
 				"name": "EX關卡",
 				"name_jp": "EXステージ",
+				"name_en": "Continuation Stages",
 				"group": 4
 			},
 			{
 				"name": "貓咪道場關卡",
 				"name_jp": "ネコ道場",
+				"name_en": "Catclaw Dojo",
 				"group": 5,
 				"forbid_gold_cpu": true
 			},
 			{
 				"name": "貓咪塔",
-				"name_jp": "風雲にゃんこ塔",
+				"name_jp": "にゃんこ塔",
+				"name_en": "Towers",
 				"group": 6
 			},
 			{
 				"name": "排行關卡",
-				"name_jp": "ネコ道場ランキング",
+				"name_jp": "ネコ道場ランキングイベント",
+				"name_en": "Ranking Dojo",
 				"group": 7,
 				"forbid_gold_cpu": true
 			},
 			{
 				"name": "挑戰賽",
 				"name_jp": "チャレンジバトル",
+				"name_en": "Challenge Battle",
 				"group": 8,
 				"forbid_gold_cpu": true
 			},
 			{
 				"name": "真傳奇關卡",
 				"name_jp": "真レジェンドステージ",
+				"name_en": "Uncanny Legends",
 				"group": 9
 			},
 			{
 				"name": "喵力達專用關卡",
 				"name_jp": "ネコビタンステージ",
+				"name_en": "Catamin Stages",
 				"group": 10
 			},
 			{
 				"name": "強襲關卡",
 				"name_jp": "強襲ステージ",
+				"name_en": "Gauntlets",
 				"group": 11
 			},
 			{
 				"name": "發掘關卡",
 				"name_jp": "発掘ステージ",
+				"name_en": "Enigma Stages",
 				"group": 12
 			},
 			{
 				"name": "合作強襲",
 				"name_jp": "コラボ強襲ステージ",
+				"name_en": "Collaboration Gauntlets",
 				"group": 13
 			},
 			{
 				"name": "超獸討伐關卡",
 				"name_jp": "超獣研究ステージ",
+				"name_en": "Behemoth Culling Stages",
 				"group": 14
 			},
 			{
 				"name": "地底迷宮",
 				"name_jp": "地底迷宮",
+				"name_en": "Underground Labyrinth",
 				"group": 15,
 				"forbid_gold_cpu": true
 			},
 			{
 				"name": "傳奇故事0",
 				"name_jp": "レジェンドストーリー0",
+				"name_en": "Zero Legends",
 				"group": 16
 			},
 			{
 				"name": "異次元競技場",
 				"name_jp": "異次元コロシアム",
+				"name_en": "Otherworld Colosseum",
 				"group": 17
 			},
 			{
 				"name": "貓咪道檢定",
 				"name_jp": "にゃんこ道検定",
+				"name_en": "Catclaw Championships",
 				"group": 18
 			}
 		],
