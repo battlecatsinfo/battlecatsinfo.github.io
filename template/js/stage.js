@@ -1060,7 +1060,7 @@ async function render_stage() {
 		}
 	}
 	rewards.textContent = "";
-	if (info3.drop && (info1.dataset.map || M1.selectedIndex !== 3)) {
+	if (info3.drop) {
 		var drop_data = info3.drop;
 		var chances = getDropData(drop_data);
 		var once = true;
