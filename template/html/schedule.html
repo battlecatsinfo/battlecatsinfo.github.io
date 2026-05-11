@@ -35,19 +35,21 @@
 
 {{#*inline "styles-inline"}}
 	<style>
+		body { margin: 0 !important; } /* temp fix to remove the unwanted 8px border */
+
 		.image-box {
 			max-width: 90%;
 			max-height: 600px;
 			width: auto;
 			border-radius: 10px;
-			border: 2px solid var(--border-color);
+			border: 2px solid var(--borderColor-default);
 			margin: 20px auto;
 			display: block;
 			cursor: pointer;
 		}
 
 		.image-box:hover {
-			border-color: var(--secondary-color);
+			border-color: var(--borderColor-default);
 			box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
 		}
 
@@ -89,7 +91,7 @@
 			background: white;
 			border: none;
 			font-size: 32px;
-			color: var(--primary-color);
+			color: var(--bgColor-muted);
 			cursor: pointer;
 			width: 40px;
 			height: 40px;
@@ -101,7 +103,7 @@
 		}
 
 		.image-modal-close:hover {
-			background: var(--secondary-color);
+			background: var(--bgColor-default);
 			color: white;
 			transform: scale(1.1);
 		}
