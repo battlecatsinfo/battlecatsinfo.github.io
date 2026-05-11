@@ -335,7 +335,7 @@ function initUI() {
 			filter_page = document.getElementById('filter').firstElementChild;
 			const items = [
 				[0, 1, 2, 3, 4, 5, /* 戰鬥道具 */ 55, 56, 57 /*貓力達*/ ],
-				[22, 6, 105, 157, 20, 21, 155, 156], // 罐頭、金券
+				[22, 6, 105, 157, 20, 21, 29, 145, 155, 156], // 罐頭、金券
 				[
 					202, /* 傳說的聖水 */
 					163, /* 9週年 */
@@ -1060,7 +1060,7 @@ async function render_stage() {
 		}
 	}
 	rewards.textContent = "";
-	if (info3.drop && (info1.dataset.map || M1.selectedIndex !== 3)) {
+	if (info3.drop) {
 		var drop_data = info3.drop;
 		var chances = getDropData(drop_data);
 		var once = true;
