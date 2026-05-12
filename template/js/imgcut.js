@@ -6,6 +6,7 @@ const edit = document.getElementById('edit');
 const img = new Image();
 const preview = document.getElementById('preview');
 const pctx = preview.getContext('2d');
+const color_select = document.getElementById('color-select');
 var last_t;
 var cut;
 var imgloaded = false;
@@ -57,6 +58,7 @@ function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 	const c = cut.cuts[i];
+	ctx.strokeStyle = color_select.value;
 	ctx.strokeRect(c[0], c[1], c[2], c[3]);
 }
 
@@ -443,6 +445,7 @@ async function pasteImg() {
 			cutfile = '';
 		}
 	}
+	ctx.strokeStyle = '#ff1100';
 
 	document.getElementById('import-img-file').addEventListener('click', importImg);
 	document.getElementById('import-img-url').addEventListener('click', importImgU);
@@ -455,8 +458,4 @@ async function pasteImg() {
 	document.getElementById('export-cut').addEventListener('click', exportcut);
 	document.getElementById('add-line').addEventListener('click', addline);
 	document.getElementById('del-line').addEventListener('click', removeline);
-	document.getElementById('color-select').addEventListener('change', function (event) {
-		ctx.strokeStyle = color.value;
-		draw();
-	});
 })();
