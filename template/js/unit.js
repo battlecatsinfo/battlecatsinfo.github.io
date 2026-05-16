@@ -417,11 +417,20 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 30:
+				if (treasure) {
+					if (form.trait & trait_no_treasure) {
+						du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
+					} else {
+						du = numStr(165 * 1.3);
+					}
+				} else {
+					du = numStr(165);
+				}
 				if (layout === 2) {
 					w2(v[0] + " % 打飛" + U);
 					break;
 				}
-				w2(v[0] + " % 打飛" + U + tn);
+				w2(`${v[0]} % 打飛${U}${tn} 至 ${du} 距離單位外，持續 ${numStrT(12)}`);
 				break;
 
 			case 31:

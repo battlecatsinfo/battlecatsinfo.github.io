@@ -146,7 +146,7 @@ function createAbIcons() {
 	for (const [i, d] of Object.entries(E.ab)) {
 		switch (ab_no = parseInt(i, 10)) {
 			case AB_KB:
-				W(`${d[0]} % 打飛敵人${U}`);
+				W(`${d[0]} % 打飛敵人${U}至 ${numStr(165)} 距離單位外，持續 ${numStrT(12)}`);
 				break;
 			case AB_STOP:
 				W(`${d[0]} % 使動作停止${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`);
