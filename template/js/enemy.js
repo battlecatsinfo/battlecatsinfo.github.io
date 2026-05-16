@@ -576,5 +576,5 @@ loadEnemy(my_id)
 		addBarItem('ImgCut', `/imgcut.html?unit=${-(E.id + 1)}`);
 		addBarItem('檢視動畫', E.animUrl);
 		addBarItem('金寶科技設定', '/settings.html#treasure');
-		addBarItem('DPS 曲線', `/dpsgraph_svg.html?units=${E.id}`);
+		addBarItem('DPS-距離圖像', `/dpsgraph_svg.html?units=${E.id}`);
 	});
