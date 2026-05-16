@@ -193,10 +193,10 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 3:
-				func = w1;
 				if (layout === 2)
-					func = w3;
-				func(`善於攻城（攻擊傷害 × 4）`);
+					w3("善於攻城");
+					break;
+				w1("善於攻城（攻擊傷害 × 4）");
 				break;
 
 			case 4:
@@ -233,11 +233,11 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 10:
-				w1("得到很多金錢（擊敗敵人時獲得金錢 × 2）");
+				w1("得到很多金錢" + (layout === 2) ? "" : "（擊敗敵人時獲得金錢 × 2）");
 				break;
 
 			case 11:
-				w1("鋼鐵特性（暴擊、毒擊之外攻擊只會受1傷害）");
+				w1("鋼鐵特性" + (layout === 2) ? "" : "（暴擊、毒擊之外攻擊只會受1傷害）");
 				break;
 
 			case 12:
@@ -273,31 +273,33 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 17:
-				func = w1;
 				if (layout === 2)
-					func = w3;
-				func("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7）");
+					w3("超生命體特效");
+					break;
+				w1("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7）");
 				break;
 
 			case 18:
-				func = w1;
 				if (layout === 2)
-					func = w3;
-				func(`超獸特效（攻擊傷害 × 2.5 、所受傷害 × 0.6、${v[0]} % 發動攻擊無效持續 ${numStrT(v[1])}）`);
+					w3(`超獸特效（${v[0]} % 發動持續 ${numStrT(v[1])} 的攻擊無效）`);
+					break;
+				w1(`超獸特效（攻擊傷害 × 2.5 、所受傷害 × 0.6、${v[0]} % 發動持續 ${numStrT(v[1])} 的攻擊無效）`);
 				break;
 
 			case 19:
-				func = w1;
-				if (layout === 2)
-					func = w3;
-				func('終結魔女');
+				if (layout === 2) {
+					w3('終結魔女');
+					break;
+				}
+				w1('終結魔女（攻擊傷害 × 5 、所受傷害 × 0.1）');
 				break;
 
 			case 20:
-				func = w1;
-				if (layout === 2)
-					func = w3;
-				func("終結使徒");
+				if (layout === 2) {
+					w3('終結使徒');
+					break;
+				}
+				w1('終結使徒（攻擊傷害 × 5 、所受傷害 × 0.2）');
 				break;
 
 			case 21:
@@ -484,10 +486,10 @@ function createAbIcons(form, p1, p2, tbody) {
 				w1('烈波反擊');
 				break;
 			case 42:
-				func = w1;
 				if (layout === 2)
-					func = w3;
-				func('超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、攻擊傷害 × 1.2、所受傷害 × 0.5）');
+					w3("超賢者特效");
+					break;
+				w1("超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、攻擊傷害 × 1.2、所受傷害 × 0.5）");
 				break;
 			case 43: {
 				const p = document.createElement('div');
