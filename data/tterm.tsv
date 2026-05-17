@@ -1,4 +1,10 @@
 jp	tw	en	kr
+基本	基本	Basic	기본
+EX	EX	Special	EX
+レア	稀有	Rare	레어
+激レア	激稀有	Super Rare	슈퍼 레어
+超激レア	超激稀有	Uber Rare	울트라 슈퍼 레어
+伝説レア	傳説稀有	Legend Rare	레전드 레어
 スピードアップ	加速	Speed Up	스피드 업
 トレジャーレーダー	寶物雷達	Treasure Radar	트레저 레이더
 ネコボン	土豪貓	Rich Cat	고양이 도령
@@ -61,21 +67,21 @@ NP	NP	NP	NP
 伝説の罠	傳說的陷阱	Legend Trap	전설의 트랩
 はてなボックス	神秘箱子	Mystery Box	물음표 박스
 ビックリマンチョコ	聖魔大戰巧克力	Bikkuriman Choco	빅쿠리맨 초코
-レ	ン	ガ	 	,	 	紅	磚	,	 	B	r	i	c	k	s	,	 	벽	돌
-羽	根	,	 	羽	毛	,	 	F	e	a	t	h	e	r	s	,	 	깃	털
-備	長	炭	,	 	備	長	炭	,	 	C	o	a	l	,	 	참	숯
-鋼	の	歯	車	,	 	鋼	製	齒	輪	,	 	S	p	r	o	c	k	e	t	s	,	 	철	 	톱	니	바	퀴
-黄	金	,	 	黃	金	,	 	G	o	l	d	,	 	황	금
-宇	宙	石	,	 	宇	宙	石	,	 	M	e	t	e	o	r	i	t	e	,	 	우	주	석
-謎	の	骨	 	,	 	神	秘	骨	頭	,	 	B	e	a	s	t	 	B	o	n	e	s	,	 	수	수	께	끼	의	 	뼈
+レンガ	紅磚	Bricks	벽돌
+羽根	羽毛	Feathers	깃털
+備長炭	備長炭	Coal	참숯
+鋼の歯車	鋼製齒輪	Sprockets	철 톱니바퀴
+黄金	黃金	Gold	황금
+宇宙石	宇宙石	Meteorite	우주석
+謎の骨 	神秘骨頭	Beast Bones	수수께끼의 뼈
 アンモナイト	菊石	Ammonite	암모나이트
-レンガ Z	紅磚Z	Bricks Z	벽돌Z
+レンガZ	紅磚Z	Bricks Z	벽돌Z
 羽根Z	羽毛Z	Feathers Z	깃털Z
 備長炭Z	備長炭Z	Coal Z	참숯Z
 鋼の歯車Z	鋼製齒輪Z	Sprockets Z	철 톱니바퀴Z
 黄金Z	黃金Z	Gold Z	황금Z
 宇宙石Z	宇宙石Z	Meteorite Z	우주석Z
-謎の骨 Z	神秘骨頭Z	Beast Bones Z	수수께끼의 뼈Z
+謎の骨Z	神秘骨頭Z	Beast Bones Z	수수께끼의 뼈Z
 アンモナイトZ	菊石Z	Ammonite Z	암모나이트Z
 属性を持たない敵	無屬性敵人	Traitless Enemies	무속성
 赤い敵	紅色敵人	Red Enemies	빨간 적
@@ -92,6 +98,7 @@ NP	NP	NP	NP
 超生命体	超生命體	Colossus	초생명체
 超獣	超獸	Behemoth	초수
 超賢者	超賢者	Sage	초현자
+怪人			
 單体攻擊	單體攻擊	Single Attack	개체 공격
 範囲攻擊	範圍攻擊	Area Attack	범위 공격
 連続攻撃	連續攻擊	Multi-Hit	연속 공격
@@ -138,6 +145,7 @@ NP	NP	NP	NP
 爆波攻擊	爆波攻擊	Explosion	폭파 공격
 波動ストッパー	波動滅止	Wave Shield	파동 스톱퍼
 召喚	召喚	Conjure	소환
+遅延	延遲	Drain	생산 지연
 超生命体特効	超生命體特效	Colossus Slayer	초생명체 특효
 超獣特効	超獸特效	Behemoth Slayer	초수 특효
 超賢者特効	超賢者特效	Sage Slayer	초현자 특효
@@ -157,6 +165,7 @@ NP	NP	NP	NP
 ふっとばし耐性	抗飛耐性	Resist Knockback	날려버린다 내성
 波動ダメージ耐性	抗波耐性	Resist Wave	파동 데미지 내성
 烈波ダメージ耐性	抗烈波耐性	Resist Surge	열파 데미지 내성
+爆波ダメージ耐性	抗爆波耐性	Resist Explosion	폭파 데미지 내성
 ワープ耐性	抗傳耐性	Resist Warp	워프 내성
 古代の呪い耐性	抗古代詛咒耐性	Resist Curse	고대의 저주 내성
 毒撃ダメージ耐性	抗毒擊耐性	Resist Toxic	독 데미지 내성
@@ -174,13 +183,12 @@ NP	NP	NP	NP
 めっぽう強い強化	強化善於攻擊	Strong Against Up	엄청 강하다 강화
 超ダメージ強化	強化超大傷害	Massive Damage Up	초 데미지 강화
 打たれ強い強化	強化很耐打	Resistance Up	맷집이 좋다 강화
-デス小烈波	遺留小烈波	Mini-Deathsurge	데스 소열파
-キャッシュバック	金錢回饋	Cash Back	캐시백
 レジェンドストーリー強化	傳奇故事強化	Boost Stories of Legend	레전드 스토리 강화
+真レジェンドストーリー強化	真傳奇故事強化	Boost Uncanny Legends	신 레전드 스토리 강화
+生産時間短縮	生產加快	Recover Speed Up	생산 스피드 업
+キャッシュバック	金錢回饋	Cash Back	캐시백
+デス小烈波	遺留小烈波	Mini-Deathsurge	데스 소열파
+１回烈波カウンター	1次烈波反擊	Single Surge Counter	
 にゃんこ砲チャージ	貓咪砲充電	Cat Cannon Charge	냥코 대포 충전
 全攻撃無効	全攻擊無效	Dodge Attack (All)	전 공격 무효
-真レジェンドストーリー強化	真傳奇故事強化	Boost Uncanny Legends	신 레전드 스토리 강화
-１回烈波カウンター			
-撃破時攻撃力アップ			
-生産時間短縮	生產加快	Recover Speed Up	생산 스피드 업
-遅延	延遲	Drain	생산 지연
+撃破時攻撃力アップ	打倒敵人攻擊力上升	Berserker	
