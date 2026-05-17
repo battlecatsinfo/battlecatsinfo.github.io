@@ -14,7 +14,7 @@ import {
 	AB_CKILL,
 	AB_BREAK,
 	AB_SHIELDBREAK,
-	AB_S,
+	AB_SAVAGE,
 	AB_BOUNTY,
 	AB_METALIC,
 	AB_MINIWAVE,
@@ -656,7 +656,7 @@ class DPSGraph {
 				};
 		}
 
-		if (F.ab.hasOwnProperty(AB_S) || helper.talent_types.has(50)) {
+		if (F.ab.hasOwnProperty(AB_SAVAGE) || helper.talent_types.has(50)) {
 			this.options.s = 0;
 			this.create_select('渾身一擊', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
@@ -848,7 +848,7 @@ class DPSGraph {
 						if (this.abis[i]) this.atks[i] *= 2;
 				}
 			}
-			x = F.ab[AB_S];
+			x = F.ab[AB_SAVAGE];
 			if (x) {
 				if (!this.options.s) {
 					for (let i = 0; i < this.atks.length; ++i)

@@ -49,7 +49,7 @@ const AB_ZKILL = 5;        // Zombie Killer 終結不死
 const AB_CKILL = 6;        // Soulstrike 靈魂攻擊
 const AB_BREAK = 7;        // Barrier Breaker 破壞護盾
 const AB_SHIELDBREAK = 8;  // Shield Piercing 破壞惡魔盾
-const AB_S = 9;            // Savage Blow 渾身一擊
+const AB_SAVAGE = 9;            // Savage Blow 渾身一擊
 const AB_BOUNTY = 10;      // Extra Money 得到很多金錢
 const AB_METALIC = 11;     // Metal 鋼鐵特性
 const AB_MINIWAVE = 12;    // Mini-Wave 小波動
@@ -87,7 +87,7 @@ const AB_SUMMON = 43;      // Conjure(Summon) 召喚
 const AB_MK = 44;          // Metal Killer 鋼鐵殺手
 const AB_EXPLOSION = 45;   // Explosion 爆波
 const AB_WEIRDO = 46;      // 怪人特效
-const AB_DRAIN = 47;       // 延遲
+const AB_DRAIN = 47;       // Drain 延遲
 
 // Resist
 const RES_WEAK = 0;        // Resist to Weaken 抗擊耐性
@@ -108,7 +108,7 @@ const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_Z
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
 
-const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_S, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_WEIRDO]);
+const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_SAVAGE, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_WEIRDO]);
 const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_WEIRDO]);
 
 function combineChances(count, chance) {
@@ -676,8 +676,8 @@ class Unit {
 
 				atk *= rv;
 
-				if (ab.hasOwnProperty(AB_S)) {
-					v = ab[AB_S];
+				if (ab.hasOwnProperty(AB_SAVAGE)) {
+					v = ab[AB_SAVAGE];
 					if (mode === 'max')
 						atk *= 1 + v[1] / 100;
 					else
@@ -822,10 +822,10 @@ class Unit {
 		return this.ab[AB_LETHAL] ?? 0;
 	}
 	get savageExtent() {
-		return this.ab[AB_S]?.[1] ?? 0;
+		return this.ab[AB_SAVAGE]?.[1] ?? 0;
 	}
 	get savageProb() {
-		return this.ab[AB_S]?.[0] ?? 0;
+		return this.ab[AB_SAVAGE]?.[0] ?? 0;
 	}
 
 	__hasab(ab) {
@@ -1293,8 +1293,8 @@ class CatForm extends Unit {
 
 				atk *= rv;
 
-				if (ab.hasOwnProperty(AB_S)) {
-					v = ab[AB_S];
+				if (ab.hasOwnProperty(AB_SAVAGE)) {
+					v = ab[AB_SAVAGE];
 					if (mode === 'max')
 						atk *= 1 + v[1] / 100;
 					else
@@ -1647,10 +1647,10 @@ class CatForm extends Unit {
 				break;
 
 			case 50:
-				t = this.ab[AB_S];
+				t = this.ab[AB_SAVAGE];
 				x = inc1 + (t ? t[0] : 0); // chance
 				y = inc2 + (t ? t[1] : 0); // power
-				this.ab[AB_S] = [x, y];
+				this.ab[AB_SAVAGE] = [x, y];
 				break;
 
 			case 51:
@@ -2409,7 +2409,7 @@ export {
 	AB_CKILL,
 	AB_BREAK,
 	AB_SHIELDBREAK,
-	AB_S,
+	AB_SAVAGE,
 	AB_BOUNTY,
 	AB_METALIC,
 	AB_MINIWAVE,

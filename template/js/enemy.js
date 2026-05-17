@@ -32,7 +32,7 @@ import {
 	AB_CKILL,
 	AB_BREAK,
 	AB_SHIELDBREAK,
-	AB_S,
+	AB_SAVAGE,
 	AB_BOUNTY,
 	AB_METALIC,
 	AB_MINIWAVE,
@@ -190,7 +190,7 @@ function createAbIcons() {
 			case AB_CURSE:
 				W(`${d[0]} % 詛咒${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`);
 				break;
-			case AB_S:
+			case AB_SAVAGE:
 				T(`${d[0]} % 渾身一擊${U}（攻擊力增加至 ${100 + d[1]} %）`);
 				break;
 			case AB_IMUATK:

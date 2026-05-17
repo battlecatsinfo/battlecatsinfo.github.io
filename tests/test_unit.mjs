@@ -2676,10 +2676,10 @@ describe('unit.mjs', function () {
 
 				// ab data is array
 				var cf = (await Unit.loadCat(496)).forms[2];
-				assert.isTrue(cf.hasAb(Unit.AB_S));
+				assert.isTrue(cf.hasAb(Unit.AB_SAVAGE));
 
 				var cf = (await Unit.loadCat(0)).forms[2];
-				assert.isFalse(cf.hasAb(Unit.AB_S));
+				assert.isFalse(cf.hasAb(Unit.AB_SAVAGE));
 			});
 
 		});
