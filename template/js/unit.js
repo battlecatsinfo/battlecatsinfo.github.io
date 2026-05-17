@@ -2433,7 +2433,7 @@ function drawgraph(T) {
 			},
 			'theme': config.colorTheme === 'dark' ? 'dark1' : 'light1',
 			'title': {
-				'text': "角色成長率圖像"
+				'text': "角色成長率圖表"
 			},
 			'data': [{
 				'xValueFormatString': '"Lv"0↑',
@@ -2503,7 +2503,7 @@ function drawgraph(T) {
 				},
 				'theme': config.colorTheme === 'dark' ? 'dark1' : 'light1',
 				'title': {
-					'text': '角色數值變化圖像'
+					'text': '角色數值變化圖表'
 				},
 				'data': [{
 					'xValueFormatString': '"Lv"0',
@@ -2811,7 +2811,7 @@ loadCat(my_id)
 		a = document.createElement('a');
 		a.classList.add('w3-bar-item');
 		a.href = `/dpsgraph_svg.html?units=${my_cat.id}-${my_cat.forms.length - 1}`;
-		a.textContent = 'DPS-距離圖像';
+		a.textContent = 'DPS-距離圖表';
 		a.target = '_blank';
 		abar.appendChild(a);
 
