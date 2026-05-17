@@ -189,7 +189,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 2:
-				w1(`${v} % 死前存活` + (layout === 2) ? "" : "（遭到致命的攻擊時以1體力存活1次）");
+				w1(`${v} % 死前存活` + ((layout === 2) ? "" : "（遭到致命的攻擊時以1體力存活1次）"));
 				break;
 
 			case 3:
@@ -233,11 +233,11 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 10:
-				w1("得到很多金錢" + (layout === 2) ? "" : "（擊敗敵人時獲得金錢 × 2）");
+				w1("得到很多金錢" + ((layout === 2) ? "" : "（擊敗敵人時獲得金錢 × 2）"));
 				break;
 
 			case 11:
-				w1("鋼鐵特性" + (layout === 2) ? "" : "（暴擊、毒擊之外攻擊只會受1傷害）");
+				w1("鋼鐵特性" + ((layout === 2) ? "" : "（暴擊、毒擊之外攻擊只會受1傷害）"));
 				break;
 
 			case 12:
