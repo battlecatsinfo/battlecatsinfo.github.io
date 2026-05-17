@@ -25,10 +25,10 @@ const plus_lv_e = document.getElementById("plus-lv");
 const cattype_e = document.getElementById("cattype");
 const trait_s = document.getElementById("trait-s");
 const atk_s = document.getElementById("atk-s");
-const ab_s = document.getElementById("ab-s");
+const ab_savage = document.getElementById("ab-s");
 const atkBtn = atk_s.firstElementChild.firstElementChild;
 const traitBtn = trait_s.firstElementChild.firstElementChild;
-const abBtn = ab_s.firstElementChild.firstElementChild;
+const abBtn = ab_savage.firstElementChild.firstElementChild;
 const name_search = document.getElementById("name-search");
 
 function rerender(page) {
@@ -163,7 +163,7 @@ function calculate(code = "", noUpdateUrl) {
 			let M = atks.map(x => x.getAttribute("data-expr"));
 			url.searchParams.set("atks", M.join(" ")), "OR" == atkBtn.textContent ? codes.push(M.join("||")) : codes.push(M.join("&&"));
 		}
-		const abs = Array.from(ab_s.querySelectorAll(".o-selected"));
+		const abs = Array.from(ab_savage.querySelectorAll(".o-selected"));
 		if (abs.length) {
 			let M = abs.map(x => x.getAttribute("data-expr"));
 			url.searchParams.set("abs", M.join(" ")), "OR" == abBtn.textContent ? codes.push(M.join("||")) : codes.push(M.join("&&"));
@@ -296,7 +296,7 @@ loadAllCats().then(_cats => {
 	}
 	addBtns(cattype_e, params.get("cattypes"));
 	addBtns(atk_s, params.get("atks"));
-	addBtns(ab_s, params.get("abs"));
+	addBtns(ab_savage, params.get("abs"));
 	addBtns(trait_s, params.get("traits"));
 	Q = params.get('form');
 	if (Q) {
@@ -355,7 +355,7 @@ document.getElementById("filter-clear").onclick = function() {
 	cattype_e.querySelectorAll(".o-selected").forEach(fn);
 	trait_s.querySelectorAll(".o-selected").forEach(fn);
 	atk_s.querySelectorAll(".o-selected").forEach(fn);
-	ab_s.querySelectorAll(".o-selected").forEach(fn);
+	ab_savage.querySelectorAll(".o-selected").forEach(fn);
 	ori_expr.value = "";
 	filter_expr.value = "";
 	sort_expr.value = "";

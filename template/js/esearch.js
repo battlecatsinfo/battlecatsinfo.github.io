@@ -12,11 +12,11 @@ const tables = document.getElementById('tables');
 const toggle_s = document.getElementById('toggle-s');
 const trait_s = document.getElementById('trait-s');
 const atk_s = document.getElementById('atk-s');
-const ab_s = document.getElementById('ab-s');
+const ab_savage = document.getElementById('ab-s');
 const kind_s = document.getElementById('kind-s');
 const atkBtn = atk_s.firstElementChild.firstElementChild;
 const traitBtn = trait_s.firstElementChild.firstElementChild;
-const abBtn = ab_s.firstElementChild.firstElementChild;
+const abBtn = ab_savage.firstElementChild.firstElementChild;
 const name_search = document.getElementById('name-search');
 var last_forms;
 var per_page = 10;
@@ -131,7 +131,7 @@ function calculate(code = '', noUpdateUrl) {
 				codes.push(M.join('&&'));
 			}
 		}
-		const abs = Array.from(ab_s.querySelectorAll('.o-selected'));
+		const abs = Array.from(ab_savage.querySelectorAll('.o-selected'));
 		if (abs.length) {
 			let M = abs.map(x => x.getAttribute('data-expr'));
 			url.searchParams.set('abs', M.join(' '));
@@ -228,7 +228,7 @@ loadAllEnemies()
 			abBtn.textContent = ao[2] == '1' ? 'OR' : 'AND';
 		}
 		addBtns(atk_s, params.get('atks'));
-		addBtns(ab_s, params.get('abs'));
+		addBtns(ab_savage, params.get('abs'));
 		addBtns(trait_s, params.get('traits'));
 		addBtns(kind_s, params.get('kinds'));
 		calculate(filter ? filter : '', true);
@@ -266,7 +266,7 @@ document.getElementById('filter-clear').onclick = function() {
 	};
 	trait_s.querySelectorAll('.o-selected').forEach(fn);
 	atk_s.querySelectorAll('.o-selected').forEach(fn);
-	ab_s.querySelectorAll('.o-selected').forEach(fn);
+	ab_savage.querySelectorAll('.o-selected').forEach(fn);
 	kind_s.querySelectorAll('.o-selected').forEach(fn);
 	filter_expr.value = '';
 	sort_expr.value = '';
