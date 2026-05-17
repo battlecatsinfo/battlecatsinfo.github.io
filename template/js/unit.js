@@ -189,7 +189,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 2:
-				w1(`遭到致命的攻擊時 ${v} % 以1體力存活1次`);
+				w1(`${v} % 死前存活` + (layout === 2) ? "" : "（遭到致命的攻擊時以1體力存活1次）");
 				break;
 
 			case 3:
@@ -486,10 +486,11 @@ function createAbIcons(form, p1, p2, tbody) {
 				w1('烈波反擊');
 				break;
 			case 42:
-				if (layout === 2)
+				if (layout === 2) {
 					w3("超賢者特效");
 					break;
-				w1("超賢者特效（受到超賢者的控場效果減少 70 %、無視超賢者的控場耐性、攻擊傷害 × 1.2、所受傷害 × 0.5）");
+				}
+				w1("超賢者特效（減輕 70% 來自超賢者的妨害效果、無視超賢者的控場耐性、攻擊傷害 × 1.2、所受傷害 × 0.5）");
 				break;
 			case 43: {
 				const p = document.createElement('div');
@@ -526,12 +527,12 @@ function createAbIcons(form, p1, p2, tbody) {
 				func(v[1] != v[2] ? `${v[0]}% 發出爆波（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 發出爆波（發生位置：${v[1]}）`);
 				break;
 			case 46:
-				func = w1;
-				if (layout === 2)
-					func = w3;
-				else
-					p1.parentNode.style.display = '';
-				func("怪人特效（攻擊傷害 × 2.5、所受傷害 × 0.4）");
+				if (layout === 2) {
+					w3("怪人特效");
+					break;
+				}
+				p1.parentNode.style.display = '';
+				w1("怪人特效（攻擊傷害 × 2.5、所受傷害 × 0.4）");
 				break;
 		}
 	}

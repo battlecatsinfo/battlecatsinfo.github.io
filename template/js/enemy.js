@@ -141,7 +141,7 @@ function createAbIcons() {
 	createImuIcons(E.imu, specials);
 	let d, U = E.pre1 ? '*' : '';
 	if (E.trait & TB_SAGE) {
-		W(`超賢者：受到我方的所有妨害減少 70%`, `/img/i/e/15.png`);
+		W(`超賢者：減輕 70% 受到的妨害效果 `, `/img/i/e/15.png`);
 	}
 	for (const [i, d] of Object.entries(E.ab)) {
 		switch (ab_no = parseInt(i, 10)) {
@@ -173,7 +173,7 @@ function createAbIcons() {
 				T(`體力 ${d[0]} % 以下時攻擊力上升至 ${100 + d[1]} %`);
 				break;
 			case AB_LETHAL:
-				W(`遭到致命的攻擊時 ${d} % 以1體力存活1次`);
+				W(`${d} % 死前存活（遭到致命的攻擊時以1體力存活1次）`);
 				break;
 			case AB_WAVES:
 				W(`波動滅止`);
