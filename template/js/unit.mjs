@@ -42,7 +42,7 @@ const IMU_EXPLOSION = 1024; // Immune to Explosion 爆波傷害無效
 
 // Abilities
 const AB_STRENGTHEN = 1;   // Strengthen 攻擊力上升
-const AB_LETHAL = 2;       // Survive 死血存活
+const AB_SURVIVE = 2;       // Survive 死血存活
 const AB_ATKBASE = 3;      // Base Destroyer 善於攻城
 const AB_CRIT = 4;         // Critical 會心一擊
 const AB_ZKILL = 5;        // Zombie Killer 終結不死
@@ -819,7 +819,7 @@ class Unit {
 		return this.ab[AB_STRENGTHEN]?.[1] ?? 0;
 	}
 	get lethalProb() {
-		return this.ab[AB_LETHAL] ?? 0;
+		return this.ab[AB_SURVIVE] ?? 0;
 	}
 	get savageExtent() {
 		return this.ab[AB_SAVAGE]?.[1] ?? 0;
@@ -1486,9 +1486,9 @@ class CatForm extends Unit {
 				break;
 
 			case 11:
-				t = this.ab[AB_LETHAL];
+				t = this.ab[AB_SURVIVE];
 				x = inc1 + (t || 0); // chance
-				this.ab[AB_LETHAL] = x;
+				this.ab[AB_SURVIVE] = x;
 				break;
 
 			case 12:
@@ -2402,7 +2402,7 @@ export {
 	trait_treasure,
 
 	AB_STRENGTHEN,
-	AB_LETHAL,
+	AB_SURVIVE,
 	AB_ATKBASE,
 	AB_CRIT,
 	AB_ZKILL,

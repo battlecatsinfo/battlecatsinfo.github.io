@@ -13,7 +13,7 @@ import {
 	trait_treasure,
 
 	AB_STRENGTHEN,
-	AB_LETHAL,
+	AB_SURVIVE,
 	AB_ATKBASE,
 	AB_CRIT,
 	AB_ZKILL,

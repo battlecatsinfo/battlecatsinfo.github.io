@@ -2555,7 +2555,7 @@ describe('unit.mjs', function () {
 
 				// ignore non-existent ID
 				var cf = (await Unit.loadCat(441)).forms[1];
-				assert.deepEqual(cf._getab([[Unit.AB_STRENGTHEN], Unit.AB_LETHAL, Unit.AB_CRIT]), {
+				assert.deepEqual(cf._getab([[Unit.AB_STRENGTHEN], Unit.AB_SURVIVE, Unit.AB_CRIT]), {
 					[Unit.AB_STRENGTHEN]: [60, 100],
 				});
 			});

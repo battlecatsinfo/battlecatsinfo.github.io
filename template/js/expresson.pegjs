@@ -52,7 +52,7 @@ const constants = {
 	imu_explosion: 1024,
 
 	ab_strengthen: 1,
-	ab_lethal: 2,
+	AB_SURVIVE: 2,
 	ab_atkbase: 3,
 	ab_crit: 4,
 	ab_zkill: 5,

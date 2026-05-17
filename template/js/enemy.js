@@ -25,7 +25,7 @@ import {
 	TB_WEIRDO,
 
 	AB_STRENGTHEN,
-	AB_LETHAL,
+	AB_SURVIVE,
 	AB_ATKBASE,
 	AB_CRIT,
 	AB_ZKILL,
@@ -172,7 +172,7 @@ function createAbIcons() {
 			case AB_STRENGTHEN:
 				T(`體力 ${d[0]} % 以下時攻擊力上升至 ${100 + d[1]} %`);
 				break;
-			case AB_LETHAL:
+			case AB_SURVIVE:
 				W(`${d} % 死前存活（遭到致命的攻擊時以1體力存活1次）`);
 				break;
 			case AB_WAVES:
