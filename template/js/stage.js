@@ -671,7 +671,25 @@ async function refresh_1(sts) {
 			name = map.name || map.nameJp || QQ;
 		}
 		
-		name = `${c + 1}. ${name}`; // auto number map indices
+		// auto map indices
+		switch (M1.selectedIndex) {
+			case 0:       // SOL
+			case 9:       // UL
+			case 16:      // ZL
+				name = `${c + 1}. ${name}`;
+				break;
+			case 3:       // main chapters
+			case 5:       // normal dojo
+			case 8:       // challenge
+			case 14:      // labyrinth
+			case 15:      // culling
+			case 17:      // colosseum
+			case 18:      // championships
+				break;
+			default:
+				name = `${c}. ${name}`; 
+				break;
+		}
 		
 		o.textContent = name;
 		c += 1;
