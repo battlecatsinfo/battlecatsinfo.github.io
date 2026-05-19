@@ -1,7 +1,16 @@
-import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
+import {config, loadScheme, getNumFormatter, numStr, numStrT} from './common.mjs';
 import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
-import {EnemyIdb, loadCat, loadAllCats, catEnv} from './unit.mjs';
+import {
+	EnemyIdb, loadCat, loadAllCats, catEnv,
+	loadEnemy,
+	createImuIcons,
+	getAbiString,
+	getCoverUnitStr as getCoverUnit,
+	ATK_RANGE, ATK_LD, ATK_OMNI, ATK_KB_REVENGE,
+	TB_RED, TB_FLOAT, TB_BLACK, TB_METAL, TB_ANGEL, TB_ALIEN, TB_ZOMBIE, TB_RELIC, TB_WHITE, TB_EVA, TB_WITCH, TB_DEMON, TB_INFN, TB_BEAST, TB_BARON, TB_SAGE, TB_WEIRDO,
+	AB_KB, AB_STOP, AB_SLOW, AB_CRIT, AB_ATKBASE, AB_WAVE, AB_MINIWAVE, AB_WEAK, AB_STRENGTHEN, AB_SURVIVE, AB_WAVES, AB_BURROW, AB_REVIVE, AB_WARP, AB_CURSE, AB_SAVAGE, AB_IMUATK, AB_SUICIDE, AB_BARRIER, AB_DSHIELD, AB_COUNTER, AB_DEATHSURGE, AB_POIATK, AB_SURGE, AB_MINISURGE, AB_EXPLOSION, AB_DRAIN,
+} from './unit.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -1285,15 +1294,26 @@ async function render_stage() {
 		atkM = parseInt(atkM || '2s', 36);
 
 		img.src = `/img/e/${enemy}/0.png`;
+		let modalHpMag, modalAtkMag, modalStageMag;
 		if (strs[6].length == 2) {
-			hpM = ~~(hpM * m).toString() + '%';
+			modalHpMag = ~~(hpM * m);
+			modalAtkMag = atkM;
+			modalStageMag = 100;
+			hpM = modalHpMag.toString() + '%';
 			atkM = atkM.toString() + '%';
 			a.href = `/enemy.html?id=${enemy}&mag=${hpM}&atkMag=${atkM}`;
 		} else {
+			modalHpMag = hpM;
+			modalAtkMag = atkM;
+			modalStageMag = mult;
 			a.href = `/enemy.html?id=${enemy}&mag=${hpM}&atkMag=${atkM}&stageMag=${mult}`;
 			hpM = ~~(hpM * m).toString() + '%';
 			atkM = ~~(atkM * m).toString() + '%';
 		}
+		a.addEventListener('click', e => {
+			e.preventDefault();
+			showEnemyModal(enemy, modalHpMag, modalAtkMag, modalStageMag);
+		});
 
 		makeTd(tr, hpM == atkM ? hpM : `HP:${hpM}, ATK:${atkM}`); // mag
 		makeTd(tr, strs[1] || "無限"); // count
@@ -1393,6 +1413,245 @@ async function doSearch(t) {
 	}
 	if (!search_result.textContent)
 		search_result.textContent = "找不到名稱包含「" + v + "」的關卡";
+}
+
+function showEnemyModal(id, hpMag, atkMag, stageMag) {
+	const enemyModal = document.getElementById('enemy-modal');
+	const ctn = document.getElementById('enemy-modal-ctn');
+	ctn.textContent = '載入中...';
+	enemyModal.hidden = false;
+
+	loadEnemy(id).then(E => {
+		ctn.textContent = '';
+
+		E.hpM = hpMag / 100;
+		E.atkM = atkMag / 100;
+		E.stageM = stageMag / 100;
+
+		const tatks = E.gettatks({filter: [], mode: 'max', isBase: false});
+		const DPS = 30 * E.gettatks({filter: [], mode: 'expected', isBase: false}).reduce((rv, x) => rv + x) / E.attackF;
+		const HP = E.getthp({filter: []});
+
+		const tbl = document.createElement('table');
+		tbl.className = 'w3-table w3-centered';
+
+		// header
+		const thead = tbl.createTHead();
+		const headTr = thead.insertRow();
+		const thName = document.createElement('th');
+		thName.colSpan = 6;
+		thName.textContent = [E.name, E.jp_name].filter(x => x).join('/') || '?';
+		headTr.appendChild(thName);
+		const thStar = document.createElement('th');
+		thStar.textContent = `★倍率:${stageMag}%`;
+		headTr.appendChild(thStar);
+		const thAtk = document.createElement('th');
+		thAtk.textContent = `攻擊倍率:${atkMag}%`;
+		headTr.appendChild(thAtk);
+		const thHp = document.createElement('th');
+		thHp.textContent = `倍率:${hpMag}%`;
+		headTr.appendChild(thHp);
+
+		const tbody = tbl.createTBody();
+
+		function makeLabel(tr, text) {
+			const td = tr.insertCell();
+			td.className = 'F';
+			td.textContent = text;
+			return td;
+		}
+		function makeVal(tr, text) {
+			const td = tr.insertCell();
+			if (text !== undefined) td.textContent = text;
+			return td;
+		}
+
+		// row 1: icon / HP / ATK / speed / traits
+		const tr1 = tbody.insertRow();
+		const tdIcon = tr1.insertCell();
+		tdIcon.rowSpan = 3;
+		tdIcon.className = 'F';
+		const img = new Image(64, 64);
+		img.src = E.icon;
+		tdIcon.appendChild(img);
+		makeLabel(tr1, 'HP');
+		makeVal(tr1, numStr(HP));
+		makeLabel(tr1, '攻擊力');
+		makeVal(tr1, tatks.filter(x => x).map(numStr).join('/'));
+		makeLabel(tr1, '速度');
+		makeVal(tr1, E.speed);
+		makeLabel(tr1, '屬性');
+		const tdTrait = makeVal(tr1);
+		tdTrait.colSpan = 2;
+		const traits = [];
+		if (E.trait & TB_RED) traits.push('紅色敵人');
+		if (E.trait & TB_FLOAT) traits.push('漂浮敵人');
+		if (E.trait & TB_BLACK) traits.push('黑色敵人');
+		if (E.trait & TB_METAL) traits.push('鋼鐵敵人');
+		if (E.trait & TB_ANGEL) traits.push('天使敵人');
+		if (E.trait & TB_ALIEN) traits.push(E.star == 1 ? '異星戰士（有星星）' : '異星戰士');
+		if (E.trait & TB_ZOMBIE) traits.push('不死生物');
+		if (E.trait & TB_RELIC) traits.push('古代種');
+		if (E.trait & TB_WHITE) traits.push('無屬性敵人');
+		if (E.trait & TB_EVA) traits.push('使徒');
+		if (E.trait & TB_WITCH) traits.push('魔女');
+		if (E.trait & TB_DEMON) traits.push('惡魔');
+		if (E.trait & TB_BEAST) traits.push('超獸');
+		if (E.trait & TB_BARON) traits.push('超生命體');
+		if (E.trait & TB_INFN) traits.push('道場塔');
+		if (E.trait & TB_SAGE) traits.push('超賢者');
+		if (E.trait & TB_WEIRDO) traits.push('怪人');
+		tdTrait.textContent = traits.join('・');
+
+		// row 2: KB / DPS / range / earn
+		const tr2 = tbody.insertRow();
+		makeLabel(tr2, 'KB');
+		makeVal(tr2, E.kb);
+		makeLabel(tr2, 'DPS');
+		makeVal(tr2, numStr(DPS));
+		makeLabel(tr2, '射程');
+		makeVal(tr2, E.range);
+		makeLabel(tr2, '獎金');
+		makeVal(tr2, E.earn);
+
+		// row 3: timing
+		const tr3 = tbody.insertRow();
+		makeLabel(tr3, '出招時間');
+		const preText = config.unit === 'F'
+			? [E.pre, E.pre1, E.pre2].filter(x => x).map(numStr).join('/') + ' F'
+			: [E.pre, E.pre1, E.pre2].filter(x => x).map(x => numStr(x / 30)).join('/') + ' 秒';
+		makeVal(tr3, preText);
+		makeLabel(tr3, '收招時間');
+		makeVal(tr3, numStrT(E.backswing));
+		makeLabel(tr3, '攻擊間隔');
+		makeVal(tr3, numStrT(E.tba));
+		makeLabel(tr3, '攻擊週期');
+		makeVal(tr3, numStrT(E.attackF));
+
+		// row 4: abilities
+		const tr4 = tbody.insertRow();
+		makeLabel(tr4, '其他');
+		const tdAb = tr4.insertCell();
+		tdAb.colSpan = 8;
+		tdAb.className = 'left em-ab';
+
+		function W(text, imgSrc, ab_no) {
+			const div = document.createElement('div');
+			const i = new Image(40, 40);
+			i.src = imgSrc || `/img/i/a/${ab_no}.png`;
+			div.appendChild(i);
+			div.append(text);
+			tdAb.appendChild(div);
+		}
+		function T(text, ab_no) {
+			W(text, null, ab_no);
+		}
+
+		createImuIcons(E.imu, tdAb);
+		const U = E.pre1 ? '*' : '';
+		if (E.trait & TB_SAGE)
+			W('超賢者：減輕 70% 受到的妨害效果 ', '/img/i/e/15.png', null);
+		if (E.info.atk1 || E.info.atk2) {
+			const atkNum = E.info.atk2 ? 3 : 2;
+			const total = E.info.atk + E.info.atk1 + E.info.atk2;
+			const atksPre = [E.info.atk, E.info.atk1, E.info.atk2].slice(0, atkNum).map(x => numStr((x / total) * 100) + ' %');
+			const div = document.createElement('div');
+			div.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(E.abi));
+			tdAb.appendChild(div);
+		}
+		let X = '';
+		if (E.atkType & ATK_OMNI) X += '全方位';
+		else if (E.atkType & ATK_LD) X += '遠方';
+		X += (E.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
+		if (E.atkType & ATK_KB_REVENGE) X += '・擊退反擊';
+		if (E.lds) {
+			const nums = '①②③';
+			let s = '';
+			for (let i = 0; i < E.lds.length; ++i) {
+				const x = E.lds[i];
+				const y = x + E.ldr[i];
+				s += `${nums[i]}${x <= y ? x : y}～${x <= y ? y : x}`;
+			}
+			X += `・範圍 ${s}`;
+		}
+		const atkTypeDiv = document.createElement('div');
+		if (E.atkType & ATK_RANGE) { const s = new Image(40, 40); s.src = '/img/i/o/0.png'; atkTypeDiv.appendChild(s); }
+		else { const s = new Image(40, 40); s.src = '/img/i/o/1.png'; atkTypeDiv.appendChild(s); }
+		if (E.atkType & ATK_LD) { const s = new Image(40, 40); s.src = '/img/i/o/2.png'; atkTypeDiv.appendChild(s); }
+		if (E.atkType & ATK_OMNI) { const s = new Image(40, 40); s.src = '/img/i/o/3.png'; atkTypeDiv.appendChild(s); }
+		if (E.atkType & ATK_KB_REVENGE) { const s = new Image(40, 40); s.src = '/img/i/o/4.png'; atkTypeDiv.appendChild(s); }
+		atkTypeDiv.append(X);
+		tdAb.appendChild(atkTypeDiv);
+
+		for (const [i, d] of Object.entries(E.ab)) {
+			const ab_no = parseInt(i, 10);
+			switch (ab_no) {
+				case AB_KB: W(`${d[0]} % 打飛敵人${U}至 ${numStr(165)} 距離單位外，持續 ${numStrT(12)}`, null, ab_no); break;
+				case AB_STOP: W(`${d[0]} % 使動作停止${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`, null, ab_no); break;
+				case AB_SLOW: W(`${d[0]} % 使動作變慢${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`, null, ab_no); break;
+				case AB_CRIT: T(`${d} % 會心一擊${U}`, ab_no); break;
+				case AB_ATKBASE: T('善於攻城（攻擊傷害 × 4）', ab_no); break;
+				case AB_WAVE: T(`${d[0]} % 發射 Lv${d[1]} 波動${U}（射程 ${267.5 + d[1]*200}）`, ab_no); break;
+				case AB_MINIWAVE: T(`${d[0]} % 發射 Lv${d[1]} 小波動${U}（射程 ${267.5 + d[1]*200}）`, ab_no); break;
+				case AB_WEAK: W(`${d[0]} % 降低攻擊力${U}至 ${d[1]} % 持續 ${numStrT(d[2])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[2])} %`, null, ab_no); break;
+				case AB_STRENGTHEN: T(`體力 ${d[0]} % 以下時攻擊力上升至 ${100 + d[1]} %`, ab_no); break;
+				case AB_SURVIVE: W(`${d} % 死前存活（遭到致命的攻擊時以1體力存活1次）`, null, ab_no); break;
+				case AB_WAVES: W('波動滅止', null, ab_no); break;
+				case AB_BURROW: W(`進入射程範圍時鑽地 ${numStr(d[1])} 距離（${d[0] == -1 ? '無限' : d[0].toString() + ' '}次）`, null, ab_no); break;
+				case AB_REVIVE: W(`擊倒後 ${numStrT(d[1])} 以 ${d[2]} % 體力復活（${d[0] == -1 ? '無限' : d[0].toString() + ' '}次）`, null, ab_no); break;
+				case AB_WARP: W(`${d[0]} % 將目標向${d[2] < 0 ? '前' : '後'}傳送${U} ${Math.abs(d[2])} 距離持續 ${numStrT(d[1])}`, null, ab_no); break;
+				case AB_CURSE: W(`${d[0]} % 詛咒${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`, null, ab_no); break;
+				case AB_SAVAGE: T(`${d[0]} % 渾身一擊${U}（攻擊力增加至 ${100 + d[1]} %）`, ab_no); break;
+				case AB_IMUATK: W(`${d[0]} % 發動攻擊無效持續 ${numStrT(d[1])}`, null, ab_no); break;
+				case AB_SUICIDE: W('一次攻擊', null, ab_no); break;
+				case AB_BARRIER: W(`護盾 ${numStr(d[0])} HP`, null, ab_no); break;
+				case AB_DSHIELD: {
+					const div = document.createElement('div');
+					const img2 = new Image(40, 40);
+					img2.src = '/img/i/a/39.png';
+					div.appendChild(img2);
+					div.append(`惡魔盾 ${~~(Math.round(d[0] * (hpMag / 100)) * (stageMag / 100))} HP，KB時惡魔盾恢復 ${d[1]} %`);
+					tdAb.appendChild(div);
+					break;
+				}
+				case AB_COUNTER: W('烈波反擊', null, ab_no); break;
+				case AB_DEATHSURGE: W(`死後 ${d[0]} % 發射 Lv${d[3]}烈波（範圍 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, null, ab_no); break;
+				case AB_POIATK: W(`${d[0]} % 毒擊（造成角色最大生命值 ${d[1]} % 的傷害）`, null, ab_no); break;
+				case AB_SURGE: T(`${d[0]} % 發射 Lv${d[3]} 烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, ab_no); break;
+				case AB_MINISURGE: T(`${d[0]} % 發射 Lv${d[3]} 小烈波（出現位置 ${d[1]}～${d[2]}，持續 ${numStrT(d[3]*20)}）`, ab_no); break;
+				case AB_EXPLOSION: T(d[1] != d[2] ? `${d[0]}% 發出爆波（發生位置：${d[1]}～${d[2]}）` : `${d[0]}% 發出爆波（發生位置：${d[1]}）`, ab_no); break;
+				case AB_DRAIN: W(`${d[0]} % 令受擊角色減少 ${d[1]} % 已恢復之生產進度`, null, ab_no); break;
+			}
+		}
+
+		// row 5: description
+		const tr5 = tbody.insertRow();
+		makeLabel(tr5, '描述');
+		const tdDesc = tr5.insertCell();
+		tdDesc.colSpan = 8;
+		tdDesc.className = 'left';
+		for (const s of E.desc.split('|')) {
+			tdDesc.append(s);
+			tdDesc.appendChild(document.createElement('br'));
+		}
+
+		ctn.appendChild(tbl);
+
+		const link = document.createElement('a');
+		link.href = `/enemy.html?id=${id}&mag=${hpMag}&atkMag=${atkMag}&stageMag=${stageMag}`;
+		link.target = '_blank';
+		link.textContent = '在完整頁面開啟';
+		link.style.cssText = 'display: block; text-align: center; margin-top: 0.8em; font-size: 0.9em;';
+		ctn.appendChild(link);
+	}).catch(() => {
+		ctn.textContent = '載入失敗';
+	});
+}
+
+{
+	const enemyModal = document.getElementById('enemy-modal');
+	document.getElementById('enemy-modal-close').onclick = () => { enemyModal.hidden = true; };
+	enemyModal.addEventListener('click', e => { if (e.target === enemyModal) enemyModal.hidden = true; });
 }
 
 {

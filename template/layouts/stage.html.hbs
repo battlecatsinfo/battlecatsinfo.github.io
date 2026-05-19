@@ -197,6 +197,47 @@
 		max-width: min(8vw, 8vh);
 		height: auto;
 	}
+	#enemy-modal .M {
+		width: max-content;
+		max-width: 95vw;
+		max-height: 90vh;
+		overflow: auto;
+		color: #222;
+		margin: 0;
+	}
+	:root.dark #enemy-modal .M {
+		color: #eee;
+	}
+	#enemy-modal table {
+		width: initial;
+		margin: 0 auto;
+	}
+	#enemy-modal td, #enemy-modal th {
+		padding: 9px 20px;
+		vertical-align: middle;
+		border: 1px solid #aaa;
+	}
+	:root.dark #enemy-modal td, :root.dark #enemy-modal th {
+		border-color: #555;
+	}
+	#enemy-modal .F {
+		background-color: #e8e8e8;
+	}
+	:root.dark #enemy-modal .F {
+		background-color: #2b2f3d;
+	}
+	#enemy-modal .left {
+		text-align: left;
+	}
+	#enemy-modal .left > * {
+		text-align: left;
+	}
+	#enemy-modal .em-ab > div {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		margin: 2px 0;
+	}
 	</style>
 {{/inline}}
 
@@ -345,6 +386,12 @@
 				<h2 class="w3-center dialog-header">固定編成</h2>
 				<div class="dialog-content"></div>
 				<button class="w3-button w3-indigo w3-round dialog-btn">OK</button>
+			</div>
+		</div>
+		<div class="modal" id="enemy-modal" style="display: flex; align-items: center; justify-content: center;" hidden>
+			<div class="M w3-animate-opacity" style="position: relative; padding: 2.5em 2.5em 1.5em;">
+				<span id="enemy-modal-close" style="position: absolute; top: 8px; right: 12px; cursor: pointer; font-size: 1.5em; line-height: 1;">&times;</span>
+				<div id="enemy-modal-ctn"></div>
 			</div>
 		</div>
 	</div>
