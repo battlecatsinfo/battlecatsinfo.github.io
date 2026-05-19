@@ -991,9 +991,9 @@ async function render_stage() {
 				}
 
 				if (treasure) {
-					leftCtn.appendChild(document.createElement('h3')).textContent = '金寶';
+					leftCtn.appendChild(document.createElement('h3')).textContent = '寶物';
 
-					const tbody = create_table(leftCtn, ['章節', '金寶'], ['w3-table', 'w3-centered']);
+					const tbody = create_table(leftCtn, ['章節', '寶物'], ['w3-table', 'w3-centered']);
 					for (const [chapter, stages] of treasure.chapters) {
 						if (chapter == 9) continue; // skip aku realms because there is no treasure in aku realms
 						const tr = tbody.appendChild(document.createElement('tr'));
@@ -1318,11 +1318,11 @@ async function render_stage() {
 		}
 		if (strs[6][0] == '2') {
 			const span = tr.firstElementChild.appendChild(document.createElement("span"));
-			span.textContent = "（BOSS、震波）";
+			span.textContent = "（魔王、震波）";
 			span.classList.add("boss");
 		} else if (strs[6][0] == '1') {
 			const span = tr.firstElementChild.appendChild(document.createElement("span"));
-			span.textContent = "（BOSS）";
+			span.textContent = "（魔王）";
 			span.classList.add("boss");
 		}
 	}

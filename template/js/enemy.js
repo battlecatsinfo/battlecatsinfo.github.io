@@ -575,6 +575,6 @@ loadEnemy(my_id)
 		addBarItem('搜尋出現關卡', search_for);
 		addBarItem('ImgCut', `/imgcut.html?unit=${-(E.id + 1)}`);
 		addBarItem('檢視動畫', E.animUrl);
-		addBarItem('金寶科技設定', '/settings.html#treasure');
+		addBarItem('寶物科技設定', '/settings.html#treasure');
 		addBarItem('DPS-距離圖表', `/dpsgraph_svg.html?units=${E.id}`);
 	});
