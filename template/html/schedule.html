@@ -4,33 +4,6 @@
 
 {{#*inline "scripts"}}
 	{{~> @partial-block}}
-	<script>
-		document.querySelectorAll('.image-box').forEach(img => {
-			img.loading = 'lazy';
-		});
-
-		const imageModal = document.getElementById('imageModal');
-		const modalImage = document.getElementById('modalImage');
-		const closeBtn = document.querySelector('.image-modal-close');
-
-		document.querySelectorAll('.resource-image-box').forEach(img => {
-			img.addEventListener('click', () => {
-				modalImage.src = img.src;
-				modalImage.alt = img.alt;
-				imageModal.classList.add('active');
-			});
-		});
-
-		closeBtn.addEventListener('click', () => {
-			imageModal.classList.remove('active');
-		});
-
-		imageModal.addEventListener('click', (e) => {
-			if (e.target === imageModal) {
-				imageModal.classList.remove('active');
-			}
-		});
-	</script>
 {{/inline}}
 
 {{#*inline "styles-inline"}}
@@ -1210,6 +1183,34 @@
 			<img id="modalImage" src="" alt="">
 		</div>
 	</div>
+
+	<script>
+		document.querySelectorAll('.image-box').forEach(img => {
+			img.loading = 'lazy';
+		});
+
+		const imageModal = document.getElementById('imageModal');
+		const modalImage = document.getElementById('modalImage');
+		const closeBtn = document.querySelector('.image-modal-close');
+
+		document.querySelectorAll('.image-box').forEach(img => {
+			img.addEventListener('click', () => {
+				modalImage.src = img.src;
+				modalImage.alt = img.alt;
+				imageModal.classList.add('active');
+			});
+		});
+
+		closeBtn.addEventListener('click', () => {
+			imageModal.classList.remove('active');
+		});
+
+		imageModal.addEventListener('click', (e) => {
+			if (e.target === imageModal) {
+				imageModal.classList.remove('active');
+			}
+		});
+	</script>
 {{/inline}}
 
 {{/gh.html}}
