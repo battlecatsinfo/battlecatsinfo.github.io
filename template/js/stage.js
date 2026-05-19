@@ -670,14 +670,9 @@ async function refresh_1(sts) {
 		} else {
 			name = map.name || map.nameJp || QQ;
 		}
-		// auto number map names
-		switch (M1.selectedIndex) {
-			case 0:       // SOL
-			case 9:       // UL
-			case 16:      // ZL
-				name = `${c + 1}. ${name}`;
-				break;
-		}
+		
+		name = `${c + 1}. ${name}`; // auto number map indices
+		
 		o.textContent = name;
 		c += 1;
 	}
