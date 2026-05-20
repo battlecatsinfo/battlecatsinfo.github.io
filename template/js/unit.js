@@ -273,16 +273,18 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 17:
-				if (layout === 2)
+				if (layout === 2) {
 					w3("超生命體特效");
 					break;
+				}
 				w1("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7）");
 				break;
 
 			case 18:
-				if (layout === 2)
+				if (layout === 2) {
 					w3(`超獸特效（${v[0]} % 發動持續 ${numStrT(v[1])} 的攻擊無效）`);
 					break;
+				}
 				w1(`超獸特效（攻擊傷害 × 2.5 、所受傷害 × 0.6、${v[0]} % 發動持續 ${numStrT(v[1])} 的攻擊無效）`);
 				break;
 
