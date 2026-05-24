@@ -225,6 +225,20 @@ Handlebars.registerHelper('loadJSON', function (filename, options) {
 	return JSON.parse(SiteGenerator.load(filename));
 });
 
+Handlebars.registerHelper('loadHTML', function (filename, options) {
+	return fs.readFileSync(
+		resolve(TEMPLATE_DIR, 'html', filename),
+		'utf8'
+	);
+});
+
+Handlebars.registerHelper('loadCSS', function (filename, options) {
+	return fs.readFileSync(
+		resolve(TEMPLATE_DIR, 'css', filename),
+		'utf8'
+	);
+});
+
 class SiteGenerator {
 	/**
 	 * A compiled template function generated with Handlebars.compile().

@@ -1,7 +1,8 @@
 import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
-import {EnemyIdb, loadCat, loadAllCats, catEnv} from './unit.mjs';
+import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
+import {renderEnemy} from "./enemy.mjs";
 
 const loader = document.getElementById('loader');
 
@@ -23,6 +24,7 @@ const rewards = document.getElementById("rewards");
 const m_times = document.getElementById("times");
 const mM = document.getElementById("mM");
 const ex_stages = document.getElementById("ex-stages");
+const enemyTable = document.getElementsByClassName('enemy-table')[0];
 const stageL = config.stagel;
 
 let info1, info2, info3, star, stage_extra, filter_page, stageF, cur_stage_code;
@@ -1298,17 +1300,26 @@ async function render_stage() {
 		atkM = parseInt(atkM || '2s', 36);
 
 		img.src = `/img/e/${enemy}/0.png`;
-		if (strs[6].length == 2) {
-			hpM = ~~(hpM * m).toString() + '%';
-			atkM = atkM.toString() + '%';
+		const noStageMag = (strs[6].length === 2);
+		a.addEventListener('click', event => {
+			event.preventDefault();
+			loadEnemy(enemy).then(e => {
+				renderEnemy(e, {my_mult: hpM, atk_mag: atkM, stageMag: noStageMag ? hpM : mult});
+				dialog('enemy-modal', enemyTable);
+			});
+		});
+		let hpMs, atkMs;
+		if (noStageMag) {
 			a.href = `/enemy.html?id=${enemy}&mag=${hpM}&atkMag=${atkM}`;
+			hpMs = ~~(hpM * m).toString() + '%';
+			atkMs = atkM.toString() + '%';
 		} else {
 			a.href = `/enemy.html?id=${enemy}&mag=${hpM}&atkMag=${atkM}&stageMag=${mult}`;
-			hpM = ~~(hpM * m).toString() + '%';
-			atkM = ~~(atkM * m).toString() + '%';
+			hpMs = ~~(hpM * m).toString() + '%';
+			atkMs = ~~(atkM * m).toString() + '%';
 		}
 
-		makeTd(tr, hpM == atkM ? hpM : `HP:${hpM}, ATK:${atkM}`); // mag
+		makeTd(tr, hpMs == atkMs ? hpMs : `HP:${hpMs}, ATK:${atkMs}`); // mag
 		makeTd(tr, strs[1] || "無限"); // count
 		makeTd(tr, strs[5] + '%'); // tower
 		if (stageF)

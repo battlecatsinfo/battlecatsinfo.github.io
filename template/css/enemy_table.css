@@ -1,0 +1,34 @@
+.enemy-table {
+	width: auto;
+}
+.enemy-table td {
+	vertical-align: middle;
+	padding: 9px 25px;
+	min-width: 60px;
+}
+.enemy-table .left > p {
+	margin-block-start: 7px;
+	margin-block-end: 7px;
+}
+.enemy-table .left {
+	text-align: left !important;
+	padding: 4px 12px !important;
+}
+.enemy-table td:first-child {
+	padding-left: 15px;
+}
+.enemy-table .F {
+	background-color: #f1f1f1 !important;
+}
+:root.dark .enemy-table .F {
+	background-color: #2b2f3d !important;
+}
+.enemy-table .left img {
+	max-width: 2em;
+	height: auto;
+	vertical-align: bottom !important;
+}
+.enemy-table .mag-lv {
+	white-space: nowrap;
+	cursor: pointer;
+}
