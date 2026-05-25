@@ -197,6 +197,12 @@
 		max-width: min(8vw, 8vh);
 		height: auto;
 	}
+	#enemy-modal-ctn {
+		margin-top: 4vh;
+		padding: 2vh 3vw;
+		font-size: min(1.2em, 18px);
+		overflow: auto;
+	}
 	{{{loadCSS "enemy_table.css"}}}
 	</style>
 {{/inline}}
@@ -349,7 +355,7 @@
 			</div>
 		</div>
 		<div class="modal" id="enemy-modal" hidden>
-			<div class="M dialog-ctn w3-animate-opacity" style="margin-top: 4vh;padding: 2vh 3vw;font-size: min(1.3em, 23px);">
+			<div id="enemy-modal-ctn" class="M dialog-ctn w3-animate-opacity">
 				<h2 class="w3-center dialog-header">敵人資訊</h2>
 				<div class="dialog-content">
 					{{{loadHTML "enemy_table.html"}}}
