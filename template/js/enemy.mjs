@@ -128,7 +128,6 @@ function W(s, img) {
 }
 
 function createAbIcons() {
-	specials.textContent = '';
 	createImuIcons(E.imu, specials);
 	let d, U = E.pre1 ? '*' : '';
 	if (E.trait & TB_SAGE) {
@@ -269,6 +268,7 @@ function renderEnemy(e, options, setTitle = false) {
 	my_mult = options.my_mult;
 	atk_mag = options.atk_mag;
 	stageMag = options.stageMag;
+	specials.textContent = '';
 	set.clear();
 	mult.textContent = '倍率:' + my_mult.toString() + '%';
 	mult_atk.textContent = '攻擊倍率:' + atk_mag.toString() + '%';
