@@ -197,13 +197,29 @@
 		max-width: min(8vw, 8vh);
 		height: auto;
 	}
+	{{{loadCSS "enemy_table.css"}}}
+	#enemy-modal {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.enemy-table td:first-child {
+		padding-left: 1.5vw;
+	}
 	#enemy-modal-ctn {
 		margin-top: 4vh;
-		padding: 2vh 3vw;
-		font-size: min(1.2em, 18px);
+		padding: 1.5vh 2vw;
+		font-size: max(0.9em, 10px);
 		overflow: auto;
 	}
-	{{{loadCSS "enemy_table.css"}}}
+	#enemy-modal-a {
+		display: block;
+		text-align: center;
+		margin-top: 0.8em;
+	}
+	.enemy-table td {
+		padding: 1vh 1vw !important;
+	}
 	</style>
 {{/inline}}
 
@@ -360,6 +376,7 @@
 				<div class="dialog-content">
 					{{{loadHTML "enemy_table.html"}}}
 				</div>
+				<a id="enemy-modal-a" target="_blank">在完整頁面開啟</a>
 				<button class="w3-button w3-indigo w3-round dialog-btn">OK</button>
 			</div>
 		</div>

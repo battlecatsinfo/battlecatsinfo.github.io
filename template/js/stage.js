@@ -25,6 +25,7 @@ const m_times = document.getElementById("times");
 const mM = document.getElementById("mM");
 const ex_stages = document.getElementById("ex-stages");
 const enemyTable = document.getElementsByClassName('enemy-table')[0];
+const enemyModalA = document.getElementById('enemy-modal-a');
 const stageL = config.stagel;
 
 let info1, info2, info3, star, stage_extra, filter_page, stageF, cur_stage_code;
@@ -154,6 +155,7 @@ function onStarAnchorClick(event) {
 function dialog(id, content) {
 	const modal = document.getElementById(id);
 	modal.hidden = false;
+	modal.addEventListener('click', e => { if (e.target === e.currentTarget) e.target.hidden = true; });
 	const dialogCtn = modal.getElementsByClassName('dialog-content')[0];
 	dialogCtn.textContent = '';
 	dialogCtn.appendChild(content);
@@ -1302,9 +1304,11 @@ async function render_stage() {
 		img.src = `/img/e/${enemy}/0.png`;
 		const noStageMag = (strs[6].length === 2);
 		a.addEventListener('click', event => {
+			const href = event.currentTarget.href;
 			event.preventDefault();
 			loadEnemy(enemy).then(e => {
 				renderEnemy(e, {my_mult: hpM, atk_mag: atkM, stageMag: noStageMag ? hpM : mult});
+				enemyModalA.href = href;
 				dialog('enemy-modal', enemyTable);
 			});
 		});
