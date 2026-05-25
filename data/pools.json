@@ -242,14 +242,14 @@
 		"tw_name": "惡魔的完美新娘活動轉蛋",
 		"jp_name": "悪魔のジューンブライドイベントガチャ",
 		"en_name": "June Bride of the Devil",
-		"img": "https://i.imgur.com/NjYaOzS.png",
+		"img": "https://i.meee.com.tw/s6kO7pA.png",
 		"rate": [800, 0, 5000, 0, 3000, 0, 1000, 1, 200, 0],
 		"stage": "11-52",
 		"ticket": 202,
 		"type": "event",
-		"units": [[10], [0, 3, 11, 12], [2, 4, 5, 14], [-758, -714, -666], [197]],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E029.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E029.html"
+		"units": [[10], [0, 3, 11, 12], [2, 4, 5, 14], [-864, -758, -714, -666], [197]],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E050.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E050.html"
 	},
 	{
 		"tw_name": "貓咪的暑假活動轉蛋",
@@ -881,7 +881,7 @@
 		"tw_name": "超破壞大帝龍皇因佩拉斯",
 		"jp_name": "超破壊大帝ドラゴンエンペラーズ",
 		"en_name": "Lords of Destruction Dragon Emperors",
-		"img": "https://i.imgur.com/gU3cjsF.png",
+		"img": "https://i.meee.com.tw/npOWmye.png",
 		"rate": [6970, 2500, 500, 30],
 		"history": [
 			"2023/9/8(11:00)~9/11(10:59) 龍族系列 5%/0.3% 必中",
@@ -987,9 +987,9 @@
 			"2014/12/21~2014/12/27 龍族系列"
 		],
 		"type": "rare",
-		"units": [760, 660, 620, 505, 450, 396, 177, 87, 86, 85, 84, 83, 447, 446, 445, 444, 443, 200, 144, 131, 129, 237, 238, 239, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R945.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R945.html"
+		"units": [861, 760, 660, 620, 505, 450, 396, 177, 87, 86, 85, 84, 83, 447, 446, 445, 444, 443, 200, 144, 131, 129, 237, 238, 239, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1060.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1060.html"
 	},
 	{
 		"tag": "超古代勇者",
@@ -1557,7 +1557,7 @@
 		"tw_name": "完美新娘",
 		"jp_name": "ジューンブライド",
 		"en_name": "June Bride",
-		"img": "https://i.imgur.com/w6dXndQ.png",
+		"img": "https://i.meee.com.tw/9QZmGO6.png",
 		"rate": [7000, 2500, 500, 0],
 		"rarity": "festival",
 		"history": [
@@ -1565,9 +1565,9 @@
 			"2022/7/18(11:00)~8/5(10:59) 完美新娘轉蛋 5% [碎] (新增: 祝福神克羅諾絲) [2022/7/30(11:00)~8/5(10:59) 5% 必中]"
 		],
 		"type": "rare",
-		"units": [756, 711, 661, 660, 358, 135, 72, 629, 636, 662, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R887.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R887.html"
+		"units": [862, 756, 711, 661, 660, 358, 72, 629, 636, 662, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1065.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1065.html"
 	},
 	{
 		"tag": "夏日1",
@@ -1579,8 +1579,8 @@
 		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1001.html",
 		"rarity": "festival",
 		"type": "rare",
-		"units": [275, 759, 714, 614, 564, 274, 654, 688, 694, 276, 276, 276, 565, 565, 565, 566, 566, 566, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R997.html"
+		"units": [275, 759, 714, 614, 564, 274, 654, 688, 694, 276, 565, 566, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1001.html"
 	},
 	{
 		"tag": "夏日2",
@@ -1589,10 +1589,10 @@
 		"en_name": "Gals of Summer: Sunshine",
 		"img": "https://i.meee.com.tw/KeMj0Hd.png",
 		"rate": [7000, 2500, 500, 0],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R903.html",
 		"rarity": "festival",
 		"type": "rare",
 		"units": [820, 666, 563, 354, 438, 494, 645, 667, 684, 276, 276, 276, 565, 565, 565, 566, 566, 566, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1010.html",
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1010.html"
 	},
 	{
@@ -2056,9 +2056,8 @@
 		"tag": "Fate",
 		"tw_name": "Fate/stay night [HF]",
 		"en_name": "Fate/Stay Night: Heaven's Feel",
-		"img": "https://i.imgur.com/4dPvKrG.png",
+		"img": "https://i.meee.com.tw/COJFEtB.png",
 		"rate": [7000, 2500, 500, 0],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R805.html",
 		"history": [
 			"2023/4/10(11:00)~4/24(10:59) Fate/stay night [HF]合作轉蛋 5% [4/21(11:00)~4/24(10:59) 5% 必中]",
 			"2019/2/25~2019/3/11 Fate/stay night [HF]合作轉蛋 5%(2019/3/6~2019/3/11 5%必中)"
@@ -2068,8 +2067,9 @@
 			"/collab/Fate_Stay_Night__Heaven_s_Feel.html"
 		],
 		"type": "rare",
-		"units": [362, 363, 364, 365, 366, 367, 368, 456, 460, 460, 460, 460, 460, 460, 370, 370, 370, 371, 371, 371, 372, 372, 372, 458, 458, 458, 459, 459, 459, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R788.html"
+		"units": [864, 865, 362, 363, 364, 365, 366, 367, 368, 456, 460, 460, 460, 460, 460, 460, 370, 370, 370, 371, 371, 371, 372, 372, 372, 458, 458, 458, 459, 459, 459, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1066.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1066.html"
 	},
 	{
 		"tag": "實況野球",
@@ -2157,7 +2157,6 @@
 		"en_name": "Street Fighter V BLUE TEAM",
 		"img": "https://i.meee.com.tw/4iGlAAP.png",
 		"rate": [6970, 2500, 500, 30, 0],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R777.html",
 		"history": [
 			"2022/11/28(11:00)~12/12(10:59) 快打旋風V CE合作轉蛋 BLUE TEAM 5%/0.3% [碎] (新增: 櫻) [2022/11/28(11:00)~12/12(10:59) 5%/0.3% 必中]"
 		],
@@ -2167,6 +2166,7 @@
 		],
 		"type": "rare",
 		"units": [510, 827, 681, 575, 574, 571, 517, 516, 515, 828, 828, 829, 829, 576, 576, 580, 580, 580, 579, 579, 579, 578, 578, 578, 577, 577, 577, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1017.html",
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1017.html"
 	},
 	{
@@ -2176,7 +2176,6 @@
 		"en_name": "Street Fighter V RED TEAM",
 		"img": "https://i.meee.com.tw/SYh2LEE.png",
 		"rate": [6970, 2500, 500, 30, 0],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R778.html",
 		"history": [
 			"2022/11/28(11:00)~12/12(10:59) 快打旋風V CE合作轉蛋 RED TEAM 5%/0.3% [碎] (新增: 路克) [2022/11/28(11:00)~12/12(10:59) 5%/0.3% 必中]"
 		],
@@ -2186,6 +2185,7 @@
 		],
 		"type": "rare",
 		"units": [510, 826, 680, 573, 572, 514, 513, 512, 511, 828, 828, 829, 829, 576, 576, 580, 580, 580, 579, 579, 579, 578, 578, 578, 577, 577, 577, 523, 522, 495, 377, 376, 325, 307, 308, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1018.html",
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1018.html"
 	},
 	{
@@ -2233,7 +2233,6 @@
 		"en_name": "Ranma 1/2",
 		"img": "https://i.imgur.com/APRMTCx.png",
 		"rate": [7000, 2500, 500, 0],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R757.html",
 		"history": [
 			"2022/10/10(11:00)~10/24(10:59) 亂馬1/2合作轉蛋 5% [碎] (新增: 早乙女亂馬（體操選手）) [2022/10/19(11:00)~10/24(10:59) 5% 必中]",
 			"2021/5/17~2021/5/31 亂馬1/2合作轉蛋 5% (2021/5/28~2021/5/31 5% 必中)"
@@ -2244,6 +2243,7 @@
 		],
 		"type": "rare",
 		"units": [671, 600, 599, 598, 597, 596, 672, 672, 601, 601, 602, 602, 603, 603, 605, 605, 605, 605, 605, 605, 605, 605, 605, 605, 522, 377, 307, 199, 153, 152, 151, 150, 61, 40, 39, 36, 35, 33, 32, 31, 30, 523, 495, 376, 325, 308, 198, 197, 149, 148, 147, 146, 145, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 38, 37],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R748.html",
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R748.html"
 	},
 	{
