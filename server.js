@@ -1,12 +1,11 @@
 const mime = require('mime-types');
 const fs = require('fs');
-const url = require('url');
 
 let verbose = false;
 
 function main(chalk) {
 	const server = require('http').createServer(function (req, res) {
-		let pathname = `.${url.parse(req.url).pathname}`;
+		let pathname = `.${(new URL(req.url, 'http://localhost')).pathname}`;
 		if (pathname == './')
 			pathname = './index.html';
 		if (pathname.startsWith('./img/'))
