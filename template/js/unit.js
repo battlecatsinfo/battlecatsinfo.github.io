@@ -1207,7 +1207,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 	}
 	makeTd(theadtr, '等級').classList.add('f');
 	{
-		let I = _super ? 6 : 1;
+		let I = (form.lvc === 2) ? 2 : (form.lvc === 3 || _super) ? 6 : 1;
 		let II = I + 4;
 		for (let i = I; i <= II; ++i) {
 			const e = makeTd(theadtr, `Lv${i * 10}`);
