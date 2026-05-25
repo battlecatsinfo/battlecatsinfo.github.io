@@ -5109,7 +5109,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(enemy.__atktype(), Unit.ATK_RANGE | Unit.ATK_LD);
 
 				var enemy = await Unit.loadEnemy(405);
-				assert.strictEqual(enemy.__atktype(), Unit.ATK_RANGE | Unit.ATK_OMNI);
+				assert.strictEqual(enemy.__atktype(), Unit.ATK_RANGE | Unit.ATK_OMNI | Unit.ATK_KB_REVENGE);
 			});
 
 			it('range', async function () {

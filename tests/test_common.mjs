@@ -181,21 +181,21 @@ describe('common.mjs', function () {
 
 		it('get config.stagef', function () {
 			getItemStub.withArgs('stagef').returns(null);
-			assert.strictEqual(config.stagef, 'F');
+			assert.strictEqual(config.stagef, 'f');
 
-			getItemStub.withArgs('stagef').returns('S');
-			assert.strictEqual(config.stagef, 'S');
+			getItemStub.withArgs('stagef').returns('s');
+			assert.strictEqual(config.stagef, 's');
 
-			getItemStub.withArgs('stagef').returns('F');
-			assert.strictEqual(config.stagef, 'F');
+			getItemStub.withArgs('stagef').returns('f');
+			assert.strictEqual(config.stagef, 'f');
 		});
 
 		it('set config.stagef', function () {
-			config.stagef = 'F';
-			assert.deepEqual(setItemStub.lastCall.args, ['stagef', 'F']);
+			config.stagef = 'f';
+			assert.deepEqual(setItemStub.lastCall.args, ['stagef', 'f']);
 
-			config.stagef = 'S';
-			assert.deepEqual(setItemStub.lastCall.args, ['stagef', 'S']);
+			config.stagef = 's';
+			assert.deepEqual(setItemStub.lastCall.args, ['stagef', 's']);
 
 			config.stagef = null;
 			assert.deepEqual(removeItemStub.lastCall.args, ['stagef']);
