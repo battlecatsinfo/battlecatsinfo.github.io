@@ -2189,7 +2189,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 	parent.textContent = '';
 	const firstLine = plus_s + fmt(
-		catEnv.getOthers(2).length ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(),
+		catEnv._orbs.atk ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(),
 		attackF
 	);
 	parent.append(firstLine);
