@@ -35,6 +35,12 @@ module.exports = class extends RewardSiteGenerator {
 		this.stage_rewards = stageTable.reduce((rv, entry, i) => {
 			let {id, drop, time} = entry;
 			id = parseInt(id, 36);
+			for (const t of drop.split('|')) {
+				if (t.startsWith('0,')) {
+					drop = false;
+					break;
+				}
+			}
 			rv[id] = drop || time || false;
 			return rv;
 		}, {});
