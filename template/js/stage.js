@@ -676,23 +676,10 @@ async function refresh_1(sts) {
 		}
 		
 		// auto map indices
-		switch (M1.selectedIndex) {
-			case 0:       // SOL
-			case 9:       // UL
-			case 16:      // ZL
-				name = `${c + 1}. ${name}`;
-				break;
-			case 3:       // main chapters
-			case 5:       // normal dojo
-			case 8:       // challenge
-			case 14:      // labyrinth
-			case 15:      // culling
-			case 17:      // colosseum
-			case 18:      // championships
-				break;
-			default:
-				name = `${c}. ${name}`; 
-				break;
+		if ([0, 9, 16].includes(M1.selectedIndex)) {
+			name = `${c + 1}. ${name}`; // SoL, UL, ZL
+		} else if (![3, 5, 8, 14, 15, 17, 18].includes(M1.selectedIndex)) {
+			name = `${c}. ${name}`; // NOT: main chapters, regular dojo, challenge, labyrinth, culling, colosseum, championships
 		}
 		
 		o.textContent = name;

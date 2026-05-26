@@ -1710,7 +1710,7 @@ class CatForm extends Unit {
 				this.attackF = (this.pre2 || this.pre1 || this.pre) + Math.max(this.backswing, this.tba - 1);
 				break;
 
-			case 62: // Mini Wave
+			case 62:
 				t = this.ab[AB_MINIWAVE];
 				x = inc1 + (t ? t[0] : 0);
 				y = inc2 + (t ? t[1] : 0);
@@ -1741,6 +1741,9 @@ class CatForm extends Unit {
 				break;
 			case 68:
 				this.ab[AB_COUNTER] = null;
+				break;
+			case 69:
+				this.imu |= IMU_EXPLOSION;
 				break;
 		}
 	}
