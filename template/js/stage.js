@@ -1241,6 +1241,7 @@ async function render_stage() {
 	} else {
 		ex_stages.hidden = true;
 	}
+	// stage enemy table
 	stLines.textContent = "";
 	for (const line of info3.enemyLines.split('|')) {
 		const tr = stLines.appendChild(document.createElement("tr"));
@@ -1286,7 +1287,11 @@ async function render_stage() {
 
 		makeTd(tr, hpMs == atkMs ? hpMs : `HP:${hpMs}, ATK:${atkMs}`); // mag
 		makeTd(tr, strs[1] || "無限"); // count
-		makeTd(tr, strs[5] + '%'); // tower
+
+		let tower = strs[5];
+		let towerIsRawHP = (parseInt(tower) > 100 || [5, 7].includes(M1.selectedIndex)) ? true : false; // dojos
+		makeTd(tr, towerIsRawHP ? tower : `${tower}%`); // tower HP/ratio
+
 		if (stageF)
 			makeTd(tr, TI(strs[2]));
 		else
