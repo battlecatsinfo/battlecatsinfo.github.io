@@ -1121,17 +1121,12 @@ async function render_stage() {
 		// Always normal stages
 		st3[1].textContent = numStr(~~(xp * 4.7));
 	} else {
-		switch (M1.selectedIndex) {
-			case 3: // Main chapter story
-				st3[1].textContent = 1000 + Math.min(M3.selectedIndex, 47) * 300;
-				break;
-			case 0:
-			case 9:
-			case 16: // SoL, UL, ZL
-				st3[1].textContent = numStr(~~(xp * 9 * 4.7));
-				break;
-			default: // Normal stages
-				st3[1].textContent = numStr(~~(xp * 4.7));
+		if ([3].includes(M1.selectedIndex)) { // main chapters
+			st3[1].textContent = 1000 + Math.min(M3.selectedIndex, 47) * 300;
+		} else if ([0, 9, 16].includes(M1.selectedIndex)) { // SoL, UL, ZL
+			st3[1].textContent = numStr(~~(xp * 9 * 4.7));
+		} else {
+			st3[1].textContent = numStr(~~(xp * 4.7));
 		}
 	}
 
