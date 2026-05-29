@@ -193,9 +193,10 @@ function createAbIcons(form, p1, p2, tbody) {
 				break;
 
 			case 3:
-				if (layout === 2)
+				if (layout === 2) {
 					w3("善於攻城");
 					break;
+				}
 				w1("善於攻城（攻擊傷害 × 4）");
 				break;
 
