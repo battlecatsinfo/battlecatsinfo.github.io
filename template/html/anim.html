@@ -79,6 +79,18 @@ select, input[type="number"] {
 .menu p {
 	cursor: pointer;
 }
+#fps {
+	font-size: 2vh;
+	position: fixed;
+	top: 1.5vh;
+	left: 1.5vh;
+	font-family: monospace;
+	color: white;
+	background-color: black;
+	border: .3em solid black;
+	border-radius: .2em;
+	padding: 0 .5em 0 .5em;
+}
 .side-ctl {
 	cursor: pointer;
 	position: fixed;
@@ -194,6 +206,7 @@ input.range:disabled { background-color: #300000; }
 	</svg>
 
 	<div id="progress-container"></div>
+	<span id="fps">FPS: </span>
 	<span class="side-ctl" style="left: 2vw;" id="prevu">❮</span>
 	<span class="side-ctl" style="right: 2vw;" id="nextu">❯</span>
 	<div id="loading" style="position: absolute;left: 50%;top: 50%;background-color: rgba(0, 0, 0, 0.7);color: white;font-family: monospace;padding: 1em;transform: translate(-50%, -50%);font-size: 2em;">載入中...</div>
