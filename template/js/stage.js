@@ -1264,7 +1264,7 @@ async function render_stage() {
 			const href = event.currentTarget.href;
 			event.preventDefault();
 			loadEnemy(enemy).then(e => {
-				renderEnemy(e, {my_mult: hpM, atk_mag: atkM, stageMag: noStageMag ? hpM : mult});
+				renderEnemy(e, {my_mult: hpM, atk_mag: atkM, stageMag: noStageMag ? 100 : mult});
 				enemyModalA.href = href;
 				dialog('enemy-modal', enemyTable);
 			});
