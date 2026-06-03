@@ -139,9 +139,6 @@ async function collectEnemyStageIds(targetId) {
 					stageIds[LEGEND_MC].add(stage.id);
 					break
 				}
-
-
-				
 			}
 		}
 	}
@@ -193,11 +190,6 @@ async function renderStages() {
         return;
     }
 
-    // let stageIntersection = new Set(activeEnemies[0].stageIds[selected_chapter]);
-    // for (let i = 1; i < activeEnemies.length; i++) {
-    //     stageIntersection = stageIntersection.intersection(activeEnemies[i].stageIds[selected_chapter]);
-    // }
-
 	const isOR = queueModeBtn.textContent === 'OR';
 
 	let stageIntersection;
@@ -244,9 +236,29 @@ function renderStageRows() {
     if (currentStageData.length == 0) return;
 
     const sorted = [...currentStageData]; // shallow copy so original order is preserved
-    if (stageSortKey) {
-        sorted.sort((a, b) => stageSortDir * (a[stageSortKey] - b[stageSortKey]));
-    }
+    
+	const isOR = queueModeBtn.textContent === 'OR';
+	const activeEnemies = enemyQueue.filter(e => e.active);
+	if (isOR){
+		for (const entry of sorted) {
+            entry.matchCount = activeEnemies.filter(
+                e => e.stageIds[selected_chapter].has(entry.stageId)
+            ).length;
+        }
+		// first sort by enemy counts, then by key
+        sorted.sort((a, b) => {
+            // primary: descending matchCount
+            const byMatch = b.matchCount - a.matchCount;
+            if (byMatch !== 0) return byMatch;
+            // // secondary: whatever stageSortKey is set to
+            return stageSortDir * (a[stageSortKey] - b[stageSortKey]);
+        });
+	}
+	else{
+		// AND mode
+		sorted.sort((a, b) => stageSortDir * (a[stageSortKey] - b[stageSortKey]));
+	}
+	
 
     for (const { mc, st, sm, stage, map } of sorted) {
 		const tr = document.createElement('tr');
