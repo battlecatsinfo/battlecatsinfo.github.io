@@ -96,6 +96,13 @@ const radios = document.querySelectorAll('#stages input[type="radio"]');
 radios.forEach(radio => {
 	radio.addEventListener('change', () => {
 		selected_chapter = parseInt(radio.value);
+		// reset sort info when changing MC
+		stageSortKey = null;
+        stageSortDir = 1;
+		for (let x of th.children) {
+            if (x._t) x.textContent = x._t;
+            x._s = 0;
+        }
 		radios.forEach(r => {
 			r.parentElement.classList.toggle(
 				'o-selected',
@@ -177,169 +184,178 @@ function filterByNameOrId(results) {
 	});
 }
 
+let currentStageData = []; // cache the fetched stage data
 
+async function renderStages() {
+    // fetches data, stores in currentStageData, then renders
+    const activeEnemies = enemyQueue.filter(e => e.active);
+    const activeIds = new Set(activeEnemies.map(e => e.id));
+    tbody.textContent = '';
 
-function renderStages(){
-	// get intersection of stages
-	console.log("rendering stages", selected_chapter);
-	const activeEnemies = enemyQueue.filter(e => e.active);
-	const activeIds = new Set(
-		enemyQueue.filter(e => e.active).map(e => e.id)
-	);
-	tbody.textContent = '';
-	if (activeEnemies.length == 0) {
-		// TODO: empty
-		console.log("no active");
-		tbody.innerHTML = '<tr><td colSpan="13">沒有符合敵人條件的關卡！</td></tr>';
-		return;
-	} 
-	let stageIntersection = new Set(activeEnemies[0].stageIds[selected_chapter]);
-
-    for (let i = 1; i < activeEnemies.length; i++) {
-		stageIntersection = stageIntersection.intersection(activeEnemies[i].stageIds[selected_chapter]);
+    if (activeEnemies.length == 0) {
+        currentStageData = [];
+        tbody.innerHTML = '<tr><td colSpan="13">沒有符合敵人條件的關卡！</td></tr>';
+        return;
     }
-	if (stageIntersection.size == 0){
-		console.log("no stages");
-		tbody.innerHTML = '<tr><td colSpan="13">沒有符合敵人條件的關卡！</td></tr>';
-		return;
-	}
-	found_stages.textContent = '';
-	console.log(stageIntersection);
 
-	for (const stageId of stageIntersection){
-		// load stage content
-		const mc = ~~(stageId / 1000000);
-		const st = stageId % 1000;
-		const sm = ~~((stageId - mc * 1000000) / 1000);
-		const mapId = mc * 1000 + sm;
+    let stageIntersection = new Set(activeEnemies[0].stageIds[selected_chapter]);
+    for (let i = 1; i < activeEnemies.length; i++) {
+        stageIntersection = stageIntersection.intersection(activeEnemies[i].stageIds[selected_chapter]);
+    }
+    if (stageIntersection.size == 0) {
+        currentStageData = [];
+        tbody.innerHTML = '<tr><td colSpan="13">沒有符合敵人條件的關卡！</td></tr>';
+        return;
+    }
+
+    found_stages.textContent = '';
+
+    // Fetch all stage data once
+    currentStageData = await Promise.all([...stageIntersection].map(async stageId => {
+        const mc = ~~(stageId / 1000000);
+        const st = stageId % 1000;
+        const sm = ~~((stageId - mc * 1000000) / 1000);
+        const mapId = mc * 1000 + sm;
+        const [stage, map] = await Promise.all([Stage.getStage(stageId), Stage.getMap(mapId)]);
+        return { mc, st, sm, stageId, stage, map, energy: stage.energy };
+    }));
+
+    renderStageRows();
+}
+
+function renderStageRows() {
+    const activeIds = new Set(enemyQueue.filter(e => e.active).map(e => e.id));
+    tbody.textContent = '';
+
+    if (currentStageData.length == 0) return;
+
+    const sorted = [...currentStageData]; // shallow copy so original order is preserved
+    if (stageSortKey) {
+        sorted.sort((a, b) => stageSortDir * (a[stageSortKey] - b[stageSortKey]));
+    }
+
+    for (const { mc, st, sm, stage, map } of sorted) {
+		const tr = document.createElement('tr');
+		tr.classList.add('no-hover');
+
+		// 篇章 (sm)
+		const tdSm = document.createElement('td');
+		
+		// 關卡 (st)
+		const tdSt = document.createElement('td');
+		
+		if (mc == 0) {
+			// legend
+			tdSm.textContent = `${sm+1}. ${map.name}`;
+			tdSt.textContent = stage.name;
+
+		}
+		else {
+			// main chapters
+			tdSm.textContent = map.name;
+			tdSt.textContent = `${st+1}. ${stage.name}`;
 			
-		Promise.all([
-			Stage.getStage(stageId),
-			Stage.getMap(mapId)
-		]).then(([stage, map]) => {
-			// both are ready here
-			console.log(mc, st, sm);
-			console.log("stage", stage);
-			console.log("map", map);
-
-			// stage stuff
-			stage.enemyLines;
-			stage.energy;
-			stage.name;
-			map.name;
-
-			const tr = document.createElement('tr');
-			tr.classList.add('no-hover');
-
-			// 篇章 (st)
-			const tdSt = document.createElement('td');
-			tdSt.textContent = map.name;
-
-			// 關卡 (sm)
-			const tdSm = document.createElement('td');
-			tdSm.textContent = stage.name;
+		}
 
 
-			// 統帥力 (energy)
-			const tdEr = document.createElement('td');
-			tdEr.textContent = stage.energy;
+		// 統帥力 (energy)
+		const tdEr = document.createElement('td');
+		tdEr.textContent = stage.energy;
 
-			// 敵人 (enemy list)
-			// const tdEnemy = document.createElement('td');
-			// tdEnemy.style.display = 'flex';
-			// tdEnemy.style.flexWrap = 'wrap';   // optional: allow wrapping
-			// tdEnemy.style.gap = '8px';         // spacing between enemies
+		// 敵人 (enemy list)
+		// const tdEnemy = document.createElement('td');
+		// tdEnemy.style.display = 'flex';
+		// tdEnemy.style.flexWrap = 'wrap';   // optional: allow wrapping
+		// tdEnemy.style.gap = '8px';         // spacing between enemies
 
-			const enemyTable = document.createElement('table');
-			enemyTable.className = 'enemy-subtable';
-			const enemyTbody = document.createElement('tbody');
+		const enemyTable = document.createElement('table');
+		enemyTable.className = 'enemy-subtable';
+		const enemyTbody = document.createElement('tbody');
 
-			// rows
-			const rowName  = document.createElement('tr');
-			const rowTime  = document.createElement('tr');
-			const rowTower = document.createElement('tr');
+		// rows
+		const rowName  = document.createElement('tr');
+		const rowTime  = document.createElement('tr');
+		const rowTower = document.createElement('tr');
 
-			// label cells
-			const makeLabel = text => {
-				const td = document.createElement('td');
-				td.textContent = text;
-				td.className = 'enemy-label';
-				return td;
-			};
+		// label cells
+		const makeLabel = text => {
+			const td = document.createElement('td');
+			td.textContent = text;
+			td.className = 'enemy-label';
+			return td;
+		};
 
-			rowName.appendChild(makeLabel(''));
-			rowTime.appendChild(makeLabel('初登場(秒)'));
-			rowTower.appendChild(makeLabel('城連動'));
+		rowName.appendChild(makeLabel(''));
+		rowTime.appendChild(makeLabel('初登場(秒)'));
+		rowTower.appendChild(makeLabel('城連動'));
 
-			const bestEnemy = new Map();
-			for (const group of stage.enemyLines.split('|')) {
-				const strs = group.split(',');
+		const bestEnemy = new Map();
+		for (const group of stage.enemyLines.split('|')) {
+			const strs = group.split(',');
 
-				const enemyId = parseInt(strs[0], 36);
-				const time = Number(strs[2]);
-				const tower = Number(strs[5]);
+			const enemyId = parseInt(strs[0], 36);
+			const time = Number(strs[2]);
+			const tower = Number(strs[5]);
 
-				const key = enemyId;
+			const key = enemyId;
 
-				if (!bestEnemy.has(key)) {
-					bestEnemy.set(key, { group, time, tower });
-					continue;
-				}
-
-				const best = bestEnemy.get(key);
-
-				// rule 1: same time: higher tower wins
-				if (time === best.time && tower > best.tower) {
-					bestEnemy.set(key, { group, time, tower });
-					continue;
-				}
-
-				// rule 2: same tower: lower time wins
-				if (tower === best.tower && time < best.time) {
-					bestEnemy.set(key, { group, time, tower });
-					continue;
-				}
+			if (!bestEnemy.has(key)) {
+				bestEnemy.set(key, { group, time, tower });
+				continue;
 			}
-			const filteredEnemyLines = [...bestEnemy.values()].map(v => v.group);
-			// for (const group of filteredEnemyLines) {
-			for (const [enemyId, { group, time, tower }] of bestEnemy) {
-				console.log(group);
-				
-				const tdName = document.createElement('td');
-				
-				const img = new Image(32, 32);
-				img.src = `/img/e/${enemyId}/0.png`;
-				
-				const enemyName = document.createElement('div');
-				enemyName.textContent = cats[enemyId].info.name;
-				enemyName.className = "enemy-name";
 
-				tdName.append(img, enemyName);
+			const best = bestEnemy.get(key);
 
-				const firstSpawn = document.createElement('td');
-				firstSpawn.textContent = Math.ceil(time/30);
-				
-
-				const towerSpawn = document.createElement('td');
-				towerSpawn.textContent = tower + "%";
-
-				if (activeIds.has(enemyId)){
-					tdName.classList.add("highlight");
-					firstSpawn.classList.add("highlight");
-					towerSpawn.classList.add("highlight");
-				}
-
-				rowName.appendChild(tdName);
-				rowTime.appendChild(firstSpawn);
-				rowTower.appendChild(towerSpawn);
+			// rule 1: same time: higher tower wins
+			if (time === best.time && tower > best.tower) {
+				bestEnemy.set(key, { group, time, tower });
+				continue;
 			}
-			enemyTbody.append(rowName, rowTime, rowTower);
-			enemyTable.appendChild(enemyTbody);
-			tr.append(tdSt, tdSm, tdEr, enemyTable);
-    		tbody.appendChild(tr);
 
-		});
-	}
+			// rule 2: same tower: lower time wins
+			if (tower === best.tower && time < best.time) {
+				bestEnemy.set(key, { group, time, tower });
+				continue;
+			}
+		}
+		const filteredEnemyLines = [...bestEnemy.values()].map(v => v.group);
+		// for (const group of filteredEnemyLines) {
+		for (const [enemyId, { group, time, tower }] of bestEnemy) {
+			console.log(group);
+			
+			const tdName = document.createElement('td');
+			
+			const img = new Image(32, 32);
+			img.src = `/img/e/${enemyId}/0.png`;
+			
+			const enemyName = document.createElement('div');
+			enemyName.textContent = cats[enemyId].info.name;
+			enemyName.className = "enemy-name";
+
+			tdName.append(img, enemyName);
+
+			const firstSpawn = document.createElement('td');
+			firstSpawn.textContent = Math.ceil(time/30);
+			
+
+			const towerSpawn = document.createElement('td');
+			towerSpawn.textContent = tower + "%";
+
+			if (activeIds.has(enemyId)){
+				tdName.classList.add("highlight");
+				firstSpawn.classList.add("highlight");
+				towerSpawn.classList.add("highlight");
+			}
+
+			rowName.appendChild(tdName);
+			rowTime.appendChild(firstSpawn);
+			rowTower.appendChild(towerSpawn);
+		}
+		enemyTbody.append(rowName, rowTime, rowTower);
+		enemyTable.appendChild(enemyTbody);
+		tr.append(tdSm, tdSt, tdEr, enemyTable);
+		tbody.appendChild(tr);
+    }
 }
 
 function renderTable(forms, page = 1) {
@@ -583,29 +599,36 @@ toggle_s.onclick = function() {
 name_search.oninput = function() {
 	renderTable(last_forms);
 }
+
+const stageProps = new Set(['st', 'sm', 'energy']);
+let stageSortKey = null;
+let stageSortDir = 1;
+
+const LEGEND_MC = 114514; // the mc value where sm is meaningful and st is not
+
 const th = document.getElementById('th');
 for (let n of th.children) {
-	if (n.title) {
-		n._s = 0;
-		n._t = n.textContent;
-		n.onclick = function(event) {
-			if (n._s == 0) {
-				n._s = 1;
-				sort_expr.value = event.currentTarget.title;
-			} else {
-				n._s = 0;
-				sort_expr.value = '-' + event.currentTarget.title;
-			}
-			let y = n._s;
-			for (let x of th.children) {
-				if (x.title) {
-					x.textContent = x._t;
-					x._s = 0;
-				}
-			}
-			n._s = y;
-			n.textContent = n._t + (n._s ? '↑' : '↓');
-			calculate(simplify(filter_expr.value));
-		}
-	}
+    if (!n.title || !stageProps.has(n.title)) continue;
+    n._s = 0;
+    n._t = n.textContent;
+    n.onclick = function(event) {
+        const key = event.currentTarget.title;
+
+        // Guard: sm only when mc == LEGEND_MC, st only when mc != LEGEND_MC
+        if (key === 'sm' && selected_chapter !== LEGEND_MC) return;
+        if (key === 'st' && selected_chapter === LEGEND_MC) return;
+
+        if (stageSortKey === key) {
+            stageSortDir *= -1;
+        } else {
+            stageSortKey = key;
+            stageSortDir = 1;
+        }
+        for (let x of th.children) {
+            if (x.title) { x.textContent = x._t; x._s = 0; }
+        }
+        n._s = stageSortDir;
+        n.textContent = n._t + (stageSortDir < 0 ? '↑' : '↓');
+        renderStageRows();
+    };
 }
