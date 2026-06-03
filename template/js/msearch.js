@@ -81,16 +81,6 @@ document.getElementById('queue-clear').onclick = function() {
 	renderStages();
 }
 
-// async function collectAllEnemyStageIds() {
-//     await Promise.all(
-//         enemyQueue.map(enemy =>
-//             collectEnemyStageIds(enemy.id.toString(36))
-//                 .then(ids => {
-//                     enemy.stageIds = ids;
-//                 })
-//         )
-//     );
-// }
 
 
 const radios = document.querySelectorAll('#stages input[type="radio"]');
@@ -98,13 +88,6 @@ const radios = document.querySelectorAll('#stages input[type="radio"]');
 radios.forEach(radio => {
 	radio.addEventListener('change', () => {
 		selected_chapter = parseInt(radio.value);
-		// reset sort info when changing MC
-		// stageSortKey = null;
-        // stageSortDir = 1;
-		// for (let x of th.children) {
-        //     if (x._t) x.textContent = x._t;
-        //     x._s = 0;
-        // }
 		radios.forEach(r => {
 			r.parentElement.classList.toggle(
 				'o-selected',
@@ -114,9 +97,17 @@ radios.forEach(radio => {
 
 		});
 		console.log(enemyQueue);
-		// re render selected chapters
 		renderStages();
 	});
+});
+
+document.getElementById('stages').addEventListener('click', function(event) {
+    const li = event.target.closest('li.w3-button');
+    if (!li) return;
+    const radio = li.querySelector('input[type="radio"]');
+    if (!radio || radio.checked) return;
+    radio.checked = true;
+    radio.dispatchEvent(new Event('change', { bubbles: true }));
 });
 
 async function collectEnemyStageIds(targetId) {
@@ -661,8 +652,18 @@ for (let n of th.children) {
 }
 
 function resetStageSort() {
-    stageSortKey = (selected_chapter === LEGEND_MC) ? 'sm' : 'st';
-    stageSortDir = 1;
+	if (stageSortKey === null){
+		stageSortKey = (selected_chapter === LEGEND_MC) ? 'sm' : 'st';
+	}
+	else if (stageSortKey === 'st' && selected_chapter === LEGEND_MC){
+		stageSortKey = 'sm';
+	}
+	else if (stageSortKey === 'sm' && selected_chapter != LEGEND_MC){
+		stageSortKey = 'st';
+	}
+    
+    // stageSortDir = 1;
+	// remove arrows in columns
     for (let x of th.children) {
         if (x._t) {
             x.textContent = x._t;
@@ -673,7 +674,7 @@ function resetStageSort() {
     for (let x of th.children) {
         if (x.title === stageSortKey) {
             x._s = 1;
-            x.textContent = x._t + '↑';
+            x.textContent = x._t + (stageSortDir < 0 ? '↑' : '↓');
             break;
         }
     }
