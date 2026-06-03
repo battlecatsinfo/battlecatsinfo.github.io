@@ -20,8 +20,10 @@ const traitBtn = trait_s.firstElementChild.firstElementChild;
 const name_search = document.getElementById('name-search');
 var last_forms;
 var per_page = 8*3;
-// var per_page = 114514;
 let results;
+
+const LEGEND_MC = 114514;
+
 
 let enemyQueue = []; // store {id, name, icon, active, stageIds} objects
 let selected_chapter = 3009; // EOC
@@ -97,12 +99,12 @@ radios.forEach(radio => {
 	radio.addEventListener('change', () => {
 		selected_chapter = parseInt(radio.value);
 		// reset sort info when changing MC
-		stageSortKey = null;
-        stageSortDir = 1;
-		for (let x of th.children) {
-            if (x._t) x.textContent = x._t;
-            x._s = 0;
-        }
+		// stageSortKey = null;
+        // stageSortDir = 1;
+		// for (let x of th.children) {
+        //     if (x._t) x.textContent = x._t;
+        //     x._s = 0;
+        // }
 		radios.forEach(r => {
 			r.parentElement.classList.toggle(
 				'o-selected',
@@ -143,7 +145,7 @@ async function collectEnemyStageIds(targetId) {
 				}
 				else if (main_chapter >= 0 && main_chapter <= 47){
 					// SL
-					stageIds[114514].add(stage.id);
+					stageIds[LEGEND_MC].add(stage.id);
 					break
 				}
 
@@ -185,8 +187,10 @@ function filterByNameOrId(results) {
 }
 
 let currentStageData = []; // cache the fetched stage data
+const queueModeBtn = document.querySelector('#enemy-queue .or-and');
 
 async function renderStages() {
+	resetStageSort();
     // fetches data, stores in currentStageData, then renders
     const activeEnemies = enemyQueue.filter(e => e.active);
     const activeIds = new Set(activeEnemies.map(e => e.id));
@@ -198,10 +202,29 @@ async function renderStages() {
         return;
     }
 
-    let stageIntersection = new Set(activeEnemies[0].stageIds[selected_chapter]);
-    for (let i = 1; i < activeEnemies.length; i++) {
-        stageIntersection = stageIntersection.intersection(activeEnemies[i].stageIds[selected_chapter]);
-    }
+    // let stageIntersection = new Set(activeEnemies[0].stageIds[selected_chapter]);
+    // for (let i = 1; i < activeEnemies.length; i++) {
+    //     stageIntersection = stageIntersection.intersection(activeEnemies[i].stageIds[selected_chapter]);
+    // }
+
+	const isOR = queueModeBtn.textContent === 'OR';
+
+	let stageIntersection;
+	if (isOR) {
+		// union: stages that contain ANY active enemy
+		stageIntersection = new Set();
+		for (const enemy of activeEnemies) {
+			for (const id of enemy.stageIds[selected_chapter]) {
+				stageIntersection.add(id);
+			}
+		}
+	} else {
+		// intersection: stages that contain ALL active enemies
+		stageIntersection = new Set(activeEnemies[0].stageIds[selected_chapter]);
+		for (let i = 1; i < activeEnemies.length; i++) {
+			stageIntersection = stageIntersection.intersection(activeEnemies[i].stageIds[selected_chapter]);
+		}
+	}
     if (stageIntersection.size == 0) {
         currentStageData = [];
         tbody.innerHTML = '<tr><td colSpan="13">沒有符合敵人條件的關卡！</td></tr>';
@@ -562,12 +585,17 @@ document.querySelectorAll('.or-and').forEach(e => {
 			t.textContent = 'AND';
 		else
 			t.textContent = 'OR';
-		calculate();
+
+		if (t === queueModeBtn){
+			renderStages();
+		}
+		else
+			calculate();
 	};
 });
-document.getElementById('filter-go').onclick = function() {
-	calculate(simplify(filter_expr.value));
-}
+// document.getElementById('filter-go').onclick = function() {
+// 	calculate(simplify(filter_expr.value));
+// }
 document.getElementById('filter-clear').onclick = function() {
 	function fn(x) {
 		x.classList.remove('o-selected');
@@ -604,7 +632,6 @@ const stageProps = new Set(['st', 'sm', 'energy']);
 let stageSortKey = null;
 let stageSortDir = 1;
 
-const LEGEND_MC = 114514; // the mc value where sm is meaningful and st is not
 
 const th = document.getElementById('th');
 for (let n of th.children) {
@@ -631,4 +658,23 @@ for (let n of th.children) {
         n.textContent = n._t + (stageSortDir < 0 ? '↑' : '↓');
         renderStageRows();
     };
+}
+
+function resetStageSort() {
+    stageSortKey = (selected_chapter === LEGEND_MC) ? 'sm' : 'st';
+    stageSortDir = 1;
+    for (let x of th.children) {
+        if (x._t) {
+            x.textContent = x._t;
+            x._s = 0;
+        }
+    }
+    // set the arrow on the default column
+    for (let x of th.children) {
+        if (x.title === stageSortKey) {
+            x._s = 1;
+            x.textContent = x._t + '↑';
+            break;
+        }
+    }
 }
