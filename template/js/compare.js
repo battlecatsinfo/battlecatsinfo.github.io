@@ -234,10 +234,10 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				W(`${v[0]} % Lv${v[1]} 波動`);
 				break;
 			case 14:
-				W(`${v[0]} % Lv${v[4]} 小烈波（${v[1]}～${v[2]}）`);
+				W(`${v[0]} % Lv${v[3]} 小烈波（${v[1]}～${v[2]}）`);
 				break;
 			case 15:
-				W(`${v[0]} % Lv${v[4]} 烈波（${v[1]}～${v[2]}）`);
+				W(`${v[0]} % Lv${v[3]} 烈波（${v[1]}～${v[2]}）`);
 				break;
 			case 16:
 				W('波動滅止');
