@@ -617,18 +617,6 @@ class DPSGraph {
 			select = null;
 		}
 
-		if (F.ab.hasOwnProperty(AB_WEIRDO)) {
-			this.options.weirdo = true;
-			select = this.create_select('怪人特效', ['ON', 'OFF']);
-		}
-		if (select) {
-			select.oninput = function() {
-				self.options.weirdo = !this.selectedIndex;
-				self.render();
-			};
-			select = null;
-		}
-
 		if (F.ab.hasOwnProperty(AB_STRENGTHEN)) {
 			this.options.strong = true;
 			select = this.create_select('攻擊力上升', ['ON', 'OFF']);
@@ -911,11 +899,6 @@ class DPSGraph {
 			if (this.options.sage) {
 				for (let i = 0; i < this.atks.length; ++i) {
 					this.atks[i] *= 1.2;
-				}
-			}
-			if (this.options.weirdo) {
-				for (let i = 0; i < this.atks.length; ++i) {
-					this.atks[i] *= 2.5;
 				}
 			}
 		}
