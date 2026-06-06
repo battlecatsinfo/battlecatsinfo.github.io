@@ -75,16 +75,39 @@ async function doSearch() {
 		lang != 'tw' && url.searchParams.set("input", lang);
 		target != 'all' && url.searchParams.set("target", target);
 		history.pushState({}, "", url);
-	}
-	if (!results_body.children.length) {
+	} else {
 		const tr = document.createElement('tr');
 		const td = document.createElement('td');
-		td.textContent = '沒有結果';
+		td.innerHTML = '無輸入內容，正在顯示所選範圍的全部內容<br>No search term entered. Showing all items in the selected scope.';
+		td.colSpan = 4;
+		tr.classList.add('group');
+		tr.appendChild(td);
+		results_body.appendChild(tr);
+
+		const storeNames = target === 'all' ? ["tterm"] : [target]; // default to tterm if "All" is selected
+		for (const storeName of storeNames) {
+			for await (const value of IdbBase.forEachValue(db, storeName)) {
+				const tr = document.createElement('tr');
+				for (const lang of ['tw', 'jp', 'en', 'kr']) {
+					const td = document.createElement('td');
+					td.textContent = value[lang];
+					tr.appendChild(td);
+				}
+				results_body.appendChild(tr);
+			}
+		}
+	}
+
+	if (!results_body.textContent) {
+		const tr = document.createElement('tr');
+		const td = document.createElement('td');
+		td.innerHTML = '無匹配結果<br>No matches found';
 		td.colSpan = 4;
 		tr.classList.add('group');
 		tr.appendChild(td);
 		results_body.appendChild(tr);
 	}
+
 }
 
 const searchParams = new URL(location.href).searchParams;
