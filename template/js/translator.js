@@ -21,6 +21,20 @@ const results_body = document.getElementById('results-body');
 const search_for = document.getElementById('search-for');
 const input_lang = document.getElementById('input-lang');
 
+function trText(rowText, isHTML = true) {
+	const tr = document.createElement('tr');
+	const td = document.createElement('td');
+	if (isHTML) {
+		td.innerHTML = rowText;
+	} else {
+		td.textContent = rowText;
+	}
+	td.colSpan = 4;
+	tr.classList.add('group');
+	tr.appendChild(td);
+	return tr;
+}
+
 async function doSearch() {
 	const lang = input_lang.value;
 	const target = search_for.value;
@@ -59,13 +73,8 @@ async function doSearch() {
 
 				if (first && storeNames.length !== 1) {
 					first = false;
-					const tr = document.createElement('tr');
-					const td = document.createElement('td');
-					td.textContent = {'tstage': '關卡', 'tcat': '貓咪', 'tenemy': '敵人', 'tterm': '名詞', 'tcombo': '聯組', 'tmedal': '獎章', 'titem': '獎勵'}[storeName];
-					td.colSpan = 4;
-					tr.appendChild(td);
-					tr.classList.add('group');
-					results_body.appendChild(tr);
+					const txt = {'tstage': '關卡', 'tcat': '貓咪', 'tenemy': '敵人', 'tterm': '名詞', 'tcombo': '聯組', 'tmedal': '獎章', 'titem': '獎勵'}[storeName];
+					results_body.appendChild(trText(txt));
 				}
 				results_body.appendChild(tr);
 			}
@@ -76,13 +85,7 @@ async function doSearch() {
 		target != 'all' && url.searchParams.set("target", target);
 		history.pushState({}, "", url);
 	} else {
-		const tr = document.createElement('tr');
-		const td = document.createElement('td');
-		td.innerHTML = '無輸入內容，正在顯示所選範圍的全部內容<br>No search term entered. Showing all items in the selected scope.';
-		td.colSpan = 4;
-		tr.classList.add('group');
-		tr.appendChild(td);
-		results_body.appendChild(tr);
+		results_body.appendChild(trText('無輸入內容，正在顯示所選範圍的全部內容<br>No search term entered. Showing all items in the selected scope.'));
 
 		const storeNames = target === 'all' ? ["tterm"] : [target]; // default to tterm if "All" is selected
 		for (const storeName of storeNames) {
@@ -99,13 +102,7 @@ async function doSearch() {
 	}
 
 	if (!results_body.textContent) {
-		const tr = document.createElement('tr');
-		const td = document.createElement('td');
-		td.innerHTML = '無匹配結果<br>No matches found';
-		td.colSpan = 4;
-		tr.classList.add('group');
-		tr.appendChild(td);
-		results_body.appendChild(tr);
+		results_body.appendChild(trText('無匹配結果<br>No matches found'));
 	}
 
 }
