@@ -39,6 +39,8 @@
 			return false;
 		if (location.pathname.startsWith('/enemy') || location.pathname.startsWith('/esearch'))
 			value = '/esearch.html?q=' + encodeURIComponent(value);
+		else if (location.pathname.startsWith('/msearch'))
+			value = '/msearch.html?q=' + encodeURIComponent(value);
 		else if (location.pathname.startsWith('/stage'))
 			value = '/stage.html?q=' + encodeURIComponent(value);
 		else
