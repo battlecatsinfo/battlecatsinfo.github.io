@@ -879,6 +879,11 @@ async function render_stage() {
 		tr.style.fontSize = "larger";
 		var th = tr.appendChild(document.createElement("th"));
 		th.colSpan = 6;
+		if (flags2 & 4) {
+			var span = th.appendChild(document.createElement("div"));
+			span.classList.add('abyssal');
+			span.textContent = "開放深淵關卡";
+		}
 		if (info2.resetMode >= 0) {
 			var span = th.appendChild(document.createElement("div"));
 			span.textContent = stage_extra.resetModes[info2.resetMode];
@@ -893,12 +898,6 @@ async function render_stage() {
 			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('I');
 			span.textContent = "召喚金額倍率：" + info2.costmulti;
-		}
-
-		if (flags2 & 4) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('abyssal');
-			span.textContent = "開放深淵關卡";
 		}
 		if (flags2 & 1) {
 			var span = th.appendChild(document.createElement("div"));
