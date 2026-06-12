@@ -22,7 +22,7 @@ import {
 	TB_BEAST,
 	TB_BARON,
 	TB_SAGE,
-	TB_WEIRDO,
+	TB_KAIJIN,
 
 	AB_STRENGTHEN,
 	AB_SURVIVE,
@@ -313,7 +313,7 @@ function renderEnemy(e, options, setTitle = false) {
 		traits.push('道場塔');
 	if (E.trait & TB_SAGE)
 		traits.push('超賢者');
-	if (E.trait & TB_WEIRDO)
+	if (E.trait & TB_KAIJIN)
 		traits.push('怪人');
 	chs[0].children[8].textContent = traits.join('・');
 	if (E.info.atk1 || E.info.atk2) {

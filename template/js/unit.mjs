@@ -25,7 +25,7 @@ const TB_INFN = 4096;      // Dojo Base 道場塔 [UNOFFICIAL]
 const TB_BEAST = 8192;     // Behemoth 超獸
 const TB_BARON = 16384;    // Colossus 超生命體
 const TB_SAGE = 32768;     // Sage 超賢者
-const TB_WEIRDO = 65536;   // 怪人
+const TB_KAIJIN = 65536;   // 怪人
 
 // Immunities
 const IMU_WAVE = 1;        // Immune to Wave 波動傷害無效
@@ -86,7 +86,7 @@ const AB_SAGE = 42;        // Sage Slayer 超賢者特效
 const AB_SUMMON = 43;      // Conjure(Summon) 召喚
 const AB_MK = 44;          // Metal Killer 鋼鐵殺手
 const AB_EXPLOSION = 45;   // Explosion 爆波
-const AB_WEIRDO = 46;      // 怪人特效
+const AB_KAIJIN = 46;      // 怪人特效
 const AB_DRAIN = 47;       // Drain 延遲
 
 // Resist
@@ -102,14 +102,14 @@ const RES_WARP = 8;        // Resist Warp 抗傳耐性
 
 const TRAIT_ALL = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE
 								| TB_RELIC | TB_WHITE | TB_EVA | TB_WITCH | TB_DEMON
-								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE | TB_WEIRDO;
-const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE | TB_WEIRDO;
+								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE | TB_KAIJIN;
+const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE | TB_KAIJIN;
 const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
 
-const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_SAVAGE, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_WEIRDO]);
-const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_WEIRDO]);
+const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_SAVAGE, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_KAIJIN]);
+const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_KAIJIN]);
 
 function combineChances(count, chance) {
 	let x = 1;
@@ -1201,7 +1201,7 @@ class CatForm extends Unit {
 			hp /= 0.7;
 		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
 			hp /= 0.5;
-		} else if ((traits & TB_WEIRDO) && ab.hasOwnProperty(AB_WEIRDO)) {
+		} else if ((traits & TB_KAIJIN) && ab.hasOwnProperty(AB_KAIJIN)) {
 			hp /= 0.4;
 		}
 
@@ -1323,7 +1323,7 @@ class CatForm extends Unit {
 				atk *= 1.6;
 			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
 				atk *= 1.2;
-			} else if ((traits & TB_WEIRDO) && ab.hasOwnProperty(AB_WEIRDO)) {
+			} else if ((traits & TB_KAIJIN) && ab.hasOwnProperty(AB_KAIJIN)) {
 				atk *= 2.5;
 			}
 
@@ -2399,7 +2399,7 @@ export {
 	TB_BEAST,
 	TB_BARON,
 	TB_SAGE,
-	TB_WEIRDO,
+	TB_KAIJIN,
 	TRAIT_ALL,
 	trait_no_treasure,
 	trait_treasure,
@@ -2449,7 +2449,7 @@ export {
 	AB_SUMMON,
 	AB_MK,
 	AB_EXPLOSION,
-	AB_WEIRDO,
+	AB_KAIJIN,
 	AB_DRAIN,
 
 	RES_WEAK,

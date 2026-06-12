@@ -57,7 +57,7 @@ import {
 	AB_SUMMON,
 	AB_MK,
 	AB_EXPLOSION,
-	AB_WEIRDO,
+	AB_KAIJIN,
 
 	catEnv,
 
@@ -1525,7 +1525,7 @@ const def_options_eff = [
 ];
 function calc_def(table) {
 	catEnv.resetOthers();
-	let weirdo = false;
+	let kaijin = false;
 	for (const tr of table.children) {
 		const chs = tr.children;
 		if (chs.length == 3) {
@@ -1535,17 +1535,17 @@ function calc_def(table) {
 				catEnv.addOther(idx, eff[chs[1].firstElementChild.selectedIndex]);
 			else
 				catEnv.setOthers(idx, [eff]);
-			weirdo |= (idx === 16);
+			kaijin |= (idx === 16);
 		}
 	}
 	if (layout === 2) {
 		for (const [tbody, form] of table_to_values) {
-			if (weirdo) {
-				tbody._s.add(AB_WEIRDO);
-				form.ab[AB_WEIRDO] = {};
+			if (kaijin) {
+				tbody._s.add(AB_KAIJIN);
+				form.ab[AB_KAIJIN] = {};
 			} else {
-				tbody._s.delete(AB_WEIRDO);
-				delete form.ab[AB_WEIRDO];
+				tbody._s.delete(AB_KAIJIN);
+				delete form.ab[AB_KAIJIN];
 			}
 			let td = tbody.children[7].children[1];
 			td.textContent = '';
@@ -1557,10 +1557,10 @@ function calc_def(table) {
 		}
 	} else {
 		for (const [tbl, form] of table_to_values) {
-			if (weirdo)
-				form.ab[AB_WEIRDO] = {};
+			if (kaijin)
+				form.ab[AB_KAIJIN] = {};
 			else
-				delete form.ab[AB_WEIRDO];
+				delete form.ab[AB_KAIJIN];
 			updateValues(form, tbl);
 			let td1 = tbl.children[11].children[1];
 			let td2 = tbl.children[12].children[1];

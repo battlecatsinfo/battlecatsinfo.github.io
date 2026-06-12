@@ -1597,7 +1597,6 @@
     	beast: 8192,
     	baron: 16384,
     	sage: 32768,
-      weirdo: 65536,
 
     	atk_single: 1,
     	atk_range: 2,
@@ -1662,7 +1661,8 @@
     	ab_summon: 43,
     	ab_mk: 44,
     	ab_explosion: 45,
-      ab_weirdo: 46,
+      kaijin: 65536,
+      ab_kaijin: 46,
       ab_drain: 47,
 
     	res_weak: 0,
