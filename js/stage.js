@@ -49,6 +49,7 @@ module.exports = class extends SiteGenerator {
 				specialCond: entry.specialcond || undefined,
 				invalidCombos: entry.invalid_combo || undefined,
 				limit: entry.limit ? entry.limit.split('|').map(x => x.split(',').map(Number)) : undefined,
+				costmulti: entry.costmulti || undefined,
 			};
 			return rv;
 		}, {});

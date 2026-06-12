@@ -889,7 +889,17 @@ async function render_stage() {
 			span.classList.add('W');
 			span.textContent = "成功挑戰冷卻時長：" + info2.wait;
 		}
+		if (info2.costmulti) {
+			var span = th.appendChild(document.createElement("div"));
+			span.classList.add('I');
+			span.textContent = "召喚金額倍率：" + info2.costmulti;
+		}
 
+		if (flags2 & 4) {
+			var span = th.appendChild(document.createElement("div"));
+			span.classList.add('abyssal');
+			span.textContent = "開放深淵關卡";
+		}
 		if (flags2 & 1) {
 			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('I');
@@ -899,6 +909,11 @@ async function render_stage() {
 			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('W');
 			span.textContent = "※掃蕩不可※";
+		}
+		if (flags2 & 8) {
+			var span = th.appendChild(document.createElement("div"));
+			span.classList.add('I');
+			span.textContent = "通關後可觀看廣告獲得2倍XP";
 		}
 
 		if (flags3 & 1) {
