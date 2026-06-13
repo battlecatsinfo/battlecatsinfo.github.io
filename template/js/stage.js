@@ -872,13 +872,18 @@ async function render_stage() {
 		}
 		tr.id = "stars-tr";
 	}
-	if (info3.flags || info2.resetMode >= 0 || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond) {
+	if (info3.flags || info2.resetMode >= 0 || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond || info2.costmulti) {
 		var s;
 		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 		tr.id = "warn-tr";
 		tr.style.fontSize = "larger";
 		var th = tr.appendChild(document.createElement("th"));
-		th.colSpan = 6;
+		th.colSpan = 9;
+		if (flags2 & 16) {
+			var span = th.appendChild(document.createElement("div"));
+			span.classList.add('w');
+			span.textContent = "此地圖已不再使用";
+		}
 		if (flags2 & 4) {
 			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('abyssal');
