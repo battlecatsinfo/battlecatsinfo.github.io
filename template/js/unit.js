@@ -1208,20 +1208,30 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 	}
 	makeTd(theadtr, '等級').classList.add('f');
 	{
-		let I = 1;
+		let startLevel, levelStep, endLevel;
+		const shouldReduceCap = !my_cat.evol4Req && (my_cat.maxBaseLv + my_cat.maxPlusLv) < 60;
+		
 		if (form.lvc > 2 || _super) {
-			I = 6;
+			startLevel = 60;
+			levelStep = 5;
+			endLevel = 80;
 		} else if (form.lvc === 2) {
-			I = my_cat.evolReq ? 3 : 2;
+			startLevel = my_cat.evolReq ? 30 : 20;
+			levelStep = shouldReduceCap ? 5 : 10;
+			endLevel = shouldReduceCap ? startLevel + 20 : startLevel + 40;
+		} else {
+			startLevel = 10;
+			levelStep = (my_cat.maxBaseLv + my_cat.maxPlusLv) < 50 ? 5 : 10;
+			endLevel = (my_cat.maxBaseLv + my_cat.maxPlusLv) < 50 ? 30 : 50;
 		}
-		let II = I + 4;
-		for (let i = I; i <= II; ++i) {
-			const e = makeTd(theadtr, `Lv${i * 10}`);
+
+		for (let i = startLevel; i <= endLevel; i += levelStep) {
+			const e = makeTd(theadtr, `Lv${i}`);
 			e.classList.add('f');
 			e.contentEditable = true;
 			e.inputMode = 'numeric';
 			e._form = base;
-			e._val = i * 10;
+			e._val = i;
 			e.style.cursor = 'pointer';
 			e.addEventListener('focus', handleFocus);
 			e.addEventListener('keydown', handleKW);
