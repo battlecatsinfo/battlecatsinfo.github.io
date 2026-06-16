@@ -917,7 +917,7 @@ async function render_stage() {
 		if (flags2 & 16) {
 			var span = th.appendChild(document.createElement("div"));
 			span.classList.add('w');
-			span.textContent = "此地圖已不再使用";
+			span.innerHTML = "<abbr title=\"此資訊僅適用於日文版，海外版可能仍在使用此地圖\">此地圖已不再使用</abbr>";
 		}
 		if (flags2 & 4) {
 			var span = th.appendChild(document.createElement("div"));
