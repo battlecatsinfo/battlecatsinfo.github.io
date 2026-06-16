@@ -1208,24 +1208,23 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 	}
 	makeTd(theadtr, '等級').classList.add('f');
 	{
-		let startLevel, levelStep, endLevel;
-		const shouldReduceCap = !my_cat.evol4Req && (my_cat.maxBaseLv + my_cat.maxPlusLv) < 60;
+		let levels = [];
 		
-		if (form.lvc > 2 || _super) {
-			startLevel = 60;
-			levelStep = 5;
-			endLevel = 80;
-		} else if (form.lvc === 2) {
-			startLevel = my_cat.evolReq ? 30 : 20;
-			levelStep = shouldReduceCap ? 5 : 10;
-			endLevel = shouldReduceCap ? startLevel + 20 : startLevel + 40;
-		} else {
-			startLevel = 10;
-			levelStep = (my_cat.maxBaseLv + my_cat.maxPlusLv) < 50 ? 5 : 10;
-			endLevel = (my_cat.maxBaseLv + my_cat.maxPlusLv) < 50 ? 30 : 50;
+		if (form.lvc > 2 || _super) { // 4th form or supertalent
+			levels = [60, 65, 70, 75, 80];
+		} else if (form.lvc === 2) { // 3rd form
+			if (my_cat.evol4Req || (my_cat.maxBaseLv + my_cat.maxPlusLv) >= 60) {
+				levels = [30, 40, 50, 60, 70];
+			} else {
+				levels = my_cat.evolReq ? [30, 35, 40, 45, 50] : [20, 30, 40, 45, 50];
+			}
+		} else if (form.lvc === 0) { // 1st form
+			levels = (my_cat.maxBaseLv + my_cat.maxPlusLv) < 50 ? [1, 10, 20, 25, 30] : [1, 10, 20, 30, 50];
+		} else { // 2nd form
+			levels = (my_cat.maxBaseLv + my_cat.maxPlusLv) < 50 ? [10, 15, 20, 25, 30] : [10, 20, 30, 40, 50];
 		}
 
-		for (let i = startLevel; i <= endLevel; i += levelStep) {
+		levels.forEach(i => {
 			const e = makeTd(theadtr, `Lv${i}`);
 			e.classList.add('f');
 			e.contentEditable = true;
@@ -1256,7 +1255,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 					t.textContent = t._val;
 				}
 			});
-		}
+		})
 	}
 	makeTd(theadtr, '每提升一級').classList.add('f');
 	makeTd(tbodytr1, 'HP').classList.add('f');
