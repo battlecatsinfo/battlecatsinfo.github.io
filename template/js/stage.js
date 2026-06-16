@@ -161,7 +161,7 @@ function dialog(id, content) {
 	dialogCtn.appendChild(content);
 }
 
-async function search_guard() {
+async function search_mapflag(flag) {
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
 	search_result.textContent = '';
@@ -175,7 +175,7 @@ async function search_guard() {
 	td.textContent = '關卡';
 
 	for await (const v of Stage.forEachStage()) {
-		if (v.flags & 2) {
+		if (v.flags & flag) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			let td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
@@ -368,13 +368,13 @@ function initUI() {
 				//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
 			];
 			const images = [
-				[66, 65, '速攻不可', search_guard],
-				[80, 80, '掃盪不可', search_gold],
-				[64, 64, '惡魔塔', search_enemy, 'fy'],
-				[64, 64, '損毀的波動塔', search_enemy, '8o'],
-				[64, 64, '波動塔', search_enemy, '8r'],
-				[64, 64, '詛咒塔', search_enemy, 'ei'],
-				[64, 64, '烈波塔', search_enemy, 'ek']
+				[66, 65, '速攻不可', 'm00', () => search_mapflag(2)],
+				[80, 80, '掃盪不可', 'm01', () => search_gold()],
+				[64, 64, '惡魔塔', 'c00', search_enemy, 'fy'],
+				[64, 64, '損毀的波動塔', 'c01', search_enemy, '8o'],
+				[64, 64, '波動塔', 'c02', search_enemy, '8r'],
+				[64, 64, '詛咒塔', 'c03', search_enemy, 'ei'],
+				[64, 64, '烈波塔', 'c04', search_enemy, 'ek']
 			];
 			const div = filter_page.appendChild(document.createElement('div'));
 			div.classList.add('V');
@@ -383,10 +383,10 @@ function initUI() {
 				const img = div.appendChild(new Image(elem[0], elem[1]));
 				img.loading = 'lazy';
 				img.classList.add('S');
-				img.src = `/img/i/o/s${i}.png`;
 				img.title = elem[2];
-				img.onclick = elem[3];
-				img.elem = elem[4];
+				img.src = `/img/i/o/s${elem[3]}.png`;
+				img.onclick = elem[4];
+				img.elem = elem[5];
 			}
 			for (let i = 0, I = items.length; i < I; i++) {
 				const list = items[i];
