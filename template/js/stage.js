@@ -400,7 +400,7 @@ function initUI() {
 				//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
 			];
 			const images = [
-				[47, 71, '開放深淵關卡', 'sm10', () => search_mapflag(4)],
+				[66, 92, '開放深淵關卡', 'sm10', () => search_mapflag(4)],
 				[184, 32, '雙倍經驗廣告', 'sm11', () => search_mapflag(8)],
 				[300, 300, '已棄用', 'sm12', () => search_mapflag(16)],
 				[66, 65, '速攻不可', 'sm00', () => search_stageflag(2)], // () => for it not to be called upon menu load
