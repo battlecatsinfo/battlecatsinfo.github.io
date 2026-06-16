@@ -170,6 +170,38 @@ async function search_mapflag(flag) {
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 	let tr = tbl.appendChild(document.createElement('tr'));
 	let td = tr.appendChild(document.createElement('td'));
+	td.textContent = '分類';
+	td = tr.appendChild(document.createElement('td'));
+	td.textContent = '地圖';
+
+	for await (const v of Stage.forEachMap()) {
+		if (v.flags & flag) {
+			const tr = tbl.appendChild(document.createElement('tr'));
+			let td = tr.appendChild(document.createElement('td'));
+			const a = td.appendChild(document.createElement('a'));
+			const mc = ~~(v.id / 1000);
+			const sm = v.id % 1000;
+			a.textContent = M1.children[mc].textContent;
+			a.href = `/stage.html?s=${mc}`;
+			a.onclick = onStageAnchorClick;
+			td = tr.appendChild(document.createElement('td'));
+			const a2 = td.appendChild(document.createElement('a'));
+			a2.textContent = v.name || v.nameJp;
+			a2.href = a.href + '-' + sm;
+			a2.onclick = onStageAnchorClick;
+		}
+	}
+}
+
+async function search_stageflag(flag) {
+	filter_page.parentNode.hidden = true;
+	main_div.hidden = true;
+	search_result.textContent = '';
+	search_result.hidden = false;
+	let tbl = search_result.appendChild(document.createElement('table'));
+	tbl.classList.add('w3-table', 'w3-centered', 'Co');
+	let tr = tbl.appendChild(document.createElement('tr'));
+	let td = tr.appendChild(document.createElement('td'));
 	td.textContent = '地圖';
 	td = tr.appendChild(document.createElement('td'));
 	td.textContent = '關卡';
@@ -368,13 +400,16 @@ function initUI() {
 				//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
 			];
 			const images = [
-				[66, 65, '速攻不可', 'm00', () => search_mapflag(2)],
-				[80, 80, '掃盪不可', 'm01', () => search_gold()],
-				[64, 64, '惡魔塔', 'c00', search_enemy, 'fy'],
-				[64, 64, '損毀的波動塔', 'c01', search_enemy, '8o'],
-				[64, 64, '波動塔', 'c02', search_enemy, '8r'],
-				[64, 64, '詛咒塔', 'c03', search_enemy, 'ei'],
-				[64, 64, '烈波塔', 'c04', search_enemy, 'ek']
+				[47, 71, '開放深淵關卡', 'sm10', () => search_mapflag(4)],
+				[184, 32, '雙倍經驗廣告', 'sm11', () => search_mapflag(8)],
+				[300, 300, '已棄用', 'sm12', () => search_mapflag(16)],
+				[66, 65, '速攻不可', 'sm00', () => search_stageflag(2)], // () => for it not to be called upon menu load
+				[80, 80, '掃盪不可', 'sm01', () => search_gold()],
+				[64, 64, '惡魔塔', 'sc00', search_enemy, 'fy'],
+				[64, 64, '損毀的波動塔', 'sc01', search_enemy, '8o'],
+				[64, 64, '波動塔', 'sc02', search_enemy, '8r'],
+				[64, 64, '詛咒塔', 'sc03', search_enemy, 'ei'],
+				[64, 64, '烈波塔', 'sc04', search_enemy, 'ek']
 			];
 			const div = filter_page.appendChild(document.createElement('div'));
 			div.classList.add('V');
@@ -384,7 +419,7 @@ function initUI() {
 				img.loading = 'lazy';
 				img.classList.add('S');
 				img.title = elem[2];
-				img.src = `/img/i/o/s${elem[3]}.png`;
+				img.src = `/img/i/o/${elem[3]}.png`;
 				img.onclick = elem[4];
 				img.elem = elem[5];
 			}
