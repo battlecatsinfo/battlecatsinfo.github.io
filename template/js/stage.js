@@ -229,8 +229,7 @@ async function search_stageflag(flag) {
 	}
 }
 
-async function search_enemy(e) {
-	const T = e.currentTarget.i;
+async function search_enemy(T) {
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
 	search_result.textContent = '';
@@ -312,9 +311,9 @@ async function search_gold() {
 	}
 }
 
-async function search_reward(e) {
-	const T = e.currentTarget.i.toString();
-	const P = stage_extra.rewards[e.currentTarget.i]?.name;
+async function search_reward(r) {
+	const T = r.toString();
+	const P = stage_extra.rewards[r]?.name;
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
 	search_result.textContent = '';
@@ -399,12 +398,12 @@ function initUI() {
 				[85, 86, 87, 88, 89, 90, 91, 140], // 城堡素材
 				//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
 			];
-			const images = [
-				[66, 92, '開放深淵關卡', 'sm10', () => search_mapflag(4)],
-				[184, 32, '雙倍經驗廣告', 'sm11', () => search_mapflag(8)],
-				[300, 300, '已棄用', 'sm12', () => search_mapflag(16)],
-				[66, 65, '速攻不可', 'sm00', () => search_stageflag(2)], // () => for it not to be called upon menu load
-				[80, 80, '掃盪不可', 'sm01', () => search_gold()],
+			const specials = [
+				[66, 92, '開放深淵關卡', 'sm10', search_mapflag, 4],
+				[184, 32, '雙倍經驗廣告', 'sm11', search_mapflag, 8],
+				[300, 300, '已棄用', 'sm12', search_mapflag, 16],
+				[66, 65, '速攻不可', 'sm00', search_stageflag, 2],
+				[80, 80, '掃盪不可', 'sm01', search_gold, 0],
 				[64, 64, '惡魔塔', 'sc00', search_enemy, 'fy'],
 				[64, 64, '損毀的波動塔', 'sc01', search_enemy, '8o'],
 				[64, 64, '波動塔', 'sc02', search_enemy, '8r'],
@@ -413,31 +412,24 @@ function initUI() {
 			];
 			const div = filter_page.appendChild(document.createElement('div'));
 			div.classList.add('V');
-			for (const i in images) {
-				const elem = images[i];
-				const img = div.appendChild(new Image(elem[0], elem[1]));
+			for (const v of specials) {
+				const img = div.appendChild(new Image(v[0], v[1]));
 				img.loading = 'lazy';
 				img.classList.add('S');
-				img.title = elem[2];
-				img.src = `/img/i/o/${elem[3]}.png`;
-				img.onclick = elem[4];
-				img.elem = elem[5];
+				img.title = v[2];
+				img.src = `/img/i/o/${v[3]}.png`;
+				img.onclick = () => v[4](v[5]);
 			}
-			for (let i = 0, I = items.length; i < I; i++) {
-				const list = items[i];
+			for (const line of items) {
 				const div = filter_page.appendChild(document.createElement('div'));
 				div.classList.add('V');
-				for (let j = 0, J = list.length; j < J; j++) {
-					const n = list[j];
+				for (const v of line) {
 					const img = div.appendChild(new Image(128, 128));
 					img.loading = 'lazy';
 					img.classList.add('S');
-					img.src = `/img/r/${n}.png`;
-					if (n >= 20 && n <= 22)
-						img.i = n - 9;
-					else
-						img.i = n;
-					img.onclick = search_reward;
+					img.src = `/img/r/${v}.png`;
+					const r = (v >= 20 && v <= 22) ? v - 9 : v;
+					img.onclick = () => search_reward(r);
 				}
 			}
 		}
