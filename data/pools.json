@@ -2815,6 +2815,22 @@
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R925.html"
 	},
 	{
+		"tag": "蛋黃哥",
+		"tw_name": "蛋黃哥",
+		"jp_name": "ぐでたま",
+		"en_name": "Gudetama",
+		"img": "https://i.meee.com.tw/SiT5rn1.png",
+		"rate": [7000, 2500, 500, 0],
+		"history": [
+			"2018/6/14~2018/6/28 蛋黃哥合作轉蛋 5%(2018/6/23～2018/6/28 5%必中)",
+			"2017/7/6~2017/7/20 蛋黃哥合作轉蛋 5%"
+		],
+		"type": "rare",
+		"units": [430, 350, 349, 349, 349, 349, 349, 349, 349, 349, 349, 349, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 348, 377, 376, 325, 307, 308, 239, 238, 237, 199, 198, 197, 153, 152, 151, 150, 149, 148, 147, 146, 145, 61, 58, 56, 55, 52, 51, 50, 49, 48, 47, 46, 41, 40, 39, 38, 37, 36, 35, 33, 32, 31, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R297.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R297.html"
+	},
+	{
 		"tag": "悠閒世界樹",
 		"tw_name": "悠閒世界樹",
 		"jp_name": "ゆるドラシル",
