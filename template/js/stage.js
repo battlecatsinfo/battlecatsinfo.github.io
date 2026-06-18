@@ -38,7 +38,7 @@ function fromV(s) {
 		case 0:
 		case 1:
 		case 2:
-		case 3:
+		case 3: // 3,20,21,22,23,30,38
 		case 4:
 			return s;
 		case 6:
@@ -193,6 +193,42 @@ async function search_mapflag(flag) {
 	}
 }
 
+async function search_costmulti() {
+	filter_page.parentNode.hidden = true;
+	main_div.hidden = true;
+	search_result.textContent = '';
+	search_result.hidden = false;
+	let tbl = search_result.appendChild(document.createElement('table'));
+	tbl.classList.add('w3-table', 'w3-centered', 'Co');
+	let tr = tbl.appendChild(document.createElement('tr'));
+	let td = tr.appendChild(document.createElement('td'));
+	td.textContent = '分類';
+	td = tr.appendChild(document.createElement('td'));
+	td.textContent = '地圖';
+	td = tr.appendChild(document.createElement('td'));
+	td.textContent = '召喚金額倍率';
+
+	for await (const v of Stage.forEachMap()) {
+		if (v.costmulti) {
+			const tr = tbl.appendChild(document.createElement('tr'));
+			let td = tr.appendChild(document.createElement('td'));
+			const a = td.appendChild(document.createElement('a'));
+			const mc = ~~(v.id / 1000);
+			const sm = v.id % 1000;
+			a.textContent = M1.children[mc].textContent; // map
+			a.href = `/stage.html?s=${mc}`;
+			a.onclick = onStageAnchorClick;
+			td = tr.appendChild(document.createElement('td'));
+			const a2 = td.appendChild(document.createElement('a')); // stage
+			a2.textContent = v.name || v.nameJp;
+			a2.href = a.href + '-' + sm;
+			a2.onclick = onStageAnchorClick;
+			td = tr.appendChild(document.createElement('td')); // costmulti
+			td.textContent = v.costmulti;
+		}
+	}
+}
+
 async function search_stageflag(flag) {
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
@@ -265,7 +301,7 @@ async function search_enemy(T) {
 	}
 }
 
-async function search_gold() {
+async function search_gold() { // CatCPU fast clear disabled
 	filter_page.parentNode.hidden = true;
 	main_div.hidden = true;
 	search_result.textContent = '';
@@ -401,6 +437,7 @@ function initUI() {
 			const specials = [
 				[66, 92, '開放深淵關卡', 'sm10', search_mapflag, 4],
 				[184, 32, '雙倍經驗廣告', 'sm11', search_mapflag, 8],
+				//[0, 0, '特殊角色價格', 'sm13', search_costmulti],
 				[300, 300, '已棄用', 'sm12', search_mapflag, 16],
 				[66, 65, '速攻不可', 'sm00', search_stageflag, 2],
 				[80, 80, '掃盪不可', 'sm01', search_gold, 0],
