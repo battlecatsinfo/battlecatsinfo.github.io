@@ -435,11 +435,11 @@ function initUI() {
 				//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
 			];
 			const specials = [
-				[66, 92, '開放深淵關卡', 'sm10', search_mapflag, 4],
-				[184, 32, '雙倍經驗廣告', 'sm11', search_mapflag, 8],
+				[106, 106, '開放深淵關卡', 'sm10', search_mapflag, 4],
+				[128, 128, '雙倍經驗廣告', 'sm11', search_mapflag, 8],
 				//[0, 0, '特殊角色價格', 'sm13', search_costmulti],
 				[300, 300, '已棄用', 'sm12', search_mapflag, 16],
-				[66, 65, '速攻不可', 'sm00', search_stageflag, 2],
+				[90, 90, '速攻不可', 'sm00', search_stageflag, 2],
 				[80, 80, '掃盪不可', 'sm01', search_gold, 0],
 				[64, 64, '惡魔塔', 'sc00', search_enemy, 'fy'],
 				[64, 64, '損毀的波動塔', 'sc01', search_enemy, '8o'],
