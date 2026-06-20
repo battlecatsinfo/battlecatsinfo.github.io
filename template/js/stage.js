@@ -823,17 +823,23 @@ function getDropData(drops) {
 		return ints.map(() => c);
 	}
 
-	if (sum === 100 || (sum <= 100 && info3.rand !== -4)) {
+	if (sum === 100) {
 		return ints;
 	}
 
 	if (sum > 100 && (info3.rand === 0 || info3.rand === 1)) {
 		let rest = 100;
-		return ints.map((x, i) => {
-			const filter = (i === 0 && x === 100) ? 100 : (rest * x) / 100;
+		let once = [];
+		let sliced = ints;
+		if (ints[0] === 100) {
+			sliced = ints.slice(1);
+			once.push(100);
+		}
+		return once.concat(sliced.map((x, i) => {
+			const filter = rest * x / 100;
 			rest -= filter;
 			return filter;
-		});
+		}));
 	}
 
 	if (info3.rand === -4) {
