@@ -948,7 +948,7 @@ async function render_stage() {
 		tr.id = "warn-tr";
 		tr.style.fontSize = "larger";
 		var th = tr.appendChild(document.createElement("th"));
-		th.colSpan = 9;
+		th.colSpan = 12;
 		if (flags2 & 32) {
 			var span = th.appendChild(document.createElement("div"));
 			span.textContent = '※此道場可以透過擊敗敵人來獲得金錢';
