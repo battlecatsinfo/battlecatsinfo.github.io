@@ -811,36 +811,36 @@ function makeTd(p, txt) {
 }
 
 function getDropData(drops) {
-    const ints = drops.map(d => d[0]);
-    const sum = ints.reduce((acc, x) => acc + x, 0);
+	const ints = drops.map(d => d[0]);
+	const sum = ints.reduce((acc, x) => acc + x, 0);
 
-    if (sum === 1000) {
-        return ints.map(x => x / 10);
-    }
+	if (sum === 1000) {
+		return ints.map(x => x / 10);
+	}
 
-    if (info3.rand === -3) {
-        const c = Math.floor(100 / drops.length).toString();
-        return ints.map(() => c);
-    }
+	if (info3.rand === -3) {
+		const c = Math.floor(100 / drops.length).toString();
+		return ints.map(() => c);
+	}
 
-    if (sum === 100 || (sum <= 100 && info3.rand !== -4)) {
-        return ints;
-    }
+	if (sum === 100 || (sum <= 100 && info3.rand !== -4)) {
+		return ints;
+	}
 
-    if (sum > 100 && (info3.rand === 0 || info3.rand === 1)) {
-        let rest = 100;
-        return ints.map((x, i) => {
-            const filter = (i === 0 && x === 100) ? 100 : (rest * x) / 100;
-            rest -= filter;
-            return filter;
-        });
-    }
+	if (sum > 100 && (info3.rand === 0 || info3.rand === 1)) {
+		let rest = 100;
+		return ints.map((x, i) => {
+			const filter = (i === 0 && x === 100) ? 100 : (rest * x) / 100;
+			rest -= filter;
+			return filter;
+		});
+	}
 
-    if (info3.rand === -4) {
-        return ints.map(x => (x * 100) / sum);
-    }
+	if (info3.rand === -4) {
+		return ints.map(x => (x * 100) / sum);
+	}
 
-    return ints;
+	return ints;
 }
 
 async function refresh_3(stage) {
