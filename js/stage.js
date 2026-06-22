@@ -69,6 +69,7 @@ module.exports = class extends SiteGenerator {
 				diff: entry.difficulty ? Number(entry.difficulty) : undefined,
 				rand: parseInt(entry.rand, 10),
 				drop: entry.drop ? entry.drop.split('|').map(x => x.split(',').map(Number)) : undefined,
+				abyssalRewards: entry.consecutive_drop ? entry.consecutive_drop.split('|').map(x => x.split(',').map(Number)) : undefined,
 				time: entry.time ? entry.time.split('|').map(x => x.split(',').map(Number)) : undefined,
 				maxMat: entry.maxmaterial ? parseInt(entry.maxmaterial, 10) : undefined,
 				flags: entry.flags ? parseInt(entry.flags, 10) : 0,

@@ -20,6 +20,7 @@ const main_div = document.getElementById("main");
 const search_form = document.getElementById("form");
 const search_result = document.getElementById("search-result");
 const m_drops = document.getElementById("drops");
+const m_abyssalRewards = document.getElementById("abyssalrewards");
 const rewards = document.getElementById("rewards");
 const m_times = document.getElementById("times");
 const mM = document.getElementById("mM");
@@ -1130,6 +1131,7 @@ async function render_stage() {
 			}
 		}
 	}
+
 	rewards.textContent = "";
 	if (info3.drop) {
 		var drop_data = info3.drop;
@@ -1148,6 +1150,20 @@ async function render_stage() {
 		}
 	}
 	rewards.parentNode.hidden = !rewards.children.length;
+
+	m_abyssalRewards.textContent = "";
+	if (info3.abyssalRewards) {
+		var drop_data = info3.abyssalRewards;
+		for (var i = 0; i < drop_data.length; ++i) {
+			var v = drop_data[i];
+			var tr = m_abyssalRewards.appendChild(document.createElement("tr"));
+			createReward(tr, v);
+			var td = tr.appendChild(document.createElement("td"));
+			td.textContent = `第${v[0]}次`;
+		}
+	}
+	m_abyssalRewards.parentNode.hidden = !m_abyssalRewards.children.length;
+
 	m_drops.textContent = "";
 	var material_drop = info2.matDrops || [];
 	for (var i = 1; i < material_drop.length; ++i) {
