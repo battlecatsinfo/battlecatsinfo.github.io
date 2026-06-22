@@ -942,7 +942,7 @@ async function render_stage() {
 		}
 		tr.id = "stars-tr";
 	}
-	if (info3.flags || info2.resetMode >= 0 || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond || info2.costmulti) {
+	if (info3.flags || info2.resetMode || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond || info2.costmulti) {
 		var s;
 		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 		tr.id = "warn-tr";
@@ -963,9 +963,9 @@ async function render_stage() {
 			span.classList.add('abyssal');
 			span.textContent = "開放深淵關卡";
 		}
-		if (info2.resetMode >= 0) {
+		if (info2.resetMode) {
 			var span = th.appendChild(document.createElement("div"));
-			span.textContent = stage_extra.resetModes[info2.resetMode];
+			span.textContent = stage_extra.resetModes[info2.resetMode - 1];
 			span.classList.add('I');
 		}
 		if (info2.wait) {

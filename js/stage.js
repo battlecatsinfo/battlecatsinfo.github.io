@@ -45,7 +45,7 @@ module.exports = class extends SiteGenerator {
 				matMults: entry.multiplier ? entry.multiplier.split(',').map(Number) : undefined,
 				flags: entry.flags ? parseInt(entry.flags, 10) : 0,
 				wait: entry.waitfortimer || undefined,
-				resetMode: entry.resetmode ? parseInt(entry.resetmode, 10) : -1,
+				resetMode: entry.resetmode ? parseInt(entry.resetmode, 10) : 0,
 				specialCond: entry.specialcond || undefined,
 				invalidCombos: entry.invalid_combo || undefined,
 				limit: entry.limit ? entry.limit.split('|').map(x => x.split(',').map(Number)) : undefined,
