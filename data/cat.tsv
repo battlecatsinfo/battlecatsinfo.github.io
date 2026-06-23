@@ -672,7 +672,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 1	3			50	20	0,2	200000!0|10!167|10!168			110700		5	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		0			Ancient_Egg:_N202_(Special_Cat)	20
 4	2			60	70					110700		1			2			Ranma_Saotome_(Leotard)_(Uber_Rare_Cat)	70
 3	2			50	70					110700		2			2			Genma_Saotome_(Panda)_(Super_Rare_Cat)	70
-4	1	無法獲得		1	0					110700		1			2			Cheetah_Cat_(Uber_Rare_Cat)	0
+4	1	無法獲得		1	0					110700		1			2			Cheetah_Cat_(Uber_Rare_Cat)	
 4	3			60	70		1000000!0|7!35|3!36|3!38|4!39|3!40		0|3|10|0|0|3|30|0|0|0|0|44|8|-1|0|27|10|1|10|0|0|0|0|0|0|29|8|-1|0|19|10|16|70|0|0|0|0|0|0|19|8|-1|0|59|0|0|0|0|0|0|0|0|0|79|9|-1|0|32|10|2|20|0|0|0|0|0|0|27|8|-1|0|31|10|2|20|0|0|0|0|0|0|28|8|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0|0|0|0|0|0|0|0|0|0|0|0|0|-1|0	110800	1	1	第3進化後攻擊力上升！<br>同時取得對上黑色敵人和<br>不死生物很耐打的能力！		2			Mighty_Carrowsell_(Uber_Rare_Cat)	70
 2	3	超獸討伐關卡通過25關後可於貓咪任務領取		50	0	0,7	200000!0|15!167|15!168|1!171			110800		4	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		3			Ancient_Egg:_N105_(Rare_Cat)	0
 2	3	超獸討伐關卡通過30關後可於貓咪任務領取		50	0	0,6	200000!0|13!169|13!170|1!171			110800		4	第3進化後展現其真正面貌！<br>更獲得了超獸特效！		3			Ancient_Egg:_N106_(Rare_Cat)	0
@@ -783,7 +783,7 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 4	2			60	70					140200		1			2			Mamoluga_(Uber_Rare_Cat)	70
 4	1	可由貓咪召喚出		60	0					140200		1			2			Special_Abilities#Conjure	0
 4	2			60	70					140200		1			2			Koneko_(Uber_Rare_Cat)	70
-1	2			50	0					140200		300|500|1400|2600|4100|5900|8000|10400|13100|16100			7			Choco_Capsule_(Special_Cat)	0
+1	2			50	0					140200		300|500|1400|2600|4100|5900|8000|10400|13100|16100			7			Choco_Capsule_(Special_Cat)	
 2	2			50	0					140200		400|700|1600|2800|4300|6100|8200|10600|13300|16300			3	11|78|10		Killer_Gross_Cat_(Rare_Cat)	0
 4	2			60	70					140200		1			2			The_Amazing_Catman_(Uber_Rare_Cat)	70
 4	2			60	70					140300		1			2			Netherworld_Nymph_Lunacia_(Uber_Rare_Cat)	70
@@ -831,11 +831,11 @@ rarity	form_count	obtain	evol	max_base_level	max_plus_level	egg_id	evol_require	
 3	2			50	70					140700		2			2			Jamie_Cat_(Super_Rare_Cat)	70
 4	2			60	70					150000		1			2			Raclesa_(Uber_Rare_Cat)	70
 1	2			50	25					150000		5			0			Scarf_Cat_(Special_Cat)	20
-1	2	日文版13週年活動：加碼多多「射撃訓練場」獲得		50	0					150000		5			0			Fedora_Cat_(Special_Cat)	0
-1	2	日文版13週年活動：任務獲得		50	0					150000		5			0			Helmet_Cat_(Special_Cat)	0
-1	2	日文版13週年活動：貓咪圖鑑獲得		50	0					150000		5			0			Goggles_Cat_(Special_Cat)	0
-1	2	日文版13週年活動：點擊蛋糕獲得		50	0					150000		5			0			Ribbon_Cat_(Special_Cat)	0
-4	2	日文版13週年任務：取得其他貓咪戰隊後獲得		60	0					150000		1			2			Giga-Nyan_Rex_(Uber_Rare_Cat)	0
+1	2	13週年活動：加碼多多「射撃訓練場」獲得		50	0					150000		5			0			Fedora_Cat_(Special_Cat)	0
+1	2	13週年活動：任務獲得		50	0					150000		5			0			Helmet_Cat_(Special_Cat)	0
+1	2	13週年活動：貓咪圖鑑獲得		50	0					150000		5			0			Goggles_Cat_(Special_Cat)	0
+1	2	13週年活動：點擊蛋糕獲得		50	0					150000		5			0			Ribbon_Cat_(Special_Cat)	0
+4	2	13週年任務：取得其他貓咪戰隊後獲得		60	0					150000		1			2			Giga-Nyan_Rex_(Uber_Rare_Cat)	0
 4	2			60	70					150100		1			2			Squire_Luno_(Uber_Rare_Cat)	70
 4	1	可由貓咪召喚出		60	0					150100		1			2			Special_Abilities#Conjure	0
 4	1	可由貓咪召喚出		60	0					150100		1			2			Special_Abilities#Conjure	0
