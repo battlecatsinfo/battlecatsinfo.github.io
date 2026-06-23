@@ -929,7 +929,6 @@ async function render_stage() {
 		mult = mults[star - 1];
 		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 		var th = tr.appendChild(document.createElement("th"));
-		th.colSpan = 6;
 		for (let i = 0; i < mults.length; ++i) {
 			var a = th.appendChild(document.createElement("span"));
 			a.classList.add("a");
@@ -1275,7 +1274,6 @@ async function render_stage() {
 			tr.id = "limit-bt";
 			tr.style.fontSize = "larger";
 			const th = tr.appendChild(document.createElement("th"));
-			th.colSpan = 6;
 			const div = th.appendChild(document.createElement("div"));
 			const span1 = div.appendChild(document.createElement('span'));
 			span1.classList.add('w');
