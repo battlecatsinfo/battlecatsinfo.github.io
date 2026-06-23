@@ -436,7 +436,7 @@ function initUI() {
 			const specials = [
 				[106, 106, '開放深淵關卡', 'sm10', search_mapflag, 4],
 				[128, 128, '雙倍經驗廣告', 'sm11', search_mapflag, 8],
-				//[0, 0, '特殊角色價格', 'sm13', search_costmulti],
+				[192, 192, '特殊角色價格', 'sm13', search_costmulti, 0],
 				[300, 300, '已棄用', 'sm12', search_mapflag, 16],
 				[90, 90, '速攻不可', 'sm00', search_stageflag, 2],
 				[80, 80, '掃盪不可', 'sm01', search_gold, 0],
