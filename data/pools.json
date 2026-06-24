@@ -5,9 +5,6 @@
 		"en_name": "Cat Capsules",
 		"img": "https://i.imgur.com/561Pb57.png",
 		"type": "normal",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N000.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N000.html",
-		"group_rates": [10000, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		"group_items": [
 			[
 				[
@@ -87,7 +84,10 @@
 			[],
 			[],
 			[]
-		]
+		],
+		"group_rates": [10000, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N000.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N000.html"
 	},
 	{
 		"tw_name": "貓咪轉蛋+",
@@ -95,9 +95,6 @@
 		"en_name": "Cat Capsules+",
 		"img": "https://i.imgur.com/MiQNzJl.png",
 		"type": "normal",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N064.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N064.html",
-		"group_rates": [10000, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		"group_items": [
 			[
 				[
@@ -181,7 +178,10 @@
 			[],
 			[],
 			[]
-		]
+		],
+		"group_rates": [10000, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N064.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N064.html"
 	},
 	{
 		"tw_name": "常駐稀有貓",
@@ -261,9 +261,6 @@
 		"en_name": "Lucky Capsules",
 		"img": "https://i.imgur.com/FaX35wb.png",
 		"type": "normal",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N062.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N062.html",
-		"group_rates": [0, 0, 7400, 0, 2100, 0, 500, 0, 0, 0],
 		"group_items": [
 			[],
 			[
@@ -369,7 +366,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 0, 7400, 0, 2100, 0, 500, 0, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N062.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N062.html"
 	},
 	{
 		"tw_name": "招福轉蛋Ｇ",
@@ -377,9 +377,6 @@
 		"en_name": "Lucky Capsule G",
 		"img": "https://i.imgur.com/jdXs9ed.png",
 		"type": "normal",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N063.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N063.html",
-		"group_rates": [0, 0, 5100, 0, 3500, 0, 1400, 0, 0, 0],
 		"group_items": [
 			[],
 			[
@@ -445,7 +442,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 0, 5100, 0, 3500, 0, 1400, 0, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N063.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N063.html"
 	},
 	{
 		"tw_name": "貓眼石轉蛋",
@@ -453,9 +453,6 @@
 		"en_name": "Catseye Capsule",
 		"img": "https://i.imgur.com/QoatlXD.png",
 		"type": "normal",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N065.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N065.html",
-		"group_rates": [500, 0, 6900, 0, 2000, 0, 500, 0, 100, 0],
 		"group_items": [
 			[
 				[
@@ -503,7 +500,10 @@
 					58
 				]
 			]
-		]
+		],
+		"group_rates": [500, 0, 6900, 0, 2000, 0, 500, 0, 100, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N065.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N065.html"
 	},
 	{
 		"tw_name": "貓薄荷轉蛋",
@@ -511,9 +511,6 @@
 		"en_name": "Catfruit Capsule",
 		"img": "https://i.imgur.com/oZwk811.png",
 		"type": "normal",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N003.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N003.html",
-		"group_rates": [400, 0, 2000, 0, 7000, 0, 600, 0, 0, 0],
 		"group_items": [
 			[
 				[
@@ -620,7 +617,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [400, 0, 2000, 0, 7000, 0, 600, 0, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/tw/N003.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/normal/N003.html"
 	},
 	{
 		"tw_name": "EX罐頭購買貓",
@@ -693,9 +693,6 @@
 		"stage": "11-48",
 		"ticket": 200,
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E047.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E047.html",
-		"group_rates": [1000, 0, 5000, 0, 2500, 0, 1500, 1, 0, 0],
 		"group_items": [
 			[
 				[
@@ -762,7 +759,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [1000, 0, 5000, 0, 2500, 0, 1500, 1, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E047.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E047.html"
 	},
 	{
 		"tw_name": "春節活動轉蛋（日文版）",
@@ -772,9 +772,6 @@
 		"stage": "11-41",
 		"ticket": 199,
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E046.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E046.html",
-		"group_rates": [800, 0, 5000, 0, 3000, 0, 1000, 1, 200, 0],
 		"group_items": [
 			[
 				[
@@ -838,7 +835,10 @@
 					197
 				]
 			]
-		]
+		],
+		"group_rates": [800, 0, 5000, 0, 3000, 0, 1000, 1, 200, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E046.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E046.html"
 	},
 	{
 		"tw_name": "春節活動轉蛋（海外版）",
@@ -848,9 +848,6 @@
 		"stage": "11-41",
 		"ticket": 199,
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E046.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E046.html",
-		"group_rates": [800, 0, 5000, 0, 3000, 0, 1000, 1, 200, 0],
 		"group_items": [
 			[
 				[
@@ -914,7 +911,10 @@
 					197
 				]
 			]
-		]
+		],
+		"group_rates": [800, 0, 5000, 0, 3000, 0, 1000, 1, 200, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E046.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E046.html"
 	},
 	{
 		"tw_name": "惡魔的完美新娘活動轉蛋",
@@ -924,9 +924,6 @@
 		"stage": "11-52",
 		"ticket": 202,
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E050.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E050.html",
-		"group_rates": [800, 0, 5000, 0, 3000, 0, 1000, 1, 200, 0],
 		"group_items": [
 			[
 				[
@@ -994,7 +991,10 @@
 					197
 				]
 			]
-		]
+		],
+		"group_rates": [800, 0, 5000, 0, 3000, 0, 1000, 1, 200, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E050.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E050.html"
 	},
 	{
 		"tw_name": "貓咪的暑假活動轉蛋",
@@ -1004,9 +1004,6 @@
 		"stage": "11-19",
 		"ticket": 203,
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E031.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E031.html",
-		"group_rates": [250, 0, 6250, 0, 2300, 0, 1000, 1, 200, 0],
 		"group_items": [
 			[],
 			[
@@ -1069,7 +1066,10 @@
 					197
 				]
 			]
-		]
+		],
+		"group_rates": [250, 0, 6250, 0, 2300, 0, 1000, 1, 200, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E031.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E031.html"
 	},
 	{
 		"tw_name": "貓咪的暑假 野外求生",
@@ -1079,9 +1079,6 @@
 		"stage": "11-71",
 		"ticket": 216,
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E040.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E040.html",
-		"group_rates": [1000, 0, 5000, 0, 3000, 0, 1000, 1, 0, 0],
 		"group_items": [
 			[
 				[
@@ -1144,7 +1141,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [1000, 0, 5000, 0, 3000, 0, 1000, 1, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E040.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E040.html"
 	},
 	{
 		"tw_name": "貓咪的暑假 享樂天堂篇",
@@ -1154,9 +1154,6 @@
 		"stage": "11-73",
 		"ticket": 220,
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E041.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E041.html",
-		"group_rates": [3400, 0, 3800, 0, 2000, 0, 800, 0, 0, 0],
 		"group_items": [
 			[
 				[
@@ -1219,7 +1216,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [3400, 0, 3800, 0, 2000, 0, 800, 0, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E041.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E041.html"
 	},
 	{
 		"tw_name": "萬聖節派對活動轉蛋",
@@ -1229,34 +1229,6 @@
 		"stage": "11-68",
 		"ticket": 206,
 		"type": "event",
-		"featured_items": {
-			"items": [
-				{
-					"id": 157,
-					"rate": 0.5,
-					"max": 1
-				},
-				{
-					"id": 21,
-					"rate": 0.5,
-					"max": 1
-				},
-				{
-					"id": 197,
-					"rate": 3.0,
-					"max": 5
-				},
-				{
-					"id": 105,
-					"rate": 1.0,
-					"max": 1
-				}
-			],
-			"guaranteed_count": 30
-		},
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E044.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E044.html",
-		"group_rates": [2000, 0, 4900, 0, 3000, 0, 0, 0, 100, 0],
 		"group_items": [
 			[
 				[
@@ -1307,7 +1279,35 @@
 					18
 				]
 			]
-		]
+		],
+		"featured_items": {
+			"items": [
+				{
+					"id": 157,
+					"rate": 0.5,
+					"max": 1
+				},
+				{
+					"id": 21,
+					"rate": 0.5,
+					"max": 1
+				},
+				{
+					"id": 197,
+					"rate": 3.0,
+					"max": 5
+				},
+				{
+					"id": 105,
+					"rate": 1.0,
+					"max": 1
+				}
+			],
+			"guaranteed_count": 30
+		},
+		"group_rates": [2000, 0, 4900, 0, 3000, 0, 0, 0, 100, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E044.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E044.html"
 	},
 	{
 		"tag": "範馬刃牙活動轉蛋",
@@ -1325,9 +1325,6 @@
 			"/collab/Hanma_Baki__Son_of_Ogre.html"
 		],
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E039.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E039.html",
-		"group_rates": [1000, 0, 4500, 0, 2500, 0, 2000, 1, 0, 0],
 		"group_items": [
 			[
 				[
@@ -1386,7 +1383,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [1000, 0, 4500, 0, 2500, 0, 2000, 1, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E039.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E039.html"
 	},
 	{
 		"tw_name": "魔物獵人大狩獵活動轉蛋",
@@ -1400,7 +1400,6 @@
 			"/collab/Monster_Hunter_Collaboration_Event.html"
 		],
 		"type": "event",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E001.html",
 		"group_items": [
 			[],
 			[
@@ -1438,7 +1437,8 @@
 				]
 			],
 			[]
-		]
+		],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E001.html"
 	},
 	{
 		"tw_name": "貓咪拼圖＆納豆君（暫譯）活動轉蛋",
@@ -1448,7 +1448,6 @@
 		"tw_url": "",
 		"ticket": 25,
 		"type": "event",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E002.html",
 		"group_items": [
 			[
 				[
@@ -1515,7 +1514,8 @@
 				]
 			],
 			[]
-		]
+		],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E002.html"
 	},
 	{
 		"tag": "聖魔",
@@ -1533,9 +1533,6 @@
 			"/collab/Bikkuriman.html"
 		],
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E033.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E033.html",
-		"group_rates": [800, 0, 4000, 0, 2000, 0, 2000, 1, 1200, 1],
 		"group_items": [
 			[
 				[
@@ -1603,7 +1600,10 @@
 					474
 				]
 			]
-		]
+		],
+		"group_rates": [800, 0, 4000, 0, 2000, 0, 2000, 1, 1200, 1],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E033.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E033.html"
 	},
 	{
 		"tw_name": "GI競馬活動轉蛋",
@@ -1613,9 +1613,6 @@
 		"stage": "13-10",
 		"ticket": 162,
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E015.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E015.html",
-		"group_rates": [1000, 0, 4000, 0, 2000, 0, 3000, 1, 0, 0],
 		"group_items": [
 			[
 				[
@@ -1674,7 +1671,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [1000, 0, 4000, 0, 2000, 0, 3000, 1, 0, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E015.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E015.html"
 	},
 	{
 		"tw_name": "13週年貓咪戰隊活動轉蛋",
@@ -1684,9 +1684,6 @@
 		"ticket": 231,
 		"stage": "1-412",
 		"type": "event",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E045.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E045.html",
-		"group_rates": [0, 0, 7000, 0, 2300, 0, 500, 1, 200, 0],
 		"group_items": [
 			[],
 			[
@@ -1749,7 +1746,10 @@
 					197
 				]
 			]
-		]
+		],
+		"group_rates": [0, 0, 7000, 0, 2300, 0, 500, 1, 200, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E045.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E045.html"
 	},
 	{
 		"tw_name": "下載紀念選拔",
@@ -1757,8 +1757,6 @@
 		"en_name": "Best of the Best Milestone Edition",
 		"img": "https://i.meee.com.tw/QfHZqNU.png",
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1049.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1049.html",
 		"group_items": [
 			[],
 			[
@@ -2041,7 +2039,9 @@
 					544
 				]
 			]
-		]
+		],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1049.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1049.html"
 	},
 	{
 		"tag": "超極貓咪祭",
@@ -2063,9 +2063,6 @@
 			"2020/5/1~2020/5/4 超極貓咪祭 10%"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1051.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1051.html",
-		"group_rates": [0, 6470, 2500, 1000, 30],
 		"group_items": [
 			[],
 			[
@@ -2760,7 +2757,10 @@
 					731
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6470, 2500, 1000, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1051.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1051.html"
 	},
 	{
 		"tag": "超級貓咪祭",
@@ -2877,9 +2877,6 @@
 			"2016/3/19~2016/3/22 超級貓咪祭 9%"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1033.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1033.html",
-		"group_rates": [0, 6470, 2600, 900, 30],
 		"group_items": [
 			[],
 			[
@@ -3530,7 +3527,10 @@
 					731
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6470, 2600, 900, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1033.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1033.html"
 	},
 	{
 		"tag": "特級貓咪祭",
@@ -3636,9 +3636,6 @@
 			"2017/4/20~2017/4/23 特級貓咪祭 9%"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1056.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1056.html",
-		"group_rates": [0, 6470, 2600, 900, 30],
 		"group_items": [
 			[],
 			[
@@ -4293,7 +4290,10 @@
 					738
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6470, 2600, 900, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1056.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1056.html"
 	},
 	{
 		"tw_name": "白金轉蛋",
@@ -4301,9 +4301,6 @@
 		"en_name": "Platinum Capsules",
 		"img": "https://i.imgur.com/kixYMGy.png",
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1008.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1008.html",
-		"group_rates": [0, 0, 0, 10000, 0],
 		"group_items": [
 			[],
 			[],
@@ -4827,7 +4824,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 0, 0, 10000, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1008.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1008.html"
 	},
 	{
 		"tw_name": "傳說轉蛋",
@@ -4835,9 +4835,6 @@
 		"en_name": "Legend Capsules",
 		"img": "https://i.imgur.com/MdxnEMn.png",
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1009.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1009.html",
-		"group_rates": [0, 0, 0, 9500, 500],
 		"group_items": [
 			[],
 			[],
@@ -5414,7 +5411,10 @@
 					448
 				]
 			]
-		]
+		],
+		"group_rates": [0, 0, 0, 9500, 500],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1009.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1009.html"
 	},
 	{
 		"tag": "不明貓",
@@ -5563,9 +5563,6 @@
 			"2014/11/18~2014/11/22 不明貓系列"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R986.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R986.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -5840,7 +5837,10 @@
 					461
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R986.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R986.html"
 	},
 	{
 		"tag": "超激烈爆彈",
@@ -5994,9 +5994,6 @@
 			"2014/11/5~2014/11/10 超激烈爆彈"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R942.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R942.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -6271,7 +6268,10 @@
 					455
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R942.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R942.html"
 	},
 	{
 		"tag": "戰國武神",
@@ -6423,9 +6423,6 @@
 			"2014/10/30~2014/11/5 戰國系列"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1044.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1044.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -6704,7 +6701,10 @@
 					448
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1044.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1044.html"
 	},
 	{
 		"tag": "電腦學園",
@@ -6856,9 +6856,6 @@
 			"2014/11/22~2014/11/28 電腦學園"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1022.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1022.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -7137,7 +7134,10 @@
 					449
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1022.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1022.html"
 	},
 	{
 		"tag": "龍族",
@@ -7287,9 +7287,6 @@
 			"2014/12/21~2014/12/27 龍族系列"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1060.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1060.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -7568,7 +7565,10 @@
 					450
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1060.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1060.html"
 	},
 	{
 		"tag": "超古代",
@@ -7715,9 +7715,6 @@
 			"2015/2/28~2015/3/5 超古代勇者"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R946.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R946.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -7992,7 +7989,10 @@
 					451
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R946.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R946.html"
 	},
 	{
 		"tag": "黑暗英雄",
@@ -8135,9 +8135,6 @@
 			"2015/7/24~2015/7/30 黑暗英雄 必中"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R947.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R947.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -8412,7 +8409,10 @@
 					481
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R947.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R947.html"
 	},
 	{
 		"tag": "天神系列",
@@ -8547,9 +8547,6 @@
 			"2016/2/6~2016/2/9 天神系列 必中"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R992.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R992.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -8824,7 +8821,10 @@
 					493
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R992.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R992.html"
 	},
 	{
 		"tag": "革命軍隊",
@@ -8944,9 +8944,6 @@
 			"2016/11/26~2016/11/30 革命軍隊 5%必中"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R980.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R980.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -9217,7 +9214,10 @@
 					463
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R980.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R980.html"
 	},
 	{
 		"tag": "元素小精靈",
@@ -9332,9 +9332,6 @@
 			"2017/11/10~2017/11/13 宇宙精靈 3%必中"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1005.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1005.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -9601,7 +9598,10 @@
 					478
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1005.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1005.html"
 	},
 	{
 		"tag": "絕命美少女",
@@ -9705,9 +9705,6 @@
 			"/collab/GirlsMons.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1016.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1016.html",
-		"group_rates": [0, 6970, 2500, 500, 30],
 		"group_items": [
 			[],
 			[
@@ -9974,7 +9971,10 @@
 					544
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1016.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1016.html"
 	},
 	{
 		"tag": "情人節淑女們",
@@ -9989,9 +9989,6 @@
 			"2023/2/20(11:00)~3/13(10:59) 情人節淑女們 5% [碎] [2/20(11:00)~2/24(10:59) 5% 必中]"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R785.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R785.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -10225,7 +10222,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R785.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R785.html"
 	},
 	{
 		"tag": "白色情人",
@@ -10243,9 +10243,6 @@
 			"2021/2/15~2021/3/1 情人節轉蛋 5% (2021/2/26~2021/3/1 5% 必中)"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R968.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R968.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -10463,7 +10460,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R968.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R968.html"
 	},
 	{
 		"tag": "復活節",
@@ -10483,9 +10483,6 @@
 			"2017/4/1~2017/4/13 復活節轉蛋(2017/4/1~2017/4/4 3%必中)"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R875.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R875.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -10711,7 +10708,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R875.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R875.html"
 	},
 	{
 		"tag": "完美新娘",
@@ -10727,9 +10727,6 @@
 			"2022/7/18(11:00)~8/8(10:59) 惡魔的完美新娘 活動轉蛋"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1065.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1065.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -10947,7 +10944,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1065.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1065.html"
 	},
 	{
 		"tag": "夏日1",
@@ -10974,8 +10974,6 @@
 			"2016/7/12~2016/7/21 夏日轉蛋5%(2016/7/15~2016/7/18 5%必中)"
 		],
 		"type": "rare",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1001.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -11201,7 +11199,9 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1001.html"
 	},
 	{
 		"tag": "夏日2",
@@ -11227,9 +11227,6 @@
 			"2016/7/12~2016/7/21 夏日轉蛋5%(2016/7/15~2016/7/18 5%必中)"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1010.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1010.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -11479,7 +11476,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1010.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1010.html"
 	},
 	{
 		"tag": "萬聖",
@@ -11501,9 +11501,6 @@
 			"2015/10/17~2015/11/1 萬聖節轉蛋"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R922.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R922.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -11741,7 +11738,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R922.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R922.html"
 	},
 	{
 		"tag": "聖誕",
@@ -11762,9 +11762,6 @@
 			"2016/12/12~2016/12/21 聖誕節轉蛋 5%"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R940.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R940.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -11986,7 +11983,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R940.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R940.html"
 	},
 	{
 		"tag": "破壞者祭",
@@ -12001,9 +12001,6 @@
 			"2024/9/27-2024/10/4 破壞者祭"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R939.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R939.html",
-		"group_rates": [0, 6800, 2500, 700, 0],
 		"group_items": [
 			[],
 			[
@@ -12393,7 +12390,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 6800, 2500, 700, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R939.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R939.html"
 	},
 	{
 		"tag": "紅色破壞者",
@@ -12457,9 +12457,6 @@
 			"2015/1/15~2015/1/20 紅色破壞者"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R696.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R696.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -12717,7 +12714,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R696.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R696.html"
 	},
 	{
 		"tag": "飄浮破壞者",
@@ -12764,9 +12764,6 @@
 			"2016/9/23~2016/9/26 漂浮破壞者5%"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R452.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R452.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -13012,7 +13009,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R452.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R452.html"
 	},
 	{
 		"tag": "鋼鐵破壞者",
@@ -13044,9 +13044,6 @@
 			"2017/9/22~2017/9/25 鋼鐵破壞者 5%"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R906.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R906.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -13352,7 +13349,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R906.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R906.html"
 	},
 	{
 		"tag": "波動破壞者",
@@ -13375,9 +13375,6 @@
 			"2020/10/9~2020/10/12 波動破壞者 5% 好康轉蛋"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R523.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R523.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -13615,7 +13612,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R523.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R523.html"
 	},
 	{
 		"tag": "超生命體破壞者",
@@ -13632,9 +13632,6 @@
 			"2023/1/26(11:00)~1/29(10:59) 超生命體破壞者 5% 好康轉蛋 (新增: 光之女神希莉烏斯)"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R772.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R772.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -13872,7 +13869,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R772.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R772.html"
 	},
 	{
 		"tag": "超國王祭",
@@ -13896,9 +13896,6 @@
 			"2021/2/8~2021/2/11(24:00) 超國王祭 7%/0.3%"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1012.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1012.html",
-		"group_rates": [0, 6770, 2500, 700, 30],
 		"group_items": [
 			[],
 			[
@@ -14277,7 +14274,10 @@
 					586
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6770, 2500, 700, 30],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1012.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1012.html"
 	},
 	{
 		"tag": "女王祭",
@@ -14297,9 +14297,6 @@
 			"2021/8/27(11:00)~2021/8/30(10:59) 女王祭 5%/0.6% [碎] (新增: 貓咪王女)"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R861.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R861.html",
-		"group_rates": [0, 6940, 2500, 500, 60],
 		"group_items": [
 			[],
 			[
@@ -14578,7 +14575,10 @@
 					544
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6940, 2500, 500, 60],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R861.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R861.html"
 	},
 	{
 		"tag": "範馬刃牙",
@@ -14594,9 +14594,6 @@
 			"/collab/Hanma_Baki__Son_of_Ogre.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R977.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R977.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -14818,7 +14815,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R977.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R977.html"
 	},
 	{
 		"tag": "神劍闖江湖",
@@ -14835,8 +14835,6 @@
 			"/collab/Rurouni_Kenshin__Meiji_Swordsman_Romantic_Story.html"
 		],
 		"type": "rare",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R888.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -15054,7 +15052,9 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R888.html"
 	},
 	{
 		"tag": "神魔",
@@ -15067,9 +15067,6 @@
 			"/collab/Tower_of_Saviors.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R879.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R879.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -15255,7 +15252,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R879.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R879.html"
 	},
 	{
 		"tag": "公主踢",
@@ -15271,9 +15271,6 @@
 			"/collab/Princess_Punt_Sweets.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R482.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R482.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -15327,7 +15324,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R482.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R482.html"
 	},
 	{
 		"tag": "梅露可物語",
@@ -15350,9 +15350,6 @@
 			"/collab/Merc_Storia.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R925.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R925.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -15446,7 +15443,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R925.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R925.html"
 	},
 	{
 		"tag": "蛋黃哥",
@@ -15463,9 +15463,6 @@
 			"/collab/Gudetama.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R297.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R297.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -15735,7 +15732,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R297.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R297.html"
 	},
 	{
 		"tag": "悠閒世界樹",
@@ -15749,8 +15749,6 @@
 			"/collab/Yurudrasil.html"
 		],
 		"type": "rare",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R049.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -15780,7 +15778,9 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R049.html"
 	},
 	{
 		"tag": "曼波魚",
@@ -15804,8 +15804,6 @@
 			"/collab/Survive__Mola_Mola_.html"
 		],
 		"type": "rare",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1000.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -16039,7 +16037,9 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1000.html"
 	},
 	{
 		"tag": "消滅都市",
@@ -16059,8 +16059,6 @@
 			"/collab/Shoumetsu_Toshi.html"
 		],
 		"type": "rare",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R505.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -16318,7 +16316,9 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R505.html"
 	},
 	{
 		"tag": "越南大戰",
@@ -16337,8 +16337,6 @@
 			"/collab/Metal_Slug_Attack.html"
 		],
 		"type": "rare",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R864.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -16620,7 +16618,9 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R864.html"
 	},
 	{
 		"tag": "魔法少女小圓",
@@ -16638,9 +16638,6 @@
 			"/collab/Puella_Magi_Madoka_Magica.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R958.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R958.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -16950,7 +16947,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R958.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R958.html"
 	},
 	{
 		"tag": "Crash Fever",
@@ -16968,9 +16968,6 @@
 			"/collab/Crash_Fever.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R546.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R546.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -17156,7 +17153,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R546.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R546.html"
 	},
 	{
 		"tag": "Fate/stay",
@@ -17172,9 +17172,6 @@
 			"/collab/Fate_Stay_Night__Heaven_s_Feel.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1066.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1066.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -17476,7 +17473,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1066.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1066.html"
 	},
 	{
 		"tag": "實況野球",
@@ -17493,9 +17493,6 @@
 			"/collab/Power_Pro_Baseball.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R265.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R265.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -17621,7 +17618,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R265.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R265.html"
 	},
 	{
 		"tag": "福音戰士1",
@@ -17646,8 +17646,6 @@
 			"/collab/Neon_Genesis_Evangelion.html"
 		],
 		"type": "rare",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R998.html",
-		"group_rates": [0, 6970, 2500, 500, 30, 0],
 		"group_items": [
 			[],
 			[
@@ -17918,7 +17916,9 @@
 					815
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30, 0],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R998.html"
 	},
 	{
 		"tag": "福音戰士2",
@@ -17943,8 +17943,6 @@
 			"/collab/Neon_Genesis_Evangelion.html"
 		],
 		"type": "rare",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R999.html",
-		"group_rates": [0, 6970, 2500, 500, 30, 0],
 		"group_items": [
 			[],
 			[
@@ -18219,7 +18217,9 @@
 					815
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30, 0],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R999.html"
 	},
 	{
 		"tag": "聖魔大戰",
@@ -18235,9 +18235,6 @@
 			"/collab/Bikkuriman.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R913.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R913.html",
-		"group_rates": [0, 6970, 2500, 500, 30, 0],
 		"group_items": [
 			[],
 			[
@@ -18472,7 +18469,10 @@
 					466
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R913.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R913.html"
 	},
 	{
 		"tag": "BLUE TEAM",
@@ -18492,9 +18492,6 @@
 			"/collab/Street_Fighter_V.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1017.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1017.html",
-		"group_rates": [0, 6970, 2500, 500, 30, 0],
 		"group_items": [
 			[],
 			[
@@ -18781,7 +18778,10 @@
 					510
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1017.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1017.html"
 	},
 	{
 		"tag": "RED TEAM",
@@ -18801,9 +18801,6 @@
 			"/collab/Street_Fighter_V.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1018.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1018.html",
-		"group_rates": [0, 6970, 2500, 500, 30, 0],
 		"group_items": [
 			[],
 			[
@@ -19090,7 +19087,10 @@
 					510
 				]
 			]
-		]
+		],
+		"group_rates": [0, 6970, 2500, 500, 30, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1018.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1018.html"
 	},
 	{
 		"tag": "鬼滅之刃",
@@ -19106,9 +19106,6 @@
 			"/collab/Demon_Slayer__Kimetsu_No_Yaiba.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1038.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1038.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -19338,7 +19335,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1038.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1038.html"
 	},
 	{
 		"tag": "初音",
@@ -19357,9 +19357,6 @@
 			"/collab/Hatsune_Miku.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R850.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R850.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -19629,7 +19626,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R850.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R850.html"
 	},
 	{
 		"tag": "亂馬",
@@ -19646,9 +19646,6 @@
 			"/collab/Ranma_1_2.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R748.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R748.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -19922,7 +19919,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R748.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R748.html"
 	},
 	{
 		"tag": "大運動會",
@@ -19941,9 +19941,6 @@
 			"/collab/River_City_Clash.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R848.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R848.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -20157,7 +20154,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R848.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R848.html"
 	},
 	{
 		"tag": "大運動會",
@@ -20176,9 +20176,6 @@
 			"/collab/River_City_Clash.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R924.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R924.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -20392,7 +20389,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R924.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R924.html"
 	},
 	{
 		"tw_name": "龍族撲克",
@@ -20404,9 +20404,6 @@
 			"/collab/Dragon_Poker.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R012.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R012.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -20544,7 +20541,10 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R012.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R012.html"
 	},
 	{
 		"tag": "音速小子",
@@ -20560,9 +20560,6 @@
 			"/collab/Sonic_the_Hedgehog.html"
 		],
 		"type": "rare",
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R985.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R985.html",
-		"group_rates": [0, 7000, 2500, 500, 0],
 		"group_items": [
 			[],
 			[
@@ -20796,6 +20793,9 @@
 				]
 			],
 			[]
-		]
+		],
+		"group_rates": [0, 7000, 2500, 500, 0],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R985.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R985.html"
 	}
 ]
