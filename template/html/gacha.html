@@ -187,7 +187,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{{#each data as |item|}}
+			{{#each data.items as |item|}}
 			<tr style="background-color:{{item.bgColor}}">
 				<td><img {{#if item.imgStyle}}style="{{item.imgStyle}}" {{/if~}}
 				src="{{item.imgSrc}}" width="{{item.imgWidth}}" height="{{item.imgHeight}}"></td>

@@ -122,8 +122,6 @@ module.exports = class extends RewardSiteGenerator {
 				data = this.get_rare(pool);
 				break;
 			case 'normal':
-				data = this.get_normal(pool);
-				break;
 			case 'event':
 				data = this.get_event(pool);
 				break;
@@ -178,23 +176,28 @@ module.exports = class extends RewardSiteGenerator {
 	get_rare(O) {
 		let exclusive_ids = [];
 		const self = this;
-		const units = O['units'];
-		const colors = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'];
+		const group_items = O['group_items'];
+		console.assert(group_items.length === 5);
+		// 0: ?, 1: rare, 2: super rare, 3: uber rare, 4: legend rare
+		const colors = ['', '#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'];
 		const S = {
-			rarity_descs: Array.from(new Set(units.map(x => this.rarity_desc[self.unit_rarity[x]]))),
+			rarity_descs: group_items.reduceRight((acc, group, i) => {
+				if (group.length)
+					acc.push(this.rarity_desc[i]);
+				return acc;
+			}, []),
 			summary: [],
 			item_free: null,
 			item_groups: [],
 			item_minor: [],
 		};
-		for (let rarity = 5;rarity >= 2;--rarity) {
-			let c = units.filter(u => this.unit_rarity[u] === rarity).length;
-			let x = rarity - 2;
-			let rate = O['rate']?.[x];
+		for (let rarity = 4; rarity >= 0; --rarity) {
+			let c = group_items[rarity].length;
+			let rate = O['group_rates']?.[rarity];
 			if (rate) {
 				S.summary.push({
-					bgColor: colors[x],
-					name: ['稀有', '激稀有', '超激稀有', '傳說稀有'][x],
+					bgColor: colors[rarity],
+					name: ['', '稀有', '激稀有', '超激稀有', '傳說稀有'][rarity],
 					rate: `${rate / 100}%`,
 					total: c,
 					rateEach: `${this.fmt.format(rate / (100 * c))}%`,
@@ -209,14 +212,10 @@ module.exports = class extends RewardSiteGenerator {
 			};
 		}
 		const MUL = {};
-		for (let rarity = 5;rarity >= 0;--rarity) {
+		for (let rarity = 4; rarity >= 0; --rarity) {
 			const out = {'0': []};
 			outer:
-			for (const u of units) {
-				if (this.unit_rarity[u] !== rarity) {
-					continue;
-				}
-
+			for (const u of group_items[rarity].map(v => v[1])) {
 				if (MUL[u]) {
 					MUL[u] += 1;
 					continue;
@@ -242,8 +241,8 @@ module.exports = class extends RewardSiteGenerator {
 
 			if (v.length) {
 				S.item_groups.push({
-					bgColor: ['', '', '#795548', '#93254b', '#9C27B0', '#673AB7'][rarity],
-					name: ['基本', 'EX', '稀有', '激稀有', '超激稀有', '傳說稀有'][rarity],
+					bgColor: ['', '#795548', '#93254b', '#9C27B0', '#673AB7'][rarity],
+					name: ['', '稀有', '激稀有', '超激稀有', '傳說稀有'][rarity],
 					rows: [],
 				});
 				v.sort((a, b) => a - b);
@@ -287,164 +286,80 @@ module.exports = class extends RewardSiteGenerator {
 
 		return c;
 	}
-	get_normal(O) {
-		const S = [];
-		const units = O['units'];
-		const result = [];
-		for (let i = 0, I;i < 5;++i) {
-			let rate = O['rate'][i];
-			if (!rate)
-				continue;
 
-			let group = units[i];
-			rate = new Fraction(rate, group.length);
-			for (const x of new Set(group)) {
-				let r = new Fraction(this.count(group, x)).mul(rate);
-				switch (x[0]) {
-				case 0:
-					I = x[1];
-					result.push([
-						-1,
-						I + 667,
-						this.uimg(I),
-						{id: I, name: this.unit_name[I]},
-						r,
-						'',
-						'104',
-						'79',
-						'padding:.4em'
-					]);
-					break;
-				case 1:
-					I = this.reward_order[x[1]];
-					result.push([
-						~~(I / 100),
-						I,
-						`/img/r/${x[1]}.png`,
-						{name: this.rewards[x[1]].name},
-						r,
-						'',
-						'128',
-						'128',
-						''
-					]);
-					break;
-				default:
-					I = x[1];
-					result.push([
-						-2,
-						I,
-						`/img/i/o/tech${I}.png`,
-						{name: this.tech_names[I]},
-						r,
-						'',
-						'128',
-						'128',
-						''
-					]);
-					break;
-				}
-			}
-		}
-
-		result.sort((a, b) => {
-			return a[1] - b[1]
-		});
-
-		let e_type = result[0][0];
-		let count = 0;
-		let last_i = 0;
-		let rate = Fraction(0);
-		let color = 0;
-
-		for (let i = 0;i < result.length;++i) {
-			const v = result[i];
-			if (e_type == v[0]) {
-				rate = rate.add(v[4]);
-				v[4] = v[4].valueOf() / 100;
-				++count;
-			} else {
-				e_type = v[0];
-				result[last_i][5] = {
-					count,
-					value: `${this.fmt.format(rate.valueOf() / 100)}%`,
-				};
-				count = 1;
-				rate = v[4];
-				v[4] = v[4].valueOf() / 100;
-				last_i = i;
-				++color;
-			}
-			v[1] = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'][color];
-		}
-
-		result[last_i][5] = {
-			count,
-			value: `${this.fmt.format(rate.valueOf() / 100)}%`,
-		};
-		for (const x of result) {
-			S.push({
-				bgColor: x[1],
-				imgStyle: x[8],
-				imgSrc: x[2],
-				imgWidth: x[6],
-				imgHeight: x[7],
-				info: x[3],
-				rate: `${this.fmt.format(x[4])}%`,
-				rateSum: x[5],
-			});
-		}
-		return S;
-	}
 	get_event(O) {
 		const S = {
 				guaranteed: false,
 				items: [],
 		};
-		const units = O['units'];
-		const d_rate = O['rate'] || [0,0,0,0,0,0,0,0,0,0];
+		const group_items = O['group_items'];
+		const group_rates = O['group_rates'] || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		console.assert(group_items.length === 5);
+		console.assert(group_rates.length === 10);
 		const result = [];
 		let must_drop_group = undefined;
 		let gacha_units = new Set();
 
 		for (let i = 0, I;i < 9;i += 2) {
-			let rate = d_rate[i];
-			let group = units[i >> 1];
+			let rate = group_rates[i];
+			let group = group_items[i >> 1];
 			let R = new Fraction(rate, group.length || 1);
-			let must = d_rate[i + 1] ? '*' : '';
+			let must = group_rates[i + 1] ? '*' : '';
 			if (must)
 				must_drop_group = group;
-			for (const x of new Set(group)) {
-				let r = new Fraction(this.count(group, x)).mul(R);
-				if (x < 0) {
-					I = -(x + 1);
-					result.push([
-						-1,
-						I + 667,
-						this.uimg(I),
-						{id: I, name: this.unit_name[I], must},
-						r,
-						null,
-						rate,
-						'104',
-						'79',
-						'padding:.4em'
-					]);
-					gacha_units.add(I);
-				} else {
-					I = this.reward_order[x];
-					result.push([
-						~~(I / 100),
-						I,
-						`/img/r/${x}.png`,
-						{name: this.rewards[x].name},
-						r,
-						null,
-						rate,
-						'128',
-						'128',
-						''
-					]);
+			for (const item of new Set(group)) {
+				let r = new Fraction(this.count(group, item)).mul(R);
+				const [kind, v] = item;
+				switch (kind) {
+					case 'unit':
+						result.push([
+							-1,
+							v + 667,
+							this.uimg(v),
+							{id: v, name: this.unit_name[v], must},
+							r,
+							null,
+							rate,
+							'104',
+							'79',
+							'padding:.4em',
+						]);
+						gacha_units.add(v);
+						break;
+					case 'item':
+						{
+							const order = this.reward_order[v];
+							result.push([
+								~~(order / 100),
+								order,
+								`/img/r/${v}.png`,
+								{name: this.rewards[v].name},
+								r,
+								null,
+								rate,
+								'128',
+								'128',
+								'',
+							]);
+						}
+						break;
+					case 'tech':
+						result.push([
+							-2,
+							v,
+							`/img/i/o/tech${v}.png`,
+							{name: this.tech_names[v]},
+							r,
+							null,
+							rate,
+							'128',
+							'128',
+							'',
+						]);
+						break;
+					default:
+						console.assert(false);
+						break;
 				}
 			}
 		}
@@ -560,7 +475,6 @@ module.exports = class extends RewardSiteGenerator {
 				rate: this.fmt2.format(entry.rate),
 			}));
 		}
-
 		return S;
 	}
 	get_category(O) {
