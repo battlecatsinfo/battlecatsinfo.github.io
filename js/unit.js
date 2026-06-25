@@ -157,15 +157,19 @@ module.exports = class extends SiteGenerator {
 						if (categoryUnits.has(id))
 							continue;
 					}
-
-					if (pool.units.includes(id)) {
-						if (pool.rarity === 'festival') {
-							obtn.push([2, pool.tw_name, normalizePath(pool.en_name)]);
-						} else if (pool.collab) {
-							_collab = [pool.collab[0], pool.collab[1].slice(8, -5)];
-							obtn.push([3, pool.tw_name, normalizePath(pool.en_name)]);
-						} else {
-							obtn.push([1, pool.tw_name, normalizePath(pool.en_name)]);
+					for (const group of pool.group_items) {
+						for (const [kind, value] of group) {
+							if (kind === 'unit' && value === id) {
+								if (pool.rarity === 'festival') {
+									obtn.push([2, pool.tw_name, normalizePath(pool.en_name)]);
+								} else if (pool.collab) {
+									_collab = [pool.collab[0], pool.collab[1].slice(8, -5)];
+									obtn.push([3, pool.tw_name, normalizePath(pool.en_name)]);
+								} else {
+									obtn.push([1, pool.tw_name, normalizePath(pool.en_name)]);
+								}
+								break;
+							}
 						}
 					}
 					break;
@@ -173,10 +177,9 @@ module.exports = class extends SiteGenerator {
 					if (Li_l_Cats.has(id))
 						break;
 
-					const test = -id - 1;
-					outer: for (const group of pool.units) {
-						for (const v of group) {
-							if (v === test) {
+					outer: for (const group of pool.group_items) {
+						for (const [kind, value] of group) {
+							if (kind === 'unit' && value === id) {
 								if (pool.collab)
 									_collab = [pool.collab[0], pool.collab[1].slice(8, -5)];
 
