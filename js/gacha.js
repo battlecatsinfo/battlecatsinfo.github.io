@@ -173,14 +173,14 @@ module.exports = class extends RewardSiteGenerator {
 	uimg(u) {
 		return this.egg_set.has(u) ? `/img/u/${u}/2.png` : `/img/u/${u}/0.png`;
 	}
-	get_rare(O) {
+	get_rare(pool) {
 		let exclusive_ids = [];
 		const self = this;
-		const group_items = O['group_items'];
+		const group_items = pool['group_items'];
 		console.assert(group_items.length === 5);
 		// 0: ?, 1: rare, 2: super rare, 3: uber rare, 4: legend rare
 		const colors = ['', '#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'];
-		const S = {
+		const output = {
 			rarity_descs: group_items.reduceRight((acc, group, i) => {
 				if (group.length)
 					acc.push(this.rarity_desc[i]);
@@ -193,9 +193,9 @@ module.exports = class extends RewardSiteGenerator {
 		};
 		for (let rarity = 4; rarity >= 0; --rarity) {
 			let c = group_items[rarity].length;
-			let rate = O['group_rates']?.[rarity];
+			let rate = pool['group_rates']?.[rarity];
 			if (rate) {
-				S.summary.push({
+				output.summary.push({
 					bgColor: colors[rarity],
 					name: ['', '稀有', '激稀有', '超激稀有', '傳說稀有'][rarity],
 					rate: `${rate / 100}%`,
@@ -204,11 +204,11 @@ module.exports = class extends RewardSiteGenerator {
 				});
 			}
 		}
-		if (O['free']) {
-			S.item_free = {
-				id: O['free'],
-				img: this.uimg(O['free']),
-				descs: this.unit_desc[O['free']].split('|'),
+		if (pool['free']) {
+			output.item_free = {
+				id: pool['free'],
+				img: this.uimg(pool['free']),
+				descs: this.unit_desc[pool['free']].split('|'),
 			};
 		}
 		const MUL = {};
@@ -224,7 +224,7 @@ module.exports = class extends RewardSiteGenerator {
 				}
 
 				for (const [name, idSet] of Object.entries(this.category_set)) {
-					if (name !== O['tw_name'] && idSet.has(u)) {
+					if (name !== pool['tw_name'] && idSet.has(u)) {
 						if (out[name]) {
 							out[name].push(u);
 						} else {
@@ -240,7 +240,7 @@ module.exports = class extends RewardSiteGenerator {
 			delete out['0'];
 
 			if (v.length) {
-				S.item_groups.push({
+				output.item_groups.push({
 					bgColor: ['', '#795548', '#93254b', '#9C27B0', '#673AB7'][rarity],
 					name: ['', '稀有', '激稀有', '超激稀有', '傳說稀有'][rarity],
 					rows: [],
@@ -248,7 +248,7 @@ module.exports = class extends RewardSiteGenerator {
 				v.sort((a, b) => a - b);
 				exclusive_ids = exclusive_ids.concat(v);
 				for (let i = 0, I = v.length - 1; i < I; i += 2) {
-					S.item_groups.at(-1).rows.push([
+					output.item_groups.at(-1).rows.push([
 						this.get1(v[i], MUL[v[i]]),
 						this.get1(v[i + 1], MUL[v[i + 1]]),
 					]);
@@ -256,26 +256,26 @@ module.exports = class extends RewardSiteGenerator {
 
 				if (v.length & 1) {
 					const u = v[v.length - 1];
-					S.item_groups.at(-1).rows.push([
+					output.item_groups.at(-1).rows.push([
 						this.get1(u, MUL[u]),
 					]);
 				}
 			}
 
 			for (const [name, ids] of Object.entries(out)) {
-				S.item_minor.push({
+				output.item_minor.push({
 					name,
 					cats: ids.sort((a, b) => a - b).map(id => ({id, name: self.unit_name[id]})),
 				});
 			}
 		}
 
-		(O.collab ? this.collab_pools: this.resident_pools).push({
-			'name': O.tw_name,
+		(pool.collab ? this.collab_pools: this.resident_pools).push({
+			'name': pool.tw_name,
 			'units': exclusive_ids,
 		});
 
-		return S;
+		return output;
 	}
 	count(arr, x) {
 		let c = 0;
@@ -287,13 +287,13 @@ module.exports = class extends RewardSiteGenerator {
 		return c;
 	}
 
-	get_event(O) {
-		const S = {
+	get_event(pool) {
+		const output = {
 				guaranteed: false,
 				items: [],
 		};
-		const group_items = O['group_items'];
-		const group_rates = O['group_rates'] || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		const group_items = pool['group_items'];
+		const group_rates = pool['group_rates'] || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		console.assert(group_items.length === 5);
 		console.assert(group_rates.length === 10);
 		const result = [];
@@ -393,16 +393,16 @@ module.exports = class extends RewardSiteGenerator {
 			count,
 			value: rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A',
 		};
-		S.guaranteed = typeof must_drop_group !== 'undefined';
+		output.guaranteed = typeof must_drop_group !== 'undefined';
 		for (const v of result) {
 			const r = v[4].n ? this.fmt.format(v[4].valueOf() / 100) + '%' : 'N/A';
-			if (S.guaranteed) {
+			if (output.guaranteed) {
 				let a;
 				if (v[3].must)
 					a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
 				else
 					a = 0.9 * v[4].valueOf() / 100;
-				S.items.push({
+				output.items.push({
 					bgColor: v[1],
 					imgStyle: v[9],
 					imgSrc: v[2],
@@ -414,7 +414,7 @@ module.exports = class extends RewardSiteGenerator {
 					rateActual: a ? this.fmt.format(a) + '%' : 'N/A',
 				});
 			} else {
-				S.items.push({
+				output.items.push({
 					bgColor: v[1],
 					imgStyle: v[9],
 					imgSrc: v[2],
@@ -428,9 +428,9 @@ module.exports = class extends RewardSiteGenerator {
 		}
 
 		if (gacha_units.size) {
-			S.max = [];
+			output.max = [];
 			for (const id of Array.from(gacha_units).sort((a, b) => a - b)) {
-				S.max.push({
+				output.max.push({
 					name: this.unit_name[id],
 					base: this.max_base[id],
 					plus_jp: this.max_plus[id],
@@ -439,10 +439,10 @@ module.exports = class extends RewardSiteGenerator {
 			}
 		}
 
-		if (O.stage) {
-			const [groupIdx, mapIdx] = O.stage.split('-').map(x => parseInt(x));
+		if (pool.stage) {
+			const [groupIdx, mapIdx] = pool.stage.split('-').map(x => parseInt(x));
 			const map_id = groupIdx * 1000 + mapIdx;
-			S.farm = {
+			output.farm = {
 				map_name: this.map_names[map_id],
 				stages: [],
 			}
@@ -453,7 +453,7 @@ module.exports = class extends RewardSiteGenerator {
 				const energy = parseInt(rw.energy, 36);
 				const average = average_reward(rw.drop, rw.rand);
 				const per100 = new Fraction(100, energy).mul(average);
-				S.farm.stages.push({
+				output.farm.stages.push({
 					name_tw: rw.name_tw,
 					name_jp: rw.name_jp,
 					energy,
@@ -463,23 +463,23 @@ module.exports = class extends RewardSiteGenerator {
 			}
 		}
 
-		if (O.ticket)
-			S.ticket = this.rewards[O.ticket];
+		if (pool.ticket)
+			output.ticket = this.rewards[pool.ticket];
 
-		if (O.featured_items) {
-			S.featured_guaranteed_count = O.featured_items.guaranteed_count;
-			S.featured_items = O.featured_items.items.map(entry => ({
+		if (pool.featured_items) {
+			output.featured_guaranteed_count = pool.featured_items.guaranteed_count;
+			output.featured_items = pool.featured_items.items.map(entry => ({
 				id: entry.id,
 				name: this.rewards[entry.id].name,
 				max: entry.max,
 				rate: this.fmt2.format(entry.rate),
 			}));
 		}
-		return S;
+		return output;
 	}
-	get_category(O) {
-		const S = [];
-		const ids = Array.from(this.category_set[O['category']]).sort((a, b) => a - b);
+	get_category(pool) {
+		const output = [];
+		const ids = Array.from(this.category_set[pool['category']]).sort((a, b) => a - b);
 		let f;
 		let c = 0;
 
@@ -488,17 +488,17 @@ module.exports = class extends RewardSiteGenerator {
 			if (c & 1)
 				f = u;
 			else
-				S.push([this.get1(f), this.get1(u)]);
+				output.push([this.get1(f), this.get1(u)]);
 		}
 
 		if (c & 1)
-			S.push([this.get1(f)]);
+			output.push([this.get1(f)]);
 
 		this.categroy_pools.push({
-			'name': O.tw_name,
+			'name': pool.tw_name,
 			'units': ids,
 		});
-		return S;
+		return output;
 	}
 	get1(u, rate = 1) {
 		return {
