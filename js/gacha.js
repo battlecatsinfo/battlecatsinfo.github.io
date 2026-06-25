@@ -175,7 +175,6 @@ module.exports = class extends RewardSiteGenerator {
 	}
 	get_rare(pool) {
 		let exclusive_ids = [];
-		const self = this;
 		const group_items = pool['group_items'];
 		console.assert(group_items.length === 5);
 		// 0: ?, 1: rare, 2: super rare, 3: uber rare, 4: legend rare
@@ -262,6 +261,7 @@ module.exports = class extends RewardSiteGenerator {
 				}
 			}
 
+			const self = this;
 			for (const [name, ids] of Object.entries(out)) {
 				output.item_minor.push({
 					name,
