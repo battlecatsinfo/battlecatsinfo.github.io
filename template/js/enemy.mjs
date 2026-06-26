@@ -261,7 +261,7 @@ function calc() {
 	chs[1].children[3].textContent = numStr(DPS);
 }
 
-function hfocus() {
+function handleFocus() {
 	this.focus();
 	const s = window.getSelection();
 	const r = document.createRange();
@@ -397,7 +397,7 @@ function renderEnemy(e, options, setTitle = false) {
 		X.appendChild(document.createElement('br'));
 	}
 	createAbIcons(options);
-	mult.addEventListener('focus', hfocus);
+	mult.addEventListener('focus', handleFocus);
 	mult.addEventListener('keydown', handleKW);
 	mult.addEventListener('blur', function() {
 		let num = mult.textContent.match(/\d+/);
@@ -410,7 +410,7 @@ function renderEnemy(e, options, setTitle = false) {
 			mult.textContent = `倍率:${my_mult}%`;
 		}
 	});
-	mult_atk.addEventListener('focus', hfocus);
+	mult_atk.addEventListener('focus', handleFocus);
 	mult_atk.addEventListener('keydown', handleKW);
 	mult_atk.addEventListener('blur', function() {
 		let num = mult_atk.textContent.match(/\d+/);
@@ -422,7 +422,7 @@ function renderEnemy(e, options, setTitle = false) {
 			mult_atk.textContent = `攻擊倍率:${atk_mag}%`;
 		}
 	});
-	st_mag.addEventListener('focus', hfocus);
+	st_mag.addEventListener('focus', handleFocus);
 	st_mag.addEventListener('keydown', handleKW);
 	st_mag.addEventListener('blur', function() {
 		let num = st_mag.textContent.match(/\d+/);
