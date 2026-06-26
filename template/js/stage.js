@@ -1110,7 +1110,7 @@ async function render_stage() {
 						const span = ctn.appendChild(document.createElement('span'));
 						const idx = part.indexOf('>');
 						span.textContent = part.slice(idx + 1);
-						span.style.color = part.slice(1, idx);
+						span.classList.add('stage-tips');
 					} else {
 						ctn.append(part);
 					}
