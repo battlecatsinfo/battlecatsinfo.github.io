@@ -18,10 +18,10 @@
 	padding-left: 15px;
 }
 .enemy-table .F {
-	background-color: #f8f8f8 !important;
+	background-color: #f1f1f1 !important;
 }
 :root.dark .enemy-table .F {
-	background-color: #4a4a4a !important;
+	background-color: #2b2f3d !important;
 }
 .enemy-table .left img {
 	max-width: 2em;
