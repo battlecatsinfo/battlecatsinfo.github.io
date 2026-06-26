@@ -105,6 +105,13 @@ function hClick(event) {
 	calc();
 }
 
+function handleKW(event) {
+	if (event.code == 'Enter' || event.code == 'NumpadEnter') {
+		event.preventDefault();
+		this.blur();
+	}
+}
+
 function T(s) {
 	let p = document.createElement('div');
 	p.style.cursor = 'pointer';
@@ -391,6 +398,7 @@ function renderEnemy(e, options, setTitle = false) {
 	}
 	createAbIcons(options);
 	mult.addEventListener('focus', hfocus);
+	mult.addEventListener('keydown', handleKW);
 	mult.addEventListener('blur', function() {
 		let num = mult.textContent.match(/\d+/);
 		if (num) {
@@ -403,6 +411,7 @@ function renderEnemy(e, options, setTitle = false) {
 		}
 	});
 	mult_atk.addEventListener('focus', hfocus);
+	mult_atk.addEventListener('keydown', handleKW);
 	mult_atk.addEventListener('blur', function() {
 		let num = mult_atk.textContent.match(/\d+/);
 		if (num) {
@@ -414,6 +423,7 @@ function renderEnemy(e, options, setTitle = false) {
 		}
 	});
 	st_mag.addEventListener('focus', hfocus);
+	st_mag.addEventListener('keydown', handleKW);
 	st_mag.addEventListener('blur', function() {
 		let num = st_mag.textContent.match(/\d+/);
 		if (num) {
