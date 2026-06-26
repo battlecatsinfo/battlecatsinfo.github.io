@@ -250,7 +250,7 @@ function calc() {
 		}
 	}
 	chs[0].children[2].textContent = numStr(HP);
-	chs[0].children[4].textContent = tatks.filter(x => x).map(numStr).join('/');
+	chs[0].children[4].textContent = tatks.map(numStr).join('/');
 	chs[1].children[3].textContent = numStr(DPS);
 }
 
