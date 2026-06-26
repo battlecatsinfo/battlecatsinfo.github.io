@@ -133,10 +133,10 @@
 		{{pool.tw_name}}<br>
 		{{/if}}
 		{{#if (and pool.jp_name (op pool.jp_name '!==' pool.tw_name))}}
-		{{pool.jp_name}}<br>
+		<small>{{pool.jp_name}}</small><br>
 		{{/if}}
 		{{#if (and pool.en_name (op pool.en_name '!==' pool.tw_name) (op pool.en_name '!==' pool.jp_name))}}
-		{{pool.en_name}}<br>
+		<small>{{pool.en_name}}</small><br>
 		{{/if}}
 		{{/with}}
 	</h1>

@@ -73,10 +73,10 @@
 		{{collab.tw_name}}<br>
 		{{/if}}
 		{{#if (and collab.jp_name (op collab.jp_name '!==' collab.tw_name))}}
-		{{collab.jp_name}}<br>
+		<small>{{collab.jp_name}}</small><br>
 		{{/if}}
 		{{#if (and collab.en_name (op collab.en_name '!==' collab.tw_name) (op collab.en_name '!==' collab.jp_name))}}
-		{{collab.en_name}}<br>
+		<small>{{collab.en_name}}</small><br>
 		{{/if}}
 		{{/with}}
 	</h1>
