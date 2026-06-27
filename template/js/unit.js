@@ -1431,10 +1431,8 @@ async function applyOrb() {
 			idx = s2 + s2 - 2, ctx.drawImage(orb_gradle, C2[idx], C2[idx + 1], 85, 85, 0, 0, 85, 85);
 
 		// don't add dummy level-0 orbs
-		if (!s2)
-			continue;
-
-		catEnv.addOrb(['atk', 'hp', 'good', 'massive', 'resist'][s3 - 1], s2);
+		if (s2 && s3)
+			catEnv.addOrb(['atk', 'hp', 'good', 'massive', 'resist'][s3 - 1], s2);
 	}
 	if (layout === 2) {
 		const TF = my_cat.forms[2].clone();
