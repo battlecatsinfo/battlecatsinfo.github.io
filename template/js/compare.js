@@ -30,7 +30,7 @@ const cat_name = document.getElementById('cat-name');
 const CF = document.getElementById('CF');
 
 loadAllCats().then(s => {
-	let o, f;
+	let o;
 	cats = s;
 	CL = document.getElementById('CL');
 	for (let i = 0; i < s.length; ++i) {
@@ -345,15 +345,6 @@ function handleKW(event) {
 	}
 }
 
-function handleFocus() {
-	this.textContent = this.textContent.match(/\d+/)[0];
-	this.focus();
-	const s = window.getSelection();
-	const r = document.createRange();
-	r.selectNodeContents(this);
-	s.removeAllRanges();
-	s.addRange(r);
-}
 
 function addCat(id, I, FC = 0) {
 	let M, G,
@@ -399,7 +390,7 @@ function addCat(id, I, FC = 0) {
 	levelInput.style.borderRadius = '3px';
 	levelInput.style.padding = '2px';
 	levelInput.addEventListener('keydown', handleKW);
-	levelInput.addEventListener('input', function(e) {
+	levelInput.addEventListener('input', function() {
 		let num = parseInt(this.value, 10);
 		if (num && num >= parseInt(this.min) && num <= parseInt(this.max)) {
 			this.F.level = num;
@@ -435,7 +426,7 @@ function addCat(id, I, FC = 0) {
 			}
 		}
 	});
-	levelInput.addEventListener('blur', function(e) {
+	levelInput.addEventListener('blur', function() {
 		// Ensure value is within bounds and update display
 		let num = parseInt(this.value, 10);
 		let maxLv = parseInt(this.max);
