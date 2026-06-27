@@ -146,7 +146,6 @@ function filter() {
 		let t = 0;
 		for (let x of chs)
 			t |= parseInt(x.value);
-		const r2 = [];
 		if (trait.previousElementSibling.src.endsWith('or.png')) {
 			for (let c of results) {
 				B: {
