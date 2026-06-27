@@ -502,7 +502,7 @@ class DPSGraph {
 		helper.createUI(this);
 
 		let select;
-		if (F.ab.hasOwnProperty(AB_MASSIVE)) {
+		if (Object.hasOwn(F.ab, AB_MASSIVE)) {
 			this.options.massive = true;
 			select = this.create_select('超大傷害', ['ON', 'OFF']);
 		} else if (helper.talent_types.has(7)) {
@@ -517,7 +517,7 @@ class DPSGraph {
 			select = null;
 		}
 
-		if (F.ab.hasOwnProperty(AB_MASSIVES)) {
+		if (Object.hasOwn(F.ab, AB_MASSIVES)) {
 			this.options.massives = true;
 			this.create_select('極度傷害', ['ON', 'OFF']).oninput = function() {
 				self.options.massives = !this.selectedIndex;
@@ -525,7 +525,7 @@ class DPSGraph {
 			};
 		}
 
-		if (F.ab.hasOwnProperty(AB_GOOD)) {
+		if (Object.hasOwn(F.ab, AB_GOOD)) {
 			this.options.good = true;
 			select = this.create_select('善於攻擊', ['ON', 'OFF']);
 		} else if (helper.talent_types.has(5)) {
@@ -540,7 +540,7 @@ class DPSGraph {
 			select = null;
 		}
 
-		if (F.ab.hasOwnProperty(AB_WKILL)) {
+		if (Object.hasOwn(F.ab, AB_WKILL)) {
 			this.options.wkill = true;
 			select = this.create_select('終結魔女', ['ON', 'OFF']);
 		} else if (helper.talent_types.has(42)) {
@@ -556,7 +556,7 @@ class DPSGraph {
 		}
 
 
-		if (F.ab.hasOwnProperty(AB_EKILL)) {
+		if (Object.hasOwn(F.ab, AB_EKILL)) {
 			this.options.ekill = true;
 			select = this.create_select('終結使徒', ['ON', 'OFF']);
 		} else if (helper.talent_types.has(43)) {
@@ -572,7 +572,7 @@ class DPSGraph {
 		}
 
 
-		if (F.ab.hasOwnProperty(AB_BSTHUNT)) {
+		if (Object.hasOwn(F.ab, AB_BSTHUNT)) {
 			this.options.beast = true;
 			select = this.create_select('超獸特效', ['ON', 'OFF']);
 		} else if (helper.talent_types.has(64)) {
@@ -587,7 +587,7 @@ class DPSGraph {
 			select = null;
 		}
 
-		if (F.ab.hasOwnProperty(AB_BAIL)) {
+		if (Object.hasOwn(F.ab, AB_BAIL)) {
 			this.options.bail = true;
 			select = this.create_select('超生命體特效', ['ON', 'OFF']);
 		} else if (helper.talent_types.has(63)) {
@@ -602,7 +602,7 @@ class DPSGraph {
 			select = null;
 		}
 
-		if (F.ab.hasOwnProperty(AB_SAGE)) {
+		if (Object.hasOwn(F.ab, AB_SAGE)) {
 			this.options.sage = true;
 			select = this.create_select('超賢者特效', ['ON', 'OFF']);
 		} else if (helper.talent_types.has(66)) {
@@ -617,7 +617,7 @@ class DPSGraph {
 			select = null;
 		}
 
-		if (F.ab.hasOwnProperty(AB_STRENGTHEN)) {
+		if (Object.hasOwn(F.ab, AB_STRENGTHEN)) {
 			this.options.strong = true;
 			select = this.create_select('攻擊力上升', ['ON', 'OFF']);
 		} else if (helper.talent_types.has(10)) {
@@ -632,7 +632,7 @@ class DPSGraph {
 			select = null;
 		}
 
-		if (F.ab.hasOwnProperty(AB_ATKBASE)) {
+		if (Object.hasOwn(F.ab, AB_ATKBASE)) {
 			this.options.base = true;
 			select = this.create_select('善於攻城', ['ON', 'OFF']);
 		} else if (helper.talent_types.has(12)) {
@@ -647,7 +647,7 @@ class DPSGraph {
 			select = null;
 		}
 
-		if (F.ab.hasOwnProperty(AB_CRIT) || helper.talent_types.has(13)) {
+		if (Object.hasOwn(F.ab, AB_CRIT) || helper.talent_types.has(13)) {
 			this.options.crit = 0;
 			this.create_select('會心一擊', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
@@ -656,7 +656,7 @@ class DPSGraph {
 				};
 		}
 
-		if (F.ab.hasOwnProperty(AB_SAVAGE) || helper.talent_types.has(50)) {
+		if (Object.hasOwn(F.ab, AB_SAVAGE) || helper.talent_types.has(50)) {
 			this.options.s = 0;
 			this.create_select('渾身一擊', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
@@ -665,7 +665,7 @@ class DPSGraph {
 				};
 		}
 
-		if (F.ab.hasOwnProperty(AB_WAVE) || helper.talent_types.has(17)) {
+		if (Object.hasOwn(F.ab, AB_WAVE) || helper.talent_types.has(17)) {
 			this.options.wave = 0;
 			this.create_select('波動', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
@@ -674,7 +674,7 @@ class DPSGraph {
 				};
 		}
 
-		if (F.ab.hasOwnProperty(AB_MINIWAVE) || helper.talent_types.has(62)) {
+		if (Object.hasOwn(F.ab, AB_MINIWAVE) || helper.talent_types.has(62)) {
 			this.options.wave = 0;
 			this.create_select('小波動', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
@@ -683,7 +683,7 @@ class DPSGraph {
 				};
 		}
 
-		if (F.ab.hasOwnProperty(AB_SURGE) || helper.talent_types.has(56)) {
+		if (Object.hasOwn(F.ab, AB_SURGE) || helper.talent_types.has(56)) {
 			this.options.surge = 0;
 			this.create_select('烈波', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
@@ -692,7 +692,7 @@ class DPSGraph {
 				};
 		}
 
-		if (F.ab.hasOwnProperty(AB_EXPLOSION) || helper.talent_types.has(67)) {
+		if (Object.hasOwn(F.ab, AB_EXPLOSION) || helper.talent_types.has(67)) {
 			this.options.explosion = 0;
 			this.create_select('爆波', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
@@ -701,7 +701,7 @@ class DPSGraph {
 				};
 		}
 
-		if (F.ab.hasOwnProperty(AB_MINISURGE) || helper.talent_types.has(65)) {
+		if (Object.hasOwn(F.ab, AB_MINISURGE) || helper.talent_types.has(65)) {
 			this.options.surge = 0;
 			this.create_select('小烈波', [`期望值`, '最大值（100%）', '無'])
 				.oninput = function() {
@@ -1028,9 +1028,9 @@ class DPSGraph {
 			}
 
 			// restore back data
-			if (this.options.hasOwnProperty('surge'))
+			if (Object.hasOwn(this.options, 'surge'))
 				this.surge_data = tmp;
-			else if (this.options.hasOwnProperty('explosion'))
+			else if (Object.hasOwn(this.options, 'explosion'))
 				this.explosion_data = tmp;
 			else
 				this.wave_pos = tmp;

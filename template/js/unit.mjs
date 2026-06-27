@@ -553,7 +553,7 @@ class Unit {
 		if (filter instanceof Set) {
 			const ab = {};
 			for (const id of filter) {
-				if (this.ab.hasOwnProperty(id)) {
+				if (Object.hasOwn(this.ab, id)) {
 					ab[id] = this.ab[id];
 				}
 			}
@@ -562,7 +562,7 @@ class Unit {
 
 		if (Array.isArray(filter)) {
 			return filter.reduce((rv, id) => {
-				if (this.ab.hasOwnProperty(id)) {
+				if (Object.hasOwn(this.ab, id)) {
 					rv[id] = this.ab[id];
 				}
 				return rv;
@@ -571,7 +571,7 @@ class Unit {
 
 		const ab = {};
 		for (const id in filter) {
-			if (this.ab.hasOwnProperty(id)) {
+			if (Object.hasOwn(this.ab, id)) {
 				ab[id] = typeof filter[id] !== 'undefined' ? filter[id] : this.ab[id];
 			}
 		}
@@ -591,16 +591,16 @@ class Unit {
 		const ab = this._getab(abFilter);
 		let hp = this.hp;
 
-		if (ab.hasOwnProperty(AB_DSHIELD)) {
+		if (Object.hasOwn(ab, AB_DSHIELD)) {
 			const v = ab[AB_DSHIELD];
 			const s = ~~(round(v[0] * this.hpM) * this.stageM);
 			hp += ~~(s + s * (v[1] / 100) * (this.kb - 1));
 		}
-		if (ab.hasOwnProperty(AB_BARRIER)) {
+		if (Object.hasOwn(ab, AB_BARRIER)) {
 			const v = ab[AB_BARRIER];
 			hp += v[0];
 		}
-		if (ab.hasOwnProperty(AB_REVIVE)) {
+		if (Object.hasOwn(ab, AB_REVIVE)) {
 			const v = ab[AB_REVIVE];
 			hp *= (1 + (v[2] / 100) * (v[0] >= 0 ? v[0] : 999));
 		}
@@ -640,13 +640,13 @@ class Unit {
 			if (this.abEnabled(idx)) {
 				let rv = 1;
 
-				if (ab.hasOwnProperty(AB_SURGE)) {
+				if (Object.hasOwn(ab, AB_SURGE)) {
 					v = ab[AB_SURGE];
 					if (mode === 'max')
 						rv += v[3];
 					else
 						rv += v[3] * v[0] / 100;
-				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
+				} else if (Object.hasOwn(ab, AB_MINISURGE)) {
 					v = ab[AB_MINISURGE];
 					if (mode === 'max')
 						rv += v[3] * 0.2;
@@ -654,7 +654,7 @@ class Unit {
 						rv += v[3] * v[0] / 500;
 				}
 
-				if (ab.hasOwnProperty(AB_EXPLOSION)) {
+				if (Object.hasOwn(ab, AB_EXPLOSION)) {
 					v = ab[AB_EXPLOSION];
 					if (mode === 'max')
 						rv += 1;
@@ -662,12 +662,12 @@ class Unit {
 						rv += v[0] / 100;
 				}
 
-				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
+				if (!isBase && Object.hasOwn(ab, AB_WAVE)) {
 					if (mode === 'max')
 						++rv;
 					else
 						rv += ab[AB_WAVE][0] / 100;
-				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
+				} else if (!isBase && Object.hasOwn(ab, AB_MINIWAVE)) {
 					if (mode === 'max')
 						rv += 0.2;
 					else
@@ -676,7 +676,7 @@ class Unit {
 
 				atk *= rv;
 
-				if (ab.hasOwnProperty(AB_SAVAGE)) {
+				if (Object.hasOwn(ab, AB_SAVAGE)) {
 					v = ab[AB_SAVAGE];
 					if (mode === 'max')
 						atk *= 1 + v[1] / 100;
@@ -685,7 +685,7 @@ class Unit {
 				}
 
 				// handle metal case specially at last
-				if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
+				if (Object.hasOwn(ab, AB_CRIT) && !(metalMode && isMetal)) {
 					if (mode === 'max')
 						atk *= 2;
 					else
@@ -693,11 +693,11 @@ class Unit {
 				}
 			}
 
-			if (ab.hasOwnProperty(AB_STRENGTHEN)) {
+			if (Object.hasOwn(ab, AB_STRENGTHEN)) {
 				atk *= 1 + ab[AB_STRENGTHEN][1] / 100;
 			}
 
-			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
+			if (isBase && Object.hasOwn(ab, AB_ATKBASE)) {
 				atk *= 4;
 			}
 
@@ -713,7 +713,7 @@ class Unit {
 						if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
 							rv += (mode === 'max') ? 1 : v[0] / 100;
 						}
-						if (ab.hasOwnProperty(AB_EXPLOSION)) {
+						if (Object.hasOwn(ab, AB_EXPLOSION)) {
 							rv += (mode === 'max') ? 1 : v[0] / 100;
 						}
 					}
@@ -730,10 +730,10 @@ class Unit {
 	}
 
 	hasAb(ab) {
-		return this.ab.hasOwnProperty(ab);
+		return Object.hasOwn(this.ab, ab);
 	}
 	hasRes(r) {
-		return (this.res ?? {}).hasOwnProperty(r);
+		return Object.hasOwn(this.res ?? {}, r);
 	}
 	getCover(chance, duration) {
 		if (!(chance && duration)) { return 0; }
@@ -1178,30 +1178,30 @@ class CatForm extends Unit {
 		traits = traits ?? TRAIT_ALL;
 		const ab = this._getab(abFilter);
 		let hp = this.hp;
-		if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL))
+		if ((traits & TB_WITCH) && Object.hasOwn(ab, AB_WKILL))
 			return hp * 10 * (1 + this.env.combo_witch);
-		if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL))
+		if ((traits & TB_EVA) && Object.hasOwn(ab, AB_EKILL))
 			return hp * 5 * (1 + this.env.combo_eva);
 
 		const t = this.trait & traits;
 		const buff_t = t & trait_treasure;
 		const buff_o = traits & TRAIT_ORB && this.lvc >= 2;
 		if (t) {
-			if (ab.hasOwnProperty(AB_RESIST)) {
+			if (Object.hasOwn(ab, AB_RESIST)) {
 				hp *= (4 + (buff_t ? this.env.resist_t : 0)) / ((buff_o ? this.env.orb_resist : 1) * (1 - this.env.combo_resist));
-			} else if (ab.hasOwnProperty(AB_RESISTS)) {
+			} else if (Object.hasOwn(ab, AB_RESISTS)) {
 				hp *= 6 + (buff_t ? this.env.resist_t : 0);
-			} else if (ab.hasOwnProperty(AB_GOOD)) {
+			} else if (Object.hasOwn(ab, AB_GOOD)) {
 				hp /= (buff_o ? this.env.orb_good_hp : 1) * (1 - this.env.combo_good) * (0.5 - (buff_t ? this.env.good_hp_t : 0));
 			}
 		}
-		if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
+		if ((traits & TB_BEAST) && Object.hasOwn(ab, AB_BSTHUNT)) {
 			hp /= 0.6;
-		} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
+		} else if ((traits & TB_BARON) && Object.hasOwn(ab, AB_BAIL)) {
 			hp /= 0.7;
-		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
+		} else if ((traits & TB_SAGE) && Object.hasOwn(ab, AB_SAGE)) {
 			hp /= 0.5;
-		} else if ((traits & TB_KAIJIN) && ab.hasOwnProperty(AB_KAIJIN)) {
+		} else if ((traits & TB_KAIJIN) && Object.hasOwn(ab, AB_KAIJIN)) {
 			hp /= 0.4;
 		}
 
@@ -1249,20 +1249,20 @@ class CatForm extends Unit {
 				return atk;
 			}
 
-			if (ab.hasOwnProperty(AB_ONLY) && !(this.trait & traits) && !isBase) {
+			if (Object.hasOwn(ab, AB_ONLY) && !(this.trait & traits) && !isBase) {
 				return 0;
 			}
 
 			if (this.abEnabled(idx)) {
 				let rv = 1;
 
-				if (ab.hasOwnProperty(AB_SURGE)) {
+				if (Object.hasOwn(ab, AB_SURGE)) {
 					v = ab[AB_SURGE];
 					if (mode === 'max')
 						rv += v[3];
 					else
 						rv += v[3] * v[0] / 100;
-				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
+				} else if (Object.hasOwn(ab, AB_MINISURGE)) {
 					v = ab[AB_MINISURGE];
 					if (mode === 'max')
 						rv += v[3] * 0.2;
@@ -1270,7 +1270,7 @@ class CatForm extends Unit {
 						rv += v[3] * v[0] / 500;
 				}
 
-				if (ab.hasOwnProperty(AB_EXPLOSION)) {
+				if (Object.hasOwn(ab, AB_EXPLOSION)) {
 					v = ab[AB_EXPLOSION];
 					if (mode === 'max')
 						rv += 1;
@@ -1279,12 +1279,12 @@ class CatForm extends Unit {
 				}
 
 				// specially exclude bases they all have IMU_WAVE
-				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
+				if (!isBase && Object.hasOwn(ab, AB_WAVE)) {
 					if (mode === 'max')
 						++rv;
 					else
 						rv += ab[AB_WAVE][0] / 100;
-				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
+				} else if (!isBase && Object.hasOwn(ab, AB_MINIWAVE)) {
 					if (mode === 'max')
 						rv += 0.2;
 					else
@@ -1293,7 +1293,7 @@ class CatForm extends Unit {
 
 				atk *= rv;
 
-				if (ab.hasOwnProperty(AB_SAVAGE)) {
+				if (Object.hasOwn(ab, AB_SAVAGE)) {
 					v = ab[AB_SAVAGE];
 					if (mode === 'max')
 						atk *= 1 + v[1] / 100;
@@ -1302,7 +1302,7 @@ class CatForm extends Unit {
 				}
 
 				// handle metal case specially at last
-				if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
+				if (Object.hasOwn(ab, AB_CRIT) && !(metalMode && isMetal)) {
 					if (mode === 'max')
 						atk *= 2;
 					else
@@ -1310,38 +1310,38 @@ class CatForm extends Unit {
 				}
 			}
 
-			if (ab.hasOwnProperty(AB_STRENGTHEN)) {
+			if (Object.hasOwn(ab, AB_STRENGTHEN)) {
 				atk *= 1 + (ab[AB_STRENGTHEN][1] + this.env.combo_strengthen) / 100;
 			}
 
-			if (isBase && ab.hasOwnProperty(AB_ATKBASE))
+			if (isBase && Object.hasOwn(ab, AB_ATKBASE))
 				return atk *= 4;
 
-			if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
+			if ((traits & TB_BEAST) && Object.hasOwn(ab, AB_BSTHUNT)) {
 				atk *= 2.5;
-			} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
+			} else if ((traits & TB_BARON) && Object.hasOwn(ab, AB_BAIL)) {
 				atk *= 1.6;
-			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
+			} else if ((traits & TB_SAGE) && Object.hasOwn(ab, AB_SAGE)) {
 				atk *= 1.2;
-			} else if ((traits & TB_KAIJIN) && ab.hasOwnProperty(AB_KAIJIN)) {
+			} else if ((traits & TB_KAIJIN) && Object.hasOwn(ab, AB_KAIJIN)) {
 				atk *= 2.5;
 			}
 
-			if (ab.hasOwnProperty(AB_EKILL) && (traits & TB_EVA))
+			if (Object.hasOwn(ab, AB_EKILL) && (traits & TB_EVA))
 				return atk * 5 * (1 + this.env.combo_eva);
 
-			if (ab.hasOwnProperty(AB_WKILL) && (traits & TB_WITCH))
+			if (Object.hasOwn(ab, AB_WKILL) && (traits & TB_WITCH))
 				return atk * 5 * (1 + this.env.combo_witch);
 
 			const t = this.trait & traits;
 			const buff_t = t & trait_treasure;
 			const buff_o = traits & TRAIT_ORB && this.lvc >= 2;
 			if (t) {
-				if (ab.hasOwnProperty(AB_MASSIVE)) {
+				if (Object.hasOwn(ab, AB_MASSIVE)) {
 					atk *= (1 + this.env.combo_massive) * (3 + (buff_t ? this.env.massive_t : 0)) + (buff_o ? this.env.orb_massive : 0);
-				} else if (ab.hasOwnProperty(AB_MASSIVES)) {
+				} else if (Object.hasOwn(ab, AB_MASSIVES)) {
 					atk *= 5 + (buff_t ? this.env.massive_t : 0);
-				} else if (ab.hasOwnProperty(AB_GOOD)) {
+				} else if (Object.hasOwn(ab, AB_GOOD)) {
 					atk *= (1 + this.env.combo_good) * (1.5  + (buff_t ? this.env.good_atk_t : 0)) + (buff_o ? this.env.orb_good_atk : 0);
 				}
 			}
@@ -1355,7 +1355,7 @@ class CatForm extends Unit {
 						if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
 							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
 						}
-						if (ab.hasOwnProperty(AB_EXPLOSION)) {
+						if (Object.hasOwn(ab, AB_EXPLOSION)) {
 							v = ab[AB_EXPLOSION];
 							if (mode === 'max')
 								rv += 1;

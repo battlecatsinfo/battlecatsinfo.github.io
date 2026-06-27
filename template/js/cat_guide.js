@@ -190,13 +190,13 @@ function filter() {
 						continue loop;
 					for (let x of abs) {
 						if (x < 1000) {
-							if (f.ab.hasOwnProperty(x))
+							if (Object.hasOwn(f.ab, x))
 								continue loop;
 						} else if (f.atkType & (x - 1000))
 							continue loop;
 					}
 					for (let x of res)
-						if (f.res.hasOwnProperty(x))
+						if (Object.hasOwn(f.res, x))
 							continue loop;
 				}
 				results.delete(i);
@@ -211,13 +211,13 @@ function filter() {
 						continue;
 					for (let x of abs) {
 						if (x < 1000) {
-							if (!f.ab.hasOwnProperty(x))
+							if (!Object.hasOwn(f.ab, x))
 								continue loop;
 						} else if (x -= 1000, x != (f.atkType & x))
 							continue loop;
 					}
 					for (let x of res)
-						if (!f.res.hasOwnProperty(x))
+						if (!Object.hasOwn(f.res, x))
 							continue loop;
 					t = true;
 					break;

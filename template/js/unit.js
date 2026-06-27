@@ -751,7 +751,7 @@ function handleBlur() {
 		form.applySuperTalents(custom_super_talents);
 
 	for (const x of tbody._s)
-		if (!form.ab.hasOwnProperty(x))
+		if (!Object.hasOwn(form.ab, x))
 			tbody._s.delete(x);
 
 	let td = tbody.children[7].children[1];

@@ -300,7 +300,7 @@ async function search_gold() { // CatCPU fast clear disabled
 
 	for (let i = 0, I = M1.children.length; i < I; ++i) {
 		const info1 = M1.children[i];
-		if (info1.dataset.hasOwnProperty('forbidGoldCpu')) {
+		if (Object.hasOwn(info1.dataset, 'forbidGoldCpu')) {
 			const tr = tbl.appendChild(document.createElement('tr'));
 			const a = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			a.textContent = info1.textContent;
@@ -547,7 +547,7 @@ function getConditionHTML(obj) {
 		if (!obj) return document.createTextNode(QQ);
 	}
 	if (typeof obj == "string") return document.createTextNode(obj);
-	if (obj.hasOwnProperty("stage")) {
+	if (Object.hasOwn(obj, "stage")) {
 		const x = Math.abs(obj.condition) % 100000;
 		const mc = fromV(~~(x / 1000));
 		const sm = x % 1000;
@@ -912,7 +912,7 @@ async function render_stage() {
 		}
 		tr.id = "stars-tr";
 	}
-	if (info3.flags || info2.resetMode || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond || info2.costmulti) {
+	if (info3.flags || info2.resetMode || Object.hasOwn(info1.dataset, 'forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond || info2.costmulti) {
 		let s;
 		const tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 		tr.id = "warn-tr";
@@ -953,7 +953,7 @@ async function render_stage() {
 			div.classList.add('I');
 			div.textContent = "全破後隱藏";
 		}
-		if (info1.dataset.hasOwnProperty('forbidGoldCpu') || flags2 & 2) {
+		if (Object.hasOwn(info1.dataset, 'forbidGoldCpu') || flags2 & 2) {
 			const div = th.appendChild(document.createElement("div"));
 			div.classList.add('W');
 			div.textContent = "※掃蕩不可※";
