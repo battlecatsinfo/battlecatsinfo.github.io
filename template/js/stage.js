@@ -1206,11 +1206,10 @@ async function render_stage() {
 		const limits = info2.limit.map(x => new Limit(x));
 		const theStar = star - 1;
 		const lim = new Limit();
-		for (let _a = 0; _a < limits.length; _a++) {
-			const l = limits[_a];
-			if (l.star == -1 || l.star == theStar)
-				if (l.sid == -1 || l.sid == M3.selectedIndex)
-					lim.combine(l);
+		for (const limit of limits) {
+			if (limit.star == -1 || limit.star == theStar)
+				if (limit.sid == -1 || limit.sid == M3.selectedIndex)
+					lim.combine(limit);
 		}
 		const limits_str = [];
 		if (lim.rare)
