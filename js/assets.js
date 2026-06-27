@@ -166,9 +166,9 @@ module.exports = class extends SiteGenerator {
 			}
 
 			if (base == 'raw')
-				this.write_string(file, contents);
+				this.writeString(file, contents);
 			else
-				this.write_raw(file, contents);
+				this.writeRaw(file, contents);
 		}
 	}
 };

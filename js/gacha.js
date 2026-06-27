@@ -6,7 +6,7 @@ const RewardSiteGenerator = require('./reward.js');
 const {normalizePath} = require('./util.js');
 
 // calculate average reward per stage
-function average_reward(drop, rand) {
+function averageReward(drop, rand) {
 	const drops = drop.split('|').map(x => x.split(',').map(Number));
 	const chances = [];
 	let sum = 0;
@@ -74,13 +74,13 @@ module.exports = class extends RewardSiteGenerator {
 				this[key] = value;
 		}
 
-		const gacha_template = this.load_template('html/gacha.html');
+		const gacha_template = this.loadTemplate('html/gacha.html');
 		const gachas = [];
 
 		this.categroy_pools = [];
 		this.resident_pools = [];
 		this.collab_pools = [];
-		this.rewards = this.load_rewards().reduce((rv, entry, i) => {
+		this.rewards = this.loadRewards().reduce((rv, entry, i) => {
 			let {id, name} = entry;
 			rv[id] = {name, id};
 			return rv;
@@ -91,14 +91,14 @@ module.exports = class extends RewardSiteGenerator {
 			this.rewards[key].name = value;
 		}
 
-		this.stage_rewards = this.parse_tsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
+		this.stage_rewards = this.parseTsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp, energy, rand, drop} = entry;
 			id = parseInt(id, 36);
 			if (drop)
 				rv[id] = {name_tw, name_jp, energy, rand, drop};
 			return rv;
 		}, {});
-		this.map_names = this.parse_tsv(this.load('map.tsv')).reduce((rv, entry, i) => {
+		this.map_names = this.parseTsv(this.load('map.tsv')).reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp} = entry;
 			id = parseInt(id, 36);
 			rv[id] = name_tw || name_jp || '？？？';
@@ -132,7 +132,7 @@ module.exports = class extends RewardSiteGenerator {
 
 			const path = 'gacha/' + normalizePath(pool.en_name) + '.html';
 
-			this.write_string(path, this.template(
+			this.writeString(path, this.template(
 				gacha_template,
 				{
 					pool,
@@ -150,10 +150,10 @@ module.exports = class extends RewardSiteGenerator {
 			});
 		}
 
-		this.write_template('html/gachas.html', 'gachas.html', {
+		this.writeTemplate('html/gachas.html', 'gachas.html', {
 			gachas,
 		});
-		this.write_template('html/cat_guide.html', 'cat_guide.html', {
+		this.writeTemplate('html/cat_guide.html', 'cat_guide.html', {
 			'categories': [
 				{
 					'name': '特殊',
@@ -451,7 +451,7 @@ module.exports = class extends RewardSiteGenerator {
 				if (!rw)
 					break;
 				const energy = parseInt(rw.energy, 36);
-				const average = average_reward(rw.drop, rw.rand);
+				const average = averageReward(rw.drop, rw.rand);
 				const per100 = new Fraction(100, energy).mul(average);
 				output.farm.stages.push({
 					name_tw: rw.name_tw,
@@ -518,7 +518,7 @@ module.exports = class extends RewardSiteGenerator {
 		this.max_plus = [];
 		this.max_plus_tw = [];
 
-		let data = this.parse_tsv(this.load('cat.tsv'));
+		let data = this.parseTsv(this.load('cat.tsv'));
 		let id = 0;
 		for (const cat of data) {
 			this.unit_rarity.push(parseInt(cat.rarity, 10));
@@ -530,7 +530,7 @@ module.exports = class extends RewardSiteGenerator {
 			id++;
 		}
 
-		data = this.parse_tsv(this.load('catstat.tsv'));
+		data = this.parseTsv(this.load('catstat.tsv'));
 		id = null;
 		for (const cat of data) {
 			if (id !== cat.id) {

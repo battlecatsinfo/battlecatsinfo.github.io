@@ -6,9 +6,9 @@ const basic_cats = new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 643]);
 
 module.exports = class extends SiteGenerator {
 	run() {
-		const catTable = this.parse_tsv(this.load('cat.tsv'));
-		const catstatTable = this.parse_tsv(this.load('catstat.tsv'));
-		const enemyTable = this.parse_tsv(this.load('enemy.tsv'));
+		const catTable = this.parseTsv(this.load('cat.tsv'));
+		const catstatTable = this.parseTsv(this.load('catstat.tsv'));
+		const enemyTable = this.parseTsv(this.load('enemy.tsv'));
 		const pools = JSON.parse(this.load('pools.json'));
 		const collabs = JSON.parse(this.load('collab.json')).collabs;
 		const gachaScheme = JSON.parse(this.load('gacha_scheme.json'));
@@ -18,21 +18,21 @@ module.exports = class extends SiteGenerator {
 			return rv;
 		}, new Set());
 
-		this.generate_cats({catTable, catstatTable, pools, collabs, gachaScheme, categoryUnits});
-		this.generate_enemy({enemyTable});
-		this.generate_data_files({catTable});
+		this.generateCats({catTable, catstatTable, pools, collabs, gachaScheme, categoryUnits});
+		this.generateEnemy({enemyTable});
+		this.generateDataFiles({catTable});
 	}
 
-	generate_cats({catTable, catstatTable, pools, collabs, gachaScheme, categoryUnits}) {
+	generateCats({catTable, catstatTable, pools, collabs, gachaScheme, categoryUnits}) {
 		// format cats
 		const cats = catTable.map((cat, i) => {
-			const [obtn, collab] = this.generate_obtain({id: i, cat, pools, collabs, gachaScheme, categoryUnits});
+			const [obtn, collab] = this.generateObtain({id: i, cat, pools, collabs, gachaScheme, categoryUnits});
 			const info = {
 				rarity: Number(cat.rarity),
 				// forms: Number(cat.form_count),
 				collab,
 				obtn,
-				evol: this.generate_evolve({id: i, form_count: Number(cat.form_count), cat, pools, collabs}),
+				evol: this.generateEvolve({id: i, form_count: Number(cat.form_count), cat, pools, collabs}),
 				maxBaseLv: Number(cat.max_base_level),
 				maxPlusLv: Number(cat.max_plus_level),
 				eid: cat.egg_id ? cat.egg_id.split(',').map(Number) : undefined,
@@ -77,19 +77,19 @@ module.exports = class extends SiteGenerator {
 				atkType: Number(form.attack_type),
 				trait: Number(form.trait),
 				abi: Number(form.ability_enabled),
-				lds: this.parse_distance(form.long_distance_1),
-				ldr: this.parse_distance(form.long_distance_2),
+				lds: this.parseDistance(form.long_distance_1),
+				ldr: this.parseDistance(form.long_distance_2),
 				imu: Number(form.immunity),
-				ab: this.parse_abilities(form.ability),
+				ab: this.parseAbilities(form.ability),
 				cd: Number(form.cd),
 				res: {},
 			});
 		}
 
-		this.write_json('cat.json', cats);
+		this.writeJson('cat.json', cats);
 	}
 
-	generate_obtain({id, cat, pools, collabs, gachaScheme, categoryUnits}) {
+	generateObtain({id, cat, pools, collabs, gachaScheme, categoryUnits}) {
 		const obtn = [];
 		let _collab;
 
@@ -206,7 +206,7 @@ module.exports = class extends SiteGenerator {
 		return [obtn, _collab];
 	}
 
-	generate_evolve({id, form_count, cat, pools, collabs}) {
+	generateEvolve({id, form_count, cat, pools, collabs}) {
 		if (form_count < 3)
 			return 5;
 
@@ -250,7 +250,7 @@ module.exports = class extends SiteGenerator {
 		return undefined;
 	}
 
-	generate_enemy({enemyTable}) {
+	generateEnemy({enemyTable}) {
 		// format enemies
 		const enemies = enemyTable.map(enemy => {
 			return {
@@ -275,19 +275,19 @@ module.exports = class extends SiteGenerator {
 				atkType: Number(enemy.attack_type),
 				trait: Number(enemy.trait),
 				abi: Number(enemy.ability_enabled),
-				lds: this.parse_distance(enemy.long_distance_1),
-				ldr: this.parse_distance(enemy.long_distance_2),
+				lds: this.parseDistance(enemy.long_distance_1),
+				ldr: this.parseDistance(enemy.long_distance_2),
 				imu: Number(enemy.immunity),
-				ab: this.parse_abilities(enemy.ability),
+				ab: this.parseAbilities(enemy.ability),
 				earn: Number(enemy.earn),
 				star: enemy.star ? Number(enemy.star) : undefined,
 			};
 		});
 
-		this.write_json('enemy.json', enemies);
+		this.writeJson('enemy.json', enemies);
 	}
 
-	generate_data_files({catTable}) {
+	generateDataFiles({catTable}) {
 		const {limited_cats, ...units_scheme} = JSON.parse(this.load('units_scheme.json'));
 
 		const eggs = catTable.reduce((eggs, cat, id) => {
@@ -297,7 +297,7 @@ module.exports = class extends SiteGenerator {
 			return eggs;
 		}, {});
 
-		this.write_json('units_scheme.json', {
+		this.writeJson('units_scheme.json', {
 			...units_scheme,
 			limited_cats: {
 				__proto: 'Set',
@@ -307,11 +307,11 @@ module.exports = class extends SiteGenerator {
 		});
 	}
 
-	parse_distance(dist) {
+	parseDistance(dist) {
 		return dist ? dist.split('|').map(Number) : undefined;
 	}
 
-	parse_abilities(abilities) {
+	parseAbilities(abilities) {
 		const rv  = {};
 		if (abilities) {
 			for (const x of abilities.split('|')) {

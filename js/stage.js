@@ -2,22 +2,22 @@ const {SiteGenerator} = require('./base.js');
 
 module.exports = class extends SiteGenerator {
 	run() {
-		const mapTable = this.parse_tsv(this.load('map.tsv'));
-		const stageTable = this.parse_tsv(this.load('stage.tsv'));
+		const mapTable = this.parseTsv(this.load('map.tsv'));
+		const stageTable = this.parseTsv(this.load('stage.tsv'));
 
 		const stageScheme = JSON.parse(this.load('stage_scheme.json'));
 		const gachaScheme = JSON.parse(this.load('gacha_scheme.json'));
 		const ototo = JSON.parse(this.load('ototo.json'));
 		const combos_scheme = JSON.parse(this.load('combos_scheme.json'));
 
-		this.generate_data_files({mapTable, stageTable, stageScheme, gachaScheme, ototo, combos_scheme});
-		this.generate_pages({stageScheme});
-		this.generate_crown({mapTable, stageScheme});
-		this.generate_materials({mapTable, stageTable});
-		this.generate_difficulty({stageTable});
+		this.generateDataFiles({mapTable, stageTable, stageScheme, gachaScheme, ototo, combos_scheme});
+		this.generatePages({stageScheme});
+		this.generateCrown({mapTable, stageScheme});
+		this.generateMaterials({mapTable, stageTable});
+		this.generateDifficulty({stageTable});
 	}
 
-	generate_data_files({mapTable, stageTable, stageScheme, gachaScheme, ototo, combos_scheme}) {
+	generateDataFiles({mapTable, stageTable, stageScheme, gachaScheme, ototo, combos_scheme}) {
 		const {categories, conditions, material_drops, reset_modes, limit_groups, fixed_lineup, stage_tips} = stageScheme;
 
 		const map = mapTable.reduce((rv, entry, i) => {
@@ -54,7 +54,7 @@ module.exports = class extends SiteGenerator {
 			return rv;
 		}, {});
 
-		this.write_json('map.json', map);
+		this.writeJson('map.json', map);
 
 		const stage = stageTable.reduce((rv, entry, i) => {
 			const id = parseInt(entry.id, 36);
@@ -92,7 +92,7 @@ module.exports = class extends SiteGenerator {
 			.sort((a, b) => a[0] - b[0])
 			.map(x => x[1]);
 
-		this.write_json('stage.json', stage);
+		this.writeJson('stage.json', stage);
 
 		const scheme = {
 			lmGrp: limit_groups,
@@ -107,23 +107,23 @@ module.exports = class extends SiteGenerator {
 			mainChapters,
 		};
 
-		this.write_json('stage_scheme.json', scheme);
+		this.writeJson('stage_scheme.json', scheme);
 	}
 
-	generate_pages({stageScheme}) {
+	generatePages({stageScheme}) {
 		const {categories} = stageScheme;
-		this.write_template('html/stage.html', 'stage.html', {
+		this.writeTemplate('html/stage.html', 'stage.html', {
 			category: categories.default,
 		});
-		this.write_template('html/stage2.html', 'stage2.html', {
+		this.writeTemplate('html/stage2.html', 'stage2.html', {
 			category: categories.official,
 		});
-		this.write_template('html/stage3.html', 'stage3.html', {
+		this.writeTemplate('html/stage3.html', 'stage3.html', {
 			category: categories.custom,
 		});
 	}
 
-	generate_crown({mapTable, stageScheme}) {
+	generateCrown({mapTable, stageScheme}) {
 		const {categories: {
 			default: groups,
 			custom: customMaps,
@@ -160,7 +160,7 @@ module.exports = class extends SiteGenerator {
 			['ZL', 16],
 		]) {
 			crownFormatted[key] = Object.values(crown[groupIdx]).map(entry => {
-				return this.generate_crown_format_entry(entry);
+				return this.generateCrownFormatEntry(entry);
 			});
 		}
 
@@ -169,7 +169,7 @@ module.exports = class extends SiteGenerator {
 				for (const map of collab.stages) {
 					const [groupIdx, mapIdx] = map.split('-').map(x => parseInt(x));
 					const entry = crown[groupIdx][mapIdx];
-					rv.push(this.generate_crown_format_entry(entry, collab.tw_name));
+					rv.push(this.generateCrownFormatEntry(entry, collab.tw_name));
 				}
 			}
 			return rv;
@@ -181,7 +181,7 @@ module.exports = class extends SiteGenerator {
 				const groupIdx = Math.floor(mapId / 1000);
 				const mapIdx = mapId - groupIdx * 1000;
 				const entry = crown[groupIdx][mapIdx];
-				rv.push(this.generate_crown_format_entry(entry, key));
+				rv.push(this.generateCrownFormatEntry(entry, key));
 			}
 			return rv;
 		}, []);
@@ -190,10 +190,10 @@ module.exports = class extends SiteGenerator {
 			const groupIdx = Math.floor(mapId / 1000);
 			const mapIdx = mapId - groupIdx * 1000;
 			const entry = crown[groupIdx][mapIdx];
-			return this.generate_crown_format_entry(entry, null);
+			return this.generateCrownFormatEntry(entry, null);
 		});
 
-		this.write_template('js/crown.js', 'crown.js', {crown: crownFormatted});
+		this.writeTemplate('js/crown.js', 'crown.js', {crown: crownFormatted});
 	}
 
 	/**
@@ -203,7 +203,7 @@ module.exports = class extends SiteGenerator {
 	 *     - null to not include the key;
 	 *     - otherwise, take this value as the key.
 	 */
-	generate_crown_format_entry(entry, overrideKey) {
+	generateCrownFormatEntry(entry, overrideKey) {
 		const key = (overrideKey === null) ? [] : [overrideKey ?? entry.index + 1];
 		return [
 			...key,
@@ -213,7 +213,7 @@ module.exports = class extends SiteGenerator {
 		];
 	}
 
-	generate_materials({mapTable, stageTable}) {
+	generateMaterials({mapTable, stageTable}) {
 		const stageMap = stageTable.reduce((rv, entry) => {
 			const id = parseInt(entry.id, 36);
 			rv.set(id, entry);
@@ -305,14 +305,14 @@ module.exports = class extends SiteGenerator {
 			]);
 		}
 
-		this.write_template('js/materials.js', 'materials.js', {materials: materialsFormatted});
+		this.writeTemplate('js/materials.js', 'materials.js', {materials: materialsFormatted});
 	}
 
-	generate_difficulty({stageTable}) {
+	generateDifficulty({stageTable}) {
 		for (const elem of stageTable)
 			elem.difficulty = Number(elem.difficulty ?? 0);
 
-		this.write_template('js/stage_difficulty.js', 'stage_difficulty.js', {
+		this.writeTemplate('js/stage_difficulty.js', 'stage_difficulty.js', {
 			data: stageTable.sort((a, b) => b.difficulty - a.difficulty).map(entry => [
 				entry.name_tw,
 				entry.name_jp,

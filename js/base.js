@@ -218,7 +218,7 @@ Handlebars.registerHelper('toJSON', function (obj, space) {
 });
 
 Handlebars.registerHelper('loadTSV', function (filename, options) {
-	return SiteGenerator.parse_tsv(SiteGenerator.load(filename));
+	return SiteGenerator.parseTsv(SiteGenerator.load(filename));
 });
 
 Handlebars.registerHelper('loadJSON', function (filename, options) {
@@ -259,44 +259,44 @@ class SiteGenerator {
 		return this.constructor.template.apply(this, args);
 	}
 
-	static write_template(in_f, out_f, env) {
+	static writeTemplate(source, output, env) {
 		fs.writeFileSync(
-			resolve(OUTPUT_DIR, out_f),
-			this.template(this.load_template(in_f), env),
+			resolve(OUTPUT_DIR, output),
+			this.template(this.loadTemplate(source), env),
 			'utf8'
 		);
 	}
-	write_template(...args) {
-		return this.constructor.write_template.apply(this, args);
+	writeTemplate(...args) {
+		return this.constructor.writeTemplate.apply(this, args);
 	}
-	static write_json(out_f, obj, replace, space) {
+	static writeJson(output, obj, replace, space) {
 		fs.writeFileSync(
-			resolve(OUTPUT_DIR, out_f),
+			resolve(OUTPUT_DIR, output),
 			JSON.stringify(obj, replace, space),
 			'utf8'
 		)
 	}
-	write_json(...args) {
-		return this.constructor.write_json.apply(this, args);
+	writeJson(...args) {
+		return this.constructor.writeJson.apply(this, args);
 	}
-	static write_string(out_f, s) {
+	static writeString(out_f, s) {
 		return fs.writeFileSync(
 			resolve(OUTPUT_DIR, out_f),
 			s,
 			'utf8'
 		);
 	}
-	write_string(...args) {
-		return this.constructor.write_string.apply(this, args);
+	writeString(...args) {
+		return this.constructor.writeString.apply(this, args);
 	}
-	static write_raw(out_f, s) {
+	static writeRaw(out_f, s) {
 		return fs.writeFileSync(
 			resolve(OUTPUT_DIR, out_f),
 			s
 		);
 	}
-	write_raw(...args) {
-		return this.constructor.write_raw.apply(this, args);
+	writeRaw(...args) {
+		return this.constructor.writeRaw.apply(this, args);
 	}
 	static load(in_f) {
 		return fs.readFileSync(
@@ -307,15 +307,15 @@ class SiteGenerator {
 	load(...args) {
 		return this.constructor.load.apply(this, args);
 	}
-	static load_template(in_f) {
+	static loadTemplate(in_f) {
 		const src = fs.readFileSync(
 			resolve(TEMPLATE_DIR, in_f),
 			'utf8'
 		);
 		return Handlebars.compile(src);
 	}
-	load_template(...args) {
-		return this.constructor.load_template.apply(this, args);
+	loadTemplate(...args) {
+		return this.constructor.loadTemplate.apply(this, args);
 	}
 	static open(in_f) {
 		return fs.createReadStream(
@@ -325,7 +325,7 @@ class SiteGenerator {
 	open(...args) {
 		return this.constructor.open.apply(this, args);
 	}
-	static parse_tsv(s, has_header = true) {
+	static parseTsv(s, has_header = true) {
 		const rows = s.split('\n').filter(x => x).map(row => row.split('\t'));
 		if (has_header) {
 			const fields = rows.shift();
@@ -338,8 +338,8 @@ class SiteGenerator {
 		}
 		return rows;
 	}
-	parse_tsv(...args) {
-		return this.constructor.parse_tsv.apply(this, args);
+	parseTsv(...args) {
+		return this.constructor.parseTsv.apply(this, args);
 	}
 }
 

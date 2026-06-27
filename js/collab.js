@@ -13,9 +13,9 @@ module.exports = class extends RewardSiteGenerator {
 				throw e;
 		}
 
-		const mapTable = this.parse_tsv(this.load('map.tsv'));
-		const stageTable = this.parse_tsv(this.load('stage.tsv'));
-		const rewardTable = this.load_rewards();
+		const mapTable = this.parseTsv(this.load('map.tsv'));
+		const stageTable = this.parseTsv(this.load('stage.tsv'));
+		const rewardTable = this.loadRewards();
 
 		this.map_names = mapTable.reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp} = entry;
@@ -56,10 +56,10 @@ module.exports = class extends RewardSiteGenerator {
 			return rv;
 		}, {});
 
-		this.write_collabs();
+		this.writeCollabs();
 	}
-	write_collabs() {
-		const collab_template = this.load_template('html/collab.html');
+	writeCollabs() {
+		const collab_template = this.loadTemplate('html/collab.html');
 		const data = JSON.parse(this.load('collab.json'));
 		const collabs = data.collabs;
 		const nav_menu = [];
@@ -148,18 +148,18 @@ module.exports = class extends RewardSiteGenerator {
 					rewards,
 				};
 			});
-			this.write_string(fn, this.template(collab_template, {
+			this.writeString(fn, this.template(collab_template, {
 				collab,
 				pools,
 				stages,
 			}));
 		}
-		this.write_template('html/collabs.html', 'collabs.html', {
+		this.writeTemplate('html/collabs.html', 'collabs.html', {
 			nav_menu,
 			japan_collab_history: Object.entries(data.jp_history).sort(),
 			taiwan_collab_history: Object.entries(data.tw_history).sort(),
 		});
-		this.write_template('html/schedule.html', 'schedule.html', {
+		this.writeTemplate('html/schedule.html', 'schedule.html', {
 			collab_stages
 		});
 	}

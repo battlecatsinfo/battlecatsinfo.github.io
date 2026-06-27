@@ -3,7 +3,7 @@ const {SiteGenerator} = require('./base.js');
 module.exports = class extends SiteGenerator {
 	run() {
 		const combos_scheme = JSON.parse(this.load('combos_scheme.json'));
-		const combos = this.parse_tsv(this.load('combos.tsv'));
+		const combos = this.parseTsv(this.load('combos.tsv'));
 
 		// format combos
 		for (let i = 0, I = combos.length; i < I; i++) {
@@ -28,9 +28,9 @@ module.exports = class extends SiteGenerator {
 				combos[i].push(parseInt(category, 10));
 		}
 
-		this.write_json('combos.json', combos);
+		this.writeJson('combos.json', combos);
 
-		this.write_json('combos_scheme.json', combos_scheme);
+		this.writeJson('combos_scheme.json', combos_scheme);
 
 		// generate combosFormatted
 		const combosFormatted = {};
@@ -54,6 +54,6 @@ module.exports = class extends SiteGenerator {
 		for (const type in combosFormatted)
 			combosFormatted[type].sort((a, b) => (a.units.length - b.units.length));
 
-		this.write_template('html/combos.html', 'combos.html', {combos: combosFormatted});
+		this.writeTemplate('html/combos.html', 'combos.html', {combos: combosFormatted});
 	}
 };
