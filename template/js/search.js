@@ -1,12 +1,12 @@
 import {config, numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
 
-var cats;
-var cats_old;
-var hide_search = false;
-var last_forms;
-var form_s = 5;
-var per_page = 10;
+let cats;
+let cats_old;
+let hide_search = false;
+let last_forms;
+let form_s = 5;
+let per_page = 10;
 let def_lv;
 let plus_lv;
 let display_forms;
@@ -84,7 +84,7 @@ function filterByNameOrId(results) {
 function renderTable(forms, page = 1) {
 	last_forms = forms;
 	forms = filterByNameOrId(forms);
-	var H = per_page * page;
+	let H = per_page * page;
 	display_forms = forms.slice(H - per_page, H);
 	tbody.textContent = "";
 	search_result.textContent = `顯示第${H - per_page + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
@@ -114,7 +114,7 @@ function renderTable(forms, page = 1) {
 		const F = display_forms[i][1];
 		const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", F.hp, F.atkm, round(F.dps), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(F.price), numStr(display_forms[i][0])];
 		for (let j = 0; j < 13; ++j) {
-			var e = tr.appendChild(document.createElement("td"));
+			let e = tr.appendChild(document.createElement("td"));
 			if (j == 3) {
 				if (F.name)
 					e.appendChild(document.createTextNode(F.name));
@@ -170,7 +170,7 @@ function calculate(code = "", noUpdateUrl) {
 		}
 		ori_expr.value = code = codes.length ? codes.map(x => `(${x})`).join("&&") : "1";
 	}
-	var results = [],
+	let results = [],
 		pcode;
 	try {
 		pcode = pegjs.parse(code);
@@ -224,7 +224,7 @@ function calculate(code = "", noUpdateUrl) {
 	try {
 		results = results.map((form, i) => {
 			let c = cats_old[form.id];
-			var x = fn(form);
+			let x = fn(form);
 			return [isFinite(x) ? x : 0, form];
 		}).sort((a, b) => b[0] - a[0]);
 	} catch (ex) {
@@ -254,7 +254,7 @@ function calculate(code = "", noUpdateUrl) {
 
 function addBtns(parent, s) {
 	if (s) {
-		var c;
+		let c;
 		s.split(" ");
 		for (c of parent.querySelectorAll("button")) s.includes(c.parentNode.getAttribute("data-expr")) && c.parentNode.classList.add("o-selected");
 	}

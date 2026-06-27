@@ -89,21 +89,23 @@ import {getMap} from './stage.mjs';
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
 const layout = config.layout;
-var level_count = 0;
-var my_cat;
-var lvMax;
-var tf_tbl;
-var tf_tbl_s;
-var tf4_tbl;
-var tf4_tbl_t;
-var tf4_tbl_s;
-var super_talent = false;
-var custom_talents;
-var custom_super_talents;
-var orb_attr;
-var orb_eff;
-var orb_gradle;
-var table_to_values = new Map();
+let level_count = 0;
+let my_cat;
+let lvMax;
+let tf_tbl;
+let tf_tbl_s;
+let tf4_tbl;
+let tf4_tbl_t;
+let tf4_tbl_s;
+let super_talent = false;
+let custom_talents;
+let custom_super_talents;
+let orb_attr;
+let orb_eff;
+let orb_gradle;
+let table_to_values = new Map();
+let buf;
+let opt_b, opt_f;
 const tables = [];
 const modal_content = document.getElementById('modal-c');
 const modal = document.getElementById('modal');
@@ -630,7 +632,7 @@ function updateValues(form, tbl) {
 		tbl.style.fontSize = 'max(16px, 0.9vw)';
 	else if (maxLen > 26)
 		tbl.style.fontSize = 'max(17px, 1vw)';
-	var preStr = numStrT(form.pre);
+	let preStr = numStrT(form.pre);
 	if (form.pre1)
 		preStr += '/' + numStrT(form.pre1);
 	if (form.pre2)
@@ -649,7 +651,7 @@ function updateValues(form, tbl) {
 		specials.appendChild(p);
 	}
 	createTraitIcons(form.trait, specials);
-	var atkType = '';
+	let atkType = '';
 	if (form.atkType & ATK_OMNI) {
 		atkType += '全方位';
 	} else if (form.atkType & ATK_LD) {
@@ -921,7 +923,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 			td.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
 			td.appendChild(document.createElement('br'));
 		}
-		var atkType = '';
+		let atkType = '';
 		tr = document.createElement('div');
 		atkType += (form.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
 		if (form.atkType & ATK_OMNI)
@@ -1127,7 +1129,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 			const img = new Image(128, 128);
 			const div = document.createElement('td');
 			div.style.width = '128px';
-			var p = document.createElement('p');
+			let p = document.createElement('p');
 			r = r.split('!');
 			if (r[1] != '0') {
 				img.src = `/img/r/${r[1]}.png`;
@@ -1164,7 +1166,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 			const img = new Image(128, 128);
 			const div = document.createElement('td');
 			div.style.width = '128px';
-			var p = document.createElement('p');
+			let p = document.createElement('p');
 			r = r.split('!');
 			if (r[1] != '0') {
 				img.src = `/img/r/${r[1]}.png`;
@@ -2208,7 +2210,7 @@ function renderUnitPage() {
 					const img = new Image(128, 128);
 					const div = document.createElement('td');
 					div.style.width = '128px';
-					var p = document.createElement('p');
+					let p = document.createElement('p');
 					r = r.split('!');
 					if (r[1] != '0') {
 						img.src = `/img/r/${r[1]}.png`;
@@ -2246,7 +2248,7 @@ function renderUnitPage() {
 					const img = new Image(128, 128);
 					const div = document.createElement('td');
 					div.style.width = '128px';
-					var p = document.createElement('p');
+					let p = document.createElement('p');
 					r = r.split('!');
 					if (r[1] != '0') {
 						img.src = `/img/r/${r[1]}.png`;
@@ -2338,8 +2340,6 @@ function renderUnitPage() {
 	renderExtras();
 	renderCombos();
 }
-var buf;
-var opt_b, opt_f;
 
 function copyTree(node) {
 	switch (node.tagName) {
@@ -2564,7 +2564,7 @@ function xpgraph() {
 	}
 	for (let i = 1; i <= 10; ++i) {
 		tr = document.createElement('tr');
-		var sum = 0;
+		let sum = 0;
 		for (let j = 0; j < 12; j += 2) {
 			let td1 = document.createElement('td');
 			let td2 = document.createElement('td');
@@ -2578,10 +2578,10 @@ function xpgraph() {
 		table.appendChild(tr);
 	}
 	let sums = [];
-	var totalSum = 0;
+	let totalSum = 0;
 	tr = document.createElement('tr');
 	for (let j = 0; j < 12; j += 2) {
-		var sum = 0;
+		let sum = 0;
 		let i = j / 2;
 		let td1 = document.createElement('td');
 		let td2 = document.createElement('td');
@@ -2599,7 +2599,7 @@ function xpgraph() {
 	table.appendChild(tr);
 	tr = document.createElement('tr');
 	for (let j = 0; j < 12; j += 2) {
-		var sum = 0;
+		let sum = 0;
 		let i = j / 2;
 		let td1 = document.createElement('td');
 		let td2 = document.createElement('td');
@@ -2763,7 +2763,7 @@ function openBBCode() {
 		if (navigator.clipboard) {
 			navigator.clipboard.writeText(buf).then(() => e.textContent = '複製成功！', setTimeout(() => e.textContent = '複製', 1000));
 		} else {
-			var t = document.createElement("textarea");
+			let t = document.createElement("textarea");
 			t.value = buf;
 			t.style.position = "fixed";
 			t.style.top = t.style.left = "0";
@@ -2803,7 +2803,7 @@ loadCat(my_id)
 		abars[5].onclick = () => makegraph(3);
 		abars[6].onclick = xpgraph;
 		abars[7].onclick = function() {
-			var oldList = config.starCats;
+			let oldList = config.starCats;
 			oldList.push({
 				'id': my_id,
 				'icon': my_cat.forms[0].icon,

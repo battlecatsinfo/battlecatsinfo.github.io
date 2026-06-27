@@ -165,7 +165,7 @@ function getCover(p, durationF, attackF) {
 
 function getCoverUnit(unit, chance, duration) {
 	if (!(unit.pre2 + unit.pre1)) return getCover(chance, duration, unit.attackF);
-	var pres = [];
+	const pres = [];
 	for (let i = 4; 1 <= i; i >>= 1)
 		if (unit.abi & i) switch (i) {
 			case 1:
@@ -187,7 +187,7 @@ function getCoverUnitStr(unit, chance, duration) {
 }
 
 function get_trait_short_names(trait) {
-	var s = "";
+	let s = "";
 	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && (s += units_scheme.traits.short_names[i]);
 	return s;
 }
@@ -1426,7 +1426,7 @@ class CatForm extends Unit {
 
 	applyTalent(talent, level) {
 		if (!level) return;
-		var t, x, y, z;
+		let t, x, y, z;
 		level -= 1;
 		const maxLv = talent[1] - 1;
 		const inc1 = ~~(talent[2] + level * (talent[3] - talent[2]) / maxLv);
@@ -2025,7 +2025,7 @@ class Cat {
 		return value;
 	}
 	getLevelMulti(level) {
-		var c, multi = .8;
+		let c, multi = .8;
 		let n = 0;
 		for (c of this.lvCurve) {
 			if (level <= n) break;
@@ -2161,7 +2161,7 @@ function createResIcons(res, p) {
 }
 
 function getAbiString(abi) {
-	var strs;
+	let strs;
 	return abi ? (strs = [], 4 & abi && strs.push('一'), 2 & abi && strs.push('二'),
 		1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
 }

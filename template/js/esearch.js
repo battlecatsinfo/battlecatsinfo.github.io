@@ -1,13 +1,13 @@
 import {numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllEnemies} from './unit.mjs';
 
-var cats;
+let cats;
 const filter_expr = document.getElementById('filter-expr');
 const sort_expr = document.getElementById('sort-expr');
 const search_result = document.getElementById('search-result');
 const tbody = document.getElementById('tbody');
 const pages_a = document.getElementById('pages-a');
-var hide_seach = false;
+let hide_seach = false;
 const tables = document.getElementById('tables');
 const toggle_s = document.getElementById('toggle-s');
 const trait_s = document.getElementById('trait-s');
@@ -18,8 +18,8 @@ const atkBtn = atk_s.firstElementChild.firstElementChild;
 const traitBtn = trait_s.firstElementChild.firstElementChild;
 const abBtn = ab_savage.firstElementChild.firstElementChild;
 const name_search = document.getElementById('name-search');
-var last_forms;
-var per_page = 10;
+let last_forms;
+let per_page = 10;
 let results;
 
 function rerender(page) {
@@ -150,7 +150,7 @@ function calculate(code = '', noUpdateUrl) {
 			return renderTable([]);
 		url.searchParams.set('filter', code);
 	}
-	var pcode;
+	let pcode;
 	try {
 		pcode = pegjs.parse(code);
 	} catch (ex) {

@@ -1,4 +1,4 @@
-var G;
+let G;
 
 function handleClick(event) {
 	if (!G) {

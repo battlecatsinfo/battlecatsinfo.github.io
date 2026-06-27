@@ -7,9 +7,9 @@ const img = new Image();
 const preview = document.getElementById('preview');
 const pctx = preview.getContext('2d');
 const color_select = document.getElementById('color-select');
-var last_t;
-var cut;
-var imgloaded = false;
+let last_t;
+let cut;
+let imgloaded = false;
 
 let imgfile;
 let cutfile;
@@ -201,13 +201,13 @@ function createLine(c, i) {
 
 function exportaimg() {
 	if (!imgloaded) return;
-	var a = document.createElement("a");
+	let a = document.createElement("a");
 	a.href = img.src;
 	a.click();
 }
 
 function exportcut() {
-	var a = document.createElement("a");
+	let a = document.createElement("a");
 	const idx = cutfile.lastIndexOf('/');
 	a.download = idx == -1 ? cutfile : cutfile.slice(idx + 1);
 	a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(`[imgcut]\n0\n${cut.name}\n${cut.cuts.length}\n${cut.cuts.map(x => x.join(',')).join('\n')}\n`);
@@ -244,7 +244,7 @@ function exportimg() {
 	preview.height = c[3];
 	pctx.clearRect(0, 0, preview.width, preview.height);
 	pctx.drawImage(img, c[0], c[1], c[2], c[3], 0, 0, c[2], c[3]);
-	var a = document.createElement("a");
+	let a = document.createElement("a");
 	a.download = 'cut ' + i.toString() + (c[4] ? ` (${c[4]})` : '');
 	a.href = preview.toDataURL();
 	a.click();
@@ -359,11 +359,11 @@ function importCutU() {
 }
 document.onpaste = function(event) {
 	const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-	for (var index in items) {
+	for (let index in items) {
 		const item = items[index];
 		if (item.kind === 'file') {
-			var blob = item.getAsFile();
-			var reader = new FileReader();
+			let blob = item.getAsFile();
+			let reader = new FileReader();
 			reader.onload = function(event) {
 				img.src = event.target.result;
 				imgfile = 'clipboard';
@@ -379,7 +379,7 @@ async function pasteImg() {
 		const imageTypes = c.types.filter(x => x.startsWith('image/'));
 		for (const t of imageTypes) {
 			const blob = await c.getType(t);
-			var reader = new FileReader();
+			let reader = new FileReader();
 			reader.onload = function(event) {
 				img.src = event.target.result;
 				imgfile = 'clipboard';

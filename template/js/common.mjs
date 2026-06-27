@@ -581,11 +581,11 @@ function pagination({
 function getCombinations(arr) {
 	if (!arr.length) return [];
 	const combi = [];
-	var temp;
+	let temp;
 	const slent = 2 << arr.length - 1;
-	for (var i = 0; i < slent; i++) {
+	for (let i = 0; i < slent; i++) {
 		temp = [];
-		for (var j = 0; j < arr.length; j++)
+		for (let j = 0; j < arr.length; j++)
 			if (i & (j ? (2 << j - 1) : 1))
 				temp.push(arr[j]);
 		if (temp.length)

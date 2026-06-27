@@ -71,9 +71,9 @@ import {
 } from './unit.mjs';
 const units_scheme = await loadScheme('units', ['talents']);
 
-var cats;
-var targets = new Set();
-var CL;
+let cats;
+let targets = new Set();
+let CL;
 const tbl = document.getElementById('tbl');
 const tby = tbl.firstElementChild.children;
 const cat_name = document.getElementById('cat-name');
@@ -123,7 +123,7 @@ function newTab() {
 
 function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 	tby[5].children[I].textContent = `${F.kb} / ${F.speed}`;
-	var T = numStrX(F.pre);
+	let T = numStrX(F.pre);
 	if (F.pre1)
 		T = '①' + T + '②' + numStrX(F.pre1);
 	if (F.pre2)
@@ -409,7 +409,7 @@ function addCat(id, I, FC = 0) {
 	let M, G,
 		C = cats[id],
 		F = C.forms[FC];
-	var FL = 0;
+	let FL = 0;
 	if (FC > 1 && (G = C.talents)) {
 		FL = 1;
 		M = tby[10].children[I];

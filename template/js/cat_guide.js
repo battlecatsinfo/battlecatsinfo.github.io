@@ -2,8 +2,8 @@ import {loadScheme, config} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
 const {limited_cats, cat_guide_ids} = await loadScheme('units', ['limited_cats', 'cat_guide_ids']);
 
-var cats;
-var tooltip;
+let cats;
+let tooltip;
 const fav_list = new Set(config.starCats.map(x => x.id));
 const cats_e = document.getElementById('cats');
 const main = cats_e.parentNode;
@@ -392,7 +392,7 @@ document.getElementById('search-name').onclick = function(event) {
 	if (!q) return;
 	let digit = q.length >= 1;
 	for (const c of q) {
-		var x = c.codePointAt(0);
+		let x = c.codePointAt(0);
 		(x < 48 || 57 < x) && (digit = false);
 	}
 	if (digit) {

@@ -283,7 +283,7 @@ function renderEnemy(e, options, setTitle = false) {
 	const title = [E.name, E.jpName].filter(x => x).join('/') || '?';
 	setTitle && (document.title = title);
 	document.getElementById('enemy-id').textContent = title;
-	var traits = [];
+	const traits = [];
 	if (E.trait & TB_RED)
 		traits.push('紅色敵人');
 	if (E.trait & TB_FLOAT)
@@ -329,7 +329,7 @@ function renderEnemy(e, options, setTitle = false) {
 		specials.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(E.abi));
 		specials.appendChild(document.createElement('br'));
 	}
-	var X = '';
+	let X = '';
 	if (E.atkType & ATK_OMNI)
 		X += '全方位';
 	else if (E.atkType & ATK_LD)
@@ -339,7 +339,7 @@ function renderEnemy(e, options, setTitle = false) {
 		X += '・擊退反擊';
 	if (E.lds) {
 		const nums = '①②③';
-		var s = '';
+		let s = '';
 		for (let i = 0; i < E.lds.length; ++i) {
 			const x = E.lds[i];
 			const y = x + E.ldr[i];
