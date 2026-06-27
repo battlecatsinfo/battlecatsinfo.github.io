@@ -26,25 +26,27 @@
 		font-size: 1em;
 	}
 	:root.dark select { background: #282a36; color: #f8f8f2; border-color: #555; }
-	#enemy-slots { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0; }
-	.enemy-slot {
-		border: 1px solid #aaa;
-		border-radius: 6px;
-		padding: 8px;
-		min-width: 200px;
-		position: relative;
-	}
-	:root.dark .enemy-slot { border-color: #555; }
-	.slot-label { font-size: 0.85em; color: #888; margin-bottom: 6px; }
-	:root.dark .slot-label { color: #aaa; }
+	#autocomplete-wrapper { position: relative; display: inline-block; }
 	.enemy-input {
-		width: 162px;
+		width: 200px;
 		border: 1px solid #ccc;
 		border-radius: 4px;
 		padding: 4px 8px;
 		font-size: 1em;
 	}
 	:root.dark .enemy-input { background: #282a36; color: #f8f8f2; border-color: #555; }
+	#add-btn {
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		padding: 4px 16px;
+		font-size: 1em;
+		cursor: pointer;
+		background: #f0f0f0;
+		color: #333;
+	}
+	#add-btn:disabled { opacity: 0.45; cursor: default; }
+	:root.dark #add-btn { background: #282a36; color: #f8f8f2; border-color: #555; }
+	:root.dark #add-btn:disabled { opacity: 0.3; }
 	.enemy-dropdown {
 		position: absolute;
 		z-index: 10;
@@ -54,7 +56,7 @@
 		background: white;
 		border: 1px solid #ccc;
 		border-radius: 4px;
-		width: 250px;
+		width: 280px;
 		max-height: 400px;
 		overflow-y: auto;
 		box-shadow: 0 2px 8px rgba(0,0,0,0.18);
@@ -71,10 +73,22 @@
 	.enemy-dropdown li:hover { background: lightcyan; }
 	:root.dark .enemy-dropdown li:hover { background: steelblue; }
 	.enemy-dropdown img { width: 36px; height: 36px; object-fit: contain; }
-	.slot-selected { display: flex; align-items: center; gap: 8px; }
-	.slot-selected[hidden] { display: none; }
-	.slot-selected img { width: 44px; height: 44px; object-fit: contain; }
-	.deselect-btn {
+	#search-list { margin: 10px 0; }
+	.search-item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin: 6px 0;
+		padding: 6px 10px;
+		border: 1px solid #aaa;
+		border-radius: 6px;
+	}
+	:root.dark .search-item { border-color: #555; }
+	.search-item img { width: 36px; height: 36px; object-fit: contain; }
+	.item-chapter { font-size: 0.9em; color: #666; }
+	:root.dark .item-chapter { color: #aaa; }
+	.item-name { font-size: 0.95em; }
+	.item-delete {
 		background: none;
 		border: 1px solid #d00;
 		color: #d00;
@@ -82,6 +96,7 @@
 		cursor: pointer;
 		padding: 2px 6px;
 		font-size: 0.9em;
+		margin-left: auto;
 	}
 #status { margin: 8px 0; font-size: 0.95em; color: #555; }
 	:root.dark #status { color: #aaa; }
@@ -114,10 +129,15 @@
 			<option value="legend">傳奇關卡</option>
 		</select>
 	</div>
-	<div class="row">
-		<label>選擇敵人：</label>
+	<div class="row" id="add-row">
+		<label for="enemy-autocomplete">選擇敵人：</label>
+		<div id="autocomplete-wrapper">
+			<input type="text" id="enemy-autocomplete" class="enemy-input" placeholder="搜尋敵人名稱" autocomplete="off">
+			<ul id="enemy-dropdown" class="enemy-dropdown" hidden></ul>
+		</div>
+		<button id="add-btn" type="button" disabled>添加</button>
 	</div>
-	<div id="enemy-slots"></div>
+	<div id="search-list"></div>
 	<div id="status">載入中…</div>
 	<div id="results" hidden>
 		<table>
