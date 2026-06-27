@@ -1,8 +1,8 @@
 const {SiteGenerator} = require('./base.js');
 const {normalizePath} = require('./util.js');
 
-const Li_l_Cats = new Set([209, 210, 211, 245, 246, 247, 311, 312, 313]);
-const basic_cats = new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 643]);
+const littleCats = new Set([209, 210, 211, 245, 246, 247, 311, 312, 313]);
+const basicCats = new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 643]);
 
 module.exports = class extends SiteGenerator {
 	run() {
@@ -32,7 +32,7 @@ module.exports = class extends SiteGenerator {
 				// forms: Number(cat.form_count),
 				collab,
 				obtn,
-				evol: this.generateEvolve({id: i, form_count: Number(cat.form_count), cat, pools, collabs}),
+				evol: this.generateEvolve({id: i, formCount: Number(cat.form_count), cat, pools, collabs}),
 				maxBaseLv: Number(cat.max_base_level),
 				maxPlusLv: Number(cat.max_plus_level),
 				eid: cat.egg_id ? cat.egg_id.split(',').map(Number) : undefined,
@@ -58,7 +58,7 @@ module.exports = class extends SiteGenerator {
 			cats[form.id].forms.push({
 				lvc: cats[form.id].forms.length,
 				name: form.name_tw,
-				jp_name: form.name_jp,
+				jpName: form.name_jp,
 				price: form.price,
 				desc: form.description,
 				hp: Number(form.health_point),
@@ -174,7 +174,7 @@ module.exports = class extends SiteGenerator {
 					}
 					break;
 				case 'event':
-					if (Li_l_Cats.has(id))
+					if (littleCats.has(id))
 						break;
 
 					outer: for (const group of pool.group_items) {
@@ -190,7 +190,7 @@ module.exports = class extends SiteGenerator {
 					}
 					break;
 				case "normal":
-					if ((pool.tw_name === "招福轉蛋" && Li_l_Cats.has(id)) || (pool.tw_name === "貓咪轉蛋+" && basic_cats.has(id)))
+					if ((pool.tw_name === "招福轉蛋" && littleCats.has(id)) || (pool.tw_name === "貓咪轉蛋+" && basicCats.has(id)))
 						obtn.push([12, pool.tw_name, normalizePath(pool.en_name)]);
 					break;
 				case 'category':
@@ -206,8 +206,8 @@ module.exports = class extends SiteGenerator {
 		return [obtn, _collab];
 	}
 
-	generateEvolve({id, form_count, cat, pools, collabs}) {
-		if (form_count < 3)
+	generateEvolve({id, formCount, cat, pools, collabs}) {
+		if (formCount < 3)
 			return 5;
 
 		if (cat.evol)
@@ -256,7 +256,7 @@ module.exports = class extends SiteGenerator {
 			return {
 				i: Number(enemy.id),
 				name: enemy.name_tw,
-				jp_name: enemy.name_jp,
+				jpName: enemy.name_jp,
 				fandom: enemy.name_fandom,
 				desc: enemy.description,
 				hp: Number(enemy.health_point),

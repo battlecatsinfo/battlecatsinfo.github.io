@@ -781,7 +781,7 @@ function mkTool(tbl) {
 	}
 	node.children[1].onclick = function(e) { // Download
 		const t = e.currentTarget.parentNode._t;
-		return savePNG([my_cat.forms[0].name || my_cat.forms[0].jp_name, t]);
+		return savePNG([my_cat.forms[0].name || my_cat.forms[0].jpName, t]);
 	}
 	tbl.appendChild(node);
 }
@@ -832,7 +832,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 		td = document.createElement('td');
 		td.classList.add('F');
 		tr.appendChild(td);
-		td.textContent = form.jp_name;
+		td.textContent = form.jpName;
 		td.style.padding = '0';
 		td.colSpan = 4;
 		tr = document.createElement('tr');
@@ -1921,7 +1921,7 @@ function rednerTalentInfos(talents, _super = false) {
 	const td3 = document.createElement('td');
 	const td4 = document.createElement('td');
 	const td5 = document.createElement('td');
-	td1.textContent = my_cat.forms[2].name || my_cat.forms[2].jp_name;
+	td1.textContent = my_cat.forms[2].name || my_cat.forms[2].jpName;
 	td1.classList.add('f');
 	td3.classList.add('F');
 	td5.classList.add('F');
@@ -2783,7 +2783,7 @@ function openBBCode() {
 loadCat(my_id)
 	.then(res => {
 		my_cat = res;
-		const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
+		const cat_names_jp = my_cat.forms.map(x => x.jpName).filter(x => x).join(' → ');
 		const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
 		if (layout !== 2) {
 			document.getElementById('ch_name').textContent = cat_names;
@@ -2807,7 +2807,7 @@ loadCat(my_id)
 			oldList.push({
 				'id': my_id,
 				'icon': my_cat.forms[0].icon,
-				'name': my_cat.forms[0].name || my_cat.forms[0].jp_name
+				'name': my_cat.forms[0].name || my_cat.forms[0].jpName
 			});
 			config.starCats = oldList;
 		};

@@ -65,7 +65,7 @@ function filterByNameOrId(results) {
 	if (form_s === 0) {
 		return results.filter(result => {
 			const f = result[1];
-			return (f.id === qid) || f.name.toLowerCase().includes(key) || f.jp_name.toLowerCase().includes(key);
+			return (f.id === qid) || f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key);
 		});
 	}
 
@@ -73,7 +73,7 @@ function filterByNameOrId(results) {
 	for (const cat of cats) {
 		if (!(
 			cat.id === qid ||
-			cat.forms.some(f => f.name.toLowerCase().includes(key) || f.jp_name.toLowerCase().includes(key))
+			cat.forms.some(f => f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key))
 		)) {
 			cats.delete(cat);
 		}
@@ -118,9 +118,9 @@ function renderTable(forms, page = 1) {
 			if (j == 3) {
 				if (F.name)
 					e.appendChild(document.createTextNode(F.name));
-				if (F.jp_name) {
+				if (F.jpName) {
 					e.appendChild(document.createElement("br"));
-					e.appendChild(document.createTextNode(F.jp_name));
+					e.appendChild(document.createTextNode(F.jpName));
 				}
 			} else {
 				e.textContent = texts[j].toString();

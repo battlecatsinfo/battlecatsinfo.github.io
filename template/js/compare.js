@@ -86,7 +86,7 @@ loadAllCats().then(s => {
 	for (let i = 0; i < s.length; ++i) {
 		const C = s[i];
 		o = document.createElement('option');
-		o.value = C.forms.map(CL => CL.name || CL.jp_name).join('/');
+		o.value = C.forms.map(CL => CL.name || CL.jpName).join('/');
 		CL.appendChild(o);
 	}
 	document.getElementById('loader').style.display = 'none';
@@ -514,7 +514,7 @@ function addCat(id, I, FC = 0) {
 		}
 	});
 	M = tby[1].children[I];
-	M.textContent = (F.name || F.jp_name) + ' Lv ';
+	M.textContent = (F.name || F.jpName) + ' Lv ';
 	M.appendChild(levelInput);
 	if (FL) {
 		F = F.clone();
@@ -668,7 +668,7 @@ document.getElementById('download').onclick = async function() {
 	for (const C of targets) {
 		const X = C.split('-');
 		const M = cats[parseInt(X[0], 10)].forms[parseInt(X[1], 10)];
-		N.push(M.name || M.jp_name);
+		N.push(M.name || M.jpName);
 	}
 	await screenshot('貓咪比較 —— ' + N.join('.v.s') + '.png');
 }

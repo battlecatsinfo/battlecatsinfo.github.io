@@ -8,16 +8,16 @@ module.exports = class extends SiteGenerator {
 		const stageScheme = JSON.parse(this.load('stage_scheme.json'));
 		const gachaScheme = JSON.parse(this.load('gacha_scheme.json'));
 		const ototo = JSON.parse(this.load('ototo.json'));
-		const combos_scheme = JSON.parse(this.load('combos_scheme.json'));
+		const combosScheme = JSON.parse(this.load('combos_scheme.json'));
 
-		this.generateDataFiles({mapTable, stageTable, stageScheme, gachaScheme, ototo, combos_scheme});
+		this.generateDataFiles({mapTable, stageTable, stageScheme, gachaScheme, ototo, combosScheme});
 		this.generatePages({stageScheme});
 		this.generateCrown({mapTable, stageScheme});
 		this.generateMaterials({mapTable, stageTable});
 		this.generateDifficulty({stageTable});
 	}
 
-	generateDataFiles({mapTable, stageTable, stageScheme, gachaScheme, ototo, combos_scheme}) {
+	generateDataFiles({mapTable, stageTable, stageScheme, gachaScheme, ototo, combosScheme}) {
 		const {categories, conditions, material_drops, reset_modes, limit_groups, fixed_lineup, stage_tips} = stageScheme;
 
 		const map = mapTable.reduce((rv, entry, i) => {
@@ -87,7 +87,7 @@ module.exports = class extends SiteGenerator {
 			return rv;
 		}, []);
 
-		const mainChapters = Object.entries(combos_scheme.requirements)
+		const mainChapters = Object.entries(combosScheme.requirements)
 			.filter(x => Number(x[0]) < 10000)
 			.sort((a, b) => a[0] - b[0])
 			.map(x => x[1]);

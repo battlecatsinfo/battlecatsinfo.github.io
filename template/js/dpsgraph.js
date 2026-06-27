@@ -237,7 +237,7 @@ class UnitDPSHelper {
 			throw new Error('Abstract Class cannot be instantiated');
 		this.B = B;
 		this.F = F;
-		this.title = this.F.name || this.F.jp_name || '<未命名>';
+		this.title = this.F.name || this.F.jpName || '<未命名>';
 		this.talent_types = new Set();
 	}
 	createAttackTypeUI() {
@@ -1054,7 +1054,7 @@ async function main(render) {
 		const catGen = CatIdb.forEachValue(catIdb);
 		for await (const cat of catGen) {
 			const o = document.createElement('option');
-			o.value = cat.forms.map(CL => CL.name || CL.jp_name).join('/');
+			o.value = cat.forms.map(CL => CL.name || CL.jpName).join('/');
 			CL.appendChild(o);
 		}
 	} finally {
@@ -1067,7 +1067,7 @@ async function main(render) {
 		const enemyGen = EnemyIdb.forEachValue(enemyIdb);
 		for await (const enemy of enemyGen) {
 			const o = document.createElement('option');
-			o.value = enemy.name || enemy.jp_name;
+			o.value = enemy.name || enemy.jpName;
 			CL.appendChild(o);
 		}
 	} finally {

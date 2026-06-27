@@ -66,7 +66,7 @@ module.exports = class extends RewardSiteGenerator {
 		}
 		for (const [key, value] of Object.entries(JSON.parse(this.load('gacha_scheme.json')))) {
 			if (key == 'categories')
-				this.category_set = Object.entries(value).reduce((rv, entry, i) => {
+				this.categorySet = Object.entries(value).reduce((rv, entry, i) => {
 					rv[entry[0]] = new Set(entry[1]);
 					return rv;
 				}, {});
@@ -74,12 +74,12 @@ module.exports = class extends RewardSiteGenerator {
 				this[key] = value;
 		}
 
-		const gacha_template = this.loadTemplate('html/gacha.html');
+		const gachaTemplate = this.loadTemplate('html/gacha.html');
 		const gachas = [];
 
-		this.categroy_pools = [];
-		this.resident_pools = [];
-		this.collab_pools = [];
+		this.categroyPools = [];
+		this.residentPools = [];
+		this.collabPools = [];
 		this.rewards = this.loadRewards().reduce((rv, entry, i) => {
 			let {id, name} = entry;
 			rv[id] = {name, id};
@@ -91,14 +91,14 @@ module.exports = class extends RewardSiteGenerator {
 			this.rewards[key].name = value;
 		}
 
-		this.stage_rewards = this.parseTsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
+		this.stageRewards = this.parseTsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp, energy, rand, drop} = entry;
 			id = parseInt(id, 36);
 			if (drop)
 				rv[id] = {name_tw, name_jp, energy, rand, drop};
 			return rv;
 		}, {});
-		this.map_names = this.parseTsv(this.load('map.tsv')).reduce((rv, entry, i) => {
+		this.mapNames = this.parseTsv(this.load('map.tsv')).reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp} = entry;
 			id = parseInt(id, 36);
 			rv[id] = name_tw || name_jp || '？？？';
@@ -107,7 +107,7 @@ module.exports = class extends RewardSiteGenerator {
 
 		this.fmt = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 5 });
 		this.fmt2 = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 2 });
-		this.load_unit();
+		this.loadUnit();
 
 		for (const pool of JSON.parse(this.load('pools.json'))) {
 			const size = pool['size'];
@@ -116,14 +116,14 @@ module.exports = class extends RewardSiteGenerator {
 			let data;
 			switch (pool['type']) {
 			case 'category':
-				data = this.get_category(pool);
+				data = this.getCategory(pool);
 				break;
 			case 'rare':
-				data = this.get_rare(pool);
+				data = this.getRare(pool);
 				break;
 			case 'normal':
 			case 'event':
-				data = this.get_event(pool);
+				data = this.getEvent(pool);
 				break;
 			default:
 				data = null;
@@ -133,7 +133,7 @@ module.exports = class extends RewardSiteGenerator {
 			const path = 'gacha/' + normalizePath(pool.en_name) + '.html';
 
 			this.writeString(path, this.template(
-				gacha_template,
+				gachaTemplate,
 				{
 					pool,
 					width,
@@ -157,30 +157,30 @@ module.exports = class extends RewardSiteGenerator {
 			'categories': [
 				{
 					'name': '特殊',
-					'pools': this.categroy_pools
+					'pools': this.categroyPools
 				},
 				{
 					'name': '常駐轉蛋池',
-					'pools': this.resident_pools
+					'pools': this.residentPools
 				},
 				{
 					'name': '合作轉蛋池',
-					'pools': this.collab_pools
+					'pools': this.collabPools
 				}
 			]
 		});
 	}
 	uimg(u) {
-		return this.egg_set.has(u) ? `/img/u/${u}/2.png` : `/img/u/${u}/0.png`;
+		return this.eggSet.has(u) ? `/img/u/${u}/2.png` : `/img/u/${u}/0.png`;
 	}
-	get_rare(pool) {
-		let exclusive_ids = [];
-		const group_items = pool['group_items'];
-		console.assert(group_items.length === 5);
+	getRare(pool) {
+		let exclusiveIds = [];
+		const groupItems = pool['group_items'];
+		console.assert(groupItems.length === 5);
 		// 0: ?, 1: rare, 2: super rare, 3: uber rare, 4: legend rare
 		const colors = ['', '#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'];
 		const output = {
-			rarity_descs: group_items.reduceRight((acc, group, i) => {
+			rarity_descs: groupItems.reduceRight((acc, group, i) => {
 				if (group.length)
 					acc.push(this.rarity_desc[i]);
 				return acc;
@@ -191,7 +191,7 @@ module.exports = class extends RewardSiteGenerator {
 			item_minor: [],
 		};
 		for (let rarity = 4; rarity >= 0; --rarity) {
-			let c = group_items[rarity].length;
+			let c = groupItems[rarity].length;
 			let rate = pool['group_rates']?.[rarity];
 			if (rate) {
 				output.summary.push({
@@ -207,14 +207,14 @@ module.exports = class extends RewardSiteGenerator {
 			output.item_free = {
 				id: pool['free'],
 				img: this.uimg(pool['free']),
-				descs: this.unit_desc[pool['free']].split('|'),
+				descs: this.unitDesc[pool['free']].split('|'),
 			};
 		}
 		const MUL = {};
 		for (let rarity = 4; rarity >= 0; --rarity) {
 			const out = {'0': []};
 			outer:
-			for (const u of group_items[rarity].map(v => v[1])) {
+			for (const u of groupItems[rarity].map(v => v[1])) {
 				if (MUL[u]) {
 					MUL[u] += 1;
 					continue;
@@ -222,7 +222,7 @@ module.exports = class extends RewardSiteGenerator {
 					MUL[u] = 1;
 				}
 
-				for (const [name, idSet] of Object.entries(this.category_set)) {
+				for (const [name, idSet] of Object.entries(this.categorySet)) {
 					if (name !== pool['tw_name'] && idSet.has(u)) {
 						if (out[name]) {
 							out[name].push(u);
@@ -245,7 +245,7 @@ module.exports = class extends RewardSiteGenerator {
 					rows: [],
 				});
 				v.sort((a, b) => a - b);
-				exclusive_ids = exclusive_ids.concat(v);
+				exclusiveIds = exclusiveIds.concat(v);
 				for (let i = 0, I = v.length - 1; i < I; i += 2) {
 					output.item_groups.at(-1).rows.push([
 						this.get1(v[i], MUL[v[i]]),
@@ -265,14 +265,14 @@ module.exports = class extends RewardSiteGenerator {
 			for (const [name, ids] of Object.entries(out)) {
 				output.item_minor.push({
 					name,
-					cats: ids.sort((a, b) => a - b).map(id => ({id, name: self.unit_name[id]})),
+					cats: ids.sort((a, b) => a - b).map(id => ({id, name: self.unitName[id]})),
 				});
 			}
 		}
 
-		(pool.collab ? this.collab_pools: this.resident_pools).push({
+		(pool.collab ? this.collabPools: this.residentPools).push({
 			'name': pool.tw_name,
-			'units': exclusive_ids,
+			'units': exclusiveIds,
 		});
 
 		return output;
@@ -287,7 +287,7 @@ module.exports = class extends RewardSiteGenerator {
 		return c;
 	}
 
-	get_event(pool) {
+	getEvent(pool) {
 		const output = {
 				guaranteed: false,
 				items: [],
@@ -297,8 +297,8 @@ module.exports = class extends RewardSiteGenerator {
 		console.assert(group_items.length === 5);
 		console.assert(group_rates.length === 10);
 		const result = [];
-		let must_drop_group = undefined;
-		let gacha_units = new Set();
+		let mustDropGroup = undefined;
+		let gachaUnits = new Set();
 
 		for (let i = 0, I;i < 9;i += 2) {
 			let rate = group_rates[i];
@@ -306,7 +306,7 @@ module.exports = class extends RewardSiteGenerator {
 			let R = new Fraction(rate, group.length || 1);
 			let must = group_rates[i + 1] ? '*' : '';
 			if (must)
-				must_drop_group = group;
+				mustDropGroup = group;
 			for (const item of new Set(group)) {
 				let r = new Fraction(this.count(group, item)).mul(R);
 				const [kind, v] = item;
@@ -316,7 +316,7 @@ module.exports = class extends RewardSiteGenerator {
 							-1,
 							v + 667,
 							this.uimg(v),
-							{id: v, name: this.unit_name[v], must},
+							{id: v, name: this.unitName[v], must},
 							r,
 							null,
 							rate,
@@ -324,7 +324,7 @@ module.exports = class extends RewardSiteGenerator {
 							'79',
 							'padding:.4em',
 						]);
-						gacha_units.add(v);
+						gachaUnits.add(v);
 						break;
 					case 'item':
 						{
@@ -365,41 +365,41 @@ module.exports = class extends RewardSiteGenerator {
 		}
 
 		result.sort((a, b) => a[1] - b[1]);
-		let e_type = result[0][0];
+		let eType = result[0][0];
 		let count = 0;
-		let last_i = 0;
+		let lastI = 0;
 		let rate = new Fraction(0);
 		let color = 0;
 
 		for (let i = 0;i < result.length;++i) {
 			const v = result[i];
-			if (e_type == v[0]) {
+			if (eType == v[0]) {
 				rate = rate.add(v[4]);
 				++count;
 			} else {
-				e_type = v[0];
-				result[last_i][5] = {
+				eType = v[0];
+				result[lastI][5] = {
 					count,
 					value: rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A',
 				};
 				count = 1;
 				rate = v[4];
-				last_i = i;
+				lastI = i;
 				++color;
 			}
 			v[1] = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'][color];
 		}
-		result[last_i][5] = {
+		result[lastI][5] = {
 			count,
 			value: rate.n ? this.fmt.format(rate.valueOf() / 100) + '%' : 'N/A',
 		};
-		output.guaranteed = typeof must_drop_group !== 'undefined';
+		output.guaranteed = typeof mustDropGroup !== 'undefined';
 		for (const v of result) {
 			const r = v[4].n ? this.fmt.format(v[4].valueOf() / 100) + '%' : 'N/A';
 			if (output.guaranteed) {
 				let a;
 				if (v[3].must)
-					a = (0.9 * (v[6] / 100) + 10) / must_drop_group.length;
+					a = (0.9 * (v[6] / 100) + 10) / mustDropGroup.length;
 				else
 					a = 0.9 * v[4].valueOf() / 100;
 				output.items.push({
@@ -427,14 +427,14 @@ module.exports = class extends RewardSiteGenerator {
 			}
 		}
 
-		if (gacha_units.size) {
+		if (gachaUnits.size) {
 			output.max = [];
-			for (const id of Array.from(gacha_units).sort((a, b) => a - b)) {
+			for (const id of Array.from(gachaUnits).sort((a, b) => a - b)) {
 				output.max.push({
-					name: this.unit_name[id],
-					base: this.max_base[id],
-					plus_jp: this.max_plus[id],
-					plus_tw: this.max_plus_tw[id],
+					name: this.unitName[id],
+					base: this.maxBase[id],
+					plus_jp: this.maxPlus[id],
+					plus_tw: this.maxPlusTw[id],
 				});
 			}
 		}
@@ -443,11 +443,11 @@ module.exports = class extends RewardSiteGenerator {
 			const [groupIdx, mapIdx] = pool.stage.split('-').map(x => parseInt(x));
 			const map_id = groupIdx * 1000 + mapIdx;
 			output.farm = {
-				map_name: this.map_names[map_id],
+				map_name: this.mapNames[map_id],
 				stages: [],
 			}
-			for (let stage_id = map_id * 1000;;++stage_id) {
-				const rw = this.stage_rewards[stage_id];
+			for (let stageId = map_id * 1000;;++stageId) {
+				const rw = this.stageRewards[stageId];
 				if (!rw)
 					break;
 				const energy = parseInt(rw.energy, 36);
@@ -477,9 +477,9 @@ module.exports = class extends RewardSiteGenerator {
 		}
 		return output;
 	}
-	get_category(pool) {
+	getCategory(pool) {
 		const output = [];
-		const ids = Array.from(this.category_set[pool['category']]).sort((a, b) => a - b);
+		const ids = Array.from(this.categorySet[pool['category']]).sort((a, b) => a - b);
 		let f;
 		let c = 0;
 
@@ -494,7 +494,7 @@ module.exports = class extends RewardSiteGenerator {
 		if (c & 1)
 			output.push([this.get1(f)]);
 
-		this.categroy_pools.push({
+		this.categroyPools.push({
 			'name': pool.tw_name,
 			'units': ids,
 		});
@@ -503,30 +503,30 @@ module.exports = class extends RewardSiteGenerator {
 	get1(u, rate = 1) {
 		return {
 			id: u,
-			name: this.unit_name[u],
-			descs: this.unit_desc[u].split('|'),
+			name: this.unitName[u],
+			descs: this.unitDesc[u].split('|'),
 			img: this.uimg(u),
 			rate: rate !== 1 ? rate : undefined,
 		}
 	}
-	load_unit() {
-		this.unit_rarity = [];
-		this.egg_set = new Set();
-		this.unit_name = [];
-		this.unit_desc = [];
-		this.max_base = [];
-		this.max_plus = [];
-		this.max_plus_tw = [];
+	loadUnit() {
+		this.unitRarity = [];
+		this.eggSet = new Set();
+		this.unitName = [];
+		this.unitDesc = [];
+		this.maxBase = [];
+		this.maxPlus = [];
+		this.maxPlusTw = [];
 
 		let data = this.parseTsv(this.load('cat.tsv'));
 		let id = 0;
 		for (const cat of data) {
-			this.unit_rarity.push(parseInt(cat.rarity, 10));
-			this.max_base.push(cat.max_base_level);
-			this.max_plus.push(cat.max_plus_level);
-			this.max_plus_tw.push(cat.max_plus_level_tw);
+			this.unitRarity.push(parseInt(cat.rarity, 10));
+			this.maxBase.push(cat.max_base_level);
+			this.maxPlus.push(cat.max_plus_level);
+			this.maxPlusTw.push(cat.max_plus_level_tw);
 			if (cat.egg_id)
-				this.egg_set.add(id);
+				this.eggSet.add(id);
 			id++;
 		}
 
@@ -535,8 +535,8 @@ module.exports = class extends RewardSiteGenerator {
 		for (const cat of data) {
 			if (id !== cat.id) {
 				id = cat.id;
-				this.unit_name.push(cat.name_tw);
-				this.unit_desc.push(cat.description);
+				this.unitName.push(cat.name_tw);
+				this.unitDesc.push(cat.description);
 			}
 		}
 	}

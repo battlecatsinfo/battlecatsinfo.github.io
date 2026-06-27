@@ -280,7 +280,7 @@ function renderEnemy(e, options, setTitle = false) {
 	mult.textContent = '倍率:' + my_mult.toString() + '%';
 	mult_atk.textContent = '攻擊倍率:' + atk_mag.toString() + '%';
 	st_mag.textContent = '★倍率:' + stageMag.toString() + '%';
-	const title = [E.name, E.jp_name].filter(x => x).join('/') || '?';
+	const title = [E.name, E.jpName].filter(x => x).join('/') || '?';
 	setTitle && (document.title = title);
 	document.getElementById('enemy-id').textContent = title;
 	var traits = [];

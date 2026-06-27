@@ -415,8 +415,8 @@ class Unit {
 	get name() {
 		return this.info.name;
 	}
-	get jp_name() {
-		return this.info.jp_name;
+	get jpName() {
+		return this.info.jpName;
 	}
 	get desc() {
 		return this.info.desc;

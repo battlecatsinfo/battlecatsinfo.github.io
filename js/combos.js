@@ -2,7 +2,7 @@ const {SiteGenerator} = require('./base.js');
 
 module.exports = class extends SiteGenerator {
 	run() {
-		const combos_scheme = JSON.parse(this.load('combos_scheme.json'));
+		const combosScheme = JSON.parse(this.load('combos_scheme.json'));
 		const combos = this.parseTsv(this.load('combos.tsv'));
 
 		// format combos
@@ -30,19 +30,19 @@ module.exports = class extends SiteGenerator {
 
 		this.writeJson('combos.json', combos);
 
-		this.writeJson('combos_scheme.json', combos_scheme);
+		this.writeJson('combos_scheme.json', combosScheme);
 
 		// generate combosFormatted
 		const combosFormatted = {};
 
-		for (const name of combos_scheme.names)
+		for (const name of combosScheme.names)
 			combosFormatted[name] = [];
 
 		for (const [name, type, level, units, req, cat] of combos) {
-			const desc = `${combos_scheme.descriptions[type].replace('#', combos_scheme.values[type][level])} 【${combos_scheme.levels[level]}】`;
-			const requirement = req > 1 ? combos_scheme.requirements[req] : null;
-			const category = combos_scheme.categories[cat ?? '-1'];
-			combosFormatted[combos_scheme.names[type]].push({
+			const desc = `${combosScheme.descriptions[type].replace('#', combosScheme.values[type][level])} 【${combosScheme.levels[level]}】`;
+			const requirement = req > 1 ? combosScheme.requirements[req] : null;
+			const category = combosScheme.categories[cat ?? '-1'];
+			combosFormatted[combosScheme.names[type]].push({
 				name,
 				desc,
 				requirement,

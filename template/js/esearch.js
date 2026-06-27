@@ -43,7 +43,7 @@ function filterByNameOrId(results) {
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
 	return results.filter(result => {
 		const f = result[1];
-		return (f.id === qid) || f.name.toLowerCase().includes(key) || f.jp_name.toLowerCase().includes(key);
+		return (f.id === qid) || f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key);
 	});
 }
 
@@ -78,7 +78,7 @@ function renderTable(forms, page = 1) {
 	for (let i = 0; i < display_forms.length; ++i) {
 		const tr = document.createElement('tr');
 		const F = display_forms[i][1];
-		const texts = [F.id, '', F.name || F.jp_name || '?', F.hp, F.atkm,
+		const texts = [F.id, '', F.name || F.jpName || '?', F.hp, F.atkm,
 			round(F.dps), F.kb, F.range, numStrT(F.attackF).replace('秒', '秒/下'), F.speed, F.earn, numStr(display_forms[i][0])
 		];
 		for (let j = 0; j < texts.length; ++j) {

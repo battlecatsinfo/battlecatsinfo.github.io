@@ -71,7 +71,7 @@ function add_unit(c, gap=true) {
 	img.onmouseover = function() {
 		const t = setTimeout(function() {
 			tooltip = document.createElement('div');
-			tooltip.textContent = c.forms.map(x => x.name || x.jp_name).join(' → ');
+			tooltip.textContent = c.forms.map(x => x.name || x.jpName).join(' → ');
 			tooltip.classList.add('tooltip');
 			a.style.position = 'relative';
 			a.appendChild(tooltip);
@@ -402,7 +402,7 @@ document.getElementById('search-name').onclick = function(event) {
 	for (let i = 0; i < cats.length; ++i) {
 		const c = cats[i];
 		for (let f of c.forms) {
-			if (f.name.includes(q) || f.jp_name.includes(q)) {
+			if (f.name.includes(q) || f.jpName.includes(q)) {
 				add_unit(c, false);
 				found = true;
 				break;
@@ -450,7 +450,7 @@ function favorite(e) {
 			arr.push({
 				'id': x,
 				'icon': c.forms[0].icon,
-				'name': c.forms[0].name || c.forms[0].jp_name
+				'name': c.forms[0].name || c.forms[0].jpName
 			});
 		}
 		config.starCats = arr;
