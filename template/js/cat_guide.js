@@ -338,7 +338,7 @@ function clearAll(event) {
 }
 document.onclick = function(event) {
 	if (event.target != main && !event.target.classList.contains('modal')) return;
-	if (notFoundEl.style.display = 'block')
+	if (notFoundEl.style.display === 'block')
 		notFoundEl.style.display = 'none';
 	for (let x of medals)
 		if (x.style.display == 'block') {
