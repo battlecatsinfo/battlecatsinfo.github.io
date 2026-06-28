@@ -9,24 +9,16 @@ let id = parseInt(params.get('id'));
 if (isNaN(id))
 	id = 0;
 
-function search_for() {
-	modal.textContent = '載入中...';
-	document.getElementById('modal').style.display = 'block';
-	_really_search();
-}
-
 function namefor(v) {
 	return v.name || v.nameJp || '？？？';
 }
 
-async function _really_search() {
-	const {grpName: groupNames} = await loadScheme('stage', ['grpName']);
-	really_search.groupNames = groupNames;
-	_really_search = really_search;
-	await really_search();
-}
+async function searchAppears() {
+	modal.textContent = '載入中...';
+	document.getElementById('modal').style.display = 'block';
 
-async function really_search() {
+	const {grpName: groupNames} = await loadScheme('stage', ['grpName']);
+
 	let previous_td, previous_mc, previous_td2, previous_sm;
 	const target = id.toString(36);
 	let tbl = document.createElement('table');
@@ -60,7 +52,7 @@ async function really_search() {
 					previous_td.rowSpan += 1;
 				} else {
 					td = document.createElement('td');
-					td.textContent = really_search.groupNames[mc];
+					td.textContent = groupNames[mc];
 					tr.appendChild(td);
 					previous_td = td;
 					previous_mc = mc;
@@ -160,7 +152,7 @@ loadEnemy(id).then(E => {
 	addBarItem('超絕', dbUrl.href).rel = 'noreferrer';
 	if (E.fandom)
 		addBarItem('Miraheze Wiki', E.fandomUrl);
-	addBarItem('搜尋出現關卡', search_for);
+	addBarItem('搜尋出現關卡', searchAppears);
 	addBarItem('ImgCut', `/imgcut.html?unit=${-(E.id + 1)}`);
 	addBarItem('檢視動畫', E.animUrl);
 	addBarItem('寶物科技設定', '/settings.html#treasure');
