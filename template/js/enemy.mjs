@@ -81,14 +81,14 @@ import {
 } from './unit.mjs';
 
 const mult = document.getElementById('enemy-mult');
-const mult_atk = document.getElementById('enemy-mult-atk');
-const st_mag = document.getElementById('enemy-st-mag');
-const stats = document.getElementById('enemy-stats');
-const chs = stats.children;
-const specials = chs[3].children[1];
+const multAtkEl = document.getElementById('enemy-mult-atk');
+const stMagEl = document.getElementById('enemy-st-mag');
+const statsEl = document.getElementById('enemy-stats');
+const statsChilds = statsEl.children;
+const specialsEl = statsChilds[3].children[1];
 
 const set = new Set();
-let E, dst_g, ab_no, my_mult, atk_mag, stageMag;
+let E, demonShield, abilityNo, myMult, atkMag, stageMag;
 
 function hClick(event) {
 	event.preventDefault();
@@ -116,32 +116,32 @@ function T(s) {
 	let p = document.createElement('div');
 	p.style.cursor = 'pointer';
 	let U = new Image(40, 40);
-	U.src = `/img/i/a/${ab_no}.png`;
+	U.src = `/img/i/a/${abilityNo}.png`;
 	p.appendChild(U);
 	p.append(s);
-	p.i = ab_no;
+	p.i = abilityNo;
 	p.s = false;
 	p.onclick = hClick;
-	specials.appendChild(p);
+	specialsEl.appendChild(p);
 }
 
 function W(s, img) {
 	let p = document.createElement('div');
 	let i = document.createElement('img');
-	i.src = img || `/img/i/a/${ab_no}.png`;
+	i.src = img || `/img/i/a/${abilityNo}.png`;
 	p.appendChild(i);
 	p.append(s);
-	specials.appendChild(p);
+	specialsEl.appendChild(p);
 }
 
 function createAbIcons() {
-	createImuIcons(E.imu, specials);
+	createImuIcons(E.imu, specialsEl);
 	let d, U = E.pre1 ? '*' : '';
 	if (E.trait & TB_SAGE) {
 		W(`超賢者：減輕 70% 受到的妨害效果 `, `/img/i/e/15.png`);
 	}
 	for (const [i, d] of Object.entries(E.ab)) {
-		switch (ab_no = parseInt(i, 10)) {
+		switch (abilityNo = parseInt(i, 10)) {
 			case AB_KB:
 				W(`${d[0]} % 打飛敵人${U}至 165 距離單位外，持續 ${numStrT(12)}`);
 				break;
@@ -205,15 +205,15 @@ function createAbIcons() {
 				let U = new Image(40, 40);
 				U.src = '/img/i/a/39.png';
 				p.appendChild(U);
-				dst_g = document.createElement('span');
-				dst_g.textContent = ~~(Math.round(d[0] * (my_mult / 100)) * (stageMag / 100));
+				demonShield = document.createElement('span');
+				demonShield.textContent = ~~(Math.round(d[0] * (myMult / 100)) * (stageMag / 100));
 				p.append('惡魔盾 ');
-				p.appendChild(dst_g);
+				p.appendChild(demonShield);
 				p.append(` HP，KB時惡魔盾恢復 ${d[1]} %`);
-				p.i = ab_no;
+				p.i = abilityNo;
 				p.s = false;
 				p.onclick = hClick;
-				specials.appendChild(p);
+				specialsEl.appendChild(p);
 			}
 			break;
 			case AB_COUNTER:
@@ -242,8 +242,8 @@ function createAbIcons() {
 }
 
 function calc() {
-	E.hpM = my_mult / 100;
-	E.atkM = atk_mag / 100;
+	E.hpM = myMult / 100;
+	E.atkM = atkMag / 100;
 	E.stageM = stageMag / 100;
 	const filter = Array.from(set);
 	const isBase = set.has(AB_ATKBASE);
@@ -252,13 +252,13 @@ function calc() {
 	const HP = E.getthp({filter});
 
 	if (E.ab[AB_DSHIELD]) {
-		if (dst_g) {
-			dst_g.textContent = ~~(Math.round(E.ab[AB_DSHIELD][0] * E.hpM) * E.stageM);
+		if (demonShield) {
+			demonShield.textContent = ~~(Math.round(E.ab[AB_DSHIELD][0] * E.hpM) * E.stageM);
 		}
 	}
-	chs[0].children[2].textContent = numStr(HP);
-	chs[0].children[4].textContent = tatks.map(numStr).join('/');
-	chs[1].children[3].textContent = numStr(DPS);
+	statsChilds[0].children[2].textContent = numStr(HP);
+	statsChilds[0].children[4].textContent = tatks.map(numStr).join('/');
+	statsChilds[1].children[3].textContent = numStr(DPS);
 }
 
 function handleFocus() {
@@ -272,14 +272,14 @@ function handleFocus() {
 
 function renderEnemy(e, options, setTitle = false) {
 	E = e;
-	my_mult = options.my_mult;
-	atk_mag = options.atk_mag;
+	myMult = options.myMult;
+	atkMag = options.atk_mag;
 	stageMag = options.stageMag;
-	specials.textContent = '';
+	specialsEl.textContent = '';
 	set.clear();
-	mult.textContent = '倍率:' + my_mult.toString() + '%';
-	mult_atk.textContent = '攻擊倍率:' + atk_mag.toString() + '%';
-	st_mag.textContent = '★倍率:' + stageMag.toString() + '%';
+	mult.textContent = '倍率:' + myMult.toString() + '%';
+	multAtkEl.textContent = '攻擊倍率:' + atkMag.toString() + '%';
+	stMagEl.textContent = '★倍率:' + stageMag.toString() + '%';
 	const title = [E.name, E.jpName].filter(x => x).join('/') || '?';
 	setTitle && (document.title = title);
 	document.getElementById('enemy-id').textContent = title;
@@ -322,12 +322,12 @@ function renderEnemy(e, options, setTitle = false) {
 		traits.push('超賢者');
 	if (E.trait & TB_KAIJIN)
 		traits.push('怪人');
-	chs[0].children[8].textContent = traits.join('・');
+	statsChilds[0].children[8].textContent = traits.join('・');
 	if (E.info.atk1 || E.info.atk2) {
 		const atkNum = E.info.atk2 ? 3 : 2;
 		const atksPre = [E.info.atk, E.info.atk1, E.info.atk2].slice(0, atkNum).map(x => numStr((x / (E.info.atk + E.info.atk1 + E.info.atk2)) * 100) + ' %');
-		specials.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(E.abi));
-		specials.appendChild(document.createElement('br'));
+		specialsEl.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(E.abi));
+		specialsEl.appendChild(document.createElement('br'));
 	}
 	let X = '';
 	if (E.atkType & ATK_OMNI)
@@ -353,44 +353,44 @@ function renderEnemy(e, options, setTitle = false) {
 	if (E.atkType & ATK_RANGE) {
 		const s = new Image(40, 40);
 		s.src = '/img/i/o/0.png';
-		specials.appendChild(s);
+		specialsEl.appendChild(s);
 	} else {
 		const s = new Image(40, 40);
 		s.src = '/img/i/o/1.png';
-		specials.appendChild(s);
+		specialsEl.appendChild(s);
 	}
 	if (E.atkType & ATK_LD) {
 		const s = new Image(40, 40);
 		s.src = '/img/i/o/2.png';
-		specials.appendChild(s);
+		specialsEl.appendChild(s);
 	}
 	if (E.atkType & ATK_OMNI) {
 		const s = new Image(40, 40);
 		s.src = '/img/i/o/3.png';
-		specials.appendChild(s);
+		specialsEl.appendChild(s);
 	}
 	if (E.atkType & ATK_KB_REVENGE) {
 		const s = new Image(40, 40);
 		s.src = '/img/i/o/4.png';
-		specials.appendChild(s);
+		specialsEl.appendChild(s);
 	}
-	specials.append(X);
-	specials.appendChild(document.createElement('br'));
-	X = chs[0].children[0].children[0];
+	specialsEl.append(X);
+	specialsEl.appendChild(document.createElement('br'));
+	X = statsChilds[0].children[0].children[0];
 	X.src = E.icon;
-	chs[2].children[3].textContent = numStrT(E.backswing);
-	chs[2].children[5].textContent = numStrT(E.tba);
-	chs[2].children[7].textContent = numStrT(E.attackF);
-	chs[1].children[5].textContent = E.range;
-	chs[1].children[7].textContent = E.earn;
+	statsChilds[2].children[3].textContent = numStrT(E.backswing);
+	statsChilds[2].children[5].textContent = numStrT(E.tba);
+	statsChilds[2].children[7].textContent = numStrT(E.attackF);
+	statsChilds[1].children[5].textContent = E.range;
+	statsChilds[1].children[7].textContent = E.earn;
 	if (config.unit === 'F')
-		chs[2].children[1].textContent = [E.pre, E.pre1, E.pre2].filter(x => x).map(numStr).join('/') + ' F';
+		statsChilds[2].children[1].textContent = [E.pre, E.pre1, E.pre2].filter(x => x).map(numStr).join('/') + ' F';
 	else
-		chs[2].children[1].textContent = [E.pre, E.pre1, E.pre2].filter(x => x).map(x => numStr(x / 30)).join('/') + ' 秒';
-	chs[0].children[6].textContent = E.speed;
-	chs[1].children[1].textContent = E.kb;
+		statsChilds[2].children[1].textContent = [E.pre, E.pre1, E.pre2].filter(x => x).map(x => numStr(x / 30)).join('/') + ' 秒';
+	statsChilds[0].children[6].textContent = E.speed;
+	statsChilds[1].children[1].textContent = E.kb;
 	calc();
-	X = chs[4].children[1];
+	X = statsChilds[4].children[1];
 	X.textContent = '';
 	for (const s of E.desc.split('|')) {
 		X.append(s);
@@ -402,36 +402,36 @@ function renderEnemy(e, options, setTitle = false) {
 	mult.addEventListener('blur', function() {
 		let num = mult.textContent.match(/\d+/);
 		if (num) {
-			atk_mag = my_mult = parseInt(num[0]);
-			mult_atk.textContent = `攻擊倍率:${num}%`;
+			atkMag = myMult = parseInt(num[0]);
+			multAtkEl.textContent = `攻擊倍率:${num}%`;
 			mult.textContent = `倍率:${num}%`;
 			calc();
 		} else {
-			mult.textContent = `倍率:${my_mult}%`;
+			mult.textContent = `倍率:${myMult}%`;
 		}
 	});
-	mult_atk.addEventListener('focus', handleFocus);
-	mult_atk.addEventListener('keydown', handleKW);
-	mult_atk.addEventListener('blur', function() {
-		let num = mult_atk.textContent.match(/\d+/);
+	multAtkEl.addEventListener('focus', handleFocus);
+	multAtkEl.addEventListener('keydown', handleKW);
+	multAtkEl.addEventListener('blur', function() {
+		let num = multAtkEl.textContent.match(/\d+/);
 		if (num) {
-			atk_mag = parseInt(num[0]);
-			mult_atk.textContent = `攻擊倍率:${num}%`;
+			atkMag = parseInt(num[0]);
+			multAtkEl.textContent = `攻擊倍率:${num}%`;
 			calc();
 		} else {
-			mult_atk.textContent = `攻擊倍率:${atk_mag}%`;
+			multAtkEl.textContent = `攻擊倍率:${atkMag}%`;
 		}
 	});
-	st_mag.addEventListener('focus', handleFocus);
-	st_mag.addEventListener('keydown', handleKW);
-	st_mag.addEventListener('blur', function() {
-		let num = st_mag.textContent.match(/\d+/);
+	stMagEl.addEventListener('focus', handleFocus);
+	stMagEl.addEventListener('keydown', handleKW);
+	stMagEl.addEventListener('blur', function() {
+		let num = stMagEl.textContent.match(/\d+/);
 		if (num) {
 			stageMag = parseInt(num[0]);
-			st_mag.textContent = `★倍率:${num}%`;
+			stMagEl.textContent = `★倍率:${num}%`;
 			calc();
 		} else {
-			st_mag.textContent = `★倍率:${stageMag}%`;
+			stMagEl.textContent = `★倍率:${stageMag}%`;
 		}
 	});
 };

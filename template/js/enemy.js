@@ -5,9 +5,9 @@ import * as Stage from './stage.mjs';
 
 const modal = document.getElementById('modal-c');
 const params = new URLSearchParams(location.search);
-let id = parseInt(params.get('id'));
-if (isNaN(id))
-	id = 0;
+let enemyId = parseInt(params.get('id'));
+if (isNaN(enemyId))
+	enemyId = 0;
 
 function namefor(v) {
 	return v.name || v.nameJp || '？？？';
@@ -19,8 +19,8 @@ async function searchAppears() {
 
 	const {grpName: groupNames} = await loadScheme('stage', ['grpName']);
 
-	let previous_td, previous_mc, previous_td2, previous_sm;
-	const target = id.toString(36);
+	let previousTd, previousMc, previousTd2, previousSm;
+	const target = enemyId.toString(36);
 	let tbl = document.createElement('table');
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 	let tr = document.createElement('tr');
@@ -48,27 +48,27 @@ async function searchAppears() {
 				const tr = document.createElement('tr');
 				let td;
 
-				if (previous_mc == mc) {
-					previous_td.rowSpan += 1;
+				if (previousMc == mc) {
+					previousTd.rowSpan += 1;
 				} else {
 					td = document.createElement('td');
 					td.textContent = groupNames[mc];
 					tr.appendChild(td);
-					previous_td = td;
-					previous_mc = mc;
-					previous_sm = null;
+					previousTd = td;
+					previousMc = mc;
+					previousSm = null;
 				}
 
-				if (previous_sm == sm) {
-					previous_td2.rowSpan += 1;
+				if (previousSm == sm) {
+					previousTd2.rowSpan += 1;
 				} else {
 					const td0 = document.createElement('td');
 					Stage.getMap(~~(v.id / 1000)).then(map => {
 						td0.textContent = namefor(map);
 					});
 					tr.appendChild(td0);
-					previous_sm = sm;
-					previous_td2 = td0;
+					previousSm = sm;
+					previousTd2 = td0;
 				}
 
 				td = document.createElement('td')
@@ -86,26 +86,26 @@ async function searchAppears() {
 	}
 }
 
-loadEnemy(id).then(E => {
+loadEnemy(enemyId).then(E => {
 	document.getElementById('loader').style.display = 'none';
 	document.getElementById('main').style.display = 'block';
 
-	let my_mult = params.get('mult') || params.get('mag');
-	let atk_mag = params.get('atkMag');
+	let myMulti = params.get('mult') || params.get('mag');
+	let atkMag = params.get('atkMag');
 	let stageMag = params.get('stageMag');
-	if (my_mult) {
-		my_mult = parseInt(my_mult);
-		if (isNaN(my_mult))
-			my_mult = 100;
+	if (myMulti) {
+		myMulti = parseInt(myMulti);
+		if (isNaN(myMulti))
+			myMulti = 100;
 	} else {
-		my_mult = 100;
+		myMulti = 100;
 	}
-	if (atk_mag) {
-		atk_mag = parseInt(atk_mag);
-		if (isNaN(atk_mag))
-			atk_mag = my_mult;
+	if (atkMag) {
+		atkMag = parseInt(atkMag);
+		if (isNaN(atkMag))
+			atkMag = myMulti;
 	} else {
-		atk_mag = my_mult;
+		atkMag = myMulti;
 	}
 	if (stageMag) {
 		stageMag = parseInt(stageMag);
@@ -114,7 +114,7 @@ loadEnemy(id).then(E => {
 	} else {
 		stageMag = 100;
 	}
-	renderEnemy(E, {my_mult, atk_mag, stageMag}, true);
+	renderEnemy(E, {myMulti, atkMag, stageMag}, true);
 
 	const abar = document.getElementById('abar');
 	const btn = abar.previousElementSibling;
@@ -148,7 +148,7 @@ loadEnemy(id).then(E => {
 		navigator.clipboard.writeText(location.href);
 	}, false);
 	const dbUrl = new URL(E.bcdbUrl);
-	if (my_mult != 100) dbUrl.searchParams.set('mag', my_mult);
+	if (myMulti != 100) dbUrl.searchParams.set('mag', myMulti);
 	addBarItem('超絕', dbUrl.href).rel = 'noreferrer';
 	if (E.fandom)
 		addBarItem('Miraheze Wiki', E.fandomUrl);
