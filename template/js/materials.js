@@ -54,7 +54,7 @@ function format(num) {
 $('#SOL').DataTable({
 	data: DROP_SOL,
 	bAutoWidth: false,
-	layout: layout,
+	layout,
 	language,
 	columnDefs: [{
 		targets: [4, 5, 6, 7, 8, 9, 10],
@@ -64,7 +64,7 @@ $('#SOL').DataTable({
 $('#UL').DataTable({
 	data: DROP_UL,
 	bAutoWidth: false,
-	layout: layout,
+	layout,
 	language,
 	columnDefs: [{
 		targets: [4, 5, 6, 7, 8, 9, 10, 11],
@@ -74,7 +74,7 @@ $('#UL').DataTable({
 $('#ZL').DataTable({
 	data: DROP_ZL,
 	bAutoWidth: false,
-	layout: layout,
+	layout,
 	language,
 	columnDefs: [{
 		targets: [4, 5, 6, 7, 8, 9, 10, 11],
