@@ -10,7 +10,7 @@
 {{#*inline "content"}}
 	<div class="M" style="display:none">
 		<div class="C">
-			<span onclick="modal.style.display='none'" class="B" style="position:absolute;right: 0;top: 0;user-select: none;display: inline-block;padding: 8px 16px;cursor: pointer;">×</span>
+			<span id="close-modal-btn" class="B" style="position:absolute;right: 0;top: 0;user-select: none;display: inline-block;padding: 8px 16px;cursor: pointer;">×</span>
 			<div id="MC" style="margin-top: 10vh;height:80vh;overflow: scroll;color: var(--color);"></div>
 		</div>
 	</div>
@@ -325,7 +325,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<a onclick="detail(1, 0)">貓咪城體力升級詳細</a>
+		<a href="#" data-castle="1" data-part="0">貓咪城體力升級詳細</a>
 		<h2>
 			<span style="color:#1aa9b2">低速砲（緩速砲）</span>
 		</h2>
@@ -362,17 +362,17 @@
 				</tr>
 			</tbody>
 		</table>
-		<a onclick="detail(2, 0)">低速砲升級詳細</a>
+		<a href="#" data-castle="2" data-part="0">低速砲升級詳細</a>
 		<h3>
 			<span style="color:#1aa9b2">低速砲的基座</span>
 		</h3>
 		<blockquote>能夠減輕來自飄浮敵人的傷害</blockquote>
-		<a onclick="detail(2, 1)">低速砲的基座升級詳細</a>
+		<a href="#" data-castle="2" data-part="1">低速砲的基座升級詳細</a>
 		<h3>
 			<span style="color:#1aa9b2">低速砲的裝飾</span>
 		</h3>
 		<blockquote>能夠減輕敵人給予的動作變慢妨害效果</blockquote>
-		<a onclick="detail(2, 2)">低速砲的裝飾升級詳細</a>
+		<a href="#" data-castle="2" data-part="2">低速砲的裝飾升級詳細</a>
 		<h2>
 			<span style="color:#1885e2">鐵壁砲</span>
 		</h2>
@@ -414,13 +414,13 @@
 				</tr>
 			</tbody>
 		</table>
-		<a onclick="detail(3, 0)">鐵壁砲升級詳細</a>
+		<a href="#" data-castle="3" data-part="0">鐵壁砲升級詳細</a>
 		<h3 style="color:#1885e2">鐵壁砲的基座</h3>
 		<blockquote>能夠減輕來自黑色敵人的傷害</blockquote>
-		<a onclick="detail(3, 1)">鐵壁砲的基座升級詳細</a>
+		<a href="#" data-castle="3" data-part="1">鐵壁砲的基座升級詳細</a>
 		<h3 style="color:#1885e2">鐵壁砲的裝飾</h3>
 		<blockquote>能夠減輕敵人的波動攻擊傷害</blockquote>
-		<a onclick="detail(3, 2)">鐵壁砲的裝飾升級詳細</a>
+		<a href="#" data-castle="3" data-part="2">鐵壁砲的裝飾升級詳細</a>
 		<h2 style="color:#0d3a99">閃雷砲</h2>
 		<blockquote>以雷電之力使敵人動作停止</blockquote>
 		<div>　　在我方貓咪前方召喚一道閃電，使半徑內的敵人動作停止並造成傷害。有使敵人動作停止無效（暫停無效）的敵人不會受到閃雷砲的暫停效果影響。升級後攻擊力與使敵人動作停止時間會增加。</div>
@@ -455,14 +455,14 @@
 				</tr>
 			</tbody>
 		</table>
-		<a onclick="detail(4, 0)">閃雷砲升級詳細</a>
+		<a href="#" data-castle="4" data-part="0">閃雷砲升級詳細</a>
 		<h3>
 			<span style="color:#0d3a99">閃雷砲的基座</span>
 		</h3>
 		<blockquote>能夠減輕來自天使敵人的傷害</blockquote>
-		<a onclick="detail(4, 1)">閃雷砲的基座升級詳細</a>
+		<a href="#" data-castle="4" data-part="1">閃雷砲的基座升級詳細</a>
 		<h3 style="color:#0d3a99">閃雷砲的裝飾</h3>
-		<a onclick="detail(4, 2)">閃雷砲的裝飾升級詳細</a>
+		<a href="#" data-castle="4" data-part="2">閃雷砲的裝飾升級詳細</a>
 		<h2 style="color:#1885e2">水喉砲</h2>
 		<blockquote>以水之力對鋼鐵敵人造成有效傷害</blockquote>
 		<div>　　發射一道水流在我方貓咪前方，使鋼鐵敵人受到當前體力一定百分比的傷害。非金屬敵人擊中時始會造成 0.1% 的傷害（四捨五入），通常只造成1傷害。升級可提升造成傷害的百分比。</div>
@@ -499,10 +499,10 @@
 				</tr>
 			</tbody>
 		</table>
-		<a onclick="detail(5, 0)">水喉砲升級詳細</a>
+		<a href="#" data-castle="5" data-part="0">水喉砲升級詳細</a>
 		<h3 style="color:#1885e2">水喉砲的基座</h3>
 		<blockquote>能夠減輕來自紅色敵人的傷害</blockquote>
-		<a onclick="detail(5, 1)">水喉砲的基座升級詳細</a>
+		<a href="#" data-castle="5" data-part="1">水喉砲的基座升級詳細</a>
 		<h3>
 			<span style="color:#1885e2">水喉砲的裝飾</span>
 		</h3>
@@ -510,7 +510,7 @@
 			<span style="color:#1885e2"></span>
 		</div>
 		<blockquote>能夠減輕敵人的烈波攻擊傷害</blockquote>
-		<a onclick="detail(5, 2)">水喉砲的裝飾升級詳細</a>
+		<a href="#" data-castle="5" data-part="2">水喉砲的裝飾升級詳細</a>
 		<h2 style="color:#e59e25">天使砲</h2>
 		<blockquote>以聖光之力挖出不死生物</blockquote>
 		<div>　　在範圍內發射一道金色光束，使所有經過地的殭屍敵人造成滿體力百分比的傷害，並使其動作停止一段時間，並使敵人後仰（同貓咪砲）。鑽地的殭屍會被挖起，並受到更大的傷害。天使砲還有終結不死和靈魂攻擊的能力，能使殭屍停止復活（如果敵方被天使砲攻擊導致死亡）並攻擊尚未復活的殭屍。非不死生物對天使砲免疫。升級後攻擊威力與敵人動作停止時間會增加。</div>
@@ -565,7 +565,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<a onclick="detail(6, 0)">天使砲升級詳細</a>
+		<a href="#" data-castle="6" data-part="0">天使砲升級詳細</a>
 		<h3>
 			<span style="color:#e59e25">天使砲的基座</span>
 		</h3>
@@ -573,10 +573,10 @@
 			<span style="color:#e59e25"></span>
 		</div>
 		<blockquote>能夠減輕來自不死生物的傷害</blockquote>
-		<a onclick="detail(6, 1)">天使砲的基座升級詳細</a>
+		<a href="#" data-castle="6" data-part="1">天使砲的基座升級詳細</a>
 		<h3 style="color:#e59e25">天使砲的裝飾</h3>
 		<blockquote>能夠減輕敵人給予的攻擊力下降妨害效果</blockquote>
-		<a onclick="detail(6, 2)">天使砲的裝飾升級詳細</a>
+		<a href="#" data-castle="6" data-part="2">天使砲的裝飾升級詳細</a>
 		<h2 style="color:#fb5f2c">斬盾砲</h2>
 		<blockquote>以音速砲彈破壞護盾後打飛敵人</blockquote>
 		<div>　　在敵人的最前線轟擊砲彈，破壞敵人的護盾後打飛敵人，因此名為「斬盾砲」。有打飛無效的敵人不受到斬盾砲的效果影響。升級後微增攻擊力與攻擊範圍。</div>
@@ -622,15 +622,15 @@
 				</tr>
 			</tbody>
 		</table>
-		<a onclick="detail(7, 0)">斬盾砲升級詳細</a>
+		<a href="#" data-castle="7" data-part="0">斬盾砲升級詳細</a>
 		<h3>
 			<span style="color:#fb5f2c">斬盾砲的基座</span>
 		</h3>
 		<blockquote>能夠減輕來自異星戰士的傷害</blockquote>
-		<a onclick="detail(7, 1)">斬盾砲的基座升級詳細</a>
+		<a href="#" data-castle="7" data-part="1">斬盾砲的基座升級詳細</a>
 		<h3 style="color:#fb5f2c">斬盾砲的裝飾</h3>
 		<blockquote>能夠減輕受敵人的毒擊攻擊的傷害</blockquote>
-		<a onclick="detail(7, 2)">斬盾砲的裝飾升級詳細</a>
+		<a href="#" data-castle="7" data-part="2">斬盾砲的裝飾升級詳細</a>
 		<h2 style="color:#18a841">詛咒砲</h2>
 		<blockquote>以詛咒之力封印敵人特殊能力</blockquote>
 		<div>　　發射出無害的黃色光束，封印射程內敵人的特殊能力，但實際上，是封印敵方的特殊「效果」。有詛咒無效的敵人不受到此貓砲影響。升級後可延長動作變慢時間。</div>
@@ -665,16 +665,16 @@
 				</tr>
 			</tbody>
 		</table>
-		<a onclick="detail(8, 0)">詛咒砲升級詳細</a>
+		<a href="#" data-castle="8" data-part="0">詛咒砲升級詳細</a>
 		<h3 style="color:#18a841">詛咒砲的基座</h3>
 		<blockquote>能夠減輕來自古代種的傷害</blockquote>
-		<a onclick="detail(8, 1)">詛咒砲的基座升級詳細</a>
+		<a href="#" data-castle="8" data-part="1">詛咒砲的基座升級詳細</a>
 		<h3 style="color:#18a841">詛咒砲的裝飾</h3>
 		<div>
 			<span style="color:#18a841"></span>
 		</div>
 		<blockquote>能夠減輕敵人給予的古代詛咒妨害效果</blockquote>
-		<a onclick="detail(8, 2)">詛咒砲的裝飾升級詳細</a>
+		<a href="#" data-castle="8" data-part="2">詛咒砲的裝飾升級詳細</a>
 		<h2>其他</h2>
 		<div>最速砲與最遲砲比較</div>
 		<br>
