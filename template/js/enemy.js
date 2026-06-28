@@ -1,6 +1,6 @@
 import {loadScheme} from "./common.mjs";
 import {loadEnemy} from "./unit.mjs";
-import {renderEnemy} from "./enemy.mjs";
+import {EnemyStatsTable} from "./enemy.mjs";
 import * as Stage from './stage.mjs';
 
 const modal = document.getElementById('modal-c');
@@ -86,35 +86,35 @@ async function searchAppears() {
 	}
 }
 
-loadEnemy(enemyId).then(E => {
+loadEnemy(enemyId).then(enemy => {
 	document.getElementById('loader').style.display = 'none';
 	document.getElementById('main').style.display = 'block';
 
-	let myMulti = params.get('mult') || params.get('mag');
-	let atkMag = params.get('atkMag');
-	let stageMag = params.get('stageMag');
-	if (myMulti) {
-		myMulti = parseInt(myMulti);
-		if (isNaN(myMulti))
-			myMulti = 100;
+	let stageMult = params.get('mult') || params.get('mag');
+	let stageAtkMult = params.get('atkMag');
+	let stageCrownMult = params.get('stageMag');
+	if (stageMult) {
+		stageMult = parseInt(stageMult);
+		if (isNaN(stageMult))
+			stageMult = 100;
 	} else {
-		myMulti = 100;
+		stageMult = 100;
 	}
-	if (atkMag) {
-		atkMag = parseInt(atkMag);
-		if (isNaN(atkMag))
-			atkMag = myMulti;
+	if (stageAtkMult) {
+		stageAtkMult = parseInt(stageAtkMult);
+		if (isNaN(stageAtkMult))
+			stageAtkMult = stageMult;
 	} else {
-		atkMag = myMulti;
+		stageAtkMult = stageMult;
 	}
-	if (stageMag) {
-		stageMag = parseInt(stageMag);
-		if (isNaN(stageMag))
-			stageMag = 100;
+	if (stageCrownMult) {
+		stageCrownMult = parseInt(stageCrownMult);
+		if (isNaN(stageCrownMult))
+			stageCrownMult = 100;
 	} else {
-		stageMag = 100;
+		stageCrownMult = 100;
 	}
-	renderEnemy(E, {myMulti, atkMag, stageMag}, true);
+	new EnemyStatsTable({enemy, setTitle: true, stageMult, stageAtkMult, stageCrownMulti: stageCrownMult});
 
 	const abar = document.getElementById('abar');
 	const btn = abar.previousElementSibling;
@@ -147,14 +147,14 @@ loadEnemy(enemyId).then(E => {
 	addBarItem('複製連結', function() {
 		navigator.clipboard.writeText(location.href);
 	}, false);
-	const dbUrl = new URL(E.bcdbUrl);
-	if (myMulti != 100) dbUrl.searchParams.set('mag', myMulti);
+	const dbUrl = new URL(enemy.bcdbUrl);
+	if (stageMult != 100) dbUrl.searchParams.set('mag', stageMult);
 	addBarItem('超絕', dbUrl.href).rel = 'noreferrer';
-	if (E.fandom)
-		addBarItem('Miraheze Wiki', E.fandomUrl);
+	if (enemy.fandom)
+		addBarItem('Miraheze Wiki', enemy.fandomUrl);
 	addBarItem('搜尋出現關卡', searchAppears);
-	addBarItem('ImgCut', `/imgcut.html?unit=${-(E.id + 1)}`);
-	addBarItem('檢視動畫', E.animUrl);
+	addBarItem('ImgCut', `/imgcut.html?unit=${-(enemy.id + 1)}`);
+	addBarItem('檢視動畫', enemy.animUrl);
 	addBarItem('寶物科技設定', '/settings.html#treasure');
-	addBarItem('DPS-距離圖表', `/dpsgraph_svg.html?units=${E.id}`);
+	addBarItem('DPS-距離圖表', `/dpsgraph_svg.html?units=${enemy.id}`);
 });

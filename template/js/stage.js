@@ -2,7 +2,7 @@ import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
 import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
-import {renderEnemy} from "./enemy.mjs";
+import {EnemyStatsTable} from "./enemy.mjs";
 
 const loader = document.getElementById('loader');
 
@@ -895,9 +895,9 @@ async function render_stage() {
 	if (limit_bt)
 		limit_bt.parentNode.removeChild(limit_bt);
 
-	let mult = 100;
+	let stageCrownMult = 100;
 	if (mults.length) {
-		mult = mults[star - 1];
+		stageCrownMult = mults[star - 1];
 		const tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 		const th = tr.appendChild(document.createElement("th"));
 		for (let i = 0; i < mults.length; ++i) {
@@ -1176,7 +1176,7 @@ async function render_stage() {
 		st3[3].textContent = "無限制";
 	}
 	if (flags3 & 8) {
-		st2[1].textContent = numStr(~~((info3.hp * mult) / 100));
+		st2[1].textContent = numStr(~~((info3.hp * stageCrownMult) / 100));
 	} else {
 		st2[1].textContent = numStr(info3.hp);
 	}
@@ -1311,36 +1311,36 @@ async function render_stage() {
 		const td = tr.appendChild(document.createElement('td')); // image
 		const a = td.appendChild(document.createElement('a'));
 		const img = a.appendChild(new Image(64, 64));
-		const m = mult / 100;
-		let hpM, atkM;
+		const m = stageCrownMult / 100;
+		let stageMult, stageAtkMult;
 
 		if (strs[7].includes('+'))
-			[hpM, atkM] = strs[7].split('+');
+			[stageMult, stageAtkMult] = strs[7].split('+');
 		else
-			hpM = atkM = strs[7];
-		hpM = parseInt(hpM || '2s', 36);
-		atkM = parseInt(atkM || '2s', 36);
+			stageMult = stageAtkMult = strs[7];
+		stageMult = parseInt(stageMult || '2s', 36);
+		stageAtkMult = parseInt(stageAtkMult || '2s', 36);
 
 		img.src = `/img/e/${enemy}/0.png`;
 		const noStageMag = (strs[6].length === 2);
 		a.addEventListener('click', event => {
 			const href = event.currentTarget.href;
 			event.preventDefault();
-			loadEnemy(enemy).then(e => {
-				renderEnemy(e, {my_mult: hpM, atk_mag: atkM, stageMag: noStageMag ? 100 : mult});
+			loadEnemy(enemy).then(enemy => {
+				new EnemyStatsTable({enemy, setTitle: false, stageMult, stageAtkMult, stageCrownMult: noStageMag ? 100 : stageCrownMult});
 				enemyModalA.href = href;
 				dialog('enemy-modal', enemyTable);
 			});
 		});
 		let hpMs, atkMs;
 		if (noStageMag) {
-			a.href = `/enemy.html?id=${enemy}&mag=${hpM}&atkMag=${atkM}`;
-			hpMs = ~~(hpM * m).toString() + '%';
-			atkMs = atkM.toString() + '%';
+			a.href = `/enemy.html?id=${enemy}&mag=${stageMult}&atkMag=${stageAtkMult}`;
+			hpMs = ~~(stageMult * m).toString() + '%';
+			atkMs = stageAtkMult.toString() + '%';
 		} else {
-			a.href = `/enemy.html?id=${enemy}&mag=${hpM}&atkMag=${atkM}&stageMag=${mult}`;
-			hpMs = ~~(hpM * m).toString() + '%';
-			atkMs = ~~(atkM * m).toString() + '%';
+			a.href = `/enemy.html?id=${enemy}&mag=${stageMult}&atkMag=${stageAtkMult}&stageMag=${stageCrownMult}`;
+			hpMs = ~~(stageMult * m).toString() + '%';
+			atkMs = ~~(stageAtkMult * m).toString() + '%';
 		}
 
 		makeTd(tr, hpMs == atkMs ? hpMs : `HP:${hpMs}, ATK:${atkMs}`); // mag
