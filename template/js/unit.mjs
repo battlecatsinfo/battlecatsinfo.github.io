@@ -103,13 +103,13 @@ const RES_WARP = 8;        // Resist Warp 抗傳耐性
 const TRAIT_ALL = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE
 								| TB_RELIC | TB_WHITE | TB_EVA | TB_WITCH | TB_DEMON
 								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE | TB_KAIJIN;
-const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE | TB_KAIJIN;
-const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
+const TRAIT_NO_TREASURE = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE | TB_KAIJIN;
+const TRAIT_TREASURE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
 
-const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_SAVAGE, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_KAIJIN]);
-const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_KAIJIN]);
+const ATK_MULTI_AB = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_SAVAGE, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_KAIJIN]);
+const HP_MULTI_AB = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_KAIJIN]);
 
 function combineChances(count, chance) {
 	let x = 1;
@@ -1184,7 +1184,7 @@ class CatForm extends Unit {
 			return hp * 5 * (1 + this.env.combo_eva);
 
 		const t = this.trait & traits;
-		const buff_t = t & trait_treasure;
+		const buff_t = t & TRAIT_TREASURE;
 		const buff_o = traits & TRAIT_ORB && this.lvc >= 2;
 		if (t) {
 			if (Object.hasOwn(ab, AB_RESIST)) {
@@ -1334,7 +1334,7 @@ class CatForm extends Unit {
 				return atk * 5 * (1 + this.env.combo_witch);
 
 			const t = this.trait & traits;
-			const buff_t = t & trait_treasure;
+			const buff_t = t & TRAIT_TREASURE;
 			const buff_o = traits & TRAIT_ORB && this.lvc >= 2;
 			if (t) {
 				if (Object.hasOwn(ab, AB_MASSIVE)) {
@@ -1782,19 +1782,19 @@ class CatForm extends Unit {
 	}
 	get slowTime() {
 		const t = super.slowTime;
-		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_slow);
+		return ((this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_slow);
 	}
 	get stopTime() {
 		const t = super.stopTime;
-		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_stop);
+		return ((this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_stop);
 	}
 	get weakTime() {
 		const t = super.weakTime;
-		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_weak);
+		return ((this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_weak);
 	}
 	get curseTime() {
 		const t = super.curseTime;
-		return (this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t;
+		return (this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t;
 	}
 	get strengthenExtent() {
 		const t = super.strengthenExtent;
@@ -2227,9 +2227,9 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 		}), attackF);
 		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${atks}`;
 
-		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
+		if (form.trait & TRAIT_TREASURE && form.trait & TRAIT_NO_TREASURE) {
 			let atksNoTrea = fmt(form.gettatks({
-				traits: trait_no_treasure,
+				traits: TRAIT_NO_TREASURE,
 				filter,
 				mode,
 				metal: false,
@@ -2237,7 +2237,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 			if (atks !== atksNoTrea)
 				s += showTrait ? 
-					`（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${atksNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）` :
+					`（${get_trait_short_names(form.trait & TRAIT_TREASURE)}）/${plus_s}${atksNoTrea}（${get_trait_short_names(form.trait & TRAIT_NO_TREASURE)}）` :
 					`（${atksNoTrea}）`;
 		}
 		maxLen = Math.max(s.length, maxLen);
@@ -2280,12 +2280,12 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 		let hp = numStr(floor(form.getthp({filter})) / KB);
 		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${hp}`;
 
-		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
-			let hpNoTrea = numStr(floor(form.getthp({filter, traits: trait_no_treasure})) / KB);
+		if (form.trait & TRAIT_TREASURE && form.trait & TRAIT_NO_TREASURE) {
+			let hpNoTrea = numStr(floor(form.getthp({filter, traits: TRAIT_NO_TREASURE})) / KB);
 
 			if (hp !== hpNoTrea)
 				s += showTrait ? 
-					`（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${hpNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）` :
+					`（${get_trait_short_names(form.trait & TRAIT_TREASURE)}）/${plus_s}${hpNoTrea}（${get_trait_short_names(form.trait & TRAIT_NO_TREASURE)}）` :
 					`（${hpNoTrea}）`;
 		}
 		maxLen = Math.max(s.length, maxLen);
@@ -2308,7 +2308,7 @@ function updateHp(form, filter, W) {
 
 		if (first) {
 			W.textContent = hp;
-			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
+			if (!(form.trait & TRAIT_TREASURE && form.trait & TRAIT_NO_TREASURE))
 				return;
 		} else {
 			if (hp === old_hp)
@@ -2321,7 +2321,7 @@ function updateHp(form, filter, W) {
 			return;
 		}
 
-		traits = trait_no_treasure;
+		traits = TRAIT_NO_TREASURE;
 		old_hp = hp;
 	}
 }
@@ -2349,7 +2349,7 @@ function updateAtk(form, filter, W1, W2) {
 		if (first) {
 			W1.append(atks);
 			W2.append(dps);
-			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
+			if (!(form.trait & TRAIT_TREASURE && form.trait & TRAIT_NO_TREASURE))
 				return;
 		} else {
 			if (atks === old_atks)
@@ -2367,7 +2367,7 @@ function updateAtk(form, filter, W1, W2) {
 			return;
 		}
 
-		traits = trait_no_treasure;
+		traits = TRAIT_NO_TREASURE;
 		old_atks = atks;
 	}
 }
@@ -2401,8 +2401,8 @@ export {
 	TB_SAGE,
 	TB_KAIJIN,
 	TRAIT_ALL,
-	trait_no_treasure,
-	trait_treasure,
+	TRAIT_NO_TREASURE,
+	TRAIT_TREASURE,
 
 	AB_STRENGTHEN,
 	AB_SURVIVE,
@@ -2504,6 +2504,6 @@ export {
 	updateHp,
 	updateAtk,
 
-	atk_mult_abs,
-	hp_mult_abs,
+	ATK_MULTI_AB,
+	HP_MULTI_AB,
 };

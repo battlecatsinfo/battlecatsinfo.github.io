@@ -15,8 +15,8 @@ import {
 	ATK_KB_REVENGE,
 
 	TB_DEMON,
-	trait_no_treasure,
-	trait_treasure,
+	TRAIT_NO_TREASURE,
+	TRAIT_TREASURE,
 
 	AB_KAIJIN,
 
@@ -38,8 +38,8 @@ import {
 	updateHp,
 	updateAtk,
 
-	atk_mult_abs,
-	hp_mult_abs,
+	ATK_MULTI_AB,
+	HP_MULTI_AB,
 } from './unit.mjs';
 import {loadAllCombos} from './combo.mjs';
 const units_scheme = await loadScheme('units');
@@ -139,7 +139,7 @@ function createAbIcons(form, p1, p2, tbody) {
 		p.append(msg);
 		p1.appendChild(p);
 	}
-	form.trait && (tn = getTraitNames(form.trait), treasure = form.trait & trait_treasure);
+	form.trait && (tn = getTraitNames(form.trait), treasure = form.trait & TRAIT_TREASURE);
 	const U = form.pre1 ? '*' : '';
 	let tmp;
 	for (const [i, v] of Object.entries(form.ab)) {
@@ -274,7 +274,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					tmp = floor(tmp * (1 + catEnv.combo_weak));
 				if (treasure) {
 					du = floor(tmp * 1.2);
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
 						du = `${numStrT(tmp)}（${numStrT(du)}）`;
 					} else {
@@ -298,7 +298,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					tmp = floor(tmp * (1 + catEnv.combo_stop));
 				if (treasure) {
 					du = floor(tmp * 1.2);
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
 						du = `${numStrT(tmp)}（${numStrT(du)}）`;
 					} else {
@@ -322,7 +322,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					tmp = floor(tmp * (1 + catEnv.combo_slow));
 				if (treasure) {
 					du = floor(tmp * 1.2);
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
 						du = `${numStrT(tmp)}（${numStrT(du)}）`;
 					} else {
@@ -386,7 +386,7 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 30:
 				if (treasure) {
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
 					} else {
 						du = numStr(165 * 1.3);
@@ -411,7 +411,7 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 32:
 				if (treasure) {
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
@@ -427,7 +427,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				// no curse combo now!
 				if (treasure) {
 					du = floor(tmp * 1.2);
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
 						du = `${numStrT(tmp)}（${numStrT(du)}）`;
 					} else {
@@ -560,8 +560,8 @@ function updateValues(form, tbl) {
 		lvE = lvE.nextElementSibling;
 	}
 	const ABF = Object.keys(form.ab).map(Number);
-	const HCs = getCombinations(ABF.filter(x => hp_mult_abs.has(x)));
-	const ACs = getCombinations(ABF.filter(x => atk_mult_abs.has(x)));
+	const HCs = getCombinations(ABF.filter(x => HP_MULTI_AB.has(x)));
+	const ACs = getCombinations(ABF.filter(x => ATK_MULTI_AB.has(x)));
 	i = 1;
 	form._plusLv = 0;
 	let maxLen = 1;

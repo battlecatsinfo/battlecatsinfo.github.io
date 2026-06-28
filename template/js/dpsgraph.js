@@ -22,7 +22,7 @@ import {
 	AB_SAGE,
 	AB_EXPLOSION,
 
-	trait_treasure,
+	TRAIT_TREASURE,
 
 	getAbiString,
 
@@ -802,7 +802,7 @@ class DPSGraph {
 		const F = this.E = this.helper.applyLevels();
 		this.atks = this.helper.getAtks(F);
 
-		let x, Xs, T = F.trait & trait_treasure;
+		let x, Xs, T = F.trait & TRAIT_TREASURE;
 
 		if (this.options.base) {
 			for (let i = 0; i < this.atks.length; ++i)

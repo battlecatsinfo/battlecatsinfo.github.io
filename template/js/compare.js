@@ -4,8 +4,8 @@ import {
 	ATK_LD,
 	ATK_OMNI,
 
-	trait_no_treasure,
-	trait_treasure,
+	TRAIT_NO_TREASURE,
+	TRAIT_TREASURE,
 
 	createTraitIcons,
 	createImuIcons,
@@ -16,8 +16,8 @@ import {
 	updateAtkBaha,
 	updateHpBaha,
 
-	atk_mult_abs,
-	hp_mult_abs,
+	ATK_MULTI_AB,
+	HP_MULTI_AB,
 } from './unit.mjs';
 
 
@@ -103,8 +103,8 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 	}
 
 	const ABF = Object.keys(F.ab).map(Number);
-	const HCs = getCombinations(ABF.filter(x => hp_mult_abs.has(x)));
-	const ACs = getCombinations(ABF.filter(x => atk_mult_abs.has(x)));
+	const HCs = getCombinations(ABF.filter(x => HP_MULTI_AB.has(x)));
+	const ACs = getCombinations(ABF.filter(x => ATK_MULTI_AB.has(x)));
 
 	updateHpBaha({
 		form: F,
@@ -139,7 +139,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 		d.append(m);
 		M.appendChild(d);
 	}
-	const hasTreasure = F.trait & trait_treasure;
+	const hasTreasure = F.trait & TRAIT_TREASURE;
 	let du;
 	for (const [i, v] of Object.entries(F.ab)) {
 		switch (abilityNo = parseInt(i, 10)) {
@@ -205,7 +205,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				break;
 			case 21:
 				if (hasTreasure) {
-					if (F.trait & trait_no_treasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[2]))}（${numStrT(floor(v[2] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[2] * 1.2));
@@ -217,7 +217,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				break;
 			case 22:
 				if (hasTreasure) {
-					if (F.trait & trait_no_treasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
@@ -229,7 +229,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				break;
 			case 23:
 				if (hasTreasure) {
-					if (F.trait & trait_no_treasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
@@ -265,7 +265,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				break;
 			case 32:
 				if (hasTreasure) {
-					if (F.trait & trait_no_treasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
@@ -277,7 +277,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				break;
 			case 33:
 				if (hasTreasure) {
-					if (F.trait & trait_no_treasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
