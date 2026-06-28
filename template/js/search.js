@@ -222,8 +222,7 @@ function calculate(code = "", noUpdateUrl) {
 	}
 	let fn = eval(`form => (${pcode})`);
 	try {
-		results = results.map((form, i) => {
-			let c = catsOld[form.id];
+		results = results.map((form) => {
 			let x = fn(form);
 			return [isFinite(x) ? x : 0, form];
 		}).sort((a, b) => b[0] - a[0]);
