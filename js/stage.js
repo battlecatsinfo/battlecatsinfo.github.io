@@ -305,6 +305,18 @@ module.exports = class extends SiteGenerator {
 			]);
 		}
 
+		for (const [key] of scheme) {
+			const sum = materialsFormatted[`SUM_${key}`];
+			const drop = materialsFormatted[`DROP_${key}`];
+			const n = (key === 'SOL') ? 11 : 12;
+			for (let j = 0; j < drop.length; ++j) {
+				const rate = 100 - drop[j][n];
+				for (let i = 4; i < n; ++i) {
+					drop[j][i] = rate * drop[j][i] / sum[j];
+				}
+			}
+		}
+
 		this.writeTemplate('js/materials.js', 'materials.js', {materials: materialsFormatted});
 	}
 

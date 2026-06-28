@@ -26,25 +26,6 @@ const layout = {
 const {{{key}}} = {{{toJSON value}}};
 {{/each}}
 
-for (let j = 0; j < DROP_SOL.length; ++j) {
-	for (let i = 4; i < 11; ++i) {
-		const rate = 100 - DROP_SOL[j][11];
-		DROP_SOL[j][i] = rate * DROP_SOL[j][i] / SUM_SOL[j];
-	}
-}
-for (let j = 0; j < DROP_UL.length; ++j) {
-	const rate = 100 - DROP_UL[j][12];
-	for (let i = 4; i < 12; ++i) {
-		DROP_UL[j][i] = rate * DROP_UL[j][i] / SUM_UL[j];
-	}
-}
-
-for (let j = 0; j < DROP_ZL.length; ++j) {
-	const rate = 100 - DROP_ZL[j][12];
-	for (let i = 4; i < 12; ++i) {
-		DROP_ZL[j][i] = rate * DROP_ZL[j][i] / SUM_ZL[j];
-	}
-}
 
 function format(num) {
 	if (num)
