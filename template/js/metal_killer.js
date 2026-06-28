@@ -3,17 +3,7 @@ const HP = document.getElementById('hp');
 const S = document.getElementById('S');
 let chart;
 
-(function () {
-	const url = new URL(location.href);	
-	const pkill = url.searchParams.get('kill');
-	if (pkill) {
-		const nkill = parseInt(pkill);
-		if (isFinite(nkill) && nkill > 0 && nkill < 100)
-			kill.value = nkill;
-	}
-})();
-
-(S.onclick = HP.oninput = kill.oninput = function () {
+function handleInput() {
 	let hp = Math.max(parseInt(HP.value) || 1, 1);
 	let Ys = [{y: hp}];
 	let m = parseInt(kill.value) / 100;
@@ -51,4 +41,22 @@ let chart;
 		document.documentElement.setAttribute("data-Q", chart.options.theme = S.value);
 		chart.render();
 	}
-})();
+}
+
+function init() {
+	const url = new URL(location.href);	
+	const pkill = url.searchParams.get('kill');
+	if (pkill) {
+		const nkill = parseInt(pkill);
+		if (isFinite(nkill) && nkill > 0 && nkill < 100)
+			kill.value = nkill;
+	}
+};
+
+
+S.addEventListener('input', handleInput);
+HP.addEventListener('input', handleInput);
+kill.addEventListener('input', handleInput);
+
+init();
+handleInput();
