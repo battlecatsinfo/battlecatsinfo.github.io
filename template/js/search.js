@@ -1,16 +1,6 @@
 import {config, numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
 
-let cats;
-let catsOld;
-let hideSearch = false;
-let lastForms;
-let formSelect = 5;
-let perPage = 10;
-let defLv;
-let plusLv;
-let displayForms;
-
 const oriExpr = document.getElementById('ori-expr');
 const filterExpr = document.getElementById("filter-expr");
 const sortExpr = document.getElementById("sort-expr");
@@ -26,10 +16,20 @@ const raritySelectEl = document.getElementById("rarity-select");
 const traitSelectEl = document.getElementById("trait-select");
 const atkSelectEl = document.getElementById("atk-type-select");
 const abilitySelectEl = document.getElementById("ability-select");
+const nameSearchEl = document.getElementById("name-search");
 const atkModeToggleEl = atkSelectEl.firstElementChild.firstElementChild;
 const traitModeToggleEl = traitSelectEl.firstElementChild.firstElementChild;
 const abilitySelectToggleEl = abilitySelectEl.firstElementChild.firstElementChild;
-const nameSearchEl = document.getElementById("name-search");
+
+let cats;
+let catsOld;
+let hideSearch = false;
+let lastForms;
+let formSelect = 5;
+let perPage = 10;
+let defLv;
+let plusLv;
+let displayForms;
 
 function rerender(page) {
 	const url = new URL(location.href);

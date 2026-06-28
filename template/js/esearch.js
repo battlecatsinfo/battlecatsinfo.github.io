@@ -1,26 +1,27 @@
 import {numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllEnemies} from './unit.mjs';
 
-let cats;
 const filterExprEl = document.getElementById('filter-expr');
 const sortExprEl = document.getElementById('sort-expr');
 const searchStatusTipEl = document.getElementById('search-status-tip');
 const tbodyEl = document.getElementById('tbody');
 const pagerEl = document.getElementById('pager');
-let hideSeach = false;
 const searchResultsEl = document.getElementById('search-results');
 const toggleResultsEl = document.getElementById('toggle-results');
 const traitSelectEl = document.getElementById('trait-select');
 const atkTypeSelectEl = document.getElementById('atk-type-select');
 const abilitySelectEl = document.getElementById('ability-select');
 const speciesSelectEl = document.getElementById('species-select');
+const nameSearchEl = document.getElementById('name-search');
 const atkModeToggleEl = atkTypeSelectEl.firstElementChild.firstElementChild;
 const traitModeToggleEl = traitSelectEl.firstElementChild.firstElementChild;
 const abilityModeToggleEl = abilitySelectEl.firstElementChild.firstElementChild;
-const nameSearchEl = document.getElementById('name-search');
+
 let lastForms;
 let perPage = 10;
 let results;
+let hideSeach = false;
+let cats;
 
 function rerender(page) {
 	renderTable(lastForms, page);
