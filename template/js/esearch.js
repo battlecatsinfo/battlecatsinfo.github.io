@@ -52,7 +52,7 @@ function renderTable(forms, page = 1) {
 	lastForms = forms;
 	forms = filterByNameOrId(forms);
 	let H = page * perPage;
-	let display_forms = forms.slice(H - perPage, H);
+	let displayForms = forms.slice(H - perPage, H);
 	tbodyEl.textContent = '';
 	searchStatusTipEl.textContent = `顯示第${H - perPage + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
 	if (forms.length == 0) {
@@ -76,11 +76,11 @@ function renderTable(forms, page = 1) {
 		}
 	}
 
-	for (let i = 0; i < display_forms.length; ++i) {
+	for (let i = 0; i < displayForms.length; ++i) {
 		const tr = document.createElement('tr');
-		const F = display_forms[i][1];
+		const F = displayForms[i][1];
 		const texts = [F.id, '', F.name || F.jpName || '?', F.hp, F.atkm,
-			round(F.dps), F.kb, F.range, numStrT(F.attackF).replace('秒', '秒/下'), F.speed, F.earn, numStr(display_forms[i][0])
+			round(F.dps), F.kb, F.range, numStrT(F.attackF).replace('秒', '秒/下'), F.speed, F.earn, numStr(displayForms[i][0])
 		];
 		for (let j = 0; j < texts.length; ++j) {
 			const e = document.createElement('td');
