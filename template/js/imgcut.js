@@ -6,8 +6,8 @@ const edit = document.getElementById('edit');
 const img = new Image();
 const preview = document.getElementById('preview');
 const pctx = preview.getContext('2d');
-const color_select = document.getElementById('color-select');
-let last_t;
+const colorSelectEl = document.getElementById('color-select');
+let lastT;
 let cut;
 let imgloaded = false;
 
@@ -58,7 +58,7 @@ function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 	const c = cut.cuts[i];
-	ctx.strokeStyle = color_select.value;
+	ctx.strokeStyle = colorSelectEl.value;
 	ctx.strokeRect(c[0], c[1], c[2], c[3]);
 }
 
@@ -125,9 +125,9 @@ function createLine(c, i) {
 	}
 	tr.onclick = function(event) {
 		event.stopPropagation();
-		if (last_t) last_t.classList.remove('ihover');
-		last_t = event.currentTarget;
-		last_t.classList.add('ihover');
+		if (lastT) lastT.classList.remove('ihover');
+		lastT = event.currentTarget;
+		lastT.classList.add('ihover');
 		draw();
 	}
 	tdx.f = tdy.f = tdw.f = tdh.f = tdn.f = true;
@@ -262,16 +262,16 @@ function addline() {
 		do
 			n.children[0].innerText = ++idx;
 		while (n = n.nextElementSibling);
-		if (last_t) last_t.classList.remove('ihover');
-		last_t = e.nextElementSibling;
-		last_t.classList.add('ihover');
+		if (lastT) lastT.classList.remove('ihover');
+		lastT = e.nextElementSibling;
+		lastT.classList.add('ihover');
 		return;
 	}
 	cut.cuts.push(c);
-	if (last_t) last_t.classList.remove('ihover');
-	last_t = createLine(c, cut.cuts.length - 1);
-	last_t.classList.add('ihover');
-	edit.appendChild(last_t);
+	if (lastT) lastT.classList.remove('ihover');
+	lastT = createLine(c, cut.cuts.length - 1);
+	lastT.classList.add('ihover');
+	edit.appendChild(lastT);
 }
 
 function removeline() {
@@ -292,7 +292,7 @@ function removeline() {
 	edit.removeChild(e);
 }
 document.onclick = function() {
-	last_t = null;
+	lastT = null;
 	for (let c of edit.getElementsByClassName('ihover'))
 		c.classList.remove('ihover');
 }
