@@ -93,7 +93,6 @@ let myFavCats = config.starCats;
 if (!myFavCats.length) {
 	myFavCatsEl.parentNode.innerHTML = '你還沒有收藏的貓咪，在貓咪檢視畫面按下「★加入我的最愛」或貓咪圖鑑收藏貓咪。';
 } else {
-	let i = 0;
 	for (let cat of myFavCats) {
 		const tr = myFavCatsEl.appendChild(document.createElement('tr'));
 		const td1 = tr.appendChild(document.createElement('td'));
