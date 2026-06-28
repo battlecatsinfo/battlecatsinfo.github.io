@@ -173,7 +173,7 @@ function calculate(code = '', noUpdateUrl) {
 	}
 	let fn = eval(`form => (${pcode})`);
 	try {
-		results = results.map((form, i) => {
+		results = results.map((form) => {
 			const x = fn(form);
 			return [isFinite(x) ? x : 0, form];
 		}).sort((a, b) => b[0] - a[0]);
@@ -196,7 +196,6 @@ function calculate(code = '', noUpdateUrl) {
 
 function addBtns(parent, s) {
 	if (!s) return;
-	const n = s.split(' ');
 	for (let c of parent.querySelectorAll('button')) {
 		if (s.includes(c.parentNode.getAttribute('data-expr'))) {
 			c.parentNode.classList.add('o-selected');
