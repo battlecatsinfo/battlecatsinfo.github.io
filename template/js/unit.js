@@ -1,4 +1,13 @@
-import {config, loadScheme, numStr, numStrT, floor, savePng, copyPng, getCombinations} from './common.mjs';
+import {
+	config,
+	loadScheme,
+	numStr,
+	numStrT,
+	floor,
+	savePng,
+	copyPng,
+	getCombinations,
+} from './common.mjs';
 import {
 	ATK_RANGE,
 	ATK_LD,
