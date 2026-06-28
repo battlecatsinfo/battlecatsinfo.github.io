@@ -261,7 +261,7 @@ function addline() {
 		let n = e.nextElementSibling;
 		do
 			n.children[0].innerText = ++idx;
-		while (n = n.nextElementSibling);
+		while ((n = n.nextElementSibling));
 		if (lastT) lastT.classList.remove('ihover');
 		lastT = e.nextElementSibling;
 		lastT.classList.add('ihover');
@@ -425,7 +425,8 @@ async function pasteImg() {
 			img.src = `/img/u/${id}/c${form}.png`;
 		}
 	} else {
-		if (imgfile = params.get('imgfile')) {
+		imgfile = params.get('imgfile')
+		if (imgfile) {
 			img.src = imgfile;
 		} else {
 			ctx.font = "30px serif";
@@ -433,7 +434,8 @@ async function pasteImg() {
 			ctx.textBaseline = 'middle';
 			ctx.fillText("導入圖片以開始", canvas.width / 2, canvas.height / 2);
 		}
-		if (cutfile = params.get('cutfile')) {
+		cutfile = params.get('cutfile');
+		if (cutfile) {
 			fetch(cutfile)
 				.then(res => res.text())
 				.then(text => {
