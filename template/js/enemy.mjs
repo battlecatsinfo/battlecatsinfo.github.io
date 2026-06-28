@@ -1,6 +1,5 @@
 import {config, numStr, numStrT} from './common.mjs';
 import {
-	ATK_SINGLE,
 	ATK_RANGE,
 	ATK_LD,
 	ATK_OMNI,
@@ -28,31 +27,15 @@ import {
 	AB_SURVIVE,
 	AB_ATKBASE,
 	AB_CRIT,
-	AB_ZKILL,
-	AB_CKILL,
-	AB_BREAK,
-	AB_SHIELDBREAK,
 	AB_SAVAGE,
-	AB_BOUNTY,
-	AB_METALIC,
 	AB_MINIWAVE,
 	AB_WAVE,
 	AB_MINISURGE,
 	AB_SURGE,
 	AB_WAVES,
-	AB_BAIL,
-	AB_BSTHUNT,
-	AB_WKILL,
-	AB_EKILL,
 	AB_WEAK,
 	AB_STOP,
 	AB_SLOW,
-	AB_ONLY,
-	AB_GOOD,
-	AB_RESIST,
-	AB_RESISTS,
-	AB_MASSIVE,
-	AB_MASSIVES,
 	AB_KB,
 	AB_WARP,
 	AB_IMUATK,
@@ -65,17 +48,12 @@ import {
 	AB_DSHIELD,
 	AB_COUNTER,
 	AB_DEATHSURGE,
-	AB_SAGE,
-	AB_SUMMON,
-	AB_MK,
 	AB_EXPLOSION,
 	AB_DRAIN,
 
-	catEnv,
-
 	getAbiString,
 
-	getCoverUnitStr as getCoverUnit,
+	getCoverUnitStr,
 
 	createImuIcons,
 } from './unit.mjs';
@@ -136,7 +114,7 @@ function W(s, img) {
 
 function createAbIcons() {
 	createImuIcons(E.imu, specialsEl);
-	let d, U = E.pre1 ? '*' : '';
+	let U = E.pre1 ? '*' : '';
 	if (E.trait & TB_SAGE) {
 		W(`超賢者：減輕 70% 受到的妨害效果 `, `/img/i/e/15.png`);
 	}
@@ -146,10 +124,10 @@ function createAbIcons() {
 				W(`${d[0]} % 打飛敵人${U}至 165 距離單位外，持續 ${numStrT(12)}`);
 				break;
 			case AB_STOP:
-				W(`${d[0]} % 使動作停止${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`);
+				W(`${d[0]} % 使動作停止${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnitStr(E, d[0], d[1])} %`);
 				break;
 			case AB_SLOW:
-				W(`${d[0]} % 使動作變慢${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`);
+				W(`${d[0]} % 使動作變慢${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnitStr(E, d[0], d[1])} %`);
 				break;
 			case AB_CRIT:
 				T(`${d} % 會心一擊${U}`);
@@ -164,7 +142,7 @@ function createAbIcons() {
 				T(`${d[0]} % 發射 Lv${d[1]} 小波動${U}（射程 ${267.5 + d[1]*200}）`);
 				break;
 			case AB_WEAK:
-				W(`${d[0]} % 降低攻擊力${U}至 ${d[1]} % 持續 ${numStrT(d[2])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[2])} %`);
+				W(`${d[0]} % 降低攻擊力${U}至 ${d[1]} % 持續 ${numStrT(d[2])}，控場覆蓋率 ${getCoverUnitStr(E, d[0], d[2])} %`);
 				break;
 			case AB_STRENGTHEN:
 				T(`體力 ${d[0]} % 以下時攻擊力上升至 ${100 + d[1]} %`);
@@ -185,7 +163,7 @@ function createAbIcons() {
 				W(`${d[0]} % 將目標向${d[2] < 0 ? '前' : '後'}傳送${U} ${Math.abs(d[2])} 距離持續 ${numStrT(d[1])}`);
 				break;
 			case AB_CURSE:
-				W(`${d[0]} % 詛咒${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnit(E, d[0], d[1])} %`);
+				W(`${d[0]} % 詛咒${U}持續 ${numStrT(d[1])}，控場覆蓋率 ${getCoverUnitStr(E, d[0], d[1])} %`);
 				break;
 			case AB_SAVAGE:
 				T(`${d[0]} % 渾身一擊${U}（攻擊力增加至 ${100 + d[1]} %）`);

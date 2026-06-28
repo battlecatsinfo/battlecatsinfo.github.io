@@ -118,7 +118,7 @@ loadEnemy(enemyId).then(E => {
 
 	const abar = document.getElementById('abar');
 	const btn = abar.previousElementSibling;
-	btn.onmouseover = function(event) {
+	btn.onmouseover = function() {
 		abar.style.display = 'block';
 	}
 	btn.onclick = function(event) {
