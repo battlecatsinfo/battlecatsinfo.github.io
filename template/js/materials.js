@@ -24,7 +24,7 @@ for (let j = 0; j < DROP_ZL.length; ++j) {
 		DROP_ZL[j][i] = rate * DROP_ZL[j][i] / SUM_ZL[j];
 	}
 }
-const F = getNumFormatter(2);
+const numFormatter = getNumFormatter(2);
 
 const layout = {
 	topStart: {
@@ -48,7 +48,7 @@ const layout = {
 
 function format(num) {
 	if (num)
-		return F.format(num);
+		return numFormatter.format(num);
 	return '';
 }
 $('#SOL').DataTable({
