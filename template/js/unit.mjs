@@ -1,4 +1,4 @@
-import {AutoIdb, loadScheme, fetch, config, numStr, round, floor} from './common.mjs';
+import {AutoIdb, loadScheme, config, numStr, round, floor} from './common.mjs';
 const units_scheme = await loadScheme('units');
 
 // Attack types

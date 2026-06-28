@@ -1,4 +1,4 @@
-import {IdbBase, AutoIdb, fetch} from './common.mjs';
+import {AutoIdb} from './common.mjs';
 
 class MapIdb extends AutoIdb {
 	static storeName = 'map';
