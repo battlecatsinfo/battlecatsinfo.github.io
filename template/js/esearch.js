@@ -2,28 +2,28 @@ import {numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllEnemies} from './unit.mjs';
 
 let cats;
-const filter_expr = document.getElementById('filter-expr');
-const sort_expr = document.getElementById('sort-expr');
-const search_result = document.getElementById('search-result');
-const tbody = document.getElementById('tbody');
-const pages_a = document.getElementById('pages-a');
-let hide_seach = false;
-const tables = document.getElementById('tables');
-const toggle_s = document.getElementById('toggle-s');
-const trait_s = document.getElementById('trait-s');
-const atk_s = document.getElementById('atk-s');
-const ab_savage = document.getElementById('ab-savage');
-const kind_s = document.getElementById('kind-s');
-const atkBtn = atk_s.firstElementChild.firstElementChild;
-const traitBtn = trait_s.firstElementChild.firstElementChild;
-const abBtn = ab_savage.firstElementChild.firstElementChild;
-const name_search = document.getElementById('name-search');
-let last_forms;
-let per_page = 10;
+const filterExprEl = document.getElementById('filter-expr');
+const sortExprEl = document.getElementById('sort-expr');
+const searchStatusTipEl = document.getElementById('search-status-tip');
+const tbodyEl = document.getElementById('tbody');
+const pagerEl = document.getElementById('pager');
+let hideSeach = false;
+const searchResultsEl = document.getElementById('search-results');
+const toggleResultsEl = document.getElementById('toggle-results');
+const traitSelectEl = document.getElementById('trait-select');
+const atkTypeSelectEl = document.getElementById('atk-type-select');
+const abilitySelectEl = document.getElementById('ability-select');
+const speciesSelectEl = document.getElementById('species-select');
+const atkModeToggleEl = atkTypeSelectEl.firstElementChild.firstElementChild;
+const traitModeToggleEl = traitSelectEl.firstElementChild.firstElementChild;
+const abilityModeToggleEl = abilitySelectEl.firstElementChild.firstElementChild;
+const nameSearchEl = document.getElementById('name-search');
+let lastForms;
+let perPage = 10;
 let results;
 
 function rerender(page) {
-	renderTable(last_forms, page);
+	renderTable(lastForms, page);
 }
 
 function onPagerClick(event) {
@@ -32,12 +32,12 @@ function onPagerClick(event) {
 }
 
 document.getElementById('per_page').oninput = function setRange(e) {
-	per_page = parseInt(e.currentTarget.value);
-	renderTable(last_forms);
+	perPage = parseInt(e.currentTarget.value);
+	renderTable(lastForms);
 };
 
 function filterByNameOrId(results) {
-	const key = name_search.value.toLowerCase().trim();
+	const key = nameSearchEl.value.toLowerCase().trim();
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
@@ -48,24 +48,24 @@ function filterByNameOrId(results) {
 }
 
 function renderTable(forms, page = 1) {
-	last_forms = forms;
+	lastForms = forms;
 	forms = filterByNameOrId(forms);
-	let H = page * per_page;
-	let display_forms = forms.slice(H - per_page, H);
-	tbody.textContent = '';
-	search_result.textContent = `顯示第${H - per_page + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
+	let H = page * perPage;
+	let display_forms = forms.slice(H - perPage, H);
+	tbodyEl.textContent = '';
+	searchStatusTipEl.textContent = `顯示第${H - perPage + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
 	if (forms.length == 0) {
-		tbody.innerHTML =
+		tbodyEl.innerHTML =
 			'<tr><td colSpan="13">沒有符合條件的敵人！</td></tr>';
 		return;
 	}
 
-	pages_a.textContent = '';
+	pagerEl.textContent = '';
 	for (const c of pagination({
 		page,
-		max: Math.ceil(forms.length / per_page),
+		max: Math.ceil(forms.length / perPage),
 	})) {
-		const td = pages_a.appendChild(document.createElement("td"));
+		const td = pagerEl.appendChild(document.createElement("td"));
 		td.textContent = c;
 		td._i = c;
 		if (page == c) {
@@ -92,7 +92,7 @@ function renderTable(forms, page = 1) {
 		a.href = './enemy.html?id=' + F.id;
 		a.appendChild(img);
 		tr.children[1].appendChild(a);
-		tbody.appendChild(tr);
+		tbodyEl.appendChild(tr);
 	}
 }
 
@@ -101,48 +101,48 @@ function simplify(code) {
 }
 
 function calculate(code = '', noUpdateUrl) {
-	const sortCode = simplify(sort_expr.value);
+	const sortCode = simplify(sortExprEl.value);
 	const url = new URL(location.pathname, location.href);
 	if (!code.length) {
 		const codes = [];
-		const traits = Array.from(trait_s.querySelectorAll('.o-selected'));
+		const traits = Array.from(traitSelectEl.querySelectorAll('.o-selected'));
 		if (traits.length) {
 			let M = traits.map(x => x.getAttribute('data-expr'));
 			url.searchParams.set('traits', M.join(' '));
-			if (traitBtn.textContent == 'OR') {
+			if (traitModeToggleEl.textContent == 'OR') {
 				codes.push(M.join('||'));
 			} else {
 				codes.push(M.join('&&'));
 			}
 		}
-		const kinds = Array.from(kind_s.querySelectorAll('.o-selected'));
+		const kinds = Array.from(speciesSelectEl.querySelectorAll('.o-selected'));
 		if (kinds.length) {
 			let M = kinds.map(x => x.getAttribute('data-expr'));
 			url.searchParams.set('kinds', M.join(' '));
 			codes.push(M.join('||'));
 		}
-		const atks = Array.from(atk_s.querySelectorAll('.o-selected'));
+		const atks = Array.from(atkTypeSelectEl.querySelectorAll('.o-selected'));
 		if (atks.length) {
 			let M = atks.map(x => x.getAttribute('data-expr'));
 			url.searchParams.set('atks', M.join(' '));
-			if (atkBtn.textContent == 'OR') {
+			if (atkModeToggleEl.textContent == 'OR') {
 				codes.push(M.join('||'));
 			} else {
 				codes.push(M.join('&&'));
 			}
 		}
-		const abs = Array.from(ab_savage.querySelectorAll('.o-selected'));
+		const abs = Array.from(abilitySelectEl.querySelectorAll('.o-selected'));
 		if (abs.length) {
 			let M = abs.map(x => x.getAttribute('data-expr'));
 			url.searchParams.set('abs', M.join(' '));
-			if (abBtn.textContent == 'OR') {
+			if (abilityModeToggleEl.textContent == 'OR') {
 				codes.push(M.join('||'));
 			} else {
 				codes.push(M.join('&&'));
 			}
 		}
 		if (codes.length) {
-			code = (filter_expr.value = codes.map(x => `(${x})`).join('&&'));
+			code = (filterExprEl.value = codes.map(x => `(${x})`).join('&&'));
 		} else
 			code = '1';
 	} else {
@@ -183,9 +183,9 @@ function calculate(code = '', noUpdateUrl) {
 	renderTable(results);
 	if (sortCode.length && sortCode != '1')
 		url.searchParams.set('sort', sortCode);
-	const a = atkBtn.textContent == 'OR' ? '1' : '0';
-	const b = traitBtn.textContent == 'OR' ? '1' : '0';
-	const c = abBtn.textContent == 'OR' ? '1' : '0';
+	const a = atkModeToggleEl.textContent == 'OR' ? '1' : '0';
+	const b = traitModeToggleEl.textContent == 'OR' ? '1' : '0';
+	const c = abilityModeToggleEl.textContent == 'OR' ? '1' : '0';
 	const ao = a + b + c;
 	if (ao != '000') // AND/AND/AND (default)
 		url.searchParams.set('ao', ao);
@@ -212,25 +212,25 @@ loadAllEnemies()
 
 		const Q = params.get('q');
 		if (Q) {
-			name_search.value = Q;
+			nameSearchEl.value = Q;
 		}
 
 		const filter = params.get('filter');
 		const sort = params.get('sort');
 		if (filter)
-			filter_expr.value = filter;
+			filterExprEl.value = filter;
 		if (sort)
-			sort_expr.value = sort;
+			sortExprEl.value = sort;
 		const ao = params.get('ao');
 		if (ao) {
-			atkBtn.textContent = ao[0] == '1' ? 'OR' : 'AND';
-			traitBtn.textContent = ao[1] == '1' ? 'OR' : 'AND';
-			abBtn.textContent = ao[2] == '1' ? 'OR' : 'AND';
+			atkModeToggleEl.textContent = ao[0] == '1' ? 'OR' : 'AND';
+			traitModeToggleEl.textContent = ao[1] == '1' ? 'OR' : 'AND';
+			abilityModeToggleEl.textContent = ao[2] == '1' ? 'OR' : 'AND';
 		}
-		addBtns(atk_s, params.get('atks'));
-		addBtns(ab_savage, params.get('abs'));
-		addBtns(trait_s, params.get('traits'));
-		addBtns(kind_s, params.get('kinds'));
+		addBtns(atkTypeSelectEl, params.get('atks'));
+		addBtns(abilitySelectEl, params.get('abs'));
+		addBtns(traitSelectEl, params.get('traits'));
+		addBtns(speciesSelectEl, params.get('kinds'));
 		calculate(filter ? filter : '', true);
 	});
 document.querySelectorAll('button').forEach(elem => {
@@ -258,36 +258,36 @@ document.querySelectorAll('.or-and').forEach(e => {
 	};
 });
 document.getElementById('filter-go').onclick = function() {
-	calculate(simplify(filter_expr.value));
+	calculate(simplify(filterExprEl.value));
 }
 document.getElementById('filter-clear').onclick = function() {
 	function fn(x) {
 		x.classList.remove('o-selected');
 	};
-	trait_s.querySelectorAll('.o-selected').forEach(fn);
-	atk_s.querySelectorAll('.o-selected').forEach(fn);
-	ab_savage.querySelectorAll('.o-selected').forEach(fn);
-	kind_s.querySelectorAll('.o-selected').forEach(fn);
-	filter_expr.value = '';
-	sort_expr.value = '';
+	traitSelectEl.querySelectorAll('.o-selected').forEach(fn);
+	atkTypeSelectEl.querySelectorAll('.o-selected').forEach(fn);
+	abilitySelectEl.querySelectorAll('.o-selected').forEach(fn);
+	speciesSelectEl.querySelectorAll('.o-selected').forEach(fn);
+	filterExprEl.value = '';
+	sortExprEl.value = '';
 	calculate();
 }
-toggle_s.onclick = function() {
-	if (hide_seach) {
-		tables.style.left = '390px';
-		tables.style.width = 'calc(100% - 400px)';
+toggleResultsEl.onclick = function() {
+	if (hideSeach) {
+		searchResultsEl.style.left = '390px';
+		searchResultsEl.style.width = 'calc(100% - 400px)';
 		document.documentElement.style.setProperty('--mhide', 'block');
-		toggle_s.textContent = '隱藏搜尋器';
+		toggleResultsEl.textContent = '隱藏搜尋器';
 	} else {
 		document.documentElement.style.setProperty('--mhide', 'none');
-		tables.style.left = '0px';
-		tables.style.width = '100%';
-		toggle_s.textContent = '顯示搜尋器';
+		searchResultsEl.style.left = '0px';
+		searchResultsEl.style.width = '100%';
+		toggleResultsEl.textContent = '顯示搜尋器';
 	}
-	hide_seach = !hide_seach;
+	hideSeach = !hideSeach;
 }
-name_search.oninput = function() {
-	renderTable(last_forms);
+nameSearchEl.oninput = function() {
+	renderTable(lastForms);
 }
 const th = document.getElementById('th');
 for (let n of th.children) {
@@ -297,10 +297,10 @@ for (let n of th.children) {
 		n.onclick = function(event) {
 			if (n._s == 0) {
 				n._s = 1;
-				sort_expr.value = event.currentTarget.title;
+				sortExprEl.value = event.currentTarget.title;
 			} else {
 				n._s = 0;
-				sort_expr.value = '-' + event.currentTarget.title;
+				sortExprEl.value = '-' + event.currentTarget.title;
 			}
 			let y = n._s;
 			for (let x of th.children) {
@@ -311,7 +311,7 @@ for (let n of th.children) {
 			}
 			n._s = y;
 			n.textContent = n._t + (n._s ? '↑' : '↓');
-			calculate(simplify(filter_expr.value));
+			calculate(simplify(filterExprEl.value));
 		}
 	}
 }
