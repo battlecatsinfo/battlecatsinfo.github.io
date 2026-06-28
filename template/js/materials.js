@@ -1,6 +1,27 @@
 import {getNumFormatter} from './common.mjs';
 import {language} from "./datatables.mjs";
 
+const numFormatter = getNumFormatter(2);
+const layout = {
+	topStart: {
+		pageLength: {
+			menu: [10, 20, 30, 40, 50]
+		}
+	},
+	bottomStart: {
+		buttons: [{
+				extend: 'copyHtml5'
+			},
+			{
+				extend: 'csvHtml5'
+			},
+			{
+				extend: 'excelHtml5'
+			},
+		]
+	}
+};
+
 {{#each materials as |value key|}}
 const {{{key}}} = {{{toJSON value}}};
 {{/each}}
@@ -24,27 +45,6 @@ for (let j = 0; j < DROP_ZL.length; ++j) {
 		DROP_ZL[j][i] = rate * DROP_ZL[j][i] / SUM_ZL[j];
 	}
 }
-const numFormatter = getNumFormatter(2);
-
-const layout = {
-	topStart: {
-		pageLength: {
-			menu: [10, 20, 30, 40, 50]
-		}
-	},
-	bottomStart: {
-		buttons: [{
-				extend: 'copyHtml5'
-			},
-			{
-				extend: 'csvHtml5'
-			},
-			{
-				extend: 'excelHtml5'
-			},
-		]
-	}
-};
 
 function format(num) {
 	if (num)
