@@ -252,8 +252,8 @@ module.exports = class extends SiteGenerator {
 				return stages.reduce((rv, stage, i) => {
 					const {id, energy, maxmaterial} = stage;
 					const cp = Math.round(maxmaterial * m) / energy;
-					const cp_rv = Math.round(rv.maxmaterial * m) / rv.energy;
-					return cp > cp_rv ? stage : rv;
+					const cpRv = Math.round(rv.maxmaterial * m) / rv.energy;
+					return cp > cpRv ? stage : rv;
 				});
 			});
 			const best = bests.pop();
@@ -281,20 +281,18 @@ module.exports = class extends SiteGenerator {
 		// generate formatted output
 		const materialsFormatted = {};
 		const scheme = [
-			['SOL', 0, [1, 8]],
-			['UL', 9, [1, 9]],
-			['ZL', 16, [9, 17]],
+			['SOL', 0, [1, 8], 11],
+			['UL', 9, [1, 9], 12],
+			['ZL', 16, [9, 17], 12],
 		];
 
-		for (const [key, groupIdx, fields] of scheme) {
-			materialsFormatted[`SUM_${key}`] = Object.values(materials[groupIdx]).map(entry => {
+		for (const [key, groupIdx, fields, notDropIdx] of scheme) {
+			const mapSums = Object.values(materials[groupIdx]).map(entry => {
 				const materials = entry.materialdrop.slice(...fields);
 				return materials.reduce((sum, v) => sum + v);
 			});
-		}
 
-		for (const [key, groupIdx, fields] of scheme) {
-			materialsFormatted[`DROP_${key}`] = Object.values(materials[groupIdx]).map(entry => [
+			const mapDrops = Object.values(materials[groupIdx]).map(entry => [
 				entry.index + 1,
 				entry.name_tw,
 				entry.name_jp,
@@ -303,18 +301,18 @@ module.exports = class extends SiteGenerator {
 				entry.materialdrop[0],
 				...entry.times,
 			]);
-		}
 
-		for (const [key] of scheme) {
-			const sum = materialsFormatted[`SUM_${key}`];
-			const drop = materialsFormatted[`DROP_${key}`];
-			const n = (key === 'SOL') ? 11 : 12;
-			for (let j = 0; j < drop.length; ++j) {
-				const rate = 100 - drop[j][n];
-				for (let i = 4; i < n; ++i) {
-					drop[j][i] = rate * drop[j][i] / sum[j];
+			for (let mapIdx = 0; mapIdx < mapDrops.length; ++mapIdx) {
+				const sum = mapSums[mapIdx];
+				const drop = mapDrops[mapIdx];
+				const rate = 100 - drop[notDropIdx];
+				for (let i = 4; i < notDropIdx; ++i) {
+					const num = rate * drop[i] / sum;
+					drop[i] = Math.round(num * 100) / 100;
 				}
 			}
+
+			materialsFormatted[`DROP_${key}`] = mapDrops;
 		}
 
 		this.writeTemplate('js/materials.js', 'materials.js', {materials: materialsFormatted});
