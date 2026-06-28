@@ -15,11 +15,11 @@ async function loadAllTranslations() {
 
 await loadAllTranslations();
 
-const search_text = document.getElementById('search-text');
-search_text.focus();
-const results_body = document.getElementById('results-body');
-const search_for = document.getElementById('search-for');
-const input_lang = document.getElementById('input-lang');
+const searchText = document.getElementById('search-text');
+searchText.focus();
+const resultsBody = document.getElementById('results-body');
+const searchFor = document.getElementById('search-for');
+const inputLang = document.getElementById('input-lang');
 
 function trText(rowText, isHTML = true) {
 	const tr = document.createElement('tr');
@@ -36,10 +36,10 @@ function trText(rowText, isHTML = true) {
 }
 
 async function doSearch() {
-	const lang = input_lang.value;
-	const target = search_for.value;
-	const v = search_text.value.trim();
-	results_body.textContent = '';
+	const lang = inputLang.value;
+	const target = searchFor.value;
+	const v = searchText.value.trim();
+	resultsBody.textContent = '';
 
 	if (v) {
 		let storeNames;
@@ -74,9 +74,9 @@ async function doSearch() {
 				if (first && storeNames.length !== 1) {
 					first = false;
 					const txt = {'tstage': '關卡', 'tcat': '貓咪', 'tenemy': '敵人', 'tterm': '名詞', 'tcombo': '聯組', 'tmedal': '獎章', 'titem': '獎勵'}[storeName];
-					results_body.appendChild(trText(txt));
+					resultsBody.appendChild(trText(txt));
 				}
-				results_body.appendChild(tr);
+				resultsBody.appendChild(tr);
 			}
 		}
 		const url = new URL(location.pathname, location.href);
@@ -85,7 +85,7 @@ async function doSearch() {
 		target != 'all' && url.searchParams.set("target", target);
 		history.pushState({}, "", url);
 	} else {
-		results_body.appendChild(trText('無輸入內容，正在顯示所選範圍的全部內容<br>No search term entered. Showing all items in the selected scope.'));
+		resultsBody.appendChild(trText('無輸入內容，正在顯示所選範圍的全部內容<br>No search term entered. Showing all items in the selected scope.'));
 
 		const storeNames = target === 'all' ? ["tterm"] : [target]; // default to tterm if "All" is selected
 		for (const storeName of storeNames) {
@@ -96,13 +96,13 @@ async function doSearch() {
 					td.textContent = value[lang];
 					tr.appendChild(td);
 				}
-				results_body.appendChild(tr);
+				resultsBody.appendChild(tr);
 			}
 		}
 	}
 
-	if (!results_body.textContent) {
-		results_body.appendChild(trText('無匹配結果<br>No matches found'));
+	if (!resultsBody.textContent) {
+		resultsBody.appendChild(trText('無匹配結果<br>No matches found'));
 	}
 
 }
@@ -110,17 +110,17 @@ async function doSearch() {
 const searchParams = new URL(location.href).searchParams;
 const target = searchParams.get('target');
 if (target)
-	search_for.value = target;
+	searchFor.value = target;
 const input = searchParams.get('input');
 if (input)
-	input_lang.value = input;
+	inputLang.value = input;
 const q = searchParams.get('q');
 if (q) {
-	search_text.value = q;
+	searchText.value = q;
 	doSearch();
 }
 
-search_text.addEventListener('keypress', async function (event) {
+searchText.addEventListener('keypress', async function (event) {
 	if (event.key == 'Enter')
 		await doSearch();
 });
