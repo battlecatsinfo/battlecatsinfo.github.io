@@ -21,8 +21,8 @@ function onStarCatDeleteClick(event) {
 	event.preventDefault();
 	const tr = event.target.parentNode.parentNode;
 	const id = parseInt(tr.children[0].children[0].innerText.slice(1));
-	my_stars_list = my_stars_list.filter(x => x.id != id);
-	config.starCats = my_stars_list;
+	myFavCats = myFavCats.filter(x => x.id != id);
+	config.starCats = myFavCats;
 	tr.remove();
 	return false;
 }
@@ -88,14 +88,14 @@ for (const elem of document.getElementById('settings').elements) {
 		elem.value = value;
 }
 
-const my_stars = document.getElementById('my-stars');
-let my_stars_list = config.starCats;
-if (!my_stars_list.length) {
-	my_stars.parentNode.innerHTML = '你還沒有收藏的貓咪，在貓咪檢視畫面按下「★加入我的最愛」或貓咪圖鑑收藏貓咪。';
+const myFavCatsEl = document.getElementById('my-stars');
+let myFavCats = config.starCats;
+if (!myFavCats.length) {
+	myFavCatsEl.parentNode.innerHTML = '你還沒有收藏的貓咪，在貓咪檢視畫面按下「★加入我的最愛」或貓咪圖鑑收藏貓咪。';
 } else {
 	let i = 0;
-	for (let cat of my_stars_list) {
-		const tr = my_stars.appendChild(document.createElement('tr'));
+	for (let cat of myFavCats) {
+		const tr = myFavCatsEl.appendChild(document.createElement('tr'));
 		const td1 = tr.appendChild(document.createElement('td'));
 		const a = td1.appendChild(document.createElement('a'));
 		a.href = './unit.html?id=' + cat.id;
