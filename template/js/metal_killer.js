@@ -1,14 +1,17 @@
-const kill = document.getElementById('kill');
-const HP = document.getElementById('hp');
-const S = document.getElementById('S');
+const killPersentEl = document.getElementById('kill');
+const enemyHpEl = document.getElementById('hp');
+const themeSelectEl = document.getElementById('S');
 let chart;
 
 function handleInput() {
-	if (!HP.value || !kill.value)
+	let hp = parseInt(enemyHpEl.value);
+	let m = parseInt(killPersentEl.value);
+	if (!(Number.isFinite(hp) && Number.isFinite(m) && hp >= 1 && m >= 1))
 		return;
-	let hp = Math.max(parseInt(HP.value) || 1, 1);
+
 	let Ys = [{y: hp}];
-	let m = parseInt((kill.value) || 1) / 100;
+	m /= 100;
+
 	while (true) {
 		hp -= 1 + Math.max(~~(hp * m), 1);
 		if (hp <= 0) {
@@ -28,7 +31,7 @@ function handleInput() {
 			'axisX': {
 				'title': 'Nth attack'
 			},
-			'theme': S.value,
+			'theme': themeSelectEl.value,
 			'title': { 'text': "Metal Killer" },
 			'data': [{
 				'xValueFormatString': '0th attack',
@@ -40,25 +43,25 @@ function handleInput() {
 		chart.render();
 	} else {
 		chart.options.data[0].dataPoints = Ys;
-		document.documentElement.setAttribute("data-Q", chart.options.theme = S.value);
+		document.documentElement.setAttribute("data-Q", (chart.options.theme = themeSelectEl.value));
 		chart.render();
 	}
 }
 
 function init() {
 	const url = new URL(location.href);	
-	const pkill = url.searchParams.get('kill');
-	if (pkill) {
-		const nkill = parseInt(pkill);
-		if (isFinite(nkill) && nkill > 0 && nkill < 100)
-			kill.value = nkill;
+	const kill = url.searchParams.get('kill');
+	if (kill) {
+		const nkill = parseInt(kill);
+		if (isFinite(kill) && nkill > 0 && nkill < 100)
+			killPersentEl.value = nkill;
 	}
 };
 
 
-S.addEventListener('input', handleInput);
-HP.addEventListener('input', handleInput);
-kill.addEventListener('input', handleInput);
+themeSelectEl.addEventListener('input', handleInput);
+enemyHpEl.addEventListener('input', handleInput);
+killPersentEl.addEventListener('input', handleInput);
 
 init();
 handleInput();
