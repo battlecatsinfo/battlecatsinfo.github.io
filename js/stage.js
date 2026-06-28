@@ -287,14 +287,14 @@ module.exports = class extends SiteGenerator {
 		];
 
 		for (const [key, groupIdx, fields] of scheme) {
-			materialsFormatted[`sum_${key}`] = Object.values(materials[groupIdx]).map(entry => {
+			materialsFormatted[`SUM_${key}`] = Object.values(materials[groupIdx]).map(entry => {
 				const materials = entry.materialdrop.slice(...fields);
 				return materials.reduce((sum, v) => sum + v);
 			});
 		}
 
 		for (const [key, groupIdx, fields] of scheme) {
-			materialsFormatted[`drop_${key}`] = Object.values(materials[groupIdx]).map(entry => [
+			materialsFormatted[`DROP_${key}`] = Object.values(materials[groupIdx]).map(entry => [
 				entry.index + 1,
 				entry.name_tw,
 				entry.name_jp,

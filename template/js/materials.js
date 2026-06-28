@@ -5,23 +5,23 @@ import {language} from "./datatables.mjs";
 const {{{key}}} = {{{toJSON value}}};
 {{/each}}
 
-for (let j = 0; j < drop_SOL.length; ++j) {
+for (let j = 0; j < DROP_SOL.length; ++j) {
 	for (let i = 4; i < 11; ++i) {
-		const rate = 100 - drop_SOL[j][11];
-		drop_SOL[j][i] = rate * drop_SOL[j][i] / sum_SOL[j];
+		const rate = 100 - DROP_SOL[j][11];
+		DROP_SOL[j][i] = rate * DROP_SOL[j][i] / SUM_SOL[j];
 	}
 }
-for (let j = 0; j < drop_UL.length; ++j) {
-	const rate = 100 - drop_UL[j][12];
+for (let j = 0; j < DROP_UL.length; ++j) {
+	const rate = 100 - DROP_UL[j][12];
 	for (let i = 4; i < 12; ++i) {
-		drop_UL[j][i] = rate * drop_UL[j][i] / sum_UL[j];
+		DROP_UL[j][i] = rate * DROP_UL[j][i] / SUM_UL[j];
 	}
 }
 
-for (let j = 0; j < drop_ZL.length; ++j) {
-	const rate = 100 - drop_ZL[j][12];
+for (let j = 0; j < DROP_ZL.length; ++j) {
+	const rate = 100 - DROP_ZL[j][12];
 	for (let i = 4; i < 12; ++i) {
-		drop_ZL[j][i] = rate * drop_ZL[j][i] / sum_ZL[j];
+		DROP_ZL[j][i] = rate * DROP_ZL[j][i] / SUM_ZL[j];
 	}
 }
 const F = getNumFormatter(2);
@@ -52,7 +52,7 @@ function format(num) {
 	return '';
 }
 $('#SOL').DataTable({
-	data: drop_SOL,
+	data: DROP_SOL,
 	bAutoWidth: false,
 	layout: layout,
 	language,
@@ -62,7 +62,7 @@ $('#SOL').DataTable({
 	}]
 });
 $('#UL').DataTable({
-	data: drop_UL,
+	data: DROP_UL,
 	bAutoWidth: false,
 	layout: layout,
 	language,
@@ -72,7 +72,7 @@ $('#UL').DataTable({
 	}]
 });
 $('#ZL').DataTable({
-	data: drop_ZL,
+	data: DROP_ZL,
 	bAutoWidth: false,
 	layout: layout,
 	language,
