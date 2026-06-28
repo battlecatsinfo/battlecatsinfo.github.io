@@ -4,9 +4,11 @@ const S = document.getElementById('S');
 let chart;
 
 function handleInput() {
+	if (!HP.value || !kill.value)
+		return;
 	let hp = Math.max(parseInt(HP.value) || 1, 1);
 	let Ys = [{y: hp}];
-	let m = parseInt(kill.value) / 100;
+	let m = parseInt((kill.value) || 1) / 100;
 	while (true) {
 		hp -= 1 + Math.max(~~(hp * m), 1);
 		if (hp <= 0) {
