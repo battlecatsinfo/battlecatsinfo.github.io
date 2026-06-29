@@ -7,6 +7,7 @@ import {
 
 	TB_RED,
 	TB_FLOAT,
+	TB_METAL,
 	TB_BLACK,
 	TB_ANGEL,
 	TB_ALIEN,
@@ -288,7 +289,7 @@ class EnemyStatsTable {
 			traits.push('漂浮敵人');
 		if (this.enemy.trait & TB_BLACK)
 			traits.push('黑色敵人');
-		if (this.enemy)
+		if (this.enemy.trait & TB_METAL)
 			traits.push('鋼鐵敵人');
 		if (this.enemy.trait & TB_ANGEL)
 			traits.push('天使敵人');
