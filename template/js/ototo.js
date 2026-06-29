@@ -171,13 +171,13 @@ function detail(A, B) {
 	modal.style.display = 'block';
 }
 
-document.querySelectorAll('a[data-castle]').forEach(a => {
+for (const a of document.querySelectorAll('a[data-castle]')) {
 	a.addEventListener('click', (event) => {
 		event.preventDefault();
 		const node = event.currentTarget;
 		detail(parseInt(node.dataset.castle, 10), parseInt(node.dataset.part, 10));
 	});
-});
+}
 
 document.getElementById('close-modal-btn').addEventListener('click', () => {
 	modal.style.display = 'none';

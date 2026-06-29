@@ -323,7 +323,7 @@ loadAllCats().then(_cats => {
 	}
 });
 
-document.querySelectorAll("button").forEach(elem => {
+for (const elem of document.querySelectorAll("button")) {
 	elem.state = "0";
 	elem.addEventListener("click", function(event) {
 		const elem = event.currentTarget;
@@ -336,14 +336,14 @@ document.querySelectorAll("button").forEach(elem => {
 		}
 		calculate();
 	});
-});
-document.querySelectorAll(".or-and").forEach(e => {
+}
+for (const e of document.querySelectorAll(".or-and")) {
 	e.onclick = function(event) {
 		const elem = event.currentTarget;
 		elem.textContent = ("OR" == elem.textContent) ? "AND" : "OR";
 		calculate();
 	};
-});
+}
 document.getElementById("filter-go").onclick = function() {
 	calculate(simplify(filterExpr.value));
 };

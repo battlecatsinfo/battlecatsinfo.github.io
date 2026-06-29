@@ -233,7 +233,7 @@ loadAllEnemies()
 		addBtns(speciesSelectEl, params.get('kinds'));
 		calculate(filter ? filter : '', true);
 	});
-document.querySelectorAll('button').forEach(elem => {
+for (const elem of document.querySelectorAll("button")) {
 	elem.state = '0';
 	elem.addEventListener("click", function(event) {
 		const t = event.currentTarget;
@@ -246,7 +246,7 @@ document.querySelectorAll('button').forEach(elem => {
 		}
 		calculate();
 	});
-});
+}
 document.querySelectorAll('.or-and').forEach(e => {
 	e.onclick = function(event) {
 		const t = event.currentTarget;
