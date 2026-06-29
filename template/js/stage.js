@@ -389,18 +389,18 @@ function initUI() {
 					24, /* MH大狩猟チケット */
 					25, /* まもるよチケット */
 					162, /* 伝説のにんじん（傳說中的胡蘿蔔）*/
-					203, /* 傳說中的捕魚網 */
+					260, /* 傳說中的捕魚網 */
 					205, /* 聖魔大戰巧克力 */
-					212, /* 1億下載紀念轉蛋券 */
 					214, /* 傳說的購物籃 */
 					215, /* 傳說的啞鈴 */
 					216, /* 傳說的陷阱 */
-					220, /* 傳說的鈔票 */
+					259, /* 傳說的鈔票 */
 					227, /* 傳說的靈魂 */
 					235, /* 傳說金元寶 */
 					242, /* 傳說的情書 */
 					243, /* 傳說的亮晶晶 */
 					255, /* 傳說的聖水 */
+					267, /* PAC-MAN */
 				], // 活動券
 				[163, 178, 198, 231, /*248, */], // 週年活動券
 				[85, 86, 87, 88, 89, 90, 91, 140], // 城堡素材
@@ -434,10 +434,17 @@ function initUI() {
 				div.classList.add('V');
 				for (const v of line) {
 					const img = div.appendChild(new Image(128, 128));
+					const src = `/img/r/${v}.png`;
 					img.loading = 'lazy';
 					img.classList.add('S');
-					img.src = `/img/r/${v}.png`;
-					const r = (v >= 20 && v <= 22) ? v - 9 : v;
+					img.src = src;
+					let r = 0;
+					for (const reward of Object.values(stage_extra.rewards)) {
+						if (reward.icon === src) {
+							r = reward.id;
+							break;
+						}
+					}
 					img.onclick = () => search_reward(r);
 				}
 			}

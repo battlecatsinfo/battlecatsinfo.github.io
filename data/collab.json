@@ -1594,6 +1594,37 @@
 			]
 		},
 		{
+			"tw_name": "小精靈",
+			"en_name": "PAC-MAN",
+			"jp_name": "パックマン",
+			"stamp": [
+				
+			],
+			"enemies": [
+				779,
+				780,
+				781,
+				782,
+				783,
+				784
+			],
+			"stages": [
+				"2-271",
+				"2-272",
+				"13-27"
+			],
+			"links": {
+				"PAC-MAN Official Site": "https://www.pacman.com/"
+			},
+			"pools": [
+				"小精靈"
+			],
+			"img": "https://i.meee.com.tw/aq31c8R.png",
+			"stamp": [
+				
+			]
+		},
+		{
 			"tw_name": "範馬刃牙",
 			"en_name": "Hanma Baki: Son of Ogre",
 			"jp_name": "範馬刃牙",
@@ -2030,7 +2061,17 @@
 				"https://i.imgur.com/gqWdZTF.png",
 				"https://i.imgur.com/USHZu7s.png"
 			],
-			"img": "https://i.imgur.com/USHZu7s.png"
+			"img": "https://i.imgur.com/USHZu7s.png",
+			"enemies": [
+				368,
+				369,
+				370,
+				371,
+				372,
+				373,
+				374,
+				778
+			]
 		},
 		{
 			"tw_name": "實況野球",
