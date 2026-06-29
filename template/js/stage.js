@@ -1124,7 +1124,7 @@ async function render_stage() {
 			const tr = rewards.appendChild(document.createElement("tr"));
 			createReward(tr, v);
 			makeTd(tr, numStr(chances[i]) + "%" + (i == 0 && v[0] !== 100 && info3.rand !== -4 ? " （寶雷）" : ""));
-			makeTd(tr, (info3.rand === -3 || (!i && (info3.rand === 1 || v[1] >= 1e3 && v[1] < 3e4))) ? "一次" : "無");
+			makeTd(tr, (info3.rand === -3 || (!i && (info3.rand === 1 || info3.rand === 2 || v[1] >= 1e3 && v[1] < 3e4))) ? "一次" : "無");
 		}
 	}
 	rewards.parentNode.hidden = !rewards.children.length;
