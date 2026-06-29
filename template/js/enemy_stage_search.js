@@ -156,7 +156,7 @@ function makeSlot(index) {
 		picked.dataset.id = e.id;
 		pickedImg.src = e.icon;
 		pickedImg.hidden = false;
-		pickedName.textContent = e.name || e.jp_name || QQ;
+		pickedName.textContent = e.name || e.jpName || QQ;
 		searchBox.hidden = true;
 		picked.hidden = false;
 		dropdown.hidden = true;
@@ -182,7 +182,7 @@ function makeSlot(index) {
 		const hits = (q ? candidates.filter(e =>
 			!usedIds.has(e.id) && (
 				(e.name || '').toLowerCase().includes(q) ||
-				(e.jp_name || '').toLowerCase().includes(q) ||
+				(e.jpName || '').toLowerCase().includes(q) ||
 				(e.fandom || '').toLowerCase().includes(q)
 			)
 		) : candidates.filter(e => !usedIds.has(e.id)));
@@ -194,7 +194,7 @@ function makeSlot(index) {
 			img.src = e.icon;
 			img.style.cssText = 'width:36px;height:36px;object-fit:contain';
 			img.onerror = () => { img.hidden = true; };
-			li.appendChild(document.createTextNode(e.name || e.jp_name || QQ));
+			li.appendChild(document.createTextNode(e.name || e.jpName || QQ));
 			li.addEventListener('mousedown', ev => { ev.preventDefault(); pick(e); });
 			li.addEventListener('keydown', ev => {
 				if (ev.key === 'Enter') { ev.preventDefault(); pick(e); }

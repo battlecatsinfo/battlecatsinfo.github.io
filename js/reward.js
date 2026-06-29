@@ -2,7 +2,7 @@ const {SiteGenerator} = require('./base.js');
 
 class RewardSiteGenerator extends SiteGenerator {
 	run() {
-		const rewardTable = this.load_rewards();
+		const rewardTable = this.loadRewards();
 
 		const rewards = rewardTable.map(entry => {
 			const {id, name, cat_id, cat_lv, icon} = entry;
@@ -15,17 +15,17 @@ class RewardSiteGenerator extends SiteGenerator {
 			};
 		});
 
-		this.write_json('rewards.json', rewards);
+		this.writeJson('rewards.json', rewards);
 	}
 
-	load_rewards() {
-		const rewardTable = this.parse_tsv(this.load('reward.tsv'));
-		const catstatTable = this.parse_tsv(this.load('catstat.tsv'));
+	loadRewards() {
+		const rewardTable = this.parseTsv(this.load('reward.tsv'));
+		const catstatTable = this.parseTsv(this.load('catstat.tsv'));
 		const result = new Array(rewardTable.length);
 		const eggs = {};
 
 		let id = 0;
-		for (const cat of this.parse_tsv(this.load('cat.tsv'))) {
+		for (const cat of this.parseTsv(this.load('cat.tsv'))) {
 			if (cat.egg_id)
 				eggs[id] = cat.egg_id;
 			id++;

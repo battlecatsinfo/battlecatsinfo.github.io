@@ -1,4 +1,4 @@
-import {AutoIdb, loadScheme, fetch, config, numStr, round, floor} from './common.mjs';
+import {AutoIdb, loadScheme, config, numStr, round, floor} from './common.mjs';
 const units_scheme = await loadScheme('units');
 
 // Attack types
@@ -103,13 +103,13 @@ const RES_WARP = 8;        // Resist Warp 抗傳耐性
 const TRAIT_ALL = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE
 								| TB_RELIC | TB_WHITE | TB_EVA | TB_WITCH | TB_DEMON
 								| TB_INFN | TB_BEAST | TB_BARON | TB_SAGE | TB_KAIJIN;
-const trait_no_treasure = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE | TB_KAIJIN;
-const trait_treasure = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
+const TRAIT_NO_TREASURE = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | TB_BEAST | TB_BARON | TB_SAGE | TB_KAIJIN;
+const TRAIT_TREASURE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
 
-const atk_mult_abs = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_SAVAGE, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_KAIJIN]);
-const hp_mult_abs = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_KAIJIN]);
+const ATK_MULTI_AB = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_SAVAGE, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_KAIJIN]);
+const HP_MULTI_AB = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_KAIJIN]);
 
 function combineChances(count, chance) {
 	let x = 1;
@@ -165,7 +165,7 @@ function getCover(p, durationF, attackF) {
 
 function getCoverUnit(unit, chance, duration) {
 	if (!(unit.pre2 + unit.pre1)) return getCover(chance, duration, unit.attackF);
-	var pres = [];
+	const pres = [];
 	for (let i = 4; 1 <= i; i >>= 1)
 		if (unit.abi & i) switch (i) {
 			case 1:
@@ -187,7 +187,7 @@ function getCoverUnitStr(unit, chance, duration) {
 }
 
 function get_trait_short_names(trait) {
-	var s = "";
+	let s = "";
 	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && (s += units_scheme.traits.short_names[i]);
 	return s;
 }
@@ -415,8 +415,8 @@ class Unit {
 	get name() {
 		return this.info.name;
 	}
-	get jp_name() {
-		return this.info.jp_name;
+	get jpName() {
+		return this.info.jpName;
 	}
 	get desc() {
 		return this.info.desc;
@@ -553,7 +553,7 @@ class Unit {
 		if (filter instanceof Set) {
 			const ab = {};
 			for (const id of filter) {
-				if (this.ab.hasOwnProperty(id)) {
+				if (Object.hasOwn(this.ab, id)) {
 					ab[id] = this.ab[id];
 				}
 			}
@@ -562,7 +562,7 @@ class Unit {
 
 		if (Array.isArray(filter)) {
 			return filter.reduce((rv, id) => {
-				if (this.ab.hasOwnProperty(id)) {
+				if (Object.hasOwn(this.ab, id)) {
 					rv[id] = this.ab[id];
 				}
 				return rv;
@@ -571,7 +571,7 @@ class Unit {
 
 		const ab = {};
 		for (const id in filter) {
-			if (this.ab.hasOwnProperty(id)) {
+			if (Object.hasOwn(this.ab, id)) {
 				ab[id] = typeof filter[id] !== 'undefined' ? filter[id] : this.ab[id];
 			}
 		}
@@ -591,16 +591,16 @@ class Unit {
 		const ab = this._getab(abFilter);
 		let hp = this.hp;
 
-		if (ab.hasOwnProperty(AB_DSHIELD)) {
+		if (Object.hasOwn(ab, AB_DSHIELD)) {
 			const v = ab[AB_DSHIELD];
 			const s = ~~(round(v[0] * this.hpM) * this.stageM);
 			hp += ~~(s + s * (v[1] / 100) * (this.kb - 1));
 		}
-		if (ab.hasOwnProperty(AB_BARRIER)) {
+		if (Object.hasOwn(ab, AB_BARRIER)) {
 			const v = ab[AB_BARRIER];
 			hp += v[0];
 		}
-		if (ab.hasOwnProperty(AB_REVIVE)) {
+		if (Object.hasOwn(ab, AB_REVIVE)) {
 			const v = ab[AB_REVIVE];
 			hp *= (1 + (v[2] / 100) * (v[0] >= 0 ? v[0] : 999));
 		}
@@ -640,13 +640,13 @@ class Unit {
 			if (this.abEnabled(idx)) {
 				let rv = 1;
 
-				if (ab.hasOwnProperty(AB_SURGE)) {
+				if (Object.hasOwn(ab, AB_SURGE)) {
 					v = ab[AB_SURGE];
 					if (mode === 'max')
 						rv += v[3];
 					else
 						rv += v[3] * v[0] / 100;
-				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
+				} else if (Object.hasOwn(ab, AB_MINISURGE)) {
 					v = ab[AB_MINISURGE];
 					if (mode === 'max')
 						rv += v[3] * 0.2;
@@ -654,7 +654,7 @@ class Unit {
 						rv += v[3] * v[0] / 500;
 				}
 
-				if (ab.hasOwnProperty(AB_EXPLOSION)) {
+				if (Object.hasOwn(ab, AB_EXPLOSION)) {
 					v = ab[AB_EXPLOSION];
 					if (mode === 'max')
 						rv += 1;
@@ -662,12 +662,12 @@ class Unit {
 						rv += v[0] / 100;
 				}
 
-				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
+				if (!isBase && Object.hasOwn(ab, AB_WAVE)) {
 					if (mode === 'max')
 						++rv;
 					else
 						rv += ab[AB_WAVE][0] / 100;
-				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
+				} else if (!isBase && Object.hasOwn(ab, AB_MINIWAVE)) {
 					if (mode === 'max')
 						rv += 0.2;
 					else
@@ -676,7 +676,7 @@ class Unit {
 
 				atk *= rv;
 
-				if (ab.hasOwnProperty(AB_SAVAGE)) {
+				if (Object.hasOwn(ab, AB_SAVAGE)) {
 					v = ab[AB_SAVAGE];
 					if (mode === 'max')
 						atk *= 1 + v[1] / 100;
@@ -685,7 +685,7 @@ class Unit {
 				}
 
 				// handle metal case specially at last
-				if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
+				if (Object.hasOwn(ab, AB_CRIT) && !(metalMode && isMetal)) {
 					if (mode === 'max')
 						atk *= 2;
 					else
@@ -693,11 +693,11 @@ class Unit {
 				}
 			}
 
-			if (ab.hasOwnProperty(AB_STRENGTHEN)) {
+			if (Object.hasOwn(ab, AB_STRENGTHEN)) {
 				atk *= 1 + ab[AB_STRENGTHEN][1] / 100;
 			}
 
-			if (isBase && ab.hasOwnProperty(AB_ATKBASE)) {
+			if (isBase && Object.hasOwn(ab, AB_ATKBASE)) {
 				atk *= 4;
 			}
 
@@ -713,7 +713,7 @@ class Unit {
 						if (v = ab[AB_WAVE] || ab[AB_MINIWAVE]) {
 							rv += (mode === 'max') ? 1 : v[0] / 100;
 						}
-						if (ab.hasOwnProperty(AB_EXPLOSION)) {
+						if (Object.hasOwn(ab, AB_EXPLOSION)) {
 							rv += (mode === 'max') ? 1 : v[0] / 100;
 						}
 					}
@@ -730,10 +730,10 @@ class Unit {
 	}
 
 	hasAb(ab) {
-		return this.ab.hasOwnProperty(ab);
+		return Object.hasOwn(this.ab, ab);
 	}
 	hasRes(r) {
-		return (this.res ?? {}).hasOwnProperty(r);
+		return Object.hasOwn(this.res ?? {}, r);
 	}
 	getCover(chance, duration) {
 		if (!(chance && duration)) { return 0; }
@@ -1178,30 +1178,30 @@ class CatForm extends Unit {
 		traits = traits ?? TRAIT_ALL;
 		const ab = this._getab(abFilter);
 		let hp = this.hp;
-		if ((traits & TB_WITCH) && ab.hasOwnProperty(AB_WKILL))
+		if ((traits & TB_WITCH) && Object.hasOwn(ab, AB_WKILL))
 			return hp * 10 * (1 + this.env.combo_witch);
-		if ((traits & TB_EVA) && ab.hasOwnProperty(AB_EKILL))
+		if ((traits & TB_EVA) && Object.hasOwn(ab, AB_EKILL))
 			return hp * 5 * (1 + this.env.combo_eva);
 
 		const t = this.trait & traits;
-		const buff_t = t & trait_treasure;
+		const buff_t = t & TRAIT_TREASURE;
 		const buff_o = traits & TRAIT_ORB && this.lvc >= 2;
 		if (t) {
-			if (ab.hasOwnProperty(AB_RESIST)) {
+			if (Object.hasOwn(ab, AB_RESIST)) {
 				hp *= (4 + (buff_t ? this.env.resist_t : 0)) / ((buff_o ? this.env.orb_resist : 1) * (1 - this.env.combo_resist));
-			} else if (ab.hasOwnProperty(AB_RESISTS)) {
+			} else if (Object.hasOwn(ab, AB_RESISTS)) {
 				hp *= 6 + (buff_t ? this.env.resist_t : 0);
-			} else if (ab.hasOwnProperty(AB_GOOD)) {
+			} else if (Object.hasOwn(ab, AB_GOOD)) {
 				hp /= (buff_o ? this.env.orb_good_hp : 1) * (1 - this.env.combo_good) * (0.5 - (buff_t ? this.env.good_hp_t : 0));
 			}
 		}
-		if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
+		if ((traits & TB_BEAST) && Object.hasOwn(ab, AB_BSTHUNT)) {
 			hp /= 0.6;
-		} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
+		} else if ((traits & TB_BARON) && Object.hasOwn(ab, AB_BAIL)) {
 			hp /= 0.7;
-		} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
+		} else if ((traits & TB_SAGE) && Object.hasOwn(ab, AB_SAGE)) {
 			hp /= 0.5;
-		} else if ((traits & TB_KAIJIN) && ab.hasOwnProperty(AB_KAIJIN)) {
+		} else if ((traits & TB_KAIJIN) && Object.hasOwn(ab, AB_KAIJIN)) {
 			hp /= 0.4;
 		}
 
@@ -1249,20 +1249,20 @@ class CatForm extends Unit {
 				return atk;
 			}
 
-			if (ab.hasOwnProperty(AB_ONLY) && !(this.trait & traits) && !isBase) {
+			if (Object.hasOwn(ab, AB_ONLY) && !(this.trait & traits) && !isBase) {
 				return 0;
 			}
 
 			if (this.abEnabled(idx)) {
 				let rv = 1;
 
-				if (ab.hasOwnProperty(AB_SURGE)) {
+				if (Object.hasOwn(ab, AB_SURGE)) {
 					v = ab[AB_SURGE];
 					if (mode === 'max')
 						rv += v[3];
 					else
 						rv += v[3] * v[0] / 100;
-				} else if (ab.hasOwnProperty(AB_MINISURGE)) {
+				} else if (Object.hasOwn(ab, AB_MINISURGE)) {
 					v = ab[AB_MINISURGE];
 					if (mode === 'max')
 						rv += v[3] * 0.2;
@@ -1270,7 +1270,7 @@ class CatForm extends Unit {
 						rv += v[3] * v[0] / 500;
 				}
 
-				if (ab.hasOwnProperty(AB_EXPLOSION)) {
+				if (Object.hasOwn(ab, AB_EXPLOSION)) {
 					v = ab[AB_EXPLOSION];
 					if (mode === 'max')
 						rv += 1;
@@ -1279,12 +1279,12 @@ class CatForm extends Unit {
 				}
 
 				// specially exclude bases they all have IMU_WAVE
-				if (!isBase && ab.hasOwnProperty(AB_WAVE)) {
+				if (!isBase && Object.hasOwn(ab, AB_WAVE)) {
 					if (mode === 'max')
 						++rv;
 					else
 						rv += ab[AB_WAVE][0] / 100;
-				} else if (!isBase && ab.hasOwnProperty(AB_MINIWAVE)) {
+				} else if (!isBase && Object.hasOwn(ab, AB_MINIWAVE)) {
 					if (mode === 'max')
 						rv += 0.2;
 					else
@@ -1293,7 +1293,7 @@ class CatForm extends Unit {
 
 				atk *= rv;
 
-				if (ab.hasOwnProperty(AB_SAVAGE)) {
+				if (Object.hasOwn(ab, AB_SAVAGE)) {
 					v = ab[AB_SAVAGE];
 					if (mode === 'max')
 						atk *= 1 + v[1] / 100;
@@ -1302,7 +1302,7 @@ class CatForm extends Unit {
 				}
 
 				// handle metal case specially at last
-				if (ab.hasOwnProperty(AB_CRIT) && !(metalMode && isMetal)) {
+				if (Object.hasOwn(ab, AB_CRIT) && !(metalMode && isMetal)) {
 					if (mode === 'max')
 						atk *= 2;
 					else
@@ -1310,38 +1310,38 @@ class CatForm extends Unit {
 				}
 			}
 
-			if (ab.hasOwnProperty(AB_STRENGTHEN)) {
+			if (Object.hasOwn(ab, AB_STRENGTHEN)) {
 				atk *= 1 + (ab[AB_STRENGTHEN][1] + this.env.combo_strengthen) / 100;
 			}
 
-			if (isBase && ab.hasOwnProperty(AB_ATKBASE))
+			if (isBase && Object.hasOwn(ab, AB_ATKBASE))
 				return atk *= 4;
 
-			if ((traits & TB_BEAST) && ab.hasOwnProperty(AB_BSTHUNT)) {
+			if ((traits & TB_BEAST) && Object.hasOwn(ab, AB_BSTHUNT)) {
 				atk *= 2.5;
-			} else if ((traits & TB_BARON) && ab.hasOwnProperty(AB_BAIL)) {
+			} else if ((traits & TB_BARON) && Object.hasOwn(ab, AB_BAIL)) {
 				atk *= 1.6;
-			} else if ((traits & TB_SAGE) && ab.hasOwnProperty(AB_SAGE)) {
+			} else if ((traits & TB_SAGE) && Object.hasOwn(ab, AB_SAGE)) {
 				atk *= 1.2;
-			} else if ((traits & TB_KAIJIN) && ab.hasOwnProperty(AB_KAIJIN)) {
+			} else if ((traits & TB_KAIJIN) && Object.hasOwn(ab, AB_KAIJIN)) {
 				atk *= 2.5;
 			}
 
-			if (ab.hasOwnProperty(AB_EKILL) && (traits & TB_EVA))
+			if (Object.hasOwn(ab, AB_EKILL) && (traits & TB_EVA))
 				return atk * 5 * (1 + this.env.combo_eva);
 
-			if (ab.hasOwnProperty(AB_WKILL) && (traits & TB_WITCH))
+			if (Object.hasOwn(ab, AB_WKILL) && (traits & TB_WITCH))
 				return atk * 5 * (1 + this.env.combo_witch);
 
 			const t = this.trait & traits;
-			const buff_t = t & trait_treasure;
+			const buff_t = t & TRAIT_TREASURE;
 			const buff_o = traits & TRAIT_ORB && this.lvc >= 2;
 			if (t) {
-				if (ab.hasOwnProperty(AB_MASSIVE)) {
+				if (Object.hasOwn(ab, AB_MASSIVE)) {
 					atk *= (1 + this.env.combo_massive) * (3 + (buff_t ? this.env.massive_t : 0)) + (buff_o ? this.env.orb_massive : 0);
-				} else if (ab.hasOwnProperty(AB_MASSIVES)) {
+				} else if (Object.hasOwn(ab, AB_MASSIVES)) {
 					atk *= 5 + (buff_t ? this.env.massive_t : 0);
-				} else if (ab.hasOwnProperty(AB_GOOD)) {
+				} else if (Object.hasOwn(ab, AB_GOOD)) {
 					atk *= (1 + this.env.combo_good) * (1.5  + (buff_t ? this.env.good_atk_t : 0)) + (buff_o ? this.env.orb_good_atk : 0);
 				}
 			}
@@ -1355,7 +1355,7 @@ class CatForm extends Unit {
 						if (v = ab[AB_SURGE] || ab[AB_MINISURGE]) {
 							rv += (mode === 'max') ? v[3] : v[3] * v[0] / 100;
 						}
-						if (ab.hasOwnProperty(AB_EXPLOSION)) {
+						if (Object.hasOwn(ab, AB_EXPLOSION)) {
 							v = ab[AB_EXPLOSION];
 							if (mode === 'max')
 								rv += 1;
@@ -1426,7 +1426,7 @@ class CatForm extends Unit {
 
 	applyTalent(talent, level) {
 		if (!level) return;
-		var t, x, y, z;
+		let t, x, y, z;
 		level -= 1;
 		const maxLv = talent[1] - 1;
 		const inc1 = ~~(talent[2] + level * (talent[3] - talent[2]) / maxLv);
@@ -1782,19 +1782,19 @@ class CatForm extends Unit {
 	}
 	get slowTime() {
 		const t = super.slowTime;
-		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_slow);
+		return ((this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_slow);
 	}
 	get stopTime() {
 		const t = super.stopTime;
-		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_stop);
+		return ((this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_stop);
 	}
 	get weakTime() {
 		const t = super.weakTime;
-		return ((this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_weak);
+		return ((this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_weak);
 	}
 	get curseTime() {
 		const t = super.curseTime;
-		return (this.trait & trait_treasure) ? ~~(t * this.env.dur_t) : t;
+		return (this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t;
 	}
 	get strengthenExtent() {
 		const t = super.strengthenExtent;
@@ -2025,7 +2025,7 @@ class Cat {
 		return value;
 	}
 	getLevelMulti(level) {
-		var c, multi = .8;
+		let c, multi = .8;
 		let n = 0;
 		for (c of this.lvCurve) {
 			if (level <= n) break;
@@ -2161,7 +2161,7 @@ function createResIcons(res, p) {
 }
 
 function getAbiString(abi) {
-	var strs;
+	let strs;
 	return abi ? (strs = [], 4 & abi && strs.push('一'), 2 & abi && strs.push('二'),
 		1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
 }
@@ -2227,9 +2227,9 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 		}), attackF);
 		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${atks}`;
 
-		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
+		if (form.trait & TRAIT_TREASURE && form.trait & TRAIT_NO_TREASURE) {
 			let atksNoTrea = fmt(form.gettatks({
-				traits: trait_no_treasure,
+				traits: TRAIT_NO_TREASURE,
 				filter,
 				mode,
 				metal: false,
@@ -2237,7 +2237,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 			if (atks !== atksNoTrea)
 				s += showTrait ? 
-					`（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${atksNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）` :
+					`（${get_trait_short_names(form.trait & TRAIT_TREASURE)}）/${plus_s}${atksNoTrea}（${get_trait_short_names(form.trait & TRAIT_NO_TREASURE)}）` :
 					`（${atksNoTrea}）`;
 		}
 		maxLen = Math.max(s.length, maxLen);
@@ -2280,12 +2280,12 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 		let hp = numStr(floor(form.getthp({filter})) / KB);
 		let s = `${getAbilityShortNames(line).join('・')}:${plus_s}${hp}`;
 
-		if (form.trait & trait_treasure && form.trait & trait_no_treasure) {
-			let hpNoTrea = numStr(floor(form.getthp({filter, traits: trait_no_treasure})) / KB);
+		if (form.trait & TRAIT_TREASURE && form.trait & TRAIT_NO_TREASURE) {
+			let hpNoTrea = numStr(floor(form.getthp({filter, traits: TRAIT_NO_TREASURE})) / KB);
 
 			if (hp !== hpNoTrea)
 				s += showTrait ? 
-					`（${get_trait_short_names(form.trait & trait_treasure)}）/${plus_s}${hpNoTrea}（${get_trait_short_names(form.trait & trait_no_treasure)}）` :
+					`（${get_trait_short_names(form.trait & TRAIT_TREASURE)}）/${plus_s}${hpNoTrea}（${get_trait_short_names(form.trait & TRAIT_NO_TREASURE)}）` :
 					`（${hpNoTrea}）`;
 		}
 		maxLen = Math.max(s.length, maxLen);
@@ -2308,7 +2308,7 @@ function updateHp(form, filter, W) {
 
 		if (first) {
 			W.textContent = hp;
-			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
+			if (!(form.trait & TRAIT_TREASURE && form.trait & TRAIT_NO_TREASURE))
 				return;
 		} else {
 			if (hp === old_hp)
@@ -2321,7 +2321,7 @@ function updateHp(form, filter, W) {
 			return;
 		}
 
-		traits = trait_no_treasure;
+		traits = TRAIT_NO_TREASURE;
 		old_hp = hp;
 	}
 }
@@ -2349,7 +2349,7 @@ function updateAtk(form, filter, W1, W2) {
 		if (first) {
 			W1.append(atks);
 			W2.append(dps);
-			if (!(form.trait & trait_treasure && form.trait & trait_no_treasure))
+			if (!(form.trait & TRAIT_TREASURE && form.trait & TRAIT_NO_TREASURE))
 				return;
 		} else {
 			if (atks === old_atks)
@@ -2367,7 +2367,7 @@ function updateAtk(form, filter, W1, W2) {
 			return;
 		}
 
-		traits = trait_no_treasure;
+		traits = TRAIT_NO_TREASURE;
 		old_atks = atks;
 	}
 }
@@ -2401,8 +2401,8 @@ export {
 	TB_SAGE,
 	TB_KAIJIN,
 	TRAIT_ALL,
-	trait_no_treasure,
-	trait_treasure,
+	TRAIT_NO_TREASURE,
+	TRAIT_TREASURE,
 
 	AB_STRENGTHEN,
 	AB_SURVIVE,
@@ -2504,6 +2504,6 @@ export {
 	updateHp,
 	updateAtk,
 
-	atk_mult_abs,
-	hp_mult_abs,
+	ATK_MULTI_AB,
+	HP_MULTI_AB,
 };

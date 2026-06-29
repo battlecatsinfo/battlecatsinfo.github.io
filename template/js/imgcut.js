@@ -6,10 +6,10 @@ const edit = document.getElementById('edit');
 const img = new Image();
 const preview = document.getElementById('preview');
 const pctx = preview.getContext('2d');
-const color_select = document.getElementById('color-select');
-var last_t;
-var cut;
-var imgloaded = false;
+const colorSelectEl = document.getElementById('color-select');
+let lastT;
+let cut;
+let imgloaded = false;
 
 let imgfile;
 let cutfile;
@@ -58,7 +58,7 @@ function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 	const c = cut.cuts[i];
-	ctx.strokeStyle = color_select.value;
+	ctx.strokeStyle = colorSelectEl.value;
 	ctx.strokeRect(c[0], c[1], c[2], c[3]);
 }
 
@@ -125,9 +125,9 @@ function createLine(c, i) {
 	}
 	tr.onclick = function(event) {
 		event.stopPropagation();
-		if (last_t) last_t.classList.remove('ihover');
-		last_t = event.currentTarget;
-		last_t.classList.add('ihover');
+		if (lastT) lastT.classList.remove('ihover');
+		lastT = event.currentTarget;
+		lastT.classList.add('ihover');
 		draw();
 	}
 	tdx.f = tdy.f = tdw.f = tdh.f = tdn.f = true;
@@ -201,13 +201,13 @@ function createLine(c, i) {
 
 function exportaimg() {
 	if (!imgloaded) return;
-	var a = document.createElement("a");
+	let a = document.createElement("a");
 	a.href = img.src;
 	a.click();
 }
 
 function exportcut() {
-	var a = document.createElement("a");
+	let a = document.createElement("a");
 	const idx = cutfile.lastIndexOf('/');
 	a.download = idx == -1 ? cutfile : cutfile.slice(idx + 1);
 	a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(`[imgcut]\n0\n${cut.name}\n${cut.cuts.length}\n${cut.cuts.map(x => x.join(',')).join('\n')}\n`);
@@ -244,7 +244,7 @@ function exportimg() {
 	preview.height = c[3];
 	pctx.clearRect(0, 0, preview.width, preview.height);
 	pctx.drawImage(img, c[0], c[1], c[2], c[3], 0, 0, c[2], c[3]);
-	var a = document.createElement("a");
+	let a = document.createElement("a");
 	a.download = 'cut ' + i.toString() + (c[4] ? ` (${c[4]})` : '');
 	a.href = preview.toDataURL();
 	a.click();
@@ -261,17 +261,17 @@ function addline() {
 		let n = e.nextElementSibling;
 		do
 			n.children[0].innerText = ++idx;
-		while (n = n.nextElementSibling);
-		if (last_t) last_t.classList.remove('ihover');
-		last_t = e.nextElementSibling;
-		last_t.classList.add('ihover');
+		while ((n = n.nextElementSibling));
+		if (lastT) lastT.classList.remove('ihover');
+		lastT = e.nextElementSibling;
+		lastT.classList.add('ihover');
 		return;
 	}
 	cut.cuts.push(c);
-	if (last_t) last_t.classList.remove('ihover');
-	last_t = createLine(c, cut.cuts.length - 1);
-	last_t.classList.add('ihover');
-	edit.appendChild(last_t);
+	if (lastT) lastT.classList.remove('ihover');
+	lastT = createLine(c, cut.cuts.length - 1);
+	lastT.classList.add('ihover');
+	edit.appendChild(lastT);
 }
 
 function removeline() {
@@ -292,7 +292,7 @@ function removeline() {
 	edit.removeChild(e);
 }
 document.onclick = function() {
-	last_t = null;
+	lastT = null;
 	for (let c of edit.getElementsByClassName('ihover'))
 		c.classList.remove('ihover');
 }
@@ -359,11 +359,11 @@ function importCutU() {
 }
 document.onpaste = function(event) {
 	const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-	for (var index in items) {
+	for (let index in items) {
 		const item = items[index];
 		if (item.kind === 'file') {
-			var blob = item.getAsFile();
-			var reader = new FileReader();
+			let blob = item.getAsFile();
+			let reader = new FileReader();
 			reader.onload = function(event) {
 				img.src = event.target.result;
 				imgfile = 'clipboard';
@@ -379,7 +379,7 @@ async function pasteImg() {
 		const imageTypes = c.types.filter(x => x.startsWith('image/'));
 		for (const t of imageTypes) {
 			const blob = await c.getType(t);
-			var reader = new FileReader();
+			let reader = new FileReader();
 			reader.onload = function(event) {
 				img.src = event.target.result;
 				imgfile = 'clipboard';
@@ -425,7 +425,8 @@ async function pasteImg() {
 			img.src = `/img/u/${id}/c${form}.png`;
 		}
 	} else {
-		if (imgfile = params.get('imgfile')) {
+		imgfile = params.get('imgfile')
+		if (imgfile) {
 			img.src = imgfile;
 		} else {
 			ctx.font = "30px serif";
@@ -433,7 +434,8 @@ async function pasteImg() {
 			ctx.textBaseline = 'middle';
 			ctx.fillText("導入圖片以開始", canvas.width / 2, canvas.height / 2);
 		}
-		if (cutfile = params.get('cutfile')) {
+		cutfile = params.get('cutfile');
+		if (cutfile) {
 			fetch(cutfile)
 				.then(res => res.text())
 				.then(text => {

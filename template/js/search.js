@@ -1,42 +1,42 @@
 import {config, numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
 
-var cats;
-var cats_old;
-var hide_search = false;
-var last_forms;
-var form_s = 5;
-var per_page = 10;
-let def_lv;
-let plus_lv;
-let display_forms;
+const oriExpr = document.getElementById('ori-expr');
+const filterExpr = document.getElementById("filter-expr");
+const sortExpr = document.getElementById("sort-expr");
+const searchStatusTipEl = document.getElementById("search-status-tip");
+const tbodyEl = document.getElementById("tbody");
+const pagerEl = document.getElementById("pager");
+const searchResultsEl = document.getElementById("search-results");
+const toggleResultsEl = document.getElementById("toggle-results");
+const onlyMyGav = document.getElementById("only-my-fav");
+const defLvEl = document.getElementById("def-lv");
+const plusLvEl = document.getElementById("plus-lv");
+const raritySelectEl = document.getElementById("rarity-select");
+const traitSelectEl = document.getElementById("trait-select");
+const atkSelectEl = document.getElementById("atk-type-select");
+const abilitySelectEl = document.getElementById("ability-select");
+const nameSearchEl = document.getElementById("name-search");
+const atkModeToggleEl = atkSelectEl.firstElementChild.firstElementChild;
+const traitModeToggleEl = traitSelectEl.firstElementChild.firstElementChild;
+const abilitySelectToggleEl = abilitySelectEl.firstElementChild.firstElementChild;
 
-const ori_expr = document.getElementById('ori-expr');
-const filter_expr = document.getElementById("filter-expr");
-const sort_expr = document.getElementById("sort-expr");
-const search_result = document.getElementById("search-result");
-const tbody = document.getElementById("tbody");
-const pages_a = document.getElementById("pages-a");
-const tables = document.getElementById("tables");
-const toggle_s = document.getElementById("toggle-s");
-const only_my_fav = document.getElementById("only-my-fav");
-const def_lv_e = document.getElementById("def-lv");
-const plus_lv_e = document.getElementById("plus-lv");
-const cattype_e = document.getElementById("cattype");
-const trait_s = document.getElementById("trait-s");
-const atk_s = document.getElementById("atk-s");
-const ab_savage = document.getElementById("ab-savage");
-const atkBtn = atk_s.firstElementChild.firstElementChild;
-const traitBtn = trait_s.firstElementChild.firstElementChild;
-const abBtn = ab_savage.firstElementChild.firstElementChild;
-const name_search = document.getElementById("name-search");
+let cats;
+let catsOld;
+let hideSearch = false;
+let lastForms;
+let formSelect = 5;
+let perPage = 10;
+let defLv;
+let plusLv;
+let displayForms;
 
 function rerender(page) {
 	const url = new URL(location.href);
 	url.searchParams.set("page", page);
 	if (location.href != url.href)
 		history.pushState({}, "", url);
-	renderTable(last_forms, page);
+	renderTable(lastForms, page);
 }
 
 function onPagerClick(event) {
@@ -45,27 +45,27 @@ function onPagerClick(event) {
 }
 
 document.getElementById('per_page').oninput = function setRange(e) {
-	per_page = parseInt(e.currentTarget.value);
+	perPage = parseInt(e.currentTarget.value);
 	const url = new URL(location.href);
-	if (per_page != 10) {
-		url.searchParams.set('per', per_page);
+	if (perPage != 10) {
+		url.searchParams.set('per', perPage);
 	} else {
 		url.searchParams.delete('per');
 	}
 	history.pushState({}, '', url);
-	renderTable(last_forms);
+	renderTable(lastForms);
 };
 
 function filterByNameOrId(results) {
-	const key = name_search.value.toLowerCase().trim();
+	const key = nameSearchEl.value.toLowerCase().trim();
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
 
-	if (form_s === 0) {
+	if (formSelect === 0) {
 		return results.filter(result => {
 			const f = result[1];
-			return (f.id === qid) || f.name.toLowerCase().includes(key) || f.jp_name.toLowerCase().includes(key);
+			return (f.id === qid) || f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key);
 		});
 	}
 
@@ -73,7 +73,7 @@ function filterByNameOrId(results) {
 	for (const cat of cats) {
 		if (!(
 			cat.id === qid ||
-			cat.forms.some(f => f.name.toLowerCase().includes(key) || f.jp_name.toLowerCase().includes(key))
+			cat.forms.some(f => f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key))
 		)) {
 			cats.delete(cat);
 		}
@@ -82,24 +82,24 @@ function filterByNameOrId(results) {
 }
 
 function renderTable(forms, page = 1) {
-	last_forms = forms;
+	lastForms = forms;
 	forms = filterByNameOrId(forms);
-	var H = per_page * page;
-	display_forms = forms.slice(H - per_page, H);
-	tbody.textContent = "";
-	search_result.textContent = `顯示第${H - per_page + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
+	let H = perPage * page;
+	displayForms = forms.slice(H - perPage, H);
+	tbodyEl.textContent = "";
+	searchStatusTipEl.textContent = `顯示第${H - perPage + 1}到第${Math.min(forms.length, H)}個結果，共有${forms.length}個結果`;
 
 	if (0 == forms.length) {
-		tbody.innerHTML = '<tr><td colSpan="13">沒有符合條件的貓咪！</td></tr>';
+		tbodyEl.innerHTML = '<tr><td colSpan="13">沒有符合條件的貓咪！</td></tr>';
 		return;
 	}
 
-	pages_a.textContent = '';
+	pagerEl.textContent = '';
 	for (const c of pagination({
 		page,
-		max: Math.ceil(forms.length / per_page),
+		max: Math.ceil(forms.length / perPage),
 	})) {
-		const td = pages_a.appendChild(document.createElement("td"));
+		const td = pagerEl.appendChild(document.createElement("td"));
 		td.textContent = c;
 		td._i = c;
 		if (page == c) {
@@ -109,18 +109,18 @@ function renderTable(forms, page = 1) {
 		}
 	}
 
-	for (let i = 0; i < display_forms.length; ++i) {
-		const tr = tbody.appendChild(document.createElement("tr"));
-		const F = display_forms[i][1];
-		const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", F.hp, F.atkm, round(F.dps), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(F.price), numStr(display_forms[i][0])];
+	for (let i = 0; i < displayForms.length; ++i) {
+		const tr = tbodyEl.appendChild(document.createElement("tr"));
+		const F = displayForms[i][1];
+		const texts = [F.id + "-" + (F.lvc + 1), `Lv ${F.baseLv} + ` + F.plusLv, "", "", F.hp, F.atkm, round(F.dps), F.kb, F.range, numStrT(F.attackF), F.speed, numStr(F.price), numStr(displayForms[i][0])];
 		for (let j = 0; j < 13; ++j) {
-			var e = tr.appendChild(document.createElement("td"));
+			let e = tr.appendChild(document.createElement("td"));
 			if (j == 3) {
 				if (F.name)
 					e.appendChild(document.createTextNode(F.name));
-				if (F.jp_name) {
+				if (F.jpName) {
 					e.appendChild(document.createElement("br"));
-					e.appendChild(document.createTextNode(F.jp_name));
+					e.appendChild(document.createTextNode(F.jpName));
 				}
 			} else {
 				e.textContent = texts[j].toString();
@@ -138,39 +138,39 @@ function simplify(code) {
 }
 
 function calculate(code = "", noUpdateUrl) {
-	const sortCode = simplify(sort_expr.value);
-	def_lv = Math.min(Math.max(parseInt(def_lv_e.value), 1), 60);
-	plus_lv = Math.min(Math.max(parseInt(plus_lv_e.value), 0), 90);
-	def_lv_e.value = def_lv;
-	plus_lv_e.value = plus_lv;
+	const sortCode = simplify(sortExpr.value);
+	defLv = Math.min(Math.max(parseInt(defLvEl.value), 1), 60);
+	plusLv = Math.min(Math.max(parseInt(plusLvEl.value), 0), 90);
+	defLvEl.value = defLv;
+	plusLvEl.value = plusLv;
 	const url = new URL(location.pathname, location.href);
 	if (code.length) {
 		url.searchParams.set("filter", code);
 	} else {
 		const codes = [],
-			cattypes = Array.from(cattype_e.querySelectorAll(".o-selected"));
+			cattypes = Array.from(raritySelectEl.querySelectorAll(".o-selected"));
 		if (cattypes.length) {
 			let M = cattypes.map(x => x.getAttribute("data-expr"));
 			url.searchParams.set("cattypes", M.join(" ")), codes.push(M.join("||"));
 		}
-		const traits = Array.from(trait_s.querySelectorAll(".o-selected"));
+		const traits = Array.from(traitSelectEl.querySelectorAll(".o-selected"));
 		if (traits.length) {
 			let M = traits.map(x => x.getAttribute("data-expr"));
-			url.searchParams.set("traits", M.join(" ")), "OR" == traitBtn.textContent ? codes.push(M.join("||")) : codes.push(M.join("&&"));
+			url.searchParams.set("traits", M.join(" ")), "OR" == traitModeToggleEl.textContent ? codes.push(M.join("||")) : codes.push(M.join("&&"));
 		}
-		const atks = Array.from(atk_s.querySelectorAll(".o-selected"));
+		const atks = Array.from(atkSelectEl.querySelectorAll(".o-selected"));
 		if (atks.length) {
 			let M = atks.map(x => x.getAttribute("data-expr"));
-			url.searchParams.set("atks", M.join(" ")), "OR" == atkBtn.textContent ? codes.push(M.join("||")) : codes.push(M.join("&&"));
+			url.searchParams.set("atks", M.join(" ")), "OR" == atkModeToggleEl.textContent ? codes.push(M.join("||")) : codes.push(M.join("&&"));
 		}
-		const abs = Array.from(ab_savage.querySelectorAll(".o-selected"));
+		const abs = Array.from(abilitySelectEl.querySelectorAll(".o-selected"));
 		if (abs.length) {
 			let M = abs.map(x => x.getAttribute("data-expr"));
-			url.searchParams.set("abs", M.join(" ")), "OR" == abBtn.textContent ? codes.push(M.join("||")) : codes.push(M.join("&&"));
+			url.searchParams.set("abs", M.join(" ")), "OR" == abilitySelectToggleEl.textContent ? codes.push(M.join("||")) : codes.push(M.join("&&"));
 		}
-		ori_expr.value = code = codes.length ? codes.map(x => `(${x})`).join("&&") : "1";
+		oriExpr.value = code = codes.length ? codes.map(x => `(${x})`).join("&&") : "1";
 	}
-	var results = [],
+	let results = [],
 		pcode;
 	try {
 		pcode = pegjs.parse(code);
@@ -180,7 +180,7 @@ function calculate(code = "", noUpdateUrl) {
 	}
 	let f = eval(`form => (${pcode})`);
 
-	switch (form_s) {
+	switch (formSelect) {
 		case 0:
 			for (const c of cats) {
 				results.push(...c.forms);
@@ -191,7 +191,7 @@ function calculate(code = "", noUpdateUrl) {
 		case 3:
 		case 4:
 			for (const c of cats) {
-				const F = c.forms[form_s - 1];
+				const F = c.forms[formSelect - 1];
 				F && results.push(F);
 			}
 			break;
@@ -205,8 +205,8 @@ function calculate(code = "", noUpdateUrl) {
 
 	try {
 		results = results.filter(form => {
-			form.baseLv = def_lv;
-			form.plusLv = plus_lv;
+			form.baseLv = defLv;
+			form.plusLv = plusLv;
 			return f(form);
 		});
 	} catch (ex) {
@@ -222,9 +222,8 @@ function calculate(code = "", noUpdateUrl) {
 	}
 	let fn = eval(`form => (${pcode})`);
 	try {
-		results = results.map((form, i) => {
-			let c = cats_old[form.id];
-			var x = fn(form);
+		results = results.map((form) => {
+			let x = fn(form);
 			return [isFinite(x) ? x : 0, form];
 		}).sort((a, b) => b[0] - a[0]);
 	} catch (ex) {
@@ -232,44 +231,44 @@ function calculate(code = "", noUpdateUrl) {
 		throw ex;
 	}
 	renderTable(results);
-	if (def_lv != 50) // Lv50 (default)
-		url.searchParams.set("deflv", def_lv); // base level
-	if (plus_lv) // +0 (default)
-		url.searchParams.set("pluslv", plus_lv); // plus level
+	if (defLv != 50) // Lv50 (default)
+		url.searchParams.set("deflv", defLv); // base level
+	if (plusLv) // +0 (default)
+		url.searchParams.set("pluslv", plusLv); // plus level
 	if (sortCode.length && sortCode != '1')
 		url.searchParams.set("sort", sortCode); // sort expression
-	const a = "OR" == atkBtn.textContent ? "1" : "0";
-	const b = "OR" == traitBtn.textContent ? "1" : "0";
-	const c = "OR" == abBtn.textContent ? "1" : "0";
+	const a = "OR" == atkModeToggleEl.textContent ? "1" : "0";
+	const b = "OR" == traitModeToggleEl.textContent ? "1" : "0";
+	const c = "OR" == abilitySelectToggleEl.textContent ? "1" : "0";
 	const ao = a + b + c;
 	if (ao != '000') // AND/AND/AND (default)
 		url.searchParams.set("ao", ao); // AND/OR switch
-	if (form_s != 5) // highest (default)
-		url.searchParams.set('form', form_s); // all/first form/envolved/true form/highest
-	if (per_page != 10) // 10 result per page (default)
-		url.searchParams.set('per', per_page); // num results per page
+	if (formSelect != 5) // highest (default)
+		url.searchParams.set('form', formSelect); // all/first form/envolved/true form/highest
+	if (perPage != 10) // 10 result per page (default)
+		url.searchParams.set('per', perPage); // num results per page
 	if (location.href != url.href && !noUpdateUrl)
 		history.pushState({}, "", url);
 }
 
 function addBtns(parent, s) {
 	if (s) {
-		var c;
+		let c;
 		s.split(" ");
 		for (c of parent.querySelectorAll("button")) s.includes(c.parentNode.getAttribute("data-expr")) && c.parentNode.classList.add("o-selected");
 	}
 }
 
 loadAllCats().then(_cats => {
-	cats_old = cats = _cats;
+	catsOld = cats = _cats;
 
 	const params = new URLSearchParams(location.search);
 
 	document.getElementById('loader').style.display = 'none';
 	document.getElementById('main').style.display = 'block';
 
-	for (let i = 0, I = cats_old.length; i < I; ++i) {
-		const cat = cats_old[i];
+	for (let i = 0, I = catsOld.length; i < I; ++i) {
+		const cat = catsOld[i];
 		for (let j = 2, J = cat.forms.length; j < J; ++j) {
 			const TF = cat.forms[j];
 			if (!TF?.talents) { break; }
@@ -278,31 +277,31 @@ loadAllCats().then(_cats => {
 	}
 	let Q = params.get('q');
 	if (Q) {
-		plus_lv = 0;
-		def_lv = 50;
-		name_search.value = Q;
+		plusLv = 0;
+		defLv = 50;
+		nameSearchEl.value = Q;
 	}
 	const filter = params.get('filter');
 	const sort = params.get('sort');
 	if (filter)
-		filter_expr.value = filter;
+		filterExpr.value = filter;
 	if (sort)
-		sort_expr.value = sort;
+		sortExpr.value = sort;
 	const ao = params.get('ao');
 	if (ao) {
-		atkBtn.textContent = ao[0] == '1' ? 'OR' : 'AND';
-		traitBtn.textContent = ao[1] == '1' ? 'OR' : 'AND';
-		abBtn.textContent = ao[2] == '1' ? 'OR' : 'AND';
+		atkModeToggleEl.textContent = ao[0] == '1' ? 'OR' : 'AND';
+		traitModeToggleEl.textContent = ao[1] == '1' ? 'OR' : 'AND';
+		abilitySelectToggleEl.textContent = ao[2] == '1' ? 'OR' : 'AND';
 	}
-	addBtns(cattype_e, params.get("cattypes"));
-	addBtns(atk_s, params.get("atks"));
-	addBtns(ab_savage, params.get("abs"));
-	addBtns(trait_s, params.get("traits"));
+	addBtns(raritySelectEl, params.get("cattypes"));
+	addBtns(atkSelectEl, params.get("atks"));
+	addBtns(abilitySelectEl, params.get("abs"));
+	addBtns(traitSelectEl, params.get("traits"));
 	Q = params.get('form');
 	if (Q) {
 		Q = parseInt(Q);
 		if (isFinite(Q) && Q >= 0 && Q <= 5) {
-			form_s = parseInt(Q);
+			formSelect = parseInt(Q);
 			document.getElementById('form-s').selectedIndex = Q;
 		}
 	}
@@ -310,7 +309,7 @@ loadAllCats().then(_cats => {
 	if (Q) {
 		Q = parseInt(Q);
 		if (isFinite(Q) && Q > 0) {
-			per_page = Q;
+			perPage = Q;
 			document.getElementById('per_page').value = Q;
 		}
 	}
@@ -346,52 +345,52 @@ document.querySelectorAll(".or-and").forEach(e => {
 	};
 });
 document.getElementById("filter-go").onclick = function() {
-	calculate(simplify(filter_expr.value));
+	calculate(simplify(filterExpr.value));
 };
 document.getElementById("filter-clear").onclick = function() {
 	function fn(x) {
 		x.classList.remove("o-selected");
 	}
-	cattype_e.querySelectorAll(".o-selected").forEach(fn);
-	trait_s.querySelectorAll(".o-selected").forEach(fn);
-	atk_s.querySelectorAll(".o-selected").forEach(fn);
-	ab_savage.querySelectorAll(".o-selected").forEach(fn);
-	ori_expr.value = "";
-	filter_expr.value = "";
-	sort_expr.value = "";
+	raritySelectEl.querySelectorAll(".o-selected").forEach(fn);
+	traitSelectEl.querySelectorAll(".o-selected").forEach(fn);
+	atkSelectEl.querySelectorAll(".o-selected").forEach(fn);
+	abilitySelectEl.querySelectorAll(".o-selected").forEach(fn);
+	oriExpr.value = "";
+	filterExpr.value = "";
+	sortExpr.value = "";
 	calculate();
 };
-only_my_fav.onchange = function() {
+onlyMyGav.onchange = function() {
 	let favs;
-	if (only_my_fav.checked) {
+	if (onlyMyGav.checked) {
 		favs = config.starCats;
 		if (!favs.length)
 			return alert('我的最愛裡還沒有貓咪！\n可以去貓咪資訊裡加入我的最愛或用貓咪圖鑑管理！');
-		favs = favs.map(x => cats_old[x.id]);
+		favs = favs.map(x => catsOld[x.id]);
 	}
-	cats = only_my_fav.checked ? favs : cats_old;
-	calculate(simplify(ori_expr.value));
+	cats = onlyMyGav.checked ? favs : catsOld;
+	calculate(simplify(oriExpr.value));
 };
-toggle_s.onclick = function() {
-	if (hide_search) {
-		tables.style.left = "390px";
-		tables.style.width = "calc(100% - 400px)";
+toggleResultsEl.onclick = function() {
+	if (hideSearch) {
+		searchResultsEl.style.left = "390px";
+		searchResultsEl.style.width = "calc(100% - 400px)";
 		document.documentElement.style.setProperty("--mhide", "block");
-		toggle_s.textContent = "隱藏搜尋器";
+		toggleResultsEl.textContent = "隱藏搜尋器";
 	} else {
 		document.documentElement.style.setProperty("--mhide", "none");
-		tables.style.left = "0px";
-		tables.style.width = "100%";
-		toggle_s.textContent = "顯示搜尋器";
+		searchResultsEl.style.left = "0px";
+		searchResultsEl.style.width = "100%";
+		toggleResultsEl.textContent = "顯示搜尋器";
 	}
-	hide_search = !hide_search;
+	hideSearch = !hideSearch;
 };
-name_search.oninput = function() {
-	renderTable(last_forms);
+nameSearchEl.oninput = function() {
+	renderTable(lastForms);
 };
 document.getElementById('form-s').onchange = function() {
-	form_s = this.selectedIndex;
-	calculate(simplify(ori_expr.value));
+	formSelect = this.selectedIndex;
+	calculate(simplify(oriExpr.value));
 };
 const th = document.getElementById('th');
 for (let n of th.children) {
@@ -401,10 +400,10 @@ for (let n of th.children) {
 		n.onclick = function(event) {
 			if (n._s == 0) {
 				n._s = 1;
-				sort_expr.value = event.currentTarget.title;
+				sortExpr.value = event.currentTarget.title;
 			} else {
 				n._s = 0;
-				sort_expr.value = '-' + event.currentTarget.title;
+				sortExpr.value = '-' + event.currentTarget.title;
 			}
 			let y = n._s;
 			for (let x of th.children) {
@@ -415,7 +414,7 @@ for (let n of th.children) {
 			}
 			n._s = y;
 			n.textContent = n._t + (n._s ? '↑' : '↓');
-			calculate(simplify(ori_expr.value));
+			calculate(simplify(oriExpr.value));
 		}
 	}
 }

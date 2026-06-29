@@ -171,9 +171,14 @@ function detail(A, B) {
 	modal.style.display = 'block';
 }
 
-// expose global methods
-// @TODO: refactor the code to prevent this
-Object.assign(globalThis, {
-	detail,
-	modal,
+document.querySelectorAll('a[data-castle]').forEach(a => {
+	a.addEventListener('click', (event) => {
+		event.preventDefault();
+		const node = event.currentTarget;
+		detail(parseInt(node.dataset.castle, 10), parseInt(node.dataset.part, 10));
+	});
+});
+
+document.getElementById('close-modal-btn').addEventListener('click', () => {
+	modal.style.display = 'none';
 });

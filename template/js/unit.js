@@ -1,62 +1,23 @@
-import {config, loadScheme, numStr, numStrT, floor, savePng, copyPng, getCombinations} from './common.mjs';
 import {
-	ATK_SINGLE,
+	config,
+	loadScheme,
+	numStr,
+	numStrT,
+	floor,
+	savePng,
+	copyPng,
+	getCombinations,
+} from './common.mjs';
+import {
 	ATK_RANGE,
 	ATK_LD,
 	ATK_OMNI,
 	ATK_KB_REVENGE,
 
-	TB_INFN,
 	TB_DEMON,
-	TRAIT_ALL,
-	trait_no_treasure,
-	trait_treasure,
+	TRAIT_NO_TREASURE,
+	TRAIT_TREASURE,
 
-	AB_STRENGTHEN,
-	AB_SURVIVE,
-	AB_ATKBASE,
-	AB_CRIT,
-	AB_ZKILL,
-	AB_CKILL,
-	AB_BREAK,
-	AB_SHIELDBREAK,
-	AB_SAVAGE,
-	AB_BOUNTY,
-	AB_METALIC,
-	AB_MINIWAVE,
-	AB_WAVE,
-	AB_MINISURGE,
-	AB_SURGE,
-	AB_WAVES,
-	AB_BAIL,
-	AB_BSTHUNT,
-	AB_WKILL,
-	AB_EKILL,
-	AB_WEAK,
-	AB_STOP,
-	AB_SLOW,
-	AB_ONLY,
-	AB_GOOD,
-	AB_RESIST,
-	AB_RESISTS,
-	AB_MASSIVE,
-	AB_MASSIVES,
-	AB_KB,
-	AB_WARP,
-	AB_IMUATK,
-	AB_CURSE,
-	AB_BURROW,
-	AB_REVIVE,
-	AB_POIATK,
-	AB_SUICIDE,
-	AB_BARRIER,
-	AB_DSHIELD,
-	AB_COUNTER,
-	AB_DEATHSURGE,
-	AB_SAGE,
-	AB_SUMMON,
-	AB_MK,
-	AB_EXPLOSION,
 	AB_KAIJIN,
 
 	catEnv,
@@ -77,8 +38,8 @@ import {
 	updateHp,
 	updateAtk,
 
-	atk_mult_abs,
-	hp_mult_abs,
+	ATK_MULTI_AB,
+	HP_MULTI_AB,
 } from './unit.mjs';
 import {loadAllCombos} from './combo.mjs';
 const units_scheme = await loadScheme('units');
@@ -89,21 +50,23 @@ import {getMap} from './stage.mjs';
 const my_params = new URLSearchParams(location.search);
 let my_id = parseInt(my_params.get('id'));
 const layout = config.layout;
-var level_count = 0;
-var my_cat;
-var lvMax;
-var tf_tbl;
-var tf_tbl_s;
-var tf4_tbl;
-var tf4_tbl_t;
-var tf4_tbl_s;
-var super_talent = false;
-var custom_talents;
-var custom_super_talents;
-var orb_attr;
-var orb_eff;
-var orb_gradle;
-var table_to_values = new Map();
+let level_count = 0;
+let my_cat;
+let lvMax;
+let tf_tbl;
+let tf_tbl_s;
+let tf4_tbl;
+let tf4_tbl_t;
+let tf4_tbl_s;
+let super_talent = false;
+let custom_talents;
+let custom_super_talents;
+let orb_attr;
+let orb_eff;
+let orb_gradle;
+let table_to_values = new Map();
+let buf;
+let opt_b, opt_f;
 const tables = [];
 const modal_content = document.getElementById('modal-c');
 const modal = document.getElementById('modal');
@@ -176,7 +139,7 @@ function createAbIcons(form, p1, p2, tbody) {
 		p.append(msg);
 		p1.appendChild(p);
 	}
-	form.trait && (tn = getTraitNames(form.trait), treasure = form.trait & trait_treasure);
+	form.trait && (tn = getTraitNames(form.trait), treasure = form.trait & TRAIT_TREASURE);
 	const U = form.pre1 ? '*' : '';
 	let tmp;
 	for (const [i, v] of Object.entries(form.ab)) {
@@ -311,7 +274,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					tmp = floor(tmp * (1 + catEnv.combo_weak));
 				if (treasure) {
 					du = floor(tmp * 1.2);
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
 						du = `${numStrT(tmp)}（${numStrT(du)}）`;
 					} else {
@@ -335,7 +298,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					tmp = floor(tmp * (1 + catEnv.combo_stop));
 				if (treasure) {
 					du = floor(tmp * 1.2);
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
 						du = `${numStrT(tmp)}（${numStrT(du)}）`;
 					} else {
@@ -359,7 +322,7 @@ function createAbIcons(form, p1, p2, tbody) {
 					tmp = floor(tmp * (1 + catEnv.combo_slow));
 				if (treasure) {
 					du = floor(tmp * 1.2);
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
 						du = `${numStrT(tmp)}（${numStrT(du)}）`;
 					} else {
@@ -423,7 +386,7 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 30:
 				if (treasure) {
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
 					} else {
 						du = numStr(165 * 1.3);
@@ -448,7 +411,7 @@ function createAbIcons(form, p1, p2, tbody) {
 
 			case 32:
 				if (treasure) {
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
@@ -464,7 +427,7 @@ function createAbIcons(form, p1, p2, tbody) {
 				// no curse combo now!
 				if (treasure) {
 					du = floor(tmp * 1.2);
-					if (form.trait & trait_no_treasure) {
+					if (form.trait & TRAIT_NO_TREASURE) {
 						cv = `${getCoverUnit(form, v[0], tmp)} %（${getCoverUnit(form, v[0], du)} %）`;
 						du = `${numStrT(tmp)}（${numStrT(du)}）`;
 					} else {
@@ -597,8 +560,8 @@ function updateValues(form, tbl) {
 		lvE = lvE.nextElementSibling;
 	}
 	const ABF = Object.keys(form.ab).map(Number);
-	const HCs = getCombinations(ABF.filter(x => hp_mult_abs.has(x)));
-	const ACs = getCombinations(ABF.filter(x => atk_mult_abs.has(x)));
+	const HCs = getCombinations(ABF.filter(x => HP_MULTI_AB.has(x)));
+	const ACs = getCombinations(ABF.filter(x => ATK_MULTI_AB.has(x)));
 	i = 1;
 	form._plusLv = 0;
 	let maxLen = 1;
@@ -630,7 +593,7 @@ function updateValues(form, tbl) {
 		tbl.style.fontSize = 'max(16px, 0.9vw)';
 	else if (maxLen > 26)
 		tbl.style.fontSize = 'max(17px, 1vw)';
-	var preStr = numStrT(form.pre);
+	let preStr = numStrT(form.pre);
 	if (form.pre1)
 		preStr += '/' + numStrT(form.pre1);
 	if (form.pre2)
@@ -649,7 +612,7 @@ function updateValues(form, tbl) {
 		specials.appendChild(p);
 	}
 	createTraitIcons(form.trait, specials);
-	var atkType = '';
+	let atkType = '';
 	if (form.atkType & ATK_OMNI) {
 		atkType += '全方位';
 	} else if (form.atkType & ATK_LD) {
@@ -749,7 +712,7 @@ function handleBlur() {
 		form.applySuperTalents(custom_super_talents);
 
 	for (const x of tbody._s)
-		if (!form.ab.hasOwnProperty(x))
+		if (!Object.hasOwn(form.ab, x))
 			tbody._s.delete(x);
 
 	let td = tbody.children[7].children[1];
@@ -781,7 +744,7 @@ function mkTool(tbl) {
 	}
 	node.children[1].onclick = function(e) { // Download
 		const t = e.currentTarget.parentNode._t;
-		return savePNG([my_cat.forms[0].name || my_cat.forms[0].jp_name, t]);
+		return savePNG([my_cat.forms[0].name || my_cat.forms[0].jpName, t]);
 	}
 	tbl.appendChild(node);
 }
@@ -832,7 +795,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 		td = document.createElement('td');
 		td.classList.add('F');
 		tr.appendChild(td);
-		td.textContent = form.jp_name;
+		td.textContent = form.jpName;
 		td.style.padding = '0';
 		td.colSpan = 4;
 		tr = document.createElement('tr');
@@ -921,7 +884,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 			td.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
 			td.appendChild(document.createElement('br'));
 		}
-		var atkType = '';
+		let atkType = '';
 		tr = document.createElement('div');
 		atkType += (form.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
 		if (form.atkType & ATK_OMNI)
@@ -1127,7 +1090,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 			const img = new Image(128, 128);
 			const div = document.createElement('td');
 			div.style.width = '128px';
-			var p = document.createElement('p');
+			let p = document.createElement('p');
 			r = r.split('!');
 			if (r[1] != '0') {
 				img.src = `/img/r/${r[1]}.png`;
@@ -1164,7 +1127,7 @@ function renderForm(form, lvc_text, _talents = false, _super = false, hide_desc 
 			const img = new Image(128, 128);
 			const div = document.createElement('td');
 			div.style.width = '128px';
-			var p = document.createElement('p');
+			let p = document.createElement('p');
 			r = r.split('!');
 			if (r[1] != '0') {
 				img.src = `/img/r/${r[1]}.png`;
@@ -1429,10 +1392,8 @@ async function applyOrb() {
 			idx = s2 + s2 - 2, ctx.drawImage(orb_gradle, C2[idx], C2[idx + 1], 85, 85, 0, 0, 85, 85);
 
 		// don't add dummy level-0 orbs
-		if (!s2)
-			continue;
-
-		catEnv.addOrb(['atk', 'hp', 'good', 'massive', 'resist'][s3 - 1], s2);
+		if (s2 && s3)
+			catEnv.addOrb(['atk', 'hp', 'good', 'massive', 'resist'][s3 - 1], s2);
 	}
 	if (layout === 2) {
 		const TF = my_cat.forms[2].clone();
@@ -1921,7 +1882,7 @@ function rednerTalentInfos(talents, _super = false) {
 	const td3 = document.createElement('td');
 	const td4 = document.createElement('td');
 	const td5 = document.createElement('td');
-	td1.textContent = my_cat.forms[2].name || my_cat.forms[2].jp_name;
+	td1.textContent = my_cat.forms[2].name || my_cat.forms[2].jpName;
 	td1.classList.add('f');
 	td3.classList.add('F');
 	td5.classList.add('F');
@@ -2208,7 +2169,7 @@ function renderUnitPage() {
 					const img = new Image(128, 128);
 					const div = document.createElement('td');
 					div.style.width = '128px';
-					var p = document.createElement('p');
+					let p = document.createElement('p');
 					r = r.split('!');
 					if (r[1] != '0') {
 						img.src = `/img/r/${r[1]}.png`;
@@ -2246,7 +2207,7 @@ function renderUnitPage() {
 					const img = new Image(128, 128);
 					const div = document.createElement('td');
 					div.style.width = '128px';
-					var p = document.createElement('p');
+					let p = document.createElement('p');
 					r = r.split('!');
 					if (r[1] != '0') {
 						img.src = `/img/r/${r[1]}.png`;
@@ -2338,8 +2299,6 @@ function renderUnitPage() {
 	renderExtras();
 	renderCombos();
 }
-var buf;
-var opt_b, opt_f;
 
 function copyTree(node) {
 	switch (node.tagName) {
@@ -2564,7 +2523,7 @@ function xpgraph() {
 	}
 	for (let i = 1; i <= 10; ++i) {
 		tr = document.createElement('tr');
-		var sum = 0;
+		let sum = 0;
 		for (let j = 0; j < 12; j += 2) {
 			let td1 = document.createElement('td');
 			let td2 = document.createElement('td');
@@ -2578,10 +2537,10 @@ function xpgraph() {
 		table.appendChild(tr);
 	}
 	let sums = [];
-	var totalSum = 0;
+	let totalSum = 0;
 	tr = document.createElement('tr');
 	for (let j = 0; j < 12; j += 2) {
-		var sum = 0;
+		let sum = 0;
 		let i = j / 2;
 		let td1 = document.createElement('td');
 		let td2 = document.createElement('td');
@@ -2599,7 +2558,7 @@ function xpgraph() {
 	table.appendChild(tr);
 	tr = document.createElement('tr');
 	for (let j = 0; j < 12; j += 2) {
-		var sum = 0;
+		let sum = 0;
 		let i = j / 2;
 		let td1 = document.createElement('td');
 		let td2 = document.createElement('td');
@@ -2763,7 +2722,7 @@ function openBBCode() {
 		if (navigator.clipboard) {
 			navigator.clipboard.writeText(buf).then(() => e.textContent = '複製成功！', setTimeout(() => e.textContent = '複製', 1000));
 		} else {
-			var t = document.createElement("textarea");
+			let t = document.createElement("textarea");
 			t.value = buf;
 			t.style.position = "fixed";
 			t.style.top = t.style.left = "0";
@@ -2783,7 +2742,7 @@ function openBBCode() {
 loadCat(my_id)
 	.then(res => {
 		my_cat = res;
-		const cat_names_jp = my_cat.forms.map(x => x.jp_name).filter(x => x).join(' → ');
+		const cat_names_jp = my_cat.forms.map(x => x.jpName).filter(x => x).join(' → ');
 		const cat_names = my_cat.forms.map(x => x.name).filter(x => x).join(' → ');
 		if (layout !== 2) {
 			document.getElementById('ch_name').textContent = cat_names;
@@ -2803,11 +2762,11 @@ loadCat(my_id)
 		abars[5].onclick = () => makegraph(3);
 		abars[6].onclick = xpgraph;
 		abars[7].onclick = function() {
-			var oldList = config.starCats;
+			let oldList = config.starCats;
 			oldList.push({
 				'id': my_id,
 				'icon': my_cat.forms[0].icon,
-				'name': my_cat.forms[0].name || my_cat.forms[0].jp_name
+				'name': my_cat.forms[0].name || my_cat.forms[0].jpName
 			});
 			config.starCats = oldList;
 		};

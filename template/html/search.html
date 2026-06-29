@@ -71,7 +71,7 @@
 	li img {
 		vertical-align: bottom;
 	}
-	.type-btn {
+	.rarity-btn {
 		text-align: center;
 		display: inline-block;
 		width: 100px;
@@ -144,14 +144,14 @@
 		width: 90px;
 		padding: 3px 10px;
 	}
-	#pages-a > td {
+	#pager > td {
 		font-size: 1.2em;
 		width: 50px;
 		text-align: center;
 		border: none;
 		cursor: pointer;
 	}
-	#pages-a > td:hover {
+	#pager > td:hover {
 		background-color: #ccc !important;
 	}
 	.w3-table td {
@@ -166,12 +166,12 @@
 	.may-hide {
 		display: var(--mhide);
 	}
-	#cattype {
+	#rarity-select {
 		width: 100%;
 		list-style-type: none;
 		text-align: center;
 	}
-	#cattype > span {
+	#rarity-select > span {
 		margin: 0px 20px;
 	}
 	.or-and {
@@ -205,7 +205,7 @@
 	<div id="loader"></div>
 	<div id="main" class="An">
 		<div>
-			<ul class="w3-ul may-hide" style="width: 150px;height: 575px;overflow: auto;" id="trait-s">
+			<ul class="w3-ul may-hide" style="width: 150px;height: 575px;overflow: auto;" id="trait-select">
 				<li><span class="w3-button or-and w3-green">AND</span></li>
 				<li data-expr="trait&RED">
 					<button><img src="/img/i/e/0.png" width="40" height="40">紅色敵人</button>
@@ -238,7 +238,7 @@
 					<button><img src="/img/i/e/11.png" width="40" height="40">惡魔</button>
 				</li>
 			</ul>
-			<ul class="w3-ul may-hide" style="width: 150px;" id="atk-s">
+			<ul class="w3-ul may-hide" style="width: 150px;" id="atk-type-select">
 				<li><span class="w3-button or-and w3-pale-red">AND</span></li>
 				<li data-expr="atktype&ATK_SINGLE">
 					<button><img src="/img/i/o/1.png" width="40" height="40">單體攻擊</button>
@@ -280,7 +280,7 @@
 				<br>
 				<a href="/help.html" style="display: block;text-align: center;">使用說明</a>
 			</div>
-			<ul class="w3-ul may-hide" style="position: absolute;left: 160px;top: 0px;height: 900px;overflow: auto;width: 190px;" id="ab-savage">
+			<ul class="w3-ul may-hide" style="position: absolute;left: 160px;top: 0px;height: 900px;overflow: auto;width: 190px;" id="ability-select">
 				<li><span class="w3-button or-and w3-blue-gray">AND</span></li>
 				<li style="text-align: center;">能力</li>
 				<li data-expr="hasab(AB_STRENGTHEN)">
@@ -464,19 +464,19 @@
 					<button><img src="/img/i/r/7.png" width="40" height="40">抗毒擊耐性</button>
 				</li>
 			</ul>
-			<div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 360px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
+			<div id="search-results" style="margin: 20px 0px;position: absolute;top: 0px;left: 360px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
 				<div class="may-hide">
 					<input type="search" placeholder="搜尋名稱或Cat id" id="name-search">
 				</div>
-				<div id="cattype" class="may-hide" style="text-wrap: nowrap;">
-					<span data-expr="rarity==0"><button class="type-btn">基本</button></span>
-					<span data-expr="rarity==1"><button class="type-btn">EX</button></span>
-					<span data-expr="rarity==2"><button class="type-btn">稀有</button></span>
-					<span data-expr="rarity==3"><button class="type-btn">激稀有</button></span>
-					<span data-expr="rarity==4"><button class="type-btn">超激稀有</button></span>
-					<span data-expr="rarity==5"><button class="type-btn">傳說稀有</button></span>
+				<div id="rarity-select" class="may-hide" style="text-wrap: nowrap;">
+					<span data-expr="rarity==0"><button class="rarity-btn">基本</button></span>
+					<span data-expr="rarity==1"><button class="rarity-btn">EX</button></span>
+					<span data-expr="rarity==2"><button class="rarity-btn">稀有</button></span>
+					<span data-expr="rarity==3"><button class="rarity-btn">激稀有</button></span>
+					<span data-expr="rarity==4"><button class="rarity-btn">超激稀有</button></span>
+					<span data-expr="rarity==5"><button class="rarity-btn">傳說稀有</button></span>
 				</div>
-				<p><span id="search-result"></span><a href="#" id="toggle-s" style="padding-left: 1em;">隱藏搜尋器</a>
+				<p><span id="search-status-tip"></span><a href="#" id="toggle-results" style="padding-left: 1em;">隱藏搜尋器</a>
 					<select id="form-s" style="float: right;">
 						<option value="0">全型態</option>
 						<option value="1">第一型態</option>
@@ -520,7 +520,7 @@
 				</table>
 				<table style="margin: 1em auto;">
 					<tbody>
-						<tr id="pages-a"></tr>
+						<tr id="pager"></tr>
 					</tbody>
 				</table>
 			</div>

@@ -13,18 +13,18 @@ module.exports = class extends RewardSiteGenerator {
 				throw e;
 		}
 
-		const mapTable = this.parse_tsv(this.load('map.tsv'));
-		const stageTable = this.parse_tsv(this.load('stage.tsv'));
-		const rewardTable = this.load_rewards();
+		const mapTable = this.parseTsv(this.load('map.tsv'));
+		const stageTable = this.parseTsv(this.load('stage.tsv'));
+		const rewardTable = this.loadRewards();
 
-		this.map_names = mapTable.reduce((rv, entry, i) => {
+		this.mapNames = mapTable.reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp} = entry;
 			id = parseInt(id, 36);
 			rv[id] = name_tw || name_jp || '？？？';
 			return rv;
 		}, {});
 
-		this.map_stars = mapTable.reduce((rv, entry, i) => {
+		this.mapStars = mapTable.reduce((rv, entry, i) => {
 			let {id, stars} = entry;
 			id = parseInt(id, 36);
 			if (stars)
@@ -32,7 +32,7 @@ module.exports = class extends RewardSiteGenerator {
 			return rv;
 		}, {});
 
-		this.stage_rewards = stageTable.reduce((rv, entry, i) => {
+		this.stageRewards = stageTable.reduce((rv, entry, i) => {
 			let {id, drop, time} = entry;
 			id = parseInt(id, 36);
 			for (const t of drop.split('|')) {
@@ -51,21 +51,21 @@ module.exports = class extends RewardSiteGenerator {
 			return rv;
 		}, {});
 
-		this.gacha_pools = JSON.parse(this.load('pools.json')).reduce((rv, p) => {
+		this.gachaPools = JSON.parse(this.load('pools.json')).reduce((rv, p) => {
 			rv[p.tw_name] = p;
 			return rv;
 		}, {});
 
-		this.write_collabs();
+		this.writeCollabs();
 	}
-	write_collabs() {
-		const collab_template = this.load_template('html/collab.html');
+	writeCollabs() {
+		const collabTemplate = this.loadTemplate('html/collab.html');
 		const data = JSON.parse(this.load('collab.json'));
 		const collabs = data.collabs;
-		const nav_menu = [];
-		const collab_stages = [];
+		const navMenu = [];
+		const collabStages = [];
 
-		function reward_sort_key(r) {
+		function rewardSortKey(r) {
 			if (r.cat_id == 0)
 				return 2;
 			if (r.cat_id == 2)
@@ -73,33 +73,33 @@ module.exports = class extends RewardSiteGenerator {
 			return 0;
 		}
 
-		function reward_sorter(a, b) {
-			return reward_sort_key(a) - reward_sort_key(b);
+		function rewardSorter(a, b) {
+			return rewardSortKey(a) - rewardSortKey(b);
 		}
 
 		for (let i = 0; i < collabs.length; i++) {
 			const collab = collabs[i];
 			const fn = 'collab/' + normalizePath(collab.en_name) + '.html';
-			nav_menu.push({
+			navMenu.push({
 				path: fn,
 				name: collab.tw_name,
 			});
 			if (collab['stages']) {
-				collab_stages.push({
+				collabStages.push({
 					'name': collab['tw_name'],
 					'stages': collab['stages'].map(s => {
 						const [A, B] = s.split('-');
 						const m = parseInt(A, 10) * 1000 + parseInt(B, 10);
 
 						return {
-							'name': this.map_names[m],
+							'name': this.mapNames[m],
 							'id': s
 						}
 					})
 				});
 			}
 			const pools = (collab.pools || []).reduce((pools, p) => {
-				let pool = this.gacha_pools[p];
+				let pool = this.gachaPools[p];
 				if (!pool) {
 					console.warn('collab.js: pool not found:', p);
 					return pools;
@@ -113,15 +113,15 @@ module.exports = class extends RewardSiteGenerator {
 			const stages = (collab.stages || []).map(s => {
 				const [A, B] = s.split('-');
 				const m = parseInt(A, 10) * 1000 + parseInt(B, 10);
-				const name = this.map_names[m];
-				const stars = this.map_stars[m] ?
-						(this.map_stars[m]).split(',').map(x => parseInt(x, 10) / 100) :
+				const name = this.mapNames[m];
+				const stars = this.mapStars[m] ?
+						(this.mapStars[m]).split(',').map(x => parseInt(x, 10) / 100) :
 						[];
 
 				let rewards = {};
 				let len = 0, st = m * 1000;
 				while (true) {
-					const r = this.stage_rewards[st + len];
+					const r = this.stageRewards[st + len];
 					if (!r) break;
 
 					for (const t of r.split('|')) {
@@ -138,7 +138,7 @@ module.exports = class extends RewardSiteGenerator {
 					len += 1;
 				}
 
-				rewards = Object.values(rewards).sort(reward_sorter);
+				rewards = Object.values(rewards).sort(rewardSorter);
 
 				return {
 					stage: s,
@@ -148,19 +148,19 @@ module.exports = class extends RewardSiteGenerator {
 					rewards,
 				};
 			});
-			this.write_string(fn, this.template(collab_template, {
+			this.writeString(fn, this.template(collabTemplate, {
 				collab,
 				pools,
 				stages,
 			}));
 		}
-		this.write_template('html/collabs.html', 'collabs.html', {
-			nav_menu,
+		this.writeTemplate('html/collabs.html', 'collabs.html', {
+			nav_menu: navMenu,
 			japan_collab_history: Object.entries(data.jp_history).sort(),
 			taiwan_collab_history: Object.entries(data.tw_history).sort(),
 		});
-		this.write_template('html/schedule.html', 'schedule.html', {
-			collab_stages
+		this.writeTemplate('html/schedule.html', 'schedule.html', {
+			collab_stages: collabStages
 		});
 	}
 };

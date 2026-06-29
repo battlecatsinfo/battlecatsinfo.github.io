@@ -2,27 +2,27 @@ import {loadScheme, config} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
 const {limited_cats, cat_guide_ids} = await loadScheme('units', ['limited_cats', 'cat_guide_ids']);
 
-var cats;
-var tooltip;
-const fav_list = new Set(config.starCats.map(x => x.id));
-const cats_e = document.getElementById('cats');
-const main = cats_e.parentNode;
-const Ms = main.getElementsByClassName('modal');
-const ab_e = document.getElementById('ab').children;
+const favList = new Set(config.starCats.map(x => x.id));
+const catsEl = document.getElementById('cats');
+const main = catsEl.parentNode;
+const medals = main.getElementsByClassName('modal');
+const abSelectEl = document.getElementById('ab').children;
 const undo = [];
-const to_e = document.getElementById('to');
-const text_e = document.getElementById('text');
-const not_e = document.getElementById('not-f');
-const fav_only = document.getElementById('fav-only');
-const ex_only = document.getElementById('ex-only');
-let fav_setting = false;
-let last_rarity = null;
+const searchTextEl = document.getElementById('name-search');
+const talentsEl = document.getElementById('to');
+const notFoundEl = document.getElementById('not-f');
+const favOnlyEl = document.getElementById('fav-only');
+const exOnlyEl = document.getElementById('ex-only');
+let cats;
+let tooltip;
+let favSetting = false;
+let lastRarity = null;
 
 function onClick(event) {
 	const t = event.currentTarget;
 	const i = t.firstElementChild;
 	const id = parseInt(t.href.slice(t.href.lastIndexOf('?') + 4));
-	if (fav_setting) {
+	if (favSetting) {
 		event.preventDefault();
 		if (i.classList.contains('grayscale')) {
 			i.classList.remove('grayscale');
@@ -34,19 +34,19 @@ function onClick(event) {
 			fav.style.right = '0px';
 			fav.style.zIndex = 1;
 			t.appendChild(fav);
-			fav_list.add(id);
+			favList.add(id);
 		} else {
 			i.classList.add('grayscale');
 			t.removeChild(i.nextElementSibling);
-			fav_list.delete(id);
+			favList.delete(id);
 		}
 	}
 }
 
-function add_unit(c, gap=true) {
-	if (gap && last_rarity !== c.rarity && last_rarity !== null)
-		cats_e.appendChild(document.createElement('p'));
-	last_rarity = c.rarity;
+function addUnit(c, gap=true) {
+	if (gap && lastRarity !== c.rarity && lastRarity !== null)
+		catsEl.appendChild(document.createElement('p'));
+	lastRarity = c.rarity;
 	const img = new Image(104, 79);
 	const a = document.createElement('a');
 	img.loading = 'lazy';
@@ -55,7 +55,7 @@ function add_unit(c, gap=true) {
 	a.href = '/unit.html?id=' + F.id;
 	a.onclick = onClick;
 	a.appendChild(img);
-	if (fav_list.has(c.forms[0].id)) {
+	if (favList.has(c.forms[0].id)) {
 		a.style.position = 'relative';
 		const fav = new Image(104, 79);
 		fav.style.position = 'absolute';
@@ -67,11 +67,11 @@ function add_unit(c, gap=true) {
 	} else {
 		img.classList.add('grayscale');
 	}
-	cats_e.appendChild(a);
+	catsEl.appendChild(a);
 	img.onmouseover = function() {
 		const t = setTimeout(function() {
 			tooltip = document.createElement('div');
-			tooltip.textContent = c.forms.map(x => x.name || x.jp_name).join(' → ');
+			tooltip.textContent = c.forms.map(x => x.name || x.jpName).join(' → ');
 			tooltip.classList.add('tooltip');
 			a.style.position = 'relative';
 			a.appendChild(tooltip);
@@ -95,7 +95,7 @@ loadAllCats().then(_cs => {
 			TF.applyAllTalents();
 		}
 	}
-	cat_guide_ids.map(i => cats[i]).forEach(add_unit);
+	cat_guide_ids.map(i => cats[i]).forEach(addUnit);
 });
 const rarity = document.getElementById('rarity');
 const trait = document.getElementById('trait-f');
@@ -106,7 +106,7 @@ const displayOrder = document.getElementById('display-order');
 
 function filter() {
 	undo.length = 0;
-	for (let x of Ms)
+	for (let x of medals)
 		if (x.style.display == 'block') {
 			x.style.display = 'none';
 			break;
@@ -115,10 +115,10 @@ function filter() {
 	let i;
 	let chs = rarity.getElementsByClassName('selected');
 	if (chs.length) {
-		if (fav_only.classList.contains('selected')) {
+		if (favOnlyEl.classList.contains('selected')) {
 			for (let x of chs) {
 				const r = parseInt(x.value);
-				for (i of fav_list)
+				for (i of favList)
 					if (cats[i].rarity == r)
 						results.add(i);
 			}
@@ -131,8 +131,8 @@ function filter() {
 			}
 		}
 	} else {
-		if (fav_only.classList.contains('selected')) {
-			for (i of fav_list)
+		if (favOnlyEl.classList.contains('selected')) {
+			for (i of favList)
 				results.add(i);
 		} else {
 			for (i = 0; i < cats.length; ++i)
@@ -146,7 +146,6 @@ function filter() {
 		let t = 0;
 		for (let x of chs)
 			t |= parseInt(x.value);
-		const r2 = [];
 		if (trait.previousElementSibling.src.endsWith('or.png')) {
 			for (let c of results) {
 				B: {
@@ -173,17 +172,17 @@ function filter() {
 		res = [];
 	let d = false;
 
-	for (i of ab_e[1].getElementsByClassName('selected'))
+	for (i of abSelectEl[1].getElementsByClassName('selected'))
 		abs.push(parseInt(i.value))
-	for (i of ab_e[2].getElementsByClassName('selected'))
+	for (i of abSelectEl[2].getElementsByClassName('selected'))
 		abs.push(parseInt(i.value));
-	for (i of ab_e[3].getElementsByClassName('selected'))
+	for (i of abSelectEl[3].getElementsByClassName('selected'))
 		imu |= parseInt(i.value), d = true;
-	for (i of ab_e[4].getElementsByClassName('selected'))
+	for (i of abSelectEl[4].getElementsByClassName('selected'))
 		res.push(parseInt(i.value)), d = true;
 
 	if (abs.length || d) {
-		if (ab_e[0].src.endsWith('or.png')) {
+		if (abSelectEl[0].src.endsWith('or.png')) {
 			loop: for (i = 0; i < cats.length; ++i) {
 				const c = cats[i];
 				for (let f of c.forms) {
@@ -191,13 +190,13 @@ function filter() {
 						continue loop;
 					for (let x of abs) {
 						if (x < 1000) {
-							if (f.ab.hasOwnProperty(x))
+							if (Object.hasOwn(f.ab, x))
 								continue loop;
 						} else if (f.atkType & (x - 1000))
 							continue loop;
 					}
 					for (let x of res)
-						if (f.res.hasOwnProperty(x))
+						if (Object.hasOwn(f.res, x))
 							continue loop;
 				}
 				results.delete(i);
@@ -212,13 +211,13 @@ function filter() {
 						continue;
 					for (let x of abs) {
 						if (x < 1000) {
-							if (!f.ab.hasOwnProperty(x))
+							if (!Object.hasOwn(f.ab, x))
 								continue loop;
 						} else if (x -= 1000, x != (f.atkType & x))
 							continue loop;
 					}
 					for (let x of res)
-						if (!f.res.hasOwnProperty(x))
+						if (!Object.hasOwn(f.res, x))
 							continue loop;
 					t = true;
 					break;
@@ -228,7 +227,7 @@ function filter() {
 			}
 		}
 	}
-	chs = to_e.getElementsByTagName('input');
+	chs = talentsEl.getElementsByTagName('input');
 	for (i = 1; i < 5; ++i) {
 		if (chs[i].checked) {
 			switch (i) {
@@ -283,15 +282,15 @@ function filter() {
 		for (let x of results)
 			if (!s.has(x))
 				results.delete(x);
-	if (!ex_only.classList.contains('selected'))
+	if (!exOnlyEl.classList.contains('selected'))
 		for (const x of results)
 			if (limited_cats.has(x))
 				results.delete(x);
 
-	cats_e.textContent = '';
-	last_rarity = null;
+	catsEl.textContent = '';
+	lastRarity = null;
 	if (!results.size) {
-		not_e.style.display = 'block';
+		notFoundEl.style.display = 'block';
 		return;
 	}
 
@@ -303,7 +302,7 @@ function filter() {
 		sorted.sort((x, y) => {
 			x.rarity - y.rarity
 		});
-		sorted.forEach(x => add_unit(x, false));
+		sorted.forEach(x => addUnit(x, false));
 		return;
 	}
 	let sorted = [];
@@ -311,13 +310,13 @@ function filter() {
 		if (results.has(id))
 			sorted.push(cats[id]);
 	}
-	sorted.forEach(add_unit);
+	sorted.forEach(addUnit);
 }
 
 function clear(event) {
 	event.preventDefault();
 	event.stopPropagation();
-	for (let x of Ms) {
+	for (let x of medals) {
 		if (x.style.display == 'block') {
 			for (let n of Array.from(x.getElementsByClassName('selected')))
 				n.classList.remove('selected');
@@ -329,18 +328,18 @@ function clear(event) {
 function clearAll(event) {
 	event.preventDefault();
 	event.stopPropagation();
-	for (let x of Ms)
+	for (let x of medals)
 		for (let n of Array.from(x.getElementsByClassName('selected')))
 			n.classList.remove('selected');
-	cats_e.textContent = '';
-	last_rarity = null;
-	cats.map(add_unit);
+	catsEl.textContent = '';
+	lastRarity = null;
+	cats.map(addUnit);
 }
 document.onclick = function(event) {
 	if (event.target != main && !event.target.classList.contains('modal')) return;
-	if (not_e.style.display = 'block')
-		not_e.style.display = 'none';
-	for (let x of Ms)
+	if (notFoundEl.style.display === 'block')
+		notFoundEl.style.display = 'none';
+	for (let x of medals)
 		if (x.style.display == 'block') {
 			x.style.display = 'none';
 			for (let b of undo)
@@ -367,55 +366,55 @@ function toggleSelected() {
 	this.classList.toggle('selected');
 }
 
-ex_only.addEventListener('click', toggleSelected);
-fav_only.addEventListener('click', toggleSelected);
+exOnlyEl.addEventListener('click', toggleSelected);
+favOnlyEl.addEventListener('click', toggleSelected);
 displayOrder.addEventListener('click', toggleSelected);
 
-ab_e[0].onclick = trait.previousElementSibling.onclick = function() {
+abSelectEl[0].onclick = trait.previousElementSibling.onclick = function() {
 	if (this.src.endsWith('or.png'))
 		this.src = 'and.png';
 	else
 		this.src = 'or.png';
 }
-const search_text = document.getElementById('name-search');
+
 document.getElementById('search-name').onclick = function(event) {
 	event.preventDefault();
-	const q = search_text.value;
+	const q = searchTextEl.value;
 	let found = false;
-	for (let x of Ms)
+	for (let x of medals)
 		if (x.style.display == 'block') {
 			x.style.display = 'none';
 			break;
 		}
-	cats_e.textContent = '';
-	last_rarity = null;
+	catsEl.textContent = '';
+	lastRarity = null;
 	if (!q) return;
 	let digit = q.length >= 1;
 	for (const c of q) {
-		var x = c.codePointAt(0);
+		let x = c.codePointAt(0);
 		(x < 48 || 57 < x) && (digit = false);
 	}
 	if (digit) {
 		const x = cats[parseInt(q)];
-		x && (found = true, add_unit(x, false));
+		x && (found = true, addUnit(x, false));
 	}
 	for (let i = 0; i < cats.length; ++i) {
 		const c = cats[i];
 		for (let f of c.forms) {
-			if (f.name.includes(q) || f.jp_name.includes(q)) {
-				add_unit(c, false);
+			if (f.name.includes(q) || f.jpName.includes(q)) {
+				addUnit(c, false);
 				found = true;
 				break;
 			}
 		}
 	}
 	if (!found)
-		not_e.style.display = 'block';
+		notFoundEl.style.display = 'block';
 	return false;
 }
 onkeydown = function(event) {
 	if (event.key == 'Escape') {
-		for (let x of Ms)
+		for (let x of medals)
 			if (x.style.display == 'block') {
 				x.style.display = 'none';
 				for (let b of undo)
@@ -434,23 +433,23 @@ function favorite(e) {
 		t.classList.add('fav');
 		for (let x of main.getElementsByClassName('C'))
 			x.style.visibility = 'hidden';
-		cats_e.setAttribute("data-t", "1")
-		fav_setting = true;
+		catsEl.setAttribute("data-t", "1")
+		favSetting = true;
 	} else {
 		t.setAttribute('data-s', '0');
 		t.textContent = '★設定我的最愛';
 		t.classList.remove('fav');
 		for (let x of main.getElementsByClassName('C'))
 			x.style.visibility = 'visible';
-		cats_e.setAttribute("data-t", "0")
-		fav_setting = false;
+		catsEl.setAttribute("data-t", "0")
+		favSetting = false;
 		let arr = [];
-		for (let x of fav_list) {
+		for (let x of favList) {
 			const c = cats[x];
 			arr.push({
 				'id': x,
 				'icon': c.forms[0].icon,
-				'name': c.forms[0].name || c.forms[0].jp_name
+				'name': c.forms[0].name || c.forms[0].jpName
 			});
 		}
 		config.starCats = arr;

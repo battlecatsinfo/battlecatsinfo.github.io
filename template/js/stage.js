@@ -2,7 +2,7 @@ import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
 import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
-import {renderEnemy} from "./enemy.mjs";
+import {EnemyStatsTable} from "./enemy.mjs";
 
 const loader = document.getElementById('loader');
 
@@ -143,7 +143,7 @@ function onStarAnchorClick(event) {
 	if (u.pathname !== location.pathname)
 		return;
 
-	let _star = u.searchParams.get('star');
+	const _star = u.searchParams.get('star');
 	if (!_star)
 		return;
 
@@ -167,26 +167,25 @@ async function search_mapflag(flag) {
 	main_div.hidden = true;
 	search_result.textContent = '';
 	search_result.hidden = false;
-	let tbl = search_result.appendChild(document.createElement('table'));
+	const tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = tbl.appendChild(document.createElement('tr'));
-	let td = tr.appendChild(document.createElement('td'));
-	td.textContent = '分類';
-	td = tr.appendChild(document.createElement('td'));
-	td.textContent = '地圖';
+	const tr = tbl.appendChild(document.createElement('tr'));
+	const td1 = tr.appendChild(document.createElement('td'));
+	td1.textContent = '分類';
+	const td2 = tr.appendChild(document.createElement('td'));
+	td2.textContent = '地圖';
 
 	for await (const v of Stage.forEachMap()) {
 		if (v.flags & flag) {
 			const tr = tbl.appendChild(document.createElement('tr'));
-			let td = tr.appendChild(document.createElement('td'));
+			const td = tr.appendChild(document.createElement('td'));
 			const a = td.appendChild(document.createElement('a'));
 			const mc = ~~(v.id / 1000);
 			const sm = v.id % 1000;
 			a.textContent = M1.children[mc].textContent;
 			a.href = `/stage.html?s=${mc}`;
 			a.onclick = onStageAnchorClick;
-			td = tr.appendChild(document.createElement('td'));
-			const a2 = td.appendChild(document.createElement('a'));
+			const a2 = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			a2.textContent = v.name || v.nameJp;
 			a2.href = a.href + '-' + sm;
 			a2.onclick = onStageAnchorClick;
@@ -199,33 +198,27 @@ async function search_costmulti() {
 	main_div.hidden = true;
 	search_result.textContent = '';
 	search_result.hidden = false;
-	let tbl = search_result.appendChild(document.createElement('table'));
+	const tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = tbl.appendChild(document.createElement('tr'));
-	let td = tr.appendChild(document.createElement('td'));
-	td.textContent = '分類';
-	td = tr.appendChild(document.createElement('td'));
-	td.textContent = '地圖';
-	td = tr.appendChild(document.createElement('td'));
-	td.textContent = '召喚金額倍率';
+	const tr = tbl.appendChild(document.createElement('tr'));
+	tr.appendChild(document.createElement('td')).textContent = '分類';
+	tr.appendChild(document.createElement('td')).textContent = '地圖';
+	tr.appendChild(document.createElement('td')).textContent = '召喚金額倍率';
 
 	for await (const v of Stage.forEachMap()) {
 		if (v.costmulti) {
 			const tr = tbl.appendChild(document.createElement('tr'));
-			let td = tr.appendChild(document.createElement('td'));
-			const a = td.appendChild(document.createElement('a'));
+			const a = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			const mc = ~~(v.id / 1000);
 			const sm = v.id % 1000;
 			a.textContent = M1.children[mc].textContent; // map
 			a.href = `/stage.html?s=${mc}`;
 			a.onclick = onStageAnchorClick;
-			td = tr.appendChild(document.createElement('td'));
-			const a2 = td.appendChild(document.createElement('a')); // stage
+			const a2 = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a')); // stage
 			a2.textContent = v.name || v.nameJp;
 			a2.href = a.href + '-' + sm;
 			a2.onclick = onStageAnchorClick;
-			td = tr.appendChild(document.createElement('td')); // costmulti
-			td.textContent = v.costmulti;
+			tr.appendChild(document.createElement('td')).textContent = v.costmulti;
 		}
 	}
 }
@@ -235,19 +228,16 @@ async function search_stageflag(flag) {
 	main_div.hidden = true;
 	search_result.textContent = '';
 	search_result.hidden = false;
-	let tbl = search_result.appendChild(document.createElement('table'));
+	const tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = tbl.appendChild(document.createElement('tr'));
-	let td = tr.appendChild(document.createElement('td'));
-	td.textContent = '地圖';
-	td = tr.appendChild(document.createElement('td'));
-	td.textContent = '關卡';
+	const tr = tbl.appendChild(document.createElement('tr'));
+	tr.appendChild(document.createElement('td')).textContent = '地圖';
+	tr.appendChild(document.createElement('td')).textContent = '關卡';
 
 	for await (const v of Stage.forEachStage()) {
 		if (v.flags & flag) {
 			const tr = tbl.appendChild(document.createElement('tr'));
-			let td = tr.appendChild(document.createElement('td'));
-			const a = td.appendChild(document.createElement('a'));
+			const a = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			Stage.getMap(~~(v.id / 1000)).then(map => {
 				a.textContent = namefor(map);
 			});
@@ -257,8 +247,7 @@ async function search_stageflag(flag) {
 			const sts = [mc, sm, st];
 			a.href = `/stage.html?s=${mc}-${sm}`;
 			a.onclick = onStageAnchorClick;
-			td = tr.appendChild(document.createElement('td'));
-			const a2 = td.appendChild(document.createElement('a'));
+			const a2 = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			a2.textContent = v.name || v.nameJp;
 			a2.href = a.href + '-' + st;
 			a2.onclick = onStageAnchorClick;
@@ -271,19 +260,16 @@ async function search_enemy(T) {
 	main_div.hidden = true;
 	search_result.textContent = '';
 	search_result.hidden = false;
-	let tbl = search_result.appendChild(document.createElement('table'));
+	const tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = tbl.appendChild(document.createElement('tr'));
-	let td = tr.appendChild(document.createElement('td'));
-	td.textContent = '地圖';
-	td = tr.appendChild(document.createElement('td'));
-	td.textContent = '關卡';
+	const tr = tbl.appendChild(document.createElement('tr'));
+	tr.appendChild(document.createElement('td')).textContent = '地圖';
+	tr.appendChild(document.createElement('td')).textContent = '關卡';
 
 	for await (const v of Stage.forEachStage()) {
 		if (v.enemyLines.startsWith(T)) {
 			const tr = tbl.appendChild(document.createElement('tr'));
-			let td = tr.appendChild(document.createElement('td'));
-			const a = td.appendChild(document.createElement('a'));
+			const a = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			Stage.getMap(~~(v.id / 1000)).then(map => {
 				a.textContent = namefor(map);
 			});
@@ -293,8 +279,7 @@ async function search_enemy(T) {
 			const sts = [mc, sm, st];
 			a.href = `/stage.html?s=${mc}-${sm}`;
 			a.onclick = onStageAnchorClick;
-			td = tr.appendChild(document.createElement('td'));
-			const a2 = td.appendChild(document.createElement('a'));
+			const a2 = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			a2.textContent = v.name || v.nameJp;
 			a2.href = a.href + '-' + st;
 			a2.onclick = onStageAnchorClick;
@@ -307,40 +292,34 @@ async function search_gold() { // CatCPU fast clear disabled
 	main_div.hidden = true;
 	search_result.textContent = '';
 	search_result.hidden = false;
-	let tbl = search_result.appendChild(document.createElement('table'));
+	const tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = tbl.appendChild(document.createElement('tr'));
-	let td = tr.appendChild(document.createElement('td'));
-	td.textContent = '分類';
-	td = tr.appendChild(document.createElement('td'));
-	td.textContent = '地圖';
+	const tr = tbl.appendChild(document.createElement('tr'));
+	tr.appendChild(document.createElement('td')).textContent = '分類';
+	tr.appendChild(document.createElement('td')).textContent = '地圖';
 
 	for (let i = 0, I = M1.children.length; i < I; ++i) {
 		const info1 = M1.children[i];
-		if (info1.dataset.hasOwnProperty('forbidGoldCpu')) {
-			tr = tbl.appendChild(document.createElement('tr'));
-			td = tr.appendChild(document.createElement('td'));
-			const a = td.appendChild(document.createElement('a'));
+		if (Object.hasOwn(info1.dataset, 'forbidGoldCpu')) {
+			const tr = tbl.appendChild(document.createElement('tr'));
+			const a = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			a.textContent = info1.textContent;
 			a.href = '/stage.html?s=' + i;
 			a.onclick = onStageAnchorClick;
-			td = tr.appendChild(document.createElement('td'));
-			td.textContent = '<全地圖皆不可掃蕩>';
+			tr.appendChild(document.createElement('td')).textContent = '<全地圖皆不可掃蕩>';
 		}
 	}
 
 	for await (const v of Stage.forEachMap()) {
 		if (v.flags & 2) {
 			const tr = tbl.appendChild(document.createElement('tr'));
-			let td = tr.appendChild(document.createElement('td'));
-			const a = td.appendChild(document.createElement('a'));
+			const a = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			const mc = ~~(v.id / 1000);
 			const sm = v.id % 1000;
 			a.textContent = M1.children[mc].textContent;
 			a.href = `/stage.html?s=${mc}`;
 			a.onclick = onStageAnchorClick;
-			td = tr.appendChild(document.createElement('td'));
-			const a2 = td.appendChild(document.createElement('a'));
+			const a2 = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 			a2.textContent = v.name || v.nameJp;
 			a2.href = a.href + '-' + sm;
 			a2.onclick = onStageAnchorClick;
@@ -355,17 +334,13 @@ async function search_reward(r) {
 	main_div.hidden = true;
 	search_result.textContent = '';
 	search_result.hidden = false;
-	let tbl = search_result.appendChild(document.createElement('table'));
+	const tbl = search_result.appendChild(document.createElement('table'));
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
-	let tr = tbl.appendChild(document.createElement('tr'));
-	let td = tr.appendChild(document.createElement('td'));
-	td.textContent = '地圖';
-	td = tr.appendChild(document.createElement('td'));
-	td.textContent = '關卡';
-	td = tr.appendChild(document.createElement('td'));
-	td.textContent = '統率力';
-	td = tr.appendChild(document.createElement('td'));
-	td.textContent = '掉落';
+	const tr = tbl.appendChild(document.createElement('tr'));
+	tr.appendChild(document.createElement('td')).textContent = '地圖';
+	tr.appendChild(document.createElement('td')).textContent = '關卡';
+	tr.appendChild(document.createElement('td')).textContent = '統率力';
+	tr.appendChild(document.createElement('td')).textContent = '掉落';
 
 	for await (const v of Stage.forEachStage()) {
 		const drop_data = v.drop;
@@ -373,22 +348,19 @@ async function search_reward(r) {
 			for (const [, id, num] of drop_data) {
 				if (id == T) {
 					const tr = tbl.appendChild(document.createElement('tr'));
-					let td0 = tr.appendChild(document.createElement('td'));
+					const td0 = tr.appendChild(document.createElement('td'));
 					Stage.getMap(~~(v.id / 1000)).then(map => {
 						td0.textContent = namefor(map);
 					});
 					const mc = ~~(v.id / 1000000);
 					const st = v.id % 1000;
 					const sm = ~~((v.id - mc * 1000000) / 1000);
-					let td = tr.appendChild(document.createElement('td'));
-					const a2 = td.appendChild(document.createElement('a'));
+					const a2 = tr.appendChild(document.createElement('td')).appendChild(document.createElement('a'));
 					a2.textContent = v.name || v.nameJp;
 					a2.href = `/stage.html?s=${mc}-${sm}-${st}`;
 					a2.onclick = onStageAnchorClick;
-					td = tr.appendChild(document.createElement('td'));
-					td.textContent = v.energy;
-					td = tr.appendChild(document.createElement('td'));
-					td.textContent = P + ' ×' + num;
+					tr.appendChild(document.createElement('td')).textContent = v.energy;
+					tr.appendChild(document.createElement('td')).textContent = P + ' ×' + num;
 					break;
 				}
 			}
@@ -575,7 +547,7 @@ function getConditionHTML(obj) {
 		if (!obj) return document.createTextNode(QQ);
 	}
 	if (typeof obj == "string") return document.createTextNode(obj);
-	if (obj.hasOwnProperty("stage")) {
+	if (Object.hasOwn(obj, "stage")) {
 		const x = Math.abs(obj.condition) % 100000;
 		const mc = fromV(~~(x / 1000));
 		const sm = x % 1000;
@@ -614,9 +586,9 @@ function getConditionHTML(obj) {
 }
 
 function getRarityString(rare) {
-	var strs = [];
-	var y = 0;
-	for (var i = 1; i < 64; i <<= 1) {
+	const strs = [];
+	let y = 0;
+	for (let i = 1; i < 64; i <<= 1) {
 		if (rare & i)
 			strs.push(stage_extra.rars[y]);
 		++y;
@@ -805,9 +777,8 @@ M2.oninput = function (event) {
 	refresh_2();
 };
 
-function makeTd(p, txt) {
-	const td = p.appendChild(document.createElement("td"));
-	td.textContent = txt;
+function makeTd(tr, text) {
+	tr.appendChild(document.createElement("td")).textContent = text;
 }
 
 function getDropData(drops) {
@@ -828,8 +799,8 @@ function getDropData(drops) {
 	}
 
 	if (sum > 100 && (info3.rand === 0 || info3.rand === 1)) {
+		const once = [];
 		let rest = 100;
-		let once = [];
 		let sliced = ints;
 		if (ints[0] === 100) {
 			sliced = ints.slice(1);
@@ -912,25 +883,25 @@ async function render_stage() {
 	}
 	document.title = (info2.name || info2.nameJp || QQ) + ' - ' + (info3.name || info3.nameJp || QQ);
 
-	var stars_tr = document.getElementById("stars-tr");
+	const stars_tr = document.getElementById("stars-tr");
 	if (stars_tr)
 		stars_tr.parentNode.removeChild(stars_tr);
 
-	var warn_tr = document.getElementById("warn-tr");
+	const warn_tr = document.getElementById("warn-tr");
 	if (warn_tr)
 		warn_tr.parentNode.removeChild(warn_tr);
 
-	var limit_bt = document.getElementById("limit-bt");
+	const limit_bt = document.getElementById("limit-bt");
 	if (limit_bt)
 		limit_bt.parentNode.removeChild(limit_bt);
 
-	var mult = 100;
+	let stageCrownMult = 100;
 	if (mults.length) {
-		mult = mults[star - 1];
-		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
-		var th = tr.appendChild(document.createElement("th"));
+		stageCrownMult = mults[star - 1];
+		const tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
+		const th = tr.appendChild(document.createElement("th"));
 		for (let i = 0; i < mults.length; ++i) {
-			var a = th.appendChild(document.createElement("span"));
+			const a = th.appendChild(document.createElement("span"));
 			a.classList.add("a");
 			a.textContent = (i + 1).toString() + "★: " + mults[i] + "%";
 			url.searchParams.set("star", (i + 1).toString());
@@ -941,74 +912,74 @@ async function render_stage() {
 		}
 		tr.id = "stars-tr";
 	}
-	if (info3.flags || info2.resetMode || info1.dataset.hasOwnProperty('forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond || info2.costmulti) {
-		var s;
-		var tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
+	if (info3.flags || info2.resetMode || Object.hasOwn(info1.dataset, 'forbidGoldCpu') || info2.wait || info2.flags || info2.specialCond || info2.costmulti) {
+		let s;
+		const tr = stName.parentNode.parentNode.appendChild(document.createElement("tr"));
 		tr.id = "warn-tr";
 		tr.style.fontSize = "larger";
-		var th = tr.appendChild(document.createElement("th"));
+		const th = tr.appendChild(document.createElement("th"));
 		if (flags2 & 32) {
-			var span = th.appendChild(document.createElement("div"));
-			span.textContent = '※此道場可以透過擊敗敵人來獲得金錢';
-			span.classList.add('I');
+			const div = th.appendChild(document.createElement("div"));
+			div.textContent = '※此道場可以透過擊敗敵人來獲得金錢';
+			div.classList.add('I');
 		}
 		if (flags2 & 16) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('w');
-			span.innerHTML = "<abbr title=\"此資訊僅適用於日文版，海外版可能仍在使用此地圖\">此地圖已不再使用</abbr>";
+			const div = th.appendChild(document.createElement("div"));
+			div.classList.add('w');
+			div.innerHTML = "<abbr title=\"此資訊僅適用於日文版，海外版可能仍在使用此地圖\">此地圖已不再使用</abbr>";
 		}
 		if (flags2 & 4) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('abyssal');
-			span.textContent = "開放深淵關卡";
+			const div = th.appendChild(document.createElement("div"));
+			div.classList.add('abyssal');
+			div.textContent = "開放深淵關卡";
 		}
 		if (info2.resetMode) {
-			var span = th.appendChild(document.createElement("div"));
-			span.textContent = stage_extra.resetModes[info2.resetMode - 1];
-			span.classList.add('I');
+			const div = th.appendChild(document.createElement("div"));
+			div.textContent = stage_extra.resetModes[info2.resetMode - 1];
+			div.classList.add('I');
 		}
 		if (info2.wait) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('W');
-			span.textContent = "成功挑戰冷卻時長：" + info2.wait;
+			const div = th.appendChild(document.createElement("div"));
+			div.classList.add('W');
+			div.textContent = "成功挑戰冷卻時長：" + info2.wait;
 		}
 		if (info2.costmulti) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('I');
-			span.textContent = "召喚金額倍率：" + info2.costmulti;
+			const div = th.appendChild(document.createElement("div"));
+			div.classList.add('I');
+			div.textContent = "召喚金額倍率：" + info2.costmulti;
 		}
 		if (flags2 & 1) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('I');
-			span.textContent = "全破後隱藏";
+			const div = th.appendChild(document.createElement("div"));
+			div.classList.add('I');
+			div.textContent = "全破後隱藏";
 		}
-		if (info1.dataset.hasOwnProperty('forbidGoldCpu') || flags2 & 2) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('W');
-			span.textContent = "※掃蕩不可※";
+		if (Object.hasOwn(info1.dataset, 'forbidGoldCpu') || flags2 & 2) {
+			const div = th.appendChild(document.createElement("div"));
+			div.classList.add('W');
+			div.textContent = "※掃蕩不可※";
 		}
 		if (flags2 & 8) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('I');
-			span.textContent = "通關後可觀看廣告獲得2倍XP";
+			const div = th.appendChild(document.createElement("div"));
+			div.classList.add('I');
+			div.textContent = "通關後可觀看廣告獲得2倍XP";
 		}
 
 		if (flags3 & 1) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('w');
-			span.textContent = "※接關不可※";
+			const div = th.appendChild(document.createElement("div"));
+			div.classList.add('w');
+			div.textContent = "※接關不可※";
 		}
 		if (flags3 & 2) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('w');
-			span.textContent = "※速攻不可（城堡盾）※";
+			const div = th.appendChild(document.createElement("div"));
+			div.classList.add('w');
+			div.textContent = "※速攻不可（城堡盾）※";
 		}
 		if (flags3 & 4) {
-			var span = th.appendChild(document.createElement('div'));
-			span.textContent = '查看固定編成';
-			span.style.cursor = 'pointer';
-			span.classList.add('I');
-			span.onclick = function() {
+			const div = th.appendChild(document.createElement('div'));
+			div.textContent = '查看固定編成';
+			div.style.cursor = 'pointer';
+			div.classList.add('I');
+			div.onclick = function() {
 				const ctn = document.createElement('div');
 				const leftCtn = ctn.appendChild(document.createElement('div'));
 				const rigjtCtn = ctn.appendChild(document.createElement('div'));
@@ -1096,11 +1067,11 @@ async function render_stage() {
 			}
 		}
 		if (flags3 & 16) {
-			var span = th.appendChild(document.createElement('div'));
-			span.textContent = '查看提示';
-			span.style.cursor = 'pointer';
-			span.classList.add('W');
-			span.onclick = function() {
+			const div = th.appendChild(document.createElement('div'));
+			div.textContent = '查看提示';
+			div.style.cursor = 'pointer';
+			div.classList.add('W');
+			div.onclick = function() {
 				const ctn = document.createElement('div');
 				ctn.style.textAlign = 'center';
 				for (const part of stage_extra.stageTips[cur_stage_code]) {
@@ -1119,80 +1090,72 @@ async function render_stage() {
 			}
 		}
 		if (info2.specialCond) {
-			var span = th.appendChild(document.createElement("div"));
-			span.classList.add('w');
-			span.textContent = info2.specialCond;
+			const div1 = th.appendChild(document.createElement("div"));
+			div1.classList.add('w');
+			div1.textContent = info2.specialCond;
 			if (info2.invalidCombos) {
-				span = th.appendChild(document.createElement("div"));
-				span.classList.add('W');
-				span.textContent = info2.invalidCombos;
+				const div2 = th.appendChild(document.createElement("div"));
+				div2.classList.add('W');
+				div2.textContent = info2.invalidCombos;
 			}
 		}
 	}
 
 	rewards.textContent = "";
 	if (info3.drop) {
-		var drop_data = info3.drop;
-		var chances = getDropData(drop_data);
-		var once = true;
-		for (var i = 0; i < drop_data.length; ++i) {
+		const drop_data = info3.drop;
+		const chances = getDropData(drop_data);
+		let once = true;
+		for (let i = 0; i < drop_data.length; ++i) {
 			if (!chances[i])
 				continue;
-			var v = drop_data[i];
-			var tr = rewards.appendChild(document.createElement("tr"));
+			const v = drop_data[i];
+			const tr = rewards.appendChild(document.createElement("tr"));
 			createReward(tr, v);
-			var td1 = tr.appendChild(document.createElement("td"));
-			td1.appendChild(document.createTextNode(numStr(chances[i]) + "%" + (i == 0 && v[0] !== 100 && info3.rand !== -4 ? " （寶雷）" : "")));
-			var td2 = tr.appendChild(document.createElement("td"));
-			td2.textContent = (info3.rand === -3 || (!i && (info3.rand === 1 || v[1] >= 1e3 && v[1] < 3e4))) ? "一次" : "無";
+			makeTd(tr, numStr(chances[i]) + "%" + (i == 0 && v[0] !== 100 && info3.rand !== -4 ? " （寶雷）" : ""));
+			makeTd(tr, (info3.rand === -3 || (!i && (info3.rand === 1 || v[1] >= 1e3 && v[1] < 3e4))) ? "一次" : "無");
 		}
 	}
 	rewards.parentNode.hidden = !rewards.children.length;
 
 	m_abyssalRewards.textContent = "";
 	if (info3.abyssalRewards) {
-		var drop_data = info3.abyssalRewards;
-		for (var i = 0; i < drop_data.length; ++i) {
-			var v = drop_data[i];
-			var tr = m_abyssalRewards.appendChild(document.createElement("tr"));
+		const drop_data = info3.abyssalRewards;
+		for (let i = 0; i < drop_data.length; ++i) {
+			const v = drop_data[i];
+			const tr = m_abyssalRewards.appendChild(document.createElement("tr"));
 			createReward(tr, v);
-			var td = tr.appendChild(document.createElement("td"));
-			td.textContent = `第${v[0]}次`;
+			makeTd(tr, `第${v[0]}次`);
 		}
 	}
 	m_abyssalRewards.parentNode.hidden = !m_abyssalRewards.children.length;
 
 	m_drops.textContent = "";
-	var material_drop = info2.matDrops || [];
-	for (var i = 1; i < material_drop.length; ++i) {
+	const material_drop = info2.matDrops || [];
+	for (let i = 1; i < material_drop.length; ++i) {
 		const x = material_drop[i];
 		if (!x)
 			continue;
-		var rw = stage_extra.matDrops[i - 1];
-		var tr = m_drops.appendChild(document.createElement("tr"));
-		var td0 = tr.appendChild(document.createElement("td"));
-		td0.textContent = stage_extra.rewards[rw]?.name;
-		var td2 = tr.appendChild(document.createElement('td'));
-		var img = td2.appendChild(new Image(128, 128));
+		const rw = stage_extra.matDrops[i - 1];
+		const tr = m_drops.appendChild(document.createElement("tr"));
+		makeTd(tr, stage_extra.rewards[rw]?.name);
+		const img = tr.appendChild(document.createElement('td')).appendChild(new Image(128, 128));
 		img.style.maxWidth = "2.7em";
 		img.style.height = 'auto';
 		img.src = `/img/r/${rw}.png`;
-		var td1 = tr.appendChild(document.createElement("td"));
-		td1.textContent = x + '%';
+		makeTd(tr, x + '%');
 	}
 	m_drops.parentNode.hidden = !m_drops.children.length;
 	mM.textContent = `抽選次數：${~~Math.round(info3.maxMat * info2.matMults?.[star - 1])}回`;
 	if (info3.time) {
 		m_times.textContent = "";
-		var drop_data = info3.time;
-		for (var _i = 0, drop_data_1 = drop_data; _i < drop_data_1.length; _i++) {
-			var v = drop_data_1[_i];
-			var tr = m_times.appendChild(document.createElement("tr"));
+		const drop_data = info3.time;
+		for (let _i = 0, drop_data_1 = drop_data; _i < drop_data_1.length; _i++) {
+			const v = drop_data_1[_i];
+			const tr = m_times.appendChild(document.createElement("tr"));
 			createReward(tr, v);
-			var td1 = tr.appendChild(document.createElement("td"));
-			td1.textContent = v[2];
-			var td2 = tr.appendChild(document.createElement("td"));
-			td2.textContent = v[0];
+			makeTd(tr, v[2]);
+			makeTd(tr, v[0]);
 		}
 		m_times.parentNode.hidden = false;
 	} else {
@@ -1213,7 +1176,7 @@ async function render_stage() {
 		st3[3].textContent = "無限制";
 	}
 	if (flags3 & 8) {
-		st2[1].textContent = numStr(~~((info3.hp * mult) / 100));
+		st2[1].textContent = numStr(~~((info3.hp * stageCrownMult) / 100));
 	} else {
 		st2[1].textContent = numStr(info3.hp);
 	}
@@ -1223,7 +1186,7 @@ async function render_stage() {
 	} else {
 		st3[5].textContent = "無限制";
 	}
-	var xp = info3.xp;
+	const xp = info3.xp;
 	if (info1.dataset.maps) {
 		// Always normal stages
 		st3[1].textContent = numStr(~~(xp * 4.7));
@@ -1242,12 +1205,11 @@ async function render_stage() {
 	if (info2.limit) {
 		const limits = info2.limit.map(x => new Limit(x));
 		const theStar = star - 1;
-		var lim = new Limit();
-		for (var _a = 0; _a < limits.length; _a++) {
-			var l = limits[_a];
-			if (l.star == -1 || l.star == theStar)
-				if (l.sid == -1 || l.sid == M3.selectedIndex)
-					lim.combine(l);
+		const lim = new Limit();
+		for (const limit of limits) {
+			if (limit.star == -1 || limit.star == theStar)
+				if (limit.sid == -1 || limit.sid == M3.selectedIndex)
+					lim.combine(limit);
 		}
 		const limits_str = [];
 		if (lim.rare)
@@ -1284,10 +1246,9 @@ async function render_stage() {
 		}
 	}
 	ex_stages.textContent = "";
-	let ex_stage_data = info3.exStage;
-	if (ex_stage_data) {
+	if (info3.exStage) {
 		ex_stages.hidden = false;
-		ex_stage_data = ex_stage_data.split('$');
+		const ex_stage_data = info3.exStage.split('$');
 		if (ex_stage_data[0]) {
 			const [exChance, exMapID, exStageIDMin, exStageIDMax] = ex_stage_data[0].split(',');
 			const td = ex_stages.appendChild(document.createElement("div"));
@@ -1316,10 +1277,8 @@ async function render_stage() {
 			table.classList.add("w3-table", "w3-centered");
 			const tbody = table.appendChild(document.createElement("tbody"));
 			const tr = tbody.appendChild(document.createElement("tr"));
-			const td0 = tr.appendChild(document.createElement("td"));
-			td0.textContent = "EX關卡";
-			const td1 = tr.appendChild(document.createElement("td"));
-			td1.textContent = "機率";
+			makeTd(tr, "EX關卡");
+			makeTd(tr, "機率");
 			exStage = exStage.split(',');
 			exChance = exChance.split(',');
 			for (let i = 0; i < exStage.length; ++i) {
@@ -1328,15 +1287,13 @@ async function render_stage() {
 				const st = s % 1000;
 				const sm = ~~((s - mc * 1000000) / 1000);
 				const tr = tbody.appendChild(document.createElement("tr"));
-				const td0 = tr.appendChild(document.createElement("td"));
-				const td1 = tr.appendChild(document.createElement("td"));
-				const a = td0.appendChild(document.createElement("a"));
+				const a = tr.appendChild(document.createElement("td")).appendChild(document.createElement("a"));
 				a.href = `/stage.html?s=${mc}-${sm}-${st}`;
 				a.onclick = onStageAnchorClick;
 				Stage.getStage(s).then(stage => {
 					a.textContent = namefor(stage);
 				});
-				td1.textContent = exChance[i] + "%";
+				makeTd(tr, exChance[i] + "%");
 			}
 		}
 	} else {
@@ -1354,43 +1311,43 @@ async function render_stage() {
 		const td = tr.appendChild(document.createElement('td')); // image
 		const a = td.appendChild(document.createElement('a'));
 		const img = a.appendChild(new Image(64, 64));
-		const m = mult / 100;
-		let hpM, atkM;
+		const m = stageCrownMult / 100;
+		let stageMult, stageAtkMult;
 
 		if (strs[7].includes('+'))
-			[hpM, atkM] = strs[7].split('+');
+			[stageMult, stageAtkMult] = strs[7].split('+');
 		else
-			hpM = atkM = strs[7];
-		hpM = parseInt(hpM || '2s', 36);
-		atkM = parseInt(atkM || '2s', 36);
+			stageMult = stageAtkMult = strs[7];
+		stageMult = parseInt(stageMult || '2s', 36);
+		stageAtkMult = parseInt(stageAtkMult || '2s', 36);
 
 		img.src = `/img/e/${enemy}/0.png`;
 		const noStageMag = (strs[6].length === 2);
 		a.addEventListener('click', event => {
 			const href = event.currentTarget.href;
 			event.preventDefault();
-			loadEnemy(enemy).then(e => {
-				renderEnemy(e, {my_mult: hpM, atk_mag: atkM, stageMag: noStageMag ? 100 : mult});
+			loadEnemy(enemy).then(enemy => {
+				new EnemyStatsTable({enemy, setTitle: false, stageMult, stageAtkMult, stageCrownMult: noStageMag ? 100 : stageCrownMult});
 				enemyModalA.href = href;
 				dialog('enemy-modal', enemyTable);
 			});
 		});
 		let hpMs, atkMs;
 		if (noStageMag) {
-			a.href = `/enemy.html?id=${enemy}&mag=${hpM}&atkMag=${atkM}`;
-			hpMs = ~~(hpM * m).toString() + '%';
-			atkMs = atkM.toString() + '%';
+			a.href = `/enemy.html?id=${enemy}&mag=${stageMult}&atkMag=${stageAtkMult}`;
+			hpMs = ~~(stageMult * m).toString() + '%';
+			atkMs = stageAtkMult.toString() + '%';
 		} else {
-			a.href = `/enemy.html?id=${enemy}&mag=${hpM}&atkMag=${atkM}&stageMag=${mult}`;
-			hpMs = ~~(hpM * m).toString() + '%';
-			atkMs = ~~(atkM * m).toString() + '%';
+			a.href = `/enemy.html?id=${enemy}&mag=${stageMult}&atkMag=${stageAtkMult}&stageMag=${stageCrownMult}`;
+			hpMs = ~~(stageMult * m).toString() + '%';
+			atkMs = ~~(stageAtkMult * m).toString() + '%';
 		}
 
 		makeTd(tr, hpMs == atkMs ? hpMs : `HP:${hpMs}, ATK:${atkMs}`); // mag
 		makeTd(tr, strs[1] || "無限"); // count
 
-		let tower = strs[5];
-		let towerIsRawHP = (parseInt(tower) > 100 || [5, 7].includes(M1.selectedIndex)) ? true : false; // dojos
+		const tower = strs[5];
+		const towerIsRawHP = (parseInt(tower) > 100 || [5, 7].includes(M1.selectedIndex)) ? true : false; // dojos
 		makeTd(tr, towerIsRawHP ? tower : `${tower}%`); // tower HP/ratio
 
 		if (stageF)

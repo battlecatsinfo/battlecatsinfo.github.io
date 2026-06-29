@@ -1,61 +1,11 @@
 import {loadScheme, config, numStr, numStrT, numStrX, floor, savePng, copyPng, getCombinations} from './common.mjs';
 import {
-	ATK_SINGLE,
 	ATK_RANGE,
 	ATK_LD,
 	ATK_OMNI,
-	ATK_KB_REVENGE,
 
-	trait_no_treasure,
-	trait_treasure,
-
-	AB_STRENGTHEN,
-	AB_SURVIVE,
-	AB_ATKBASE,
-	AB_CRIT,
-	AB_ZKILL,
-	AB_CKILL,
-	AB_BREAK,
-	AB_SHIELDBREAK,
-	AB_SAVAGE,
-	AB_BOUNTY,
-	AB_METALIC,
-	AB_MINIWAVE,
-	AB_WAVE,
-	AB_MINISURGE,
-	AB_SURGE,
-	AB_WAVES,
-	AB_BAIL,
-	AB_BSTHUNT,
-	AB_WKILL,
-	AB_EKILL,
-	AB_WEAK,
-	AB_STOP,
-	AB_SLOW,
-	AB_ONLY,
-	AB_GOOD,
-	AB_RESIST,
-	AB_RESISTS,
-	AB_MASSIVE,
-	AB_MASSIVES,
-	AB_KB,
-	AB_WARP,
-	AB_IMUATK,
-	AB_CURSE,
-	AB_BURROW,
-	AB_REVIVE,
-	AB_POIATK,
-	AB_SUICIDE,
-	AB_BARRIER,
-	AB_DSHIELD,
-	AB_COUNTER,
-	AB_DEATHSURGE,
-	AB_SAGE,
-	AB_SUMMON,
-	AB_MK,
-	AB_EXPLOSION,
-
-	catEnv,
+	TRAIT_NO_TREASURE,
+	TRAIT_TREASURE,
 
 	createTraitIcons,
 	createImuIcons,
@@ -66,28 +16,27 @@ import {
 	updateAtkBaha,
 	updateHpBaha,
 
-	atk_mult_abs,
-	hp_mult_abs,
+	ATK_MULTI_AB,
+	HP_MULTI_AB,
 } from './unit.mjs';
-const units_scheme = await loadScheme('units', ['talents']);
 
-var cats;
-var targets = new Set();
-var CL;
-const tbl = document.getElementById('tbl');
-const tby = tbl.firstElementChild.children;
-const cat_name = document.getElementById('cat-name');
-const CF = document.getElementById('CF');
+
+let cats;
+let targets = new Set();
+const tableEl = document.getElementById('tbl');
+const tbodyEl = tableEl.firstElementChild.children;
+const catNameEl = document.getElementById('cat-name');
+const formSelectEl = document.getElementById('form-select');
+const nameListEl = document.getElementById('name-list');
+const unitScheme = await loadScheme('units', ['talents']);
 
 loadAllCats().then(s => {
-	let o, f;
 	cats = s;
-	CL = document.getElementById('CL');
 	for (let i = 0; i < s.length; ++i) {
 		const C = s[i];
-		o = document.createElement('option');
-		o.value = C.forms.map(CL => CL.name || CL.jp_name).join('/');
-		CL.appendChild(o);
+		const option = document.createElement('option');
+		option.value = C.forms.map(unit => unit.name || unit.jpName).join('/');
+		nameListEl.appendChild(option);
 	}
 	document.getElementById('loader').style.display = 'none';
 	let X = (new URL(location.href)).searchParams.get('targets');
@@ -113,29 +62,29 @@ loadAllCats().then(s => {
 });
 
 function newTab() {
-	for (let i = 0, I = tby.length; i < I; i++) {
-		const tr = tby[i];
+	for (let i = 0, I = tbodyEl.length; i < I; i++) {
+		const tr = tbodyEl[i];
 		const t = document.createElement('td');
 		tr.appendChild(t);
 	}
-	return tby[0].children.length - 1;
+	return tbodyEl[0].children.length - 1;
 }
 
 function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
-	tby[5].children[I].textContent = `${F.kb} / ${F.speed}`;
-	var T = numStrX(F.pre);
+	tbodyEl[5].children[I].textContent = `${F.kb} / ${F.speed}`;
+	let T = numStrX(F.pre);
 	if (F.pre1)
 		T = '①' + T + '②' + numStrX(F.pre1);
 	if (F.pre2)
 		T += '③' + numStrX(F.pre2);
-	tby[6].children[I].textContent = `${numStrX(F.attackF)} / ${T} ${config.unit === 'F' ? 'F' : '秒'}`;
+	tbodyEl[6].children[I].textContent = `${numStrX(F.attackF)} / ${T} ${config.unit === 'F' ? 'F' : '秒'}`;
 	T = '';
 	if (F.atkType & ATK_OMNI)
 		T += '全方位';
 	else if (F.atkType & ATK_LD)
 		T += '遠方';
 	T += (F.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
-	tby[7].children[I].textContent = numStrT(F.cd) + ' / ' + numStr(F.info.price * 1.5) + '元';
+	tbodyEl[7].children[I].textContent = numStrT(F.cd) + ' / ' + numStr(F.info.price * 1.5) + '元';
 	if (F.lds) {
 		let s = '';
 		for (let i = 0; i < F.lds.length; ++i) {
@@ -148,52 +97,52 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				s += z + y + '~' + x;
 			}
 		}
-		tby[8].children[I].textContent = F.range + ' / ' + T + '（' + s + '）';
+		tbodyEl[8].children[I].textContent = F.range + ' / ' + T + '（' + s + '）';
 	} else {
-		tby[8].children[I].textContent = F.range + ' / ' + T;
+		tbodyEl[8].children[I].textContent = F.range + ' / ' + T;
 	}
 
 	const ABF = Object.keys(F.ab).map(Number);
-	const HCs = getCombinations(ABF.filter(x => hp_mult_abs.has(x)));
-	const ACs = getCombinations(ABF.filter(x => atk_mult_abs.has(x)));
+	const HCs = getCombinations(ABF.filter(x => HP_MULTI_AB.has(x)));
+	const ACs = getCombinations(ABF.filter(x => ATK_MULTI_AB.has(x)));
 
 	updateHpBaha({
 		form: F,
 		Cs: HCs,
-		parent: tby[2].children[I],
+		parent: tbodyEl[2].children[I],
 		showTrait: false,
 	});
 	updateAtkBaha({
 		form: F,
 		Cs: ACs,
-		parent: tby[3].children[I],
+		parent: tbodyEl[3].children[I],
 		showTrait: false,
 	});
 	updateAtkBaha({
 		form: F,
 		Cs: ACs,
-		parent: tby[4].children[I],
+		parent: tbodyEl[4].children[I],
 		dpsMode: true,
 		showTrait: false,
 	});
 
-	let M = tby[9].children[I];
+	let M = tbodyEl[9].children[I];
 	M.textContent = '';
 	createTraitIcons(F.trait, M);
-	let ab_no;
+	let abilityNo;
 
 	function W(m) {
 		const u = new Image(40, 40);
-		u.src = `/img/i/a/${ab_no}.png`;
+		u.src = `/img/i/a/${abilityNo}.png`;
 		const d = document.createElement('div');
 		d.appendChild(u);
 		d.append(m);
 		M.appendChild(d);
 	}
-	const has_treasure = F.trait & trait_treasure;
+	const hasTreasure = F.trait & TRAIT_TREASURE;
 	let du;
 	for (const [i, v] of Object.entries(F.ab)) {
-		switch (ab_no = parseInt(i, 10)) {
+		switch (abilityNo = parseInt(i, 10)) {
 			case 1:
 				W(`體力 ${v[0]} % 以下攻擊力增加至 ${100 + v[1]} %`);
 				break;
@@ -255,8 +204,8 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				W("終結使徒");
 				break;
 			case 21:
-				if (has_treasure) {
-					if (F.trait & trait_no_treasure) {
+				if (hasTreasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[2]))}（${numStrT(floor(v[2] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[2] * 1.2));
@@ -267,8 +216,8 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				W(`${v[0]} % 降攻 ${du}`);
 				break;
 			case 22:
-				if (has_treasure) {
-					if (F.trait & trait_no_treasure) {
+				if (hasTreasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
@@ -279,8 +228,8 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				W(`${v[0]} % 暫停 ${du}`);
 				break;
 			case 23:
-				if (has_treasure) {
-					if (F.trait & trait_no_treasure) {
+				if (hasTreasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
@@ -315,8 +264,8 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				W(v[0] + " % 傳送敵人");
 				break;
 			case 32:
-				if (has_treasure) {
-					if (F.trait & trait_no_treasure) {
+				if (hasTreasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
@@ -327,8 +276,8 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 				W(`${v[0]} % 攻擊無效 ${du}`);
 				break;
 			case 33:
-				if (has_treasure) {
-					if (F.trait & trait_no_treasure) {
+				if (hasTreasure) {
+					if (F.trait & TRAIT_NO_TREASURE) {
 						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
 					} else {
 						du = numStrT(floor(v[1] * 1.2));
@@ -395,24 +344,15 @@ function handleKW(event) {
 	}
 }
 
-function handleFocus() {
-	this.textContent = this.textContent.match(/\d+/)[0];
-	this.focus();
-	const s = window.getSelection();
-	const r = document.createRange();
-	r.selectNodeContents(this);
-	s.removeAllRanges();
-	s.addRange(r);
-}
 
 function addCat(id, I, FC = 0) {
 	let M, G,
 		C = cats[id],
 		F = C.forms[FC];
-	var FL = 0;
+	let FL = 0;
 	if (FC > 1 && (G = C.talents)) {
 		FL = 1;
-		M = tby[10].children[I];
+		M = tbodyEl[10].children[I];
 		M.style.textAlign = 'left';
 		for (let i = 1; i < 113 && G[i]; i += 14) {
 			const D = document.createElement('div');
@@ -422,11 +362,11 @@ function addCat(id, I, FC = 0) {
 			}
 			const I = D.appendChild(new Image(40, 40));
 			I.src = `/img/i/t/${G[i]}.png`;
-			D.append(units_scheme.talents.names[G[i]]);
+			D.append(unitScheme.talents.names[G[i]]);
 			M.appendChild(D);
 		}
 	}
-	M = tby[0].children[I];
+	M = tbodyEl[0].children[I];
 	G = new Image(104, 79);
 	G.src = F.icon;
 	M.appendChild(G);
@@ -449,7 +389,7 @@ function addCat(id, I, FC = 0) {
 	levelInput.style.borderRadius = '3px';
 	levelInput.style.padding = '2px';
 	levelInput.addEventListener('keydown', handleKW);
-	levelInput.addEventListener('input', function(e) {
+	levelInput.addEventListener('input', function() {
 		let num = parseInt(this.value, 10);
 		if (num && num >= parseInt(this.min) && num <= parseInt(this.max)) {
 			this.F.level = num;
@@ -485,7 +425,7 @@ function addCat(id, I, FC = 0) {
 			}
 		}
 	});
-	levelInput.addEventListener('blur', function(e) {
+	levelInput.addEventListener('blur', function() {
 		// Ensure value is within bounds and update display
 		let num = parseInt(this.value, 10);
 		let maxLv = parseInt(this.max);
@@ -513,8 +453,8 @@ function addCat(id, I, FC = 0) {
 			setStat(this.C, J, this.I);
 		}
 	});
-	M = tby[1].children[I];
-	M.textContent = (F.name || F.jp_name) + ' Lv ';
+	M = tbodyEl[1].children[I];
+	M.textContent = (F.name || F.jpName) + ' Lv ';
 	M.appendChild(levelInput);
 	if (FL) {
 		F = F.clone();
@@ -524,15 +464,15 @@ function addCat(id, I, FC = 0) {
 		}
 	}
 	setStat(C, F, I);
-	M = tby[11].children[I];
+	M = tbodyEl[11].children[I];
 	M.style.border = 'none';
 	G = document.createElement('span');
 	G.textContent = '移除';
 	G.style.color = 'red';
 	G.style.cursor = 'pointer';
 	G.onclick = function() {
-		for (let i = 0; i < tby.length; ++i) {
-			const x = tby[i].children[I];
+		for (let i = 0; i < tbodyEl.length; ++i) {
+			const x = tbodyEl[i].children[I];
 			x.textContent = '';
 			x.style.display = 'none';
 		}
@@ -621,12 +561,12 @@ function addCat(id, I, FC = 0) {
 }
 
 document.getElementById('tab').onclick = function() {
-	const X = CL.options;
-	const Y = cat_name.value;
+	const X = nameListEl.options;
+	const Y = catNameEl.value;
 	for (let i = 0; i < X.length; ++i) {
 		if (X[i].value == Y) {
 			const X = cats[i].forms.length;
-			let m = CF.selectedIndex;
+			let m = formSelectEl.selectedIndex;
 			if (m <= 3) {
 				if (m >= X) {
 					alert('此貓咪沒有第' + (m + 1) + '型態');
@@ -651,14 +591,14 @@ document.getElementById('tab').onclick = function() {
 
 async function screenshot(filename) {
 	const fn = typeof filename === 'string' ? savePng : copyPng;
-	tbl.classList.add('export');
-	await fn(tbl, filename, {
+	tableEl.classList.add('export');
+	await fn(tableEl, filename, {
 		'filter': elem => !(elem instanceof HTMLTableRowElement && elem.classList.contains('export-hide')),
 		'style': {
 			'margin': '0'
 		}
 	});
-	tbl.classList.remove('export');
+	tableEl.classList.remove('export');
 }
 
 document.getElementById('camera').onclick = screenshot;
@@ -668,7 +608,7 @@ document.getElementById('download').onclick = async function() {
 	for (const C of targets) {
 		const X = C.split('-');
 		const M = cats[parseInt(X[0], 10)].forms[parseInt(X[1], 10)];
-		N.push(M.name || M.jp_name);
+		N.push(M.name || M.jpName);
 	}
 	await screenshot('貓咪比較 —— ' + N.join('.v.s') + '.png');
 }
@@ -677,13 +617,13 @@ document.getElementById('clear').onclick = function() {
 	let x, y;
 	history.pushState({}, "", '/compare.html');
 	targets.clear();
-	for (const tr of tby) {
+	for (const tr of tbodyEl) {
 		x = tr.firstElementChild;
 		while (x != (y = tr.lastChild))
 			tr.removeChild(y);
 	}
 }
 
-cat_name.addEventListener('focus', function() {
+catNameEl.addEventListener('focus', function() {
 	this.select();
 });

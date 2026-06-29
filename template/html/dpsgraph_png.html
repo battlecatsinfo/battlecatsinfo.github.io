@@ -28,9 +28,9 @@
 {{#*inline "content"}}
 	<div id="loader"></div>
 	<form action="javascript:void(0);" style="margin: 0 auto;width: 100%;margin-top: 0.8em;text-align: center;">
-		<datalist id="CL"></datalist>
-		<input type="text" id="cat-name" list="CL" name="add-cat" autocomplete="off">
-		<select id="CF" style="width:6.2em;padding:2px;margin:0px 10px;">
+		<datalist id="name-list"></datalist>
+		<input type="text" id="cat-name" list="name-list" name="add-cat" autocomplete="off">
+		<select id="form-select" style="width:6.2em;padding:2px;margin:0px 10px;">
 			<option>第一型態</option>
 			<option>第二型態</option>
 			<option>第三型態</option>
@@ -39,12 +39,12 @@
 		</select>
 	<button id="ok" class="w3-button w3-round w3-blue" style="margin-left: 0.5em;">OK</button>
 	</form>
-	<div id="id01" class="w3-modal">
+	<div id="popup-modal" class="w3-modal">
 		<div class="w3-modal-content w3-card-4 w3-animate-top">
 			<form action="javascript:void(0);" class="w3-container">
-				<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-hover-red w3-display-topright">&times;</span>
+				<span id="popup-modal-close" class="w3-button w3-hover-red w3-display-topright">&times;</span>
 				<p>選取要新增的貓咪</p>
-				<input type="text" id="cat-name2" list="CL" name="add-cat2" autocomplete="off">
+				<input type="text" id="cat-name2" list="name-list" name="add-cat2" autocomplete="off">
 				<select id="CF2" style="width:6.2em;padding:2px;margin:0px 10px;">
 					<option>第一型態</option>
 					<option>第二型態</option>
@@ -67,7 +67,7 @@
 			<option value="dark2">深色2</option>
 		</select>
 	</div>
-	<div id="graph_container"></div>
+	<div id="graph-container"></div>
 {{/inline}}
 
 {{/common.html}}

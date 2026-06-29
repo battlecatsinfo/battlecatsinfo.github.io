@@ -1,34 +1,26 @@
 import {loadScheme} from "./common.mjs";
 import {loadEnemy} from "./unit.mjs";
-import {renderEnemy} from "./enemy.mjs";
+import {EnemyStatsTable} from "./enemy.mjs";
 import * as Stage from './stage.mjs';
 
 const modal = document.getElementById('modal-c');
 const params = new URLSearchParams(location.search);
-let id = parseInt(params.get('id'));
-if (isNaN(id))
-	id = 0;
-
-function search_for() {
-	modal.textContent = '載入中...';
-	document.getElementById('modal').style.display = 'block';
-	_really_search();
-}
+let enemyId = parseInt(params.get('id'));
+if (isNaN(enemyId))
+	enemyId = 0;
 
 function namefor(v) {
 	return v.name || v.nameJp || '？？？';
 }
 
-async function _really_search() {
-	const {grpName: groupNames} = await loadScheme('stage', ['grpName']);
-	really_search.groupNames = groupNames;
-	_really_search = really_search;
-	await really_search();
-}
+async function searchAppears() {
+	modal.textContent = '載入中...';
+	document.getElementById('modal').style.display = 'block';
 
-async function really_search() {
-	let previous_td, previous_mc, previous_td2, previous_sm;
-	const target = id.toString(36);
+	const {grpName: groupNames} = await loadScheme('stage', ['grpName']);
+
+	let previousTd, previousMc, previousTd2, previousSm;
+	const target = enemyId.toString(36);
 	let tbl = document.createElement('table');
 	tbl.classList.add('w3-table', 'w3-centered', 'Co');
 	let tr = document.createElement('tr');
@@ -56,27 +48,27 @@ async function really_search() {
 				const tr = document.createElement('tr');
 				let td;
 
-				if (previous_mc == mc) {
-					previous_td.rowSpan += 1;
+				if (previousMc == mc) {
+					previousTd.rowSpan += 1;
 				} else {
 					td = document.createElement('td');
-					td.textContent = really_search.groupNames[mc];
+					td.textContent = groupNames[mc];
 					tr.appendChild(td);
-					previous_td = td;
-					previous_mc = mc;
-					previous_sm = null;
+					previousTd = td;
+					previousMc = mc;
+					previousSm = null;
 				}
 
-				if (previous_sm == sm) {
-					previous_td2.rowSpan += 1;
+				if (previousSm == sm) {
+					previousTd2.rowSpan += 1;
 				} else {
 					const td0 = document.createElement('td');
 					Stage.getMap(~~(v.id / 1000)).then(map => {
 						td0.textContent = namefor(map);
 					});
 					tr.appendChild(td0);
-					previous_sm = sm;
-					previous_td2 = td0;
+					previousSm = sm;
+					previousTd2 = td0;
 				}
 
 				td = document.createElement('td')
@@ -94,39 +86,39 @@ async function really_search() {
 	}
 }
 
-loadEnemy(id).then(E => {
+loadEnemy(enemyId).then(enemy => {
 	document.getElementById('loader').style.display = 'none';
 	document.getElementById('main').style.display = 'block';
 
-	let my_mult = params.get('mult') || params.get('mag');
-	let atk_mag = params.get('atkMag');
-	let stageMag = params.get('stageMag');
-	if (my_mult) {
-		my_mult = parseInt(my_mult);
-		if (isNaN(my_mult))
-			my_mult = 100;
+	let stageMult = params.get('mult') || params.get('mag');
+	let stageAtkMult = params.get('atkMag');
+	let stageCrownMult = params.get('stageMag');
+	if (stageMult) {
+		stageMult = parseInt(stageMult);
+		if (isNaN(stageMult))
+			stageMult = 100;
 	} else {
-		my_mult = 100;
+		stageMult = 100;
 	}
-	if (atk_mag) {
-		atk_mag = parseInt(atk_mag);
-		if (isNaN(atk_mag))
-			atk_mag = my_mult;
+	if (stageAtkMult) {
+		stageAtkMult = parseInt(stageAtkMult);
+		if (isNaN(stageAtkMult))
+			stageAtkMult = stageMult;
 	} else {
-		atk_mag = my_mult;
+		stageAtkMult = stageMult;
 	}
-	if (stageMag) {
-		stageMag = parseInt(stageMag);
-		if (isNaN(stageMag))
-			stageMag = 100;
+	if (stageCrownMult) {
+		stageCrownMult = parseInt(stageCrownMult);
+		if (isNaN(stageCrownMult))
+			stageCrownMult = 100;
 	} else {
-		stageMag = 100;
+		stageCrownMult = 100;
 	}
-	renderEnemy(E, {my_mult, atk_mag, stageMag}, true);
+	new EnemyStatsTable({enemy, setTitle: true, stageMult, stageAtkMult, stageCrownMulti: stageCrownMult});
 
 	const abar = document.getElementById('abar');
 	const btn = abar.previousElementSibling;
-	btn.onmouseover = function(event) {
+	btn.onmouseover = function() {
 		abar.style.display = 'block';
 	}
 	btn.onclick = function(event) {
@@ -155,14 +147,14 @@ loadEnemy(id).then(E => {
 	addBarItem('複製連結', function() {
 		navigator.clipboard.writeText(location.href);
 	}, false);
-	const dbUrl = new URL(E.bcdbUrl);
-	if (my_mult != 100) dbUrl.searchParams.set('mag', my_mult);
+	const dbUrl = new URL(enemy.bcdbUrl);
+	if (stageMult != 100) dbUrl.searchParams.set('mag', stageMult);
 	addBarItem('超絕', dbUrl.href).rel = 'noreferrer';
-	if (E.fandom)
-		addBarItem('Miraheze Wiki', E.fandomUrl);
-	addBarItem('搜尋出現關卡', search_for);
-	addBarItem('ImgCut', `/imgcut.html?unit=${-(E.id + 1)}`);
-	addBarItem('檢視動畫', E.animUrl);
+	if (enemy.fandom)
+		addBarItem('Miraheze Wiki', enemy.fandomUrl);
+	addBarItem('搜尋出現關卡', searchAppears);
+	addBarItem('ImgCut', `/imgcut.html?unit=${-(enemy.id + 1)}`);
+	addBarItem('檢視動畫', enemy.animUrl);
 	addBarItem('寶物科技設定', '/settings.html#treasure');
-	addBarItem('DPS-距離圖表', `/dpsgraph_svg.html?units=${E.id}`);
+	addBarItem('DPS-距離圖表', `/dpsgraph_svg.html?units=${enemy.id}`);
 });

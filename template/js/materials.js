@@ -1,31 +1,7 @@
 import {getNumFormatter} from './common.mjs';
 import {language} from "./datatables.mjs";
 
-{{#each materials as |value key|}}
-const {{{key}}} = {{{toJSON value}}};
-{{/each}}
-
-for (var j = 0; j < drop_SOL.length; ++j) {
-	for (var i = 4; i < 11; ++i) {
-		const rate = 100 - drop_SOL[j][11];
-		drop_SOL[j][i] = rate * drop_SOL[j][i] / sum_SOL[j];
-	}
-}
-for (var j = 0; j < drop_UL.length; ++j) {
-	const rate = 100 - drop_UL[j][12];
-	for (var i = 4; i < 12; ++i) {
-		drop_UL[j][i] = rate * drop_UL[j][i] / sum_UL[j];
-	}
-}
-
-for (var j = 0; j < drop_ZL.length; ++j) {
-	const rate = 100 - drop_ZL[j][12];
-	for (var i = 4; i < 12; ++i) {
-		drop_ZL[j][i] = rate * drop_ZL[j][i] / sum_ZL[j];
-	}
-}
-const F = getNumFormatter(2);
-
+const numFormatter = getNumFormatter(2);
 const layout = {
 	topStart: {
 		pageLength: {
@@ -46,15 +22,20 @@ const layout = {
 	}
 };
 
+{{#each materials as |value key|}}
+const {{{key}}} = {{{toJSON value}}};
+{{/each}}
+
+
 function format(num) {
 	if (num)
-		return F.format(num);
+		return numFormatter.format(num);
 	return '';
 }
 $('#SOL').DataTable({
-	data: drop_SOL,
+	data: DROP_SOL,
 	bAutoWidth: false,
-	layout: layout,
+	layout,
 	language,
 	columnDefs: [{
 		targets: [4, 5, 6, 7, 8, 9, 10],
@@ -62,9 +43,9 @@ $('#SOL').DataTable({
 	}]
 });
 $('#UL').DataTable({
-	data: drop_UL,
+	data: DROP_UL,
 	bAutoWidth: false,
-	layout: layout,
+	layout,
 	language,
 	columnDefs: [{
 		targets: [4, 5, 6, 7, 8, 9, 10, 11],
@@ -72,9 +53,9 @@ $('#UL').DataTable({
 	}]
 });
 $('#ZL').DataTable({
-	data: drop_ZL,
+	data: DROP_ZL,
 	bAutoWidth: false,
-	layout: layout,
+	layout,
 	language,
 	columnDefs: [{
 		targets: [4, 5, 6, 7, 8, 9, 10, 11],

@@ -1,26 +1,23 @@
 import {savePng} from './common.mjs';
 
-async function camera(e) {
-	const tbl = e.currentTarget.parentNode._t;
-	await savePng(tbl, 'rate.png', {
-		style: {
-			'margin': '0',
-		},
-	});
-}
-onload = function() {
+(function() {
 	const tooltip = document.getElementsByClassName('tooltip')[0];
-	for (const cls of ['rate', 'N', 'Y']) {
-		for (const N of document.getElementsByClassName(cls)) {
-			N.style.position = 'relative';
-			const node = tooltip.cloneNode(true);
-			node.style.position = 'absolute';
-			node.style.right = '-0';
-			node.style.top = '-2em';
-			node.style.display = 'block';
-			node._t = N;
-			node.firstElementChild.onclick = camera;
-			N.appendChild(node);
+	for (const className of ['rate', 'N', 'Y']) {
+		for (const table of document.getElementsByClassName(className)) {
+			table.style.position = 'relative';
+			const cameraTool = tooltip.cloneNode(true);
+			cameraTool.style.position = 'absolute';
+			cameraTool.style.right = '-0';
+			cameraTool.style.top = '-2em';
+			cameraTool.style.display = 'block';
+			cameraTool.firstElementChild.addEventListener('click', async event => {
+				await savePng(table, 'rate.png', {
+					style: {
+						'margin': '0',
+					},
+				});
+			});
+			table.appendChild(cameraTool);
 		}
 	}
-}
+})();

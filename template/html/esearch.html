@@ -137,14 +137,14 @@
 		width: 90px;
 		padding: 3px 10px;
 	}
-	#pages-a > td {
+	#pager > td {
 		font-size: 1.2em;
 		width: 50px;
 		text-align: center;
 		border: none;
 		cursor: pointer;
 	}
-	#pages-a > td:hover {
+	#pager > td:hover {
 		background-color: #ccc;
 	}
 	.w3-table td {
@@ -186,7 +186,7 @@
 	<div id="loader"></div>
 	<div id="main" class="An">
 		<div class="w3-container">
-			<ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: auto;" id="trait-s">
+			<ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: auto;" id="trait-select">
 				<li><span class="w3-button or-and w3-pale-red">AND</span></li>
 				<li data-expr="trait&RED">
 					<button><img src="/img/i/e/0.png" width="40" height="40">紅色敵人</button>
@@ -243,7 +243,7 @@
 					<button><img src="/img/i/e/12.png" width="40" height="40">道場塔</button>
 				</li>
 			</ul>
-			<ul class="w3-ul may-hide" style="width: 150px;" id="atk-s">
+			<ul class="w3-ul may-hide" style="width: 150px;" id="atk-type-select">
 				<li><span class="w3-button or-and w3-blue-gray">AND</span></li>
 				<li data-expr="atktype&ATK_SINGLE">
 					<button><img src="/img/i/o/1.png" width="40" height="40">單體攻擊</button>
@@ -277,7 +277,7 @@
 				<br>
 				<a href="/help.html" style="display: block;text-align: center;">使用說明</a>
 			</div>
-			<ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: auto;width: 190px;" id="ab-savage">
+			<ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: auto;width: 190px;" id="ability-select">
 				<li><span class="w3-button or-and w3-green">AND</span></li>
 				<li style="text-align: center;">能力</li>
 				<li data-expr="hasab(AB_STRENGTHEN)">
@@ -391,7 +391,7 @@
 					<button><img src="/img/i/m/8.png" width="40" height="40">毒擊傷害無效</button>
 				</li>
 			</ul>
-			<ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="kind-s">
+			<ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="species-select">
 				{{#each (loadTSV "enemy_species.tsv") as |sp|}}
 				<li data-expr="
 					{{~#if sp.id_list~}}
@@ -405,12 +405,12 @@
 				</li>
 				{{/each}}
 			</ul>
-			<div id="tables" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
+			<div id="search-results" style="margin: 20px 0px;position: absolute;top: 0px;left: 390px;vertical-align: middle;min-width: 800px;width: calc(100% - 400px);">
 				<div class="may-hide">
 					<input type="search" placeholder="搜尋名稱或敵人id" id="name-search">
 				</div>
 				<p>
-					<span id="search-result"></span><a href="#" id="toggle-s" style="padding-left: 1em;">隱藏搜尋器</a>
+					<span id="search-status-tip"></span><a href="#" id="toggle-results" style="padding-left: 1em;">隱藏搜尋器</a>
 					<span style="float: right;">
 						每頁顯示
 						<select id="per_page">
@@ -443,7 +443,7 @@
 				</table>
 				<table style="margin: 1em auto;">
 					<tbody>
-						<tr id="pages-a"></tr>
+						<tr id="pager"></tr>
 					</tbody>
 				</table>
 			</div>

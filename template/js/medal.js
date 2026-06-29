@@ -1,20 +1,36 @@
-var G;
+(function () {
+	let currentModal;
 
-function handleClick(event) {
-	if (!G) {
-		G && (G.style.display = 'none');
-		(G = event.currentTarget.nextElementSibling).style.display = 'block';
+	for (const img of document.getElementById('container').getElementsByTagName('img')) {
+		img.addEventListener('click', (event) => {
+			event.stopPropagation();
+			event.preventDefault();
+
+			// if old modal exists, remove it
+			if (currentModal)
+				currentModal.style.display = 'none';
+
+			// display the modal
+			currentModal = event.currentTarget.nextElementSibling;
+			currentModal.style.display = 'block';
+		});
 	}
-	event.stopPropagation();
-	event.preventDefault();
-}
-document.onclick = function() {
-	G && (G.style.display = 'none', G = null);
-};
-document.ontouchstart = function() {
-	G && (G.style.display = 'none', G = null);
-	event.stopPropagation();
-};
 
-for (const img of document.getElementById('container').querySelectorAll('img'))
-	img.addEventListener('click', handleClick);
+	// hide modal
+	document.addEventListener('click', () => {
+		if (currentModal) {
+			currentModal.style.display = 'none';
+			currentModal = null;
+		}
+	});
+	
+	// hide modal
+	document.addEventListener('touchstart', event => {
+		if (currentModal) {
+			currentModal.style.display = 'none';
+			currentModal = null;
+		}
+
+		event.stopPropagation();
+	});
+})();
