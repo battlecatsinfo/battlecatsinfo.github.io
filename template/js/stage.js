@@ -105,6 +105,17 @@ function createReward(tr, v) {
 	img.src = reward.icon;
 }
 
+function createEnergy(energy) {
+	if (energy > 1000) {
+		const count = energy % 1000;
+		const id = ~~(energy / 1000);
+		const reward = stage_extra.rewards[id];
+
+		return `${reward?.name} ×${count}`;
+	}
+	return numStr(energy);
+}
+
 function TI(t) {
 	return stageF ? stageF.format(t / 30) + 's' : t.toString();
 }
@@ -359,7 +370,7 @@ async function search_reward(r) {
 					a2.textContent = v.name || v.nameJp;
 					a2.href = `/stage.html?s=${mc}-${sm}-${st}`;
 					a2.onclick = onStageAnchorClick;
-					tr.appendChild(document.createElement('td')).textContent = v.energy;
+					tr.appendChild(document.createElement('td')).textContent = createEnergy(v.energy);
 					tr.appendChild(document.createElement('td')).textContent = P + ' ×' + num;
 					break;
 				}
@@ -1176,7 +1187,7 @@ async function render_stage() {
 	if (M1.selectedIndex == 10) {
 		st1[1].textContent = `喵力達${String.fromCharCode(65 + energy / 1000)} × ${energy % 1e3}`;
 	} else {
-		st1[1].textContent = energy > 1000 ? numStr(energy) : energy;
+		st1[1].textContent = createEnergy(energy);
 	}
 	st1[3].textContent = info3.max;
 	st1[5].textContent = info3.diff;

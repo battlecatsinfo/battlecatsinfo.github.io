@@ -1150,7 +1150,7 @@
 		"tw_name": "貓咪的暑假 享樂天堂篇",
 		"jp_name": "ねこのなつやすみ サバイバル",
 		"en_name": "Summer Break Cats: Paradise",
-		"img": "https://i.meee.com.tw/Tl5PXKu.png",
+		"img": "https://i.meee.com.tw/30Z8EwP.png",
 		"stage": "11-73",
 		"ticket": 220,
 		"type": "event",
@@ -1200,26 +1200,26 @@
 			[
 				[
 					"unit",
-					213
-				],
-				[
-					"unit",
 					342
 				],
 				[
 					"unit",
-					635
+					375
 				],
 				[
 					"unit",
 					822
+				],
+				[
+					"unit",
+					870
 				]
 			],
 			[]
 		],
 		"group_rates": [3400, 0, 3800, 0, 2000, 0, 800, 0, 0, 0],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E041.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E041.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E051.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E051.html"
 	},
 	{
 		"tw_name": "萬聖節派對活動轉蛋",
