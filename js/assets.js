@@ -51,6 +51,7 @@ const sources = [
 
 	'common.mjs',
 	'unit.mjs',
+	'cat_stat_table.mjs',
 	'combo.mjs',
 	'stage.mjs',
 	'reward.mjs',

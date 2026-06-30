@@ -508,6 +508,15 @@ async function fetchUrl(url, options) {
 	return response;
 }
 
+function fetchImage(src) {
+	return new Promise((resolve, reject) => {
+		const img = new Image();
+		img.onload = () => resolve(img);
+		img.onerror = (err) => reject(err);
+		img.src = src;
+	});
+}
+
 async function loadDomToImage() {
 	if (typeof globalThis.domtoimage === 'undefined') {
 		await new Promise((resolve, reject) => {
@@ -608,6 +617,7 @@ export {
 	toggleTheme,
 	resetTheme,
 	fetchUrl as fetch,
+	fetchImage,
 	saveBlob,
 	savePng,
 	copyPng,
