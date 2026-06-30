@@ -450,7 +450,9 @@ module.exports = class extends RewardSiteGenerator {
 				const rw = this.stageRewards[stageId];
 				if (!rw)
 					break;
-				const energy = parseInt(rw.energy, 36);
+				let energy = parseInt(rw.energy, 36);
+				if (energy > 1000)
+					energy %= 1000;
 				const average = averageReward(rw.drop, rw.rand);
 				const per100 = new Fraction(100, energy).mul(average);
 				output.farm.stages.push({
