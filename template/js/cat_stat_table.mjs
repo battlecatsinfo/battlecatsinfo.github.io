@@ -1,0 +1,1199 @@
+import { 
+	config,
+	floor,
+	numStr,
+	numStrT,
+	getCombinations,
+} from "./common.mjs";
+import {
+	units_scheme,
+	catEnv,
+
+	ATK_RANGE,
+	ATK_LD,
+	ATK_OMNI,
+	ATK_KB_REVENGE,
+
+	AB_KAIJIN,
+	TB_DEMON,
+	TRAIT_TREASURE,
+	TRAIT_NO_TREASURE,
+
+	get_trait_short_names,
+
+	createTraitIcons,
+	createImuIcons,
+	createResIcons,
+
+	updateHp,
+	updateAtk,
+	updateHpBaha,
+	updateAtkBaha,
+	getCoverUnitStr,
+	getAbiString,
+
+	ATK_MULTI_AB,
+	HP_MULTI_AB,
+} from "./unit.mjs";
+
+const layout = config.layout;
+
+function makeTd(tr, text) {
+	const td = document.createElement('td');
+	if (text)
+		td.textContent = text;
+	tr.appendChild(td);
+	return td;
+}
+
+class FormStatsTable {
+	/**
+	 * Detailed form stat table.
+	 * 
+	 * @param {Object} [init]
+	 * @param {HTMLTableElement} [init.table]
+	 * @param {Cat} [init.cat]
+	 * @param {CatForm} [init.form]
+	 */
+	constructor({table, cat, form}) {
+		if (new.target === FormStatsTable)
+			throw new Error('Abstract Class cannot be instantiated');
+
+		this.table = table;
+		this.cat = cat;
+		this.form = form;
+		this.enableKaijin = false;
+
+		this.hasSuper = (() => {
+			const talents = this.cat.talents;
+
+			if (!talents)
+				return false;
+
+			for (let i = 1; i < 113; i += 14) {
+				if (!talents[i])
+					break;
+
+				if (talents[i + 13] === 1)
+					return true;
+			}
+
+			return false;
+		})();
+	}
+
+	getRes(cd) {
+		if (catEnv.combo_cd)
+			return Math.max(60, cd - 264 - floor(catEnv.combo_cd / 10));
+		return Math.max(60, cd - 264);
+	}
+
+	getTraitNames(trait) {
+		const idxs = [];
+		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && idxs.push(i);
+		return 1 === idxs.length ? `（${units_scheme.traits.names[idxs[0]]}）` : `（${get_trait_short_names(trait)}）敵人`;
+	}
+
+	createAbIcons(form, p1, p2) {
+		let treasure = false,
+			tn, du, cv, func, abNo;
+
+		const self = this;
+
+		function w1(msg) {
+			const p = document.createElement('div');
+			let s = new Image(40, 40);
+			s.src = `/img/i/a/${abNo}.png`;
+			p.appendChild(s);
+			p.append(msg);
+			p1.appendChild(p);
+		}
+
+		function w2(msg) {
+			const p = document.createElement('div');
+			let s = new Image(40, 40);
+			s.src = `/img/i/a/${abNo}.png`;
+			p.appendChild(s);
+			p.append(msg);
+			p2.appendChild(p);
+		}
+
+		function w3(msg) {
+			const p = document.createElement('div');
+			p.classList.add('ab-select');
+			p.dataset.no = abNo;
+			if (self.selectedAbilities.has(abNo)) {
+				p.style.setProperty('background-color', '#5cabd273', 'important');
+				p.dataset.selected = '1';
+			} else {
+				p.dataset.selected = '0';
+			}
+			p.onclick = function(event) {
+				event.preventDefault();
+				event.stopPropagation();
+				if (this.dataset.selected === '1') {
+					this.style.removeProperty('background-color');
+					this.dataset.selected = '0';
+					self.selectedAbilities.delete(parseInt(this.dataset.no), 10);
+				} else {
+					this.style.setProperty('background-color', '#5cabd273', 'important');
+					this.dataset.selected = '1';
+					self.selectedAbilities.add(parseInt(this.dataset.no), 10);
+				}
+				self.updateValues();
+			}
+			let s = new Image(40, 40);
+			s.src = `/img/i/a/${abNo}.png`;
+			p.appendChild(s);
+			p.append(msg);
+			p1.appendChild(p);
+		}
+		form.trait && (tn = this.getTraitNames(form.trait), treasure = form.trait & TRAIT_TREASURE);
+		const U = form.pre1 ? '*' : '';
+		let tmp;
+		for (const [i, v] of Object.entries(form.ab)) {
+			switch (abNo = parseInt(i, 10)) {
+				case 1:
+					func = w1;
+					if (layout === 2)
+						func = w3;
+					func(`體力 ${v[0]} % 以下時攻擊力上升至 ${100 + v[1] + catEnv.combo_strengthen} %`);
+					break;
+
+				case 2:
+					w1(`${v} % 死前存活` + ((layout === 2) ? "" : "（遭到致命的攻擊時以1體力存活1次）"));
+					break;
+
+				case 3:
+					if (layout === 2) {
+						w3("善於攻城");
+						break;
+					}
+					w1("善於攻城（攻擊傷害 × 4）");
+					break;
+
+				case 4:
+					func = w1;
+					if (layout === 2)
+						func = w3;
+					tmp = catEnv.combo_crit || 0;
+					func(`${v + tmp} % 會心一擊${U}`);
+					break;
+
+				case 5:
+					w1("終結不死");
+					break;
+
+				case 6:
+					w1("靈魂攻擊");
+					break;
+
+				case 7:
+					w1(`${v[0]} % 破壞護盾${U}`);
+					break;
+
+				case 8:
+					w1(`${v[0]} % 破壞惡魔盾${U}`);
+					break;
+
+				case 9:
+					func = w1;
+					if (layout === 2)
+						func = w3;
+					func(`${v[0]} % 渾身一擊${U}（攻擊力增加至${100 + v[1]} %）`);
+					break;
+
+				case 10:
+					w1("得到很多金錢" + ((layout === 2) ? "" : "（擊敗敵人時獲得金錢 × 2）"));
+					break;
+
+				case 11:
+					w1("鋼鐵特性" + ((layout === 2) ? "" : "（暴擊、毒擊之外攻擊只會受1傷害）"));
+					break;
+
+				case 12:
+					func = w1;
+					if (layout === 2)
+						func = w3;
+					func(`${v[0]} % 發射 Lv${v[1]} 小波動${U}（射程 ${132.5 + v[1]*200}）`);
+					break;
+
+				case 13:
+					func = w1;
+					if (layout === 2)
+						func = w3;
+					func(`${v[0]} % 發射 Lv${v[1]} 波動${U}（射程 ${132.5 + v[1]*200}）`);
+					break;
+
+				case 14:
+					func = w1;
+					if (layout === 2)
+						func = w3;
+					func(`${v[0]} % 發射 Lv${v[3]} 小烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`);
+					break;
+
+				case 15:
+					func = w1;
+					if (layout === 2)
+						func = w3;
+					func(`${v[0]} % 發射 Lv${v[3]} 烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`);
+					break;
+
+				case 16:
+					w1('波動滅止');
+					break;
+
+				case 17:
+					if (layout === 2) {
+						w3("超生命體特效");
+						break;
+					}
+					w1("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7）");
+					break;
+
+				case 18:
+					if (layout === 2) {
+						w3(`超獸特效（${v[0]} % 發動持續 ${numStrT(v[1])} 的攻擊無效）`);
+						break;
+					}
+					w1(`超獸特效（攻擊傷害 × 2.5 、所受傷害 × 0.6、${v[0]} % 發動持續 ${numStrT(v[1])} 的攻擊無效）`);
+					break;
+
+				case 19:
+					if (layout === 2) {
+						w3('終結魔女');
+						break;
+					}
+					w1('終結魔女（攻擊傷害 × 5 、所受傷害 × 0.1）');
+					break;
+
+				case 20:
+					if (layout === 2) {
+						w3('終結使徒');
+						break;
+					}
+					w1('終結使徒（攻擊傷害 × 5 、所受傷害 × 0.2）');
+					break;
+
+				case 21:
+					tmp = v[2];
+					if (catEnv.combo_weak)
+						tmp = floor(tmp * (1 + catEnv.combo_weak));
+					if (treasure) {
+						du = floor(tmp * 1.2);
+						if (form.trait & TRAIT_NO_TREASURE) {
+							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
+							du = `${numStrT(tmp)}（${numStrT(du)}）`;
+						} else {
+							cv = getCoverUnitStr(form, v[0], du) + ' %';
+							du = numStrT(du);
+						}
+					} else {
+						du = numStrT(tmp);
+						cv = getCoverUnitStr(form, v[0], tmp) + ' %';
+					}
+					if (layout === 2) {
+						w2(`${v[0]} % 使攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`);
+						break;
+					}
+					w2(`${v[0]} % 使${tn}攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`);
+					break;
+
+				case 22:
+					tmp = v[1];
+					if (catEnv.combo_stop)
+						tmp = floor(tmp * (1 + catEnv.combo_stop));
+					if (treasure) {
+						du = floor(tmp * 1.2);
+						if (form.trait & TRAIT_NO_TREASURE) {
+							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
+							du = `${numStrT(tmp)}（${numStrT(du)}）`;
+						} else {
+							cv = getCoverUnitStr(form, v[0], du) + ' %';
+							du = numStrT(du);
+						}
+					} else {
+						du = numStrT(tmp);
+						cv = getCoverUnitStr(form, v[0], tmp) + ' %';
+					}
+					if (layout === 2) {
+						w2(`${v[0]} % 使動作停止持續 ${du} ${U}，覆蓋率 ${cv}`);
+						break;
+					}
+					w2(`${v[0]} % 使 ${tn} 動作停止${U}持續 ${du}，覆蓋率 ${cv}`);
+					break;
+
+				case 23:
+					tmp = v[1];
+					if (catEnv.combo_slow)
+						tmp = floor(tmp * (1 + catEnv.combo_slow));
+					if (treasure) {
+						du = floor(tmp * 1.2);
+						if (form.trait & TRAIT_NO_TREASURE) {
+							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
+							du = `${numStrT(tmp)}（${numStrT(du)}）`;
+						} else {
+							cv = getCoverUnitStr(form, v[0], du) + ' %';
+							du = numStrT(du);
+						}
+					} else {
+						du = numStrT(tmp);
+						cv = getCoverUnitStr(form, v[0], tmp) + ' %';
+					}
+					if (layout === 2) {
+						w2(`${v[0]} % 使動作變慢${U}持續 ${du}，覆蓋率 ${cv}`);
+						break;
+					}
+					w2(`${v[0]} % 使${tn}動作變慢${U}持續 ${du}，覆蓋率 ${cv}`);
+					break;
+
+				case 24:
+					w2("只能攻擊" + tn);
+					break;
+
+				case 25:
+					if (layout === 2) {
+						w3('善於攻擊');
+						break;
+					}
+					w2('善於攻擊（攻擊傷害 × 1.5 至 1.8 、所受傷害 × 0.5 至 0.4）');
+					break;
+
+				case 26:
+					if (layout === 2) {
+						w3('很耐打');
+						break;
+					}
+					w2(`很耐打（所受傷害 × 1/4 至 1/5）`);
+					break;
+
+				case 27:
+					if (layout === 2) {
+						w3('超耐打');
+						break;
+					}
+					w2(`超耐打（所受傷害 × 1/6 至 1/7）`);
+					break;
+
+				case 28:
+					if (layout === 2) {
+						w3(`超大傷害`);
+						break;
+					}
+					w2(`超大傷害（攻擊傷害 × 3 至 4）`);
+					break;
+
+				case 29:
+					if (layout === 2) {
+						w3('極度傷害');
+						break;
+					}
+					w2(`極度傷害（攻擊傷害 × 5 至 6）`);
+					break;
+
+				case 30:
+					if (treasure) {
+						if (form.trait & TRAIT_NO_TREASURE) {
+							du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
+						} else {
+							du = numStr(165 * 1.3);
+						}
+					} else {
+						du = numStr(165);
+					}
+					if (layout === 2) {
+						w2(v[0] + " % 打飛" + U);
+						break;
+					}
+					w2(`${v[0]} % 打飛${U}${tn} 至 ${du} 距離單位外，持續 ${numStrT(12)}`);
+					break;
+
+				case 31:
+					if (layout === 2) {
+						w2(v[0] + " % 傳送" + U);
+						break;
+					}
+					w2(v[0] + " % 傳送" + U + tn);
+					break;
+
+				case 32:
+					if (treasure) {
+						if (form.trait & TRAIT_NO_TREASURE) {
+							du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+						} else {
+							du = numStrT(floor(v[1] * 1.2));
+						}
+					} else {
+						du = numStrT(v[1]);
+					}
+					w2(`${v[0]} % 發動攻擊無效持續 ${du}`);
+					break;
+
+				case 33:
+					tmp = v[1];
+					// no curse combo now!
+					if (treasure) {
+						du = floor(tmp * 1.2);
+						if (form.trait & TRAIT_NO_TREASURE) {
+							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
+							du = `${numStrT(tmp)}（${numStrT(du)}）`;
+						} else {
+							cv = getCoverUnitStr(form, v[0], du) + ' %';
+							du = numStrT(du);
+						}
+					} else {
+						du = numStrT(tmp);
+						cv = getCoverUnitStr(form, v[0], tmp) + ' %';
+					}
+					if (layout === 2) {
+						w2(`${v[0]} % 詛咒${U}持續 ${du}，覆蓋率 ${cv}`);
+						break;
+					}
+					w2(`${v[0]} % 詛咒${U}${tn}持續 ${du}，覆蓋率 ${cv}`);
+					break;
+
+				case 37:
+					w1("一次攻擊");
+					break;
+				case 40:
+					w1('烈波反擊');
+					break;
+				case 42:
+					if (layout === 2) {
+						w3("超賢者特效");
+						break;
+					}
+					w1("超賢者特效（減輕 70% 來自超賢者的妨害效果、無視超賢者的控場耐性、攻擊傷害 × 1.2、所受傷害 × 0.5）");
+					break;
+				case 43: {
+					const p = document.createElement('div');
+					let s = new Image(40, 40);
+					s.src = '/img/i/a/43.png';
+					const a = document.createElement('a');
+					a.href = '/unit.html?id=' + v;
+					p.appendChild(s);
+					p.append('召喚');
+					a.textContent = '精靈';
+					p.appendChild(a);
+					p.append('攻擊一次');
+					p1.appendChild(p);
+					break;
+				}
+				case 44: {
+					const p = document.createElement('div');
+					let s = new Image(40, 40);
+					s.src = '/img/i/a/44.png';
+					const a = document.createElement('a');
+					a.href = '/metal_killer.html?kill=' + v;
+					p.appendChild(s);
+					a.textContent = `${v}%`;
+					p.append('鋼鐵殺手（減少敵方當前體力的 ');
+					p.appendChild(a);
+					p.append('）');
+					p1.appendChild(p);
+					break;
+				}
+				case 45:
+					func = w1;
+					if (layout === 2)
+						func = w3;
+					func(v[1] != v[2] ? `${v[0]}% 發出爆波（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 發出爆波（發生位置：${v[1]}）`);
+					break;
+				case 46:
+					if (layout === 2) {
+						w3("怪人特效");
+						break;
+					}
+					p1.parentNode.style.display = '';
+					w1("怪人特效（攻擊傷害 × 2.5、所受傷害 × 0.4）");
+					break;
+			}
+		}
+	}
+
+	verifyInput(event, max = this.cat.maxLevel, min = 1) {
+		const target = event.currentTarget;
+		const num = target.textContent.match(/\d+/);
+
+		let lv = -1;
+
+		if (num) {
+			lv = Math.min(Math.max(parseInt(num[0], 10) || 0, min), max).toString();
+
+			if (lv !== target.dataset.level)
+				target.dataset.level = lv;
+			else
+				lv = -1;
+		}
+
+		target.textContent = `Lv${target.dataset.level}`;
+		return lv;
+	}
+
+	static handleKW(event) {
+		if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+			event.preventDefault();
+			this.blur();
+		}
+	}
+
+	static handleFocus() {
+		this.textContent = this.textContent.match(/\d+/)[0];
+		this.focus();
+		const s = window.getSelection();
+		const r = document.createRange();
+		r.selectNodeContents(this);
+		s.removeAllRanges();
+		s.addRange(r);
+	}
+}
+
+
+class DetailedFormStatsTable extends FormStatsTable {
+	static layout = 1;
+
+	/**
+	 * Detailed form stat table.
+	 *
+	 * @param {Object} [options]
+	 * @param {HTMLTableElement} [options.table]
+	 * @param {Cat} [options.cat]
+	 * @param {CatForm} [options.form]
+	 * @param {?number[]} [options.talentLevels]
+	 * @param {?number[]} [options.superTalentLevels]
+	 */
+	constructor({table, cat, form, talentLevels, superTalentLevels}) {
+		super({table, cat, form});
+
+		if (talentLevels)
+			this.talentLevels = talentLevels;
+
+		if (superTalentLevels)
+			this.superTalentLevels = superTalentLevels;
+
+		this.tbody = table.appendChild(document.createElement('tbody'));
+		const self = this;
+		const theadtr = this.tbody.appendChild(document.createElement('tr'));
+		const body = Array.from({length: 12}, () => this.tbody.appendChild(document.createElement('tr')));
+
+		makeTd(theadtr, '等級').classList.add('f');
+
+		for (const level of this.getDefaultLevels()) {
+			const td = makeTd(theadtr, `Lv${level}`);
+			td.classList.add('f');
+			td.contentEditable = true;
+			td.inputMode = 'numeric';
+			td.dataset.level = level;
+			td.style.cursor = 'pointer';
+			td.addEventListener('focus', FormStatsTable.handleFocus);
+			td.addEventListener('keydown', FormStatsTable.handleKW);
+			td.addEventListener('blur', event => {
+				if (self.verifyInput(event) !== -1)
+					self.updateValues();
+			});
+		}
+		
+		makeTd(theadtr, '每提升一級').classList.add('f');
+
+		let td;
+
+		for (let i = 0; i < 4; ++i) {
+			makeTd(body[i], ['HP', '硬度', '攻擊力', 'DPS'][i]).classList.add('f');
+			for (let j = 0; j < 6; ++j) {
+				td = makeTd(body[i], '-');
+				if ((j & 1))
+					td.classList.add('F');
+			}
+		}
+
+		makeTd(body[4], '攻擊週期').classList.add('f');
+		makeTd(body[4]);
+		makeTd(body[4], '出招時間').classList.add('f');
+		makeTd(body[4]);
+		td = makeTd(body[4], '射程');
+		td.rowSpan = 2;
+		td.classList.add('f');
+		makeTd(body[4]).rowSpan = 2;
+		td = makeTd(body[4]);
+		td.rowSpan = 3;
+		td.classList.add('f');
+		makeTd(body[5], '攻擊間隔').classList.add('f');
+		makeTd(body[5]);
+		makeTd(body[5], '收招時間').classList.add('f');
+		makeTd(body[5]);
+		makeTd(body[6], 'KB').classList.add('f');
+		makeTd(body[6]);
+		makeTd(body[6], '跑速').classList.add('f');
+		makeTd(body[6]);
+		makeTd(body[6], '再生產').classList.add('f');
+		makeTd(body[6]);
+		makeTd(body[7], '召喚金額').classList.add('f');
+		makeTd(body[7], '一章').classList.add('f');
+		makeTd(body[7]);
+		makeTd(body[7], '二章(傳說)').classList.add('f');
+		makeTd(body[7]);
+		makeTd(body[7], '三章').classList.add('f');
+		makeTd(body[7]);
+
+		for (let i = 8; i < 12; ++i) {
+			makeTd(body[i], ['攻擊對象', '抗性', '能力', '效果'][i - 8]).classList.add('f');
+			td = makeTd(body[i]);
+			td.colSpan = 6;
+			td.style.textAlign = 'left';
+			td.style.paddingLeft = '.5em';
+		}
+
+		// update the table
+		this.updateTable(form, table);
+
+		// hide unused parts
+		for (const tr of body.slice(8)) {
+			if (!tr.children[1].children.length) {
+				tr.style.display = 'none';
+			}
+		}
+	}
+
+
+	getDefaultLevels() {
+		// ultra form or super talents
+		if (this.form.lvc > 2 || this.superTalentLevels)
+			return [60, 65, 70, 75, 80];
+
+		switch (this.form.lvc) {
+			// first form
+			case 0:
+				if (this.cat.maxLevel < 50)
+					return [1, 10, 20, 25, 30];
+
+				return [1, 10, 20, 30, 50];
+
+			// true form
+			case 2:
+				if (this.cat.evol4Req || this.cat.maxLevel >= 60)
+					return [30, 40, 50, 60, 70];
+
+				if (this.cat.evolReq)
+					return [30, 35, 40, 45, 50];
+				
+				return [20, 30, 40, 45, 50];
+
+			// evolved
+			default:
+				if (this.cat.maxLevel < 50)
+					return [10, 15, 20, 25, 30];
+				
+				return [10, 20, 30, 40, 50];
+		}
+	}
+
+	updateValues() {
+		const chs = this.tbody.children;
+		let HPs = chs[1].children;
+		let HPPKBs = chs[2].children;
+		let ATKs = chs[3].children;
+		let DPSs = chs[4].children;
+		let PRs = chs[8].children;
+		let CD = chs[7].children[5];
+		let KB = chs[7].children[1];
+		let i;
+
+		// form setup
+		const form = this.form.clone();
+		if (this.talentLevels) {
+			form.applyTalents(this.talentLevels);
+		}
+		if (this.superTalentLevels)
+			form.applySuperTalents(this.superTalentLevels);
+
+		if (this.enableKaijin)
+			form.ab[AB_KAIJIN] = null;
+
+		// update stats
+		chs[7].children[3].textContent = floor(form.speed);
+		PRs[2].textContent = form.info.price;
+		PRs[4].textContent = form.info.price * 1.5;
+		PRs[6].textContent = form.info.price * 2;
+
+		// read levels
+		const lvMax = this.cat.maxLevel;
+		let levels = new Array(5);
+		let lvE = chs[0].children[1];
+		
+		for (i = 0; i < levels.length; ++i) {
+			levels[i] = parseInt(lvE.textContent.replace('Lv', ''), 10) || 1;
+			lvE = lvE.nextElementSibling;
+		}
+
+		const ABF = Object.keys(form.ab).map(Number);
+		const HCs = getCombinations(ABF.filter(x => HP_MULTI_AB.has(x)));
+		const ACs = getCombinations(ABF.filter(x => ATK_MULTI_AB.has(x)));
+		i = 1;
+		form._plusLv = 0;
+		let maxLen = 1;
+		for (const lv of levels) {
+			form._baseLv = lv;
+			if (i > lvMax) {
+				HPs[i].textContent = '-';
+				HPPKBs[i].textContent = '-';
+				ATKs[i].textContent = '-';
+				DPSs[i].textContent = '-';
+			} else {
+				maxLen = updateHpBaha({form, Cs: HCs, parent: HPs[i]});
+				updateHpBaha({form, Cs: HCs, parent: HPPKBs[i], KB: form.kb});
+				maxLen = Math.max(maxLen, updateAtkBaha({form, Cs: ACs, parent: ATKs[i]}));
+				updateAtkBaha({form, Cs: ACs, parent: DPSs[i], dpsMode: true});
+			}
+			++i;
+		}
+		form._baseLv = 1;
+		updateHpBaha ({form, Cs: HCs, parent: HPs[i],    KB: 5,           plus: true});
+		updateHpBaha ({form, Cs: HCs, parent: HPPKBs[i], KB: 5 * form.kb, plus: true});
+		updateAtkBaha({form, Cs: ACs, parent: ATKs[i],   dpsMode: false,  plus: true});
+		updateAtkBaha({form, Cs: ACs, parent: DPSs[i],   dpsMode: true,   plus: true});
+
+		chs[6].children[1].textContent = numStrT(form.tba);
+		chs[6].children[3].textContent = numStrT(form.backswing);
+		chs[5].children[1].textContent = numStrT(form.attackF).replace('秒', '秒/下');
+		if (maxLen > 38)
+			this.table.style.fontSize = 'max(16px, 0.9vw)';
+		else if (maxLen > 26)
+			this.table.style.fontSize = 'max(17px, 1vw)';
+		let preStr = numStrT(form.pre);
+		if (form.pre1)
+			preStr += '/' + numStrT(form.pre1);
+		if (form.pre2)
+			preStr += '/' + numStrT(form.pre2);
+		chs[5].children[3].textContent = preStr;
+		const specials = chs[9].children[1];
+		specials.textContent = '';
+		if (form.info.atk1 || form.info.atk2) {
+			const atkNum = form.info.atk2 ? 3 : 2;
+			const atksPre = [form.info.atk, form.info.atk1, form.info.atk2].slice(0, atkNum).map(x => numStr((x / (form.info.atk + form.info.atk1 + form.info.atk2)) * 100) + ' %');
+			const p = document.createElement('div');
+			const img = new Image(40, 40);
+			img.src = '/img/i/o/5.png';
+			p.appendChild(img);
+			p.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
+			specials.appendChild(p);
+		}
+		createTraitIcons(form.trait, specials);
+		let atkType = '';
+		if (form.atkType & ATK_OMNI) {
+			atkType += '全方位';
+		} else if (form.atkType & ATK_LD) {
+			atkType += '遠方';
+		}
+		atkType += (form.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
+		chs[5].children[6].textContent = atkType;
+		if (form.atkType & ATK_KB_REVENGE) {
+			const p = document.createElement('div');
+			const img = new Image(40, 40);
+			img.src = '/img/i/o/4.png';
+			p.appendChild(img);
+			p.append('擊退反擊');
+			specials.appendChild(p);
+		}
+		const node = chs[5].children[5];
+		if (form.lds) {
+			const nums = '①②③';
+			node.textContent = '接觸點' + form.range;
+			node.appendChild(document.createElement('br'));
+			node.append('範圍');
+			node.appendChild(document.createElement('br'));
+			for (let i = 0; i < form.lds.length; ++i) {
+				const x = form.lds[i];
+				const y = x + form.ldr[i];
+				if (x <= y)
+					node.append(`${nums[i]}${x}～${y}`);
+				else
+					node.append(`${nums[i]}${y}～${x}`);
+				node.appendChild(document.createElement('br'));
+			}
+		} else {
+			node.textContent = form.range;
+		}
+		KB.textContent = form.kb.toString();
+		CD.textContent = numStrT(this.getRes(form.info.cd));
+
+		return form;
+	}
+
+	updateTable() {
+		const form = this.updateValues();
+		const chs = this.tbody.children;
+		chs[10].children[1].textContent = '';
+		chs[11].children[1].textContent = '';
+		chs[12].children[1].textContent = '';
+		createImuIcons(form.imu, chs[10].children[1]);
+		createResIcons(form.res, chs[10].children[1]);
+		this.createAbIcons(form, chs[11].children[1], chs[12].children[1]);
+	}
+}
+
+class SimpleFormStatsTable extends FormStatsTable {
+	static layout = 2;
+
+	/**
+	 * Simple form stat table. 
+	 *
+	 * @param {Object} [options]
+	 * @param {HTMLTableElement} [options.table]
+	 * @param {Cat} [options.cat]
+	 * @param {CatForm} [options.form]
+	 */
+	constructor({table, cat, form}) {
+		super({table, cat, form});
+
+		const self = this;
+
+		this.selectedAbilities = new Set();
+
+		table.style.maxWidth = 'min(80%, 1500px)';
+
+		this.tbody = table.appendChild(document.createElement('tbody'));
+
+		let tr = document.createElement('tr');
+		this.tbody.appendChild(tr);
+		
+		let td = makeTd(tr);
+		td.rowSpan = 2;
+		td.style.position = 'relative';
+		td.style.height = '86px';
+		td.style.width = '120px';
+
+		const icon = new Image(104, 79);
+		icon.src = form.icon;
+		icon.style.setProperty('background-color', '#0000', 'important');
+		td.appendChild(icon);
+
+		td = makeTd(tr, '編號');
+		td.classList.add('F');
+		td.style.padding = '0';
+		
+		td = makeTd(tr, '等級');		
+		td.classList.add('F');
+		td.style.padding = '0';
+
+		td = makeTd(tr, form.jpName);
+		td.colSpan = 4;
+		td.classList.add('F');
+		td.style.padding = '0';
+		
+		tr = document.createElement('tr');
+		this.tbody.appendChild(tr);
+
+		td = makeTd(tr, `${form.id} - ${form.lvc + 1}`);
+		td.style.cursor = 'pointer';
+		td.contentEditable = true;
+		td.inputMode = 'numeric';
+		td.addEventListener('focus', FormStatsTable.handleFocus);
+		td.addEventListener('keydown', FormStatsTable.handleKW);
+		td.addEventListener('blur', function(event) {
+			const t = event.currentTarget;
+			let num = t.textContent.match(/\d+/);
+			if (num) {
+				const id = parseInt(num[0], 10);
+				if (id !== form.id) {
+					location.href = '/unit.html?id=' + num;
+					return;
+				}
+			}
+			t.textContent = `${form.id} - ${form.lvc + 1}`;
+		});
+
+		const defaultLevel = this.getDefaultLevel();
+		td = makeTd(tr, `Lv${defaultLevel}`);
+		td.dataset.level = defaultLevel;
+		td.contentEditable = true;
+		td.style.cursor = 'pointer';
+		td.inputMode = 'numeric';
+		td.addEventListener('focus', FormStatsTable.handleFocus);
+		td.addEventListener('keydown', FormStatsTable.handleKW);
+		td.addEventListener('blur', event => {
+			if (self.verifyInput(event) !== -1)
+				self.updateValues();
+		});
+
+
+		td = makeTd(tr);
+		td.colSpan = 4;
+		td.textContent = form.name;
+
+		for (const n of tr.children)
+			n.style.padding = '0';
+
+		const rows = [
+			['體力', '', '擊退', '', '攻擊週期', ''],
+			['攻擊力', '', '移動速度', '', '出招時間', ''],
+			['每秒傷害', '', '射程', '', '收招時間', ''],
+			['生產成本', '', '再生產', '', '攻擊間隔', ''],
+		];
+
+		for (const row of rows) {
+			tr = document.createElement('tr');
+			this.tbody.appendChild(tr);
+			let counter = 0;
+			for (const text of row) {
+				td = makeTd(tr, text);
+				if ((++counter) & 1) {
+					td.classList.add('F');
+				}
+			}
+		}
+
+		tr = document.createElement('tr');
+		this.tbody.appendChild(tr);
+
+		makeTd(tr, '攻擊對象').classList.add('F');
+		td = makeTd(tr);
+		td.colSpan = 5;
+		td.style.paddingLeft = '0.5em';
+		td.style.textAlign = 'left';
+
+		if (form.info.atk1 || form.info.atk2) {
+			const i = new Image(40, 40);
+			i.src = '/img/i/o/5.png';
+			td.appendChild(i);
+			const atkNum = form.info.atk2 ? 3 : 2;
+			const atksPre = [form.info.atk, form.info.atk1, form.info.atk2].slice(0, atkNum).map(x => numStr((x / (form.info.atk + form.info.atk1 + form.info.atk2)) * 100) + ' %');
+			td.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
+			td.appendChild(document.createElement('br'));
+		}
+		let atkType = '';
+		let div = td.appendChild(document.createElement('div'));
+		atkType += (form.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
+		if (form.atkType & ATK_OMNI)
+			atkType += '・全方位攻擊';
+		else if (form.atkType & ATK_LD)
+			atkType += '・遠距攻擊';
+		if (form.atkType & ATK_RANGE) {
+			const s = new Image(40, 40);
+			s.src = '/img/i/o/0.png';
+			div.appendChild(s);
+		} else {
+			const s = new Image(40, 40);
+			s.src = '/img/i/o/1.png';
+			div.appendChild(s);
+		}
+		if (form.atkType & ATK_LD) {
+			const s = new Image(40, 40);
+			s.src = '/img/i/o/2.png';
+			div.appendChild(s);
+		}
+		if (form.atkType & ATK_OMNI) {
+			const s = new Image(40, 40);
+			s.src = '/img/i/o/3.png';
+			div.appendChild(s);
+		}
+		if (form.atkType & ATK_KB_REVENGE) {
+			const s = new Image(40, 40);
+			s.src = '/img/i/o/4.png';
+			div.appendChild(s);
+		}
+		div.append(atkType);
+
+		if (form.atkType & ATK_KB_REVENGE)
+			div.append('・擊退反擊');
+
+		this.traitDiv = td.appendChild(document.createElement('div'));
+
+		if (form.lds) {
+			const s = [];
+			for (let i = 0; i < form.lds.length; ++i) {
+				const x = form.lds[i];
+				const y = x + form.ldr[i];
+				if (x < y) {
+					s.push(`${x}～${y}`);
+				} else {
+					s.push(`${y}～${x}`);
+				}
+			}
+			div.append('（' + s.join(', ') + '）');
+		}
+
+		div = document.createElement('div');
+		td.appendChild(div);
+
+		tr = document.createElement('tr');
+		this.tbody.appendChild(tr);
+
+		makeTd(tr, '效果 ＆ 能力').classList.add('F');
+		td = makeTd(tr);
+		td.colSpan = 5;
+		td.style.textAlign = 'left';
+		td.classList.add('A');
+
+		if (form.lvc >= 2 && cat.talents) {
+			tr = document.createElement('tr');
+			this.tbody.appendChild(tr);
+
+			makeTd(tr, '等級').classList.add('f');
+			
+			td = makeTd(tr, '本能');
+			td.colSpan = 4;
+			td.classList.add('f');
+
+			td = makeTd(tr, 'NP');
+			td.classList.add('f');
+			tr.appendChild(td);
+
+			this.talentLevels = this.addTalents();
+
+			if (this.hasSuper) {
+				tr = document.createElement('tr');
+				this.tbody.appendChild(tr);
+
+				td = makeTd(tr, '等級');
+				td.classList.add('f');
+				
+				td = makeTd(tr, '超本能');
+				td.colSpan = 4;
+				td.classList.add('f');
+
+				makeTd(tr, 'NP').classList.add('f');
+
+				this.superTalentLevels = this.addTalents(true);
+			}
+		}
+
+		this.updateTable();
+	}
+
+	addTalents(isSuper = false) {
+		const self = this;
+		const talentLevels = [];
+		let counter = 0;
+
+		for (const entry of this.form.forEachTalent(isSuper)) {
+			const {maxLv, name, cost} = entry;
+			const sum = units_scheme.talents.costs[cost].slice(0, maxLv).reduce((rv, x) => rv + x, 0);
+
+			talentLevels.push(maxLv);
+
+			const tr = document.createElement('tr');
+			this.tbody.appendChild(tr);
+
+			const td1 = makeTd(tr, `Lv${maxLv}`);
+			const td2 = makeTd(tr, name);
+			const td3 = makeTd(tr, sum);
+
+			td1.dataset.level = maxLv;
+			td1.classList.add('F');
+			td1.contentEditable = true;
+			td1.inputMode = 'numeric';
+
+			const idx = counter++;
+
+			td1.addEventListener('blur', event => {
+				const level = self.verifyInput(event, maxLv, 0);
+
+				if (level !== -1) {
+					const lv = parseInt(level, 10);
+					const total = units_scheme.talents.costs[cost].slice(0, lv).reduce((rv, x) => rv + x, 0);
+					td3.textContent = total;
+
+					self[isSuper ? 'superTalentLevels' : 'talentLevels'][idx] = lv;
+					self.updateTable();
+				}
+			});
+
+			td1.addEventListener('focus', FormStatsTable.handleFocus);
+			td1.addEventListener('keydown', FormStatsTable.handleKW);
+			
+			td2.colSpan = 4;
+			
+			td3.classList.add('F');
+		}
+
+		return talentLevels;
+	}
+
+	getDefaultLevel() {
+		if (this.form.lvc === 3 || this.hasSuper)
+			return 60;
+
+		return 50;
+	}
+
+	updateTable() {
+		const tbody = this.tbody;
+		const form = this.updateValues();
+	
+		let td = tbody.children[7].children[1];
+		td.textContent = '';
+
+		createImuIcons(form.imu, td);
+		createResIcons(form.res, td);
+		this.createAbIcons(form, td, td, tbody);
+		this.updateValues(form, tbody);
+
+		this.traitDiv.textContent = '';
+		createTraitIcons(form.trait, this.traitDiv);
+
+	}
+
+	updateValues() {
+		// form setup
+		const form = this.form.clone();
+		if (this.talentLevels) {
+			form.applyTalents(this.talentLevels);
+		}
+		if (this.superTalentLevels)
+			form.applySuperTalents(this.superTalentLevels);
+
+		// manually insert kaijin ability
+		if (this.enableKaijin)
+			form.ab[AB_KAIJIN] = null;
+
+		for (const key of this.selectedAbilities)
+			if (!Object.hasOwn(form.ab, key))
+				this.selectedAbilities.delete(key);
+
+		// update values
+		const chs = this.tbody.childNodes;
+		let tr = chs[2].children;
+		form.level = parseInt(chs[1].children[1].textContent.replace('Lv', '') || 1, 10);
+		updateHp(form, this.selectedAbilities, tr[1]);
+		tr[3].textContent = form.kb;
+		tr[5].textContent = numStrT(form.attackF);
+		tr = chs[3].children;
+		updateAtk(form, this.selectedAbilities, tr[1], chs[4].children[1]);
+		tr[3].textContent = floor(form.speed);
+		if (config.unit === 'F') {
+			let t = numStr(form.pre);
+			if (form.pre1)
+				t += '/' + numStr(form.pre1);
+			if (form.pre2)
+				t += '/' + numStr(form.pre2);
+			tr[5].textContent = t + ' F';
+		} else {
+			let t = numStr(form.pre / 30);
+			if (form.pre1)
+				t += '/' + numStr(form.pre1 / 30);
+			if (form.pre2)
+				t += '/' + numStr(form.pre2 / 30);
+			tr[5].textContent = t + ' 秒';
+		}
+		tr = chs[4].children;
+		tr[3].textContent = form.range;
+		tr[5].textContent = numStrT(form.backswing);
+		tr = chs[5].children;
+		tr[1].textContent = numStr(form.info.price * 1.5);
+		tr[3].textContent = numStrT(this.getRes(form.info.cd));
+		tr[5].textContent = numStrT(form.tba);
+		
+		return form;
+	}
+}
+
+
+
+export {
+	layout,
+	makeTd,
+	units_scheme,
+	DetailedFormStatsTable,
+	SimpleFormStatsTable,
+};
+

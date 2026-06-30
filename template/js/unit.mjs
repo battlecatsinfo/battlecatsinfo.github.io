@@ -1424,6 +1424,29 @@ class CatForm extends Unit {
 		return rv;
 	}
 
+	*forEachTalent(isSuper = false) {
+		const talents = this.talents;
+
+		if (!talents)
+			return;
+
+		for (let i = 1; i < 113; i += 14) {
+			if (!talents[i])
+				break;
+
+			if (isSuper != (talents[i + 13] === 1))
+				continue;
+
+			yield {
+				type: talents[i],
+				maxLv: talents[i + 1] || 1,
+				name: units_scheme.talents.names[talents[i]],
+				cost: talents[i + 11] - 1,
+				data: talents.subarray(i + 2, i + 10),
+			};
+		}
+	}
+
 	applyTalent(talent, level) {
 		if (!level) return;
 		let t, x, y, z;
@@ -2124,39 +2147,45 @@ async function loadAllEnemies() {
 }
 
 
-function createTraitIcons(trait, parent) {
-	if (!trait) { return; }
-	const E = document.createElement('div');
+function createTraitIcons(trait, container) {
+	if (!trait)
+		return;
+
+	const div = container.appendChild(document.createElement('div'));
 	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
-		if (!(trait & x)) { continue; }
-		const e = E.appendChild(new Image(40, 40));
-		e.src = `/img/i/e/${i}.png`;
+		if (!(trait & x))
+			continue;
+
+		container.appendChild(new Image(40, 40)).src = `/img/i/e/${i}.png`;
 	}
-	parent.appendChild(E);
 }
 
-function createImuIcons(imu, parent) {
-	if (!imu) { return; }
-	const p = document.createElement('div');
+function createImuIcons(imu, container) {
+	if (!imu)
+		return;
+
+	const div = container.appendChild(document.createElement('div'));
 	const names = [];
 	for (let x = 1, i = 0; x <= 1024; x <<= 1, ++i) {
-		if (!(imu & x)) { continue; }
-		const e = p.appendChild(new Image(40, 40));
-		e.src = `/img/i/m/${i}.png`;
+		if (!(imu & x))
+			continue;
+		
+		div.appendChild(new Image(40, 40)).src = `/img/i/m/${i}.png`;
 		names.push(units_scheme.immunes[i]);
 	}
 	const text = (names.length === 1) ? `${names.join('')}無效` : `無效（${names.join('、')}）`;
-	p.append(text);
-	parent.appendChild(p);
+	div.append(text);
 }
 
-function createResIcons(res, p) {
+function createResIcons(res, container) {
+	if (!res)
+		return;
+
 	for (let [k, v] of Object.entries(res)) {
 		k = parseInt(k, 10);
-		const c = p.appendChild(document.createElement('div'));
-		const e = c.appendChild(new Image(40, 40));
-		e.src = `/img/i/r/${k}.png`;
-		c.append(units_scheme.resists[k].replace('$', v));
+		const div = container.appendChild(document.createElement('div'));
+		div.appendChild(new Image(40, 40)).src = `/img/i/r/${k}.png`;
+		div.append(units_scheme.resists[k].replace('$', v));
 	}
 }
 
