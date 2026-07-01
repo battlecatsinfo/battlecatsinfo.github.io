@@ -1177,6 +1177,7 @@ class UnitPage {
 
 			if (cat.forms.length >= 4) {
 				const form = cat.forms[3];
+				icons.appendChild(new Image(104, 79)).src = form.icon;
 
 				this.renderFruits(`進化素材（四階）`, true);
 
