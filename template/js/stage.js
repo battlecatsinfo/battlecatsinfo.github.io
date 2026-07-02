@@ -2,7 +2,7 @@ import {config, loadScheme, getNumFormatter, numStr} from './common.mjs';
 import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
 import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
-import {EnemyStatsTable} from "./enemy.mjs";
+import {EnemyStatsTable} from "./enemy_stat_table.mjs";
 
 const loader = document.getElementById('loader');
 

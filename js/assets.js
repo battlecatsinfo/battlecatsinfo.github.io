@@ -56,7 +56,7 @@ const sources = [
 	'stage.mjs',
 	'reward.mjs',
 	'datatables.mjs',
-	'enemy.mjs',
+	'enemy_stat_table.mjs',
 
 	'common.js',
 	'navbar.js',

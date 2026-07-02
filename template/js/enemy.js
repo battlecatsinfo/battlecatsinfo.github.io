@@ -1,6 +1,6 @@
 import {loadScheme} from "./common.mjs";
 import {loadEnemy} from "./unit.mjs";
-import {EnemyStatsTable} from "./enemy.mjs";
+import {EnemyStatsTable} from "./enemy_stat_table.mjs";
 import * as Stage from './stage.mjs';
 
 const modal = document.getElementById('modal-c');
