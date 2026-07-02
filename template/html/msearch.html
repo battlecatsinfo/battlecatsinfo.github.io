@@ -1,0 +1,598 @@
+{{#> common.html nav_bar_active="monthly"}}
+
+{{#*inline "viewport"}}{{/inline}}
+
+{{#*inline "title"}}月間搜尋{{/inline}}
+
+{{#*inline "description"}}篩選和排序敵人{{/inline}}
+
+{{#*inline "og"}}
+	{{~> @partial-block}}
+	<meta property="og:image" content="/img/i/o/enemy.png">
+{{/inline}}
+
+{{#*inline "scripts"}}
+	{{~> @partial-block}}
+	<script src="parser.js"></script>
+	<script src="msearch.js" type="module"></script>
+{{/inline}}
+
+{{#*inline "styles-inline"}}
+	<style>
+	body {
+		font-size: 16px;
+		padding: 0;
+		margin: 0;
+		width: 100%;
+	}
+	#loader {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		z-index: 1;
+		width: 120px;
+		height: 120px;
+		margin: -76px 0 0 -76px;
+		border: 16px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 16px solid #3498db;
+		-webkit-animation: spin 2s linear infinite;
+		animation: spin 2s linear infinite;
+	}
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+	.An {
+		position: relative;
+		display: none;
+		animation-name: An;
+		animation-duration: 0.7s;
+	}
+	@keyframes An {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	table,
+	th,
+	td {
+		border: 1px solid #d1d5d5;
+	}
+	.w3-centered td {
+		vertical-align: middle;
+	}
+	.w3-ul li {
+		padding: 0px;
+		cursor: default;
+		border-radius: 1px;
+	}
+	li img {
+		vertical-align: bottom;
+	}
+	li.o-selected {
+		box-shadow: 0 0 2px black;
+		background-color: #7fdbff;
+	}
+	span.o-selected > button {
+		background-color: #795548;
+	}
+	.w3-ul {
+		border-radius: 3px;
+		border: 1.5px solid #818181;
+		margin-top: 4px;
+		margin-bottom: 4px;
+	}
+	button {
+		display: block;
+		text-align: left;
+		width: 100%;
+		cursor: default;
+		transition: opacity 0s;
+		border: 0px;
+		background-color: inherit;
+		padding: 5px;
+	}
+	delete_enemy_button {
+		display: inline-block;
+		text-align: left;
+		width: max-content;
+		cursor: default;
+		transition: opacity 0s;
+		border: 0px;
+		background-color: inherit;
+		padding: 5px;
+	}
+	ul::-webkit-scrollbar {
+		width: 10px;
+	}
+	ul::-webkit-scrollbar-button {
+		background: #ebebeb;
+		border-radius: 4px;
+	}
+	ul::-webkit-scrollbar-track-piece {
+		background: #ebebeb;
+	}
+	ul::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background-color: gray;
+		border: 1px solid darkgray;
+	}
+	.w3-table tr:hover td,
+	li:hover {
+		background-color: lightcyan;
+	}
+	:root.dark .w3-table tr:hover td {
+		background-color: #638593;
+	}
+	:root.dark li:hover {
+		background-color: steelblue;
+	}
+	textarea {
+		font-size: 20px;
+		font-family: Monaco, "Ubuntu Mono", "Source Code Pro", Menlo, Consolas,
+			monospace;
+	}
+	input[type="button"] {
+		margin: 0px auto;
+		margin-top: 20px;
+		border-radius: 5px;
+		width: 90px;
+		padding: 3px 10px;
+	}
+	#pages-a > td {
+		font-size: 1.2em;
+		width: 50px;
+		text-align: center;
+		border: none;
+		cursor: pointer;
+	}
+	#pages-a > td:hover {
+		background-color: #ccc;
+	}
+	.w3-table td {
+		padding: 0px;
+	}
+	:root {
+		--mhide: block;
+	}
+	.may-hide {
+		display: var(--mhide);
+	}
+	.or-and {
+		margin-top: 0px;
+		width: 100%;
+	}
+	#name-search {
+		width: 100%;
+		padding: 6px 20px;
+		border: 3px solid #ddd;
+		border-radius: 7px;
+		outline: none;
+		transition: 0.2s;
+		margin: 0 auto;
+	}
+	#name-search:focus {
+		border-color: #bbb;
+	}
+	td.N {
+		background-color: var(--spans);
+	}
+	p {
+		margin-block-start: 5px;
+		margin-block-end: 5px;
+	}
+	.enemy-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, 130px);
+		gap: 12px;
+		justify-content: center;
+	}
+
+	.enemy-card {
+		width: 130px;
+		height: 170px;
+		border: 1px solid #ccc;
+		border-radius: 6px;
+		text-align: center;
+		/* background: #fff; */
+		cursor: pointer;
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+
+		padding: 6px;
+		box-sizing: border-box;
+	}
+	.enemy-card:hover {
+		background-color: lightcyan;
+	}
+	
+	:root.dark .enemy-card:hover {
+		background-color: steelblue;
+
+	}
+
+	.enemy-card img {
+		width: 110px;
+		height: 110px;
+		margin-top: 6px;
+	}
+
+	.enemy-name {
+		font-size: 14px;
+		line-height: 1.2;
+		margin-bottom: 6px;
+		word-break: break-word;
+	}
+	.enemy-subtable {
+		border-collapse: collapse;
+		font-size: 12px;
+	}
+
+	.enemy-subtable td {
+		border: 1px solid #ccc;
+		padding: 4px;
+		text-align: center;
+		vertical-align: top;
+	}
+
+	.enemy-label {
+		font-weight: bold;
+		/* background: #f3f3f3; */
+		white-space: nowrap;
+	}
+	.w3-table tr.no-hover:hover td {
+		background-color: transparent;
+	}
+
+	:root.dark .w3-table tr.no-hover:hover td {
+		background-color: transparent;
+	}
+	/* Highlighted cells */
+	.w3-table td.highlight {
+		background-color: #7fdbff;
+	}
+
+	:root.dark .w3-table td.highlight {
+		background-color: steelblue;
+	}
+
+	/* Keep highlight during hover */
+	.w3-table tr.no-hover:hover td.highlight {
+		background-color: #7fdbff;
+	}
+
+	:root.dark .w3-table tr.no-hover:hover td.highlight {
+		background-color: steelblue;
+	}
+	</style>
+{{/inline}}
+
+{{#*inline "content"}}
+	<div id="loader"></div>
+	<div id="main" class="An">
+		<div class="w3-container">
+			<!-- trait searcher -->
+			<!-- <ul class="w3-ul may-hide" style="width: 150px;height: 600px;overflow: auto;" id="trait-s"> -->
+			<div>
+				<ul class="w3-ul may-hide" style="position: absolute;left: 230px;top: 50px;height: 600px;overflow: auto;width: 190px;" id="trait-s">
+					<li><span class="w3-button or-and w3-pale-red">AND</span></li>
+					<li data-expr="trait&RED">
+						<button><img src="/img/i/e/0.png" width="40" height="40">紅色敵人</button>
+					</li>
+					<li data-expr="trait&FLOAT">
+						<button><img src="/img/i/e/1.png" width="40" height="40">飄浮敵人</button>
+					</li>
+					<li data-expr="trait&BLACK">
+						<button><img src="/img/i/e/2.png" width="40" height="40">黑色敵人</button>
+					</li>
+					<li data-expr="trait&METAL">
+						<button><img src="/img/i/e/3.png" width="40" height="40">鋼鐵敵人</button>
+					</li>
+					<li data-expr="trait&ANGEL">
+						<button><img src="/img/i/e/4.png" width="40" height="40">天使敵人</button>
+					</li>
+					<li data-expr="trait&ALIEN">
+						<button><img src="/img/i/e/5.png" width="40" height="40">異星戰士</button>
+					</li>
+					<li data-expr="trait&ZOMBIE">
+						<button><img src="/img/i/e/6.png" width="40" height="40">不死生物</button>
+					</li>
+					<li data-expr="trait&WHITE">
+						<button><img src="/img/i/e/8.png" width="40" height="40">無屬性敵人</button>
+					</li>
+					<li data-expr="trait&RELIC">
+						<button><img src="/img/i/e/7.png" width="40" height="40">古代種</button>
+					</li>
+					<li data-expr="trait&DEMON">
+						<button><img src="/img/i/e/11.png" width="40" height="40">惡魔</button>
+					</li>
+					<li data-expr="trait&BARON">
+						<button><img src="/img/i/e/14.png" width="40" height="40">超生命體</button>
+					</li>
+					<li data-expr="trait&BEAST">
+						<button><img src="/img/i/e/13.png" width="40" height="40">超獸</button>
+					</li>
+					<li data-expr="trait&EVA">
+						<button><img src="/img/i/e/9.png" width="40" height="40">使徒</button>
+					</li>
+					<li data-expr="trait&WITCH">
+						<button><img src="/img/i/e/10.png" width="40" height="40">魔女</button>
+					</li>
+					<li data-expr="trait&SAGE">
+						<button><img src="/img/i/e/15.png" width="40" height="40">超賢者</button>
+					</li>
+					<li data-expr="trait&WEIRDO">
+						<button><img src="/img/i/e/16.png" width="40" height="40">怪人</button>
+					</li>
+					<li data-expr="speed == 0 && trait == 0">
+						<button><img src="/img/i/e/animated.png" width="41" height="41">動畫塔</button>
+					</li>
+					<li data-expr="trait&INFN">
+						<button><img src="/img/i/e/12.png" width="40" height="40">道場塔</button>
+					</li>
+				</ul>
+				<form action="javascript:void(0);" onsubmit="return false;" class="may-hide" style="position: absolute;left: 230px; top: 0px; width: 150px;">
+					<!-- <span class="w3-button w3-teal w3-round" id="filter-go">篩選</span> -->
+					<span class="w3-button w3-red w3-round" id="filter-clear">清除</span>
+				</form>
+			</div>
+			<!-- Enemy Queue Section -->
+			<div id="enemy-queue" style="width: 200px;height: 800px;overflow: auto;">
+			<!-- <div id="enemy-queue" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: auto;width: 190px;"> -->
+				<h3>已選擇的敵人隊列</h3>
+				<li><span class="w3-button or-and w3-green">AND</span></li>
+				<ul id="queue-list" class="w3-ul" style="height: 600px; overflow-y: auto;"></ul>
+				<button id="queue-clear" class="w3-button w3-red" style="margin-top: 5px;">清空隊列</button>
+			</div>
+			<!-- clear/reset buttons -->
+			<!-- <form action="javascript:void(0);" onsubmit="return false;" class="may-hide" style="width: 150px;">
+				<span class="w3-button w3-teal w3-round" id="filter-go">篩選</span>
+				<span class="w3-button w3-red w3-round" id="filter-clear">清除</span>
+			</form> -->
+			<!-- regex? idk -->
+			<div class="no-print may-hide" style="position: absolute;top: 1047px;left: 17px;">
+				<div>篩選表達式</div>
+				<textarea class="w3-code" rows="3" cols="60" name="filter-expr" id="filter-expr" spellcheck="false" style="width: 400px;"></textarea>
+				<br>
+				<div>排序表達式</div>
+				<textarea class="w3-code" rows="3" cols="60" name="sort-expr" id="sort-expr" spellcheck="false" style="width: 400px;"></textarea>
+				<br>
+				<a href="/help.html" style="display: block;text-align: center;">使用說明</a>
+			</div>
+			<!-- abilities searcher -->
+			<!-- <ul class="w3-ul may-hide" style="position: absolute;left: 180px;top: 0px;height: 600px;overflow: auto;width: 190px;" id="ab-s">
+				<li><span class="w3-button or-and w3-green">AND</span></li>
+				<li style="text-align: center;">能力</li>
+				<li data-expr="hasab(AB_STRENGTHEN)">
+					<button><img src="/img/i/a/1.png" width="40" height="40">攻擊力上升</button>
+				</li>
+				<li data-expr="hasab(AB_LETHAL)">
+					<button><img src="/img/i/a/2.png" width="40" height="40">死前存活</button>
+				</li>
+				<li data-expr="hasab(AB_ATKBASE)">
+					<button><img src="/img/i/a/3.png" width="40" height="40">善於攻城</button>
+				</li>
+				<li data-expr="hasab(AB_CRIT)">
+					<button><img src="/img/i/a/4.png" width="40" height="40">會心一擊</button>
+				</li>
+				<li data-expr="hasab(AB_S)">
+					<button><img src="/img/i/a/9.png" width="40" height="40">渾身一擊</button>
+				</li>
+				<li data-expr="hasab(AB_MINIWAVE)">
+					<button><img src="/img/i/a/12.png" width="40" height="40">小波動</button>
+				</li>
+				<li data-expr="hasab(AB_WAVE)">
+					<button><img src="/img/i/a/13.png" width="40" height="40">波動</button>
+				</li>
+				<li data-expr="hasab(AB_MINISURGE)">
+					<button><img src="/img/i/a/14.png" width="40" height="40">小烈波</button>
+				</li>
+				<li data-expr="hasab(AB_SURGE)">
+					<button><img src="/img/i/a/15.png" width="40" height="40">烈波攻擊</button>
+				</li>
+				<li data-expr="hasab(AB_DEATHSURGE)">
+					<button><img src="/img/i/a/41.png" width="40" height="40">遺留烈波</button>
+				</li>
+				<li data-expr="hasab(AB_COUNTER)">
+					<button><img src="/img/i/a/40.png" width="40" height="40">烈波反擊</button>
+				</li>
+				<li data-expr="hasab(AB_EXPLOSION)">
+					<button><img src="/img/i/a/45.png" width="40" height="40">爆波攻擊</button>
+				</li>
+				<li data-expr="hasab(AB_BURROW)">
+					<button><img src="/img/i/a/34.png" width="40" height="40">鑽地</button>
+				</li>
+				<li data-expr="hasab(AB_REVIVE)">
+					<button><img src="/img/i/a/35.png" width="40" height="40">復活</button>
+				</li>
+				<li data-expr="hasab(AB_BARRIER)">
+					<button><img src="/img/i/a/38.png" width="40" height="40">護盾</button>
+				</li>
+				<li data-expr="hasab(AB_DSHIELD)">
+					<button><img src="/img/i/a/39.png" width="40" height="40">惡魔盾</button>
+				</li>
+				<li data-expr="hasab(AB_SUICIDE)">
+					<button><img src="/img/i/a/37.png" width="40" height="40">一次攻擊</button>
+				</li>
+				<li style="text-align: center;">效果</li>
+				<li data-expr="hasab(AB_WEAK)">
+					<button><img src="/img/i/a/21.png" width="40" height="40">攻擊力下降</button>
+				</li>
+				<li data-expr="hasab(AB_STOP)">
+					<button><img src="/img/i/a/22.png" width="40" height="40">使動作停止</button>
+				</li>
+				<li data-expr="hasab(AB_SLOW)">
+					<button><img src="/img/i/a/23.png" width="40" height="40">使動作變慢</button>
+				</li>
+				<li data-expr="hasab(AB_KB)">
+					<button><img src="/img/i/a/30.png" width="40" height="40">打飛敵人</button>
+				</li>
+				<li data-expr="hasab(AB_WARP)">
+					<button><img src="/img/i/a/31.png" width="40" height="40">傳送</button>
+				</li>
+				<li data-expr="hasab(AB_CURSE)">
+					<button><img src="/img/i/a/33.png" width="40" height="40">詛咒</button>
+				</li>
+				<li data-expr="hasab(AB_IMUATK)">
+					<button><img src="/img/i/a/32.png" width="40" height="40">攻擊無效</button>
+				</li>
+				<li data-expr="hasab(AB_POIATK)">
+					<button><img src="/img/i/a/36.png" width="40" height="40">毒擊</button>
+				</li>
+				<li style="text-align: center;">抗性</li>
+				<li data-expr="imu&IMU_WEAK">
+					<button><img src="/img/i/m/5.png" width="40" height="40">攻擊力下降無效</button>
+				</li>
+				<li data-expr="imu&IMU_STOP">
+					<button><img src="/img/i/m/1.png" width="40" height="40">動作停止無效</button>
+				</li>
+				<li data-expr="imu&IMU_SLOW">
+					<button><img src="/img/i/m/2.png" width="40" height="40">動作變慢無效</button>
+				</li>
+				<li data-expr="imu&IMU_KB">
+					<button><img src="/img/i/m/3.png" width="40" height="40">打飛敵人無效</button>
+				</li>
+				<li data-expr="imu&IMU_WAVE">
+					<button><img src="/img/i/m/0.png" width="40" height="40">波動傷害無效</button>
+				</li>
+				<li data-expr="imu&IMU_SURGE">
+					<button><img src="/img/i/m/4.png" width="40" height="40">烈波傷害無效</button>
+				</li>
+				<li data-expr="imu&IMU_EXPLOSION">
+					<button><img src="/img/i/m/10.png" width="40" height="40">爆波傷害無效</button>
+				</li>
+				<li data-expr="imu&IMU_WARP">
+					<button><img src="/img/i/m/6.png" width="40" height="40">傳送無效</button>
+				</li>
+				<li data-expr="imu&IMU_CURSE">
+					<button><img src="/img/i/m/7.png" width="40" height="40">詛咒無效</button>
+				</li>
+				<li data-expr="imu&IMU_TOXIC">
+					<button><img src="/img/i/m/8.png" width="40" height="40">毒擊傷害無效</button>
+				</li>
+			</ul> -->
+			<!-- species searcher -->
+			<!-- <ul style="position: absolute;top: 605px;height: 395px;overflow: auto;width: 190px;left: 180px;font-size: 18px;" class="w3-ul may-hide" id="kind-s">
+				{{#each (loadTSV "enemy_species.tsv") as |sp|}}
+				<li data-expr="
+					{{~#each (split sp.id_list ",") as |id|~}}
+					id=={{id}}
+					{{~#unless @last}}||{{/unless~}}
+					{{~/each~}}
+				">
+					<button>{{sp.name}}</button>
+				</li>
+				{{/each}}
+			</ul> -->
+			<!-- stages selector -->
+			<div id="stages" class="w3-bar stage-buttons"
+				style="margin:20px 0; position:absolute; top:0; left:440px;">
+
+				<li class="w3-button o-selected">
+					<input type="radio" name="stage" value=3009 checked> 世界篇
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value=3003> 未來一
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value=3004> 未來二
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value=3005> 未來三
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value=3006> 宇宙一
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value=3007> 宇宙二
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value=3008> 宇宙三
+				</li>
+				<li class="w3-button">
+					<input type="radio" name="stage" value=114514> 傳奇關卡
+				</li>
+			</div>
+
+
+
+			<!-- search bar & results -->
+			<div id="tables" style="margin: 20px 0px;position: absolute;top: 45px;left: 440px;vertical-align: middle;min-width: 800px;width: calc(100% - 450px);">
+				<div>
+				<!-- <div class="may-hide"> -->
+					<input type="search" placeholder="搜尋名稱或敵人id" id="name-search">
+				</div>
+				<p>
+					<span id="search-result"></span><a href="#" id="toggle-s" style="padding-left: 1em;">隱藏搜尋器</a>
+					<span style="float: right;">
+						每頁顯示
+						<select id="per_page">
+							<option value="10">10個</option>
+							<option value="25">25個</option>
+							<option value="50">50個</option>
+							<option value="100">100個</option>
+							<option value="9999">全部</option>
+						</select>
+					</span>
+				</p>
+				<!-- <table class="w3-table w3-centered" style="width: 100%;margin-bottom: 0px;">
+					<thead>
+						<tr id="th" style="cursor: pointer;">
+							<td style="width: 110px;">圖示</td>
+							<td>名稱</td>
+						</tr>
+					</thead>
+					<tbody id="tbody"></tbody>
+				</table>
+				<table style="margin: 1em auto;">
+					<tbody>
+						<tr id="pages-a"></tr>
+					</tbody>
+				</table> -->
+				<div id="enemy-grid" class="enemy-grid"></div>
+
+				<div style="margin: 1em auto; text-align: center;">
+					<table>
+						<tbody>
+							<tr id="pages-a"></tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- show searched stages -->
+				<div>
+					<table class="w3-table w3-centered" style="width: 100%;margin-bottom: 0px;">
+						<thead>
+							<tr id="th" style="cursor: pointer;">
+								<td title="sm" style="width: 150px;">篇章</td>
+								<td title="st" style="width: 150px;">關卡</td>
+								<td title="energy" style="width: 50px;">統帥力</td>
+								<td title="enemy">敵人</td>
+							</tr>
+						</thead>
+						<tbody id="tbody"></tbody>
+					</table>
+
+					<table style="margin: 1em auto;">
+						<tbody>
+							<tr id="found-stages"></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+{{/inline}}
+
+{{/common.html}}
