@@ -1,4 +1,10 @@
-import {config, numStr, numStrT} from './common.mjs';
+import {
+	config,
+	numStr,
+	numStrT,
+	displayRange,
+	displaySpeed,
+} from './common.mjs';
 import {
 	ATK_RANGE,
 	ATK_LD,
@@ -343,9 +349,9 @@ class EnemyStatsTable {
 				const x = this.enemy.lds[i];
 				const y = x + this.enemy.ldr[i];
 				if (x <= y)
-					s += `${nums[i]}${x}～${y}`;
+					s += `${nums[i]}${displayRange(x)}～${displayRange(y)}`;
 				else
-					s += `${nums[i]}${y}～${x}`;
+					s += `${nums[i]}${displayRange(y)}～${displayRange(x)}`;
 			}
 			X += `・範圍 ${s}`;
 		}
@@ -380,13 +386,13 @@ class EnemyStatsTable {
 		this.enemyStatsBody[2].children[3].textContent = numStrT(this.enemy.backswing);
 		this.enemyStatsBody[2].children[5].textContent = numStrT(this.enemy.tba);
 		this.enemyStatsBody[2].children[7].textContent = numStrT(this.enemy.attackF);
-		this.enemyStatsBody[1].children[5].textContent = this.enemy.range;
+		this.enemyStatsBody[1].children[5].textContent = displayRange(this.enemy.range);
 		this.enemyStatsBody[1].children[7].textContent = this.enemy.earn;
 		if (config.unit === 'F')
 			this.enemyStatsBody[2].children[1].textContent = [this.enemy.pre, this.enemy.pre1, this.enemy.pre2].filter(x => x).map(numStr).join('/') + ' F';
 		else
 			this.enemyStatsBody[2].children[1].textContent = [this.enemy.pre, this.enemy.pre1, this.enemy.pre2].filter(x => x).map(x => numStr(x / 30)).join('/') + ' 秒';
-		this.enemyStatsBody[0].children[6].textContent = this.enemy.speed;
+		this.enemyStatsBody[0].children[6].textContent = displaySpeed(this.enemy.speed);
 		this.enemyStatsBody[1].children[1].textContent = this.enemy.kb;
 		this.calc();
 		X = this.enemyStatsBody[4].children[1];

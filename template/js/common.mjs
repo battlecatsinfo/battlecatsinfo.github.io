@@ -345,6 +345,15 @@ class ConfigHandler {
 		else
 			localStorage.setItem('unit', value);
 	}
+	get range() {
+		return localStorage.getItem('range') ?? 'n';
+	}
+	set range(value) {
+		if (value === null)
+			localStorage.removeItem('range');
+		else
+			localStorage.setItem('range', value);
+	}
 	get prec() {
 		let value = localStorage.getItem('prec');
 		return (value !== null) ? parseInt(value, 10) : 2;
@@ -450,26 +459,6 @@ function getNumFormatter(prec = config.prec) {
 	return new Intl.NumberFormat(undefined, {
 		'maximumFractionDigits': prec,
 	});
-}
-
-function numStr(num) {
-	const formatter = getNumFormatter();
-	const fn = numStr = num => formatter.format(num);
-	return fn(num);
-}
-
-function numStrT(num) {
-	const fn = numStrT = (config.unit === 'F') ?
-		num => num.toString() + ' F' :
-		num => numStr(num / 30) + ' 秒';
-	return fn(num);
-}
-
-function numStrX(num) {
-	const fn = numStrX = (config.unit === 'F') ?
-		num => num.toString() + ' F' :
-		num => numStr(num / 30);
-	return fn(num);
 }
 
 function round(num, decimals = 0) {
@@ -605,6 +594,34 @@ function getCombinations(arr) {
 
 const config = new ConfigHandler();
 
+const formatter = getNumFormatter();
+
+const numUnit = config.unit === 'F' ? 'F' : '秒';
+
+function numStr(num) {
+	return formatter.format(num);
+}
+
+function numStrX(num) {
+	if (config.unit !== 'F')
+		num /= 30;
+	return formatter.format(num);
+}
+
+function numStrT(num) {
+	if (config.unit !== 'F')
+		num /= 30;
+	return `${formatter.format(num)} ${numUnit}`;
+}
+
+function displayRange(num) {
+	return config.range === 'u' ? `${4 * num}u` : formatter.format(num);
+}
+
+function displaySpeed(num) {
+	return config.range === 'u' ? `${num + num} u/F` : formatter.format(num);
+}
+
 export {
 	DB_NAME,
 	DB_VERSION,
@@ -625,6 +642,9 @@ export {
 	numStr,
 	numStrT,
 	numStrX,
+	numUnit,
+	displayRange,
+	displaySpeed,
 	round,
 	floor,
 	pagination,

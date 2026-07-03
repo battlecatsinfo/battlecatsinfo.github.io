@@ -3,6 +3,8 @@ import {
 	floor,
 	numStr,
 	numStrT,
+	displayRange,
+	displaySpeed,
 	getCombinations,
 } from "./common.mjs";
 import {
@@ -710,7 +712,7 @@ class DetailedFormStatsTable extends FormStatsTable {
 			form.ab[AB_KAIJIN] = null;
 
 		// update stats
-		chs[7].children[3].textContent = floor(form.speed);
+		chs[7].children[3].textContent = displaySpeed(form.speed);
 		PRs[2].textContent = form.info.price;
 		PRs[4].textContent = form.info.price * 1.5;
 		PRs[6].textContent = form.info.price * 2;
@@ -797,7 +799,7 @@ class DetailedFormStatsTable extends FormStatsTable {
 		const node = chs[5].children[5];
 		if (form.lds) {
 			const nums = '①②③';
-			node.textContent = '接觸點' + form.range;
+			node.textContent = `接觸點${displayRange(form.range)}`;
 			node.appendChild(document.createElement('br'));
 			node.append('範圍');
 			node.appendChild(document.createElement('br'));
@@ -805,13 +807,13 @@ class DetailedFormStatsTable extends FormStatsTable {
 				const x = form.lds[i];
 				const y = x + form.ldr[i];
 				if (x <= y)
-					node.append(`${nums[i]}${x}～${y}`);
+					node.append(`${nums[i]}${displayRange(x)}～${displayRange(y)}`);
 				else
-					node.append(`${nums[i]}${y}～${x}`);
+					node.append(`${nums[i]}${displayRange(y)}～${displayRange(x)}`);
 				node.appendChild(document.createElement('br'));
 			}
 		} else {
-			node.textContent = form.range;
+			node.textContent = displayRange(form.range);
 		}
 		KB.textContent = form.kb.toString();
 		CD.textContent = numStrT(this.getRes(form.info.cd));
@@ -1004,9 +1006,9 @@ class SimpleFormStatsTable extends FormStatsTable {
 				const x = form.lds[i];
 				const y = x + form.ldr[i];
 				if (x < y) {
-					s.push(`${x}～${y}`);
+					s.push(`${displayRange(x)}～${displayRange(y)}`);
 				} else {
-					s.push(`${y}～${x}`);
+					s.push(`${displayRange(y)}～${displayRange(x)}`);
 				}
 			}
 			div.append('（' + s.join(', ') + '）');
@@ -1159,7 +1161,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 		tr[5].textContent = numStrT(form.attackF);
 		tr = chs[3].children;
 		updateAtk(form, this.selectedAbilities, tr[1], chs[4].children[1]);
-		tr[3].textContent = floor(form.speed);
+		tr[3].textContent = displaySpeed(form.speed);
 		if (config.unit === 'F') {
 			let t = numStr(form.pre);
 			if (form.pre1)
@@ -1176,7 +1178,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 			tr[5].textContent = t + ' 秒';
 		}
 		tr = chs[4].children;
-		tr[3].textContent = form.range;
+		tr[3].textContent = displayRange(form.range);
 		tr[5].textContent = numStrT(form.backswing);
 		tr = chs[5].children;
 		tr[1].textContent = numStr(form.info.price * 1.5);

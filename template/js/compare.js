@@ -1,4 +1,17 @@
-import {loadScheme, config, numStr, numStrT, numStrX, floor, savePng, copyPng, getCombinations} from './common.mjs';
+import {
+	loadScheme,
+	config,
+	numStr,
+	numStrT,
+	numStrX,
+	numUnit,
+	displayRange,
+	displaySpeed,
+	floor,
+	savePng,
+	copyPng,
+	getCombinations
+} from './common.mjs';
 import {
 	ATK_RANGE,
 	ATK_LD,
@@ -73,13 +86,14 @@ function newTab() {
 }
 
 function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
-	tbodyEl[5].children[I].textContent = `${F.kb} / ${F.speed}`;
+	tbodyEl[5].children[I].textContent = `${F.kb} / ${displaySpeed(F.speed)}`;
 	let T = numStrX(F.pre);
-	if (F.pre1)
-		T = '①' + T + '②' + numStrX(F.pre1);
-	if (F.pre2)
-		T += '③' + numStrX(F.pre2);
-	tbodyEl[6].children[I].textContent = `${numStrX(F.attackF)} / ${T} ${config.unit === 'F' ? 'F' : '秒'}`;
+	if (F.pre1) {
+		T = `①${T}②${numStrX(F.pre1)}`;
+		if (F.pre2)
+			T += `③${numStrX(F.pre2)}`;
+	}
+	tbodyEl[6].children[I].textContent = `${numStrX(F.attackF)} / ${T} ${numUnit}`;
 	T = '';
 	if (F.atkType & ATK_OMNI)
 		T += '全方位';
@@ -94,14 +108,14 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 			const y = x + F.ldr[i];
 			const z = '①②③' [i];
 			if (x < y) {
-				s += z + x + '~' + y;
+				s += `${z}${displayRange(x)}~${displayRange(y)}`;
 			} else {
-				s += z + y + '~' + x;
+				s += `${z}${displayRange(y)}~${displayRange(x)}`;
 			}
 		}
-		tbodyEl[8].children[I].textContent = F.range + ' / ' + T + '（' + s + '）';
+		tbodyEl[8].children[I].textContent = `${displayRange(F.range)} / ${T}（${s}）`;
 	} else {
-		tbodyEl[8].children[I].textContent = F.range + ' / ' + T;
+		tbodyEl[8].children[I].textContent = `${displayRange(F.range)} / ${T}`;
 	}
 
 	const ABF = Object.keys(F.ab).map(Number);
