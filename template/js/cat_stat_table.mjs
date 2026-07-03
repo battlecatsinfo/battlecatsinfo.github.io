@@ -29,6 +29,8 @@ import {
 
 	ATK_MULTI_AB,
 	HP_MULTI_AB,
+	MULTI_AB,
+	EFFECTS,
 } from "./unit.mjs";
 
 const layout = config.layout;
@@ -40,8 +42,6 @@ function makeTd(tr, text) {
 	tr.appendChild(td);
 	return td;
 }
-
-const MULTI_AB = ATK_MULTI_AB.union(HP_MULTI_AB);
 
 class FormStatsTable {
 	/**
@@ -87,7 +87,8 @@ class FormStatsTable {
 
 	createAbIcons(form, p1, p2) {
 		for (const obj of form.abilityDescriptions(layout)) {
-			const p = document.createElement('div');
+			const parent = EFFECTS.has(obj.abNo) ? p2 : p1;
+			const p = parent.appendChild(document.createElement('div'));
 			p.appendChild(new Image(40, 40)).src = `/img/i/a/${obj.abNo}.png`;
 
 			if (obj.link) {
@@ -124,9 +125,6 @@ class FormStatsTable {
 						this.updateValues();
 					});
 				}
-				p1.appendChild(p);
-			} else {
-				p2.appendChild(p);
 			}
 		}
 	}
@@ -745,8 +743,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 
 		createImuIcons(form.imu, td);
 		createResIcons(form.res, td);
-		this.createAbIcons(form, td, td, tbody);
-		this.updateValues(form, tbody);
+		this.createAbIcons(form, td, td);
 
 		this.traitDiv.textContent = '';
 		createTraitIcons(form.trait, this.traitDiv);

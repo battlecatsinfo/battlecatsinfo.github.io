@@ -6,7 +6,8 @@ import {
 	numStrT,
 	round,
 	floor,
-	formatTemplate
+	formatTemplate,
+	displayRange
 } from './common.mjs';
 const units_scheme = await loadScheme('units');
 
@@ -35,6 +36,7 @@ const TB_BEAST = 8192;     // Behemoth 超獸
 const TB_BARON = 16384;    // Colossus 超生命體
 const TB_SAGE = 32768;     // Sage 超賢者
 const TB_KAIJIN = 65536;   // 怪人
+const TB_LAST = TB_KAIJIN;
 
 // Immunities
 const IMU_WAVE = 1;        // Immune to Wave 波動傷害無效
@@ -116,9 +118,57 @@ const TRAIT_NO_TREASURE = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | T
 const TRAIT_TREASURE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
+const EFFECTS = new Set([
+	AB_SLOW,
+	AB_STOP,
+	AB_SLOW,
+	AB_ONLY,
+	AB_GOOD,
+	AB_RESIST,
+	AB_RESISTS,
+	AB_MASSIVE,
+	AB_MASSIVES,
+	AB_KB,
+	AB_CURSE,
+	AB_IMUATK,
+]);
+const ATK_MULTI_AB = new Set([
+	AB_GOOD,
+	AB_MASSIVE,
+	AB_MASSIVES,
 
-const ATK_MULTI_AB = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_SAVAGE, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_KAIJIN]);
-const HP_MULTI_AB = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_KAIJIN]);
+	AB_STRENGTHEN,
+	AB_SAVAGE,
+	AB_CRIT,
+	AB_ATKBASE,
+
+	AB_SURGE,
+	AB_MINISURGE,
+	AB_WAVE,
+	AB_MINIWAVE,
+	AB_EXPLOSION,
+
+	AB_EKILL,
+	AB_WKILL,
+	AB_BAIL,
+	AB_BSTHUNT,
+	AB_SAGE,
+	AB_KAIJIN,
+]);
+const HP_MULTI_AB = new Set([
+	AB_GOOD,
+	AB_RESIST,
+	AB_RESISTS,
+
+	AB_BSTHUNT,
+	AB_BAIL,
+
+	AB_EKILL,
+	AB_WKILL,
+	AB_SAGE,
+	AB_KAIJIN,
+]);
+const MULTI_AB = ATK_MULTI_AB.union(HP_MULTI_AB);
 
 function combineChances(count, chance) {
 	let x = 1;
@@ -549,8 +599,8 @@ class Unit {
 
 	*abilityDescriptions(layout) {
 		const extra = {
-			'u': this.info.pre1 ? '*' : '',
-			'tn': this.getTraitNames(),
+			'star': this.info.pre1 ? '*' : '',
+			'target': this.getTraitNames(),
 		};
 
 		for (const [k, v] of Object.entries(this.info.ab)) {
@@ -577,12 +627,16 @@ class Unit {
 
 				case AB_WAVE:
 				case AB_MINIWAVE:
-					params = [v[0], v[1], 132.5 + v[1] * 200];
+					params = [v[0], v[1], displayRange(132.5 + v[1] * 200)];
 					break;
 
 				case AB_SURGE:
 				case AB_MINISURGE:
-					params = [v[0], v[3], v[1], v[2], numStrT(v[3] * 20)];
+					params = [v[0], v[3], displayRange(v[1]), displayRange(v[2]), numStrT(v[3] * 20)];
+					break;
+
+				case AB_BSTHUNT:
+					params = [v[0], numStrT(v[1])];
 					break;
 
 				case AB_WEAK:
@@ -592,21 +646,19 @@ class Unit {
 				case AB_IMUATK:
 					{
 						const du = (abNo === AB_WEAK) ? v[2] : v[1];
-						let durLong = du;
-						let duStr;
-						let coverStr;
+						let du1 = du;
 
-						if (this.info.trait & TRAIT_TREASURE)
-							durLong = floor(du * catEnv.dur_t);
+						if ((this.info.trait & TRAIT_TREASURE) && !(this.info.trait & TRAIT_NO_TREASURE))
+							du1 = floor(du * catEnv.dur_t);
 
-						duStr = numStrT(durLong);
-						if (abNo !== AB_IMUATK)
-							coverStr = getCoverUnitStr(this, v[0], durLong);
+						let duStr = numStrT(du1);
+						let coverStr = (abNo !== AB_IMUATK) ? getCoverUnitStr(this, v[0], du1) : '';
 
-						if (this.info.trait & TRAIT_TREASURE && this.info.trait & TRAIT_NO_TREASURE) {
-							duStr += `（${numStrT(du)}）`;
+						if ((this.info.trait & TRAIT_TREASURE) && (this.info.trait & TRAIT_NO_TREASURE)) {
+							du1 = floor(du * catEnv.dur_t);
+							duStr += `（${numStrT(du1)}）`;
 							if (abNo !== AB_IMUATK)
-								coverStr += `（${getCoverUnitStr(this, v[0], du)}）`;
+								coverStr += `（${getCoverUnitStr(this, v[0], du1)}）`;
 						}
 
 						params = [v[0], duStr, coverStr];
@@ -2115,6 +2167,97 @@ class Enemy extends Unit {
 	__price() {
 		return this.earn;
 	}
+
+	*abilityDescriptions(layout) {
+		const extra = {
+			'star': this.info.pre1 ? '*' : '',
+			'target': '',
+		};
+
+		for (const [k, v] of Object.entries(this.info.ab)) {
+			const abNo = parseInt(k, 10);
+			let params = v;
+			let link;
+
+			switch (abNo) {
+				case AB_SURVIVE:
+					params = [v];
+					break;
+
+				case AB_STRENGTHEN:
+					params = [v[0], 100 + v[1] + catEnv.combo_strengthen];
+					break;
+
+				case AB_CRIT:
+					params = [v + catEnv.combo_crit || 0];
+					break;
+
+				case AB_SAVAGE:
+					params = [v[0], 100 + v[1]];
+					break;
+
+				case AB_WAVE:
+				case AB_MINIWAVE:
+					params = [v[0], v[1], displayRange(267.5 + v[1] * 200)];
+					break;
+
+				case AB_SURGE:
+				case AB_MINISURGE:
+				case AB_DEATHSURGE:
+					params = [v[0], v[3], displayRange(v[1]), displayRange(v[2]), numStrT(v[3] * 20)];
+					break;
+
+				case AB_STOP:
+				case AB_SLOW:
+				case AB_CURSE:
+				case AB_IMUATK:
+					params = [v[0], numStrT(v[1])];
+					if (abNo !== AB_IMUATK)
+						params.push(getCoverUnitStr(this, v[0], v[1]));
+					break;
+				
+				case AB_WEAK:
+					params = [v[0], numStrT(v[2]), getCoverUnitStr(this, v[0], v[2]), v[1]];
+					break;
+
+				case AB_EXPLOSION:
+					params = [v[0], v[1], v[1] === v[2] ? '' : `~${v[2]}`];
+					break;
+				
+				case AB_BURROW:
+					params = [displayRange(v[1]), v[0] === -1 ? '無限' : `${numStr(v[0])} `];
+					break;
+
+				case AB_REVIVE:
+					params = [numStrT(v[1]), v[2], v[0] === -1 ? '無限' : `${numStr(v[0])} `];
+					break;
+				
+				case AB_WARP:
+					params = [v[0], v[2] < 0 ? '前' : '後', displayRange(v[2]), numStrT(v[1])];
+					break;
+				
+				case AB_BARRIER:
+					params = [numStr(v[0])];
+					break;
+
+				case AB_KB:
+					params = [v[0], displayRange(165), numStrT(12)];
+					break;
+			}
+			let entry = units_scheme.abilities.descriptions[abNo];
+			let template;
+			if (entry.length === 1) {
+				template = entry[0];
+			} else {
+				template = entry[layout - 1];
+			}
+			yield {
+				abNo,
+				text: formatTemplate(template, params, extra),
+				link, // empty
+			};
+		}
+	}
 }
 
 class Cat {
@@ -2582,6 +2725,7 @@ export {
 	TB_BARON,
 	TB_SAGE,
 	TB_KAIJIN,
+	TB_LAST,
 	TRAIT_ALL,
 	TRAIT_NO_TREASURE,
 	TRAIT_TREASURE,
@@ -2685,6 +2829,8 @@ export {
 	updateHp,
 	updateAtk,
 
+	EFFECTS,
 	ATK_MULTI_AB,
 	HP_MULTI_AB,
+	MULTI_AB,
 };
