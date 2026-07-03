@@ -576,6 +576,17 @@ function pagination({
 	return rv;
 }
 
+const templateVarPattern = new RegExp(/{([0-9a-z]+)}/g);
+
+function formatTemplate(template, params, extra = {}) {
+	return template.replace(templateVarPattern, (_, path) => {
+		let v = extra[path];
+		if (typeof v !== 'undefined')
+			return v;
+		return params[parseInt(path, 10)];
+	});
+}
+
 function getCombinations(arr) {
 	if (!arr.length) return [];
 	const combi = [];
@@ -649,4 +660,5 @@ export {
 	floor,
 	pagination,
 	getCombinations,
+	formatTemplate,
 };

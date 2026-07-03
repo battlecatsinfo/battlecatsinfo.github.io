@@ -1,4 +1,13 @@
-import {AutoIdb, loadScheme, config, numStr, round, floor} from './common.mjs';
+import {
+	AutoIdb,
+	loadScheme,
+	config,
+	numStr,
+	numStrT,
+	round,
+	floor,
+	formatTemplate
+} from './common.mjs';
 const units_scheme = await loadScheme('units');
 
 // Attack types
@@ -183,13 +192,8 @@ function getCoverUnit(unit, chance, duration) {
 }
 
 function getCoverUnitStr(unit, chance, duration) {
-	return numStr(getCoverUnit(unit, chance, duration));
-}
-
-function get_trait_short_names(trait) {
-	let s = "";
-	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && (s += units_scheme.traits.short_names[i]);
-	return s;
+	const cover = numStr(getCoverUnit(unit, chance, duration));
+	return `${cover} %`;
 }
 
 class CatEnv {
@@ -502,6 +506,155 @@ class Unit {
 	}
 	get res() {
 		return this.info.res;
+	}
+
+	getTraitShortNames(filter) {
+		let trait = this.info.trait;
+
+		if (filter)
+			trait &= filter;
+
+		if (!trait)
+			return '';
+
+		let s = "";
+		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) {
+			if (trait & x) {
+				s += units_scheme.traits.short_names[i];
+			}
+		}
+		return s;
+	}
+
+	getTraitNames(filter) {
+		let trait = this.info.trait;
+
+		if (filter)
+			trait &= filter;
+
+		if (!trait)
+			return '';
+
+		const idxs = [];
+		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) {
+			if (trait & x) {
+				idxs.push(i);
+			}
+		}
+		if (idxs.length === 1)
+			return `（${units_scheme.traits.names[idxs[0]]}）`;
+
+		return `（${this.getTraitShortNames(filter)}）敵人`;
+	}
+
+	*abilityDescriptions(layout) {
+		const extra = {
+			'u': this.info.pre1 ? '*' : '',
+			'tn': this.getTraitNames(),
+		};
+
+		for (const [k, v] of Object.entries(this.info.ab)) {
+			const abNo = parseInt(k, 10);
+			let params = v;
+			let link;
+
+			switch (abNo) {
+				case AB_SURVIVE:
+					params = [v];
+					break;
+
+				case AB_STRENGTHEN:
+					params = [v[0], 100 + v[1] + catEnv.combo_strengthen];
+					break;
+
+				case AB_CRIT:
+					params = [v + catEnv.combo_crit || 0];
+					break;
+
+				case AB_SAVAGE:
+					params = [v[0], 100 + v[1]];
+					break;
+
+				case AB_WAVE:
+				case AB_MINIWAVE:
+					params = [v[0], v[1], 132.5 + v[1] * 200];
+					break;
+
+				case AB_SURGE:
+				case AB_MINISURGE:
+					params = [v[0], v[3], v[1], v[2], numStrT(v[3] * 20)];
+					break;
+
+				case AB_WEAK:
+				case AB_STOP:
+				case AB_SLOW:
+				case AB_CURSE:
+				case AB_IMUATK:
+					{
+						const du = (abNo === AB_WEAK) ? v[2] : v[1];
+						let durLong = du;
+						let duStr;
+						let coverStr;
+
+						if (this.info.trait & TRAIT_TREASURE)
+							durLong = floor(du * catEnv.dur_t);
+
+						duStr = numStrT(durLong);
+						if (abNo !== AB_IMUATK)
+							coverStr = getCoverUnitStr(this, v[0], durLong);
+
+						if (this.info.trait & TRAIT_TREASURE && this.info.trait & TRAIT_NO_TREASURE) {
+							duStr += `（${numStrT(du)}）`;
+							if (abNo !== AB_IMUATK)
+								coverStr += `（${getCoverUnitStr(this, v[0], du)}）`;
+						}
+
+						params = [v[0], duStr, coverStr];
+						if (abNo === AB_WEAK)
+							params.push(v[1]);
+					}
+					break;
+				case AB_KB:
+					let du;
+					if (this.info.trait & TRAIT_TREASURE) {
+						if (this.info.trait & TRAIT_NO_TREASURE) {
+							du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
+						} else {
+							du = numStr(165 * 1.3);
+						}
+					} else {
+						du = numStr(165);
+					}
+					params = [v[0], du, numStrT(12)];
+					break;
+
+				case AB_SUMMON:
+					link = `/unit.html?id=${v}`;
+					params = [v];
+					break;
+
+				case AB_MK:
+					link = `/metal_killer.html?kill=${v}`;
+					params = [v];
+					break;
+
+				case AB_EXPLOSION:
+					params = [v[0], v[1], v[1] === v[2] ? '' : `~${v[2]}`];
+					break;
+			}
+			let entry = units_scheme.abilities.descriptions[abNo];
+			let template;
+			if (entry.length === 1) {
+				template = entry[0];
+			} else {
+				template = entry[layout - 1];
+			}
+			yield {
+				abNo,
+				text: formatTemplate(template, params, extra),
+				link,
+			};
+		}
 	}
 
 	abEnabled(atkIdx) {
@@ -2266,7 +2419,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 			if (atks !== atksNoTrea)
 				s += showTrait ? 
-					`（${get_trait_short_names(form.trait & TRAIT_TREASURE)}）/${plus_s}${atksNoTrea}（${get_trait_short_names(form.trait & TRAIT_NO_TREASURE)}）` :
+					`（${form.getTraitShortNames(TRAIT_TREASURE)}）/${plus_s}${atksNoTrea}（${form.getTraitShortNames(TRAIT_NO_TREASURE)}）` :
 					`（${atksNoTrea}）`;
 		}
 		maxLen = Math.max(s.length, maxLen);
@@ -2314,7 +2467,7 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 
 			if (hp !== hpNoTrea)
 				s += showTrait ? 
-					`（${get_trait_short_names(form.trait & TRAIT_TREASURE)}）/${plus_s}${hpNoTrea}（${get_trait_short_names(form.trait & TRAIT_NO_TREASURE)}）` :
+					`（${form.getTraitShortNames(TRAIT_TREASURE)}）/${plus_s}${hpNoTrea}（${form.getTraitShortNames(TRAIT_NO_TREASURE)}）` :
 					`（${hpNoTrea}）`;
 		}
 		maxLen = Math.max(s.length, maxLen);
@@ -2506,7 +2659,6 @@ export {
 	units_scheme,
 	catEnv,
 
-	get_trait_short_names,
 	getAbiString,
 
 	getCoverUnit,

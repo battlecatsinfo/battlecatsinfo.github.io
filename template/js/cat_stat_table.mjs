@@ -16,12 +16,28 @@ import {
 	ATK_OMNI,
 	ATK_KB_REVENGE,
 
+
+	AB_STRENGTHEN,
+	AB_CRIT,
+	AB_SAVAGE,
+	AB_WAVE,
+	AB_MINIWAVE,
+	AB_SURGE,
+	AB_MINISURGE,
+	AB_WEAK,
+	AB_STOP,
+	AB_SLOW,
+	AB_KB,
+	AB_IMUATK,
+	AB_CURSE,
+	AB_SUMMON,
+	AB_MK,
+	AB_EXPLOSION,
+
 	AB_KAIJIN,
 	TB_DEMON,
 	TRAIT_TREASURE,
 	TRAIT_NO_TREASURE,
-
-	get_trait_short_names,
 
 	createTraitIcons,
 	createImuIcons,
@@ -47,6 +63,8 @@ function makeTd(tr, text) {
 	tr.appendChild(td);
 	return td;
 }
+
+const MULTI_AB = ATK_MULTI_AB.union(HP_MULTI_AB);
 
 class FormStatsTable {
 	/**
@@ -90,425 +108,48 @@ class FormStatsTable {
 		return Math.max(60, cd - 264);
 	}
 
-	getTraitNames(trait) {
-		const idxs = [];
-		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && idxs.push(i);
-		return 1 === idxs.length ? `（${units_scheme.traits.names[idxs[0]]}）` : `（${get_trait_short_names(trait)}）敵人`;
-	}
-
 	createAbIcons(form, p1, p2) {
-		let treasure = false,
-			tn, du, cv, func, abNo;
-
-		const self = this;
-
-		function w1(msg) {
+		for (const obj of form.abilityDescriptions(layout)) {
 			const p = document.createElement('div');
-			let s = new Image(40, 40);
-			s.src = `/img/i/a/${abNo}.png`;
-			p.appendChild(s);
-			p.append(msg);
-			p1.appendChild(p);
-		}
+			p.appendChild(new Image(40, 40)).src = `/img/i/a/${obj.abNo}.png`;
 
-		function w2(msg) {
-			const p = document.createElement('div');
-			let s = new Image(40, 40);
-			s.src = `/img/i/a/${abNo}.png`;
-			p.appendChild(s);
-			p.append(msg);
-			p2.appendChild(p);
-		}
-
-		function w3(msg) {
-			const p = document.createElement('div');
-			p.classList.add('ab-select');
-			p.dataset.no = abNo;
-			if (self.selectedAbilities.has(abNo)) {
-				p.style.setProperty('background-color', '#5cabd273', 'important');
-				p.dataset.selected = '1';
+			if (obj.link) {
+				const a = p.appendChild(document.createElement('a'));
+				a.textContent = obj.text;
+				a.href = obj.link;
 			} else {
-				p.dataset.selected = '0';
+				p.append(obj.text);
 			}
-			p.onclick = function(event) {
-				event.preventDefault();
-				event.stopPropagation();
-				if (this.dataset.selected === '1') {
-					this.style.removeProperty('background-color');
-					this.dataset.selected = '0';
-					self.selectedAbilities.delete(parseInt(this.dataset.no), 10);
-				} else {
-					this.style.setProperty('background-color', '#5cabd273', 'important');
-					this.dataset.selected = '1';
-					self.selectedAbilities.add(parseInt(this.dataset.no), 10);
+
+			if (MULTI_AB.has(obj.abNo)) {
+				if (layout === 2) {
+					p.classList.add('ab-select');
+					p.dataset.no = obj.abNo;
+					if (this.selectedAbilities.has(obj.abNo)) {
+						p.style.setProperty('background-color', '#5cabd273', 'important');
+						p.dataset.selected = '1';
+					} else {
+						p.dataset.selected = '0';
+					}
+					p.addEventListener('click', event => {
+						event.preventDefault();
+						event.stopPropagation();
+						const p = event.currentTarget;
+						if (p.dataset.selected === '1') {
+							p.style.removeProperty('background-color');
+							p.dataset.selected = '0';
+							this.selectedAbilities.delete(parseInt(p.dataset.no), 10);
+						} else {
+							p.style.setProperty('background-color', '#5cabd273', 'important');
+							p.dataset.selected = '1';
+							this.selectedAbilities.add(parseInt(p.dataset.no), 10);
+						}
+						this.updateValues();
+					});
 				}
-				self.updateValues();
-			}
-			let s = new Image(40, 40);
-			s.src = `/img/i/a/${abNo}.png`;
-			p.appendChild(s);
-			p.append(msg);
-			p1.appendChild(p);
-		}
-		form.trait && (tn = this.getTraitNames(form.trait), treasure = form.trait & TRAIT_TREASURE);
-		const U = form.pre1 ? '*' : '';
-		let tmp;
-		for (const [i, v] of Object.entries(form.ab)) {
-			switch (abNo = parseInt(i, 10)) {
-				case 1:
-					func = w1;
-					if (layout === 2)
-						func = w3;
-					func(`體力 ${v[0]} % 以下時攻擊力上升至 ${100 + v[1] + catEnv.combo_strengthen} %`);
-					break;
-
-				case 2:
-					w1(`${v} % 死前存活` + ((layout === 2) ? "" : "（遭到致命的攻擊時以1體力存活1次）"));
-					break;
-
-				case 3:
-					if (layout === 2) {
-						w3("善於攻城");
-						break;
-					}
-					w1("善於攻城（攻擊傷害 × 4）");
-					break;
-
-				case 4:
-					func = w1;
-					if (layout === 2)
-						func = w3;
-					tmp = catEnv.combo_crit || 0;
-					func(`${v + tmp} % 會心一擊${U}`);
-					break;
-
-				case 5:
-					w1("終結不死");
-					break;
-
-				case 6:
-					w1("靈魂攻擊");
-					break;
-
-				case 7:
-					w1(`${v[0]} % 破壞護盾${U}`);
-					break;
-
-				case 8:
-					w1(`${v[0]} % 破壞惡魔盾${U}`);
-					break;
-
-				case 9:
-					func = w1;
-					if (layout === 2)
-						func = w3;
-					func(`${v[0]} % 渾身一擊${U}（攻擊力增加至${100 + v[1]} %）`);
-					break;
-
-				case 10:
-					w1("得到很多金錢" + ((layout === 2) ? "" : "（擊敗敵人時獲得金錢 × 2）"));
-					break;
-
-				case 11:
-					w1("鋼鐵特性" + ((layout === 2) ? "" : "（暴擊、毒擊之外攻擊只會受1傷害）"));
-					break;
-
-				case 12:
-					func = w1;
-					if (layout === 2)
-						func = w3;
-					func(`${v[0]} % 發射 Lv${v[1]} 小波動${U}（射程 ${132.5 + v[1]*200}）`);
-					break;
-
-				case 13:
-					func = w1;
-					if (layout === 2)
-						func = w3;
-					func(`${v[0]} % 發射 Lv${v[1]} 波動${U}（射程 ${132.5 + v[1]*200}）`);
-					break;
-
-				case 14:
-					func = w1;
-					if (layout === 2)
-						func = w3;
-					func(`${v[0]} % 發射 Lv${v[3]} 小烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`);
-					break;
-
-				case 15:
-					func = w1;
-					if (layout === 2)
-						func = w3;
-					func(`${v[0]} % 發射 Lv${v[3]} 烈波${U}（出現位置 ${v[1]}～${v[2]}，持續 ${numStrT(v[3] * 20)}）`);
-					break;
-
-				case 16:
-					w1('波動滅止');
-					break;
-
-				case 17:
-					if (layout === 2) {
-						w3("超生命體特效");
-						break;
-					}
-					w1("超生命體特效（攻擊傷害 × 1.6、所受傷害 × 0.7）");
-					break;
-
-				case 18:
-					if (layout === 2) {
-						w3(`超獸特效（${v[0]} % 發動持續 ${numStrT(v[1])} 的攻擊無效）`);
-						break;
-					}
-					w1(`超獸特效（攻擊傷害 × 2.5 、所受傷害 × 0.6、${v[0]} % 發動持續 ${numStrT(v[1])} 的攻擊無效）`);
-					break;
-
-				case 19:
-					if (layout === 2) {
-						w3('終結魔女');
-						break;
-					}
-					w1('終結魔女（攻擊傷害 × 5 、所受傷害 × 0.1）');
-					break;
-
-				case 20:
-					if (layout === 2) {
-						w3('終結使徒');
-						break;
-					}
-					w1('終結使徒（攻擊傷害 × 5 、所受傷害 × 0.2）');
-					break;
-
-				case 21:
-					tmp = v[2];
-					if (catEnv.combo_weak)
-						tmp = floor(tmp * (1 + catEnv.combo_weak));
-					if (treasure) {
-						du = floor(tmp * catEnv.dur_t);
-						if (form.trait & TRAIT_NO_TREASURE) {
-							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
-							du = `${numStrT(tmp)}（${numStrT(du)}）`;
-						} else {
-							cv = getCoverUnitStr(form, v[0], du) + ' %';
-							du = numStrT(du);
-						}
-					} else {
-						du = numStrT(tmp);
-						cv = getCoverUnitStr(form, v[0], tmp) + ' %';
-					}
-					if (layout === 2) {
-						w2(`${v[0]} % 使攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`);
-						break;
-					}
-					w2(`${v[0]} % 使${tn}攻擊力下降${U}至 ${v[1]} % 持續 ${du}，覆蓋率 ${cv}`);
-					break;
-
-				case 22:
-					tmp = v[1];
-					if (catEnv.combo_stop)
-						tmp = floor(tmp * (1 + catEnv.combo_stop));
-					if (treasure) {
-						du = floor(tmp * catEnv.dur_t);
-						if (form.trait & TRAIT_NO_TREASURE) {
-							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
-							du = `${numStrT(tmp)}（${numStrT(du)}）`;
-						} else {
-							cv = getCoverUnitStr(form, v[0], du) + ' %';
-							du = numStrT(du);
-						}
-					} else {
-						du = numStrT(tmp);
-						cv = getCoverUnitStr(form, v[0], tmp) + ' %';
-					}
-					if (layout === 2) {
-						w2(`${v[0]} % 使動作停止持續 ${du} ${U}，覆蓋率 ${cv}`);
-						break;
-					}
-					w2(`${v[0]} % 使 ${tn} 動作停止${U}持續 ${du}，覆蓋率 ${cv}`);
-					break;
-
-				case 23:
-					tmp = v[1];
-					if (catEnv.combo_slow)
-						tmp = floor(tmp * (1 + catEnv.combo_slow));
-					if (treasure) {
-						du = floor(tmp * catEnv.dur_t);
-						if (form.trait & TRAIT_NO_TREASURE) {
-							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
-							du = `${numStrT(tmp)}（${numStrT(du)}）`;
-						} else {
-							cv = getCoverUnitStr(form, v[0], du) + ' %';
-							du = numStrT(du);
-						}
-					} else {
-						du = numStrT(tmp);
-						cv = getCoverUnitStr(form, v[0], tmp) + ' %';
-					}
-					if (layout === 2) {
-						w2(`${v[0]} % 使動作變慢${U}持續 ${du}，覆蓋率 ${cv}`);
-						break;
-					}
-					w2(`${v[0]} % 使${tn}動作變慢${U}持續 ${du}，覆蓋率 ${cv}`);
-					break;
-
-				case 24:
-					w2("只能攻擊" + tn);
-					break;
-
-				case 25:
-					if (layout === 2) {
-						w3('善於攻擊');
-						break;
-					}
-					w2('善於攻擊（攻擊傷害 × 1.5 至 1.8 、所受傷害 × 0.5 至 0.4）');
-					break;
-
-				case 26:
-					if (layout === 2) {
-						w3('很耐打');
-						break;
-					}
-					w2(`很耐打（所受傷害 × 1/4 至 1/5）`);
-					break;
-
-				case 27:
-					if (layout === 2) {
-						w3('超耐打');
-						break;
-					}
-					w2(`超耐打（所受傷害 × 1/6 至 1/7）`);
-					break;
-
-				case 28:
-					if (layout === 2) {
-						w3(`超大傷害`);
-						break;
-					}
-					w2(`超大傷害（攻擊傷害 × 3 至 4）`);
-					break;
-
-				case 29:
-					if (layout === 2) {
-						w3('極度傷害');
-						break;
-					}
-					w2(`極度傷害（攻擊傷害 × 5 至 6）`);
-					break;
-
-				case 30:
-					if (treasure) {
-						if (form.trait & TRAIT_NO_TREASURE) {
-							du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
-						} else {
-							du = numStr(165 * 1.3);
-						}
-					} else {
-						du = numStr(165);
-					}
-					if (layout === 2) {
-						w2(v[0] + " % 打飛" + U);
-						break;
-					}
-					w2(`${v[0]} % 打飛${U}${tn} 至 ${du} 距離單位外，持續 ${numStrT(12)}`);
-					break;
-
-				case 31:
-					if (layout === 2) {
-						w2(v[0] + " % 傳送" + U);
-						break;
-					}
-					w2(v[0] + " % 傳送" + U + tn);
-					break;
-
-				case 32:
-					if (treasure) {
-						if (form.trait & TRAIT_NO_TREASURE) {
-							du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
-						} else {
-							du = numStrT(floor(v[1] * catEnv.dur_t));
-						}
-					} else {
-						du = numStrT(v[1]);
-					}
-					w2(`${v[0]} % 發動攻擊無效持續 ${du}`);
-					break;
-
-				case 33:
-					tmp = v[1];
-					// no curse combo now!
-					if (treasure) {
-						du = floor(tmp * catEnv.dur_t);
-						if (form.trait & TRAIT_NO_TREASURE) {
-							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
-							du = `${numStrT(tmp)}（${numStrT(du)}）`;
-						} else {
-							cv = getCoverUnitStr(form, v[0], du) + ' %';
-							du = numStrT(du);
-						}
-					} else {
-						du = numStrT(tmp);
-						cv = getCoverUnitStr(form, v[0], tmp) + ' %';
-					}
-					if (layout === 2) {
-						w2(`${v[0]} % 詛咒${U}持續 ${du}，覆蓋率 ${cv}`);
-						break;
-					}
-					w2(`${v[0]} % 詛咒${U}${tn}持續 ${du}，覆蓋率 ${cv}`);
-					break;
-
-				case 37:
-					w1("一次攻擊");
-					break;
-				case 40:
-					w1('烈波反擊');
-					break;
-				case 42:
-					if (layout === 2) {
-						w3("超賢者特效");
-						break;
-					}
-					w1("超賢者特效（減輕 70% 來自超賢者的妨害效果、無視超賢者的控場耐性、攻擊傷害 × 1.2、所受傷害 × 0.5）");
-					break;
-				case 43: {
-					const p = document.createElement('div');
-					let s = new Image(40, 40);
-					s.src = '/img/i/a/43.png';
-					const a = document.createElement('a');
-					a.href = '/unit.html?id=' + v;
-					p.appendChild(s);
-					p.append('召喚');
-					a.textContent = '精靈';
-					p.appendChild(a);
-					p.append('攻擊一次');
-					p1.appendChild(p);
-					break;
-				}
-				case 44: {
-					const p = document.createElement('div');
-					let s = new Image(40, 40);
-					s.src = '/img/i/a/44.png';
-					const a = document.createElement('a');
-					a.href = '/metal_killer.html?kill=' + v;
-					p.appendChild(s);
-					a.textContent = `${v}%`;
-					p.append('鋼鐵殺手（減少敵方當前體力的 ');
-					p.appendChild(a);
-					p.append('）');
-					p1.appendChild(p);
-					break;
-				}
-				case 45:
-					func = w1;
-					if (layout === 2)
-						func = w3;
-					func(v[1] != v[2] ? `${v[0]}% 發出爆波${U}（發生位置：${v[1]}～${v[2]}）` : `${v[0]}% 發出爆波${U}（發生位置：${v[1]}）`);
-					break;
-				case 46:
-					if (layout === 2) {
-						w3("怪人特效");
-						break;
-					}
-					p1.parentNode.style.display = '';
-					w1("怪人特效（攻擊傷害 × 2.5、所受傷害 × 0.4）");
-					break;
+				p1.appendChild(p);
+			} else {
+				p2.appendChild(p);
 			}
 		}
 	}
