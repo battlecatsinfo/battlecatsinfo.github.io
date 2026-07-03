@@ -15,29 +15,7 @@ import {
 	ATK_LD,
 	ATK_OMNI,
 	ATK_KB_REVENGE,
-
-
-	AB_STRENGTHEN,
-	AB_CRIT,
-	AB_SAVAGE,
-	AB_WAVE,
-	AB_MINIWAVE,
-	AB_SURGE,
-	AB_MINISURGE,
-	AB_WEAK,
-	AB_STOP,
-	AB_SLOW,
-	AB_KB,
-	AB_IMUATK,
-	AB_CURSE,
-	AB_SUMMON,
-	AB_MK,
-	AB_EXPLOSION,
-
 	AB_KAIJIN,
-	TB_DEMON,
-	TRAIT_TREASURE,
-	TRAIT_NO_TREASURE,
 
 	createTraitIcons,
 	createImuIcons,
@@ -47,7 +25,6 @@ import {
 	updateAtk,
 	updateHpBaha,
 	updateAtkBaha,
-	getCoverUnitStr,
 	getAbiString,
 
 	ATK_MULTI_AB,
@@ -831,7 +808,6 @@ class SimpleFormStatsTable extends FormStatsTable {
 }
 
 
-
 export {
 	layout,
 	makeTd,
@@ -839,4 +815,3 @@ export {
 	DetailedFormStatsTable,
 	SimpleFormStatsTable,
 };
-
