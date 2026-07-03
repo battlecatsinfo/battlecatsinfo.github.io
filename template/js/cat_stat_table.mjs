@@ -280,7 +280,7 @@ class FormStatsTable {
 					if (catEnv.combo_weak)
 						tmp = floor(tmp * (1 + catEnv.combo_weak));
 					if (treasure) {
-						du = floor(tmp * 1.2);
+						du = floor(tmp * catEnv.dur_t);
 						if (form.trait & TRAIT_NO_TREASURE) {
 							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
 							du = `${numStrT(tmp)}（${numStrT(du)}）`;
@@ -304,7 +304,7 @@ class FormStatsTable {
 					if (catEnv.combo_stop)
 						tmp = floor(tmp * (1 + catEnv.combo_stop));
 					if (treasure) {
-						du = floor(tmp * 1.2);
+						du = floor(tmp * catEnv.dur_t);
 						if (form.trait & TRAIT_NO_TREASURE) {
 							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
 							du = `${numStrT(tmp)}（${numStrT(du)}）`;
@@ -328,7 +328,7 @@ class FormStatsTable {
 					if (catEnv.combo_slow)
 						tmp = floor(tmp * (1 + catEnv.combo_slow));
 					if (treasure) {
-						du = floor(tmp * 1.2);
+						du = floor(tmp * catEnv.dur_t);
 						if (form.trait & TRAIT_NO_TREASURE) {
 							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
 							du = `${numStrT(tmp)}（${numStrT(du)}）`;
@@ -419,9 +419,9 @@ class FormStatsTable {
 				case 32:
 					if (treasure) {
 						if (form.trait & TRAIT_NO_TREASURE) {
-							du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+							du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
 						} else {
-							du = numStrT(floor(v[1] * 1.2));
+							du = numStrT(floor(v[1] * catEnv.dur_t));
 						}
 					} else {
 						du = numStrT(v[1]);
@@ -433,7 +433,7 @@ class FormStatsTable {
 					tmp = v[1];
 					// no curse combo now!
 					if (treasure) {
-						du = floor(tmp * 1.2);
+						du = floor(tmp * catEnv.dur_t);
 						if (form.trait & TRAIT_NO_TREASURE) {
 							cv = `${getCoverUnitStr(form, v[0], tmp)} %（${getCoverUnitStr(form, v[0], du)} %）`;
 							du = `${numStrT(tmp)}（${numStrT(du)}）`;

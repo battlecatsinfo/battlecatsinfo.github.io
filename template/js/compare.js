@@ -18,6 +18,8 @@ import {
 
 	ATK_MULTI_AB,
 	HP_MULTI_AB,
+
+	catEnv,
 } from './unit.mjs';
 
 
@@ -206,9 +208,9 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 			case 21:
 				if (hasTreasure) {
 					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[2]))}（${numStrT(floor(v[2] * 1.2))}）`;
+						du = `${numStrT(floor(v[2]))}（${numStrT(floor(v[2] * catEnv.dur_t))}）`;
 					} else {
-						du = numStrT(floor(v[2] * 1.2));
+						du = numStrT(floor(v[2] * catEnv.dur_t));
 					}
 				} else {
 					du = numStrT(v[2]);
@@ -218,9 +220,9 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 			case 22:
 				if (hasTreasure) {
 					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
 					} else {
-						du = numStrT(floor(v[1] * 1.2));
+						du = numStrT(floor(v[1] * catEnv.dur_t));
 					}
 				} else {
 					du = numStrT(v[1]);
@@ -230,9 +232,9 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 			case 23:
 				if (hasTreasure) {
 					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
 					} else {
-						du = numStrT(floor(v[1] * 1.2));
+						du = numStrT(floor(v[1] * catEnv.dur_t));
 					}
 				} else {
 					du = numStrT(v[1]);
@@ -266,9 +268,9 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 			case 32:
 				if (hasTreasure) {
 					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
 					} else {
-						du = numStrT(floor(v[1] * 1.2));
+						du = numStrT(floor(v[1] * catEnv.dur_t));
 					}
 				} else {
 					du = numStrT(v[1]);
@@ -278,9 +280,9 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 			case 33:
 				if (hasTreasure) {
 					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * 1.2))}）`;
+						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
 					} else {
-						du = numStrT(floor(v[1] * 1.2));
+						du = numStrT(floor(v[1] * catEnv.dur_t));
 					}
 				} else {
 					du = numStrT(v[1]);
