@@ -654,7 +654,7 @@ describe('unit.mjs', function () {
 				assert.isUndefined(cat.evol4Req);
 
 				var cat = await Unit.loadCat(138);
-				assert.strictEqual(cat.evol4Req, '1000000!0|1!183|5!168|5!167|2!40');
+				assert.strictEqual(cat.evol4Req, '2000000!0|1!183|5!168|5!167|2!40');
 			});
 
 		});
@@ -3328,7 +3328,7 @@ describe('unit.mjs', function () {
 				assert.strictEqual(cf.__evol4_require(0), 0);
 
 				var cf = (await Unit.loadCat(138)).forms[3];
-				assert.strictEqual(cf.__evol4_require(0), 1000000);
+				assert.strictEqual(cf.__evol4_require(0), 2000000);
 				assert.strictEqual(cf.__evol4_require(40), 2);
 				assert.strictEqual(cf.__evol4_require(167), 5);
 			});
