@@ -2805,9 +2805,6 @@ export {
 
 	getAbiString,
 
-	getCoverUnit,
-	getCoverUnitStr,
-
 	createTraitIcons,
 	createImuIcons,
 	createResIcons,
