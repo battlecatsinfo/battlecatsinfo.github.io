@@ -17,8 +17,6 @@ import {
 	ATK_KB_REVENGE,
 	AB_KAIJIN,
 
-	createImuIcons,
-
 	updateHp,
 	updateAtk,
 	updateHpBaha,
@@ -441,7 +439,7 @@ class DetailedFormStatsTable extends FormStatsTable {
 		chs[10].children[1].textContent = '';
 		chs[11].children[1].textContent = '';
 		chs[12].children[1].textContent = '';
-		createImuIcons(form.imu, chs[10].children[1]);
+		form.createImuIcons(chs[10].children[1]);
 		form.createResIcons(chs[10].children[1]);
 		this.createAbIcons(form, chs[11].children[1], chs[12].children[1]);
 	}
@@ -739,7 +737,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 		let td = tbody.children[7].children[1];
 		td.textContent = '';
 
-		createImuIcons(form.imu, td);
+		form.createImuIcons(td);
 		form.createResIcons(td);
 		this.createAbIcons(form, td, td);
 

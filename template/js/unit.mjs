@@ -735,6 +735,23 @@ class Unit {
 		}
 	}
 
+	createImuIcons(container) {
+		if (!this.imu)
+			return;
+
+		const div = container.appendChild(document.createElement('div'));
+		const names = [];
+		for (let x = 1, i = 0; x <= 1024; x <<= 1, ++i) {
+			if (!(this.imu & x))
+				continue;
+			
+			div.appendChild(new Image(40, 40)).src = `/img/i/m/${i}.png`;
+			names.push(units_scheme.immunes[i]);
+		}
+		const text = (names.length === 1) ? `${names.join('')}無效` : `無效（${names.join('、')}）`;
+		div.append(text);
+	}
+
 	abEnabled(atkIdx) {
 		return this.abi & (1 << (2 - atkIdx));
 	}
@@ -2468,24 +2485,6 @@ async function loadAllEnemies() {
 	}
 }
 
-
-function createImuIcons(imu, container) {
-	if (!imu)
-		return;
-
-	const div = container.appendChild(document.createElement('div'));
-	const names = [];
-	for (let x = 1, i = 0; x <= 1024; x <<= 1, ++i) {
-		if (!(imu & x))
-			continue;
-		
-		div.appendChild(new Image(40, 40)).src = `/img/i/m/${i}.png`;
-		names.push(units_scheme.immunes[i]);
-	}
-	const text = (names.length === 1) ? `${names.join('')}無效` : `無效（${names.join('、')}）`;
-	div.append(text);
-}
-
 function getAbiString(abi) {
 	let strs;
 	return abi ? (strs = [], 4 & abi && strs.push('一'), 2 & abi && strs.push('二'),
@@ -2805,8 +2804,6 @@ export {
 	catEnv,
 
 	getAbiString,
-
-	createImuIcons,
 
 	CatEnv,
 	Cat,

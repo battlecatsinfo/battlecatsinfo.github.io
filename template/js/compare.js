@@ -15,8 +15,6 @@ import {
 	ATK_LD,
 	ATK_OMNI,
 
-	createImuIcons,
-
 	loadAllCats,
 
 	updateAtkBaha,
@@ -145,7 +143,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 	}
 
 	F.createResIcons(M);
-	F.imu && createImuIcons(F.imu, M);
+	F.createImuIcons(M);
 	M.style.setProperty('text-align', 'left', 'important');
 }
 

@@ -21,7 +21,6 @@ import {
 	AB_DSHIELD,
 
 	getAbiString,
-	createImuIcons,
 
 	units_scheme,
 } from './unit.mjs';
@@ -112,7 +111,7 @@ class EnemyStatsTable {
 	}
 
 	createAbIcons() {
-		createImuIcons(this.enemy.imu, this.specialsEl);
+		this.enemy.createImuIcons(this.specialsEl);
 
 		if (this.enemy.trait & TB_SAGE) {
 			this.addAbility({'text': `超賢者：減輕 70% 受到的妨害效果 `}, `/img/i/e/15.png`);
