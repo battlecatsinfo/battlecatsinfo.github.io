@@ -722,6 +722,19 @@ class Unit {
 		}
 	}
 
+	createTraitIcons(container) {
+		if (!this.info.trait)
+			return;
+
+		const div = container.appendChild(document.createElement('div'));
+		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
+			if (!(this.info.trait & x))
+				continue;
+
+			container.appendChild(new Image(40, 40)).src = `/img/i/e/${i}.png`;
+		}
+	}
+
 	abEnabled(atkIdx) {
 		return this.abi & (1 << (2 - atkIdx));
 	}
@@ -2456,19 +2469,6 @@ async function loadAllEnemies() {
 }
 
 
-function createTraitIcons(trait, container) {
-	if (!trait)
-		return;
-
-	const div = container.appendChild(document.createElement('div'));
-	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
-		if (!(trait & x))
-			continue;
-
-		container.appendChild(new Image(40, 40)).src = `/img/i/e/${i}.png`;
-	}
-}
-
 function createImuIcons(imu, container) {
 	if (!imu)
 		return;
@@ -2806,7 +2806,6 @@ export {
 
 	getAbiString,
 
-	createTraitIcons,
 	createImuIcons,
 
 	CatEnv,

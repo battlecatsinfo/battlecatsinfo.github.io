@@ -15,7 +15,6 @@ import {
 	ATK_LD,
 	ATK_OMNI,
 
-	createTraitIcons,
 	createImuIcons,
 
 	loadAllCats,
@@ -136,7 +135,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 
 	let M = tbodyEl[9].children[I];
 	M.textContent = '';
-	createTraitIcons(F.trait, M);
+	F.createTraitIcons(M);
 
 	for (const obj of F.abilityDescriptions(2)) {
 		const div = document.createElement('div');

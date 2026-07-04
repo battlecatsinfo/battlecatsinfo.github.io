@@ -17,7 +17,6 @@ import {
 	ATK_KB_REVENGE,
 	AB_KAIJIN,
 
-	createTraitIcons,
 	createImuIcons,
 
 	updateHp,
@@ -394,7 +393,7 @@ class DetailedFormStatsTable extends FormStatsTable {
 			p.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
 			specials.appendChild(p);
 		}
-		createTraitIcons(form.trait, specials);
+		form.createTraitIcons(specials);
 		let atkType = '';
 		if (form.atkType & ATK_OMNI) {
 			atkType += '全方位';
@@ -745,8 +744,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 		this.createAbIcons(form, td, td);
 
 		this.traitDiv.textContent = '';
-		createTraitIcons(form.trait, this.traitDiv);
-
+		form.createTraitIcons(this.traitDiv);
 	}
 
 	updateValues() {
