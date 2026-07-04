@@ -180,23 +180,24 @@ function combineChances(count, chance) {
 function getCoverComplex(freq, pres, chance, duration) {
 		const segments = [];
 		const steps = new Set();
+
 		outer: for (let now = 0;;now -= freq) {
-				for (let i = pres.length - 1;i >= 0;--i) {
-					let start = now + pres[i];
-					let end = start + duration;
+			for (let i = pres.length - 1;i >= 0;--i) {
+				let start = now + pres[i];
+				let end = start + duration;
 
-					if (end < 0)
-						break outer;
+				if (end < 0)
+					break outer;
 
-					start = Math.max(start, 0);
-					end = Math.min(end, freq);
+				start = Math.max(start, 0);
+				end = Math.min(end, freq);
 
-					if (start != end) {
-						segments.push([start, end]);
-						steps.add(start);
-						steps.add(end);
-					}
+				if (start != end) {
+					segments.push([start, end]);
+					steps.add(start);
+					steps.add(end);
 				}
+			}
 		}
 		let cover = 0;
 		let count = 0;
