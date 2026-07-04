@@ -177,7 +177,7 @@ function combineChances(count, chance) {
 }
 
 // https://gist.github.com/battlecatsinfo/7d043065effd6c2397d7d9272c6aba83
-function getChances(freq, pres, chance, duration) {
+function getCoverComplex(freq, pres, chance, duration) {
 		const segments = [];
 		const steps = new Set();
 		outer: for (let now = 0;;now -= freq) {
@@ -216,14 +216,14 @@ function getChances(freq, pres, chance, duration) {
 		return 100 * cover / freq;
 }
 
-function getCover(p, durationF, attackF) {
+function getCoverSimple(p, durationF, attackF) {
 	p /= 100;
 	durationF /= attackF, attackF = ~~durationF, durationF -= attackF;
 	return 100 * Math.min(1 - durationF * Math.pow(1 - p, 1 + attackF) - (1 - durationF) * Math.pow(1 - p, attackF), 1);
 }
 
 function getCoverUnit(unit, chance, duration) {
-	if (!(unit.pre2 + unit.pre1)) return getCover(chance, duration, unit.attackF);
+	if (!(unit.pre2 + unit.pre1)) return getCoverSimple(chance, duration, unit.attackF);
 	const pres = [];
 	for (let i = 4; 1 <= i; i >>= 1)
 		if (unit.abi & i) switch (i) {
@@ -238,7 +238,7 @@ function getCoverUnit(unit, chance, duration) {
 			case 4:
 				pres.push(unit.pre);
 		}
-	return getChances(unit.attackF, pres, chance, duration);
+	return getCoverComplex(unit.attackF, pres, chance, duration);
 }
 
 function getCoverUnitStr(unit, chance, duration) {
