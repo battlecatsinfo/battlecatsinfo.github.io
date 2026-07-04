@@ -559,6 +559,13 @@ class Unit {
 		return this.info.res;
 	}
 
+	getAbiString() {
+		const abi = this.info.abi;
+		let strs;
+		return abi ? (strs = [], 4 & abi && strs.push('一'), 2 & abi && strs.push('二'),
+			1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
+	}
+
 	getTraitShortNames(filter) {
 		let trait = this.info.trait;
 
@@ -2485,12 +2492,6 @@ async function loadAllEnemies() {
 	}
 }
 
-function getAbiString(abi) {
-	let strs;
-	return abi ? (strs = [], 4 & abi && strs.push('一'), 2 & abi && strs.push('二'),
-		1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
-}
-
 function getAbilityShortNames(abs) {
 	return abs.map(x => units_scheme.abilities.short_names[x]);
 }
@@ -2802,8 +2803,6 @@ export {
 
 	units_scheme,
 	catEnv,
-
-	getAbiString,
 
 	CatEnv,
 	Cat,

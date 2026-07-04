@@ -21,7 +21,6 @@ import {
 	updateAtk,
 	updateHpBaha,
 	updateAtkBaha,
-	getAbiString,
 
 	ATK_MULTI_AB,
 	HP_MULTI_AB,
@@ -388,7 +387,7 @@ class DetailedFormStatsTable extends FormStatsTable {
 			const img = new Image(40, 40);
 			img.src = '/img/i/o/5.png';
 			p.appendChild(img);
-			p.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
+			p.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + form.getAbiString());
 			specials.appendChild(p);
 		}
 		form.createTraitIcons(specials);
@@ -571,7 +570,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 			td.appendChild(i);
 			const atkNum = form.info.atk2 ? 3 : 2;
 			const atksPre = [form.info.atk, form.info.atk1, form.info.atk2].slice(0, atkNum).map(x => numStr((x / (form.info.atk + form.info.atk1 + form.info.atk2)) * 100) + ' %');
-			td.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(form.abi));
+			td.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + form.getAbiString());
 			td.appendChild(document.createElement('br'));
 		}
 		let atkType = '';

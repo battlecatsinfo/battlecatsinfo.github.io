@@ -20,8 +20,6 @@ import {
 	AB_ATKBASE,
 	AB_DSHIELD,
 
-	getAbiString,
-
 	units_scheme,
 } from './unit.mjs';
 
@@ -184,7 +182,7 @@ class EnemyStatsTable {
 		if (this.enemy.info.atk1 || this.enemy.info.atk2) {
 			const atkNum = this.enemy.info.atk2 ? 3 : 2;
 			const atksPre = [this.enemy.info.atk, this.enemy.info.atk1, this.enemy.info.atk2].slice(0, atkNum).map(x => numStr((x / (this.enemy.info.atk + this.enemy.info.atk1 + this.enemy.info.atk2)) * 100) + ' %');
-			this.specialsEl.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + getAbiString(this.enemy.abi));
+			this.specialsEl.append(`${atkNum}回連續攻擊（傷害 ${atksPre.join(' / ')}）` + this.enemy.getAbiString());
 			this.specialsEl.appendChild(document.createElement('br'));
 		}
 		let X = '';

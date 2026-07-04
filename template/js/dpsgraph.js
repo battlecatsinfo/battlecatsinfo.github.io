@@ -24,8 +24,6 @@ import {
 
 	TRAIT_TREASURE,
 
-	getAbiString,
-
 	CatIdb,
 	EnemyIdb,
 	loadCat,
@@ -242,7 +240,7 @@ class UnitDPSHelper {
 			}
 			desc += (this.F.atkType & ATK_RANGE) ? '範圍攻擊' : '單體攻擊';
 			if (this.graph.abis.length > 1) {
-				div.textContent = desc + getAbiString(this.F.abi);
+				div.textContent = desc + this.F.getAbiString();
 			} else {
 				div.textContent = desc;
 			}
