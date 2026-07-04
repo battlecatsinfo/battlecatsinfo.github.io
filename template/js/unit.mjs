@@ -722,19 +722,6 @@ class Unit {
 		}
 	}
 
-	createTraitIcons(container) {
-		if (!this.info.trait)
-			return;
-
-		const div = container.appendChild(document.createElement('div'));
-		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
-			if (!(this.info.trait & x))
-				continue;
-
-			container.appendChild(new Image(40, 40)).src = `/img/i/e/${i}.png`;
-		}
-	}
-
 	createImuIcons(container) {
 		if (!this.imu)
 			return;
@@ -1653,6 +1640,19 @@ class CatForm extends Unit {
 	dpsAgainst(traits) {
 		const atkm = this.gettatks({traits, mode: 'expected'}).reduce((rv, x) => rv + x);
 		return 30 * atkm / this.attackF;
+	}
+
+	createTraitIcons(container) {
+		if (!this.info.trait)
+			return;
+
+		const div = container.appendChild(document.createElement('div'));
+		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
+			if (!(this.info.trait & x))
+				continue;
+
+			container.appendChild(new Image(40, 40)).src = `/img/i/e/${i}.png`;
+		}
 	}
 
 	get talents() {
