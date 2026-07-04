@@ -653,7 +653,20 @@ class Unit {
 				case AB_CURSE:
 				case AB_IMUATK:
 					{
-						const du = (abNo === AB_WEAK) ? v[2] : v[1];
+						let du = (abNo === AB_WEAK) ? v[2] : v[1];
+
+						switch (abNo) {
+							case AB_WEAK:
+								du = floor(du * (1 + catEnv.combo_weak));
+								break;
+							case AB_STOP:
+								du = floor(du * (1 + catEnv.combo_stop));
+								break;
+							case AB_SLOW:
+								du = floor(du * (1 + catEnv.combo_slow));
+								break;
+						}
+
 						let du1 = du;
 
 						if ((this.info.trait & TRAIT_TREASURE) && !(this.info.trait & TRAIT_NO_TREASURE))
