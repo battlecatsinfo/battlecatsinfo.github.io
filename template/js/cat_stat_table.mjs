@@ -19,7 +19,6 @@ import {
 
 	createTraitIcons,
 	createImuIcons,
-	createResIcons,
 
 	updateHp,
 	updateAtk,
@@ -444,7 +443,7 @@ class DetailedFormStatsTable extends FormStatsTable {
 		chs[11].children[1].textContent = '';
 		chs[12].children[1].textContent = '';
 		createImuIcons(form.imu, chs[10].children[1]);
-		createResIcons(form.res, chs[10].children[1]);
+		form.createResIcons(chs[10].children[1]);
 		this.createAbIcons(form, chs[11].children[1], chs[12].children[1]);
 	}
 }
@@ -742,7 +741,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 		td.textContent = '';
 
 		createImuIcons(form.imu, td);
-		createResIcons(form.res, td);
+		form.createResIcons(td);
 		this.createAbIcons(form, td, td);
 
 		this.traitDiv.textContent = '';

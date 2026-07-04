@@ -17,7 +17,6 @@ import {
 
 	createTraitIcons,
 	createImuIcons,
-	createResIcons,
 
 	loadAllCats,
 
@@ -146,7 +145,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 		M.appendChild(div);
 	}
 
-	F.res && createResIcons(F.res, M);
+	F.createResIcons(M);
 	F.imu && createImuIcons(F.imu, M);
 	M.style.setProperty('text-align', 'left', 'important');
 }

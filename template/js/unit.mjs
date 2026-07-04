@@ -710,6 +710,18 @@ class Unit {
 		}
 	}
 
+	createResIcons(container) {
+		if (!this.res)
+			return;
+
+		for (let [k, v] of Object.entries(this.res)) {
+			k = parseInt(k, 10);
+			const div = container.appendChild(document.createElement('div'));
+			div.appendChild(new Image(40, 40)).src = `/img/i/r/${k}.png`;
+			div.append(units_scheme.resists[k].replace('$', v));
+		}
+	}
+
 	abEnabled(atkIdx) {
 		return this.abi & (1 << (2 - atkIdx));
 	}
@@ -2474,18 +2486,6 @@ function createImuIcons(imu, container) {
 	div.append(text);
 }
 
-function createResIcons(res, container) {
-	if (!res)
-		return;
-
-	for (let [k, v] of Object.entries(res)) {
-		k = parseInt(k, 10);
-		const div = container.appendChild(document.createElement('div'));
-		div.appendChild(new Image(40, 40)).src = `/img/i/r/${k}.png`;
-		div.append(units_scheme.resists[k].replace('$', v));
-	}
-}
-
 function getAbiString(abi) {
 	let strs;
 	return abi ? (strs = [], 4 & abi && strs.push('一'), 2 & abi && strs.push('二'),
@@ -2808,7 +2808,6 @@ export {
 
 	createTraitIcons,
 	createImuIcons,
-	createResIcons,
 
 	CatEnv,
 	Cat,
