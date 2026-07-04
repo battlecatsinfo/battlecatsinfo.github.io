@@ -1,4 +1,14 @@
-import {AutoIdb, loadScheme, config, numStr, round, floor} from './common.mjs';
+import {
+	AutoIdb,
+	loadScheme,
+	config,
+	numStr,
+	numStrT,
+	round,
+	floor,
+	formatTemplate,
+	displayRange
+} from './common.mjs';
 const units_scheme = await loadScheme('units');
 
 // Attack types
@@ -26,6 +36,7 @@ const TB_BEAST = 8192;     // Behemoth 超獸
 const TB_BARON = 16384;    // Colossus 超生命體
 const TB_SAGE = 32768;     // Sage 超賢者
 const TB_KAIJIN = 65536;   // 怪人
+const TB_LAST = TB_KAIJIN;
 
 // Immunities
 const IMU_WAVE = 1;        // Immune to Wave 波動傷害無效
@@ -107,9 +118,57 @@ const TRAIT_NO_TREASURE = TB_DEMON | TB_EVA | TB_WITCH | TB_WHITE | TB_RELIC | T
 const TRAIT_TREASURE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_METAL;
 const TRAIT_ORB = TB_RED | TB_FLOAT | TB_BLACK | TB_METAL | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC | TB_DEMON;
 const TRAIT_BASE = TB_RED | TB_FLOAT | TB_BLACK | TB_ANGEL | TB_ALIEN | TB_ZOMBIE | TB_RELIC;
+const EFFECTS = new Set([
+	AB_SLOW,
+	AB_STOP,
+	AB_SLOW,
+	AB_ONLY,
+	AB_GOOD,
+	AB_RESIST,
+	AB_RESISTS,
+	AB_MASSIVE,
+	AB_MASSIVES,
+	AB_KB,
+	AB_CURSE,
+	AB_IMUATK,
+]);
+const ATK_MULTI_AB = new Set([
+	AB_GOOD,
+	AB_MASSIVE,
+	AB_MASSIVES,
 
-const ATK_MULTI_AB = new Set([AB_STRENGTHEN, AB_MASSIVE, AB_MASSIVES, AB_EKILL, AB_WKILL, AB_BAIL, AB_BSTHUNT, AB_SAVAGE, AB_GOOD, AB_CRIT, AB_WAVE, AB_MINIWAVE, AB_MINISURGE, AB_SURGE, AB_ATKBASE, AB_SAGE, AB_EXPLOSION, AB_KAIJIN]);
-const HP_MULTI_AB = new Set([AB_EKILL, AB_WKILL, AB_GOOD, AB_RESIST, AB_RESISTS, AB_BSTHUNT, AB_BAIL, AB_SAGE, AB_KAIJIN]);
+	AB_STRENGTHEN,
+	AB_SAVAGE,
+	AB_CRIT,
+	AB_ATKBASE,
+
+	AB_SURGE,
+	AB_MINISURGE,
+	AB_WAVE,
+	AB_MINIWAVE,
+	AB_EXPLOSION,
+
+	AB_EKILL,
+	AB_WKILL,
+	AB_BAIL,
+	AB_BSTHUNT,
+	AB_SAGE,
+	AB_KAIJIN,
+]);
+const HP_MULTI_AB = new Set([
+	AB_GOOD,
+	AB_RESIST,
+	AB_RESISTS,
+
+	AB_BSTHUNT,
+	AB_BAIL,
+
+	AB_EKILL,
+	AB_WKILL,
+	AB_SAGE,
+	AB_KAIJIN,
+]);
+const MULTI_AB = ATK_MULTI_AB.union(HP_MULTI_AB);
 
 function combineChances(count, chance) {
 	let x = 1;
@@ -118,26 +177,27 @@ function combineChances(count, chance) {
 }
 
 // https://gist.github.com/battlecatsinfo/7d043065effd6c2397d7d9272c6aba83
-function getChances(freq, pres, chance, duration) {
+function getCoverComplex(freq, pres, chance, duration) {
 		const segments = [];
 		const steps = new Set();
+
 		outer: for (let now = 0;;now -= freq) {
-				for (let i = pres.length - 1;i >= 0;--i) {
-					let start = now + pres[i];
-					let end = start + duration;
+			for (let i = pres.length - 1;i >= 0;--i) {
+				let start = now + pres[i];
+				let end = start + duration;
 
-					if (end < 0)
-						break outer;
+				if (end < 0)
+					break outer;
 
-					start = Math.max(start, 0);
-					end = Math.min(end, freq);
+				start = Math.max(start, 0);
+				end = Math.min(end, freq);
 
-					if (start != end) {
-						segments.push([start, end]);
-						steps.add(start);
-						steps.add(end);
-					}
+				if (start != end) {
+					segments.push([start, end]);
+					steps.add(start);
+					steps.add(end);
 				}
+			}
 		}
 		let cover = 0;
 		let count = 0;
@@ -157,14 +217,14 @@ function getChances(freq, pres, chance, duration) {
 		return 100 * cover / freq;
 }
 
-function getCover(p, durationF, attackF) {
+function getCoverSimple(p, durationF, attackF) {
 	p /= 100;
 	durationF /= attackF, attackF = ~~durationF, durationF -= attackF;
 	return 100 * Math.min(1 - durationF * Math.pow(1 - p, 1 + attackF) - (1 - durationF) * Math.pow(1 - p, attackF), 1);
 }
 
 function getCoverUnit(unit, chance, duration) {
-	if (!(unit.pre2 + unit.pre1)) return getCover(chance, duration, unit.attackF);
+	if (!(unit.pre2 + unit.pre1)) return getCoverSimple(chance, duration, unit.attackF);
 	const pres = [];
 	for (let i = 4; 1 <= i; i >>= 1)
 		if (unit.abi & i) switch (i) {
@@ -179,17 +239,12 @@ function getCoverUnit(unit, chance, duration) {
 			case 4:
 				pres.push(unit.pre);
 		}
-	return getChances(unit.attackF, pres, chance, duration);
+	return getCoverComplex(unit.attackF, pres, chance, duration);
 }
 
 function getCoverUnitStr(unit, chance, duration) {
-	return numStr(getCoverUnit(unit, chance, duration));
-}
-
-function get_trait_short_names(trait) {
-	let s = "";
-	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) trait & x && (s += units_scheme.traits.short_names[i]);
-	return s;
+	const cover = numStr(getCoverUnit(unit, chance, duration));
+	return `${cover} %`;
 }
 
 class CatEnv {
@@ -502,6 +557,206 @@ class Unit {
 	}
 	get res() {
 		return this.info.res;
+	}
+
+	getAbiString() {
+		const abi = this.info.abi;
+		let strs;
+		return abi ? (strs = [], 4 & abi && strs.push('一'), 2 & abi && strs.push('二'),
+			1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
+	}
+
+	getTraitShortNames(filter) {
+		let trait = this.info.trait;
+
+		if (filter)
+			trait &= filter;
+
+		if (!trait)
+			return '';
+
+		let s = "";
+		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) {
+			if (trait & x) {
+				s += units_scheme.traits.short_names[i];
+			}
+		}
+		return s;
+	}
+
+	getTraitNames(filter) {
+		let trait = this.info.trait;
+
+		if (filter)
+			trait &= filter;
+
+		if (!trait)
+			return '';
+
+		const idxs = [];
+		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, i++) {
+			if (trait & x) {
+				idxs.push(i);
+			}
+		}
+		if (idxs.length === 1)
+			return `（${units_scheme.traits.names[idxs[0]]}）`;
+
+		return `（${this.getTraitShortNames(filter)}）敵人`;
+	}
+
+	*abilityDescriptions(layout) {
+		const extra = {
+			'star': this.info.pre1 ? '*' : '',
+			'target': this.getTraitNames(),
+		};
+
+		for (const [k, v] of Object.entries(this.info.ab)) {
+			const abNo = parseInt(k, 10);
+			let params = v;
+			let link;
+
+			switch (abNo) {
+				case AB_SURVIVE:
+					params = [v];
+					break;
+
+				case AB_STRENGTHEN:
+					params = [v[0], 100 + v[1] + catEnv.combo_strengthen];
+					break;
+
+				case AB_CRIT:
+					params = [v + catEnv.combo_crit || 0];
+					break;
+
+				case AB_SAVAGE:
+					params = [v[0], 100 + v[1]];
+					break;
+
+				case AB_WAVE:
+				case AB_MINIWAVE:
+					params = [v[0], v[1], displayRange(132.5 + v[1] * 200)];
+					break;
+
+				case AB_SURGE:
+				case AB_MINISURGE:
+					params = [v[0], v[3], displayRange(v[1]), displayRange(v[2]), numStrT(v[3] * 20)];
+					break;
+
+				case AB_BSTHUNT:
+					params = [v[0], numStrT(v[1])];
+					break;
+
+				case AB_WEAK:
+				case AB_STOP:
+				case AB_SLOW:
+				case AB_CURSE:
+				case AB_IMUATK:
+					{
+						let du = (abNo === AB_WEAK) ? v[2] : v[1];
+
+						switch (abNo) {
+							case AB_WEAK:
+								du = floor(du * (1 + catEnv.combo_weak));
+								break;
+							case AB_STOP:
+								du = floor(du * (1 + catEnv.combo_stop));
+								break;
+							case AB_SLOW:
+								du = floor(du * (1 + catEnv.combo_slow));
+								break;
+						}
+
+						let du1 = du;
+
+						if ((this.info.trait & TRAIT_TREASURE) && !(this.info.trait & TRAIT_NO_TREASURE))
+							du1 = floor(du * catEnv.dur_t);
+
+						let duStr = numStrT(du1);
+						let coverStr = (abNo !== AB_IMUATK) ? getCoverUnitStr(this, v[0], du1) : '';
+
+						if ((this.info.trait & TRAIT_TREASURE) && (this.info.trait & TRAIT_NO_TREASURE)) {
+							du1 = floor(du * catEnv.dur_t);
+							duStr += `（${numStrT(du1)}）`;
+							if (abNo !== AB_IMUATK)
+								coverStr += `（${getCoverUnitStr(this, v[0], du1)}）`;
+						}
+
+						params = [v[0], duStr, coverStr];
+						if (abNo === AB_WEAK)
+							params.push(v[1]);
+					}
+					break;
+				case AB_KB:
+					let du;
+					if (this.info.trait & TRAIT_TREASURE) {
+						if (this.info.trait & TRAIT_NO_TREASURE) {
+							du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
+						} else {
+							du = numStr(165 * 1.3);
+						}
+					} else {
+						du = numStr(165);
+					}
+					params = [v[0], du, numStrT(12)];
+					break;
+
+				case AB_SUMMON:
+					link = `/unit.html?id=${v}`;
+					params = [v];
+					break;
+
+				case AB_MK:
+					link = `/metal_killer.html?kill=${v}`;
+					params = [v];
+					break;
+
+				case AB_EXPLOSION:
+					params = [v[0], v[1], v[1] === v[2] ? '' : `~${v[2]}`];
+					break;
+			}
+			let entry = units_scheme.abilities.descriptions[abNo];
+			let template;
+			if (entry.length === 1) {
+				template = entry[0];
+			} else {
+				template = entry[layout - 1];
+			}
+			yield {
+				abNo,
+				text: formatTemplate(template, params, extra),
+				link,
+			};
+		}
+	}
+
+	createResIcons(container) {
+		if (!this.res)
+			return;
+
+		for (let [k, v] of Object.entries(this.res)) {
+			k = parseInt(k, 10);
+			const div = container.appendChild(document.createElement('div'));
+			div.appendChild(new Image(40, 40)).src = `/img/i/r/${k}.png`;
+			div.append(units_scheme.resists[k].replace('$', v));
+		}
+	}
+
+	createImuIcons(container) {
+		if (!this.imu)
+			return;
+
+		const div = container.appendChild(document.createElement('div'));
+		const names = [];
+		for (let x = 1, i = 0; x <= 1024; x <<= 1, ++i) {
+			if (!(this.imu & x))
+				continue;
+			
+			div.appendChild(new Image(40, 40)).src = `/img/i/m/${i}.png`;
+			names.push(units_scheme.immunes[i]);
+		}
+		const text = (names.length === 1) ? `${names.join('')}無效` : `無效（${names.join('、')}）`;
+		div.append(text);
 	}
 
 	abEnabled(atkIdx) {
@@ -1407,6 +1662,19 @@ class CatForm extends Unit {
 		return 30 * atkm / this.attackF;
 	}
 
+	createTraitIcons(container) {
+		if (!this.info.trait)
+			return;
+
+		const div = container.appendChild(document.createElement('div'));
+		for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
+			if (!(this.info.trait & x))
+				continue;
+
+			container.appendChild(new Image(40, 40)).src = `/img/i/e/${i}.png`;
+		}
+	}
+
 	get talents() {
 		return this.base.talents;
 	}
@@ -1962,6 +2230,97 @@ class Enemy extends Unit {
 	__price() {
 		return this.earn;
 	}
+
+	*abilityDescriptions(layout) {
+		const extra = {
+			'star': this.info.pre1 ? '*' : '',
+			'target': '',
+		};
+
+		for (const [k, v] of Object.entries(this.info.ab)) {
+			const abNo = parseInt(k, 10);
+			let params = v;
+			let link;
+
+			switch (abNo) {
+				case AB_SURVIVE:
+					params = [v];
+					break;
+
+				case AB_STRENGTHEN:
+					params = [v[0], 100 + v[1] + catEnv.combo_strengthen];
+					break;
+
+				case AB_CRIT:
+					params = [v + catEnv.combo_crit || 0];
+					break;
+
+				case AB_SAVAGE:
+					params = [v[0], 100 + v[1]];
+					break;
+
+				case AB_WAVE:
+				case AB_MINIWAVE:
+					params = [v[0], v[1], displayRange(267.5 + v[1] * 200)];
+					break;
+
+				case AB_SURGE:
+				case AB_MINISURGE:
+				case AB_DEATHSURGE:
+					params = [v[0], v[3], displayRange(v[1]), displayRange(v[2]), numStrT(v[3] * 20)];
+					break;
+
+				case AB_STOP:
+				case AB_SLOW:
+				case AB_CURSE:
+				case AB_IMUATK:
+					params = [v[0], numStrT(v[1])];
+					if (abNo !== AB_IMUATK)
+						params.push(getCoverUnitStr(this, v[0], v[1]));
+					break;
+				
+				case AB_WEAK:
+					params = [v[0], numStrT(v[2]), getCoverUnitStr(this, v[0], v[2]), v[1]];
+					break;
+
+				case AB_EXPLOSION:
+					params = [v[0], v[1], v[1] === v[2] ? '' : `~${v[2]}`];
+					break;
+				
+				case AB_BURROW:
+					params = [displayRange(v[1]), v[0] === -1 ? '無限' : `${numStr(v[0])} `];
+					break;
+
+				case AB_REVIVE:
+					params = [numStrT(v[1]), v[2], v[0] === -1 ? '無限' : `${numStr(v[0])} `];
+					break;
+				
+				case AB_WARP:
+					params = [v[0], v[2] < 0 ? '前' : '後', displayRange(v[2]), numStrT(v[1])];
+					break;
+				
+				case AB_BARRIER:
+					params = [numStr(v[0])];
+					break;
+
+				case AB_KB:
+					params = [v[0], displayRange(165), numStrT(12)];
+					break;
+			}
+			let entry = units_scheme.abilities.descriptions[abNo];
+			let template;
+			if (entry.length === 1) {
+				template = entry[0];
+			} else {
+				template = entry[layout - 1];
+			}
+			yield {
+				abNo,
+				text: formatTemplate(template, params, extra),
+				link, // empty
+			};
+		}
+	}
 }
 
 class Cat {
@@ -2146,55 +2505,6 @@ async function loadAllEnemies() {
 	}
 }
 
-
-function createTraitIcons(trait, container) {
-	if (!trait)
-		return;
-
-	const div = container.appendChild(document.createElement('div'));
-	for (let x = 1, i = 0; x <= TB_DEMON; x <<= 1, ++i) {
-		if (!(trait & x))
-			continue;
-
-		container.appendChild(new Image(40, 40)).src = `/img/i/e/${i}.png`;
-	}
-}
-
-function createImuIcons(imu, container) {
-	if (!imu)
-		return;
-
-	const div = container.appendChild(document.createElement('div'));
-	const names = [];
-	for (let x = 1, i = 0; x <= 1024; x <<= 1, ++i) {
-		if (!(imu & x))
-			continue;
-		
-		div.appendChild(new Image(40, 40)).src = `/img/i/m/${i}.png`;
-		names.push(units_scheme.immunes[i]);
-	}
-	const text = (names.length === 1) ? `${names.join('')}無效` : `無效（${names.join('、')}）`;
-	div.append(text);
-}
-
-function createResIcons(res, container) {
-	if (!res)
-		return;
-
-	for (let [k, v] of Object.entries(res)) {
-		k = parseInt(k, 10);
-		const div = container.appendChild(document.createElement('div'));
-		div.appendChild(new Image(40, 40)).src = `/img/i/r/${k}.png`;
-		div.append(units_scheme.resists[k].replace('$', v));
-	}
-}
-
-function getAbiString(abi) {
-	let strs;
-	return abi ? (strs = [], 4 & abi && strs.push('一'), 2 & abi && strs.push('二'),
-		1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
-}
-
 function getAbilityShortNames(abs) {
 	return abs.map(x => units_scheme.abilities.short_names[x]);
 }
@@ -2266,7 +2576,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 
 			if (atks !== atksNoTrea)
 				s += showTrait ? 
-					`（${get_trait_short_names(form.trait & TRAIT_TREASURE)}）/${plus_s}${atksNoTrea}（${get_trait_short_names(form.trait & TRAIT_NO_TREASURE)}）` :
+					`（${form.getTraitShortNames(TRAIT_TREASURE)}）/${plus_s}${atksNoTrea}（${form.getTraitShortNames(TRAIT_NO_TREASURE)}）` :
 					`（${atksNoTrea}）`;
 		}
 		maxLen = Math.max(s.length, maxLen);
@@ -2314,7 +2624,7 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 
 			if (hp !== hpNoTrea)
 				s += showTrait ? 
-					`（${get_trait_short_names(form.trait & TRAIT_TREASURE)}）/${plus_s}${hpNoTrea}（${get_trait_short_names(form.trait & TRAIT_NO_TREASURE)}）` :
+					`（${form.getTraitShortNames(TRAIT_TREASURE)}）/${plus_s}${hpNoTrea}（${form.getTraitShortNames(TRAIT_NO_TREASURE)}）` :
 					`（${hpNoTrea}）`;
 		}
 		maxLen = Math.max(s.length, maxLen);
@@ -2429,6 +2739,7 @@ export {
 	TB_BARON,
 	TB_SAGE,
 	TB_KAIJIN,
+	TB_LAST,
 	TRAIT_ALL,
 	TRAIT_NO_TREASURE,
 	TRAIT_TREASURE,
@@ -2506,16 +2817,6 @@ export {
 	units_scheme,
 	catEnv,
 
-	get_trait_short_names,
-	getAbiString,
-
-	getCoverUnit,
-	getCoverUnitStr,
-
-	createTraitIcons,
-	createImuIcons,
-	createResIcons,
-
 	CatEnv,
 	Cat,
 	CatForm,
@@ -2533,6 +2834,8 @@ export {
 	updateHp,
 	updateAtk,
 
+	EFFECTS,
 	ATK_MULTI_AB,
 	HP_MULTI_AB,
+	MULTI_AB,
 };

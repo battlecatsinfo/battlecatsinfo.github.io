@@ -1,13 +1,11 @@
 import {
 	loadScheme,
-	config,
 	numStr,
 	numStrT,
 	numStrX,
 	numUnit,
 	displayRange,
 	displaySpeed,
-	floor,
 	savePng,
 	copyPng,
 	getCombinations
@@ -17,13 +15,6 @@ import {
 	ATK_LD,
 	ATK_OMNI,
 
-	TRAIT_NO_TREASURE,
-	TRAIT_TREASURE,
-
-	createTraitIcons,
-	createImuIcons,
-	createResIcons,
-
 	loadAllCats,
 
 	updateAtkBaha,
@@ -31,8 +22,6 @@ import {
 
 	ATK_MULTI_AB,
 	HP_MULTI_AB,
-
-	catEnv,
 } from './unit.mjs';
 
 
@@ -144,190 +133,17 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 
 	let M = tbodyEl[9].children[I];
 	M.textContent = '';
-	createTraitIcons(F.trait, M);
-	let abilityNo;
+	F.createTraitIcons(M);
 
-	function W(m) {
-		const u = new Image(40, 40);
-		u.src = `/img/i/a/${abilityNo}.png`;
-		const d = document.createElement('div');
-		d.appendChild(u);
-		d.append(m);
-		M.appendChild(d);
+	for (const obj of F.abilityDescriptions(2)) {
+		const div = document.createElement('div');
+		div.appendChild(new Image(40, 40)).src = `/img/i/a/${obj.abNo}.png`;
+		div.append(obj.text);
+		M.appendChild(div);
 	}
-	const hasTreasure = F.trait & TRAIT_TREASURE;
-	let du;
-	for (const [i, v] of Object.entries(F.ab)) {
-		switch (abilityNo = parseInt(i, 10)) {
-			case 1:
-				W(`體力 ${v[0]} % 以下攻擊力增加至 ${100 + v[1]} %`);
-				break;
-			case 2:
-				W(`${v} % 死前存活`);
-				break;
-			case 3:
-				W(`對塔傷害 ${v[0]} % （${numStr(1 + v[0] / 100)}）`);
-				break;
-			case 4:
-				W(`${v} % 會心一擊`);
-				break;
-			case 5:
-				W("終結不死");
-				break;
-			case 6:
-				W("靈魂攻擊");
-				break;
-			case 7:
-				W(`${v[0]} % 破壞護盾`);
-				break;
-			case 8:
-				W(`${v[0]} % 破壞惡魔盾`);
-				break;
-			case 9:
-				W(`${v[0]} % 渾身一擊（至${100 + v[1]} %）`);
-				break;
-			case 10:
-				W("得到很多金錢");
-				break;
-			case 11:
-				W("鋼鐵");
-				break;
-			case 12:
-				W(`${v[0]} % Lv${v[1]} 小波動`);
-				break;
-			case 13:
-				W(`${v[0]} % Lv${v[1]} 波動`);
-				break;
-			case 14:
-				W(`${v[0]} % Lv${v[3]} 小烈波（${v[1]}～${v[2]}）`);
-				break;
-			case 15:
-				W(`${v[0]} % Lv${v[3]} 烈波（${v[1]}～${v[2]}）`);
-				break;
-			case 16:
-				W('波動滅止');
-				break;
-			case 17:
-				W("超生命體特效");
-				break;
-			case 18:
-				W('超獸特效');
-				break;
-			case 19:
-				W('終結魔女');
-				break;
-			case 20:
-				W("終結使徒");
-				break;
-			case 21:
-				if (hasTreasure) {
-					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[2]))}（${numStrT(floor(v[2] * catEnv.dur_t))}）`;
-					} else {
-						du = numStrT(floor(v[2] * catEnv.dur_t));
-					}
-				} else {
-					du = numStrT(v[2]);
-				}
-				W(`${v[0]} % 降攻 ${du}`);
-				break;
-			case 22:
-				if (hasTreasure) {
-					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
-					} else {
-						du = numStrT(floor(v[1] * catEnv.dur_t));
-					}
-				} else {
-					du = numStrT(v[1]);
-				}
-				W(`${v[0]} % 暫停 ${du}`);
-				break;
-			case 23:
-				if (hasTreasure) {
-					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
-					} else {
-						du = numStrT(floor(v[1] * catEnv.dur_t));
-					}
-				} else {
-					du = numStrT(v[1]);
-				}
-				W(`${v[0]} % 緩速 ${du}`);
-				break;
-			case 24:
-				W("只能攻擊");
-				break;
-			case 25:
-				W('善於攻擊');
-				break;
-			case 26:
-				W('很耐打');
-				break;
-			case 27:
-				W('超耐打');
-				break;
-			case 28:
-				W(`超大傷害`);
-				break;
-			case 29:
-				W('極度傷害');
-				break;
-			case 30:
-				W(v[0] + " % 打飛敵人");
-				break;
-			case 31:
-				W(v[0] + " % 傳送敵人");
-				break;
-			case 32:
-				if (hasTreasure) {
-					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
-					} else {
-						du = numStrT(floor(v[1] * catEnv.dur_t));
-					}
-				} else {
-					du = numStrT(v[1]);
-				}
-				W(`${v[0]} % 攻擊無效 ${du}`);
-				break;
-			case 33:
-				if (hasTreasure) {
-					if (F.trait & TRAIT_NO_TREASURE) {
-						du = `${numStrT(floor(v[1]))}（${numStrT(floor(v[1] * catEnv.dur_t))}）`;
-					} else {
-						du = numStrT(floor(v[1] * catEnv.dur_t));
-					}
-				} else {
-					du = numStrT(v[1]);
-				}
-				W(`${v[0]} % 詛咒 ${du}`);
-				break;
-			case 37:
-				W("一次攻擊");
-				break;
-			case 40:
-				W('烈波反擊');
-				break;
-			case 42:
-				W('超賢者特效');
-				break;
-			case 43:
-				W(`召喚精靈 No. ${v}`);
-				break;
-			case 44:
-				W(`鋼鐵殺手（-${v}%）`);
-				break;
-			case 45:
-				W(`${v[0]} % 爆波（${v[1]}～${v[2]}）`);
-				break;
-			case 46:
-				W('怪人特效');
-				break;
-		}
-	}
-	F.res && createResIcons(F.res, M);
-	F.imu && createImuIcons(F.imu, M);
+
+	F.createResIcons(M);
+	F.createImuIcons(M);
 	M.style.setProperty('text-align', 'left', 'important');
 }
 
