@@ -163,7 +163,7 @@ class UnitPage {
 			['檢視動畫', this.cat.animUrl, null],
 			['DPS-距離圖表', `/dpsgraph_svg.html?units=${this.cat.id}-${this.cat.forms.length - 1}`, null],
 			['UDP', this.cat.udpUrl, null],
-			['Miraheze Wiki', this.fandomUrl, null],
+			['Miraheze Wiki', this.cat.fandomUrl, null],
 		];
 
 		for (const [title, href, action] of menu) {
