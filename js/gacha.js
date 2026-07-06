@@ -497,13 +497,13 @@ module.exports = class extends RewardSiteGenerator {
 					}
 				}
 
-				const per100 = new Fraction(100, energyVal).mul(average);
+				const per1200 = new Fraction(1200, energyVal).mul(average);
 				output.farm.stages.push({
 					name_tw: name_tw,
 					name_jp: name_jp,
 					energy: energyStr,
 					average: this.fmt2.format(average.valueOf()),
-					per100: this.fmt2.format(per100.valueOf()),
+					per1200: this.fmt2.format(per1200.valueOf()),
 				});
 			}
 		}
