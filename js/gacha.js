@@ -91,13 +91,12 @@ module.exports = class extends RewardSiteGenerator {
 			this.rewards[key].name = value;
 		}
 
-		this.stageRewards = this.parseTsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
-			let {id, name_tw, name_jp, energy, rand, drop} = entry;
-			id = parseInt(id, 36);
-			if (drop)
-				rv[id] = {name_tw, name_jp, energy, rand, drop};
+		this.stageTable = this.parseTsv(this.load('stage.tsv')).reduce((rv, entry, i) => {
+			const id = parseInt(entry.id, 36);
+			rv[id] = entry;
 			return rv;
 		}, {});
+
 		this.mapNames = this.parseTsv(this.load('map.tsv')).reduce((rv, entry, i) => {
 			let {id, name_tw, name_jp} = entry;
 			id = parseInt(id, 36);
@@ -447,27 +446,62 @@ module.exports = class extends RewardSiteGenerator {
 				stages: [],
 			}
 			for (let stageId = map_id * 1000;;++stageId) {
-				const rw = this.stageRewards[stageId];
-				if (!rw)
+				const entry = this.stageTable[stageId];
+				if (!entry)
 					break;
-				const energyRaw = parseInt(rw.energy, 36);
-				let energy;
+
+				const {id, name_tw, name_jp, energy, rand, drop, ex_stage} = entry;
+
+				console.assert(drop || ex_stage, `no rewards or ex-stage in stage ${stageId}`);
+
+				let average = 0;
+				const energyRaw = parseInt(energy, 36);
+				let energyStr;
 				let energyVal;
+				
 				if (energyRaw > 1000) {
 					const id = ~~(energyRaw / 1000);
 					const count = energyRaw % 1000;
-					energy = `${this.rewards[id].name} ×${count}`;
+					energyStr = `${this.rewards[id].name} ×${count}`;
 					energyVal = count;
 				} else {
 					energyVal = energyRaw;
-					energy = energyRaw.toString();
+					energyStr = energyRaw.toString();
 				}
-				const average = averageReward(rw.drop, rw.rand);
+
+				if (drop) {
+					average += averageReward(drop, rand);
+				}
+
+				if (ex_stage) {
+					const exData = ex_stage.split('$');
+					if (exData[0]) {
+						const [exChance, exMapID, exStageIDMin, exStageIDMax] = exData[0].split(',');
+						if (exChance !== '?') {
+							const min = parseInt(exStageIDMin, 10);
+							const max = parseInt(exStageIDMax, 10);
+							const base = (4000 + parseInt(exMapID, 10)) * 1000 + min;
+							const chance = (max - min + 1) * parseInt(exChance, 10) / 100;
+							for (let i = base + min; i <= base + max; ++i) {
+								const ex = this.stageTable[i];
+								average += averageReward(ex.drop, ex.rand) * chance;
+							}
+						}
+					} else if (exData[1]) {
+						const [exStage, exChance] = ex_stage_data[1].split('|').map(x => x.split(',').map(y => parseInt(y, 10)));
+
+						for (let i = 0; i < exStage.length; ++i) {
+							const ex = this.stageTable[exStage[i]];
+							average += averageReward(ex.drop, ex.rand) * exChance[i] / 100;
+						}
+					}
+				}
+
 				const per100 = new Fraction(100, energyVal).mul(average);
 				output.farm.stages.push({
-					name_tw: rw.name_tw,
-					name_jp: rw.name_jp,
-					energy,
+					name_tw: name_tw,
+					name_jp: name_jp,
+					energy: energyStr,
 					average: this.fmt2.format(average.valueOf()),
 					per100: this.fmt2.format(per100.valueOf()),
 				});
