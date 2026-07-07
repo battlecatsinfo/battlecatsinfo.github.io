@@ -168,7 +168,9 @@ const HP_MULTI_AB = new Set([
 	AB_SAGE,
 	AB_KAIJIN,
 ]);
-const MULTI_AB = ATK_MULTI_AB.union(HP_MULTI_AB);
+// Set.union is not supported in IOS 16.7 Safari
+// https://caniuse.com/mdn-javascript_builtins_set_union
+const MULTI_AB = new Set([...ATK_MULTI_AB, ...HP_MULTI_AB]);
 
 function combineChances(count, chance) {
 	let x = 1;
