@@ -1,4 +1,4 @@
-{{#> gh.html}}
+{{#> static.html}}
 
 {{#*inline "title"}}關卡獎勵一覽{{/inline}}
 
@@ -6,28 +6,38 @@
 	{{~> @partial-block}}
 	<style>
 		table {
+			width: fit-content;
 			white-space: nowrap;
+		}
+		.icon {
+			vertical-align: middle;
+			height: 1.5em;
+			width: auto;
+			margin-right: -0.2em;
 		}
 	</style>
 {{/inline}}
 
 {{#*inline "content"}}
+<div class="E">
 	<h3>超生命體強襲</h3>
 	<p>Lv. 1 ~ Lv. MAX 獎勵</p>
 	<table>
-		<tbody>
+		<thead>
 			<tr>
-				<td>Lv. 1</td>
-				<td>Lv. 2</td>
-				<td>Lv. 3</td>
-				<td>Lv. 4</td>
-				<td>Lv. 5</td>
-				<td>Lv. 6</td>
-				<td>Lv. 7</td>
-				<td>Lv. 8</td>
-				<td>Lv. 9</td>
-				<td>Lv. 10</td>
+				<th>Lv. 1</th>
+				<th>Lv. 2</th>
+				<th>Lv. 3</th>
+				<th>Lv. 4</th>
+				<th>Lv. 5</th>
+				<th>Lv. 6</th>
+				<th>Lv. 7</th>
+				<th>Lv. 8</th>
+				<th>Lv. 9</th>
+				<th>Lv. 10</th>
 			</tr>
+		</thead>
+		<tbody>
 			<tr>
 				<td>喵力達A ×3</td>
 				<td>城堡素材</td>
@@ -40,18 +50,22 @@
 				<td>城堡素材</td>
 				<td>貓咪轉蛋券 ×2</td>
 			</tr>
+		</tbody>
+		<thead>
 			<tr>
-				<td>Lv. 11</td>
-				<td>Lv. 12</td>
-				<td>Lv. 13</td>
-				<td>Lv. 14</td>
-				<td>Lv. 15</td>
-				<td>Lv. 16</td>
-				<td>Lv. 17</td>
-				<td>Lv. 18</td>
-				<td>Lv. 19</td>
-				<td>Lv. MAX</td>
+				<th>Lv. 11</th>
+				<th>Lv. 12</th>
+				<th>Lv. 13</th>
+				<th>Lv. 14</th>
+				<th>Lv. 15</th>
+				<th>Lv. 16</th>
+				<th>Lv. 17</th>
+				<th>Lv. 18</th>
+				<th>Lv. 19</th>
+				<th>Lv. MAX</th>
 			</tr>
+		</thead>
+		<tbody>
 			<tr>
 				<td>喵力達C ×3</td>
 				<td>城堡素材</td>
@@ -68,129 +82,131 @@
 	</table>
 	<p>EX 關卡進入機率</p>
 	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>起源的樹海</th>
+				<th>頂點的樹海</th>
+				<th>秘境的樹海</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td></td>
-				<td>起源的樹海</td>
-				<td>頂點的樹海</td>
-				<td>秘境的樹海</td>
-			</tr>
-			<tr>
-				<td>Lv. 1</td>
+				<th>Lv. 1</th>
 				<td>1%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 2</td>
+				<th>Lv. 2</th>
 				<td>3%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 3</td>
+				<th>Lv. 3</th>
 				<td>7%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 4</td>
+				<th>Lv. 4</th>
 				<td>11%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 5</td>
+				<th>Lv. 5</th>
 				<td>15%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 6</td>
+				<th>Lv. 6</th>
 				<td>18%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 7</td>
+				<th>Lv. 7</th>
 				<td>21%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 8</td>
+				<th>Lv. 8</th>
 				<td>24%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 9</td>
+				<th>Lv. 9</th>
 				<td>27%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 10</td>
+				<th>Lv. 10</th>
 				<td>30%</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 11</td>
+				<th>Lv. 11</th>
 				<td>33.66%</td>
 				<td>1%</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 12</td>
+				<th>Lv. 12</th>
 				<td>36.26%</td>
 				<td>2%</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 13</td>
+				<th>Lv. 13</th>
 				<td>38.77%</td>
 				<td>3%</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 14</td>
+				<th>Lv. 14</th>
 				<td>45.6%</td>
 				<td>5%</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 15</td>
+				<th>Lv. 15</th>
 				<td>50.4%</td>
 				<td>10%</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>Lv. 16</td>
+				<th>Lv. 16</th>
 				<td>78.21%</td>
 				<td>20.79%</td>
 				<td>1%</td>
 			</tr>
 			<tr>
-				<td>Lv. 17</td>
+				<th>Lv. 17</th>
 				<td>74.42%</td>
 				<td>20.58%</td>
 				<td>2%</td>
 			</tr>
 			<tr>
-				<td>Lv. 18</td>
+				<th>Lv. 18</th>
 				<td>71.78%</td>
 				<td>25.22%</td>
 				<td>3%</td>
 			</tr>
 			<tr>
-				<td>Lv. 19</td>
+				<th>Lv. 19</th>
 				<td>69.35%</td>
 				<td>25.65%</td>
 				<td>5%</td>
 			</tr>
 			<tr>
-				<td>Lv. MAX</td>
+				<th>Lv. MAX</th>
 				<td>59.4%</td>
 				<td>30.6%</td>
 				<td>10%</td>
@@ -198,31 +214,34 @@
 		</tbody>
 	</table>
 	<p>EX 關卡掉落機率</p>
-	<table style="text-align:left;">
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th colspan="3">D 級</th>
+				<th colspan="3">C 級</th>
+				<th colspan="3">B 級</th>
+				<th colspan="3">A 級</th>
+			</tr>
+		</thead>
 		<tbody>
-			<tr style="text-align:center;">
-				<td rowspan="2"></td>
-				<td colspan="3">D 級</td>
-				<td colspan="3">C 級</td>
-				<td colspan="3">B 級</td>
-				<td colspan="3">A 級</td>
+			<tr>
+				<th></th>
+				<th>普通玉</th>
+				<th>特殊玉</th>
+				<th>總和</th>
+				<th>普通玉</th>
+				<th>特殊玉</th>
+				<th>總和</th>
+				<th>普通玉</th>
+				<th>特殊玉</th>
+				<th>總和</th>
+				<th>普通玉</th>
+				<th>特殊玉</th>
+				<th>總和</th>
 			</tr>
 			<tr>
-				<td>普通玉</td>
-				<td>特殊玉</td>
-				<td>總和</td>
-				<td>普通玉</td>
-				<td>特殊玉</td>
-				<td>總和</td>
-				<td>普通玉</td>
-				<td>特殊玉</td>
-				<td>總和</td>
-				<td>普通玉</td>
-				<td>特殊玉</td>
-				<td>總和</td>
-			</tr>
-			<tr>
-				<td>起源的樹海</td>
+				<th>起源的樹海</th>
 				<td>20%</td>
 				<td>60%</td>
 				<td>80%</td>
@@ -237,7 +256,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>頂點的樹海</td>
+				<th>頂點的樹海</th>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -252,7 +271,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>秘境的樹海</td>
+				<th>秘境的樹海</th>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -268,37 +287,38 @@
 			</tr>
 		</tbody>
 	</table>
-	<p>※普通玉：提升傷害（增傷玉）、減輕傷害（減傷玉）</p>
-	<p>※特殊玉：善於攻擊（善攻玉）、超大傷害（超傷玉）、很耐打（耐打玉）</p>
+	<p>※普通玉：提升傷害（增傷玉）、減輕傷害（減傷玉）<br>
+	※特殊玉：善於攻擊（善攻玉）、超大傷害（超傷玉）、很耐打（耐打玉）</p>
 	<h3>本能玉地圖、秘寶沉眠之孤島</h3>
-	<table style="text-align:left;">
-		<tbody>
-			<tr style="text-align:center;">
-				<td rowspan="2"></td>
-				<td colspan="3">D 級</td>
-				<td colspan="3">C 級</td>
-				<td colspan="3">B 級</td>
-				<td colspan="3">A 級</td>
+	<table>
+		<thead>
+			<tr>
+				<th rowspan="2"></th>
+				<th colspan="3">D 級</th>
+				<th colspan="3">C 級</th>
+				<th colspan="3">B 級</th>
+				<th colspan="3">A 級</th>
 			</tr>
 			<tr>
-				<td>普通玉</td>
-				<td>特殊玉</td>
-				<td>總和</td>
-				<td>普通玉</td>
-				<td>特殊玉</td>
-				<td>總和</td>
-				<td>普通玉</td>
-				<td>特殊玉</td>
-				<td>總和</td>
-				<td>普通玉</td>
-				<td>特殊玉</td>
-				<td>總和</td>
+				<th>普通玉</th>
+				<th>特殊玉</th>
+				<th>總和</th>
+				<th>普通玉</th>
+				<th>特殊玉</th>
+				<th>總和</th>
+				<th>普通玉</th>
+				<th>特殊玉</th>
+				<th>總和</th>
+				<th>普通玉</th>
+				<th>特殊玉</th>
+				<th>總和</th>
+			</tr>
+		</thead>
+			<tr>
+				<th colspan="13">紅色（紅）、飄浮（浮）、黑色（黑）、神聖（天）、蒼藍（異）、腐朽（死）</th>
 			</tr>
 			<tr>
-				<td colspan="13" style="text-align:center;">紅色（紅）、飄浮（浮）、黑色（黑）、神聖（天）、蒼藍（異）、腐朽（死）</td>
-			</tr>
-			<tr>
-				<td>起源的樹海</td>
+				<th>起源的樹海</th>
 				<td>82%</td>
 				<td>3%</td>
 				<td>85%</td>
@@ -313,7 +333,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>頂點的樹海</td>
+				<th>頂點的樹海</th>
 				<td>75.5%</td>
 				<td>4.5%</td>
 				<td>80%</td>
@@ -328,7 +348,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>秘境的樹海</td>
+				<th>秘境的樹海</th>
 				<td>65%</td>
 				<td>6%</td>
 				<td>71%</td>
@@ -343,10 +363,10 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td colspan="13" style="text-align:center;">惡意（惡）、古代（古）</td>
+				<th colspan="13">惡意（惡）、古代（古）</th>
 			</tr>
 			<tr>
-				<td>起源的樹海</td>
+				<th>起源的樹海</th>
 				<td>20%</td>
 				<td>60%</td>
 				<td>80%</td>
@@ -361,7 +381,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>頂點的樹海</td>
+				<th>頂點的樹海</th>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -376,7 +396,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>秘境的樹海</td>
+				<th>秘境的樹海</th>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -391,10 +411,10 @@
 				<td>20%</td>
 			</tr>
 			<tr>
-				<td colspan="13" style="text-align:center;">強硬（鋼）</td>
+				<th colspan="13">強硬（鋼）</th>
 			</tr>
 			<tr>
-				<td>起源的樹海</td>
+				<th>起源的樹海</th>
 				<td>85%</td>
 				<td>0%</td>
 				<td>85%</td>
@@ -409,7 +429,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>頂點的樹海</td>
+				<th>頂點的樹海</th>
 				<td>80%</td>
 				<td>0%</td>
 				<td>80%</td>
@@ -424,7 +444,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>秘境的樹海</td>
+				<th>秘境的樹海</th>
 				<td>73%</td>
 				<td>0%</td>
 				<td>73%</td>
@@ -442,21 +462,23 @@
 	</table>
 	<h3>月間強襲</h3>
 	<table>
+		<thead>
+			<tr>
+				<th colspan="10">月間強襲（每月1~15日）</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td colspan="10">月間強襲（每月1~15日）</td>
-			</tr>
-			<tr>
-				<td>Lv. 1</td>
-				<td>Lv. 2</td>
-				<td>Lv. 3</td>
-				<td>Lv. 4</td>
-				<td>Lv. 5</td>
-				<td>Lv. 6</td>
-				<td>Lv. 7</td>
-				<td>Lv. 8</td>
-				<td>Lv. 9</td>
-				<td>Lv. 10</td>
+				<th>Lv. 1</th>
+				<th>Lv. 2</th>
+				<th>Lv. 3</th>
+				<th>Lv. 4</th>
+				<th>Lv. 5</th>
+				<th>Lv. 6</th>
+				<th>Lv. 7</th>
+				<th>Lv. 8</th>
+				<th>Lv. 9</th>
+				<th>Lv. 10</th>
 			</tr>
 			<tr>
 				<td>加速 ×1</td>
@@ -470,20 +492,24 @@
 				<td>洞悉先機 ×1</td>
 				<td style="color:#ff8f00;">稀有券 ×1</td>
 			</tr>
+		</tbody>
+		<thead>
 			<tr>
-				<td colspan="10">續・月間強襲（每月16日~月底）</td>
+				<th colspan="10">續・月間強襲（每月16日~月底）</th>
 			</tr>
+		</thead>
+		<tbody>
 			<tr>
-				<td>Lv. 11</td>
-				<td>Lv. 12</td>
-				<td>Lv. 13</td>
-				<td>Lv. 14</td>
-				<td>Lv. 15</td>
-				<td>Lv. 16</td>
-				<td>Lv. 17</td>
-				<td>Lv. 18</td>
-				<td>Lv. 19</td>
-				<td>Lv. MAX</td>
+				<th>Lv. 11</th>
+				<th>Lv. 12</th>
+				<th>Lv. 13</th>
+				<th>Lv. 14</th>
+				<th>Lv. 15</th>
+				<th>Lv. 16</th>
+				<th>Lv. 17</th>
+				<th>Lv. 18</th>
+				<th>Lv. 19</th>
+				<th>Lv. MAX</th>
 			</tr>
 			<tr>
 				<td>加速 ×2</td>
@@ -501,20 +527,22 @@
 	</table>
 	<h3>月間活動全明星 眾星雲集大感謝祭！</h3>
 	<table>
-		<tbody>
+		<thead>
 			<tr>
-				<td>Lv. 1</td>
-				<td>Lv. 2</td>
-				<td>Lv. 3</td>
-				<td>Lv. 4</td>
-				<td>Lv. 5</td>
-				<td>Lv. 6</td>
-				<td>Lv. 7</td>
-				<td>Lv. 8</td>
-				<td>Lv. 9</td>
-				<td>Lv. MAX</td>
-				<td>總和</td>
+				<th>Lv. 1</th>
+				<th>Lv. 2</th>
+				<th>Lv. 3</th>
+				<th>Lv. 4</th>
+				<th>Lv. 5</th>
+				<th>Lv. 6</th>
+				<th>Lv. 7</th>
+				<th>Lv. 8</th>
+				<th>Lv. 9</th>
+				<th>Lv. MAX</th>
+				<th>總和</th>
 			</tr>
+		</thead>
+		<tbody>
 			<tr>
 				<td>XP 50萬</td>
 				<td>XP 75萬</td>
@@ -532,40 +560,42 @@
 	</table>
 
 	<h3>每月G券</h3>
-	<table style="text-align:left;">
+	<table>
+		<thead>
+			<tr>
+				<th>關卡</th>
+				<th>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></th>
+				<th>期望值</th>
+				<th>每 300 統率力</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td>關卡</td>
-				<td>統率力</td>
-				<td>期望值</td>
-				<td>每 300 統率力</td>
-			</tr>
-			<tr>
-				<td>第一關</td>
+				<th>第一關</th>
 				<td>150</td>
 				<td>0.3</td>
 				<td>0.6</td>
 			</tr>
 			<tr>
-				<td>第二關</td>
+				<th>第二關</th>
 				<td>180</td>
 				<td>0.45</td>
 				<td>0.75</td>
 			</tr>
 			<tr>
-				<td>第三關</td>
+				<th>第三關</th>
 				<td>210</td>
 				<td>0.67</td>
 				<td>0.96</td>
 			</tr>
 			<tr>
-				<td>第四關</td>
+				<th>第四關</th>
 				<td>250</td>
 				<td>0.875</td>
 				<td>1.05</td>
 			</tr>
 			<tr>
-				<td>第五關</td>
+				<th>第五關</th>
 				<td>300</td>
 				<td>1.3</td>
 				<td>1.3</td>
@@ -573,53 +603,57 @@
 		</tbody>
 	</table>
 	<h3>招福轉蛋券</h3>
-	<table style="text-align:left;">
-		<tbody>
+	<table>
+		<thead>
 			<tr>
-				<td>關卡</td>
-				<td>統率力</td>
-				<td>期望值</td>
+				<th>關卡</th>
+				<th>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></th>
+				<th>期望值</th>
 			</tr>
+		</thead>
 			<tr>
-				<td>第一關</td>
+				<th>第一關</th>
 				<td>100</td>
 				<td>0.3</td>
 			</tr>
 			<tr>
-				<td>第二關</td>
+				<th>第二關</th>
 				<td>100</td>
 				<td>0.45</td>
 			</tr>
 			<tr>
-				<td>第三關</td>
+				<th>第三關</th>
 				<td>100</td>
 				<td>0.67</td>
 			</tr>
 			<tr>
-				<td>第四關</td>
+				<th>第四關</th>
 				<td>100</td>
 				<td>0.875</td>
 			</tr>
 			<tr>
-				<td>第五關</td>
+				<th>第五關</th>
 				<td>100</td>
 				<td>1.11</td>
 			</tr>
 		</tbody>
 	</table>
 	<h3>道具關卡</h3>
-	<table style="text-align:left;">
+	<table>
+		<thead>
+			<tr>
+				<th>道具</th>
+				<th>關卡</th>
+				<th>日文</th>
+				<th>小關</th>
+				<th>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></th>
+				<th>期望值</th>
+				<th>每 360 統率力</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td></td>
-				<td colspan="2"></td>
-				<td>關卡</td>
-				<td>統率力</td>
-				<td>期望值</td>
-				<td>每 360 統率力</td>
-			</tr>
-			<tr>
-				<td rowspan="4">土豪貓</td>
+				<th rowspan="4">土豪貓</th>
 				<td rowspan="3"><a href="/stage.html?s=1-0">星期一關卡</a></td>
 				<td rowspan="3">月曜ステージ</td>
 				<td>富二代的豪宅 初級</td>
@@ -648,7 +682,7 @@
 				<td>1.8</td>
 			</tr>
 			<tr>
-				<td rowspan="4">加速</td>
+				<th rowspan="4">加速</th>
 				<td rowspan="3"><a href="/stage.html?s=1-1">星期二關卡</a></td>
 				<td rowspan="3">火曜ステージ</td>
 				<td>極速戰鬥者 初級</td>
@@ -677,7 +711,7 @@
 				<td>3.6</td>
 			</tr>
 			<tr>
-				<td rowspan="4">洞悉先機</td>
+				<th rowspan="4">洞悉先機</th>
 				<td rowspan="3"><a href="/stage.html?s=1-2">星期三關卡</a></td>
 				<td rowspan="3">水曜ステージ</td>
 				<td>謀略道場 初級</td>
@@ -706,7 +740,7 @@
 				<td>2.4</td>
 			</tr>
 			<tr>
-				<td rowspan="4">狙擊手</td>
+				<th rowspan="4">狙擊手</th>
 				<td rowspan="3"><a href="/stage.html?s=1-3">星期四關卡</a></td>
 				<td rowspan="3">木曜ステージ</td>
 				<td>狙擊神人 初級</td>
@@ -735,7 +769,7 @@
 				<td>1.8</td>
 			</tr>
 			<tr>
-				<td rowspan="4">貓型電腦</td>
+				<th rowspan="4">貓型電腦</th>
 				<td rowspan="3"><a href="/stage.html?s=1-4">星期五關卡</a></td>
 				<td rowspan="3">金曜ステージ</td>
 				<td>貓咪也能做的事 初級</td>
@@ -764,7 +798,7 @@
 				<td>4.24</td>
 			</tr>
 			<tr>
-				<td>加速</td>
+				<th>加速</th>
 				<td rowspan="6"><a href="/stage.html?s=1-182">活動全明星 超級豪華大禮</a></td>
 				<td rowspan="6">略…</td>
 				<td rowspan="6">發禮物了！ 超級難</td>
@@ -772,59 +806,59 @@
 				<td colspan="2">0.666…</td>
 			</tr>
 			<tr>
-				<td>寶物雷達</td>
+				<th>寶物雷達</th>
 				<td colspan="2">0.333…</td>
 			</tr>
 			<tr>
-				<td>土豪貓</td>
+				<th>土豪貓</th>
 				<td colspan="2">0.333…</td>
 			</tr>
 			<tr>
-				<td>貓型電腦</td>
+				<th>貓型電腦</th>
 				<td colspan="2">0.666…</td>
 			</tr>
 			<tr>
-				<td>洞悉先機</td>
+				<th>洞悉先機</th>
 				<td colspan="2">0.333…</td>
 			</tr>
 			<tr>
-				<td>狙擊手</td>
+				<th>狙擊手</th>
 				<td colspan="2">0.333…</td>
 			</tr>
 			<tr>
-				<td>加速</td>
+				<th>加速</th>
 				<td rowspan="6" colspan="3">招福轉蛋券關卡</td>
 				<td rowspan="6">100</td>
 				<td>0.12</td>
 				<td>0.37</td>
 			</tr>
 			<tr>
-				<td>寶物雷達</td>
+				<th>寶物雷達</th>
 				<td>0.06</td>
 				<td>0.17</td>
 			</tr>
 			<tr>
-				<td>土豪貓</td>
+				<th>土豪貓</th>
 				<td>0.08</td>
 				<td>0.23</td>
 			</tr>
 			<tr>
-				<td>貓型電腦</td>
+				<th>貓型電腦</th>
 				<td>0.08</td>
 				<td>0.25</td>
 			</tr>
 			<tr>
-				<td>洞悉先機</td>
+				<th>洞悉先機</th>
 				<td>0.08</td>
 				<td>0.23</td>
 			</tr>
 			<tr>
-				<td>狙擊手</td>
+				<th>狙擊手</th>
 				<td>0.08</td>
 				<td>0.23</td>
 			</tr>
 			<tr>
-				<td rowspan="2">加速</td>
+				<th rowspan="2">加速</th>
 				<td rowspan="4"><a href="/stage.html?s=1-182">傳說的開始</a></td>
 				<td rowspan="4">伝説のはじまり</td>
 				<td><a href="/stage.html?s=1-182-0">天搖地動</a></td>
@@ -836,14 +870,14 @@
 				<td><a href="/stage.html?s=0-0-1">恐怖再現</a></td>
 			</tr>
 			<tr>
-				<td>土豪貓</td>
+				<th>土豪貓</th>
 				<td><a href="/stage.html?s=0-0-6">牧場的守護者</a></td>
 				<td>70 + 寶物雷達 × 1</td>
 				<td>1</td>
 				<td>5.14</td>
 			</tr>
 			<tr>
-				<td>洞悉先機</td>
+				<th>洞悉先機</th>
 				<td><a href="/stage.html?s=0-0-2">疲累日落</a></td>
 				<td>55 + 寶物雷達 × 1</td>
 				<td>1</td>
@@ -853,15 +887,17 @@
 	</table>
 
 	<h3>經驗值關卡</h3>
-	<table style="text-align:left;">
-		<tbody>
+	<table>
+		<thead>
 			<tr>
-				<td colspan="2">關卡</td>
-				<td colspan="2">日文</td>
-				<td>統率力</td>
-				<td>關卡本身 XP（+洞悉先機）</td>
-				<td>最大掉落 XP</td>
+				<th colspan="2">關卡</th>
+				<th colspan="2">日文</th>
+				<th>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></th>
+				<th>關卡本身 XP（+洞悉先機）</th>
+				<th>最大掉落 XP</th>
 			</tr>
+		</thead>
+		<tbody>
 			<tr>
 				<td colspan="2"><a href="/stage.html?s=1-27">週末關卡</a></td>
 				<td colspan="2">土日ステージ</td>
@@ -919,20 +955,22 @@
 	<br>
 	※開放時只能通關一次
 	<h3>貓薄荷</h3>
-	<table style="text-align:center;">
+	<table>
+		<thead>
+			<tr>
+				<th>開放時間</th>
+				<th>地圖</th>
+				<th>日文</th>
+				<th>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></th>
+				<th colspan="2">關卡</th>
+				<th>獎勵</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td>開放時間</td>
-				<td>地圖</td>
-				<td>日文</td>
-				<td>統率力</td>
-				<td colspan="2">關卡</td>
-				<td>獎勵</td>
-			</tr>
-			<tr>
-				<td rowspan="5">
+				<th rowspan="5">
 					全天開放
-				</td>
+				</th>
 				<td rowspan="5">
 					<a class="internal-link" href="/stage.html?s=1-422" data-href="/stage.html?s=1-422">進化的貓薄荷</a>
 				</td>
@@ -970,7 +1008,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td rowspan="7">每天固定時段</td>
+				<th rowspan="7">每天固定時段</th>
 				<td rowspan="7"><a href="/stage.html?s=1-162">進化的古代貓薄荷</a></td>
 				<td rowspan="7">進化の古代マタタビ</td>
 				<td rowspan="7">300</td>
@@ -1001,7 +1039,7 @@
 				<td><a href="/stage.html?s=4-22-6">太古的死海 極難</a></td>
 			</tr>
 			<tr>
-				<td>週末固定時段</td>
+				<th>週末固定時段</th>
 				<td><a href="/stage.html?s=1-222">進化的彩虹貓薄荷</a></td>
 				<td>進化の虹マタタビ</td>
 				<td>350</td>
@@ -1012,7 +1050,7 @@
 					<br>裏關100%種子</td>
 			</tr>
 			<tr>
-				<td rowspan="4">每天固定時段</td>
+				<th rowspan="4">每天固定時段</th>
 				<td rowspan="4"><a href="/stage.html?s=1-274">進化的惡貓薄荷</a></td>
 				<td rowspan="4">進化の悪マタタビ</td>
 				<td rowspan="4">300</td>
@@ -1033,7 +1071,7 @@
 					<br>75% 種子 × 1</td>
 			</tr>
 			<tr>
-				<td>每天固定時段</td>
+				<th>每天固定時段</th>
 				<td><a href="/stage.html?s=1-326">進化的彩虹獸石</a></td>
 				<td>進化の虹獣石</td>
 				<td>1,000</td>
@@ -1041,7 +1079,7 @@
 				<td>100% 種子</td>
 			</tr>
 			<tr>
-				<td>週末固定時段 不定期開放</td>
+				<th>週末固定時段 不定期開放</th>
 				<td><a href="/stage.html?s=1-118">貓薄荷挑戰</a></td>
 				<td>マタタビチャレンジ</td>
 				<td>500</td>
@@ -1052,16 +1090,18 @@
 			</tr>
 		</tbody>
 	</table>#1 各色貓薄荷關卡獎勵
-	<table style="text-align:left;">
-		<tbody>
+	<table>
+		<thead>
 			<tr>
-				<td>種子</td>
-				<td>果實</td>
-				<td>彩虹果實</td>
-				<td>無掉落</td>
-				<td>EX裏關機率</td>
-				<td>EX 關卡掉落</td>
+				<th>種子</th>
+				<th>果實</th>
+				<th>彩虹果實</th>
+				<th>無掉落</th>
+				<th>EX裏關機率</th>
+				<th>EX 關卡掉落</th>
 			</tr>
+		</thead>
+		<tbody>
 			<tr>
 				<td>27.2%</td>
 				<td>60%</td>
@@ -1072,90 +1112,96 @@
 			</tr>
 		</tbody>
 	</table>#2 貓薄荷 EX 關卡獎勵
-	<table style="text-align:left;">
+	<table>
+		<thead>
+			<tr>
+				<th>EX裏關</th>
+				<th>種子</th>
+				<th>果實</th>
+				<th>彩虹果實</th>
+				<th>備註</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td>EX裏關</td>
-				<td>種子</td>
-				<td>果實</td>
-				<td>彩虹果實</td>
-				<td>備註</td>
-			</tr>
-			<tr>
-				<td>白天背景</td>
+				<th>白天背景</th>
 				<td>14.95%</td>
 				<td>50.05%</td>
 				<td>35%</td>
 				<td rowspan="3">各 EX 關卡平分機率</td>
 			</tr>
 			<tr>
-				<td>傍晚背景</td>
+				<th>傍晚背景</th>
 				<td>9.5%</td>
 				<td>40.5%</td>
 				<td>50%</td>
 			</tr>
 			<tr>
-				<td>晚上背景</td>
+				<th>晚上背景</th>
 				<td>4.5%</td>
 				<td>25.5%</td>
 				<td>70%</td>
 			</tr>
 		</tbody>
 	</table>#3 貓薄荷挑戰 EX 關卡獎勵
-	<table style="text-align:left;">
+	<table>
+		<thead>
+			<tr>
+				<th>EX尾關</th>
+				<th>果實</th>
+				<th>彩虹果實</th>
+				<th>備註</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td>EX尾關</td>
-				<td>果實</td>
-				<td>彩虹果實</td>
-				<td>備註</td>
-			</tr>
-			<tr>
-				<td>白天背景</td>
+				<th>白天背景</th>
 				<td>65%</td>
 				<td>35%</td>
 				<td rowspan="3">各 EX 關卡平分機率</td>
 			</tr>
 			<tr>
-				<td>傍晚背景</td>
+				<th>傍晚背景</th>
 				<td>50%</td>
 				<td>50%</td>
 			</tr>
 			<tr>
-				<td>晚上背景</td>
+				<th>晚上背景</th>
 				<td>30%</td>
 				<td>70%</td>
 			</tr>
 		</tbody>
 	</table>
 	<h3>發掘地圖</h3>
-	<table style="text-align:left;">
+	<table>
+		<thead>
+			<tr>
+				<th colspan="3">發掘地圖資訊</th>
+				<th colspan="4">常規地圖</th>
+				<th colspan="4">本能珠珠地圖</th>
+				<th colspan="4">獸石地圖</th>
+			</tr>
+			<tr>
+				<th>發掘Lv</th>
+				<th>開始角色</th>
+				<th>對應章節</th>
+				<th>粗劣</th>
+				<th>普通</th>
+				<th>最棒</th>
+				<th>總和</th>
+				<th>起源</th>
+				<th>頂點</th>
+				<th>秘境</th>
+				<th>總和</th>
+				<th>粗劣</th>
+				<th>普通</th>
+				<th>最棒</th>
+				<th>獵人的地圖</th>
+			</tr>
+		</thead>
 		<tbody>
-			<tr style="text-align:center;">
-				<td colspan="3">發掘地圖資訊</td>
-				<td colspan="4">常規地圖</td>
-				<td colspan="4">本能珠珠地圖</td>
-				<td colspan="4">獸石地圖</td>
-			</tr>
 			<tr>
-				<td>發掘Lv</td>
-				<td>開始角色</td>
-				<td>對應章節</td>
-				<td>粗劣</td>
-				<td>普通</td>
-				<td>最棒</td>
-				<td>總和</td>
-				<td>起源</td>
-				<td>頂點</td>
-				<td>秘境</td>
-				<td>總和</td>
-				<td>粗劣</td>
-				<td>普通</td>
-				<td>最棒</td>
-				<td>獵人的地圖</td>
-			</tr>
-			<tr>
-				<td>1</td>
+				<th>1</th>
 				<td><a href="/unit.html?id=130">狼與少女</a></td>
 				<td>Sol 18-6</td>
 				<td>12.5%</td>
@@ -1172,7 +1218,7 @@
 				<td>Ⅰ</td>
 			</tr>
 			<tr>
-				<td>2</td>
+				<th>2</th>
 				<td><a href="/unit.html?id=172">小戰士貓彈</a></td>
 				<td>Sol 23-6</td>
 				<td>7.5%</td>
@@ -1189,7 +1235,7 @@
 				<td>Ⅰ</td>
 			</tr>
 			<tr>
-				<td>3</td>
+				<th>3</th>
 				<td><a href="/unit.html?id=268">貓紅帽咪娜</a></td>
 				<td>Sol 28-6</td>
 				<td>3.5%</td>
@@ -1206,7 +1252,7 @@
 				<td>Ⅰ</td>
 			</tr>
 			<tr>
-				<td>4</td>
+				<th>4</th>
 				<td><a href="/unit.html?id=323">宮木武藏</a></td>
 				<td>Sol 37-6</td>
 				<td>2.6%</td>
@@ -1223,7 +1269,7 @@
 				<td>Ⅱ</td>
 			</tr>
 			<tr>
-				<td>5</td>
+				<th>5</th>
 				<td><a href="/unit.html?id=426">噴噴貓騎士</a></td>
 				<td>Sol 49-1</td>
 				<td>2.5%</td>
@@ -1240,7 +1286,7 @@
 				<td>Ⅱ</td>
 			</tr>
 			<tr>
-				<td>6</td>
+				<th>6</th>
 				<td><a href="/unit.html?id=464">土偶喵丸</a></td>
 				<td>UL 12-6</td>
 				<td></td>
@@ -1257,7 +1303,7 @@
 				<td>Ⅲ</td>
 			</tr>
 			<tr>
-				<td>7</td>
+				<th>7</th>
 				<td><a href="/unit.html?id=532">巨狼與烏爾斯</a></td>
 				<td>UL 21-6</td>
 				<td></td>
@@ -1274,7 +1320,7 @@
 				<td>Ⅲ</td>
 			</tr>
 			<tr>
-				<td>8</td>
+				<th>8</th>
 				<td><a href="/unit.html?id=613">古神面多龍</a></td>
 				<td>UL 36-6</td>
 				<td></td>
@@ -1291,7 +1337,7 @@
 				<td>Ⅲ</td>
 			</tr>
 			<tr>
-				<td>9</td>
+				<th>9</th>
 				<td><a href="/unit.html?id=653">古獸納拉</a></td>
 				<td>UL 43-6</td>
 				<td></td>
@@ -1308,7 +1354,7 @@
 				<td>Ⅲ</td>
 			</tr>
 			<tr>
-				<td>10</td>
+				<th>10</th>
 				<td><a href="/unit.html?id=691">遠古的蛋：N000</a></td>
 				<td>UL 49-1</td>
 				<td></td>
@@ -1327,16 +1373,18 @@
 		</tbody>
 	</table>
 	<h3>常規地圖</h3>
-	<table style="text-align: left;">
+	<table>
+		<thead>
+			<tr>
+				<th>品質</th>
+				<th>關卡</th>
+				<th>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></th>
+				<th>獎勵</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td>品質</td>
-				<td>關卡</td>
-				<td>統率力</td>
-				<td>獎勵</td>
-			</tr>
-			<tr>
-				<td rowspan="3">粗劣</td>
+				<th rowspan="3">粗劣</th>
 				<td><a href="/stage.html?s=12-0">道具古戰場</a></td>
 				<td rowspan="9">100</td>
 				<td>任意一種戰鬥道具 × 2</td>
@@ -1350,7 +1398,7 @@
 				<td>XP 50 萬</td>
 			</tr>
 			<tr>
-				<td rowspan="3">普通</td>
+				<th rowspan="3">普通</th>
 				<td><a href="/stage.html?s=12-7">維他命火山</a></td>
 				<td>任意一種喵力達 × 2</td>
 			</tr>
@@ -1365,7 +1413,7 @@
 					<br>10% 貓咪券 x 3</td>
 			</tr>
 			<tr>
-				<td rowspan="3">最棒</td>
+				<th rowspan="3">最棒</th>
 				<td><a href="/stage.html?s=12-6">貓眼洞窟</a></td>
 				<td>任意一種貓眼石 × 1</td>
 			</tr>
@@ -1382,31 +1430,33 @@
 		</tbody>
 	</table>
 	<h3>獵人的地圖</h3>
-	<table style="text-align:left;">
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th><a href="/stage.html?s=12-60">獵人的地圖Ⅰ</a></th>
+				<th><a href="/stage.html?s=12-61">獵人的地圖Ⅱ</a></th>
+				<th><a href="/stage.html?s=12-62">獵人的地圖Ⅲ</a></th>
+				<th colspan="3"><a href="/stage.html?s=12-66">獵人的地圖Ⅳ</a></th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td></td>
-				<td><a href="/stage.html?s=12-60">獵人的地圖Ⅰ</a></td>
-				<td><a href="/stage.html?s=12-61">獵人的地圖Ⅱ</a></td>
-				<td><a href="/stage.html?s=12-62">獵人的地圖Ⅲ</a></td>
-				<td colspan="3"><a href="/stage.html?s=12-66">獵人的地圖Ⅳ</a></td>
-			</tr>
-			<tr>
-				<td>發掘Lv</td>
+				<th>發掘Lv</th>
 				<td>1~3</td>
 				<td>4~5</td>
 				<td>6~9</td>
 				<td colspan="3">10~11</td>
 			</tr>
 			<tr>
-				<td>開始角色</td>
+				<th>開始角色</th>
 				<td><a href="/unit.html?id=130">狼與少女</a></td>
 				<td><a href="/unit.html?id=323">宮木武藏</a></td>
 				<td><a href="/unit.html?id=464">土偶喵丸</a></td>
 				<td colspan="3"><a href="/unit.html?id=691">遠古的蛋：N000</a></td>
 			</tr>
 			<tr>
-				<td>對應章節</td>
+				<th>對應章節</th>
 				<td>Sol 18-6
 					<br><a href="/stage.html?s=0-17-5">越獄隧道 - 大逃亡</a></td>
 				<td>Sol 37-6
@@ -1417,14 +1467,14 @@
 					<br><a href="/stage.html?s=9-48">古代神木 - 起源的覺醒</a></td>
 			</tr>
 			<tr>
-				<td>統率力</td>
+				<th>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></th>
 				<td>200</td>
 				<td>250</td>
 				<td>300</td>
 				<td colspan="3">300</td>
 			</tr>
 			<tr>
-				<td>紫獸石</td>
+				<th style="color: #fa1eff;">紫獸石<img loading="lazy" class="icon" src="/img/r/167.png"></th>
 				<td rowspan="2">100% 2顆</td>
 				<td rowspan="2">30% 2顆
 					<br>40% 3顆
@@ -1442,10 +1492,10 @@
 					<br>20% 4顆結晶</td>
 			</tr>
 			<tr>
-				<td>紅獸石</td>
+				<th style="color:#ef5350;">紅獸石<img loading="lazy" class="icon" src="/img/r/168.png"></th>
 			</tr>
 			<tr>
-				<td>蒼獸石</td>
+				<th style="color: #2596be;">蒼獸石<img loading="lazy" class="icon" src="/img/r/169.png"></th>
 				<td rowspan="3"></td>
 				<td rowspan="2">50% 1顆
 					<br>50% 2顆</td>
@@ -1460,11 +1510,11 @@
 					<br>40% 2顆結晶</td>
 			</tr>
 			<tr>
-				<td>翠獸石</td>
+				<th style="color:#558b2f;">翠獸石<img loading="lazy" class="icon" src="/img/r/170.png"></th>
 			</tr>
 			<tr>
-				<td>黃獸石</td>
-				<td></td>
+				<th style="color:#ff8f00;">黃獸石<img loading="lazy" class="icon" src="/img/r/171.png"></th>
+				<td>-</td>
 				<td>100% 1顆</td>
 				<td>70% 1顆
 					<br>30% 2顆</td>
@@ -1476,48 +1526,28 @@
 
 	<h3>超獸討伐關卡</h3>
 	<figure class="table">
-		<table style="text-align:center;">
+		<table>
+			<thead>
+				<tr>
+					<th>關卡</th>
+					<th>項目</th>
+					<th colspan="4">1~4</th>
+					<th colspan="5">5~10</th>
+					<th colspan="6">11~16</th>
+					<th colspan="3">17~19</th>
+				</tr>
+			</thead>
 			<tbody>
 				<tr>
-					<td>關卡</td>
-					<td>獎勵</td>
-					<td>1區</td>
-					<td>2區</td>
-					<td>3區</td>
-					<td>4區</td>
-					<td>5區</td>
-					<td>6區</td>
-					<td>7區</td>
-					<td>8區</td>
-					<td>9區</td>
-					<td>10區</td>
-					<td>11區</td>
-					<td>12區</td>
-					<td>13區</td>
-					<td>14區</td>
-					<td>15區</td>
-					<td>16區</td>
-					<td>17區</td>
-					<td>18區</td>
-					<td>19區</td>
-				</tr>
-				<tr>
-					<td rowspan="4">甲普拉密林</td>
-					<td>統率力</td>
+					<th rowspan="3">甲普拉密林</th>
+					<td>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></td>
 					<td colspan="4">100</td>
 					<td colspan="6">150</td>
 					<td colspan="6">200</td>
 					<td colspan="3">250</td>
 				</tr>
 				<tr>
-					<td>紅磚 / 羽毛</td>
-					<td>35%</td>
-					<td>30%</td>
-					<td colspan="2">20%</td>
-					<td colspan="15"></td>
-				</tr>
-				<tr>
-					<td>紅獸石 / 紫獸石</td>
+					<td><span style="color:#ef5350;">紅獸石<img loading="lazy" class="icon" src="/img/r/168.png"></span> / <span style="color: #fa1eff;">紫獸石<img loading="lazy" class="icon" src="/img/r/167.png"></span></td>
 					<td>15%</td>
 					<td>20%</td>
 					<td colspan="2">30%</td>
@@ -1526,27 +1556,19 @@
 					<td colspan="3">130%</td>
 				</tr>
 				<tr>
-					<td>蒼獸石 / 翠獸石</td>
-					<td colspan="10"></td>
+					<td><span style="color: #2596be;">蒼獸石</span><img loading="lazy" class="icon" src="/img/r/169.png"> / <span style="color:#558b2f;">翠獸石</span><img loading="lazy" class="icon" src="/img/r/170.png"></td>
+					<td colspan="10">-</td>
 					<td colspan="9">5%</td>
 				</tr>
 				<tr>
-					<td rowspan="5">亞蜥比沙漠</td>
-					<td>統率力</td>
+					<th rowspan="4">亞蜥比沙漠</th>
+					<td>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></td>
 					<td colspan="4">150</td>
 					<td colspan="6">200</td>
 					<td colspan="9">250</td>
 				</tr>
 				<tr>
-					<td>黃金 / 神祕骨頭</td>
-					<td>40%</td>
-					<td>35%</td>
-					<td>30%</td>
-					<td>21%</td>
-					<td colspan="15"></td>
-				</tr>
-				<tr>
-					<td>紅獸石 / 紫獸石</td>
+					<td><span style="color:#ef5350;">紅獸石<img loading="lazy" class="icon" src="/img/r/168.png"></span> / <span style="color: #fa1eff;">紫獸石<img loading="lazy" class="icon" src="/img/r/167.png"></span></td>
 					<td>3%</td>
 					<td>4.5%</td>
 					<td>6%</td>
@@ -1556,7 +1578,7 @@
 					<td colspan="3">16%</td>
 				</tr>
 				<tr>
-					<td>蒼獸石 / 翠獸石</td>
+					<td><span style="color: #2596be;">蒼獸石</span><img loading="lazy" class="icon" src="/img/r/169.png"> / <span style="color:#558b2f;">翠獸石</span><img loading="lazy" class="icon" src="/img/r/170.png"></td>
 					<td>7%</td>
 					<td>10.5%</td>
 					<td>14%</td>
@@ -1566,23 +1588,18 @@
 					<td colspan="3">60.5%</td>
 				</tr>
 				<tr>
-					<td>黃獸石</td>
-					<td colspan="10"></td>
+					<td style="color:#ff8f00;">黃獸石<img loading="lazy" class="icon" src="/img/r/171.png"></td>
+					<td colspan="10">-</td>
 					<td colspan="9">5%</td>
 				</tr>
 				<tr>
-					<td rowspan="5">將弗裂火山</td>
-					<td>統率力</td>
+					<th rowspan="4">將弗裂火山</th>
+					<td>統率力<img loading="lazy" class="icon" src="/img/r/105.png"></td>
 					<td colspan="4">200</td>
 					<td colspan="15">250</td>
 				</tr>
 				<tr>
-					<td>宇宙石 / 備長炭 / 鋼製齒輪</td>
-					<td colspan="4">略…</td>
-					<td colspan="15"></td>
-				</tr>
-				<tr>
-					<td>紅獸石 / 紫獸石</td>
+					<td><span style="color:#ef5350;">紅獸石<img loading="lazy" class="icon" src="/img/r/168.png"></span> / <span style="color: #fa1eff;">紫獸石<img loading="lazy" class="icon" src="/img/r/167.png"></span></td>
 					<td rowspan="3">4%</td>
 					<td rowspan="3">6%</td>
 					<td rowspan="3">8%</td>
@@ -1592,11 +1609,11 @@
 					<td colspan="3">16.2%</td>
 				</tr>
 				<tr>
-					<td>蒼獸石 / 翠獸石</td>
+					<td><span style="color: #2596be;">蒼獸石</span><img loading="lazy" class="icon" src="/img/r/169.png"> / <span style="color:#558b2f;">翠獸石</span><img loading="lazy" class="icon" src="/img/r/170.png"></td>
 					<td colspan="3">16.3%</td>
 				</tr>
 				<tr>
-					<td>黃獸石</td>
+					<td style="color:#ff8f00;">黃獸石<img loading="lazy" class="icon" src="/img/r/171.png"></td>
 					<td colspan="6">24%</td>
 					<td colspan="6">25.2%</td>
 					<td colspan="3">35%</td>
@@ -1606,74 +1623,53 @@
 	</figure>
 	<figure class="table">
 		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>7:00 ~ 11:00</th>
+					<th>12:00 ~ 16:00</th>
+					<th>19:00 ~ 23:00</th>
+				</tr>
+			</thead>
 			<tbody>
 				<tr>
-					<td>
-					</td>
-					<td>
-						7:00 ~ 11:00
-					</td>
-					<td>
-						12:00 ~ 16:00
-					</td>
-					<td>
-						19:00 ~ 23:00
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Mon
-					</td>
+					<th>Mon</th>
 					<td style="color:#558b2f;">密林</td>
 					<td style="color:#ff8f00;">沙漠</td>
 					<td style="color:#ef5350;">火山</td>
 				</tr>
 				<tr>
-					<td>
-						Tue</p>
-					</td>
+					<th>Tue</th>
 					<td style="color:#ef5350;">火山</td>
 					<td style="color:#558b2f;">密林</td>
 					<td style="color:#ff8f00;">沙漠</td>
 				</tr>
 				<tr>
-					<td>
-						Wed
-					</td>
+					<th>Wed</th>
 					<td style="color:#ff8f00;">沙漠</td>
 					<td style="color:#ef5350;">火山</td>
 					<td style="color:#558b2f;">密林</td>
 				</tr>
 				<tr>
-					<td>
-						Thu
-					</td>
+					<th>Thu</th>
 					<td style="color:#558b2f;">密林</td>
 					<td style="color:#ff8f00;">沙漠</td>
 					<td style="color:#ef5350;">火山</td>
 				</tr>
 				<tr>
-					<td>
-						Fri
-					</td>
-					<td>
-						火山
-					</td>
+					<th>Fri</th>
+					<td>火山</td>
 					<td style="color:#558b2f;">密林</td>
 					<td style="color:#ff8f00;">沙漠</td>
 				</tr>
 				<tr>
-					<td>
-						Sat
-					</td>
+					<th>Sat</th>
 					<td style="color:#ff8f00;">沙漠</td>
 					<td style="color:#ef5350;">火山</td>
 					<td style="color:#558b2f;">密林</td>
 				</tr>
 				<tr>
-					<td>
-						Sun
-					</td>
+					<th>Sun</th>
 					<td style="color:#558b2f;">密林</td>
 					<td style="color:#ff8f00;">沙漠</td>
 					<td style="color:#ef5350;">火山</td>
@@ -1682,11 +1678,12 @@
 		</table>
 	</figure>
 	<p>※甲普拉密林需要通過世界篇第3章解放，亞蜥比沙漠需要通過未來篇第1章解放，將弗裂火山需要通過未來篇第3章解放
-		<br>※超獸討伐關卡過關獎勵是城堡素材、各種獸石中挑選一個掉落
-		<br>※標示為平均期望值，不是實際掉落機率
-		<br>※如有複數獎勵在同一格，則代表各自的機率，如在「紅獸石 / 紫獸石」標示 4% 代表紅獸石與紫獸石的期望值都是 4%
-		<br>※將弗裂火山的素材掉落機率省略
-		<br>※第 20 區是最終關，只會掉落一次的稀有券</p>
+	<br>※超獸討伐關卡過關獎勵是城堡素材、各種獸石中挑選一個掉落
+	<br>※標示為平均期望值，不是實際掉落機率
+	<br>※如有複數獎勵在同一格，則代表各自的機率，如在「紅獸石 / 紫獸石」標示 4% 代表紅獸石與紫獸石的期望值都是 4%
+	<br>※將弗裂火山的素材掉落機率省略
+	<br>※第 20 區是最終關，只會掉落一次的稀有券</p>
+</div>
 {{/inline}}
 
-{{/gh.html}}
+{{/static.html}}

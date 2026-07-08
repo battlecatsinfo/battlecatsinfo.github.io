@@ -79,7 +79,7 @@ function detail(A, B) {
 	let sum = new Array(10).fill(0);
 	for (let i = 0; i < data.materials.length; ++i) {
 		tr = document.createElement('tr');
-		td = document.createElement('td');
+		td = document.createElement('th');
 		if (B) {
 			td.textContent = 'Lv' + (i + 1);
 		} else {

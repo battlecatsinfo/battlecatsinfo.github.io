@@ -28,13 +28,11 @@
 		--bg: #fff;
 		--color: black;
 		--ac: #4d64ff;
-		--th: #eee;
 	}
 	:root.dark {
 		--bg: #141414;
 		--color: #f8f8f2;
 		--ac: #7c8eff;
-		--th: #2f2f2f;
 	}
 	.w3-card {
 		box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -163,9 +161,19 @@
 		padding-left: 1.5em;
 		line-height: 2.4em;
 	}
-	th {
-		background-color: var(--th);
+	thead th {
+    	background-color: #cfcfcf;
+	    border: 1px solid #b2b2b2;
+	}
+	tbody th {
 		font-weight: normal;
+		background-color: #e2e2e2;
+	}
+	:root.dark thead th {
+		background-color: #2f2f2f !important;
+	}
+	:root.dark tbody th {
+		background-color: #2f2f2f !important;
 	}
 	.C th,
 	.C td {

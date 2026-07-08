@@ -2,6 +2,15 @@
 
 {{#*inline "title"}}城堡寶開發隊{{/inline}}
 
+{{#*inline "styles-inline"}}
+	{{~> @partial-block}}
+	<style>
+		table {
+			white-space: nowrap;
+		}
+	</style>
+{{/inline}}
+
 {{#*inline "scripts"}}
 	{{~> @partial-block}}
 	<script src="ototo.js" type="module"></script>
@@ -133,20 +142,22 @@
 		<div>　　滿世界、未來篇寶物的數值，滿世界篇寶物攻擊力 +1,500，滿未來篇攻擊力 +1,500， <span style="color:#b629d4">貓咪砲攻擊力</span>每提升一級傷害 +50（幾乎沒有）。 </div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th></th>
 					<th>
-						<div>攻擊力</div>
+						攻擊力
 					</th>
 					<th>
-						<div>充電時間</div>
+						充電時間
 					</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>
-						<div>Lv19（最速砲）</div>
-					</td>
+					<th>
+						Lv19（最速砲）
+					</th>
 					<td>
 						<div>
 							<span style="color:#5724c2">4000</span>
@@ -157,16 +168,16 @@
 					</td>
 				</tr>
 				<tr>
-					<td>
-						<div>Lv20+10（最遲砲）</div>
-					</td>
+					<th>
+						Lv20+10（最遲砲）
+					</th>
 					<td>
 						<div>
 							<span style="color:#fb5f2c">4550</span>
 						</div>
 					</td>
 					<td>
-						<div>1500F（50秒）</div>
+						1500F（50秒）
 					</td>
 				</tr>
 			</tbody>
@@ -174,7 +185,7 @@
 		<div>貓咪砲攻擊力詳細</div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>貓咪砲攻擊力</th>
 					<th>攻擊力</th>
@@ -183,86 +194,88 @@
 					<th>貓咪砲攻擊力</th>
 					<th>攻擊力</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>Lv1</td>
+					<th>Lv1</th>
 					<td>3100</td>
-					<td>Lv11</td>
+					<th>Lv11</th>
 					<td>3600</td>
-					<td>Lv20+1</td>
+					<th>Lv20+1</th>
 					<td>4100</td>
 				</tr>
 				<tr>
-					<td>Lv2</td>
+					<th>Lv2</th>
 					<td>3150</td>
-					<td>Lv12</td>
+					<th>Lv12</th>
 					<td>3650</td>
-					<td>Lv20+2</td>
+					<th>Lv20+2</th>
 					<td>4150</td>
 				</tr>
 				<tr>
-					<td>Lv3</td>
+					<th>Lv3</th>
 					<td>3200</td>
-					<td>Lv13</td>
+					<th>Lv13</th>
 					<td>3700</td>
-					<td>Lv20+3</td>
+					<th>Lv20+3</th>
 					<td>4200</td>
 				</tr>
 				<tr>
-					<td>Lv4</td>
+					<th>Lv4</th>
 					<td>3250</td>
-					<td>Lv14</td>
+					<th>Lv14</th>
 					<td>3750</td>
-					<td>Lv20+4</td>
+					<th>Lv20+4</th>
 					<td>4250</td>
 				</tr>
 				<tr>
-					<td>Lv5</td>
+					<th>Lv5</th>
 					<td>3300</td>
-					<td>Lv15</td>
+					<th>Lv15</th>
 					<td>3800</td>
-					<td>Lv20+5</td>
+					<th>Lv20+5</th>
 					<td>4300</td>
 				</tr>
 				<tr>
-					<td>Lv6</td>
+					<th>Lv6</th>
 					<td>3350</td>
-					<td>Lv16</td>
+					<th>Lv16</th>
 					<td>3850</td>
-					<td>Lv20+6</td>
+					<th>Lv20+6</th>
 					<td>4350</td>
 				</tr>
 				<tr>
-					<td>Lv7</td>
+					<th>Lv7</th>
 					<td>3400</td>
-					<td>Lv17</td>
+					<th>Lv17</th>
 					<td>3900</td>
-					<td>Lv20+7</td>
+					<th>Lv20+7</th>
 					<td>4400</td>
 				</tr>
 				<tr>
-					<td>Lv8</td>
+					<th>Lv8</th>
 					<td>3450</td>
-					<td>Lv18</td>
+					<th>Lv18</th>
 					<td>3950</td>
-					<td>Lv20+8</td>
+					<th>Lv20+8</th>
 					<td>4450</td>
 				</tr>
 				<tr>
-					<td>Lv9</td>
+					<th>Lv9</th>
 					<td>3500</td>
-					<td>Lv19</td>
+					<th>Lv19</th>
 					<td>
 						<span style="color:#5724c2">4000</span>
 					</td>
-					<td>Lv20+9</td>
+					<th>Lv20+9</th>
 					<td>4500</td>
 				</tr>
 				<tr>
-					<td>Lv10</td>
+					<th>Lv10</th>
 					<td>3550</td>
-					<td>Lv20</td>
+					<th>Lv20</th>
 					<td>4050</td>
-					<td>Lv20+10</td>
+					<th>Lv20+10</th>
 					<td>
 						<span style="color:#fb5f2c">4550</span>
 					</td>
@@ -274,53 +287,57 @@
 		<div>　　升級可提升貓咪城的體力，同樣影響貓咪城體力的還有升級畫面的「城堡體力」、世界篇、未來篇的寶物。大多數情況塔體力對攻略影響不大，不過到最後還是會升滿的。</div>
 		<h3>城堡體力表格</h3>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>城堡體力（開發隊）</th>
 					<th>效果</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>Lv1~Lv10</td>
+					<th>Lv1~Lv10</th>
 					<td>每提升一級，城體力+3600</td>
 				</tr>
 				<tr>
-					<td>Lv11~Lv30</td>
+					<th>Lv11~Lv30</th>
 					<td>每提升一級，城體力+4000</td>
 				</tr>
 			</tbody>
 		</table>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>說明</th>
 					<th>城體力</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>遊戲開始</td>
+					<th>遊戲開始</th>
 					<td>1000</td>
 				</tr>
 				<tr>
-					<td>滿科技（Lv20+10）</td>
+					<th>滿科技（Lv20+10）</th>
 					<td>78,000</td>
 				</tr>
 				<tr>
-					<td>滿科技、滿世界篇寶物</td>
+					<th>滿科技、滿世界篇寶物</th>
 					<td>99,000</td>
 				</tr>
 				<tr>
-					<td>滿科技、滿世界篇、未來篇寶物</td>
+					<th>滿科技、滿世界篇、未來篇寶物</th>
 					<td>12,0000</td>
 				</tr>
 				<tr>
-					<td>滿科技、滿世界篇、未來篇寶物、開發隊Lv10</td>
+					<th>滿科技、滿世界篇、未來篇寶物、開發隊Lv10</th>
 					<td>156,000</td>
 				</tr>
 				<tr>
-					<td>滿科技、滿世界篇、未來篇寶物、開發隊Lv20</td>
+					<th>滿科技、滿世界篇、未來篇寶物、開發隊Lv20</th>
 					<td>196,000</td>
 				</tr>
 				<tr>
-					<td>滿科技、滿世界篇、未來篇寶物、滿開發隊（Lv30）</td>
+					<th>滿科技、滿世界篇、未來篇寶物、滿開發隊（Lv30）</th>
 					<td>236,000（最大）</td>
 				</tr>
 			</tbody>
@@ -335,27 +352,29 @@
 		<div>　　低速砲可以有效的阻擋敵人前進，其效果時間僅次於詛咒砲與鐵壁砲。作用的對象是所有被打到的敵人，可以有效的阻擋燕子、古代松鼠、古代河豚等砲速快的敵人前進，或是碰塔後發射低速砲，使敵人卡在塔前，如 <a target="_blank" href="https://www.youtube.com/watch?v=-VHjWWXGCwk">這部影片</a>中在大河童出來後使用低速砲，使大河童和小怪卡在塔前，以利飛腳爆塔。 </div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>等級</th>
 					<th>使動作變慢時間</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>Lv1</td>
+					<th>Lv1</th>
 					<td>30F（1秒）</td>
 				</tr>
 				<tr>
-					<td>Lv10（最速砲）</td>
+					<th>Lv10（最速砲）</th>
 					<td>
 						<span style="color:#5724c2">50F（1.67秒）</span>
 					</td>
 				</tr>
 				<tr>
-					<td>Lv20</td>
+					<th>Lv20</th>
 					<td>100F（3.33秒）</td>
 				</tr>
 				<tr>
-					<td>Lv30（最遲砲）</td>
+					<th>Lv30（最遲砲）</th>
 					<td>
 						<span style="color:#fb5f2c">150F（5秒）</span>
 					</td>
@@ -382,31 +401,33 @@
 		<div>　　和低速砲類似，都是阻擋敵人前進，不過被鐵壁砲的敵人會停下來攻擊鐵壁砲，常用在速攻與阻擋敵人前進中。如果是單體攻擊的敵人，則可以擋下攻擊時我方角色不受到傷害。另外，如果有變成屍體的不死生物，鐵壁砲會出現在屍體前面，鐵壁砲也會引發不死敵人鑽地。還有顧名思義，強化鐵壁砲需要大量的鋼鐵齒輪。</div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>等級</th>
 					<th>體力</th>
 					<th>持續時間</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>Lv1</td>
+					<th>Lv1</th>
 					<td>5</td>
 					<td>60F（2秒）</td>
 				</tr>
 				<tr>
-					<td>Lv10（最速砲）</td>
+					<th>Lv10（最速砲）</th>
 					<td>14</td>
 					<td>
 						<span style="color:#5724c2">90F（3秒）</span>
 					</td>
 				</tr>
 				<tr>
-					<td>Lv20</td>
+					<th>Lv20</th>
 					<td>16</td>
 					<td>135F（4.5秒）</td>
 				</tr>
 				<tr>
-					<td>Lv30（最遲砲）</td>
+					<th>Lv30（最遲砲）</th>
 					<td>18</td>
 					<td>
 						<span style="color:#fb5f2c">180F（6秒）</span>
@@ -428,27 +449,29 @@
 		<div>　　因為閃雷砲的效果是所有貓砲中最強勢的，所以作用時間也是最短。閃雷砲打所有幾乎所有的敵人都有不錯的效果，不果要注意不要使用在河豚等 KB 數高的敵人，因為他們受到微量傷害就會 KB 並攻擊我方敵人。</div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>等級</th>
 					<th>使動作停止時間</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>Lv1</td>
+					<th>Lv1</th>
 					<td>15F（0.5秒）</td>
 				</tr>
 				<tr>
-					<td>Lv10（最速砲）</td>
+					<th>Lv10（最速砲）</th>
 					<td>
 						<span style="color:#5724c2">30F（1秒）</span>
 					</td>
 				</tr>
 				<tr>
-					<td>Lv20</td>
+					<th>Lv20</th>
 					<td>60F（2秒）</td>
 				</tr>
 				<tr>
-					<td>Lv30（最遲砲）</td>
+					<th>Lv30（最遲砲）</th>
 					<td>
 						<span style="color:#fb5f2c">90F（3秒）</span>
 					</td>
@@ -472,27 +495,29 @@
 		<div>　　在最速砲中，水喉砲的效果不明顯，但是在最遲砲中，水喉砲的傷害得到很大的強化，可以用在高體力的鋼鐵敵人 - 如鋼鐵海豹，不果後續的傷害也會隨著敵人體力下降而降低。</div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>等級</th>
 					<th>傷害比例</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>Lv1</td>
+					<th>Lv1</th>
 					<td>11%</td>
 				</tr>
 				<tr>
-					<td>Lv10（最速砲）</td>
+					<th>Lv10（最速砲）</th>
 					<td>
 						<span style="color:#5724c2">20%</span>
 					</td>
 				</tr>
 				<tr>
-					<td>Lv20</td>
+					<th>Lv20</th>
 					<td>35%</td>
 				</tr>
 				<tr>
-					<td>Lv30（最遲砲）</td>
+					<th>Lv30（最遲砲）</th>
 					<td>
 						<span style="color:#fb5f2c">45%</span>
 					</td>
@@ -520,21 +545,23 @@
 		<div>　　最遲砲天使砲的優勢是能減少大量不死生物的體力，尤其是地下的不死生物，成為對不死生物強大的武器。最速砲天使砲的優勢是能過增加挖起不死生物的頻率。</div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>等級</th>
 					<th>攻擊力（地上）</th>
 					<th>攻擊力（地下）</th>
 					<th>使動作停止時間</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>Lv1</td>
+					<th>Lv1</th>
 					<td>0.5%</td>
 					<td>10%</td>
 					<td>30F（1秒）</td>
 				</tr>
 				<tr>
-					<td>Lv10（最速砲）</td>
+					<th>Lv10（最速砲）</th>
 					<td>
 						<span style="color:#5724c2">2.5%</span>
 					</td>
@@ -546,13 +573,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Lv20</td>
+					<th>Lv20</th>
 					<td>10%</td>
 					<td>30%</td>
 					<td>60F（2秒）</td>
 				</tr>
 				<tr>
-					<td>Lv30（最遲砲）</td>
+					<th>Lv30（最遲砲）</th>
 					<td>
 						<span style="color:#fb5f2c">15%</span>
 					</td>
@@ -586,19 +613,21 @@
 		<div>　　由於升級斬盾砲提升的攻擊力和範圍用途不大，最速砲相比最遲砲充能斬盾砲的時間較短，通常會速砲會比最遲砲在斬盾砲中還有優勢。</div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>等級</th>
 					<th>攻擊力</th>
 					<th>半徑 （範圍=2半徑）</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>Lv1</td>
+					<th>Lv1</th>
 					<td>30%</td>
 					<td>80</td>
 				</tr>
 				<tr>
-					<td>Lv10（最速砲）</td>
+					<th>Lv10（最速砲）</th>
 					<td>
 						<span style="color:#5724c2">50%</span>
 					</td>
@@ -607,12 +636,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Lv20</td>
+					<th>Lv20</th>
 					<td>100%</td>
 					<td>160</td>
 				</tr>
 				<tr>
-					<td>Lv30（最遲砲）</td>
+					<th>Lv30（最遲砲）</th>
 					<td>
 						<span style="color:#fb5f2c">150%</span>
 					</td>
@@ -638,27 +667,29 @@
 		<div>　　詛咒砲可以將封應敵人的特殊效果，包含攻擊力下降、使動作停止、使動作變慢、詛咒、毒擊、傳送、打飛、攻擊無效，最高可以持續 6 秒，是效果最常的貓砲（和鐵壁砲同等）。通常用在有特殊妨害效果的敵人身上，如聖者波普、阿龜我王等。</div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>等級</th>
 					<th>詛咒時間</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>Lv1</td>
+					<th>Lv1</th>
 					<td>33F（1.1秒）</td>
 				</tr>
 				<tr>
-					<td>Lv10（最速砲）</td>
+					<th>Lv10（最速砲）</th>
 					<td>
 						<span style="color:#5724c2">60F（2秒）</span>
 					</td>
 				</tr>
 				<tr>
-					<td>Lv20</td>
+					<th>Lv20</th>
 					<td>120F（4秒）</td>
 				</tr>
 				<tr>
-					<td>Lv30（最遲砲）</td>
+					<th>Lv30（最遲砲）</th>
 					<td>
 						<span style="color:#fb5f2c">180F（6秒）</span>
 					</td>
@@ -679,91 +710,93 @@
 		<div>最速砲與最遲砲比較</div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th colspan="2"></th>
 					<th>最速砲</th>
 					<th>最遲砲</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td colspan="2">貓咪砲攻擊力等級</td>
+					<th colspan="2">貓咪砲攻擊力等級</th>
 					<td>Lv9+10</td>
 					<td>Lv20+10</td>
 				</tr>
 				<tr>
-					<td colspan="2">貓咪砲攻擊力</td>
+					<th colspan="2">貓咪砲攻擊力</th>
 					<td>4000</td>
 					<td>4550</td>
 				</tr>
 				<tr>
-					<td colspan="2">充電時間</td>
+					<th colspan="2">充電時間</th>
 					<td>950F（31.6秒）</td>
 					<td>1500F（50秒）</td>
 				</tr>
 				<tr>
-					<td colspan="2">特殊砲上限</td>
+					<th colspan="2">特殊砲上限</th>
 					<td>Lv10</td>
 					<td>Lv30</td>
 				</tr>
 				<tr>
-					<td>低速砲</td>
-					<td>使動作變慢時間</td>
+					<th>低速砲</th>
+					<th>使動作變慢時間</th>
 					<td>50F（1.67秒）</td>
 					<td>180F（6秒）</td>
 				</tr>
 				<tr>
-					<td rowspan="2">鐵壁砲</td>
-					<td>持續時間</td>
+					<th rowspan="2">鐵壁砲</th>
+					<th>持續時間</th>
 					<td>90F（3秒）</td>
 					<td>180F（6秒）</td>
 				</tr>
 				<tr>
-					<td>體力</td>
+					<th>體力</th>
 					<td>14</td>
 					<td>18</td>
 				</tr>
 				<tr>
-					<td>閃雷砲</td>
-					<td>使動作停止時間</td>
+					<th>閃雷砲</th>
+					<th>使動作停止時間</th>
 					<td>30F（1秒）</td>
 					<td>90F（3秒）</td>
 				</tr>
 				<tr>
-					<td>水喉砲</td>
-					<td>傷害</td>
+					<th>水喉砲</th>
+					<th>傷害</th>
 					<td>20%</td>
 					<td>45%</td>
 				</tr>
 				<tr>
-					<td rowspan="3">天使砲</td>
-					<td>傷害（地上）</td>
+					<th rowspan="3">天使砲</th>
+					<th>傷害（地上）</th>
 					<td>2.5%</td>
 					<td>15%</td>
 				</tr>
 				<tr>
-					<td>傷害（地下）</td>
+					<th>傷害（地下）</th>
 					<td>15%</td>
 					<td>40%</td>
 				</tr>
 				<tr>
-					<td>使動作停止時間</td>
+					<th>使動作停止時間</th>
 					<td>45F（1.5秒）</td>
 					<td>75（2.5秒）</td>
 				</tr>
 				<tr>
-					<td rowspan="2">斬盾砲</td>
-					<td>攻擊力</td>
+					<th rowspan="2">斬盾砲</th>
+					<th>攻擊力</th>
 					<td>50%</td>
 					<td>150%</td>
 				</tr>
 				<tr>
-					<td>範圍</td>
+					<th>範圍</th>
 					<td>320</td>
 					<td>400</td>
 				</tr>
 				<tr>
-					<td>詛咒砲</td>
-					<td>詛咒時間</td>
+					<th>詛咒砲</th>
+					<th>詛咒時間</th>
 					<td>33F（1.1秒）</td>
 					<td>180F（6秒）</td>
 				</tr>
@@ -772,7 +805,7 @@
 		<div>打飛效果</div>
 		<br>
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th>項目</th>
 					<th>打飛</th>
@@ -781,8 +814,10 @@
 					<th>貓咪砲</th>
 					<th>震波</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
-					<td>說明</td>
+					<th>說明</th>
 					<td>角色、敵人的打飛「效果」、斬盾砲</td>
 					<td>角色、敵人受到一定傷害後被擊退</td>
 					<td>狙擊道具</td>
@@ -790,7 +825,7 @@
 					<td>BOSS（魔王）登場</td>
 				</tr>
 				<tr>
-					<td>後退距離</td>
+					<th>後退距離</th>
 					<td>214.5</td>
 					<td>345</td>
 					<td>55</td>
@@ -798,7 +833,7 @@
 					<td>705</td>
 				</tr>
 				<tr>
-					<td>判定消滅F</td>
+					<th>判定消滅F</th>
 					<td>12F（0.4秒）</td>
 					<td>24F（0.8秒）</td>
 					<td>12F（0.4秒）</td>

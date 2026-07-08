@@ -31,28 +31,32 @@
 	<div style="font-style:italic;text-align:center;">{{treasure.desc}}</div>
 	<img width="600" height="241" alt="treasure" loading="lazy" src="{{treasure.img}}">
 	<table>
-		<tr>
-			<th>台版關卡</th>
-			<th>寶物</th>
-			<th>日版關卡</th>
-			<th>寶物</th>
-			<th>國際版關卡</th>
-			<th>寶物</th>
-			<th>韓版關卡</th>
-			<th>寶物</th>
-		</tr>
+		<thead>
+			<tr>
+				<th>台版關卡</th>
+				<th>寶物</th>
+				<th>日版關卡</th>
+				<th>寶物</th>
+				<th>國際版關卡</th>
+				<th>寶物</th>
+				<th>韓版關卡</th>
+				<th>寶物</th>
+			</tr>
+		</thead>
+		<tbody>
 		{{#each treasure.content as |item|}}
-		<tr>
-			<td><a href="/stage.html?s=3-{{item.[0]}}">{{item.[1]}}</a></td>
-			<td>{{item.[2]}}</td>
-			<td>{{item.[3]}}</td>
-			<td>{{item.[4]}}</td>
-			<td>{{item.[5]}}</td>
-			<td>{{item.[6]}}</td>
-			<td>{{item.[7]}}</td>
-			<td>{{item.[8]}}</td>
-		</tr>
+			<tr>
+				<th><a href="/stage.html?s=3-{{item.[0]}}">{{item.[1]}}</a></th>
+				<td>{{item.[2]}}</td>
+				<th>{{item.[3]}}</th>
+				<td>{{item.[4]}}</td>
+				<th>{{item.[5]}}</th>
+				<td>{{item.[6]}}</td>
+				<th>{{item.[7]}}</th>
+				<td>{{item.[8]}}</td>
+			</tr>
 		{{/each}}
+		</tbody>
 	</table>
 	{{/each}}
 {{/with}}
