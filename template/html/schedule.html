@@ -1,10 +1,23 @@
-{{#> gh.html nav_bar_active="schedule"}}
+{{#> static.html nav_bar_active="schedule"}}
 
 {{#*inline "title"}}貓咪大戰爭 關卡表{{/inline}}
 
 {{#*inline "styles-inline"}}
 	{{~> @partial-block}}
 	<style>
+		table {
+			display: block;
+			width: max-content;
+			max-width: 100%;
+			overflow: auto;
+			white-space: nowrap;
+		}
+		.icon-table td {
+			padding-left: 0;
+			padding-right: 0;
+			padding-top: .25em;
+			padding-bottom: 0;
+		}
 		.image-box {
 			max-width: 90%;
 			max-height: 600px;
@@ -75,13 +88,22 @@
 			color: white;
 			transform: scale(1.1);
 		}
-
+		.icon {
+			vertical-align: middle;
+			height: 1.5em;
+			width: auto;
+		}
+		.icon-l {
+			vertical-align: middle;
+			height: 2.5em;
+			width: auto;
+		}
 	</style>
 {{/inline}}
 
 {{#*inline "content"}}
+	<div class="E">
 	<h3>參考資料：<a href="https://forum.gamer.com.tw/C.php?bsn=23772&snA=20534">【情報】貓咪大戰爭本家常駐&非常駐活動日程</a></h3>
-	<h5>資訊版本：15.3 (2026-05-18)</h5>
 	<h2>月份關卡</h2>
 	<table>
 		<thead>
@@ -103,7 +125,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<th>月份貓取得</th>
+				<th><b>月份貓取得</b><br><small>（整月開放）</small></th>
 				<td><a href="stage.html?s=1-11">新年快樂？</a></td>
 				<td><a href="stage.html?s=1-12">被召喚的福！</a></td>
 				<td><a href="stage.html?s=1-13">人偶架上的戰士們</a></td>
@@ -118,7 +140,7 @@
 				<td><a href="stage.html?s=1-10">聖誕節居然來了！</a></td>
 			</tr>
 			<tr>
-				<td>月份貓開眼</td>
+				<th><b>月份貓開眼</b><br><small>（整月開放）</small></th>
 				<td><a href="stage.html?s=1-83">開眼成人貓來襲！</a></td>
 				<td><a href="stage.html?s=1-84">開眼我是鬼來襲！</a></td>
 				<td><a href="stage.html?s=1-85">開眼人偶貓咪來襲！</a></td>
@@ -133,7 +155,7 @@
 				<td><a href="stage.html?s=1-94">開眼的馴鹿魚來襲！</a></td>
 			</tr>
 			<tr>
-				<td>G券</td>
+				<th><b>G券</b><br><small>（整月開放）</small></th>
 				<td><a href="stage.html?s=1-184">新年快樂了？</a></td>
 				<td><a href="stage.html?s=1-186">再次被召喚的福！</a></td>
 				<td><a href="stage.html?s=1-192">人偶架上的戰士們特別版</a></td>
@@ -148,7 +170,7 @@
 				<td><a href="stage.html?s=1-175">宇宙中聖誕節居然也來了！</a></td>
 			</tr>
 			<tr>
-				<td>月間強襲</td>
+				<th><b>月間強襲</b><br><small>（每月 16 號前）</small></th>
 				<td><a href="stage.html?s=11-32">1月強襲！</a></td>
 				<td><a href="stage.html?s=11-39">2月強襲！</a></td>
 				<td><a href="stage.html?s=11-43">3月強襲！</a></td>
@@ -163,7 +185,7 @@
 				<td><a href="stage.html?s=11-30">12月強襲！</a></td>
 			</tr>
 			<tr>
-				<td>續・月間強襲</td>
+				<th><b>續・月間強襲</b><br><small>（每月 16 號後）</small></th>
 				<td><a href="stage.html?s=11-33">續・1月強襲</a></td>
 				<td><a href="stage.html?s=11-40">續・2月強襲</a></td>
 				<td><a href="stage.html?s=11-44">續・3月強襲</a></td>
@@ -180,7 +202,143 @@
 		</tbody>
 	</table>
 
+	<h2>寶物嘉年華</h2>
+	<p>
+	每月 22 日為貓咪紀念日，世界篇、未來篇、宇宙篇全天開放寶物嘉年華。<br>
+	每週三為水曜貓咪日，可獲得隨機一隻 Lv30 角色升級 XP 減半（需通過世界篇第一章），狂亂、極難、游擊經驗關卡失敗後返回統率力，世界篇、未來篇、宇宙篇、傳奇關卡、真傳奇關卡統率力 1/2（全天開放，可和寶物嘉年華重疊），且登入即可領取首領旗 x1。<br>
+	另外，開放加碼多多 XP 限定區域（效率較低不推薦），當日 08:00～10:00、12:00～14:00、19:00～21:00 開放貓薄荷挑戰。<br>
+	<br>
+	除此之外，不定期舉開寶物嘉年華活動，時間如下（可開啟遊戲內日程表查看）。
+	</p>
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>12:00 ~ 13:00</th>
+				<th>17:00 ~ 18:00</th>
+				<th>19:00 ~ 20:00</th>
+				<th>21:00 ~ 22:00</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>星期一</th>
+				<td>世界篇</td>
+				<td>未來篇</td>
+				<td>-</td>
+				<td>宇宙篇</td>
+			</tr>
+			<tr>
+				<th>星期二</th>
+				<td>未來篇</td>
+				<td>宇宙篇</td>
+				<td>-</td>
+				<td>世界篇</td>
+			</tr>
+			<tr>
+				<th>星期三</th>
+				<td>未來篇</td>
+				<td>宇宙篇</td>
+				<td>-</td>
+				<td>世界篇</td>
+			</tr>
+			<tr>
+				<th>星期四</th>
+				<td>宇宙篇</td>
+				<td>世界篇</td>
+				<td>-</td>
+				<td>未來篇</td>
+			</tr>
+			<tr>
+				<th>星期五</th>
+				<td>世界篇</td>
+				<td>宇宙篇</td>
+				<td>-</td>
+				<td>未來篇</td>
+			</tr>
+			<tr>
+				<th>星期六</th>
+				<td>世界篇 / 未來篇 / 宇宙篇</td>
+				<td>-</td>
+				<td>世界篇 / 未來篇 / 宇宙篇</td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<th>星期日</th>
+				<td>世界篇 / 未來篇 / 宇宙篇</td>
+				<td>-</td>
+				<td>世界篇 / 未來篇 / 宇宙篇</td>
+				<td>-</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>寶物掉落率</p>
+	<table>
+		<thead>
+			<tr>
+				<th>基礎掉落率 A</th>
+				<th>寶物嘉年華 B</th>
+				<th>已清除該區域<br>的不死入侵 C</th>
+				<th>實際掉落率 D</th>
+				<th>原始狀態</th>
+				<th colspan="2">機率</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td rowspan="10">35%</td>
+				<td rowspan="10">70%</td>
+				<td rowspan="10">50%</td>
+				<td rowspan="10">A, B, C 取最大值</td>
+				<td rowspan="4">無寶物</td>
+				<td>無掉落</td>
+				<td>100% - D</td>
+			</tr>
+			<tr>
+				<td>粗劣的</td>
+				<td>D × 45%</td>
+			</tr>
+			<tr>
+				<td>普通的</td>
+				<td>D × 30%</td>
+			</tr>
+			<tr>
+				<td>最棒的</td>
+				<td>D × 25%</td>
+			</tr>
+			<tr>
+				<td rowspan="3"> 已獲得粗劣 </td>
+				<td>無掉落</td>
+				<td>100% - D%</td>
+			</tr>
+			<tr>
+				<td>普通的</td>
+				<td>D × 70%</td>
+			</tr>
+			<tr>
+				<td>最棒的</td>
+				<td>D × 30%</td>
+			</tr>
+			<tr>
+				<td rowspan="2">已獲得普通</td>
+				<td>無掉落</td>
+				<td>100% - D</td>
+			</tr>
+			<tr>
+				<td>最棒的</td>
+				<td>D</td>
+			</tr>
+			<tr>
+				<td>已獲得最棒</td>
+				<td>最棒的</td>
+				<td>100%</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>詳見<a target="_blank" href="/treasure_list.html">寶物與關卡對照表</a>及<a target="_blank" href="/settings.html">設定</a>頁面有寶物詳細關卡和效果</p>
+
 	<h2>招福轉蛋券</h2>
+	<p>可用於抽取小小貓</p>
 	<ul>
 		<li><a href="stage.html?s=1-160">加油！入考大戰爭</a>（約2月開始）</li>
 		<li><a href="stage.html?s=1-140">日進斗金 淘金夢</a>（約4月底開始）</li>
@@ -191,16 +349,30 @@
 		<li><a href="stage.html?s=1-125">貓咪雪祭</a>（約12月底開始）</li>
 	</ul>
 
+	<h2>每週日程</h2>
+	<p>點擊圖片以查看</p>
+	<img src="/img/misc/schedule_WeeklyEvents_v6.0.2_bcinfo.png" class="image-box">
+
 	<h2>道具關卡</h2>
 	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>星期一</th>
+				<th>星期二</th>
+				<th>星期三</th>
+				<th>星期四</th>
+				<th>星期五</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td>全天開放</td>
-				<td><a href="stage.html?s=1-0">星期一關卡</a></td>
-				<td><a href="stage.html?s=1-1">星期二關卡</a></td>
-				<td><a href="stage.html?s=1-2">星期三關卡</a></td>
-				<td><a href="stage.html?s=1-3">星期四關卡</a></td>
-				<td><a href="stage.html?s=1-4">星期五關卡</a></td>
+				<th>全天開放</th>
+				<th><a href="stage.html?s=1-0">星期一關卡</a></th>
+				<th><a href="stage.html?s=1-1">星期二關卡</a></th>
+				<th><a href="stage.html?s=1-2">星期三關卡</a></th>
+				<th><a href="stage.html?s=1-3">星期四關卡</a></th>
+				<th><a href="stage.html?s=1-4">星期五關卡</a></th>
 			</tr>
 			<tr>
 				<td>獎勵</td>
@@ -211,12 +383,12 @@
 				<td>100% 貓型電腦 ×1</td>
 			</tr>
 			<tr>
-				<td>限時開放</td>
-				<td><a href="stage.html?s=1-73">游擊星期一關卡</a></td>
-				<td><a href="stage.html?s=1-74">游擊星期二關卡</a></td>
-				<td><a href="stage.html?s=1-75">游擊星期三關卡</a></td>
-				<td><a href="stage.html?s=1-76">游擊星期四關卡</a></td>
-				<td><a href="stage.html?s=1-77">游擊星期五關卡</a></td>
+				<th>限時開放</th>
+				<th><a href="stage.html?s=1-73">游擊星期一關卡</a></th>
+				<th><a href="stage.html?s=1-74">游擊星期二關卡</a></th>
+				<th><a href="stage.html?s=1-75">游擊星期三關卡</a></th>
+				<th><a href="stage.html?s=1-76">游擊星期四關卡</a></th>
+				<th><a href="stage.html?s=1-77">游擊星期五關卡</a></th>
 			</tr>
 			<tr>
 				<td>獎勵</td>
@@ -228,24 +400,141 @@
 			</tr>
 		</tbody>
 	</table>
+	<p>※限時開放時間： 當日 08:00~09:00、12:00~13:00、19:00~20:00</p>
 	<h2>貓薄荷關卡</h2>
 	<table>
 		<thead>
 			<tr>
-				<th>無限期開放</th>
-				<th>星期三限時開放<br>週末不定期限時開放</th>
-				<th>週末限時開放</th>
-				<th>每天限時開放</th>
-				<th>每天限時開放</th>
+				<th>關卡名稱</th>
+				<th>解放條件</th>
+				<th>開放時間</th>
+				<th>備註</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td><a href="stage.html?s=1-422">進化的貓薄荷</a></td>
-				<td><a href="stage.html?s=1-118">貓薄荷挑戰</a></td>
-				<td><a href="stage.html?s=1-222">進化的彩虹貓薄荷</a></td>
-				<td><a href="stage.html?s=1-162">進化的古代貓薄荷</a></td>
-				<td><a href="stage.html?s=1-274">進化的惡貓薄荷</a></td>
+				<th><a href="stage.html?s=1-422">進化的貓薄荷</a></th>
+				<td>通過世界篇第3章</td>
+				<td>全天</td>
+				<td>15% 進入 EX 關卡，有機率獲得彩虹貓薄荷。</td>
+			</tr>
+			<tr>
+				<th><a href="stage.html?s=1-118">貓薄荷挑戰</a></th>
+				<td>通過世界篇第3章</td>
+				<td>活動開放、週三</td>
+				<td>CP 值高，必定出現彩虹貓薄荷 EX關卡。</td>
+			</tr>
+			<tr>
+				<th><a href="stage.html?s=1-222">進化的彩虹貓薄荷</a></th>
+				<td>通過「真傳奇故事 1-1」</td>
+				<td>週末限時開放</td>
+				<td>關卡解放難度高，取得彩虹貓薄荷種子的主要管道。</td>
+			</tr>
+			<tr>
+				<th><a href="stage.html?s=1-162">進化的古代貓薄荷</a></th>
+				<td>通過所有的傳奇故事</td>
+				<td>每天限時開放</td>
+				<td>初關不掉落，100% 進入 7 種 EX 關卡之一。</td>
+			</tr>
+			<tr>
+				<th><a href="stage.html?s=1-274">進化的惡貓薄荷</a></th>
+				<td>通過「解放的貓咪們」</td>
+				<td>每天限時開放</td>
+				<td>後 2 關受惡魔城影響，掉落機率較高。</td>
+			</tr>
+		</tbody>
+	</table>
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>07:00 ~ 09:00</th>
+				<th>10:00 ~ 12:00</th>
+				<th>11:00 ~ 14:00</th>
+				<th>12:00 ~ 14:00</th>
+				<th>15:00 ~ 17:00</th>
+				<th>18:00 ~ 21:00</th>
+				<th>19:00 ~ 21:00</th>
+				<th>21:00 ~ 23:00</th>
+			</tr>
+		</thead>
+		<tbody class="icon-table">
+			<tr>
+				<th>星期一</th>
+				<td><img loading="lazy" class="icon-l" src="/img/r/42.png"></td>
+				<td>-</td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/161.png"></td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<th>星期二</th>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/42.png"></td>
+				<td>-</td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/161.png"></td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<th>星期三</th>
+				<td><img loading="lazy" class="icon-l" src="/img/r/161.png"></td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/42.png"></td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<th>星期四</th>
+				<td><img loading="lazy" class="icon-l" src="/img/r/42.png"></td>
+				<td>-</td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/161.png"></td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<th>星期五</th>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/42.png"></td>
+				<td>-</td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/161.png"></td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<th>星期六</th>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/161.png"></td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/43.png"></td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/42.png"></td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/161.png"></td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/42.png"></td>
+			</tr>
+			<tr>
+				<th>星期日</th>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/42.png"></td>
+				<td>-</td>
+				<td>-</td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/161.png"></td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/43.png"></td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/42.png"></td>
+				<td><img loading="lazy" class="icon-l" src="/img/r/161.png"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -253,54 +542,74 @@
 	<table>
 		<thead>
 			<tr>
-				<th>星期一</th>
-				<th colspan="2">星期二</th>
-				<th>星期三</th>
-				<th>星期四</th>
-				<th>星期五</th>
-				<th>星期五</th>
-				<th colspan="2">星期六</th>
-				<th colspan="2">星期日</th>
+				<th>星期</th>
+				<th>簡稱</th>
+				<th>漩渦</th>
+				<th>絕・漩渦</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
+				<th>星期一</th>
 				<td>紅渦</td>
-				<td>風渦</td>
-				<td>屍渦</td>
-				<td>黑渦</td>
-				<td>異渦</td>
-				<td>白渦</td>
-				<td>魔渦</td>
-				<td>天渦</td>
-				<td>古渦</td>
-				<td>鐵渦</td>
-				<td>星渦</td>
-			</tr>
-			<tr>
 				<td><a href="stage.html?s=1-14">紅色突變</a></td>
-				<td><a href="stage.html?s=1-96">緊急暴風警報</a></td>
-				<td><a href="stage.html?s=1-122">滾死樂團</a></td>
-				<td><a href="stage.html?s=1-15">黑暗天堂</a></td>
-				<td><a href="stage.html?s=1-66">絕望異次元</a></td>
-				<td><a href="stage.html?s=1-16">國士無雙</a></td>
-				<td><a href="stage.html?s=1-259">大魔王</a></td>
-				<td><a href="stage.html?s=1-39">天譴</a></td>
-				<td><a href="stage.html?s=1-189">零號颱風</a></td>
-				<td><a href="stage.html?s=1-43">鐵子的部屋</a></td>
-				<td><a href="stage.html?s=1-157">絕望新次元</a></td>
+				<td><a href="stage.html?s=1-169">絕・紅色突變</a></td>
 			</tr>
 			<tr>
-				<td><a href="stage.html?s=1-169">絕・紅色突變</a></td>
+				<th rowspan="2">星期二</th>
+				<td>風渦</td>
+				<td><a href="stage.html?s=1-96">緊急暴風警報</a></td>
 				<td><a href="stage.html?s=1-195">絕・緊急暴風警報</a></td>
+			</tr>
+			<tr>
+				<td>屍渦</td>
+				<td><a href="stage.html?s=1-122">滾死樂團</a></td>
 				<td><a href="stage.html?s=1-198">絕・滾死樂團</a></td>
+			</tr>
+			<tr>
+				<th>星期三</th>
+				<td>黑渦</td>
+				<td><a href="stage.html?s=1-15">黑暗天堂</a></td>
 				<td><a href="stage.html?s=1-172">絕・黑暗天堂</a></td>
+			</tr>
+			<tr>
+				<th>星期四</th>
+				<td>異渦</td>
+				<td><a href="stage.html?s=1-66">絕望異次元</a></td>
 				<td><a href="stage.html?s=1-193">絕・絕望異次元</a></td>
+			</tr>
+			<tr>
+				<th>星期五</th>
+				<td>白渦</td>
+				<td><a href="stage.html?s=1-16">國士無雙</a></td>
 				<td><a href="stage.html?s=1-176">絕・國士無雙</a></td>
+			</tr>
+			<tr>
+				<th>星期五</th>
+				<td>魔渦</td>
+				<td><a href="stage.html?s=1-259">大魔王</a></td>
 				<td><a href="stage.html?s=1-342">絕・大魔王</a></td>
+			</tr>
+			<tr>
+				<th rowspan="2">星期六</th>
+				<td>天渦</td>
+				<td><a href="stage.html?s=1-39">天譴</a></td>
 				<td><a href="stage.html?s=1-185">絕・天譴</a></td>
+			</tr>
+			<tr>
+				<td>古渦</td>
+				<td><a href="stage.html?s=1-189">零號颱風</a></td>
 				<td><a href="stage.html?s=1-247">絕・零號颱風</a></td>
+			</tr>
+			<tr>
+				<th rowspan="2">星期日</th>
+				<td>鐵渦</td>
+				<td><a href="stage.html?s=1-43">鐵子的部屋</a></td>
 				<td><a href="stage.html?s=1-187">絕・鐵子的部屋</a></td>
+			</tr>
+			<tr>
+				<td>星渦</td>
+				<td><a href="stage.html?s=1-157">絕望新次元</a></td>
 				<td><a href="stage.html?s=1-203">絕・絕望新次元</a></td>
 			</tr>
 		</tbody>
@@ -320,8 +629,10 @@
 			</tr>
 		</tbody>
 	</table>
-	<img src="/img/misc/schedule_WeeklyEvents_v6.0.2_bcinfo.png" class="image-box">
 	<h2>雙渦關卡</h2>
+	<p>通關後必定出現 EX 關卡，EX 關卡必定掉落 1 顆彩虹貓薄荷。<br>
+		開放時只能通關一次。
+	</p>
 	<table>
 		<thead>
 			<tr>
@@ -355,7 +666,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>極難關卡</td>
+				<th>極難關卡</th>
 				<td><a href="stage.html?s=1-119">女帝飛來</a></td>
 				<td><a href="stage.html?s=1-128">亡者肥普降臨</a></td>
 				<td><a href="stage.html?s=1-158">吉娃娃伯爵降臨</a></td>
@@ -365,7 +676,7 @@
 				<td>-</td>
 			</tr>
 			<tr>
-				<td>絕・極難</td>
+				<th>絕・極難</th>
 				<td><a href="stage.html?s=1-201">絕・女帝飛來</a></td>
 				<td><a href="stage.html?s=1-205">絕・亡者肥普降臨</a></td>
 				<td><a href="stage.html?s=1-207">絕・吉娃娃伯爵降臨</a></td>
@@ -402,7 +713,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>超極難關卡</td>
+				<th>超極難關卡</th>
 				<td><a href="stage.html?s=1-220">古王妃飛來</a></td>
 				<td><a href="stage.html?s=1-219">聖者波普降臨</a></td>
 				<td><a href="stage.html?s=1-229">綺羅星汪汪降臨</a></td>
@@ -416,7 +727,7 @@
 				<td><a href="stage.html?s=1-226">暗沼幽靈</a></td>
 			</tr>
 			<tr>
-				<td>絕・超極難</td>
+				<th>絕・超極難</th>
 				<td><a href="stage.html?s=1-383">絕・古王妃飛來</a></td>
 				<td><a href="stage.html?s=1-381">絕・聖者波普降臨</a></td>
 				<td><a href="stage.html?s=1-338">絕・綺羅星汪汪降臨</a></td>
@@ -430,7 +741,7 @@
 				<td><a href="stage.html?s=1-243">絕・暗沼幽靈</a></td>
 			</tr>
 			<tr>
-				<td>獎勵</td>
+				<th>獎勵</th>
 				<td><a href="unit.html?id=527">史萊姆貓</a></td>
 				<td><a href="unit.html?id=528">哥薩克貓</a></td>
 				<td><a href="unit.html?id=539">英式橄欖球貓</a></td>
@@ -477,8 +788,37 @@
 	
 	<h2>狂亂關卡</h2>
 	<table>
+		<thead>
+			<tr>
+				<th>繁中版</th>
+				<th><a href="stage.html?s=1-17">每月3日</a></th>
+				<th><a href="stage.html?s=1-18">每月6日</a></th>
+				<th><a href="stage.html?s=1-19">每月9日</a></th>
+				<th><a href="stage.html?s=1-20">每月12日</a></th>
+				<th><a href="stage.html?s=1-21">每月15日</a></th>
+				<th><a href="stage.html?s=1-22">每月18日</a></th>
+				<th><a href="stage.html?s=1-23">每月21日</a></th>
+				<th><a href="stage.html?s=1-24">每月24日</a></th>
+				<th><a href="stage.html?s=1-25">每月27日</a></th>
+				<th><a href="stage.html?s=1-161">每月28日</a></th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
+				<th>日文版</th>
+				<th><a href="stage.html?s=1-17">每月1日</a></th>
+				<th><a href="stage.html?s=1-18">每月4日</a></th>
+				<th><a href="stage.html?s=1-19">每月7日</a></th>
+				<th><a href="stage.html?s=1-20">每月10日</a></th>
+				<th><a href="stage.html?s=1-21">每月13日</a></th>
+				<th><a href="stage.html?s=1-22">每月16日</a></th>
+				<th><a href="stage.html?s=1-23">每月19日</a></th>
+				<th><a href="stage.html?s=1-24">每月22日</a></th>
+				<th><a href="stage.html?s=1-25">每月25日</a></th>
+				<th><a href="stage.html?s=1-161">每月28日</a></th>
+			</tr>
+			<tr>
+				<th>取得</th>
 				<td><a href="stage.html?s=1-17">狂亂貓咪降臨</a></td>
 				<td><a href="stage.html?s=1-18">狂亂坦克貓降臨</a></td>
 				<td><a href="stage.html?s=1-19">狂亂戰鬥貓降臨</a></td>
@@ -491,6 +831,7 @@
 				<td><a href="stage.html?s=1-161">狂亂萌貓降臨</a></td>
 			</tr>
 			<tr>
+				<th>三階</th>
 				<td><a href="stage.html?s=1-102">大狂亂貓咪降臨</a></td>
 				<td><a href="stage.html?s=1-103">大狂亂坦克貓降臨</a></td>
 				<td><a href="stage.html?s=1-104">大狂亂戰鬥貓降臨</a></td>
@@ -503,24 +844,57 @@
 				<td>無</td>
 			</tr>
 			<tr>
-				<td><a href="unit.html?id=91">狂亂貓</a>（狂小）</td>
-				<td><a href="unit.html?id=92">狂亂坦克貓</a>（狂牆）</td>
-				<td><a href="unit.html?id=93">狂亂戰鬥貓</a>（狂戰）</td>
-				<td><a href="unit.html?id=94">狂亂噁心貓</a>（狂腿）</td>
-				<td><a href="unit.html?id=95">狂亂牛貓</a>（狂牛）</td>
-				<td><a href="unit.html?id=96">狂亂鳥貓</a>（狂鳥）</td>
-				<td><a href="unit.html?id=97">狂亂魚貓</a>（狂島）</td>
-				<td><a href="unit.html?id=98">狂亂蜥蜴貓</a>（狂龍）</td>
-				<td><a href="unit.html?id=99">狂亂巨神貓</a>（狂巨）</td>
-				<td><a href="unit.html?id=418">狂亂萌貓</a>（狂萌）</td>
+				<th>角色</th>
+				<td><a href="unit.html?id=91">狂亂貓</a></td>
+				<td><a href="unit.html?id=92">狂亂坦克貓</a></td>
+				<td><a href="unit.html?id=93">狂亂戰鬥貓</a></td>
+				<td><a href="unit.html?id=94">狂亂噁心貓</a></td>
+				<td><a href="unit.html?id=95">狂亂牛貓</a></td>
+				<td><a href="unit.html?id=96">狂亂鳥貓</a></td>
+				<td><a href="unit.html?id=97">狂亂魚貓</a></td>
+				<td><a href="unit.html?id=98">狂亂蜥蜴貓</a></td>
+				<td><a href="unit.html?id=99">狂亂巨神貓</a></td>
+				<td><a href="unit.html?id=418">狂亂萌貓</a></td>
 			</tr>
 		</tbody>
 	</table>
-	<p><a href="stage.html?s=1-208">狂亂家族大亂鬥</a></p>
+	<p>每月 26~28 日開放狂亂祭，日程如下。</p>
+	<table>
+		<thead>
+			<tr>
+				<th>日期</th>
+				<th>開放時間</th>
+				<th>狂亂關卡</th>
+				<th>大狂亂關卡</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>每月 26 日</th>
+				<td>00:00 ~ 24:00</td>
+				<td>狂亂貓咪、狂亂噁心貓、狂亂鳥貓</td>
+				<td>大狂亂戰鬥貓、大狂亂鳥貓、大狂亂巨神貓</td>
+			</tr>
+			<tr>
+				<th>每月 27 日</th>
+				<td>00:00 ~ 24:00</td>
+				<td>狂亂坦克貓、狂亂牛貓、狂亂蜥蜴貓</td>
+				<td>大狂亂貓咪、大狂亂噁心貓、大狂亂鳥貓</td>
+			</tr>
+			<tr>
+				<th>每月 28 日</th>
+				<td>00:00 ~ 24:00</td>
+				<td>狂亂戰鬥貓、狂亂鳥貓、狂亂巨神貓</td>
+				<td>大狂亂坦克貓、大狂亂牛貓、大狂亂蜥蜴貓</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>通關所有狂亂關卡後解鎖<a href="stage.html?s=1-208">狂亂家族大亂鬥</a>，每月 1 日開放。</p>
 	<h2>小小貓開眼關卡</h2>
 	<table>
 		<thead>
 			<tr>
+				<th></th>
 				<th>每月2日</th>
 				<th>每月5日</th>
 				<th>每月8日</th>
@@ -534,6 +908,7 @@
 		</thead>
 		<tbody>
 			<tr>
+				<th>關卡</th>
 				<td><a href="stage.html?s=1-130">開眼小小貓來襲！</a></td>
 				<td><a href="stage.html?s=1-131">開眼小小坦克貓來襲！</a></td>
 				<td><a href="stage.html?s=1-132">開眼小小戰鬥貓來襲！</a></td>
@@ -545,6 +920,7 @@
 				<td><a href="stage.html?s=1-138">開眼小小巨神貓來襲！</a></td>
 			</tr>
 			<tr>
+				<th>角色</th>
 				<td><a href="unit.html?id=209">小小摩西根貓</a></td>
 				<td><a href="unit.html?id=210">小小橡皮貓</a></td>
 				<td><a href="unit.html?id=211">小小暗黑貓</a></td>
@@ -557,11 +933,12 @@
 			</tr>
 		</tbody>
 	</table>
-	<p><a href="stage.html?s=1-339">小小貓大試煉</a></p>
+	<p>通關所有狂亂關卡後解鎖<a href="stage.html?s=1-339">小小貓大試煉</a>，每月 2、5、8、11、14、17、20、23、26 日開放。</p>
 	<h2>EX貓開眼關卡</h2>
 	<table>
 		<thead>
 			<tr>
+				<th></th>
 				<th>每月2日</th>
 				<th>每月4日</th>
 				<th>每月6日</th>
@@ -580,6 +957,7 @@
 		</thead>
 		<tbody>
 			<tr>
+				<th>關卡</th>
 				<td><a href="stage.html?s=1-49">開眼女王貓來襲！</a></td>
 				<td><a href="stage.html?s=1-51">開眼三角褲貓來襲！</a></td>
 				<td><a href="stage.html?s=1-46">開眼功夫貓來襲！</a></td>
@@ -596,6 +974,7 @@
 				<td><a href="stage.html?s=1-45">開眼女優貓來襲！</a></td>
 			</tr>
 			<tr>
+				<th>角色</th>
 				<td><a href="unit.html?id=13">暗黑姊</a></td>
 				<td><a href="unit.html?id=15">害羞貓</a></td>
 				<td><a href="unit.html?id=10">舞者貓</a></td>
@@ -654,31 +1033,22 @@
 		</tbody>
 	</table>
 
-	<p><a href="stage.html?s=1-376">極惡家族大亂鬥</a></p>
+	<p>通關所有極惡關卡後解鎖<a href="stage.html?s=1-376">極惡家族大亂鬥</a>，每月 16 日開放。</p>
 	
-	<h2>大試煉/大亂鬥</h2>
+	<h2>大試煉/大亂鬪</h2>
 	<table>
 		<thead>
 			<tr>
-				<th>每月2、5、8、11、14、17、20、23、26日</th>
-				<th>每月1日</th>
-				<th>每月16日</th>
-				<th>通過宇宙篇第1章</th>
-				<th>通過議事阻撓貓及瓦爾基麗貓大試煉</th>
+				<th>通過宇宙篇 第1章</th>
+				<th>通過議事阻撓貓、瓦爾基麗貓大試煉</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td><a href="stage.html?s=1-339">小小貓大試煉</a></td>
-				<td><a href="stage.html?s=1-208">狂亂家族大亂鬥</a></td>
-				<td><a href="stage.html?s=1-376">極惡家族大亂鬥</a></td>
 				<td><a href="stage.html?s=1-394">瓦爾基麗貓大試煉</a></td>
 				<td><a href="stage.html?s=1-395">姆特貓大試煉</a></td>
 			</tr>
 			<tr>
-				<td>小小貓附加等級上限：+LV60</td>
-				<td>稀有券×2</td>
-				<td>稀有券×3</td>
 				<td>瓦爾基麗貓本能解放</td>
 				<td>姆特貓本能解放</td>
 			</tr>
@@ -687,10 +1057,10 @@
 	<table>
 		<thead>
 			<tr>
-				<th>5月21日至5月28日</th>
-				<th>8月21日至8月28日</th>
-				<th>11月21日至11月28日</th>
-				<th>2月21日至2月28日</th>
+				<th>每月 5 月 21 日至 5 月 28 日</th>
+				<th>每月 8 月 21 日至 8 月 28 日</th>
+				<th>每月 11 月 21 日至 11 月 28 日</th>
+				<th>每月 2 月 21 日至 2 月 28 日</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -705,30 +1075,125 @@
 	
 	<h2>貓咪券關卡</h2>
 	<table>
+		<thead>
+			<tr>
+				<th>關卡</th>
+				<th>獎勵</th>
+				<th>解放條件</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td><a href="stage.html?s=1-6">貓咪券★機會！</a></td>
-				<td><a href="stage.html?s=1-7">逆襲的河馬將</a></td>
-				<td><a href="stage.html?s=1-78">逆襲的臉君</a></td>
+				<th><a href="stage.html?s=1-6">貓咪券★機會！</a></th>
+				<td>30% 貓咪券 ×1</td>
+				<td>無</td>
 			</tr>
 			<tr>
-				<td>30% 貓咪券 ×1</td>
+				<th><a href="stage.html?s=1-7">逆襲的河馬將</a></th>
 				<td>100% 貓咪券 ×1</td>
+				<td>世界篇 第1章</td>
+			</tr>
+			<tr>
+				<th><a href="stage.html?s=1-78">逆襲的臉君</a></th>
 				<td>70% 貓咪券×2，30% 貓咪券×3</td>
+				<td>未來篇 第1章</td>
 			</tr>
 		</tbody>
 	</table>
+	<table>
+		<thead>
+			<tr>
+				<th colspan="2">逆襲的河馬將</th>
+				<th colspan="2">逆襲的臉君</th>
+			</tr>
+			<tr>
+				<th>日期</th>
+				<th>開放時間</th>
+				<th>日期</th>
+				<th>開放時間</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>01日</th>
+				<td>07:00 ~ 08:00</td>
+				<th>02日</th>
+				<td>00:00 ~ 12:00</td>
+			</tr>
+			<tr>
+				<th>04日</th>
+				<td>11:00 ~ 12:00</td>
+				<th>05日</th>
+				<td>12:00 ~ 24:00</td>
+			</tr>
+			<tr>
+				<th>07日</th>
+				<td>16:00 ~ 17:00</td>
+				<th>08日</th>
+				<td>00:00 ~ 12:00</td>
+			</tr>
+			<tr>
+				<th>10日</th>
+				<td>08:00 ~ 09:00</td>
+				<th>11日</th>
+				<td>12:00 ~ 24:00</td>
+			</tr>
+			<tr>
+				<th>13日</th>
+				<td>12:00 ~ 13:00</td>
+				<th>14日</th>
+				<td>00:00 ~ 12:00</td>
+			</tr>
+			<tr>
+				<th>16日</th>
+				<td>17:00 ~ 18:00</td>
+				<th>17日</th>
+				<td>12:00 ~ 24:00</td>
+			</tr>
+			<tr>
+				<th>19日</th>
+				<td>13:00 ~ 14:00</td>
+				<th>20日</th>
+				<td>00:00 ~ 12:00</td>
+			</tr>
+			<tr>
+				<th>22日</th>
+				<td>19:00 ~ 20:00</td>
+				<th>23日</th>
+				<td>12:00 ~ 24:00</td>
+			</tr>
+			<tr>
+				<th>25日</th>
+				<td>20:00 ~ 21:00</td>
+				<th>26日</th>
+				<td>00:00 ~ 12:00</td>
+			</tr>
+			<tr>
+				<th>28日</th>
+				<td>21:00 ~ 22:00</td>
+				<th>29日</th>
+				<td>12:00 ~ 24:00</td>
+			</tr>
+			<tr>
+				<th>31日</th>
+				<td>22:00 ~ 23:00</td>
+				<td colspan="2"></td>
+			</tr>
+		</tbody>
+	</table>
+	<p>※逆襲的臉君開放時能只通關一次，通關後隱藏。</p>
+
 	<h2>經驗值關卡</h2>
 	<table>
 		<tbody>
 			<tr>
-				<td><a href="stage.html?s=1-27">週末關卡</a></td>
-				<td><a href="stage.html?s=1-28">游擊經驗值喵！</a></td>
-				<td><a href="stage.html?s=1-59">超級游擊經驗值喵！</a></td>
-				<td><a href="stage.html?s=1-124">終極游擊經驗值喵！</a></td>
-				<td><a href="stage.html?s=1-155">超終極游擊經驗值喵！</a></td>
-				<td><a href="stage.html?s=1-319">超終極惡游擊經驗值喵！</a></td>
-				<td><a href="stage.html?s=11-49">月間活動全明星 眾星雲集大感謝祭！</a></td>
+				<th><a href="stage.html?s=1-27">週末關卡</a></th>
+				<th><a href="stage.html?s=1-28">游擊經驗值喵！</a></th>
+				<th><a href="stage.html?s=1-59">超級游擊經驗值喵！</a></th>
+				<th><a href="stage.html?s=1-124">終極游擊經驗值喵！</a></th>
+				<th><a href="stage.html?s=1-155">超終極游擊經驗值喵！</a></th>
+				<th><a href="stage.html?s=1-319">超終極惡游擊經驗值喵！</a></th>
+				<th><a href="stage.html?s=11-49">月間活動全明星 眾星雲集大感謝祭！</a></th>
 			</tr>
 			<tr>
 				<td>78萬</td>
@@ -741,21 +1206,46 @@
 			</tr>
 		</tbody>
 	</table>
-	<p>※經驗值以尾關開寶物雷達及洞悉先機(1.5倍)計算</p>
-	<p>※推薦打「超終極游擊經驗值喵！」、「超終極惡游擊經驗值喵！」、「月間活動全明星 眾星雲集大感謝祭！」三個地圖，或靠傳奇關卡、真傳奇關卡、傳奇故事0獲取XP</p>
-	<p>※解月間任務可打「週末關卡」的第一關或<a href="stage.html?s=10-11">使用一個喵力達A</a></p>
+	<p>「超終極惡游擊經驗值喵！」開放時間：</p>
+	<table>
+		<thead>
+			<tr>
+				<th>星期</th>
+				<th>開放時間</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>星期一</th>
+				<td>13:00 ~ 14:00</td>
+			</tr>
+			<tr>
+				<th>星期三</th>
+				<td>19:00 ~ 20:00</td>
+			</tr>
+			<tr>
+				<th>星期六</th>
+				<td>11:00 ~ 12:00</td>
+			</tr>
+			<tr>
+				<th>星期日</th>
+				<td>19:00 ~ 20:00</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>※經驗值以尾關開寶物雷達及洞悉先機（1.5倍）計算</p>
 	<h2>超生命體強襲</h2>
 	<table>
 		<tbody>
 			<tr>
-				<td><a href="stage.html?s=11-20">巨大生物強襲</a></td>
-				<td><a href="stage.html?s=11-27">巨象黑藏強襲</a></td>
-				<td><a href="stage.html?s=11-34">巨蛾蛾蛾強襲</a></td>
-				<td><a href="stage.html?s=11-35">巨大河馬星人強襲</a></td>
-				<td><a href="stage.html?s=11-37">特大號大天使強襲</a></td>
-				<td><a href="stage.html?s=11-38">巨大企鵝大哥Z強襲</a></td>
-				<td><a href="stage.html?s=11-61">巨大三惡魔強襲</a></td>
-				<td><a href="stage.html?s=11-65">大型陶器埴輪巨犬強襲</a></td>
+				<th><a href="stage.html?s=11-20">巨大生物強襲</a></th>
+				<th><a href="stage.html?s=11-27">巨象黑藏強襲</a></th>
+				<th><a href="stage.html?s=11-34">巨蛾蛾蛾強襲</a></th>
+				<th><a href="stage.html?s=11-35">巨大河馬星人強襲</a></th>
+				<th><a href="stage.html?s=11-37">特大號大天使強襲</a></th>
+				<th><a href="stage.html?s=11-38">巨大企鵝大哥Z強襲</a></th>
+				<th><a href="stage.html?s=11-61">巨大三惡魔強襲</a></th>
+				<th><a href="stage.html?s=11-65">大型陶器埴輪巨犬強襲</a></th>
 			</tr>
 			<tr>
 				<td>本能玉【紅】</td>
@@ -769,7 +1259,35 @@
 			</tr>
 		</tbody>
 	</table>
+	<p>繁中版、日文版出場順序（每隔兩禮拜一次）</p>
+	<table>
+		<tbody>
+			<tr>
+				<th>日文版</th>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_097.png">黑藏</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_107.png">惡魔</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_096.png">生物</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_099.png">河馬</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_098.png">巨蛾</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_096.png">企鵝</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_101.png">天使</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_115.png">埴輪</td>
+			</tr>
+			<tr>
+				<th>繁中版</th>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_097.png">黑藏</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_099.png">河馬</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_098.png">巨蛾</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_115.png">埴輪</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_107.png">惡魔</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_096.png">企鵝</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_096.png">生物</td>
+				<td><img loading="lazy" class="icon-l" src="/img/m/medal_101.png">天使</td>
+			</tr>
+		</tbody>
+	</table>
 	<h2>貓咪塔</h2>
+	<p>隨週年、活動等不定期開放</p>
 	<table>
 		<tbody>
 			<tr>
@@ -777,6 +1295,9 @@
 				<td><a href="stage.html?s=6-6">異界貓咪塔</a></td>
 				<td><a href="stage.html?s=6-10">黃金貓咪塔</a></td>
 				<td><a href="stage.html?s=6-11">魅惑の堕天楼</a></td>
+				<td colspan="4"></td>
+			</tr>
+			<tr>
 				<td><a href="stage.html?s=6-1">喵別塔【紅】</a></td>
 				<td><a href="stage.html?s=6-2">喵別塔【黑】</a></td>
 				<td><a href="stage.html?s=6-3">喵別塔【天】</a></td>
@@ -789,36 +1310,44 @@
 		</tbody>
 	</table>
 	<h2>慶祝活動/降臨祭等</h2>
+	<p>隨週年、活動等不定期開放</p>
 	<table>
+		<thead>
+			<tr>
+				<th>活動分類</th>
+				<th colspan="9">關卡列表</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
+				<th>雜項</th>
 				<td><a href="stage.html?s=1-173">大逆襲的鋼鐵熊</a></td>
-				<td></td>
 				<td><a href="stage.html?s=1-69">極難祭！</a></td>
 				<td><a href="stage.html?s=1-120">極難祭2！</a></td>
 				<td><a href="stage.html?s=1-190">極難祭3！</a></td>
-				<td></td>
-				<td><a href="stage.html?s=1-182">活動全明星 超級豪華大禮</a></td>
+				<td colspan="5"><a href="stage.html?s=1-182">活動全明星 超級豪華大禮</a></td>
 			</tr>
 			<tr>
+				<th>雜項</th>
 				<td><a href="stage.html?s=1-33">月間活動全明星 特別紀念！</a></td>
 				<td><a href="stage.html?s=1-34">月間活動全明星 超強紀念！</a></td>
 				<td><a href="stage.html?s=1-35">月間活動全明星 無敵紀念！</a></td>
 				<td><a href="stage.html?s=1-70">月間活動全明星 絕佳紀念！</a></td>
 				<td><a href="stage.html?s=1-79">活動全明星關卡 卓越紀念！</a></td>
 				<td><a href="stage.html?s=1-146">活動全明星 偉大紀念！</a></td>
-				<td><a href="stage.html?s=11-49">月間活動全明星 眾星雲集大感謝祭！</a></td>
+				<td colspan="3"><a href="stage.html?s=11-49">月間活動全明星 眾星雲集大感謝祭！</a></td>
 			</tr>
 			<tr>
+				<th>雜項</th>
 				<td><a href="stage.html?s=1-287">黑夜襲擊之戰</a></td>
 				<td><a href="stage.html?s=1-289">烈火之亂</a></td>
 				<td><a href="stage.html?s=1-336">殭屍古堡</a></td>
 				<td><a href="stage.html?s=1-349">機械反抗軍</a></td>
 				<td><a href="stage.html?s=11-53">決鬥大挑戰</a></td>
-				<td><a href="stage.html?s=11-54">雙人鬪技大挑戰</a></td>
-				<td></td>
+				<td colspan="4"><a href="stage.html?s=11-54">雙人鬪技大挑戰</a></td>
 			</tr>
 			<tr>
+				<th>降臨祭</th>
 				<td><a href="stage.html?s=1-251">天使與般若</a></td>
 				<td><a href="stage.html?s=1-252">女帝與亡者</a></td>
 				<td><a href="stage.html?s=1-253">伯爵與乙女</a></td>
@@ -826,15 +1355,8 @@
 				<td><a href="stage.html?s=1-306">女帝與少女</a></td>
 				<td><a href="stage.html?s=1-307">伯爵與天使</a></td>
 				<td><a href="stage.html?s=1-377">阿龜與小孩</a></td>
-			</tr>
-			<tr>
 				<td><a href="stage.html?s=1-378">王子與死靈</a></td>
 				<td><a href="stage.html?s=1-379">蜜江與聖者</a></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
 			</tr>
 		</tbody>
 	</table>
@@ -848,17 +1370,19 @@
 	<p>上面三關都通關後出現 <a href="stage.html?s=1-268">解放的貓咪們</a>，打完後解鎖以下關卡：女王的研究報告（5章，掉落各式資源）、女王的挖掘調查（5章，獎勵遠古的蛋）、<a href="stage.html?s=3-14">魔界篇</a>、<a href="stage.html?s=9-38">真傳奇關卡 第39章 - 大災難的開始</a>、<a href="stage.html?s=1-272">誘惑的交響曲</a>、 <a href="stage.html?s=1-273">羅生門</a>、
 		<a href="stage.html?s=1-350">極惡貓咪降臨</a>等關卡</p>
 	<table>
+		<thead>
+			<tr>
+				<th>女王的研究報告</th>
+				<th><a href="stage.html?s=1-269">女王的研究報告1</a></th>
+				<th><a href="stage.html?s=1-270">女王的研究報告2</a></th>
+				<th><a href="stage.html?s=1-271">女王的研究報告3</a></th>
+				<th><a href="stage.html?s=1-275">女王的研究報告4</a></th>
+				<th><a href="stage.html?s=1-276">女王的研究報告5</a></th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td>女王的研究報告</td>
-				<td><a href="stage.html?s=1-269">女王的研究報告1</a></td>
-				<td><a href="stage.html?s=1-270">女王的研究報告2</a></td>
-				<td><a href="stage.html?s=1-271">女王的研究報告3</a></td>
-				<td><a href="stage.html?s=1-275">女王的研究報告4</a></td>
-				<td><a href="stage.html?s=1-276">女王的研究報告5</a></td>
-			</tr>
-			<tr>
-				<td>女王的挖掘調查</td>
+				<th>女王的挖掘調查</th>
 				<td><a href="stage.html?s=1-277">女王的挖掘調查1</a>獎勵<a href="unit.html?id=656">埴輪貓</a></td>
 				<td><a href="stage.html?s=1-278">女王的挖掘調查2</a>獎勵<a href="unit.html?id=669">仙人掌貓</a></td>
 				<td><a href="stage.html?s=1-279">女王的挖掘調查3</a>獎勵<a href="unit.html?id=685">小鴨車車貓</a></td>
@@ -868,84 +1392,39 @@
 		</tbody>
 	</table>
 	<img src="/img/misc/schedule_AkuEvents_v6.0.2_bcinfo.png" class="image-box">
-	<h2>挖掘地圖/超獸討伐/獸石關卡</h2>
+	<h2>發掘地圖/超獸討伐/獸石關卡</h2>
 
-	<table>
-		<tbody>
-			<tr>
-				<td rowspan="3">粗劣</td>
-				<td><a href="stage.html?s=12-0">道具古戰場</a></td>
-				<td>隨機一種戰鬥道具×2</td>
-			</tr>
-			<tr>
-				<td><a href="stage.html?s=12-1">維他命溪谷</a></td>
-				<td>隨機一種喵力達×1</td>
-			</tr>
-			<tr>
-				<td><a href="stage.html?s=12-3">精神與時間的小屋</a></td>
-				<td>必定50萬XP</td>
-			</tr>
-			<tr>
-				<td rowspan="3">普通</td>
-				<td><a href="stage.html?s=12-7">維他命火山</a></td>
-				<td>隨機一種喵力達×2</td>
-			</tr>
-			<tr>
-				<td><a href="stage.html?s=12-4">精神與時間的洞窟</a></td>
-				<td>必定100萬XP</td>
-			</tr>
-			<tr>
-				<td><a href="stage.html?s=12-2">貓咪券★獵人</a></td>
-				<td>63%貓咪券×1
-					<br>27%貓咪券×2
-					<br>10%貓咪券×3</td>
-			</tr>
-			<tr>
-				<td rowspan="3">最棒</td>
-				<td><a href="stage.html?s=12-6">貓眼洞窟</a></td>
-				<td>35%貓眼石【EX】
-					<br>27%貓眼石【稀有】×1
-					<br>27%貓眼石【激稀有】×1
-					<br>10%貓眼石【超激稀有】×1
-					<br>1%貓眼石【傳說】×1</td>
-			</tr>
-			<tr>
-				<td><a href="stage.html?s=12-5">精神與時間的迷宮</a></td>
-				<td>必定200萬XP</td>
-			</tr>
-			<tr>
-				<td><a href="stage.html?s=12-8">貓咪券★獵人G</a></td>
-				<td>63%貓咪券×2
-					<br>27%貓咪券×3
-					<br>10%貓咪券×4</td>
-			</tr>
-		</tbody>
-	</table>
+	<p>
+		詳見<a target="_blank" href="rewards.html">關卡獎勵一覽</a>，或參考以下圖片：
+	</p>
+	
 
-	<table>
-		<tbody>
-			<tr>
-				<td><a href="stage.html?s=14-0">甲普拉密林</a></td>
-				<td><a href="stage.html?s=14-1">亞蜥比沙漠</a></td>
-				<td><a href="stage.html?s=14-2">將弗裂火山</a></td>
-				<td><a href="stage.html?s=1-326">進化的彩虹獸石</a></td>
-			</tr>
-			<tr>
-				<td><a href="stage.html?s=12-60">獵人的地圖Ⅰ</a></td>
-				<td><a href="stage.html?s=12-61">獵人的地圖Ⅱ</a></td>
-				<td><a href="stage.html?s=12-62">獵人的地圖Ⅲ</a></td>
-				<td><a href="stage.html?s=12-66">獵人的地圖Ⅳ</a></td>
-			</tr>
-		</tbody>
-	</table>
 	<img src="/img/misc/schedule_BehemothEvents_v6.0.2_bcinfo.png" class="image-box">
 	<img src="/img/misc/schedule_Enigma_12.4.0_bcinfo.png" class="image-box">
 
 	<h2>本能玉地圖</h2>
 	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th colspan="9">發掘地圖</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td>粗劣</td>
+				<th>屬性</th>
+				<th>紅色</th>
+				<th>飄浮</th>
+				<th>黑色</th>
+				<th>神聖</th>
+				<th>蒼藍</th>
+				<th>腐朽</th>
+				<th>強硬</th>
+				<th>惡意</th>
+				<th>古代</th>
+			</tr>
+			<tr>
+				<th>粗劣</th>
 				<td><a href="stage.html?s=12-33">紅色本能的起源</a></td>
 				<td><a href="stage.html?s=12-12">飄浮本能的起源</a></td>
 				<td><a href="stage.html?s=12-15">黑色本能的起源</a></td>
@@ -957,7 +1436,7 @@
 				<td><a href="stage.html?s=12-67">古代本能的起源</a></td>
 			</tr>
 			<tr>
-				<td>普通</td>
+				<th>普通</th>
 				<td><a href="stage.html?s=12-34">紅色本能的頂點</a></td>
 				<td><a href="stage.html?s=12-13">飄浮本能的頂點</a></td>
 				<td><a href="stage.html?s=12-16">黑色本能的頂點</a></td>
@@ -969,7 +1448,7 @@
 				<td><a href="stage.html?s=12-68">古代本能的頂點</a></td>
 			</tr>
 			<tr>
-				<td>最棒</td>
+				<th>最棒</th>
 				<td><a href="stage.html?s=12-35">紅色本能的秘境</a></td>
 				<td><a href="stage.html?s=12-14">飄浮本能的秘境</a></td>
 				<td><a href="stage.html?s=12-17">黑色本能的秘境</a></td>
@@ -1188,31 +1667,31 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>對應本能玉等級</td>
+					<th>對應本能玉等級</th>
 					<td>B</td>
 					<td>C</td>
 					<td>D</td>
 				</tr>
 				<tr>
-					<td>上位 10％</td>
+					<th>上位 10％</th>
 					<td>x2</td>
 					<td>x2</td>
 					<td>x4</td>
 				</tr>
 				<tr>
-					<td>上位 30％</td>
+					<th>上位 30％</th>
 					<td>x2</td>
 					<td>x2</td>
 					<td>x3</td>
 				</tr>
 				<tr>
-					<td>上位 60%</td>
+					<th>上位 60%</th>
 					<td>x2</td>
 					<td>x2</td>
 					<td>x2</td>
 				</tr>
 				<tr>
-					<td>上位 100％</td>
+					<th>上位 100％</th>
 					<td>x1</td>
 					<td>x2</td>
 					<td>x2</td>
@@ -1231,6 +1710,8 @@
 		{{/each}}
 	</ul>
 	{{/each}}
+
+	</div>
 
 	<div class="image-modal" id="imageModal">
 		<div class="image-modal-content">
@@ -1268,4 +1749,4 @@
 	</script>
 {{/inline}}
 
-{{/gh.html}}
+{{/static.html}}
