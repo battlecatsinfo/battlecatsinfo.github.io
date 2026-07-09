@@ -2,41 +2,12 @@
 
 {{#*inline "title"}}關卡獎勵一覽{{/inline}}
 
-{{#*inline "styles-inline"}}
-	{{~> @partial-block}}
-	<style>
-		.icon {
-			vertical-align: middle;
-			height: 1.5em;
-			width: auto;
-			margin-right: -0.2em;
-		}
-		.pink thead th {
-			background-color: #f1cac8;
-		}
-		.pink tbody th {
-			background-color: #f5dddc;
-		}
-		.blue thead th {
-			background-color: #c4ccff;
-		}
-		.blue tbody th {
-			background-color: #d7ddff;
-		}
-		.green thead th {
-			background-color: #c4e0c6;
-		}
-		.green tbody th {
-			background-color: #d2e7d3;
-		}
-	</style>
-{{/inline}}
 
 {{#*inline "content"}}
 <div class="main-content">
 	<h3>超生命體強襲</h3>
 	<p>Lv. 1 ~ Lv. MAX 獎勵</p>
-	<table class="blue">
+	<table class="blue-tbl">
 		<thead>
 			<tr>
 				<th>Lv. 1</th>
@@ -95,7 +66,7 @@
 		</tbody>
 	</table>
 	<p>EX 關卡進入機率</p>
-	<table class="blue">
+	<table class="blue-tbl">
 		<thead>
 			<tr>
 				<th></th>
@@ -228,7 +199,7 @@
 		</tbody>
 	</table>
 	<p>EX 關卡掉落機率</p>
-	<table class="blue">
+	<table class="blue-tbl">
 		<thead>
 			<tr>
 				<th></th>
@@ -304,7 +275,7 @@
 	<p>※普通玉：提升傷害（增傷玉）、減輕傷害（減傷玉）<br>
 	※特殊玉：善於攻擊（善攻玉）、超大傷害（超傷玉）、很耐打（耐打玉）</p>
 	<h3>本能玉地圖、秘寶沉眠之孤島</h3>
-	<table class="blue">
+	<table class="blue-tbl">
 		<thead>
 			<tr>
 				<th rowspan="2"></th>
@@ -475,7 +446,7 @@
 		</tbody>
 	</table>
 	<h3>月間強襲</h3>
-	<table class="green">
+	<table class="green-tbl">
 		<thead>
 			<tr>
 				<th colspan="10">月間強襲（每月1~15日）</th>
@@ -540,7 +511,7 @@
 		</tbody>
 	</table>
 	<h3>月間活動全明星 眾星雲集大感謝祭！</h3>
-	<table class="green">
+	<table class="green-tbl">
 		<thead>
 			<tr>
 				<th>Lv. 1</th>
@@ -574,7 +545,7 @@
 	</table>
 
 	<h3>每月G券</h3>
-	<table class="green">
+	<table class="green-tbl">
 		<thead>
 			<tr>
 				<th>關卡</th>
@@ -617,7 +588,7 @@
 		</tbody>
 	</table>
 	<h3>招福轉蛋券</h3>
-	<table class="green">
+	<table class="green-tbl">
 		<thead>
 			<tr>
 				<th>關卡</th>
@@ -653,7 +624,7 @@
 		</tbody>
 	</table>
 	<h3>道具關卡</h3>
-	<table class="pink">
+	<table class="pink-tbl">
 		<thead>
 			<tr>
 				<th>道具</th>
@@ -901,7 +872,7 @@
 	</table>
 
 	<h3>經驗值關卡</h3>
-	<table class="blue">
+	<table class="blue-tbl">
 		<thead>
 			<tr>
 				<th colspan="2">關卡</th>
@@ -969,7 +940,7 @@
 	<br>
 	※開放時只能通關一次
 	<h3>貓薄荷</h3>
-	<table class="green">
+	<table class="green-tbl">
 		<thead>
 			<tr>
 				<th>開放時間</th>
@@ -1104,7 +1075,7 @@
 			</tr>
 		</tbody>
 	</table>#1 各色貓薄荷關卡獎勵
-	<table class="pink">
+	<table class="pink-tbl">
 		<thead>
 			<tr>
 				<th>種子</th>
@@ -1126,7 +1097,7 @@
 			</tr>
 		</tbody>
 	</table>#2 貓薄荷 EX 關卡獎勵
-	<table class="pink">
+	<table class="pink-tbl">
 		<thead>
 			<tr>
 				<th>EX裏關</th>
@@ -1158,7 +1129,7 @@
 			</tr>
 		</tbody>
 	</table>#3 貓薄荷挑戰 EX 關卡獎勵
-	<table class="pink">
+	<table class="pink-tbl">
 		<thead>
 			<tr>
 				<th>EX尾關</th>
