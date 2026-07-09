@@ -6,7 +6,6 @@ const sources = [
 	'unit.css',
 	'w3.css',
 	'dracula.css',
-	'gh.css',
 	'menu.css',
 
 	'index.html',
