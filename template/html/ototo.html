@@ -5,8 +5,55 @@
 {{#*inline "styles-inline"}}
 	{{~> @partial-block}}
 	<style>
-		table {
-			white-space: nowrap;
+		#modal {
+			position: fixed;
+			inset: 0;
+			z-index: 9999;
+			display: none;
+			justify-content: center;
+			align-items: center;
+			padding: 24px;
+			background: rgba(0,0,0,.45);
+		}
+		#modal.show {
+			display: flex;
+		}
+		#modal-container {
+			margin: 0 auto;
+			position: relative;
+			background: var(--bg);
+			width: min(95vw, 1100px);
+			max-height: 90vh;
+			padding-top: 1em;
+			border-radius: 10px;
+			box-shadow: 0 10px 40px rgba(0,0,0,.3);
+			overflow: hidden;
+		}
+		#close-modal-btn {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 48px;
+			height: 48px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24px;
+			cursor: pointer;
+			user-select: none;
+			z-index: 1;
+		}
+
+		#close-modal-btn:hover {
+			background: #ddd;
+		}
+		#modal-content {
+			overflow: auto;
+			max-height: 90vh;
+		}
+		#modal-content th,
+		#modal-content td {
+			padding: .4rem .85rem;
 		}
 	</style>
 {{/inline}}
@@ -17,10 +64,10 @@
 {{/inline}}
 
 {{#*inline "content"}}
-	<div class="M" style="display:none">
-		<div class="C">
-			<span id="close-modal-btn" class="B" style="position:absolute;right: 0;top: 0;user-select: none;display: inline-block;padding: 8px 16px;cursor: pointer;">×</span>
-			<div id="MC" style="margin-top: 10vh;height:80vh;overflow: scroll;color: var(--color);"></div>
+	<div style="display: none;" id="modal">
+		<div id="modal-container">
+			<span id="close-modal-btn">×</span>
+			<div id="modal-content"></div>
 		</div>
 	</div>
 	<div class="main-content">

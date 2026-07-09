@@ -1,7 +1,7 @@
 import {numStr} from './common.mjs';
 
 const ototo = {{{toJSON (loadJSON "ototo.json")}}};
-const M = document.getElementById('MC');
+const M = document.getElementById('modal-content');
 const modal = M.parentNode.parentNode;
 
 
@@ -181,4 +181,8 @@ for (const a of document.querySelectorAll('a[data-castle]')) {
 
 document.getElementById('close-modal-btn').addEventListener('click', () => {
 	modal.style.display = 'none';
+});
+modal.addEventListener('click', event => {
+	if (event.target === modal)
+		modal.style.display = 'none';
 });
