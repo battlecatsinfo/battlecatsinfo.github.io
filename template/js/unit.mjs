@@ -159,6 +159,7 @@ const HP_MULTI_AB = new Set([
 	AB_GOOD,
 	AB_RESIST,
 	AB_RESISTS,
+	AB_IMUATK,
 
 	AB_BSTHUNT,
 	AB_BAIL,
@@ -862,6 +863,11 @@ class Unit {
 			hp *= (1 + (v[2] / 100) * (v[0] >= 0 ? v[0] : 999));
 		}
 
+		if (Object.hasOwn(ab, AB_IMUATK)) {
+			const v = ab[AB_IMUATK];
+			hp /= ((100 - v[0]) / 100);
+		}
+
 		return hp;
 	}
 
@@ -1450,6 +1456,9 @@ class CatForm extends Unit {
 				hp *= 6 + (buff_t ? this.env.resist_t : 0);
 			} else if (Object.hasOwn(ab, AB_GOOD)) {
 				hp /= (buff_o ? this.env.orb_good_hp : 1) * (1 - this.env.combo_good) * (0.5 - (buff_t ? this.env.good_hp_t : 0));
+			}
+			if (Object.hasOwn(ab, AB_IMUATK)) {
+				hp /= ((100 - ab[AB_IMUATK][0]) / 100);
 			}
 		}
 		if ((traits & TB_BEAST) && Object.hasOwn(ab, AB_BSTHUNT)) {
