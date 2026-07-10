@@ -10,7 +10,6 @@ p {
 pre {
 	white-space: normal;
 	text-wrap: wrap;
-	font-family: system-ui;
 }
 #loader {
 	position: absolute;
