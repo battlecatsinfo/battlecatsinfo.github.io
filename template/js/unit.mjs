@@ -160,6 +160,7 @@ const HP_MULTI_AB = new Set([
 	AB_RESIST,
 	AB_RESISTS,
 	AB_IMUATK,
+	AB_WEAK,
 
 	AB_BSTHUNT,
 	AB_BAIL,
@@ -868,6 +869,11 @@ class Unit {
 			hp /= ((100 - v[0]) / 100);
 		}
 
+		if (Object.hasOwn(ab, AB_WEAK)) {
+			const v = ab[AB_WEAK];
+			hp /= 1 - (getCoverUnit(this, v[0], v[2]) / 100) * ((100 - v[1]) / 100);
+		}
+
 		return hp;
 	}
 
@@ -1459,6 +1465,10 @@ class CatForm extends Unit {
 			}
 			if (Object.hasOwn(ab, AB_IMUATK)) {
 				hp /= ((100 - ab[AB_IMUATK][0]) / 100);
+			}
+			if (Object.hasOwn(ab, AB_WEAK)) {
+				const v = ab[AB_WEAK];
+				hp /= 1 - (getCoverUnit(this, v[0], v[2]) / 100) * ((100 - v[1]) / 100);
 			}
 		}
 		if ((traits & TB_BEAST) && Object.hasOwn(ab, AB_BSTHUNT)) {
