@@ -2573,9 +2573,8 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 		)
 			continue;
 
-		if (
-			(filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE)) > 1
-		)
+		const count = filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE) + filter.has(AB_KAIJIN);
+		if (count > 1)
 			continue;
 
 		let traits = filter.has(AB_ATKBASE) ? 0 : (TRAIT_ALL ^ TB_INFN);
@@ -2631,10 +2630,17 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 		)
 			continue;
 
-		if (
-			(filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE)) > 1
-		)
+		const count = filter.has(AB_BSTHUNT) + filter.has(AB_BAIL) + filter.has(AB_SAGE) + filter.has(AB_KAIJIN);
+		if (count > 1)
 			continue;
+
+		if (count && (filter.has(AB_IMUATK) || filter.has(AB_WEAK))) {
+			if (!(filter.has(AB_GOOD) | filter.has(AB_RESIST) || filter.has(AB_RESISTS))) {
+				if (Object.hasOwn(form.ab, AB_GOOD) || Object.hasOwn(form.ab, AB_RESIST) || Object.hasOwn(form.ab, AB_RESISTS)) {
+					continue;
+				}
+			}
+		}
 
 
 		let hp = numStr(floor(form.getthp({filter})) / KB);
