@@ -2,6 +2,14 @@ const DB_NAME = 'battlecatsinfo';
 const DB_VERSION = {{{lookup (loadJSON "config.json") "db_ver"}}};
 const translatorStores = ["tstage", "tcat", "tenemy", "tterm", "tcombo", "titem", "tmedal"];
 
+// web worker mode (anim.min.js)
+if (typeof window === 'undefined') {
+	self.localStorage = {
+		getItem: () => null,
+		setItem: () => {},
+	};
+}
+
 class IdbBase {
 	static onUpgrade(event) {
 		const {target: {result: db}, oldVersion, newVersion} = event;
