@@ -386,7 +386,7 @@ module.exports = class extends RewardSiteGenerator {
 				lastI = i;
 				++color;
 			}
-			v[1] = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'][color];
+			v[1] = ['#d0e0e3', '#d9d2e9', '#c9daf8', '#fce5cd'][color % 4];
 		}
 		result[lastI][5] = {
 			count,
