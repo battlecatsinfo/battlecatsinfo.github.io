@@ -1221,7 +1221,7 @@
 			],
 			[]
 		],
-		"group_rates": [3400, 0, 3800, 0, 2000, 0, 800, 0, 0, 0],
+		"group_rates": [3400, 0, 3800, 0, 2000, 0, 800, 1, 0, 0],
 		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E051.html",
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E051.html"
 	},
