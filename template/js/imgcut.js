@@ -11,8 +11,8 @@ let lastT;
 let cut;
 let imgloaded = false;
 
-let imgfile;
-let cutfile;
+let imgfile = '';
+let cutfile = '';
 
 class ImgCut {
 	constructor(text) {
@@ -209,7 +209,7 @@ function exportaimg() {
 function exportcut() {
 	let a = document.createElement("a");
 	const idx = cutfile.lastIndexOf('/');
-	a.download = idx == -1 ? cutfile : cutfile.slice(idx + 1);
+	a.download = idx == -1 ? (cutfile || 'export') : cutfile.slice(idx + 1);
 	a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(`[imgcut]\n0\n${cut.name}\n${cut.cuts.length}\n${cut.cuts.map(x => x.join(',')).join('\n')}\n`);
 	a.click();
 }
@@ -443,8 +443,6 @@ async function pasteImg() {
 					for (let i = 0; i < cut.cuts.length; ++i)
 						edit.appendChild(createLine(cut.cuts[i], i));
 				});
-		} else {
-			cutfile = '';
 		}
 	}
 	ctx.strokeStyle = '#ff1100';
