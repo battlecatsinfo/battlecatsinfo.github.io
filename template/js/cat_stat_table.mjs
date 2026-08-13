@@ -30,6 +30,10 @@ import {
 
 const layout = config.layout;
 
+if (layout === 2) {
+	HP_MULTI_AB.add(AB_IMUATK);
+}
+
 function makeTd(tr, text) {
 	const td = document.createElement('td');
 	if (text)

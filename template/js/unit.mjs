@@ -159,7 +159,6 @@ const HP_MULTI_AB = new Set([
 	AB_GOOD,
 	AB_RESIST,
 	AB_RESISTS,
-	AB_IMUATK,
 	AB_WEAK,
 
 	AB_BSTHUNT,
