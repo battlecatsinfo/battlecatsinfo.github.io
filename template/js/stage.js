@@ -592,7 +592,20 @@ function getConditionHTML(obj) {
 		const ay = Math.abs(y);
 		const x = ay % 100000;
 		const mc = fromV(~~(x / 1000));
-		const sm = x % 1000;
+		let sm = x % 1000;
+		if (mc === 3) {
+			sm = {
+				0: 0,
+				1: 0,
+				2: 0,
+				3: 1,
+				4: 2,
+				5: 3,
+				6: 4,
+				7: 5,
+				8: 6,
+			}[sm];
+		}
 		if (i) div.append(Math.sign(y) !== Math.sign(last) ? "或" : "及");
 		div.append(ay > 200000 ? "通過" : "玩過");
 		const a = div.appendChild(document.createElement("a"));
