@@ -783,11 +783,11 @@ class UnitPage {
 				return range('');
 			case 50:
 				if (snd)
-					return range('%', 4);
+					return range('%', 2);
 				return range();
 			case 51:
 				if (snd)
-					return range('F', 4);
+					return range('F', 2);
 				return range();
 			case 56:
 				if (data[6] != data[7])
