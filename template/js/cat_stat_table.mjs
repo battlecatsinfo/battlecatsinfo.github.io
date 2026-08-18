@@ -16,6 +16,7 @@ import {
 	ATK_OMNI,
 	ATK_KB_REVENGE,
 	AB_KAIJIN,
+	AB_IMUATK,
 
 	updateHp,
 	updateAtk,
