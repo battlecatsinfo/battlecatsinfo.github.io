@@ -99,6 +99,10 @@ class FormStatsTable {
 				p.append(obj.text);
 			}
 
+			if (layout === 2 && obj.tooltip) {
+				p.title = obj.tooltip;
+			}
+
 			if (MULTI_AB.has(obj.abNo)) {
 				if (layout === 2) {
 					p.classList.add('ab-select');

@@ -718,17 +718,16 @@ class Unit {
 					params = [v[0], v[1], v[1] === v[2] ? '' : `~${v[2]}`];
 					break;
 			}
-			let entry = units_scheme.abilities.descriptions[abNo];
-			let template;
-			if (entry.length === 1) {
-				template = entry[0];
-			} else {
-				template = entry[layout - 1];
-			}
+			const entry = units_scheme.abilities.descriptions[abNo];
+			const template = (entry.length === 1) ? entry[0] : entry[layout - 1];
+			const text = formatTemplate(template, params, extra);
+			const tooltip = units_scheme.abilities.tooltips[abNo];
+
 			yield {
 				abNo,
-				text: formatTemplate(template, params, extra),
+				text,
 				link,
+				tooltip,
 			};
 		}
 	}
