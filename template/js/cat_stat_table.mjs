@@ -32,6 +32,7 @@ import {
 const layout = config.layout;
 
 if (layout === 2) {
+	MULTI_AB.add(AB_IMUATK);
 	HP_MULTI_AB.add(AB_IMUATK);
 }
 
