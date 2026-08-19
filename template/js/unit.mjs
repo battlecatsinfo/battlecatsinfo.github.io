@@ -1668,7 +1668,12 @@ class CatForm extends Unit {
 							atk += buff * v[0] / 100;
 					}
 
-					// @TODO: check whether Attack Up Orb is effected by AB_EXPLOSION
+					if (v = ab[AB_EXPLOSION]) {
+						if (mode === 'max')
+							atk += buff;
+						else
+							atk +=  buff * v[0] / 100;
+					}
 				}
 			}
 
