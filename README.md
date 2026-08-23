@@ -35,7 +35,6 @@ Note: Clone https://github.com/battlecatsinfo/img to `img/` to display reference
 ## Layouts
 
 * `common`: use [W3.CSS](https://www.w3schools.com/w3css/default.asp) + [Dracula Theme](https://draculatheme.com/).
-* `gh`: Texts and tables are rendered left to right, based on [github-markdown-css](https://github.com/sindresorhus/github-markdown-css), good for displaying complex or large tables.
 * `static`: Document is centered, good for writing articles.
 * `blank`: Special pages without common navigation bar, styles, and script.
 
