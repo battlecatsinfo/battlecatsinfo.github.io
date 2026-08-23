@@ -252,7 +252,7 @@
 		"en_name": "Killer Cats",
 		"size": "860x240",
 		"category": "殺意貓",
-		"img": "https://i.imgur.com/HBAeof6.png",
+		"img": "/img/b/killer_cats.png",
 		"type": "category"
 	},
 	{
@@ -646,7 +646,7 @@
 		"en_name": "Legend Chapters Unlockable",
 		"size": "860x240",
 		"category": "傳說關卡掉落貓",
-		"img": "https://i.imgur.com/AcHg40M.png",
+		"img": "/img/b/legend_chapters_unlockable.png",
 		"type": "category"
 	},
 	{
@@ -662,8 +662,8 @@
 		"tw_name": "降臨和漩渦關卡掉落",
 		"jp_name": "降臨ステージ&サイクロンドロップネコ",
 		"en_name": "Advent and Cyclone Drops",
-		"size": "860x650",
-		"img": "https://i.imgur.com/7c1iOlB.png",
+		"size": "860x560",
+		"img": "/img/b/advent_and_cyclone_drops.png",
 		"category": "降臨和漩渦關卡掉落",
 		"type": "category"
 	},
@@ -672,8 +672,8 @@
 		"jp_name": "古びたタマゴ",
 		"en_name": "Ancient Eggs",
 		"category": "遠古的蛋",
-		"size": "860x510",
-		"img": "https://i.imgur.com/vqEcus9.png",
+		"size": "860x560",
+		"img": "/img/b/ancient_eggs.png",
 		"type": "category"
 	},
 	{
