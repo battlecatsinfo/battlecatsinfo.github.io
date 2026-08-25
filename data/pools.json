@@ -1229,7 +1229,7 @@
 		"tw_name": "萬聖節派對活動轉蛋",
 		"jp_name": "ハロウィンパーティ! スペシャル★イベントガチャ",
 		"en_name": "Halloween Party!",
-		"img": "https://i.meee.com.tw/7Wx1xWn.png",
+		"img": "https://i.meee.com.tw/FEBljHx.png",
 		"stage": "11-68",
 		"ticket": 206,
 		"type": "event",
@@ -1284,34 +1284,78 @@
 				]
 			]
 		],
-		"featured_items": {
-			"items": [
-				{
-					"id": 157,
-					"rate": 0.5,
-					"max": 1
-				},
-				{
-					"id": 21,
-					"rate": 0.5,
-					"max": 1
-				},
-				{
-					"id": 197,
-					"rate": 3.0,
-					"max": 5
-				},
-				{
-					"id": 105,
-					"rate": 1.0,
-					"max": 1
-				}
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E054.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E054.html"
+	},
+	{
+		"tw_name": "下載紀念！特別活動轉蛋",
+		"jp_name": "ダウンロード記念！スペシャルイベントガチャ",
+		"en_name": "Download Celebration! Special Event Capsules",
+		"img": "https://i.meee.com.tw/GUUwRSd.png",
+		"stage": "11-74",
+		"ticket": 221,
+		"type": "event",
+		"group_items": [
+			[
+				[
+					"item",
+					10
+				]
 			],
-			"guaranteed_count": 30
-		},
-		"group_rates": [2000, 0, 4900, 0, 3000, 0, 0, 0, 100, 0],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E044.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E044.html"
+			[
+				[
+					"unit",
+					504
+				],
+				[
+					"unit",
+					776
+				],
+				[
+					"item",
+					0
+				],
+				[
+					"item",
+					3
+				],
+				[
+					"item",
+					11
+				],
+				[
+					"item",
+					12
+				]
+			],
+			[
+				[
+					"item",
+					2
+				],
+				[
+					"item",
+					4
+				],
+				[
+					"item",
+					5
+				],
+				[
+					"item",
+					14
+				]
+			],
+			[
+				[
+					"unit",
+					726
+				]
+			],
+			[]
+		],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E055.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E055.html"
 	},
 	{
 		"tag": "PAC-MAN",
@@ -1837,7 +1881,7 @@
 		"tw_name": "下載紀念選拔",
 		"jp_name": "DL記念選抜",
 		"en_name": "Best of the Best Milestone Edition",
-		"img": "https://i.meee.com.tw/QfHZqNU.png",
+		"img": "https://i.meee.com.tw/UtO5gCH.png",
 		"type": "rare",
 		"group_items": [
 			[],
@@ -2016,63 +2060,63 @@
 			[
 				[
 					"unit",
-					783
+					873
 				],
 				[
 					"unit",
-					712
+					73
 				],
 				[
 					"unit",
-					763
+					34
 				],
 				[
 					"unit",
-					71
+					733
 				],
 				[
 					"unit",
-					106
+					76
 				],
 				[
 					"unit",
-					85
+					360
 				],
 				[
 					"unit",
-					525
+					59
 				],
 				[
 					"unit",
-					137
+					143
 				],
 				[
 					"unit",
-					261
+					87
 				],
 				[
 					"unit",
-					258
+					135
 				],
 				[
 					"unit",
-					799
+					196
 				],
 				[
 					"unit",
-					824
+					811
 				],
 				[
 					"unit",
-					725
+					607
 				],
 				[
 					"unit",
-					655
+					417
 				],
 				[
 					"unit",
-					719
+					674
 				]
 			],
 			[
@@ -2122,8 +2166,9 @@
 				]
 			]
 		],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1049.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1049.html"
+		"group_rates": [0, 6930, 2500, 500, 70],
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1077.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1077.html"
 	},
 	{
 		"tag": "超極貓咪祭",
@@ -20095,7 +20140,7 @@
 		"tw_name": "熱血！大運動會 紅隊",
 		"jp_name": "熱血！大運動会ガチャ 赤組",
 		"en_name": "River City Clash Red Team",
-		"img": "https://i.imgur.com/ICQMhtn.png",
+		"img": "https://i.meee.com.tw/dX7Pit8.png",
 		"free": 624,
 		"history": [
 			"2024/12/2-2024/12/16 熱血大運動會合作轉蛋(12/11必中,紅隊:熱血硬派國夫君,白隊:花園高中老大阿力)",
@@ -20284,31 +20329,15 @@
 			[
 				[
 					"unit",
-					83
+					496
 				],
 				[
 					"unit",
-					105
+					169
 				],
 				[
 					"unit",
-					136
-				],
-				[
-					"unit",
-					170
-				],
-				[
-					"unit",
-					194
-				],
-				[
-					"unit",
-					271
-				],
-				[
-					"unit",
-					338
+					830
 				],
 				[
 					"unit",
@@ -20316,22 +20345,38 @@
 				],
 				[
 					"unit",
-					617
+					43
+				],
+				[
+					"unit",
+					86
+				],
+				[
+					"unit",
+					525
+				],
+				[
+					"unit",
+					774
+				],
+				[
+					"unit",
+					271
 				]
 			],
 			[]
 		],
 		"group_rates": [0, 7000, 2500, 500, 0],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R848.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R848.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1079.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1079.html"
 	},
 	{
 		"tag": "大運動會",
-		"tw_name": "熱血！大運動會 白隊",
-		"jp_name": "熱血！大運動会ガチャ 白組",
+		"tw_name": "熱血！大運動會 黑隊",
+		"jp_name": "熱血！大運動会ガチャ 黑組",
 		"en_name": "River City Clash White Team",
-		"img": "https://i.imgur.com/4BMAhQc.png",
-		"free": 721,
+		"img": "https://i.meee.com.tw/2Kn2zNW.png",
+		"free": 874,
 		"history": [
 			"2024/12/2-2024/12/16 熱血大運動會合作轉蛋(12/11必中,紅隊:熱血硬派國夫君,白隊:花園高中老大阿力)",
 			"2022/12/12(11:00)~12/26(10:59) 熱血！大運動會 5% [國雄] [2022/12/23(11:00)~12/26(10:59) 5% [國雄] 必中]",
@@ -20519,46 +20564,46 @@
 			[
 				[
 					"unit",
-					177
+					72
 				],
 				[
 					"unit",
-					619
+					171
 				],
 				[
 					"unit",
-					212
+					105
 				],
 				[
 					"unit",
-					316
+					719
 				],
 				[
 					"unit",
-					401
+					763
 				],
 				[
 					"unit",
-					137
+					85
 				],
 				[
 					"unit",
-					618
+					692
 				],
 				[
 					"unit",
-					625
+					194
 				],
 				[
 					"unit",
-					668
+					272
 				]
 			],
 			[]
 		],
 		"group_rates": [0, 7000, 2500, 500, 0],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R924.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R924.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1080.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1080.html"
 	},
 	{
 		"tw_name": "龍族撲克",
