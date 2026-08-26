@@ -5,7 +5,7 @@
     "start": "node server.js"
   },
   "author": "ianfun",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "clean-css": "^5.3.3",
