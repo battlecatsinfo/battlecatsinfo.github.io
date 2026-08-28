@@ -287,10 +287,13 @@ module.exports = class extends RewardSiteGenerator {
 	}
 
 	getEvent(pool) {
+		const guaranteed_drop = pool['guaranteed_drop'] ?? 10;
 		const output = {
 				guaranteed: false,
 				items: [],
+				guaranteed_drop,
 		};
+		const guaranteed_rate = 100 / guaranteed_drop;
 		const group_items = pool['group_items'];
 		const group_rates = pool['group_rates'] || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		console.assert(group_items.length === 5);
@@ -397,10 +400,11 @@ module.exports = class extends RewardSiteGenerator {
 			const r = v[4].n ? this.fmt.format(v[4].valueOf() / 100) + '%' : 'N/A';
 			if (output.guaranteed) {
 				let a;
+				const no_guaranteed = (100 - guaranteed_rate) / 100;
 				if (v[3].must)
-					a = (0.9 * (v[6] / 100) + 10) / mustDropGroup.length;
+					a = (no_guaranteed * (v[6] / 100) + guaranteed_rate) / mustDropGroup.length;
 				else
-					a = 0.9 * v[4].valueOf() / 100;
+					a = no_guaranteed * v[4].valueOf() / 100;
 				output.items.push({
 					bgColor: v[1],
 					imgStyle: v[9],

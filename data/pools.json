@@ -1072,6 +1072,7 @@
 				]
 			]
 		],
+		"group_rates": [250, 0, 6250, 0, 2300, 0, 1000, 1, 200, 0],
 		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/tw/E053.html",
 		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/event/E053.html"
 	},
@@ -1158,6 +1159,7 @@
 		"stage": "1-434",
 		"ticket": 220,
 		"type": "event",
+		"guaranteed_drop": 50,
 		"group_items": [
 			[
 				[
