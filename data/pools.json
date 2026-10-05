@@ -7734,7 +7734,7 @@
 		"tw_name": "超古代勇者超級靈魂勇者",
 		"jp_name": "超古代勇者ウルトラソウルズ",
 		"en_name": "Ancient Heroes Ultra Souls",
-		"img": "https://i.imgur.com/fEevVRV.png",
+		"img": "https://i.meee.com.tw/IHCiN6Q.png",
 		"history": [
 			"2026/8/14-2026/8/17 超古代勇者",
 			"2026/8/3-2026/8/5 超古代勇者",
@@ -8103,6 +8103,10 @@
 			[
 				[
 					"unit",
+					877
+				],
+				[
+					"unit",
 					769
 				],
 				[
@@ -8154,8 +8158,8 @@
 			]
 		],
 		"group_rates": [0, 6970, 2500, 500, 30],
-		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R946.html",
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R946.html"
+		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R1084.html",
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1084.html"
 	},
 	{
 		"tag": "黑暗英雄",
@@ -15038,7 +15042,7 @@
 		"tw_name": "神劍闖江湖－明治劍客浪漫譚－",
 		"jp_name": "るろうに剣心 －明治剣客浪漫譚－",
 		"en_name": "Rurouni Kenshin",
-		"img": "https://i.imgur.com/jPny0Ou.png",
+		"img": "https://i.meee.com.tw/T8HPZXD.png",
 		"tw_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/tw/R905.html",
 		"history": [
 			"2024/8/5-2024/8/19 NEW神劍闖江湖合作轉蛋(8/16必中)"
@@ -15249,6 +15253,18 @@
 			[
 				[
 					"unit",
+					880
+				],
+				[
+					"unit",
+					879
+				],
+				[
+					"unit",
+					878
+				],
+				[
+					"unit",
 					746
 				],
 				[
@@ -15264,10 +15280,15 @@
 					749
 				]
 			],
-			[]
+			[
+				[
+					"unit",
+					881
+				]
+			]
 		],
-		"group_rates": [0, 7000, 2500, 500, 0],
-		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R888.html"
+		"group_rates": [0, 6970, 2500, 500, 30],
+		"jp_url": "https://ponosgames.com/information/appli/battlecats/gacha/rare/R1082.html"
 	},
 	{
 		"tag": "神魔",
