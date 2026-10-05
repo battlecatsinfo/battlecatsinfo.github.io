@@ -99,6 +99,7 @@ const AB_MK = 44;          // Metal Killer 鋼鐵殺手
 const AB_EXPLOSION = 45;   // Explosion 爆波
 const AB_KAIJIN = 46;      // 怪人特效
 const AB_DRAIN = 47;       // Drain 延遲
+const AB_SHORTENED_CD = 48;// Shortened Cooldown 縮短生產時間
 
 // Resist
 const RES_WEAK = 0;        // Resist to Weaken 抗擊耐性
@@ -2060,6 +2061,15 @@ class CatForm extends Unit {
 			case 69:
 				this.imu |= IMU_EXPLOSION;
 				break;
+			case 70:
+				this.atkM = 1 + inc1 / 100;
+				break;
+			case 71:
+				this.hpM = 1 + inc1 / 100;
+				break;
+			case 72:
+				this.ab[AB_SHORTENED_CD] = [inc1];
+				break;
 		}
 	}
 
@@ -2821,6 +2831,7 @@ export {
 	AB_EXPLOSION,
 	AB_KAIJIN,
 	AB_DRAIN,
+	AB_SHORTENED_CD,
 
 	RES_WEAK,
 	RES_STOP,

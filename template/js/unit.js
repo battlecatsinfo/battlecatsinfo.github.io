@@ -774,6 +774,10 @@ class UnitPage {
 			case 54:
 			case 58:
 			case 61:
+			case 67:
+			case 70:
+			case 71:
+			case 72:
 				return range();
 			case 25:
 				return [numStr(data[0] * 1.5), numStr(data[1] * 1.5), maxLv, numStr(data[0] * 1.5)];

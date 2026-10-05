@@ -27,11 +27,13 @@ import {
 	HP_MULTI_AB,
 	MULTI_AB,
 	EFFECTS,
+	AB_SHORTENED_CD,
 } from "./unit.mjs";
 
 const layout = config.layout;
 
 if (layout === 2) {
+	MULTI_AB.add(AB_SHORTENED_CD);
 	MULTI_AB.add(AB_IMUATK);
 	HP_MULTI_AB.add(AB_IMUATK);
 }
@@ -80,10 +82,17 @@ class FormStatsTable {
 		})();
 	}
 
-	getRes(cd) {
-		if (catEnv.combo_cd)
-			return Math.max(60, cd - 264 - floor(catEnv.combo_cd / 10));
-		return Math.max(60, cd - 264);
+	getRes(form) {
+		const min_cd = 60;
+		const treasure_tech_reduce = 264;
+		const combo_reduce = floor(catEnv.combo_cd / 10);
+		let cd = Math.max(min_cd, form.info.cd - treasure_tech_reduce - combo_reduce);
+
+		if (this.selectedAbilities?.has(AB_SHORTENED_CD) && Object.hasOwn(form.ab, AB_SHORTENED_CD)) {
+			cd -= floor(cd * form.ab[AB_SHORTENED_CD][0] / 100);
+		}
+
+		return numStrT(cd);
 	}
 
 	createAbIcons(form, p1, p2) {
@@ -437,7 +446,7 @@ class DetailedFormStatsTable extends FormStatsTable {
 			node.textContent = displayRange(form.range);
 		}
 		KB.textContent = form.kb.toString();
-		CD.textContent = numStrT(this.getRes(form.info.cd));
+		CD.textContent = this.getRes(form);
 
 		return form;
 	}
@@ -801,7 +810,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 		tr[5].textContent = numStrT(form.backswing);
 		tr = chs[5].children;
 		tr[1].textContent = numStr(form.info.price * 1.5);
-		tr[3].textContent = numStrT(this.getRes(form.info.cd));
+		tr[3].textContent = this.getRes(form);
 		tr[5].textContent = numStrT(form.tba);
 		
 		return form;
