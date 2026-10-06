@@ -70,7 +70,7 @@ class FormStatsTable {
 			if (!talents)
 				return false;
 
-			for (let i = 1; i < 113; i += 14) {
+			for (let i = 1; i < 141; i += 14) {
 				if (!talents[i])
 					break;
 

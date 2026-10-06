@@ -250,7 +250,7 @@ function filter() {
 							results.delete(x);
 						} else {
 							outer: {
-								for (let j = 1; j < 113 && c[j]; j += 14)
+								for (let j = 1; j < 141 && c[j]; j += 14)
 									if (c[j + 13] == 1)
 										break outer;
 								results.delete(x);

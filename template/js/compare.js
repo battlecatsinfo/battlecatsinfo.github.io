@@ -186,7 +186,7 @@ function addCat(id, I, FC = 0) {
 		FL = 1;
 		M = tbodyEl[10].children[I];
 		M.style.textAlign = 'left';
-		for (let i = 1; i < 113 && G[i]; i += 14) {
+		for (let i = 1; i < 141 && G[i]; i += 14) {
 			const D = document.createElement('div');
 			if (G[i + 13] == 1) {
 				D.classList.add('super-talent');

@@ -1308,7 +1308,9 @@ class CatForm extends Unit {
 			env: {value: props.env ?? catEnv, writable: true, configurable: true},
 			info: {value: props.info, enumerable: true},
 			hpM: {value: props.hpM ?? 1, writable: true, configurable: true, enumerable: true},
+			hpM2: {value: props.hpM ?? 1, writable: true, configurable: true, enumerable: true},
 			atkM: {value: props.atkM ?? 1, writable: true, configurable: true, enumerable: true},
+			atkM2: {value: props.atkM2 ?? 1, writable: true, configurable: true, enumerable: true},
 			_baseLv: {value: props._baseLv ?? 1, writable: true, configurable: true, enumerable: true},
 			_plusLv: {value: props._plusLv ?? 0, writable: true, configurable: true, enumerable: true},
 		});
@@ -1332,7 +1334,14 @@ class CatForm extends Unit {
 		this.info.price = value;
 	}
 	get hp() {
-		return ~~(~~(~~(round(this.info.hp * this.getLevelMulti()) * this.env.hp_t) * (1 + this.env.combo_hp)) * this.hpM);
+		let ret = round(this.info.hp * this.getLevelMulti());
+		ret = ~~(ret * this.env.hp_t);
+		ret = ~~(ret * (1 + this.env.combo_hp));
+		if (this.hpM !== 1 || this.hpM2 !== 1) {
+			ret = ~~(ret * this.hpM);
+			ret = ~~(ret * this.hpM2);
+		}
+		return ret;
 	}
 
 	hpAgainst(traits) {
@@ -1424,7 +1433,16 @@ class CatForm extends Unit {
 		atks = (typeof i !== 'undefined') ? [atks[i]] : atks.filter((x, i) => !i || x);
 
 		atks = atks.map(atk => {
-			return ~~(~~(~~(round(atk * m) * this.env.atk_t) * (1 + this.env.combo_atk)) * this.atkM);
+			let ret = round(atk * m);
+			ret = ~~(ret * this.env.atk_t);
+			ret = ~~(ret * (1 + this.env.combo_atk));
+
+			if (this.atkM !== 1 || this.atkM2 !== 1) {
+				ret = ~~(ret * this.atkM);
+				ret = ~~(ret * this.atkM2);
+			}
+
+			return ret;
 		});
 
 		return (typeof i !== 'undefined') ? atks[0] : atks;
@@ -1711,7 +1729,7 @@ class CatForm extends Unit {
 	maxTalentLevels(type = null) {
 		const talents = this.talents;
 		const rv = [];
-		for (let i = 1; i < 113 && talents[i]; i += 14)
+		for (let i = 1; i < 141 && talents[i]; i += 14)
 			if (type === null || type === talents[i + 13])
 				rv.push(talents[i + 1] || 1);
 		return rv;
@@ -1723,7 +1741,7 @@ class CatForm extends Unit {
 		if (!talents)
 			return;
 
-		for (let i = 1; i < 113; i += 14) {
+		for (let i = 1; i < 141; i += 14) {
 			if (!talents[i])
 				break;
 
@@ -2062,10 +2080,10 @@ class CatForm extends Unit {
 				this.imu |= IMU_EXPLOSION;
 				break;
 			case 70:
-				this.atkM = 1 + inc1 / 100;
+				this.atkM2 = 1 + inc1 / 100;
 				break;
 			case 71:
-				this.hpM = 1 + inc1 / 100;
+				this.hpM2 = 1 + inc1 / 100;
 				break;
 			case 72:
 				this.ab[AB_SHORTENED_CD] = [inc1];
@@ -2095,7 +2113,7 @@ class CatForm extends Unit {
 		const talents = this.talents;
 		let j = 0;
 		this.trait = this.trait | talents[0];
-		for (let i = 1; i < 113 && talents[i]; i += 14) {
+		for (let i = 1; i < 141 && talents[i]; i += 14) {
 			if (type === null || type === talents[i + 13])
 				this.applyTalent(talents.subarray(i, i + 14), levels[j++]);
 		}
