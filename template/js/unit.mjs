@@ -1746,7 +1746,7 @@ class CatForm extends Unit {
 			if (!talents[i])
 				break;
 
-			if (isSuper != (talents[i + 13] === 1))
+			if (isSuper !== (talents[i + 13] === 1))
 				continue;
 
 			yield {
