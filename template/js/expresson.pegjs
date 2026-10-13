@@ -50,6 +50,7 @@ const constants = {
 	imu_toxic: 256,
 	imu_bosswave: 512,
 	imu_explosion: 1024,
+	imu_drain: 2048,
 
 	ab_strengthen: 1,
 	ab_survive: 2,

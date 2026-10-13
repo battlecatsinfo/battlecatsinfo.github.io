@@ -49,7 +49,8 @@ const IMU_WARP = 64;       // Immune to Warp 傳送無效
 const IMU_CURSE = 128;     // Immune to Curse 古代詛咒無效
 const IMU_TOXIC = 256;     // Immune to Toxic 毒擊傷害無效
 const IMU_BOSSWAVE = 512;  // Immune to Boss Shockwave 魔王震波無效 [UNOFFICIAL]
-const IMU_EXPLOSION = 1024; // Immune to Explosion 爆波傷害無效
+const IMU_EXPLOSION = 1024;// Immune to Explosion 爆波傷害無效
+const IMU_DRAIN = 2048;    // Immune to Drain 延遲無效
 
 // Abilities
 const AB_STRENGTHEN = 1;   // Strengthen 攻擊力上升
@@ -751,7 +752,7 @@ class Unit {
 
 		const div = container.appendChild(document.createElement('div'));
 		const names = [];
-		for (let x = 1, i = 0; x <= 1024; x <<= 1, ++i) {
+		for (let x = 1, i = 0; x <= 2048; x <<= 1, ++i) {
 			if (!(this.imu & x))
 				continue;
 			
