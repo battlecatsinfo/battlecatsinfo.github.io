@@ -1,5 +1,5 @@
 import {loadScheme, config} from './common.mjs';
-import {loadAllCats} from './unit.mjs';
+import {loadAllCats, units_scheme} from './unit.mjs';
 const {limited_cats, cat_guide_ids} = await loadScheme('units', ['limited_cats', 'cat_guide_ids']);
 
 const favList = new Set(config.starCats.map(x => x.id));
@@ -7,16 +7,24 @@ const catsEl = document.getElementById('cats');
 const main = catsEl.parentNode;
 const medals = main.getElementsByClassName('modal');
 const abSelectEl = document.getElementById('ab').children;
-const undo = [];
 const searchTextEl = document.getElementById('name-search');
-const talentsEl = document.getElementById('to');
+let talentsOpenEl = document.getElementById('to');
+let orbcEl = document.getElementById('orb-count');
 const notFoundEl = document.getElementById('not-f');
 const favOnlyEl = document.getElementById('fav-only');
 const exOnlyEl = document.getElementById('ex-only');
+const rarity = document.getElementById('rarity');
+const trait = document.getElementById('trait-f');
+const G0 = document.getElementById('G0');
+const G1 = document.getElementById('G1');
+const G2 = document.getElementById('G2');
+const displayOrder = document.getElementById('display-order');
+const undo = [];
 let cats;
 let tooltip;
 let favSetting = false;
 let lastRarity = null;
+let talentsEl;
 
 function onClick(event) {
 	const t = event.currentTarget;
@@ -85,24 +93,44 @@ function addUnit(c, gap=true) {
 		}
 	}
 }
-loadAllCats().then(_cs => {
-	cats = _cs;
-	document.getElementById('loader').style.display = 'none';
-	main.style.display = 'block';
-	for (let cat of cats) {
-		const TF = cat.forms[2];
-		if (TF?.talents) {
-			TF.applyAllTalents();
+
+function setsIntersection(sets) {
+	if (sets.length === 0) {
+		return new Set();
+	}
+
+
+	// native method (2024 baseline)
+	if (sets[0].intersection === 'function') {
+		return sets.reduce((acc, x) => {
+		  return acc.intersection(x);
+		});
+	}
+
+	// fallback method
+	let result = new Set(sets[0]);
+
+	for (let i = 1; i < sets.length; i++) {
+		const current = sets[i];
+
+		const intersection = new Set();
+
+		for (const value of result) {
+			if (current.has(value)) {
+				intersection.add(value);
+			}
+		}
+
+		result = intersection;
+
+		if (result.size === 0) {
+			break;
 		}
 	}
-	cat_guide_ids.map(i => cats[i]).forEach(addUnit);
-});
-const rarity = document.getElementById('rarity');
-const trait = document.getElementById('trait-f');
-const G0 = document.getElementById('G0');
-const G1 = document.getElementById('G1');
-const G2 = document.getElementById('G2');
-const displayOrder = document.getElementById('display-order');
+
+	return result;
+}
+
 
 function filter() {
 	undo.length = 0;
@@ -227,7 +255,7 @@ function filter() {
 			}
 		}
 	}
-	chs = talentsEl.getElementsByTagName('input');
+	chs = talentsOpenEl;
 	for (i = 1; i < 5; ++i) {
 		if (chs[i].checked) {
 			switch (i) {
@@ -270,6 +298,49 @@ function filter() {
 			break;
 		}
 	}
+	chs = orbcEl;
+	for (i = 1; i <= 2; ++i) {
+		if (chs[i].checked) {
+			for (let x of results) {
+				if (cats[x].orbs !== i) {
+					results.delete(x);
+				}
+			}
+		}
+	}
+	chs = talentsEl;
+	const dieList = [];
+	for (i = 0; i < chs.length; ++i) {
+		const check = i + 1;
+		if (chs[i].checked) {
+			const subSet = new Set();
+			for (let x of results) {
+				let pass = false;
+				const talents = cats[x].talents;
+				if (talents) {
+					for (let i = 1; i < 141; i += 14) {
+						if (talents[i] === check) {
+							pass = true;
+							break;
+						}
+					}
+				}
+
+				if (!pass) {
+					subSet.add(x);
+				}
+			}
+			if (subSet.size) {
+				dieList.push(subSet);
+			}
+		}
+	}
+	if (dieList.length) {
+		for (const x of setsIntersection(dieList)) {
+			results.delete(x);
+		}
+	}
+
 	d = false;
 	const s = new Set();
 	for (i of [G0, G1, G2])
@@ -335,95 +406,7 @@ function clearAll(event) {
 	lastRarity = null;
 	cats.map(addUnit);
 }
-document.onclick = function(event) {
-	if (event.target != main && !event.target.classList.contains('modal')) return;
-	if (notFoundEl.style.display === 'block')
-		notFoundEl.style.display = 'none';
-	for (let x of medals)
-		if (x.style.display == 'block') {
-			x.style.display = 'none';
-			for (let b of undo)
-				b.classList.toggle('selected');
-			undo.length = 0;
-			return;
-		}
-}
 
-function ot() {
-	this.nextElementSibling.style.display = 'block';
-}
-for (let C of main.getElementsByClassName('C'))
-	C.onclick = ot;
-for (let B of main.querySelectorAll('.M button')) {
-	if (!B.value) continue;
-	B.addEventListener('click', function() {
-		this.classList.toggle('selected');
-		undo.push(this);
-	});
-}
-
-function toggleSelected() {
-	this.classList.toggle('selected');
-}
-
-exOnlyEl.addEventListener('click', toggleSelected);
-favOnlyEl.addEventListener('click', toggleSelected);
-displayOrder.addEventListener('click', toggleSelected);
-
-abSelectEl[0].onclick = trait.previousElementSibling.onclick = function() {
-	if (this.src.endsWith('or.png'))
-		this.src = 'and.png';
-	else
-		this.src = 'or.png';
-}
-
-document.getElementById('search-name').onclick = function(event) {
-	event.preventDefault();
-	const q = searchTextEl.value;
-	let found = false;
-	for (let x of medals)
-		if (x.style.display == 'block') {
-			x.style.display = 'none';
-			break;
-		}
-	catsEl.textContent = '';
-	lastRarity = null;
-	if (!q) return;
-	let digit = q.length >= 1;
-	for (const c of q) {
-		let x = c.codePointAt(0);
-		(x < 48 || 57 < x) && (digit = false);
-	}
-	if (digit) {
-		const x = cats[parseInt(q)];
-		x && (found = true, addUnit(x, false));
-	}
-	for (let i = 0; i < cats.length; ++i) {
-		const c = cats[i];
-		for (let f of c.forms) {
-			if (f.name.includes(q) || f.jpName.includes(q)) {
-				addUnit(c, false);
-				found = true;
-				break;
-			}
-		}
-	}
-	if (!found)
-		notFoundEl.style.display = 'block';
-	return false;
-}
-onkeydown = function(event) {
-	if (event.key == 'Escape') {
-		for (let x of medals)
-			if (x.style.display == 'block') {
-				x.style.display = 'none';
-				for (let b of undo)
-					b.classList.toggle('selected');
-				undo.length = 0;
-				return;
-			}
-	}
-}
 
 function favorite(e) {
 	const t = e.target;
@@ -456,11 +439,136 @@ function favorite(e) {
 	}
 }
 
-for (const e of document.getElementsByClassName('filter'))
-	e.addEventListener('click', filter);
+(function () {
+	loadAllCats().then(_cs => {
+		cats = _cs;
+		document.getElementById('loader').style.display = 'none';
+		main.style.display = 'block';
+		for (let cat of cats) {
+			const TF = cat.forms[2];
+			if (TF?.talents) {
+				TF.applyAllTalents();
+			}
+		}
+		cat_guide_ids.map(i => cats[i]).forEach(addUnit);
+	});
 
-for (const e of document.getElementsByClassName('clear'))
-	e.addEventListener('click', clear);
+	function toggleDisplay() {
+		this.nextElementSibling.style.display = 'block';
+	}
 
-document.getElementById('favorite').addEventListener('click', favorite);
-document.getElementById('clear-all').addEventListener('click', clearAll);
+	for (let C of main.getElementsByClassName('C')) {
+		C.addEventListener('click', toggleDisplay);
+	}
+
+	for (let B of main.querySelectorAll('.M button')) {
+		if (!B.value) continue;
+		B.addEventListener('click', function() {
+			this.classList.toggle('selected');
+			undo.push(this);
+		});
+	}
+
+	function toggleSelected() {
+		this.classList.toggle('selected');
+	}
+
+	exOnlyEl.addEventListener('click', toggleSelected);
+	favOnlyEl.addEventListener('click', toggleSelected);
+	displayOrder.addEventListener('click', toggleSelected);
+
+	abSelectEl[0].onclick = trait.previousElementSibling.onclick = function() {
+		if (this.src.endsWith('or.png'))
+			this.src = 'and.png';
+		else
+			this.src = 'or.png';
+	}
+
+	document.getElementById('search-name').onclick = function(event) {
+		event.preventDefault();
+		const q = searchTextEl.value;
+		let found = false;
+		for (let x of medals)
+			if (x.style.display == 'block') {
+				x.style.display = 'none';
+				break;
+			}
+		catsEl.textContent = '';
+		lastRarity = null;
+		if (!q) return;
+		let digit = q.length >= 1;
+		for (const c of q) {
+			let x = c.codePointAt(0);
+			(x < 48 || 57 < x) && (digit = false);
+		}
+		if (digit) {
+			const x = cats[parseInt(q)];
+			x && (found = true, addUnit(x, false));
+		}
+		for (let i = 0; i < cats.length; ++i) {
+			const c = cats[i];
+			for (let f of c.forms) {
+				if (f.name.includes(q) || f.jpName.includes(q)) {
+					addUnit(c, false);
+					found = true;
+					break;
+				}
+			}
+		}
+		if (!found)
+			notFoundEl.style.display = 'block';
+		return false;
+	}
+
+	document.addEventListener('click', function(event) {
+		if (event.target != main && !event.target.classList.contains('modal')) return;
+		if (notFoundEl.style.display === 'block')
+			notFoundEl.style.display = 'none';
+		for (let x of medals)
+			if (x.style.display == 'block') {
+				x.style.display = 'none';
+				for (let b of undo)
+					b.classList.toggle('selected');
+				undo.length = 0;
+				return;
+			}
+	});
+
+	window.addEventListener('keydown', function(event) {
+		if (event.key == 'Escape') {
+			for (let x of medals)
+				if (x.style.display == 'block') {
+					x.style.display = 'none';
+					for (let b of undo)
+						b.classList.toggle('selected');
+					undo.length = 0;
+					return;
+				}
+		}
+	});
+
+	for (const e of document.getElementsByClassName('filter'))
+		e.addEventListener('click', filter);
+
+	for (const e of document.getElementsByClassName('clear'))
+		e.addEventListener('click', clear);
+
+	document.getElementById('favorite').addEventListener('click', favorite);
+	document.getElementById('clear-all').addEventListener('click', clearAll);
+
+	talentsEl = orbcEl.parentNode.appendChild(document.createElement('fieldset'));
+	talentsEl.appendChild(document.createElement('legend')).textContent = '本能詳細（OR 運算）';
+
+	for (let i = 1; i < units_scheme.talents.names.length; ++i) {
+		const p = talentsEl.appendChild(document.createElement('p'));
+		const input = p.appendChild(document.createElement('input'));
+		const label = p.appendChild(document.createElement('label'));
+		label.textContent = `${i}: ${units_scheme.talents.names[i]}`;
+		input.type = 'checkbox';
+		input.name = 'talents';
+		label.htmlFor = input.id = `talents-${i}`;
+	}
+	talentsOpenEl = talentsOpenEl.getElementsByTagName('input');
+	talentsEl = talentsEl.getElementsByTagName('input');
+	orbcEl = orbcEl.getElementsByTagName('input');
+})();
