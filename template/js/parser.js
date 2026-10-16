@@ -1579,6 +1579,8 @@
 			"hpagainst",
 			"evol_require",
 			"evol4_require",
+			"talent_status",
+			"has_talent",
 		]);
 		const constants = {
 			red: 1,
@@ -1749,7 +1751,8 @@
 			"stop_cover",
 			"slow_cover",
 			"weak_cover",
-			"curse_cover"
+			"curse_cover",
+			"orb_count",
 		]);
 
 

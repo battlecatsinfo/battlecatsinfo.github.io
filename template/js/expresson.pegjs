@@ -14,6 +14,8 @@ const known_methods = new Set([
 	"hpagainst",
 	"evol_require",
 	"evol4_require",
+	"talent_status",
+	"has_talent",
 ]);
 const constants = {
 	red: 1,
@@ -183,7 +185,8 @@ const known_identifiers = new Set([
 	"stop_cover",
 	"slow_cover",
 	"weak_cover",
-	"curse_cover"
+	"curse_cover",
+	"orb_count",
 ]);
 }
 Expression

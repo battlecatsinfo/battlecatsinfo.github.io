@@ -278,7 +278,7 @@ function filter() {
 							results.delete(x);
 						} else {
 							outer: {
-								for (let j = 1; j < 141 && c[j]; j += 14)
+								for (let j = 1; j < 155 && c[j]; j += 14)
 									if (c[j + 13] == 1)
 										break outer;
 								results.delete(x);
@@ -318,7 +318,7 @@ function filter() {
 				let pass = false;
 				const talents = cats[x].talents;
 				if (talents) {
-					for (let i = 1; i < 141; i += 14) {
+					for (let i = 1; i < 155; i += 14) {
 						if (talents[i] === check) {
 							pass = true;
 							break;

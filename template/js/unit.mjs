@@ -1097,6 +1097,45 @@ class Unit {
 		return this.ab[AB_SAVAGE]?.[0] ?? 0;
 	}
 
+	__talent_status(code) {
+		const talents = this.talents;
+
+		switch (code) {
+			case 0:
+				return talents ? 0 : 1;
+			case 1:
+				return talents ? 1 : 0;
+			case 2:
+				if (!talents)
+					return 0;
+				for (let i = 1; i < 155; i += 14) {
+					if (!talents[i])
+						break;
+
+					if (talents[i + 13] === 1)
+						return 1;
+				}
+		}
+
+		return 0;
+	}
+
+	__has_talent(no) {
+		const talents = this.talents;
+
+		if (!talents)
+			return;
+
+		for (let i = 1; i < 155; i += 14) {
+			if (!talents[i])
+				break;
+
+			if (talents[i] === no)
+				return 1;
+		}
+		return 0;
+	}
+
 	__hasab(ab) {
 		return this.hasAb(ab);
 	}
@@ -1730,7 +1769,7 @@ class CatForm extends Unit {
 	maxTalentLevels(type = null) {
 		const talents = this.talents;
 		const rv = [];
-		for (let i = 1; i < 141 && talents[i]; i += 14)
+		for (let i = 1; i < 155 && talents[i]; i += 14)
 			if (type === null || type === talents[i + 13])
 				rv.push(talents[i + 1] || 1);
 		return rv;
@@ -1742,7 +1781,7 @@ class CatForm extends Unit {
 		if (!talents)
 			return;
 
-		for (let i = 1; i < 141; i += 14) {
+		for (let i = 1; i < 155; i += 14) {
 			if (!talents[i])
 				break;
 
@@ -2114,7 +2153,7 @@ class CatForm extends Unit {
 		const talents = this.talents;
 		let j = 0;
 		this.trait = this.trait | talents[0];
-		for (let i = 1; i < 141 && talents[i]; i += 14) {
+		for (let i = 1; i < 155 && talents[i]; i += 14) {
 			if (type === null || type === talents[i + 13])
 				this.applyTalent(talents.subarray(i, i + 14), levels[j++]);
 		}
@@ -2171,6 +2210,9 @@ class CatForm extends Unit {
 	}
 	__rarity() {
 		return this.base.rarity;
+	}
+	__orb_count() {
+		return this.base.orbs ?? 0;
 	}
 	__hpagainst(traits) {
 		return this.hpAgainst(traits);

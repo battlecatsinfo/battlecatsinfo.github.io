@@ -324,7 +324,7 @@ class CatDPSHelper extends UnitDPSHelper {
 		const self = this;
 
 		if (this.F.lvc >= 2 && this.F.talents) {
-			for (let i = 1; i < 141; i += 14) {
+			for (let i = 1; i < 155; i += 14) {
 				if (!this.F.talents[i]) break;
 				((this.F.talents[i + 13] == 1) ? this.superTalentLevels : this.talentLevels).push(this.F.talents[i + 1] || 1);
 				this.talentTypes.add(this.F.talents[i]);
@@ -333,7 +333,7 @@ class CatDPSHelper extends UnitDPSHelper {
 
 
 		if (this.F.lvc >= 2 && this.F.talents) {
-			for (let i = 1; i < 141 && this.F.talents[i]; i += 14) {
+			for (let i = 1; i < 155 && this.F.talents[i]; i += 14) {
 				const talentIndex = this.F.talents[i];
 				if (!DPS_RELATED_TALENTS.has(talentIndex))
 					continue;
@@ -353,7 +353,7 @@ class CatDPSHelper extends UnitDPSHelper {
 				p.oninput = function() {
 					let talentsCounter = 0;
 					let superTalentsCounter = 0;
-					for (let j = 1;j < 141;j += 14) {
+					for (let j = 1;j < 155;j += 14) {
 						if (j == i) {
 							if (self.F.talents[j + 13] == 1) {
 								self.superTalentLevels[superTalentsCounter] = parseInt(this.value);
