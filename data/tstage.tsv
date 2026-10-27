@@ -755,8 +755,8 @@ New Challenger	New Challenger	New Challenger	New Challenger
 特別任務！魘夢討伐	特別任務！討伐魘夢	Mission: Slay Enmu!	특별 임무! 엔무 토벌
 特別任務！猗窩座討伐	特別任務！討伐猗窩座	Mission: Slay Akaza!	특별 임무! 아카자 토벌
 隠された聖杯戦争	隱藏的聖杯戰爭	The Hidden Grail War	숨겨진 성배전쟁
-パックマン登場！			
-パックマンとネコ			
+パックマン登場！	PAC-MAN登場！	PAC-MAN Appears!	
+パックマンとネコ	PAC-MAN與貓咪	PAC-MAN & Cat	
 破戒僧・悠久山安慈			
 天剣・瀬田宗次郎			
 幕末の亡霊・志々雄真実			
@@ -893,7 +893,7 @@ New Challenger	New Challenger	New Challenger	New Challenger
 ランキングの間	排行賽會場	Arena of Honor	랭킹의 방
 ランキングの間	排行賽會場	Arena of Honor	랭킹의 방
 超ランキングの間	超排行賽會場	Arena of Power	울트라 랭킹의 방
-ランキングの間(旧)	排行賽會場	Arena of Honor	랭킹의 방
+ランキングの間(旧)			랭킹의 방
 超ランキングの間	超排行賽會場	Arena of Power	울트라 랭킹의 방
 ランキングの間			
 極ランキングの間	極排行賽會場	Arena of Destiny	하이퍼 랭킹의 방
@@ -1211,7 +1211,7 @@ VS範馬刃牙	VS範馬刃牙	Vs Baki Hanma	VS한마 바키
 エヴァ量産機強襲	EVA量產機強襲	Mass Production EVA Strikes	에바 양산기 강습
 強襲！猗窩座との戦い	強襲！與猗窩座的戰鬥	Akaza Strikes!	강습! 아카자와의 전투
 真アサシン強襲！	真Assassin強襲！	True Assassin's Gauntlet	진 어새신 강습!
-強襲！巨大パックマン			
+強襲！巨大パックマン	強襲！巨大PAC-MAN	Giant PAC-MAN Strikes!	
 魔界編	魔界篇	The Aku Realms	마계편
 ガープラ密林	甲普拉密林	Hidden Forest of Gapra	가푸라 밀림
 アシビニ砂漠	亞蜥比沙漠	Ashvini Desert	비시니 사막
@@ -1252,8 +1252,8 @@ VS範馬刃牙	VS範馬刃牙	Vs Baki Hanma	VS한마 바키
 ン・トーベ地方	愛呷便當地區	Bento Region	라이브 피시 센터
 おしゃれクレイジー	時尚瘋到不行	Haute Horror	크레이지 패션
 偏愛化学実験場	偏愛化學實驗場	Yandere Chemistry	편애 화학 실험장
-シュガーハイランド			
-理想郷ビバラメン			
+シュガーハイランド	糖分超標遊樂園	Six Flans	
+理想郷ビバラメン	完美拉麵烏托邦	Noodle Nirvana	
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
@@ -1282,7 +1282,7 @@ VS範馬刃牙	VS範馬刃牙	Vs Baki Hanma	VS한마 바키
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
 異次元コロシアム	異次元競技場	Otherworld Colosseum	이차원 콜로세움
-異次元コロシアム			
+異次元コロシアム	異次元競技場	Otherworld Colosseum	
 にゃんこ道検定 初段	貓咪道檢定 一段	Catclaw Championships Rank 1	냥코도 승단 시험 초단
 にゃんこ道検定 二段	貓咪道檢定 二段	Catclaw Championships Rank 2	냥코도 승단 시험 2단
 にゃんこ道検定 三段	貓咪道檢定 三段	Catclaw Championships Rank 3	냥코도 승단 시험 3단
@@ -3649,23 +3649,23 @@ VSジュリ 激ムズ	VS蛛俐 困難	VS JURI (Expert)	VS주리 고난도
 犯した罪と昏い闇	與犯下的罪沉溺黑暗	Sins of the Abyss	저지른 죄와 짙은 어둠
 影との融合	和黑影融合	One with the Shadows	그림자와의 융합
 新たな春のその先へ	向著春天邁進	Beyond Springtide	새로운 봄, 그 너머로
-迷路に並んだクッキー			
-クッキーを食べ尽くせ！			
-ゴーストにつかまるな			
-フルーツで高得点			
-形勢逆転！パワークッキー			
-イジケゴーストを追いかけろ			
-目指せ256面			
-進み始めたら止まらない			
-ワープトンネルの向こう側			
-ゴーストをやっつけろ			
-直線移動の美学			
-パワークッキーはどこへ			
-エンドレス拾い食い			
-逃げるよりも立ち向かえ			
-ハイスコアへの招待状			
-クッキーかネコカンか			
-もう食べられない			
+迷路に並んだクッキー	豆子迷宮排排站	Pac-Dots in the Maze	
+クッキーを食べ尽くせ！	把豆子全吃光光	Bellyful of Pac-Dots	
+ゴーストにつかまるな	不要被幽靈抓到	Dodge Them Ghosts	
+フルーツで高得点	吃到水果拿高分	High Score Fruit	
+形勢逆転！パワークッキー	用能量球大翻盤	Power Pellet Comeback	
+イジケゴーストを追いかけろ	追擊變弱的幽靈	Ghosts on the Run	
+目指せ256面	目標通過256關	256 Levels to Victory	
+進み始めたら止まらない	開始前進不停歇	Objects in Motion	
+ワープトンネルの向こう側	傳送通道的彼端	Warp Tunnel's End	
+ゴーストをやっつけろ	將幽靈一網打盡	Get those Ghosts	
+直線移動の美学	直線移動的美學	A Straight Line's Beauty	
+パワークッキーはどこへ	能量球你在哪裡	The Hunt for Power Pellets	
+エンドレス拾い食い	無止盡邊走邊吃	Endless Scavenging	
+逃げるよりも立ち向かえ	不逃跑正面迎戰	Face the Threat	
+ハイスコアへの招待状	拿高分的邀請函	Invitation to a High Score	
+クッキーかネコカンか	豆子還是貓罐頭	Pac-Dots or Cat Food?	
+もう食べられない	再也吃不下去了	Fit to Burst	
 森の出会い			
 破壊の極意・二重の極み			
 救世のために編み出した秘伝			
@@ -3876,7 +3876,7 @@ in MOON	in THE MOON	in THE MOON	in THE MOON
 幸運！お年玉大襲来！	財神到！紅包大量來襲！	Lucky! New Year's Loot!	행운의 세뱃돈 대습격!
 幸運！お年玉大襲来！	財神到！紅包大量來襲！	Lucky! New Year's Loot!	행운의 세뱃돈 대습격!
 幸運！お年玉大襲来！	財神到！紅包大量來襲！	Lucky! New Year's Loot!	행운의 세뱃돈 대습격!
-ボーナスステージ			
+ボーナスステージ	加分關卡	Bonus Stage	
 貓咪道場關卡	ネコ道場	Dojo Stages	냥코 도장
  ネコ修行 初段	貓咪修行 初段	Wanderer's Trial (Stage 1)	냥코 수행 초단
  ニコ修行 やわめ			
@@ -6235,16 +6235,16 @@ Lv.MAX これが究極の力だ！	Lv.MAX 這就是終極的力量！	Lv. MAX Ul
 妄想心音 Lv.8	妄想心音 Lv.8	Delusional Heartbeat Lv.8	망상심음 Lv.8
 妄想心音 Lv.9	妄想心音 Lv.9	Delusional Heartbeat Lv.9	망상심음 Lv.9
 妄想心音 Lv.MAX	妄想心音 Lv.MAX	Delusional Heartbeat Lv.MAX	망상심음 Lv.MAX
-ROUND 1			
-ROUND 2			
-ROUND 3			
-ROUND 4			
-ROUND 5			
-ROUND 6			
-ROUND 7			
-ROUND 8			
-ROUND 9			
-ROUND 10			
+ROUND 1	ROUND 1	ROUND 1	
+ROUND 2	ROUND 2	ROUND 2	
+ROUND 3	ROUND 3	ROUND 3	
+ROUND 4	ROUND 4	ROUND 4	
+ROUND 5	ROUND 5	ROUND 5	
+ROUND 6	ROUND 6	ROUND 6	
+ROUND 7	ROUND 7	ROUND 7	
+ROUND 8	ROUND 8	ROUND 8	
+ROUND 9	ROUND 9	ROUND 9	
+ROUND 10	ROUND 10	ROUND 10	
 超獸討伐關卡	超獣研究ステージ	Behemoth Culling	초수 토벌 스테이지
 多湿樹海 エリア1	高溼樹海 1區	Woodlands Area 1	다습 수해 지역 1
 多湿樹海 エリア2	高溼樹海 2區	Woodlands Area 2	다습 수해 지역 2
@@ -6613,18 +6613,18 @@ ROUND 10
 嫉妬の炎色反応	嫉妒燃起焰色反應	Envy's Flame Test	질투의 불꽃 반응
 好き好きスキーム	滿載喜歡戀愛機制	Smothering Scheme	사랑의 반응 경로
 ろ過された真心	過濾後的真情實意	Distilled Devotion	여과된 진심
-別腹の入り口			
-バウム回転木馬			
-デンジャラスソルベ			
-甘いまどろみ			
-裏方菓子職人			
-カヌレ山コースター			
-黄金スープ油田			
-トロリチャー州			
-メンマ大橋			
-混沌コーンゾーン			
-ナルー塔			
-一杯の幸せ			
+別腹の入り口	甜點王國的入口	Room for Dessert	
+バウム回転木馬	年輪蛋糕轉轉樂	Merry-Go-Roundcake	
+デンジャラスソルベ	危險雪酪大怒神	Sinister Sorbet	
+甘いまどろみ	甜蜜朦朧夢鄉裡	Sugar Coma	
+裏方菓子職人	幕後甜點職人坊	Backstage Baker	
+カヌレ山コースター	可麗露雲霄飛車	Cannelé Corkscrew	
+黄金スープ油田	黃金湯頭油田區	Soup Stock Springs	
+トロリチャー州	美味濃稠叉燒州	Mass-Chashu-Sets	
+メンマ大橋	筍乾風味大天橋	Golden Gate Menma	
+混沌コーンゾーン	黑白玉米大領地	Kernel Chaos	
+ナルー塔	粉色漩渦魚板塔	Fishcake Fortress	
+一杯の幸せ	一碗拉麵的幸福	Bowl of Bliss	
 異次元競技場	異次元コロシアム	Otherworld Colosseum	이차원 콜로세움
 Round 1	Round 1	Round 1	Round 1
 Round 2	Round 2	Round 2	Round 2
@@ -6766,11 +6766,11 @@ Round 2	Round 2	Round 2	Round 2
 Round 3	Round 3	Round 3	Round 3
 Round 4	Round 4	Round 4	Round 4
 Round 5	Round 5	Round 5	Round 5
-Round 1			
-Round 2			
-Round 3			
-Round 4			
-Round 5			
+Round 1	Round 1	Round 1	
+Round 2	Round 2	Round 2	
+Round 3	Round 3	Round 3	
+Round 4	Round 4	Round 4	
+Round 5	Round 5	Round 5	
 基本	基本	Basic	기본
 EX	EX	Special	EX
 レア	稀有	Rare	레어
