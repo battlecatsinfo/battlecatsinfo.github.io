@@ -101,6 +101,7 @@ const AB_EXPLOSION = 45;   // Explosion 爆波
 const AB_KAIJIN = 46;      // 怪人特效
 const AB_DRAIN = 47;       // Drain 延遲
 const AB_SHORTENED_CD = 48;// Shortened Cooldown 縮短生產時間
+const AB_CAT_COMBO = 49;   // New Cat Combo 新增貓咪聯組
 
 // Resist
 const RES_WEAK = 0;        // Resist to Weaken 抗擊耐性
@@ -2127,6 +2128,9 @@ class CatForm extends Unit {
 				break;
 			case 72:
 				this.ab[AB_SHORTENED_CD] = [inc1];
+				break;
+			case 73:
+				this.ab[AB_CAT_COMBO] = inc1;
 				break;
 		}
 	}

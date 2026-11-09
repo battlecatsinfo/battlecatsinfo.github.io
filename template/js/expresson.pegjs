@@ -102,6 +102,7 @@ const constants = {
 	ab_kaijin: 46,
 	ab_drain: 47,
 	ab_shortened_cd: 48,
+	ab_cat_combo: 49,
 
 	res_weak: 0,
 	res_stop: 1,

@@ -779,6 +779,8 @@ class UnitPage {
 			case 71:
 			case 72:
 				return range();
+			case 73:
+				return range('#');
 			case 25:
 				return [numStr(data[0] * 1.5), numStr(data[1] * 1.5), maxLv, numStr(data[0] * 1.5)];
 			case 26:
