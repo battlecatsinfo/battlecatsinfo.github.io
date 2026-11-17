@@ -3,6 +3,7 @@ import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
 import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
 import {EnemyStatsTable} from "./enemy_stat_table.mjs";
+import {searchVariants} from './cn2tw.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -1458,10 +1459,13 @@ async function doSearch(t) {
 	main_div.hidden = true;
 	search_result.hidden = false;
 	search_result.textContent = '';
+	// 简体输入也要能命中繁体关卡名；第三个参数用于高亮，必须传实际命中的子串
+	const vs = searchVariants(v);
 	for await (const stage of Stage.forEachStage()) {
 		let s = stage.name;
-		if (s?.includes(v))
-			add_result_stage(stage.id, s, v);
+		const hit = vs.find(n => s?.includes(n));
+		if (hit)
+			add_result_stage(stage.id, s, hit);
 		else {
 			s = stage.nameJp;
 			if (s?.includes(v))
@@ -1470,8 +1474,9 @@ async function doSearch(t) {
 	}
 	for await (const map of Stage.forEachMap()) {
 		let s = map.name;
-		if (s?.includes(v))
-			add_result_map(map.id, s, v);
+		const hit = vs.find(n => s?.includes(n));
+		if (hit)
+			add_result_map(map.id, s, hit);
 		else {
 			s = map.nameJp;
 			if (s?.includes(v))

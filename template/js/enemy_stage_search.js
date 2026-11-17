@@ -1,5 +1,6 @@
 import * as Stage from './stage.mjs';
 import {loadAllEnemies} from './unit.mjs';
+import {searchVariants} from './cn2tw.mjs';
 
 const chapterSel = document.getElementById('chapter');
 const slotsDiv = document.getElementById('enemy-slots');
@@ -175,13 +176,15 @@ function makeSlot(index) {
 
 	function suggestInput() {
 		const q = input.value.trim().toLowerCase();
+		// 简体输入也要能命中繁体敌人名；日文/英文列仍用原始输入
+		const qs = searchVariants(q);
 		dropdown.textContent = '';
 		const usedIds = new Set(
 			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null)
 		);
 		const hits = (q ? candidates.filter(e =>
 			!usedIds.has(e.id) && (
-				(e.name || '').toLowerCase().includes(q) ||
+				qs.some(n => (e.name || '').toLowerCase().includes(n)) ||
 				(e.jpName || '').toLowerCase().includes(q) ||
 				(e.fandom || '').toLowerCase().includes(q)
 			)
