@@ -1,5 +1,6 @@
 import {numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllEnemies} from './unit.mjs';
+import {searchVariants} from './cn2tw.mjs';
 
 const filterExprEl = document.getElementById('filter-expr');
 const sortExprEl = document.getElementById('sort-expr');
@@ -42,9 +43,10 @@ function filterByNameOrId(results) {
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
+	const twKeys = searchVariants(key);
 	return results.filter(result => {
 		const f = result[1];
-		return (f.id === qid) || f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key);
+		return (f.id === qid) || twKeys.some(k => f.name.toLowerCase().includes(k)) || f.jpName.toLowerCase().includes(key);
 	});
 }
 

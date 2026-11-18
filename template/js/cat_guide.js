@@ -1,5 +1,6 @@
 import {loadScheme, config} from './common.mjs';
 import {loadAllCats, units_scheme} from './unit.mjs';
+import {searchVariants} from './cn2tw.mjs';
 const {limited_cats, cat_guide_ids} = await loadScheme('units', ['limited_cats', 'cat_guide_ids']);
 
 const favList = new Set(config.starCats.map(x => x.id));
@@ -496,6 +497,8 @@ function favorite(e) {
 		catsEl.textContent = '';
 		lastRarity = null;
 		if (!q) return;
+		// 简体输入也要能命中繁体猫名：候选算一次，别放进循环
+		const qs = searchVariants(q);
 		let digit = q.length >= 1;
 		for (const c of q) {
 			let x = c.codePointAt(0);
@@ -508,7 +511,7 @@ function favorite(e) {
 		for (let i = 0; i < cats.length; ++i) {
 			const c = cats[i];
 			for (let f of c.forms) {
-				if (f.name.includes(q) || f.jpName.includes(q)) {
+				if (qs.some(n => f.name.includes(n)) || f.jpName.includes(q)) {
 					addUnit(c, false);
 					found = true;
 					break;

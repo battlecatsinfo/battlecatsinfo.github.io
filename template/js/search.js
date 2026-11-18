@@ -1,5 +1,6 @@
 import {config, numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
+import {searchVariants} from './cn2tw.mjs';
 
 const oriExpr = document.getElementById('ori-expr');
 const filterExpr = document.getElementById("filter-expr");
@@ -61,11 +62,12 @@ function filterByNameOrId(results) {
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
+	const twKeys = searchVariants(key);
 
 	if (formSelect === 0) {
 		return results.filter(result => {
 			const f = result[1];
-			return (f.id === qid) || f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key);
+			return (f.id === qid) || twKeys.some(k => f.name.toLowerCase().includes(k)) || f.jpName.toLowerCase().includes(key);
 		});
 	}
 
@@ -73,7 +75,7 @@ function filterByNameOrId(results) {
 	for (const cat of cats) {
 		if (!(
 			cat.id === qid ||
-			cat.forms.some(f => f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key))
+			cat.forms.some(f => twKeys.some(k => f.name.toLowerCase().includes(k)) || f.jpName.toLowerCase().includes(key))
 		)) {
 			cats.delete(cat);
 		}

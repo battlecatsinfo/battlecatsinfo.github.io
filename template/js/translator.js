@@ -1,4 +1,5 @@
 import {IdbBase, AutoIdb, translatorStores} from './common.mjs';
+import {searchVariants} from './cn2tw.mjs';
 
 let db;
 
@@ -48,11 +49,14 @@ async function doSearch() {
 		else
 			storeNames = [target];
 
+		// 简体输入也要能命中繁体条目：只对中文栏位（tw）做简繁归一化
+		const needles = lang === 'tw' ? searchVariants(v) : [v];
+
 		for (const storeName of storeNames) {
 			let first = true;
 
 			for await (const value of IdbBase.forEachValue(db, storeName)) {
-				if (!value[lang].includes(v))
+				if (!needles.some(needle => value[lang].includes(needle)))
 					continue;
 
 				const tr = document.createElement('tr');
