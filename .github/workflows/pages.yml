@@ -46,6 +46,10 @@ jobs:
         run: |
           npm install .
 
+      - name: Check Chinese normalization tables
+        run: |
+          npm run check:zh
+
       - name: Build static site contents
         run: |
           node build.js -f -m
