@@ -2,7 +2,9 @@
   "name": "static-maker",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "gen:zh": "node js/gen_zh_tables.js",
+    "check:zh": "node js/gen_zh_tables.js --check"
   },
   "author": "ianfun",
   "license": "MIT",

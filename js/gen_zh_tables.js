@@ -6,7 +6,8 @@
  *   - TWVariants.txt     异体 -> 台湾正体
  *
  * 用法：
- *   node js/gen_zh_tables.js
+ *   node js/gen_zh_tables.js            # 生成/更新
+ *   node js/gen_zh_tables.js --check    # 只校验已提交的表是否最新
  *   OPENCC_TS=... OPENCC_TW=... node js/gen_zh_tables.js   # 离线时指定本地文件
  */
 const fs = require('node:fs');
@@ -85,7 +86,7 @@ function reverse(map, text) {
 	return rev;
 }
 
-function writeTable(file, header, map) {
+function renderTable(file, header, map) {
 	const entries = [...map].sort(([a], [b]) => a.codePointAt(0) - b.codePointAt(0));
 	const lines = [];
 	for (let i = 0; i < entries.length; i += 8) {
@@ -93,7 +94,7 @@ function writeTable(file, header, map) {
 			.map(([k, v]) => `'${k}': '${v}'`)
 			.join(', ') + ',');
 	}
-	const body = `/**
+	return `/**
 ${header}
  */
 const MAP = {
@@ -113,11 +114,29 @@ export function ${file === 'tw2cn.mjs' ? 'toCn' : 'toTw'}(text) {
 	return out;
 }
 `;
-	fs.writeFileSync(resolve(TEMPLATE_DIR, file), body);
+}
+
+function writeOrCheck(file, header, map, check) {
+	const body = renderTable(file, header, map);
+	const path = resolve(TEMPLATE_DIR, file);
+	if (check) {
+		const current = fs.existsSync(path) ?
+			fs.readFileSync(path, 'utf8').replace(/\r\n/g, '\n') :
+			null;
+		if (current !== body) {
+			console.error(`${file}: OUT OF DATE (${map.size} entries). Run: npm run gen:zh`);
+			process.exitCode = 1;
+			return;
+		}
+		console.log(`${file}: up to date (${map.size} entries)`);
+		return;
+	}
+	fs.writeFileSync(path, body);
 	console.log(`${file}: ${map.size} entries, ${(Buffer.byteLength(body) / 1024).toFixed(1)} KB`);
 }
 
 (async () => {
+	const check = process.argv.includes('--check');
 	const tsText = await readSource('TSCharacters.txt', 'OPENCC_TS');
 	const twText = await readSource('TWVariants.txt', 'OPENCC_TW');
 	const ts = parse(tsText);
@@ -162,7 +181,7 @@ export function ${file === 'tw2cn.mjs' ? 'toCn' : 'toTw'}(text) {
 		}
 	}
 
-	writeTable('tw2cn.mjs', ` * 繁体（台湾正体）-> 简体 的单字映射，供简体输入时双侧归一。
+	writeOrCheck('tw2cn.mjs', ` * 繁体（台湾正体）-> 简体 的单字映射，供简体输入时双侧归一。
  *
  * 由 js/gen_zh_tables.js 生成，请勿手改。
  * 来源：OpenCC @ ${OPENCC_REV}（TSCharacters.txt + TWVariants.txt，Apache-2.0）
@@ -170,13 +189,13 @@ export function ${file === 'tw2cn.mjs' ? 'toCn' : 'toTw'}(text) {
  *
  * 为什么不反过来做「简 -> 繁」：那是**一对多、不确定**的（干 到底是
  * 乾、幹 还是 榦？）。而「繁 -> 简」是**多对一、确定**的，两边都停在
- * 简体上再比，就不需要展开候选。`, tw2cn);
+ * 简体上再比，就不需要展开候选。`, tw2cn, check);
 
-	writeTable('tw2tw.mjs', ` * 繁体异体字归一表，供繁体输入时使用。
+	writeOrCheck('tw2tw.mjs', ` * 繁体异体字归一表，供繁体输入时使用。
  *
  * 由 js/gen_zh_tables.js 生成，请勿手改。
  * 来源：OpenCC @ ${OPENCC_REV}（TWVariants.txt，Apache-2.0）
  *
  * 这里只处理异体 / 台湾用字（裡/裏、臺/台、著/着 等），不把繁体落到
- * 简体，所以「噁/惡」「髮/發」「團/糰」这类同简异义的字不会被混搜。`, tw2tw);
+ * 简体，所以「噁/惡」「髮/發」「團/糰」这类同简异义的字不会被混搜。`, tw2tw, check);
 })();
