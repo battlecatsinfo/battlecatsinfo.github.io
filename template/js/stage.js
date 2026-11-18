@@ -3,7 +3,7 @@ import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
 import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
 import {EnemyStatsTable} from "./enemy_stat_table.mjs";
-import {searchVariants} from './cn2tw.mjs';
+import {toCn} from './tw2cn.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -1449,6 +1449,11 @@ function add_result_map(id, name, search_for) {
 	a.innerHTML = M1.children[mc].textContent + ' - ' + name;
 }
 
+/** 关卡/地图名归一到简体并缓存，避免每次搜索重复转换。 */
+function cnOf(item) {
+	return item._cn ?? (item._cn = toCn(item.name || ''));
+}
+
 async function doSearch(t) {
 	const v = t.value.trim();
 	if (!v) {
@@ -1459,13 +1464,12 @@ async function doSearch(t) {
 	main_div.hidden = true;
 	search_result.hidden = false;
 	search_result.textContent = '';
-	// 简体输入也要能命中繁体关卡名；第三个参数用于高亮，必须传实际命中的子串
-	const vs = searchVariants(v);
+	// 简体输入也要能命中繁体关卡名：两边都归一到简体再比
+	const vCn = toCn(v);
 	for await (const stage of Stage.forEachStage()) {
 		let s = stage.name;
-		const hit = vs.find(n => s?.includes(n));
-		if (hit)
-			add_result_stage(stage.id, s, hit);
+		if (cnOf(stage).includes(vCn) || s?.includes(v))
+			add_result_stage(stage.id, s, v);
 		else {
 			s = stage.nameJp;
 			if (s?.includes(v))
@@ -1474,9 +1478,8 @@ async function doSearch(t) {
 	}
 	for await (const map of Stage.forEachMap()) {
 		let s = map.name;
-		const hit = vs.find(n => s?.includes(n));
-		if (hit)
-			add_result_map(map.id, s, hit);
+		if (cnOf(map).includes(vCn) || s?.includes(v))
+			add_result_map(map.id, s, v);
 		else {
 			s = map.nameJp;
 			if (s?.includes(v))

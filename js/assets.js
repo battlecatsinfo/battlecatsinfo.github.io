@@ -49,7 +49,7 @@ const sources = [
 	'anim.min.js.map',
 
 	'common.mjs',
-	'cn2tw.mjs',
+	'tw2cn.mjs',
 	'unit.mjs',
 	'cat_stat_table.mjs',
 	'combo.mjs',

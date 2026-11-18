@@ -1,6 +1,6 @@
 import {config, numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
-import {searchVariants} from './cn2tw.mjs';
+import {toCn} from './tw2cn.mjs';
 
 const oriExpr = document.getElementById('ori-expr');
 const filterExpr = document.getElementById("filter-expr");
@@ -57,17 +57,22 @@ document.getElementById('per_page').oninput = function setRange(e) {
 	renderTable(lastForms);
 };
 
+/** 把形态名归一到简体并缓存，避免每次搜索重复转换。 */
+function cnName(form) {
+	return form._cn ?? (form._cn = toCn(form.name));
+}
+
 function filterByNameOrId(results) {
 	const key = nameSearchEl.value.toLowerCase().trim();
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
-	const twKeys = searchVariants(key);
+	const keyCn = toCn(key);
 
 	if (formSelect === 0) {
 		return results.filter(result => {
 			const f = result[1];
-			return (f.id === qid) || twKeys.some(k => f.name.toLowerCase().includes(k)) || f.jpName.toLowerCase().includes(key);
+			return (f.id === qid) || cnName(f).includes(keyCn) || f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key);
 		});
 	}
 
@@ -75,7 +80,7 @@ function filterByNameOrId(results) {
 	for (const cat of cats) {
 		if (!(
 			cat.id === qid ||
-			cat.forms.some(f => twKeys.some(k => f.name.toLowerCase().includes(k)) || f.jpName.toLowerCase().includes(key))
+			cat.forms.some(f => cnName(f).includes(keyCn) || f.name.toLowerCase().includes(key) || f.jpName.toLowerCase().includes(key))
 		)) {
 			cats.delete(cat);
 		}
