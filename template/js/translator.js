@@ -1,5 +1,5 @@
 import {IdbBase, AutoIdb, translatorStores} from './common.mjs';
-import {toCn} from './tw2cn.mjs';
+import {cnMode, zh} from './zh.mjs';
 
 let db;
 
@@ -49,15 +49,15 @@ async function doSearch() {
 		else
 			storeNames = [target];
 
-		// 简体输入也要能命中繁体条目：两边都归一到简体再比，
-		// 「干/乾/幹」这类一对多也没有歧义
-		const vCn = lang === 'tw' ? toCn(v) : null;
+		// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
+		const cn = lang === 'tw' ? cnMode(v) : null;
+		const vN = cn === null ? null : zh(v, cn).toLowerCase();
 
 		for (const storeName of storeNames) {
 			let first = true;
 
 			for await (const value of IdbBase.forEachValue(db, storeName)) {
-				if (!value[lang].includes(v) && (vCn === null || !toCn(value[lang]).includes(vCn)))
+				if (!value[lang].includes(v) && (vN === null || !zh(value[lang], cn).toLowerCase().includes(vN)))
 					continue;
 
 				const tr = document.createElement('tr');

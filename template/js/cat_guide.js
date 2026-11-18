@@ -1,6 +1,6 @@
 import {loadScheme, config} from './common.mjs';
 import {loadAllCats, units_scheme} from './unit.mjs';
-import {toCn} from './tw2cn.mjs';
+import {cnMode, zhName, zhQuery} from './zh.mjs';
 const {limited_cats, cat_guide_ids} = await loadScheme('units', ['limited_cats', 'cat_guide_ids']);
 
 const favList = new Set(config.starCats.map(x => x.id));
@@ -487,7 +487,7 @@ function favorite(e) {
 
 	document.getElementById('search-name').onclick = function(event) {
 		event.preventDefault();
-		const q = searchTextEl.value;
+		const q = searchTextEl.value.trim();
 		let found = false;
 		for (let x of medals)
 			if (x.style.display == 'block') {
@@ -497,10 +497,12 @@ function favorite(e) {
 		catsEl.textContent = '';
 		lastRarity = null;
 		if (!q) return;
-		// 简体输入也要能命中繁体猫名：两边归一到简体再比，转换结果挂在形态上缓存
-		const qCn = toCn(q);
-		let digit = q.length >= 1;
-		for (const c of q) {
+		// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
+		const key = q.toLowerCase();
+		const cn = cnMode(key);
+		const qN = zhQuery(key, cn);
+		let digit = key.length >= 1;
+		for (const c of key) {
 			let x = c.codePointAt(0);
 			(x < 48 || 57 < x) && (digit = false);
 		}
@@ -511,7 +513,7 @@ function favorite(e) {
 		for (let i = 0; i < cats.length; ++i) {
 			const c = cats[i];
 			for (let f of c.forms) {
-				if ((f._cn ?? (f._cn = toCn(f.name))).includes(qCn) || f.jpName.includes(q)) {
+				if (zhName(f, cn).includes(qN) || (f.jpName || '').toLowerCase().includes(key)) {
 					addUnit(c, false);
 					found = true;
 					break;

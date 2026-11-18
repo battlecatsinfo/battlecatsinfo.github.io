@@ -1,6 +1,6 @@
 import * as Stage from './stage.mjs';
 import {loadAllEnemies} from './unit.mjs';
-import {toCn} from './tw2cn.mjs';
+import {cnMode, zhName, zhQuery} from './zh.mjs';
 
 const chapterSel = document.getElementById('chapter');
 const slotsDiv = document.getElementById('enemy-slots');
@@ -176,16 +176,16 @@ function makeSlot(index) {
 
 	function suggestInput() {
 		const q = input.value.trim().toLowerCase();
-		// 简体输入也要能命中繁体敌人名：两边归一到简体再比
-		const qCn = toCn(q);
+		// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
+		const cn = cnMode(q);
+		const qN = zhQuery(q, cn);
 		dropdown.textContent = '';
 		const usedIds = new Set(
 			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null)
 		);
 		const hits = (q ? candidates.filter(e =>
 			!usedIds.has(e.id) && (
-				(e._cn ?? (e._cn = toCn(e.name || ''))).includes(qCn) ||
-				(e.name || '').toLowerCase().includes(q) ||
+				zhName(e, cn).includes(qN) ||
 				(e.jpName || '').toLowerCase().includes(q) ||
 				(e.fandom || '').toLowerCase().includes(q)
 			)

@@ -3,7 +3,7 @@ import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
 import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
 import {EnemyStatsTable} from "./enemy_stat_table.mjs";
-import {toCn} from './tw2cn.mjs';
+import {cnMode, zhName, zhQuery} from './zh.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -1449,9 +1449,21 @@ function add_result_map(id, name, search_for) {
 	a.innerHTML = M1.children[mc].textContent + ' - ' + name;
 }
 
-/** 关卡/地图名归一到简体并缓存，避免每次搜索重复转换。 */
-function cnOf(item) {
-	return item._cn ?? (item._cn = toCn(item.name || ''));
+/**
+ * 在原文里找出归一化命中的子串，供高亮使用。
+ * 两张归一化表都是严格逐字一对一，所以 code point 偏移可以直接映射回原文。
+ * @param {string} name - 显示用原文。
+ * @param {string} normalized - 归一化后的名称（小写）。
+ * @param {string} query - 归一化后的查询词（小写）。
+ * @returns {string|null} 实际命中的原文子串；未命中返回 null。
+ */
+function matchHit(name, normalized, query) {
+	const i = normalized.indexOf(query);
+	if (i < 0)
+		return null;
+	// indexOf 给的是 UTF-16 下标；转成 code point 下标再切原文。
+	const start = [...normalized.slice(0, i)].length;
+	return [...name].slice(start, start + [...query].length).join('');
 }
 
 async function doSearch(t) {
@@ -1464,26 +1476,29 @@ async function doSearch(t) {
 	main_div.hidden = true;
 	search_result.hidden = false;
 	search_result.textContent = '';
-	// 简体输入也要能命中繁体关卡名：两边都归一到简体再比
-	const vCn = toCn(v);
+	// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
+	const cn = cnMode(v);
+	const vN = zhQuery(v, cn);
 	for await (const stage of Stage.forEachStage()) {
-		let s = stage.name;
-		if (cnOf(stage).includes(vCn) || s?.includes(v))
-			add_result_stage(stage.id, s, v);
+		const name = stage.name;
+		const hit = name ? matchHit(name, zhName(stage, cn), vN) : null;
+		if (hit !== null)
+			add_result_stage(stage.id, name, hit);
 		else {
-			s = stage.nameJp;
-			if (s?.includes(v))
-				add_result_stage(stage.id, s, v);
+			const nameJp = stage.nameJp;
+			if (nameJp?.includes(v))
+				add_result_stage(stage.id, nameJp, v);
 		}
 	}
 	for await (const map of Stage.forEachMap()) {
-		let s = map.name;
-		if (cnOf(map).includes(vCn) || s?.includes(v))
-			add_result_map(map.id, s, v);
+		const name = map.name;
+		const hit = name ? matchHit(name, zhName(map, cn), vN) : null;
+		if (hit !== null)
+			add_result_map(map.id, name, hit);
 		else {
-			s = map.nameJp;
-			if (s?.includes(v))
-				add_result_map(map.id, s, v);
+			const nameJp = map.nameJp;
+			if (nameJp?.includes(v))
+				add_result_map(map.id, nameJp, v);
 		}
 	}
 	if (!search_result.textContent)
