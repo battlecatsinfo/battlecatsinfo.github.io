@@ -3,7 +3,7 @@ import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
 import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
 import {EnemyStatsTable} from "./enemy_stat_table.mjs";
-import {cnMode, zhName, zhQuery} from './zh.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -1476,12 +1476,12 @@ async function doSearch(t) {
 	main_div.hidden = true;
 	search_result.hidden = false;
 	search_result.textContent = '';
-	// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
-	const cn = cnMode(v);
-	const vN = zhQuery(v, cn);
+	// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+	const cross = isCrossSearch();
+	const vN = zhQuery(v, cross);
 	for await (const stage of Stage.forEachStage()) {
 		const name = stage.name;
-		const hit = name ? matchHit(name, zhName(stage, cn), vN) : null;
+		const hit = name ? matchHit(name, zhName(stage, cross), vN) : null;
 		if (hit !== null)
 			add_result_stage(stage.id, name, hit);
 		else {
@@ -1492,7 +1492,7 @@ async function doSearch(t) {
 	}
 	for await (const map of Stage.forEachMap()) {
 		const name = map.name;
-		const hit = name ? matchHit(name, zhName(map, cn), vN) : null;
+		const hit = name ? matchHit(name, zhName(map, cross), vN) : null;
 		if (hit !== null)
 			add_result_map(map.id, name, hit);
 		else {

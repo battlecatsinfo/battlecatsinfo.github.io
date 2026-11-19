@@ -1,6 +1,6 @@
 import * as Stage from './stage.mjs';
 import {loadAllEnemies} from './unit.mjs';
-import {cnMode, zhName, zhQuery} from './zh.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh.mjs';
 
 const chapterSel = document.getElementById('chapter');
 const slotsDiv = document.getElementById('enemy-slots');
@@ -176,16 +176,16 @@ function makeSlot(index) {
 
 	function suggestInput() {
 		const q = input.value.trim().toLowerCase();
-		// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
-		const cn = cnMode(q);
-		const qN = zhQuery(q, cn);
+		// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+		const cross = isCrossSearch();
+		const qN = zhQuery(q, cross);
 		dropdown.textContent = '';
 		const usedIds = new Set(
 			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null)
 		);
 		const hits = (q ? candidates.filter(e =>
 			!usedIds.has(e.id) && (
-				zhName(e, cn).includes(qN) ||
+				zhName(e, cross).includes(qN) ||
 				(e.jpName || '').toLowerCase().includes(q) ||
 				(e.fandom || '').toLowerCase().includes(q)
 			)

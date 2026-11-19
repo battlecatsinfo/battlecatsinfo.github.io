@@ -1,5 +1,4 @@
 import {config, toggleTheme, resetTheme} from './common.mjs';
-import {isCrossSearch, setCrossSearch} from './zh-pref.mjs';
 
 function onSidebarAnchorClick(event) {
 	for (const node of document.getElementsByClassName('focus'))
@@ -53,11 +52,6 @@ function onSettingChange(event) {
 		return;
 	}
 
-	if (name === 'crossSearch') {
-		setCrossSearch(value === '1');
-		return;
-	}
-
 	if (!(name in config)) {
 		throw new Error(`Missing handler for setting: ${name}`);
 	}
@@ -84,8 +78,6 @@ for (const elem of document.getElementById('settings').elements) {
 		value = config.getTreasure(idx);
 	} else if (name === 'theme') {
 		value = config.colorTheme;
-	} else if (name === 'crossSearch') {
-		value = isCrossSearch() ? '1' : '';
 	} else {
 		value = config[name];
 	}

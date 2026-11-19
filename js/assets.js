@@ -50,8 +50,6 @@ const sources = [
 
 	'common.mjs',
 	'tw2cn.mjs',
-	'tw2tw.mjs',
-	'zh-pref.mjs',
 	'zh.mjs',
 	'unit.mjs',
 	'cat_stat_table.mjs',

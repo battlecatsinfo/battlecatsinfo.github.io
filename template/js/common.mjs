@@ -401,6 +401,16 @@ class ConfigHandler {
 		else
 			localStorage.setItem('layout', value);
 	}
+	// zh.mjs 直接读同一个 key，避免额外引入模块。
+	get crossSearch() {
+		return localStorage.getItem('crossSearch') === '1';
+	}
+	set crossSearch(value) {
+		if (value === '1' || value === true)
+			localStorage.setItem('crossSearch', '1');
+		else
+			localStorage.removeItem('crossSearch');
+	}
 	get colorTheme() {
 		return localStorage.getItem('theme') ||
 			(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');

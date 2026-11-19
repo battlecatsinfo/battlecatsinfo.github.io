@@ -1,6 +1,6 @@
 import {config, numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
-import {cnMode, zhName, zhQuery} from './zh.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh.mjs';
 
 const oriExpr = document.getElementById('ori-expr');
 const filterExpr = document.getElementById("filter-expr");
@@ -62,14 +62,14 @@ function filterByNameOrId(results) {
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
-	// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
-	const cn = cnMode(key);
-	const keyN = zhQuery(key, cn);
+	// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+	const cross = isCrossSearch();
+	const keyN = zhQuery(key, cross);
 
 	if (formSelect === 0) {
 		return results.filter(result => {
 			const f = result[1];
-			return (f.id === qid) || zhName(f, cn).includes(keyN) || (f.jpName || '').toLowerCase().includes(key);
+			return (f.id === qid) || zhName(f, cross).includes(keyN) || (f.jpName || '').toLowerCase().includes(key);
 		});
 	}
 
@@ -77,7 +77,7 @@ function filterByNameOrId(results) {
 	for (const cat of cats) {
 		if (!(
 			cat.id === qid ||
-			cat.forms.some(f => zhName(f, cn).includes(keyN) || (f.jpName || '').toLowerCase().includes(key))
+			cat.forms.some(f => zhName(f, cross).includes(keyN) || (f.jpName || '').toLowerCase().includes(key))
 		)) {
 			cats.delete(cat);
 		}

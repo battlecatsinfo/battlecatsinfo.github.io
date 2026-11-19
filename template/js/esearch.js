@@ -1,6 +1,6 @@
 import {numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllEnemies} from './unit.mjs';
-import {cnMode, zhName, zhQuery} from './zh.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh.mjs';
 
 const filterExprEl = document.getElementById('filter-expr');
 const sortExprEl = document.getElementById('sort-expr');
@@ -43,12 +43,12 @@ function filterByNameOrId(results) {
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
-	// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
-	const cn = cnMode(key);
-	const keyN = zhQuery(key, cn);
+	// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+	const cross = isCrossSearch();
+	const keyN = zhQuery(key, cross);
 	return results.filter(result => {
 		const f = result[1];
-		return (f.id === qid) || zhName(f, cn).includes(keyN) || (f.jpName || '').toLowerCase().includes(key);
+		return (f.id === qid) || zhName(f, cross).includes(keyN) || (f.jpName || '').toLowerCase().includes(key);
 	});
 }
 

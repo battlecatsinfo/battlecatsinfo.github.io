@@ -1,5 +1,5 @@
 /**
- * 生成 template/js/tw2cn.mjs 与 template/js/tw2tw.mjs。
+ * 生成 template/js/tw2cn.mjs。
  *
  * 数据源固定为 OpenCC 的一个 commit，避免“表来自哪个版本”说不清：
  *   - TSCharacters.txt   繁体 -> 简体
@@ -21,27 +21,6 @@ const TEMPLATE_DIR = resolve(__dirname, '..', 'template', 'js');
 const TW2CN_EXTRA = {
 	'妳': '你',
 	'姊': '姐',
-};
-
-// 数据里实际出现过、但 TWVariants 没收的异体 / 日文新字体。
-const TW2TW_EXTRA = {
-	'説': '說',
-	'緑': '綠',
-	'溼': '濕',
-	'艷': '豔',
-	'証': '證',
-	'閑': '閒',
-	'麽': '麼',
-};
-
-// 台湾用字偏好：两边都归一到同一个写法即可，方向不重要。
-const PREFER = {
-	'臺': '台',
-	'妳': '你',
-	'姊': '姐',
-	'裡': '里',
-	'著': '着',
-	'麼': '么',
 };
 
 async function readSource(name, envVar) {
@@ -86,6 +65,29 @@ function reverse(map, text) {
 	return rev;
 }
 
+/**
+ * 同一行的多个简体候选（如 噹 -> 当、𪠽）要先归到同一个代表，
+ * 否则资料里的 叮噹 会变成 叮当，而用户输入 叮𪠽 不会命中。
+ *
+ * 注意不能把所有候选一律合并：像 哩 -> 哩、里，其中 里 也是 裡/裏 的
+ * 首选简体，直接合并会把 裡 变成 哩。这里只给“既是候补、又不是别的
+ * 字首选、也不是独立繁体字”的生僻候选加别名。
+ */
+function buildSimplifier(ts) {
+	const primary = new Map([...ts].map(([key, values]) => [key, values[0]]));
+	const firstValues = new Set(primary.values());
+	const alias = new Map();
+	for (const [key, values] of ts) {
+		const canonical = values[0];
+		for (const value of values.slice(1)) {
+			if (value === canonical || ts.has(value) || firstValues.has(value))
+				continue;
+			alias.set(value, canonical);
+		}
+	}
+	return ch => alias.get(ch) ?? primary.get(ch) ?? ch;
+}
+
 function renderTable(file, header, map) {
 	const entries = [...map].sort(([a], [b]) => a.codePointAt(0) - b.codePointAt(0));
 	const lines = [];
@@ -106,7 +108,7 @@ ${lines.join('\n')}
  * @param {string} text - 待归一化文本。
  * @returns {string} 归一化后的文本。
  */
-export function ${file === 'tw2cn.mjs' ? 'toCn' : 'toTw'}(text) {
+export function toCn(text) {
 	if (!text) return text;
 	let out = '';
 	for (const ch of text)
@@ -142,60 +144,36 @@ function writeOrCheck(file, header, map, check) {
 	const ts = parse(tsText);
 	const tw = parse(twText);
 	const rev = reverse(tw, twText);
-	// OpenCC 同一个繁体可能列出多个简体候选，取第一个（OpenCC 的默认选择）。
-	const firstTs = new Map([...ts].map(([k, values]) => [k, values[0]]));
+	const simplified = buildSimplifier(ts);
 
 	// 繁 -> 简：TWVariantsRev 之后再过 TSCharacters。
+	// 同时把所有 TS 候选字也作为 key，保证 叮𪠽 / 叮噹 能归到同一个形式。
+	const chars = new Set([...ts.keys(), ...rev.keys(), ...Object.keys(TW2CN_EXTRA)]);
+	for (const values of ts.values()) {
+		for (const value of values)
+			chars.add(value);
+	}
 	const tw2cn = new Map();
-	for (const ch of new Set([...firstTs.keys(), ...rev.keys(), ...Object.keys(TW2CN_EXTRA)])) {
+	for (const ch of chars) {
 		const twForm = rev.get(ch) ?? ch;
-		const cnForm = TW2CN_EXTRA[ch] ?? TW2CN_EXTRA[firstTs.get(twForm) ?? twForm] ?? firstTs.get(twForm) ?? twForm;
+		const cnForm = TW2CN_EXTRA[ch] ?? TW2CN_EXTRA[simplified(twForm)] ?? simplified(twForm);
 		if (ch !== cnForm)
 			tw2cn.set(ch, cnForm);
 	}
 
-	// 异体 -> 台湾正体（只做异体归一，不落到简体）。
-	const firstTw = new Map([...tw].map(([k, values]) => [k, values[0]]));
-	const step = ch => {
-		const twForm = TW2TW_EXTRA[ch] ?? firstTw.get(ch) ?? ch;
-		return PREFER[twForm] ?? twForm;
-	};
-	const tw2tw = new Map();
-	for (const ch of new Set([...firstTw.keys(), ...Object.keys(TW2TW_EXTRA), ...Object.keys(PREFER)])) {
-		let cur = ch;
-		for (let i = 0; i < 4; ++i) {
-			const next = step(cur);
-			if (next === cur)
-				break;
-			cur = next;
-		}
-		if (ch !== cur)
-			tw2tw.set(ch, cur);
-	}
-
 	// 高亮按 code point 偏移回原文，依赖严格的一对一（单字 -> 单字）。
-	for (const [name, map] of [['tw2cn', tw2cn], ['tw2tw', tw2tw]]) {
-		for (const [k, v] of map) {
-			if ([...k].length !== 1 || [...v].length !== 1)
-				throw new Error(`${name}: ${k} -> ${v} is not one-to-one`);
-		}
+	for (const [k, v] of tw2cn) {
+		if ([...k].length !== 1 || [...v].length !== 1)
+			throw new Error(`tw2cn: ${k} -> ${v} is not one-to-one`);
 	}
 
-	writeOrCheck('tw2cn.mjs', ` * 繁体（台湾正体）-> 简体 的单字映射，供简体输入时双侧归一。
+	writeOrCheck('tw2cn.mjs', ` * 繁体（台湾正体）-> 简体 的单字映射，供「交叉搜尋簡繁字」开启时双侧归一。
  *
  * 由 js/gen_zh_tables.js 生成，请勿手改。
  * 来源：OpenCC @ ${OPENCC_REV}（TSCharacters.txt + TWVariants.txt，Apache-2.0）
- * 组成：TWVariantsRev（裡->裏、著->着 等）+ TSCharacters，另加 妳->你、姊->姐。
+ * 组成：TWVariantsRev（裡->裏、著->着 等）+ TSCharacters；
+ * 同一行的多个简体候选归到同一个代表（如 噹/𪠽 -> 当），另加 妳->你、姊->姐。
  *
- * 为什么不反过来做「简 -> 繁」：那是**一对多、不确定**的（干 到底是
- * 乾、幹 还是 榦？）。而「繁 -> 简」是**多对一、确定**的，两边都停在
- * 简体上再比，就不需要展开候选。`, tw2cn, check);
-
-	writeOrCheck('tw2tw.mjs', ` * 繁体异体字归一表，供繁体输入时使用。
- *
- * 由 js/gen_zh_tables.js 生成，请勿手改。
- * 来源：OpenCC @ ${OPENCC_REV}（TWVariants.txt，Apache-2.0）
- *
- * 这里只处理异体 / 台湾用字（裡/裏、臺/台、著/着 等），不把繁体落到
- * 简体，所以「噁/惡」「髮/發」「團/糰」这类同简异义的字不会被混搜。`, tw2tw, check);
+ * 为什么不做「简 -> 繁」：那是一对多、不确定的（干 到底是 乾、幹 还是 榦？），
+ * 只能靠枚举猜；繁 -> 简是多对一、确定的，两边都停在简体上再比即可。`, tw2cn, check);
 })();

@@ -1,7 +1,6 @@
 import {assert} from './lib/chai.js';
 import {toCn} from '../tw2cn.mjs';
-import {toTw} from '../tw2tw.mjs';
-import {cnMode, isCnQuery, isCrossSearch, setCrossSearch, zh, zhName, zhQuery} from '../zh.mjs';
+import {isCrossSearch, setCrossSearch, zh, zhName, zhQuery} from '../zh.mjs';
 
 // Node 下没有 localStorage，给 zh.mjs 一个最小实现；浏览器里用真的。
 if (typeof localStorage === 'undefined') {
@@ -9,6 +8,7 @@ if (typeof localStorage === 'undefined') {
 	globalThis.localStorage = {
 		getItem: key => store.has(key) ? store.get(key) : null,
 		setItem: (key, value) => store.set(key, String(value)),
+		removeItem: key => store.delete(key),
 	};
 }
 
@@ -37,6 +37,16 @@ describe('zh', function () {
 			assert.strictEqual(toCn('簷'), '檐');
 		});
 
+		it('maps alternate Simplified candidates to the same form', function () {
+			assert.strictEqual(toCn('噹'), '当');
+			assert.strictEqual(toCn('𪠽'), '当');
+			assert.strictEqual(toCn('叮噹'), toCn('叮𪠽'));
+			assert.strictEqual(toCn('閒'), '闲');
+			assert.strictEqual(toCn('𫔮'), '闲');
+			// 哩 是独立字，不能被 裡/裏 的归一拖走
+			assert.strictEqual(toCn('哩'), '哩');
+		});
+
 		it('normalizes whole names', function () {
 			assert.strictEqual(toCn('天搖地動'), '天摇地动');
 			assert.strictEqual(toCn('風乾庭院'), '风干庭院');
@@ -44,74 +54,52 @@ describe('zh', function () {
 		});
 
 		it('is idempotent', function () {
-			for (const s of ['天搖地動', '風乾庭院', '並併復複', 'ネコ'])
+			for (const s of ['天搖地動', '風乾庭院', '並併復複', '叮噹', 'ネコ'])
 				assert.strictEqual(toCn(toCn(s)), toCn(s));
 		});
 	});
 
-	describe('toTw', function () {
+	describe('zh', function () {
 
-		it('unifies variants without collapsing distinct characters', function () {
-			assert.strictEqual(toTw('裏'), toTw('裡'));
-			assert.strictEqual(toTw('臺'), toTw('台'));
-			assert.strictEqual(toTw('著'), toTw('着'));
-			assert.strictEqual(toTw('妳'), toTw('你'));
-			assert.strictEqual(toTw('姊'), toTw('姐'));
-			assert.strictEqual(toTw('説'), toTw('說'));
-			assert.strictEqual(toTw('緑'), toTw('綠'));
-			assert.strictEqual(toTw('溼'), toTw('濕'));
-
-			assert.notStrictEqual(toTw('噁'), toTw('惡'));
-			assert.notStrictEqual(toTw('髮'), toTw('發'));
-			assert.notStrictEqual(toTw('團'), toTw('糰'));
-			assert.notStrictEqual(toTw('復'), toTw('複'));
-			assert.notStrictEqual(toTw('乾'), toTw('幹'));
+		it('keeps raw text when cross search is off', function () {
+			assert.strictEqual(zh('天搖地動', false), '天搖地動');
+			assert.strictEqual(zh('噁', false), '噁');
+			assert.strictEqual(zh('幹', false), '幹');
 		});
 
-		it('leaves already-canonical names untouched', function () {
-			assert.strictEqual(toTw('天搖地動'), '天搖地動');
-			assert.strictEqual(toTw('ネコ'), 'ネコ');
-		});
-	});
-
-	describe('query mode', function () {
-
-		it('detects Simplified input', function () {
-			assert.isTrue(isCnQuery('天摇地动'));
-			assert.isTrue(isCnQuery('干'));
-			assert.isTrue(isCnQuery('ufo猫'));
-			assert.isFalse(isCnQuery('天搖地動'));
-			assert.isFalse(isCnQuery('乾'));
-			assert.isFalse(isCnQuery('UFO貓'));
-		});
-
-		it('normalizes by mode', function () {
+		it('normalizes both sides when cross search is on', function () {
 			assert.strictEqual(zh('天搖地動', true), '天摇地动');
-			assert.strictEqual(zh('臺', false), '台');
-			assert.strictEqual(zhQuery('UFO貓', false), 'ufo貓');
+			assert.strictEqual(zh('噁', true), '恶');
+			assert.strictEqual(zh('幹', true), '干');
+		});
+
+		it('lowercases for case-insensitive matching', function () {
+			assert.strictEqual(zh('UFO貓', false), 'ufo貓');
+			assert.strictEqual(zh('UFO貓', true), 'ufo猫');
 			assert.strictEqual(zhQuery('UFO猫', true), 'ufo猫');
 		});
 
-		it('caches normalized names on the object', function () {
+		it('caches normalized names per mode', function () {
 			const form = {name: '裡'};
-			assert.strictEqual(zhName(form, false), '里');
-			assert.strictEqual(form._tw, '里');
-			assert.strictEqual(zhName(form, false), '里');
+			assert.strictEqual(zhName(form, false), '裡');
+			assert.strictEqual(form._raw, '裡');
+			assert.strictEqual(zhName(form, true), '里');
+			assert.strictEqual(form._cn, '里');
 		});
 	});
 
 	describe('cross search toggle', function () {
 
-		it('is off by default and switches Traditional queries to toCn', function () {
+		it('is off by default and toggles the mode', function () {
 			const prev = isCrossSearch();
 			try {
 				setCrossSearch(false);
-				assert.isFalse(cnMode('幹'));
-				assert.isTrue(cnMode('干'));
+				assert.isFalse(isCrossSearch());
+				assert.strictEqual(zh('幹', isCrossSearch()), '幹');
 
 				setCrossSearch(true);
-				assert.isTrue(cnMode('幹'));
-				assert.strictEqual(zhName({name: '乾'}, cnMode('幹')), '干');
+				assert.isTrue(isCrossSearch());
+				assert.strictEqual(zh('幹', isCrossSearch()), '干');
 			} finally {
 				setCrossSearch(prev);
 			}

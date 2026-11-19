@@ -1,5 +1,5 @@
 import {IdbBase, AutoIdb, translatorStores} from './common.mjs';
-import {cnMode, zh} from './zh.mjs';
+import {isCrossSearch, zh} from './zh.mjs';
 
 let db;
 
@@ -49,15 +49,14 @@ async function doSearch() {
 		else
 			storeNames = [target];
 
-		// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
-		const cn = lang === 'tw' ? cnMode(v) : null;
-		const vN = cn === null ? null : zh(v, cn).toLowerCase();
+		// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+		const vN = lang === 'tw' && isCrossSearch() ? zh(v, true) : null;
 
 		for (const storeName of storeNames) {
 			let first = true;
 
 			for await (const value of IdbBase.forEachValue(db, storeName)) {
-				if (!value[lang].includes(v) && (vN === null || !zh(value[lang], cn).toLowerCase().includes(vN)))
+				if (!value[lang].includes(v) && (vN === null || !zh(value[lang], true).includes(vN)))
 					continue;
 
 				const tr = document.createElement('tr');

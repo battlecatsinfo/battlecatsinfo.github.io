@@ -1,6 +1,6 @@
 import {loadScheme, config} from './common.mjs';
 import {loadAllCats, units_scheme} from './unit.mjs';
-import {cnMode, zhName, zhQuery} from './zh.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh.mjs';
 const {limited_cats, cat_guide_ids} = await loadScheme('units', ['limited_cats', 'cat_guide_ids']);
 
 const favList = new Set(config.starCats.map(x => x.id));
@@ -497,10 +497,10 @@ function favorite(e) {
 		catsEl.textContent = '';
 		lastRarity = null;
 		if (!q) return;
-		// 默认按输入脚本选择归一表；开启「交叉搜尋簡繁字」后繁体也走繁 -> 简
+		// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
 		const key = q.toLowerCase();
-		const cn = cnMode(key);
-		const qN = zhQuery(key, cn);
+		const cross = isCrossSearch();
+		const qN = zhQuery(key, cross);
 		let digit = key.length >= 1;
 		for (const c of key) {
 			let x = c.codePointAt(0);
@@ -513,7 +513,7 @@ function favorite(e) {
 		for (let i = 0; i < cats.length; ++i) {
 			const c = cats[i];
 			for (let f of c.forms) {
-				if (zhName(f, cn).includes(qN) || (f.jpName || '').toLowerCase().includes(key)) {
+				if (zhName(f, cross).includes(qN) || (f.jpName || '').toLowerCase().includes(key)) {
 					addUnit(c, false);
 					found = true;
 					break;
