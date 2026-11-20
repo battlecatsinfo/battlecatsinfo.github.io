@@ -83,11 +83,11 @@ const sources = [
 	'stage.js',
 	'enemy_stage_search.js',
 	'anim.min.js',
-	'imgcut.js'
+	'imgcut.js',
 ];
 
 module.exports = class extends SiteGenerator {
-	run({minify = false}) {		
+	run({minify = false}) {
 		let UglifyJS, CleanCSS, htmlmin;
 
 		if (minify) {

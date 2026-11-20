@@ -8,7 +8,7 @@ import {
 	displaySpeed,
 	savePng,
 	copyPng,
-	getCombinations
+	getCombinations,
 } from './common.mjs';
 import {
 	ATK_RANGE,
@@ -74,7 +74,7 @@ function newTab() {
 	return tbodyEl[0].children.length - 1;
 }
 
-function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
+function setStat(C /* Cat */, F /* Form */, I /* insert index */) {
 	tbodyEl[5].children[I].textContent = `${F.kb} / ${displaySpeed(F.speed)}`;
 	let T = numStrX(F.pre);
 	if (F.pre1) {
@@ -95,7 +95,7 @@ function setStat(C /* Cat */ , F /* Form */ , I /* insert index */ ) {
 		for (let i = 0; i < F.lds.length; ++i) {
 			const x = F.lds[i];
 			const y = x + F.ldr[i];
-			const z = '①②③' [i];
+			const z = '①②③'[i];
 			if (x < y) {
 				s += `${z}${displayRange(x)}~${displayRange(y)}`;
 			} else {
@@ -204,9 +204,9 @@ function addCat(id, I, FC = 0) {
 	M.appendChild(G);
 	M.style.border = 'none';
 	const levelInput = document.createElement('input');
-	F.level = (FL === 2) ? 
-		60 : 
-		((FC === 3) ? 60 : 50);
+	F.level = (FL === 2) ?
+		60 :
+			((FC === 3) ? 60 : 50);
 	levelInput.type = 'number';
 	levelInput.min = '1';
 	levelInput.max = '130';
@@ -221,7 +221,7 @@ function addCat(id, I, FC = 0) {
 	levelInput.style.borderRadius = '3px';
 	levelInput.style.padding = '2px';
 	levelInput.addEventListener('keydown', handleKW);
-	levelInput.addEventListener('input', function() {
+	levelInput.addEventListener('input', function () {
 		let num = parseInt(this.value, 10);
 		if (num && num >= parseInt(this.min) && num <= parseInt(this.max)) {
 			this.F.level = num;
@@ -257,7 +257,7 @@ function addCat(id, I, FC = 0) {
 			}
 		}
 	});
-	levelInput.addEventListener('blur', function() {
+	levelInput.addEventListener('blur', function () {
 		// Ensure value is within bounds and update display
 		let num = parseInt(this.value, 10);
 		let maxLv = parseInt(this.max);
@@ -302,7 +302,7 @@ function addCat(id, I, FC = 0) {
 	G.textContent = '移除';
 	G.style.color = 'red';
 	G.style.cursor = 'pointer';
-	G.onclick = function() {
+	G.onclick = function () {
 		for (let i = 0; i < tbodyEl.length; ++i) {
 			const x = tbodyEl[i].children[I];
 			x.textContent = '';
@@ -313,7 +313,7 @@ function addCat(id, I, FC = 0) {
 			history.pushState({}, "", '/compare.html?forms=' + Array.from(targets).join(','));
 		else
 			history.pushState({}, "", '/compare.html');
-	}
+	};
 	M.appendChild(G);
 	if (FL) {
 		let D = document.createElement('div');
@@ -323,7 +323,7 @@ function addCat(id, I, FC = 0) {
 		G.id = 'T' + id + '-' + FC;
 		D.appendChild(G);
 		levelInput.X = G;
-		G.onclick = function() {
+		G.onclick = function () {
 			const H = levelInput.F.clone();
 			if (levelInput.X.checked) {
 				if (levelInput.lv < 30) {
@@ -347,7 +347,7 @@ function addCat(id, I, FC = 0) {
 			}
 			F.level = levelInput.lv;
 			setStat(levelInput.C, H, levelInput.I);
-		}
+		};
 		G = document.createElement('label');
 		G.textContent = '本能';
 		G.htmlFor = 'T' + id + '-' + FC;
@@ -359,7 +359,7 @@ function addCat(id, I, FC = 0) {
 			G.checked = true;
 			G.id = 'S' + id + '-' + FC;
 			D.appendChild(G);
-			G.onclick = function() {
+			G.onclick = function () {
 				const H = levelInput.F.clone();
 				if (levelInput.X.checked) {
 					if (levelInput.lv < 30) {
@@ -381,7 +381,7 @@ function addCat(id, I, FC = 0) {
 				}
 				F.level = levelInput.lv;
 				setStat(levelInput.C, H, levelInput.I);
-			}
+			};
 			G = document.createElement('label');
 			G.textContent = '超本能';
 			G.htmlFor = 'S' + id + '-' + FC;
@@ -392,7 +392,7 @@ function addCat(id, I, FC = 0) {
 	}
 }
 
-document.getElementById('tab').onclick = function() {
+document.getElementById('tab').onclick = function () {
 	const X = nameListEl.options;
 	const Y = catNameEl.value;
 	for (let i = 0; i < X.length; ++i) {
@@ -407,7 +407,7 @@ document.getElementById('tab').onclick = function() {
 			} else {
 				m = X - 1;
 			}
-			let N = i.toString() + '-' + m;;
+			let N = i.toString() + '-' + m;
 			if (targets.has(N)) {
 				alert('此貓咪已在表格中！');
 				return;
@@ -419,7 +419,7 @@ document.getElementById('tab').onclick = function() {
 		}
 	}
 	alert('無法識別輸入的貓咪！請檢查名稱是否正確！');
-}
+};
 
 async function screenshot(filename) {
 	const fn = typeof filename === 'string' ? savePng : copyPng;
@@ -427,15 +427,15 @@ async function screenshot(filename) {
 	await fn(tableEl, filename, {
 		'filter': elem => !(elem instanceof HTMLTableRowElement && elem.classList.contains('export-hide')),
 		'style': {
-			'margin': '0'
-		}
+			'margin': '0',
+		},
 	});
 	tableEl.classList.remove('export');
 }
 
 document.getElementById('camera').onclick = screenshot;
 
-document.getElementById('download').onclick = async function() {
+document.getElementById('download').onclick = async function () {
 	let N = [];
 	for (const C of targets) {
 		const X = C.split('-');
@@ -443,9 +443,9 @@ document.getElementById('download').onclick = async function() {
 		N.push(M.name || M.jpName);
 	}
 	await screenshot('貓咪比較 —— ' + N.join('.v.s') + '.png');
-}
+};
 
-document.getElementById('clear').onclick = function() {
+document.getElementById('clear').onclick = function () {
 	let x, y;
 	history.pushState({}, "", '/compare.html');
 	targets.clear();
@@ -454,8 +454,8 @@ document.getElementById('clear').onclick = function() {
 		while (x != (y = tr.lastChild))
 			tr.removeChild(y);
 	}
-}
+};
 
-catNameEl.addEventListener('focus', function() {
+catNameEl.addEventListener('focus', function () {
 	this.select();
 });

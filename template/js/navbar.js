@@ -21,7 +21,7 @@
 	}
 
 	function onInputBlur(event) {
-		setTimeout(function() {
+		setTimeout(function () {
 			siteSearchResult.hidden = true;
 		}, 500);
 	}

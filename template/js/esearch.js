@@ -80,7 +80,7 @@ function renderTable(forms, page = 1) {
 		const tr = document.createElement('tr');
 		const F = displayForms[i][1];
 		const texts = [F.id, '', F.name || F.jpName || '?', F.hp, F.atkm,
-			round(F.dps), F.kb, F.range, numStrT(F.attackF).replace('秒', '秒/下'), F.speed, F.earn, numStr(displayForms[i][0])
+			round(F.dps), F.kb, F.range, numStrT(F.attackF).replace('秒', '秒/下'), F.speed, F.earn, numStr(displayForms[i][0]),
 		];
 		for (let j = 0; j < texts.length; ++j) {
 			const e = document.createElement('td');
@@ -235,7 +235,7 @@ loadAllEnemies()
 	});
 for (const elem of document.querySelectorAll("button")) {
 	elem.state = '0';
-	elem.addEventListener("click", function(event) {
+	elem.addEventListener("click", function (event) {
 		const t = event.currentTarget;
 		if (t.state == '0') {
 			t.parentNode.classList.add('o-selected');
@@ -248,7 +248,7 @@ for (const elem of document.querySelectorAll("button")) {
 	});
 }
 document.querySelectorAll('.or-and').forEach(e => {
-	e.onclick = function(event) {
+	e.onclick = function (event) {
 		const t = event.currentTarget;
 		if (t.textContent == 'OR')
 			t.textContent = 'AND';
@@ -257,13 +257,13 @@ document.querySelectorAll('.or-and').forEach(e => {
 		calculate();
 	};
 });
-document.getElementById('filter-go').onclick = function() {
+document.getElementById('filter-go').onclick = function () {
 	calculate(simplify(filterExprEl.value));
-}
-document.getElementById('filter-clear').onclick = function() {
+};
+document.getElementById('filter-clear').onclick = function () {
 	function fn(x) {
 		x.classList.remove('o-selected');
-	};
+	}
 	traitSelectEl.querySelectorAll('.o-selected').forEach(fn);
 	atkTypeSelectEl.querySelectorAll('.o-selected').forEach(fn);
 	abilitySelectEl.querySelectorAll('.o-selected').forEach(fn);
@@ -271,8 +271,8 @@ document.getElementById('filter-clear').onclick = function() {
 	filterExprEl.value = '';
 	sortExprEl.value = '';
 	calculate();
-}
-toggleResultsEl.onclick = function() {
+};
+toggleResultsEl.onclick = function () {
 	if (hideSeach) {
 		searchResultsEl.style.left = '390px';
 		searchResultsEl.style.width = 'calc(100% - 400px)';
@@ -285,16 +285,16 @@ toggleResultsEl.onclick = function() {
 		toggleResultsEl.textContent = '顯示搜尋器';
 	}
 	hideSeach = !hideSeach;
-}
-nameSearchEl.oninput = function() {
+};
+nameSearchEl.oninput = function () {
 	renderTable(lastForms);
-}
+};
 const th = document.getElementById('th');
 for (let n of th.children) {
 	if (n.title) {
 		n._s = 0;
 		n._t = n.textContent;
-		n.onclick = function(event) {
+		n.onclick = function (event) {
 			if (n._s == 0) {
 				n._s = 1;
 				sortExprEl.value = event.currentTarget.title;
@@ -312,6 +312,6 @@ for (let n of th.children) {
 			n._s = y;
 			n.textContent = n._t + (n._s ? '↑' : '↓');
 			calculate(simplify(filterExprEl.value));
-		}
+		};
 	}
 }

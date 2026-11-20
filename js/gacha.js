@@ -1,7 +1,7 @@
 const Fraction = require('fraction.js');
 const fs = require('node:fs');
 const {resolve} = require('node:path');
-const {OUTPUT_DIR,} = require('./base.js');
+const {OUTPUT_DIR} = require('./base.js');
 const RewardSiteGenerator = require('./reward.js');
 const {normalizePath} = require('./util.js');
 
@@ -50,7 +50,7 @@ function averageReward(drop, rand) {
 		chances[0] = new Fraction(0);
 
 	let avg = new Fraction(0);
-	for (let i = 0;i < drops.length;++i)
+	for (let i = 0; i < drops.length; ++i)
 		avg = avg.add(chances[i].mul(drops[i][2]));
 
 	return avg;
@@ -104,8 +104,8 @@ module.exports = class extends RewardSiteGenerator {
 			return rv;
 		}, {});
 
-		this.fmt = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 5 });
-		this.fmt2 = new Intl.NumberFormat('zh-Hant', { maximumFractionDigits: 2 });
+		this.fmt = new Intl.NumberFormat('zh-Hant', {maximumFractionDigits: 5});
+		this.fmt2 = new Intl.NumberFormat('zh-Hant', {maximumFractionDigits: 2});
 		this.loadUnit();
 
 		for (const pool of JSON.parse(this.load('pools.json'))) {
@@ -114,19 +114,19 @@ module.exports = class extends RewardSiteGenerator {
 
 			let data;
 			switch (pool['type']) {
-			case 'category':
-				data = this.getCategory(pool);
-				break;
-			case 'rare':
-				data = this.getRare(pool);
-				break;
-			case 'normal':
-			case 'event':
-				data = this.getEvent(pool);
-				break;
-			default:
-				data = null;
-				console.assert(false);
+				case 'category':
+					data = this.getCategory(pool);
+					break;
+				case 'rare':
+					data = this.getRare(pool);
+					break;
+				case 'normal':
+				case 'event':
+					data = this.getEvent(pool);
+					break;
+				default:
+					data = null;
+					console.assert(false);
 			}
 
 			const path = 'gacha/' + normalizePath(pool.en_name) + '.html';
@@ -156,22 +156,24 @@ module.exports = class extends RewardSiteGenerator {
 			'categories': [
 				{
 					'name': '特殊',
-					'pools': this.categroyPools
+					'pools': this.categroyPools,
 				},
 				{
 					'name': '常駐轉蛋池',
-					'pools': this.residentPools
+					'pools': this.residentPools,
 				},
 				{
 					'name': '合作轉蛋池',
-					'pools': this.collabPools
-				}
-			]
+					'pools': this.collabPools,
+				},
+			],
 		});
 	}
+
 	uimg(u) {
 		return this.eggSet.has(u) ? `/img/u/${u}/2.png` : `/img/u/${u}/0.png`;
 	}
+
 	getRare(pool) {
 		let exclusiveIds = [];
 		const groupItems = pool['group_items'];
@@ -276,6 +278,7 @@ module.exports = class extends RewardSiteGenerator {
 
 		return output;
 	}
+
 	count(arr, x) {
 		let c = 0;
 
@@ -289,9 +292,9 @@ module.exports = class extends RewardSiteGenerator {
 	getEvent(pool) {
 		const guaranteed_drop = pool['guaranteed_drop'] ?? 10;
 		const output = {
-				guaranteed: false,
-				items: [],
-				guaranteed_drop,
+			guaranteed: false,
+			items: [],
+			guaranteed_drop,
 		};
 		const guaranteed_rate = 100 / guaranteed_drop;
 		const group_items = pool['group_items'];
@@ -302,7 +305,7 @@ module.exports = class extends RewardSiteGenerator {
 		let mustDropGroup = undefined;
 		let gachaUnits = new Set();
 
-		for (let i = 0, I;i < 9;i += 2) {
+		for (let i = 0, I; i < 9; i += 2) {
 			let rate = group_rates[i];
 			let group = group_items[i >> 1];
 			let R = new Fraction(rate, group.length || 1);
@@ -373,7 +376,7 @@ module.exports = class extends RewardSiteGenerator {
 		let rate = new Fraction(0);
 		let color = 0;
 
-		for (let i = 0;i < result.length;++i) {
+		for (let i = 0; i < result.length; ++i) {
 			const v = result[i];
 			if (eType == v[0]) {
 				rate = rate.add(v[4]);
@@ -448,8 +451,8 @@ module.exports = class extends RewardSiteGenerator {
 			output.farm = {
 				map_name: this.mapNames[map_id],
 				stages: [],
-			}
-			for (let stageId = map_id * 1000;;++stageId) {
+			};
+			for (let stageId = map_id * 1000; ;++stageId) {
 				const entry = this.stageTable[stageId];
 				if (!entry)
 					break;
@@ -462,7 +465,7 @@ module.exports = class extends RewardSiteGenerator {
 				const energyRaw = parseInt(energy, 36);
 				let energyStr;
 				let energyVal;
-				
+
 				if (energyRaw > 1000) {
 					const id = ~~(energyRaw / 1000);
 					const count = energyRaw % 1000;
@@ -526,6 +529,7 @@ module.exports = class extends RewardSiteGenerator {
 		}
 		return output;
 	}
+
 	getCategory(pool) {
 		const output = [];
 		const ids = Array.from(this.categorySet[pool['category']]).sort((a, b) => a - b);
@@ -549,6 +553,7 @@ module.exports = class extends RewardSiteGenerator {
 		});
 		return output;
 	}
+
 	get1(u, rate = 1) {
 		return {
 			id: u,
@@ -556,8 +561,9 @@ module.exports = class extends RewardSiteGenerator {
 			descs: this.unitDesc[u].split('|'),
 			img: this.uimg(u),
 			rate: rate !== 1 ? rate : undefined,
-		}
+		};
 	}
+
 	loadUnit() {
 		this.unitRarity = [];
 		this.eggSet = new Set();

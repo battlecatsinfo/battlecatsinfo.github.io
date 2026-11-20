@@ -76,22 +76,22 @@ function addUnit(c, gap=true) {
 		img.classList.add('grayscale');
 	}
 	catsEl.appendChild(a);
-	img.onmouseover = function() {
-		const t = setTimeout(function() {
+	img.onmouseover = function () {
+		const t = setTimeout(function () {
 			tooltip = document.createElement('div');
 			tooltip.textContent = c.forms.map(x => x.name || x.jpName).join(' → ');
 			tooltip.classList.add('tooltip');
 			a.style.position = 'relative';
 			a.appendChild(tooltip);
 		}, 300);
-		this.onmouseleave = function() {
+		this.onmouseleave = function () {
 			clearTimeout(t);
 			if (tooltip) {
 				tooltip.parentNode.removeChild(tooltip);
 				tooltip = null;
 			}
-		}
-	}
+		};
+	};
 }
 
 function setsIntersection(sets) {
@@ -103,7 +103,7 @@ function setsIntersection(sets) {
 	// native method (2024 baseline)
 	if (sets[0].intersection === 'function') {
 		return sets.reduce((acc, x) => {
-		  return acc.intersection(x);
+			return acc.intersection(x);
 		});
 	}
 
@@ -201,7 +201,7 @@ function filter() {
 	let d = false;
 
 	for (i of abSelectEl[1].getElementsByClassName('selected'))
-		abs.push(parseInt(i.value))
+		abs.push(parseInt(i.value));
 	for (i of abSelectEl[2].getElementsByClassName('selected'))
 		abs.push(parseInt(i.value));
 	for (i of abSelectEl[3].getElementsByClassName('selected'))
@@ -264,13 +264,13 @@ function filter() {
 						if (cats[x].talents)
 							results.delete(x);
 				}
-				break;
+					break;
 				case 2: {
 					for (let x of results)
 						if (!cats[x].talents)
 							results.delete(x);
 				}
-				break;
+					break;
 				case 3: {
 					for (let x of results) {
 						const c = cats[x].talents;
@@ -286,7 +286,7 @@ function filter() {
 						}
 					}
 				}
-				break;
+					break;
 				case 4: {
 					for (let x of results) {
 						if (cats[x].forms.length != 4) {
@@ -371,7 +371,7 @@ function filter() {
 		for (const x of results)
 			sorted[i++] = cats[x];
 		sorted.sort((x, y) => {
-			x.rarity - y.rarity
+			x.rarity - y.rarity;
 		});
 		sorted.forEach(x => addUnit(x, false));
 		return;
@@ -416,7 +416,7 @@ function favorite(e) {
 		t.classList.add('fav');
 		for (let x of main.getElementsByClassName('C'))
 			x.style.visibility = 'hidden';
-		catsEl.setAttribute("data-t", "1")
+		catsEl.setAttribute("data-t", "1");
 		favSetting = true;
 	} else {
 		t.setAttribute('data-s', '0');
@@ -424,7 +424,7 @@ function favorite(e) {
 		t.classList.remove('fav');
 		for (let x of main.getElementsByClassName('C'))
 			x.style.visibility = 'visible';
-		catsEl.setAttribute("data-t", "0")
+		catsEl.setAttribute("data-t", "0");
 		favSetting = false;
 		let arr = [];
 		for (let x of favList) {
@@ -432,7 +432,7 @@ function favorite(e) {
 			arr.push({
 				'id': x,
 				'icon': c.forms[0].icon,
-				'name': c.forms[0].name || c.forms[0].jpName
+				'name': c.forms[0].name || c.forms[0].jpName,
 			});
 		}
 		config.starCats = arr;
@@ -463,7 +463,7 @@ function favorite(e) {
 
 	for (let B of main.querySelectorAll('.M button')) {
 		if (!B.value) continue;
-		B.addEventListener('click', function() {
+		B.addEventListener('click', function () {
 			this.classList.toggle('selected');
 			undo.push(this);
 		});
@@ -477,14 +477,14 @@ function favorite(e) {
 	favOnlyEl.addEventListener('click', toggleSelected);
 	displayOrder.addEventListener('click', toggleSelected);
 
-	abSelectEl[0].onclick = trait.previousElementSibling.onclick = function() {
+	abSelectEl[0].onclick = trait.previousElementSibling.onclick = function () {
 		if (this.src.endsWith('or.png'))
 			this.src = 'and.png';
 		else
 			this.src = 'or.png';
-	}
+	};
 
-	document.getElementById('search-name').onclick = function(event) {
+	document.getElementById('search-name').onclick = function (event) {
 		event.preventDefault();
 		const q = searchTextEl.value;
 		let found = false;
@@ -518,9 +518,9 @@ function favorite(e) {
 		if (!found)
 			notFoundEl.style.display = 'block';
 		return false;
-	}
+	};
 
-	document.addEventListener('click', function(event) {
+	document.addEventListener('click', function (event) {
 		if (event.target != main && !event.target.classList.contains('modal')) return;
 		if (notFoundEl.style.display === 'block')
 			notFoundEl.style.display = 'none';
@@ -534,7 +534,7 @@ function favorite(e) {
 			}
 	});
 
-	window.addEventListener('keydown', function(event) {
+	window.addEventListener('keydown', function (event) {
 		if (event.key == 'Escape') {
 			for (let x of medals)
 				if (x.style.display == 'block') {

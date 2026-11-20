@@ -71,7 +71,7 @@ async function searchAppears() {
 					previousTd2 = td0;
 				}
 
-				td = document.createElement('td')
+				td = document.createElement('td');
 				const a = document.createElement('a');
 				a.textContent = v.name || v.nameJp;
 				a.href = `/stage.html?s=${mc}-${sm}-${st}`;
@@ -118,17 +118,17 @@ loadEnemy(enemyId).then(enemy => {
 
 	const abar = document.getElementById('abar');
 	const btn = abar.previousElementSibling;
-	btn.onmouseover = function() {
+	btn.onmouseover = function () {
 		abar.style.display = 'block';
-	}
-	btn.onclick = function(event) {
+	};
+	btn.onclick = function (event) {
 		event.stopPropagation();
 		event.preventDefault();
 		abar.style.display = 'block';
-	}
-	window.onclick = function() {
+	};
+	window.onclick = function () {
 		abar.style.display = 'none';
-	}
+	};
 
 	function addBarItem(text, action) {
 		const a = document.createElement('a');
@@ -144,7 +144,7 @@ loadEnemy(enemyId).then(enemy => {
 		return a;
 	}
 
-	addBarItem('複製連結', function() {
+	addBarItem('複製連結', function () {
 		navigator.clipboard.writeText(location.href);
 	}, false);
 	const dbUrl = new URL(enemy.bcdbUrl);

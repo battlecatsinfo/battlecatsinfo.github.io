@@ -1,4 +1,4 @@
-import { 
+import {
 	config,
 	floor,
 	numStr,
@@ -49,7 +49,7 @@ function makeTd(tr, text) {
 class FormStatsTable {
 	/**
 	 * Detailed form stat table.
-	 * 
+	 *
 	 * @param {Object} [init]
 	 * @param {HTMLTableElement} [init.table]
 	 * @param {Cat} [init.cat]
@@ -224,7 +224,7 @@ class DetailedFormStatsTable extends FormStatsTable {
 					self.updateValues();
 			});
 		}
-		
+
 		makeTd(theadtr, '每提升一級').classList.add('f');
 
 		let td;
@@ -307,14 +307,14 @@ class DetailedFormStatsTable extends FormStatsTable {
 
 				if (this.cat.evolReq)
 					return [30, 35, 40, 45, 50];
-				
+
 				return [20, 30, 40, 45, 50];
 
 			// evolved
 			default:
 				if (this.cat.maxLevel < 50)
 					return [10, 15, 20, 25, 30];
-				
+
 				return [10, 20, 30, 40, 50];
 		}
 	}
@@ -351,7 +351,7 @@ class DetailedFormStatsTable extends FormStatsTable {
 		const lvMax = this.cat.maxLevel;
 		let levels = new Array(5);
 		let lvE = chs[0].children[1];
-		
+
 		for (i = 0; i < levels.length; ++i) {
 			levels[i] = parseInt(lvE.textContent.replace('Lv', ''), 10) || 1;
 			lvE = lvE.nextElementSibling;
@@ -379,10 +379,10 @@ class DetailedFormStatsTable extends FormStatsTable {
 			++i;
 		}
 		form._baseLv = 1;
-		updateHpBaha ({form, Cs: HCs, parent: HPs[i],    KB: 5,           plus: true});
+		updateHpBaha ({form, Cs: HCs, parent: HPs[i], KB: 5, plus: true});
 		updateHpBaha ({form, Cs: HCs, parent: HPPKBs[i], KB: 5 * form.kb, plus: true});
-		updateAtkBaha({form, Cs: ACs, parent: ATKs[i],   dpsMode: false,  plus: true});
-		updateAtkBaha({form, Cs: ACs, parent: DPSs[i],   dpsMode: true,   plus: true});
+		updateAtkBaha({form, Cs: ACs, parent: ATKs[i], dpsMode: false, plus: true});
+		updateAtkBaha({form, Cs: ACs, parent: DPSs[i], dpsMode: true, plus: true});
 
 		chs[6].children[1].textContent = numStrT(form.tba);
 		chs[6].children[3].textContent = numStrT(form.backswing);
@@ -467,7 +467,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 	static layout = 2;
 
 	/**
-	 * Simple form stat table. 
+	 * Simple form stat table.
 	 *
 	 * @param {Object} [options]
 	 * @param {HTMLTableElement} [options.table]
@@ -487,7 +487,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 
 		let tr = document.createElement('tr');
 		this.tbody.appendChild(tr);
-		
+
 		let td = makeTd(tr);
 		td.rowSpan = 2;
 		td.style.position = 'relative';
@@ -502,8 +502,8 @@ class SimpleFormStatsTable extends FormStatsTable {
 		td = makeTd(tr, '編號');
 		td.classList.add('F');
 		td.style.padding = '0';
-		
-		td = makeTd(tr, '等級');		
+
+		td = makeTd(tr, '等級');
 		td.classList.add('F');
 		td.style.padding = '0';
 
@@ -511,7 +511,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 		td.colSpan = 4;
 		td.classList.add('F');
 		td.style.padding = '0';
-		
+
 		tr = document.createElement('tr');
 		this.tbody.appendChild(tr);
 
@@ -521,7 +521,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 		td.inputMode = 'numeric';
 		td.addEventListener('focus', FormStatsTable.handleFocus);
 		td.addEventListener('keydown', FormStatsTable.handleKW);
-		td.addEventListener('blur', function(event) {
+		td.addEventListener('blur', function (event) {
 			const t = event.currentTarget;
 			let num = t.textContent.match(/\d+/);
 			if (num) {
@@ -661,7 +661,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 			this.tbody.appendChild(tr);
 
 			makeTd(tr, '等級').classList.add('f');
-			
+
 			td = makeTd(tr, '本能');
 			td.colSpan = 4;
 			td.classList.add('f');
@@ -678,7 +678,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 
 				td = makeTd(tr, '等級');
 				td.classList.add('f');
-				
+
 				td = makeTd(tr, '超本能');
 				td.colSpan = 4;
 				td.classList.add('f');
@@ -732,9 +732,9 @@ class SimpleFormStatsTable extends FormStatsTable {
 
 			td1.addEventListener('focus', FormStatsTable.handleFocus);
 			td1.addEventListener('keydown', FormStatsTable.handleKW);
-			
+
 			td2.colSpan = 4;
-			
+
 			td3.classList.add('F');
 		}
 
@@ -751,7 +751,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 	updateTable() {
 		const tbody = this.tbody;
 		const form = this.updateValues();
-	
+
 		let td = tbody.children[7].children[1];
 		td.textContent = '';
 
@@ -812,7 +812,7 @@ class SimpleFormStatsTable extends FormStatsTable {
 		tr[1].textContent = numStr(form.info.price * 1.5);
 		tr[3].textContent = this.getRes(form);
 		tr[5].textContent = numStrT(form.tba);
-		
+
 		return form;
 	}
 }

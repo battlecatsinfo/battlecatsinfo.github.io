@@ -93,14 +93,14 @@ describe('common.mjs', function () {
 		let removeItemStub;
 		let matchMediaStub;
 
-		beforeEach(function() {
+		beforeEach(function () {
 			getItemStub = sinon.stub(_localStorage, 'getItem');
 			setItemStub = sinon.stub(_localStorage, 'setItem');
 			removeItemStub = sinon.stub(_localStorage, 'removeItem');
 			matchMediaStub = sinon.stub(window, 'matchMedia');
 		});
 
-		afterEach(function() {
+		afterEach(function () {
 			getItemStub.restore();
 			setItemStub.restore();
 			removeItemStub.restore();
@@ -255,12 +255,12 @@ describe('common.mjs', function () {
 			assert.deepEqual(config.starCats, []);
 
 			getItemStub.withArgs('star-cats').returns(JSON.stringify([
-				{id: 0, name: "貓咪", icon:"/img/u/0/0.png"},
-				{id: 4, name: "牛貓", icon:"/img/u/4/0.png"},
+				{id: 0, name: "貓咪", icon: "/img/u/0/0.png"},
+				{id: 4, name: "牛貓", icon: "/img/u/4/0.png"},
 			]));
 			assert.deepEqual(config.starCats, [
-				{id: 0, name: "貓咪", icon:"/img/u/0/0.png"},
-				{id: 4, name: "牛貓", icon:"/img/u/4/0.png"},
+				{id: 0, name: "貓咪", icon: "/img/u/0/0.png"},
+				{id: 4, name: "牛貓", icon: "/img/u/4/0.png"},
 			]);
 
 			getItemStub.withArgs('star-cats').returns(JSON.stringify([]));
@@ -269,16 +269,16 @@ describe('common.mjs', function () {
 
 		it('set config.starCats', function () {
 			config.starCats = [
-				{id: 0, name: "貓咪", icon:"/img/u/0/0.png"},
-				{id: 3, name: "噁心貓", icon:"/img/u/3/0.png"},
-				{id: 4, name: "牛貓", icon:"/img/u/4/0.png"},
+				{id: 0, name: "貓咪", icon: "/img/u/0/0.png"},
+				{id: 3, name: "噁心貓", icon: "/img/u/3/0.png"},
+				{id: 4, name: "牛貓", icon: "/img/u/4/0.png"},
 			];
 			assert.deepEqual(setItemStub.lastCall.args, [
 				'star-cats',
 				JSON.stringify([
-					{id: 0, name: "貓咪", icon:"/img/u/0/0.png"},
-					{id: 3, name: "噁心貓", icon:"/img/u/3/0.png"},
-					{id: 4, name: "牛貓", icon:"/img/u/4/0.png"},
+					{id: 0, name: "貓咪", icon: "/img/u/0/0.png"},
+					{id: 3, name: "噁心貓", icon: "/img/u/3/0.png"},
+					{id: 4, name: "牛貓", icon: "/img/u/4/0.png"},
 				]),
 			]);
 
@@ -368,7 +368,7 @@ describe('common.mjs', function () {
 			var d2 = config.getDefaultTreasures();
 			assert.deepEqual(
 				d1,
-				[300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 30, 10, 30, 30, 30, 30, 30, 30, 30, 100, 600, 1500, 300, 100, 30, 300, 300, 300, 300, 100]
+				[300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 30, 10, 30, 30, 30, 30, 30, 30, 30, 100, 600, 1500, 300, 100, 30, 300, 300, 300, 300, 100],
 			);
 			assert.deepEqual(d1, d2);
 			assert.notStrictEqual(d1, d2);

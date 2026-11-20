@@ -58,6 +58,7 @@ module.exports = class extends RewardSiteGenerator {
 
 		this.writeCollabs();
 	}
+
 	writeCollabs() {
 		const collabTemplate = this.loadTemplate('html/collab.html');
 		const data = JSON.parse(this.load('collab.json'));
@@ -93,9 +94,9 @@ module.exports = class extends RewardSiteGenerator {
 
 						return {
 							'name': this.mapNames[m],
-							'id': s
-						}
-					})
+							'id': s,
+						};
+					}),
 				});
 			}
 			const pools = (collab.pools || []).reduce((pools, p) => {
@@ -160,7 +161,7 @@ module.exports = class extends RewardSiteGenerator {
 			taiwan_collab_history: Object.entries(data.tw_history).sort(),
 		});
 		this.writeTemplate('html/schedule.html', 'schedule.html', {
-			collab_stages: collabStages
+			collab_stages: collabStages,
 		});
 	}
 };

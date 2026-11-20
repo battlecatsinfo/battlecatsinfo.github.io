@@ -131,4 +131,4 @@ await import('./test_combo.mjs');
 await import('./test_stage.mjs');
 await import('./test_reward.mjs');
 
-mocha.run();	
+mocha.run();

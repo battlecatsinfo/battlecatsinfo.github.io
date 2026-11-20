@@ -177,14 +177,14 @@ function makeSlot(index) {
 		const q = input.value.trim().toLowerCase();
 		dropdown.textContent = '';
 		const usedIds = new Set(
-			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null)
+			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null),
 		);
 		const hits = (q ? candidates.filter(e =>
 			!usedIds.has(e.id) && (
 				(e.name || '').toLowerCase().includes(q) ||
 				(e.jpName || '').toLowerCase().includes(q) ||
 				(e.fandom || '').toLowerCase().includes(q)
-			)
+			),
 		) : candidates.filter(e => !usedIds.has(e.id)));
 		if (!hits.length) { dropdown.hidden = true; return; }
 		for (const e of hits) {
@@ -286,7 +286,7 @@ async function doSearch() {
 	renderTable();
 
 	resultsDiv.hidden = false;
-};
+}
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 

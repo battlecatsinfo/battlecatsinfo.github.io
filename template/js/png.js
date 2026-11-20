@@ -23,29 +23,31 @@ class DPSRender {
 			'responsive': true,
 			'exportEnabled': true,
 			'axisY': {
-				'title': "DPS"
+				'title': "DPS",
 			},
 			'axisX': {
-				'title': "Range"
+				'title': "Range",
 			},
 			'legend': {
 				verticalAlign: "top",
 				horizontalAlign: "right",
-				dockInsidePlotArea: true
+				dockInsidePlotArea: true,
 			},
 			'toolTip': {
-				'shared': true
+				'shared': true,
 			},
 			'data': [],
-			'theme': theme
+			'theme': theme,
 		});
 		CS.add(this.W);
 	}
+
 	D() {
 		this.W.exportChart({
-			format: "png"
+			format: "png",
 		});
 	}
+
 	register(title) {
 		this.W.options.exportFileName = title;
 		const x = {
@@ -53,19 +55,22 @@ class DPSRender {
 			'showInLegend': true,
 			'legendMarkerType': "square",
 			'type': "area",
-			'markerSize': 0
+			'markerSize': 0,
 		};
 		this.W.options.data.push(x);
 		return x;
 	}
+
 	C() {
 		return 0;
 	}
+
 	destroy() {
 		CS.delete(this.W);
 		this.W.destroy();
 		this.W = null;
 	}
+
 	text() {
 		const objs = this.W.options.data;
 		const M = {};
@@ -154,12 +159,13 @@ class DPSRender {
 
 		return R;
 	}
+
 	plot(obj) {
 		obj.dataPoints = [];
 		for (let i = 0; i < obj.Xs.length; ++i) {
 			obj.dataPoints.push({
 				'x': obj.Xs[i],
-				'y': obj.Ys[i]
+				'y': obj.Ys[i],
 			});
 		}
 		obj.Xs.length = 0;
@@ -169,5 +175,5 @@ class DPSRender {
 }
 
 export {
-	DPSRender
+	DPSRender,
 };

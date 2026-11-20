@@ -124,14 +124,14 @@ class UnitPage {
 
 		const catNamesJp = this.cat.forms.map(x => x.jpName).filter(x => x).join(' → ');
 		const catNames = this.cat.forms.map(x => x.name).filter(x => x).join(' → ');
-		
+
 		if (layout !== 2) {
 			document.getElementById('ch_name').textContent = catNames;
 			document.getElementById('jp_name').textContent = catNamesJp;
 		}
-		
+
 		this.renderForms();
-		
+
 		document.getElementById('loader').style.display = 'none';
 		document.getElementById('main').style.display = 'block';
 		document.title = catNames.replaceAll(' → ', ' ') + ' - 貓咪資訊';
@@ -153,7 +153,7 @@ class UnitPage {
 			oldList.push({
 				'id': this.cat.id,
 				'icon': this.cat.forms[0].icon,
-				'name': this.cat.forms[0].name || this.cat.forms[0].jpName
+				'name': this.cat.forms[0].name || this.cat.forms[0].jpName,
 			});
 			config.starCats = oldList;
 		});
@@ -177,7 +177,7 @@ class UnitPage {
 				a.addEventListener('click', action);
 			else
 				a.target = '_blank';
-			
+
 			abar.appendChild(a);
 		}
 	}
@@ -224,7 +224,7 @@ class UnitPage {
 			for (let i = 0; i <= floor(lvs / 10); ++i)
 				data.push({
 					y: line[i],
-					x: (i * 10) || 1
+					x: (i * 10) || 1,
 				});
 			this.modal_content.appendChild(canvas);
 			new CanvasJS.Chart(canvas, {
@@ -233,22 +233,22 @@ class UnitPage {
 				'axisY': {
 					'title': "成長百分比",
 					'suffix': "%",
-					'interval': 5
+					'interval': 5,
 				},
 				'axisX': {
 					'title': '等級',
-					'prefix': "Lv"
+					'prefix': "Lv",
 				},
 				'theme': config.colorTheme === 'dark' ? 'dark1' : 'light1',
 				'title': {
-					'text': "角色成長率圖表"
+					'text': "角色成長率圖表",
 				},
 				'data': [{
 					'xValueFormatString': '"Lv"0↑',
 					'yValueFormatString': "0'%'",
 					'type': 'stepLine',
-					'dataPoints': data
-				}]
+					'dataPoints': data,
+				}],
 			}).render();
 		} else {
 			const select = document.createElement('select');
@@ -271,7 +271,7 @@ class UnitPage {
 							const hp = floor(2.5 * Math.round(form.info.hp * form.getLevelMulti(level ? level : 1)));
 							datas.push({
 								x: level ? level : 1,
-								y: hp
+								y: hp,
 							});
 						}
 						break;
@@ -280,7 +280,7 @@ class UnitPage {
 							const atk = floor(2.5 * Math.round((form.info.atk + form.info.atk1 + form.info.atk2) * form.getLevelMulti(level ? level : 1)));
 							datas.push({
 								x: level ? level : 1,
-								y: atk
+								y: atk,
 							});
 						}
 						break;
@@ -289,7 +289,7 @@ class UnitPage {
 							const atk = floor(2.5 * Math.round((form.info.atk + form.info.atk1 + form.info.atk2) * form.getLevelMulti(level ? level : 1)));
 							datas.push({
 								x: level ? level : 1,
-								y: atk * 30 / form.attackF
+								y: atk * 30 / form.attackF,
 							});
 						}
 						break;
@@ -303,22 +303,22 @@ class UnitPage {
 					'animationEnabled': true,
 					'responsive': true,
 					'axisY': {
-						'title': ['體力', '攻擊力', 'DPS'][T - 1]
+						'title': ['體力', '攻擊力', 'DPS'][T - 1],
 					},
 					'axisX': {
 						'title': '等級',
-						'prefix': "Lv"
+						'prefix': "Lv",
 					},
 					'theme': config.colorTheme === 'dark' ? 'dark1' : 'light1',
 					'title': {
-						'text': '角色數值變化圖表'
+						'text': '角色數值變化圖表',
 					},
 					'data': [{
 						'xValueFormatString': '"Lv"0',
 						'yValueFormatString': '#,##0',
 						'type': 'line',
-						'dataPoints': datas
-					}]
+						'dataPoints': datas,
+					}],
 				});
 				C.render();
 			})();
@@ -459,7 +459,7 @@ class UnitPage {
 		tr.appendChild(td);
 		table.appendChild(tr);
 	}
-	
+
 	calcEnv(table) {
 		catEnv.resetOthers();
 		let kaijin = false;
@@ -489,7 +489,7 @@ class UnitPage {
 			stat.updateTable();
 		}
 	}
-	
+
 	addEnvOptions(table) {
 		const self = this;
 		const tr = document.createElement('tr');
@@ -523,7 +523,7 @@ class UnitPage {
 			}
 			self.calcEnv(table);
 		});
-		select2.addEventListener('change',  () => {
+		select2.addEventListener('change', () => {
 			self.calcEnv(table);
 		});
 		const option = document.createElement('option');
@@ -720,7 +720,7 @@ class UnitPage {
 		function range(f = '%', start = 0) {
 			const end = start + 1;
 			const inc = numStr((data[end] - data[start]) / (maxLv - 1));
-			return [`${data[start]}${f}`,  `${data[end]}${f}`, `${maxLv}`, `${inc}${f}`];
+			return [`${data[start]}${f}`, `${data[end]}${f}`, `${maxLv}`, `${inc}${f}`];
 		}
 		const snd = data[2] != data[3];
 		switch (type) {
@@ -987,10 +987,10 @@ class UnitPage {
 			td.textContent = i == 0 ? '無' : '0';
 			if (!i)
 				td.classList.add('f');
-			
+
 			if (isSuper)
 				td.dataset['super'] = '1';
-			
+
 			td.dataset.lv = '0';
 			td.addEventListener('click', calcTalent);
 			tr2.appendChild(td);
@@ -1174,7 +1174,7 @@ class UnitPage {
 
 					this.rednerTalentInfos(form, true);
 					superTalentLevels = this.renderTalentCosts(form, true);
-					
+
 					this.renderDesc(form, title, true);
 					const table = this.createTable(title);
 					this.formTables.push(new DetailedFormStatsTable({table, cat, form, talentLevels, superTalentLevels}));
@@ -1222,7 +1222,7 @@ class UnitPage {
 	renderFruits(title, ultraForm = false) {
 		const fruits = (ultraForm ? this.cat.info.evol4Req : this.cat.info.evolReq) ?? '';
 		const split = fruits.split('|');
-		const desc = (ultraForm ? this.cat.info.evol4Desc : this.cat.info.evolDesc)
+		const desc = (ultraForm ? this.cat.info.evol4Desc : this.cat.info.evolDesc);
 
 		if (!(fruits || desc))
 			return;

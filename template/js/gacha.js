@@ -1,6 +1,6 @@
 import {savePng} from './common.mjs';
 
-(function() {
+(function () {
 	const tooltip = document.getElementsByClassName('tooltip')[0];
 	for (const className of ['rate', 'N', 'Y']) {
 		for (const table of document.getElementsByClassName(className)) {

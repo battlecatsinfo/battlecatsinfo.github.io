@@ -31,7 +31,7 @@ class RewardSiteGenerator extends SiteGenerator {
 			id++;
 		}
 
-		for (let i = 0;i < rewardTable.length;++i) {
+		for (let i = 0; i < rewardTable.length; ++i) {
 			const {id, reward, icon} = rewardTable[i];
 			let name = reward;
 			let cat_id;
@@ -66,7 +66,7 @@ class RewardSiteGenerator extends SiteGenerator {
 				name,
 				cat_id,
 				cat_lv,
-				icon: newIcon
+				icon: newIcon,
 			};
 		}
 

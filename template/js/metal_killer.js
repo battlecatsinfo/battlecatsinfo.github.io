@@ -23,22 +23,22 @@ function handleInput() {
 	if (!chart) {
 		chart = new CanvasJS.Chart('canvas', {
 			'animationEnabled': true,
-			'responsive':true,
+			'responsive': true,
 			'exportEnabled': true,
 			'axisY': {
-				'title': "Enemy HP"
+				'title': "Enemy HP",
 			},
 			'axisX': {
-				'title': 'Nth attack'
+				'title': 'Nth attack',
 			},
 			'theme': themeSelectEl.value,
-			'title': { 'text': "Metal Killer" },
+			'title': {'text': "Metal Killer"},
 			'data': [{
 				'xValueFormatString': '0th attack',
 				'yValueFormatString': '#,##0 HP remaining',
 				'type': 'line',
-				'dataPoints': Ys
-			}]
+				'dataPoints': Ys,
+			}],
 		});
 		chart.render();
 	} else {
@@ -49,14 +49,14 @@ function handleInput() {
 }
 
 function init() {
-	const url = new URL(location.href);	
+	const url = new URL(location.href);
 	const kill = url.searchParams.get('kill');
 	if (kill) {
 		const nkill = parseInt(kill);
 		if (isFinite(kill) && nkill > 0 && nkill < 100)
 			killPersentEl.value = nkill;
 	}
-};
+}
 
 
 themeSelectEl.addEventListener('input', handleInput);

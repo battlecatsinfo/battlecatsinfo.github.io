@@ -16,7 +16,7 @@ for (const file of fs.readdirSync(layoutDir)) {
 	}
 	Handlebars.registerPartial(
 		file.slice(0, -ext.length),
-		fs.readFileSync(resolve(layoutDir, file), 'utf-8')
+		fs.readFileSync(resolve(layoutDir, file), 'utf-8'),
 	);
 }
 
@@ -115,7 +115,7 @@ for (const file of fs.readdirSync(layoutDir)) {
 
 		// e.g. {{op "!" myvar}}
 		if (args.length === 2) {
-			const [op,  v1] = args;
+			const [op, v1] = args;
 			const fn = unaryOperators[op];
 			if (!fn) {
 				throw new Error(`Unknown unary operator ${JSON.stringify(op)}`);
@@ -135,7 +135,7 @@ for (const file of fs.readdirSync(layoutDir)) {
 
 Handlebars.registerHelper('lookupRankReward', function (table, rank) {
 	// handle special ids
-	
+
 	if (rank.reward_count) {
 		if (rank.reward_id === '22')
 			return '貓罐頭';
@@ -149,18 +149,18 @@ Handlebars.registerHelper('lookupRankReward', function (table, rank) {
 	let combos;
 
 	switch (rank.rank) {
-	case '2150':
-		combos = ['酒瘋青年', '恐龍時代', '百鬼夜行'];
-		break;
-	case '1450':
-		combos = ['喵卜力工作室', '兜襠布祭典', '南瓜褲'];
-		break;
-	case '2700':
-		combos = ['幽魂來也', '懶鬼一族', '四人約會'];
-		break;
+		case '2150':
+			combos = ['酒瘋青年', '恐龍時代', '百鬼夜行'];
+			break;
+		case '1450':
+			combos = ['喵卜力工作室', '兜襠布祭典', '南瓜褲'];
+			break;
+		case '2700':
+			combos = ['幽魂來也', '懶鬼一族', '四人約會'];
+			break;
 	}
 
-	return combos ? combos.map(x => `<a target="_blank" href="/combos.html#${x}">${x}</a>`).join('、' ) : '';
+	return combos ? combos.map(x => `<a target="_blank" href="/combos.html#${x}">${x}</a>`).join('、') : '';
 });
 
 Handlebars.registerHelper('split', function (...args) {
@@ -228,14 +228,14 @@ Handlebars.registerHelper('loadJSON', function (filename, options) {
 Handlebars.registerHelper('loadHTML', function (filename, options) {
 	return fs.readFileSync(
 		resolve(TEMPLATE_DIR, 'html', filename),
-		'utf8'
+		'utf8',
 	);
 });
 
 Handlebars.registerHelper('loadCSS', function (filename, options) {
 	return fs.readFileSync(
 		resolve(TEMPLATE_DIR, 'css', filename),
-		'utf8'
+		'utf8',
 	);
 });
 
@@ -255,6 +255,7 @@ class SiteGenerator {
 		}
 		return tpl(env);
 	}
+
 	template(...args) {
 		return this.constructor.template.apply(this, args);
 	}
@@ -263,68 +264,82 @@ class SiteGenerator {
 		fs.writeFileSync(
 			resolve(OUTPUT_DIR, output),
 			this.template(this.loadTemplate(src), env),
-			'utf8'
+			'utf8',
 		);
 	}
+
 	writeTemplate(...args) {
 		return this.constructor.writeTemplate.apply(this, args);
 	}
+
 	static writeJson(output, obj, replace, space) {
 		fs.writeFileSync(
 			resolve(OUTPUT_DIR, output),
 			JSON.stringify(obj, replace, space),
-			'utf8'
-		)
+			'utf8',
+		);
 	}
+
 	writeJson(...args) {
 		return this.constructor.writeJson.apply(this, args);
 	}
+
 	static writeString(output, s) {
 		return fs.writeFileSync(
 			resolve(OUTPUT_DIR, output),
 			s,
-			'utf8'
+			'utf8',
 		);
 	}
+
 	writeString(...args) {
 		return this.constructor.writeString.apply(this, args);
 	}
+
 	static writeRaw(output, s) {
 		return fs.writeFileSync(
 			resolve(OUTPUT_DIR, output),
-			s
+			s,
 		);
 	}
+
 	writeRaw(...args) {
 		return this.constructor.writeRaw.apply(this, args);
 	}
+
 	static load(src) {
 		return fs.readFileSync(
 			resolve(DATA_DIR, src),
-			'utf8'
+			'utf8',
 		);
 	}
+
 	load(...args) {
 		return this.constructor.load.apply(this, args);
 	}
+
 	static loadTemplate(src) {
 		const contents = fs.readFileSync(
 			resolve(TEMPLATE_DIR, src),
-			'utf8'
+			'utf8',
 		);
 		return Handlebars.compile(contents);
 	}
+
 	loadTemplate(...args) {
 		return this.constructor.loadTemplate.apply(this, args);
 	}
+
 	static open(src) {
 		return fs.createReadStream(
-			resolve(DATA_DIR, src)
+			resolve(DATA_DIR, src),
 		);
 	}
+
 	open(...args) {
 		return this.constructor.open.apply(this, args);
 	}
+
 	static parseTsv(s, hasHeader = true) {
 		const rows = s.split('\n').filter(x => x).map(row => row.split('\t'));
 		if (hasHeader) {
@@ -338,6 +353,7 @@ class SiteGenerator {
 		}
 		return rows;
 	}
+
 	parseTsv(...args) {
 		return this.constructor.parseTsv.apply(this, args);
 	}
