@@ -12,16 +12,16 @@ $ npm install
 ### Build
 
 ```sh
-$ node build.js  # or npm run build
+$ npm run build
 ```
 
-Files will be generated under `_out`. See `node build.js -h` for more details.
+Files will be generated under `_out`. See `npm run build -- -h` for more details.
 
 ### Running the local server
 
 ```sh
-$ node server.js            # or npm start
-$ node server.js --verbose  # log requests
+$ npm run start        # or npm start
+$ npm run start -- -v  # log requests
 ```
 
 Note: Clone https://github.com/battlecatsinfo/img to `img/` to display referenced images.

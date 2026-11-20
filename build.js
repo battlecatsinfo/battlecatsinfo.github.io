@@ -34,7 +34,7 @@ const args = parseArgs({
 
 if (args.values.help) {
 	const usage = `\
-Usage: node build.js [parts ...] [options ...]
+Usage: npm run build [-- [parts ...] [options ...]]
 
 Supported parts (default: all):
 ${[...modules].map(x => `    ${x}`).join('\n')}

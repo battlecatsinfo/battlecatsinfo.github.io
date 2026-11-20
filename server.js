@@ -38,7 +38,14 @@ function main(chalk) {
 
 process.argv.slice(2).forEach(arg => {
 	if (arg == '-h' || arg == '-?' || arg == '--help') {
-		console.error('Usage: npm run server [options]\n\nUse "-v" or "--verbose" to log requests\n'), process.exit(0);
+		const usage = `\
+Usage: npm run start [-- [options ...]]
+
+Options:
+    -v | --verbose    Log requests.
+`;
+		process.stderr.write(usage);
+		process.exit(0);
 	} else if (arg == '-v' || arg == '--verbose')
 		verbose = true;
 	else
