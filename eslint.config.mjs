@@ -93,6 +93,23 @@ export default [
 	},
 	{
 		files: [
+			"tests/test_*",
+		],
+		languageOptions: {
+			globals: {
+				...globals.node,
+				mocha: "false",
+				describe: "false",
+				it: "false",
+				beforeEach: "false",
+				afterEach: "false",
+				before: "false",
+				after: "false",
+			},
+		},
+	},
+	{
+		files: [
 			"tests/t/**",
 		],
 		languageOptions: {

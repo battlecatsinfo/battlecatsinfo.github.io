@@ -5,7 +5,7 @@ $ npm run build -- -f  # perform a clean build
 $ npm run start        # start the local server
 ```
 
-Visit `http://localhost:8080/tests/test.html` to check the testing results.
+Visit `http://localhost:8080/tests/test.html` to check the testing results, or run `npm run test` to run tests within a headless browser.
 
 ### Notes
 
