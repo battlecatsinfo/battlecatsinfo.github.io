@@ -495,7 +495,7 @@ module.exports = class extends RewardSiteGenerator {
 							}
 						}
 					} else if (exData[1]) {
-						const [exStage, exChance] = ex_stage_data[1].split('|').map(x => x.split(',').map(y => parseInt(y, 10)));
+						const [exStage, exChance] = exData[1].split('|').map(x => x.split(',').map(y => parseInt(y, 10)));
 
 						for (let i = 0; i < exStage.length; ++i) {
 							const ex = this.stageTable[exStage[i]];

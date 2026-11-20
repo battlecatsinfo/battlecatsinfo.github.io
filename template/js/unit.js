@@ -701,6 +701,7 @@ class UnitPage {
 			this.renderObtain(table, obtn, true, bg = !bg);
 
 		if (this.cat.evol !== undefined)
+			// eslint-disable-next-line no-useless-assignment
 			this.renderObtain(table, this.cat.evol, false, bg = !bg);
 
 		if (this.cat.ver) {

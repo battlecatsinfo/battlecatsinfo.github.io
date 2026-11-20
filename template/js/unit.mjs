@@ -758,17 +758,19 @@ class Unit {
 					}
 					break;
 				case AB_KB:
-					let du;
-					if (this.info.trait & TRAIT_TREASURE) {
-						if (this.info.trait & TRAIT_NO_TREASURE) {
-							du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
+					{
+						let du;
+						if (this.info.trait & TRAIT_TREASURE) {
+							if (this.info.trait & TRAIT_NO_TREASURE) {
+								du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
+							} else {
+								du = numStr(165 * 1.3);
+							}
 						} else {
-							du = numStr(165 * 1.3);
+							du = numStr(165);
 						}
-					} else {
-						du = numStr(165);
+						params = [v[0], du, numStrT(12)];
 					}
-					params = [v[0], du, numStrT(12)];
 					break;
 
 				case AB_SUMMON:
@@ -1829,7 +1831,7 @@ class CatForm extends Unit {
 			}
 
 			if (isBase && Object.hasOwn(ab, AB_ATKBASE))
-				return atk *= 4;
+				return atk * 4;
 
 			if ((traits & TB_BEAST) && Object.hasOwn(ab, AB_BSTHUNT)) {
 				atk *= 2.5;
@@ -2535,6 +2537,8 @@ class Enemy extends Unit {
 
 		if (this.star === 4)
 			return this.env.god3_t;
+
+		return undefined;
 	}
 
 	__cost() {
@@ -2554,7 +2558,6 @@ class Enemy extends Unit {
 		for (const [k, v] of Object.entries(this.info.ab)) {
 			const abNo = parseInt(k, 10);
 			let params = v;
-			let link;
 
 			switch (abNo) {
 				case AB_SURVIVE:
@@ -2631,7 +2634,6 @@ class Enemy extends Unit {
 			yield {
 				abNo,
 				text: formatTemplate(template, params, extra),
-				link, // empty
 			};
 		}
 	}
