@@ -12,7 +12,7 @@ $ npm install
 ### Build
 
 ```sh
-$ node build.js
+$ node build.js  # or npm run build
 ```
 
 Files will be generated under `_out`. See `node build.js -h` for more details.
