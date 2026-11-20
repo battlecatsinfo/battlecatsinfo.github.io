@@ -44,7 +44,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install .
+          npm ci
 
       - name: Build static site contents
         run: |
