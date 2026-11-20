@@ -13,7 +13,7 @@ function main(chalk) {
 		if (pathname.startsWith('./tests/'))
 			pathname = '../' + pathname.slice(2);
 		fs.stat(pathname, (err, stat) => {
-			if (err) {
+			if (err || !stat.isFile()) {
 				res.statusCode = 404;
 				res.setHeader('content-type', 'text/html');
 				res.end(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>404 Not Found</title></head><body><center><h1>404 Not Found</h1><hr><h2>The requested URL <code>${req.url}</code> was not found on this server.</h2></center></body></html>`);
