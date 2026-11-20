@@ -11,7 +11,7 @@ function main(chalk) {
 		if (pathname.startsWith('./img/'))
 			pathname = '../' + pathname.slice(2);
 		if (pathname.startsWith('./tests/'))
-			pathname = '../' + pathname.slice(2);
+			pathname = '../tests/t/' + pathname.slice(8);
 		fs.stat(pathname, (err, stat) => {
 			if (err || !stat.isFile()) {
 				res.statusCode = 404;

@@ -29,7 +29,7 @@ export default [
 			"template/js/ototo.js",
 			"template/js/parser.js",
 			"template/js/stage_difficulty.js",
-			"tests/lib/",
+			"tests/t/lib/",
 		],
 	},
 	{
@@ -71,6 +71,7 @@ export default [
 		files: [
 			"*",
 			"js/**",
+			"tests/*",
 		],
 		languageOptions: {
 			globals: {
@@ -92,7 +93,7 @@ export default [
 	},
 	{
 		files: [
-			"tests/**",
+			"tests/t/**",
 		],
 		languageOptions: {
 			globals: {

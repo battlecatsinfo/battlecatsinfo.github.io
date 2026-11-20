@@ -4,7 +4,7 @@
   "scripts": {
     "lint": "eslint",
     "build": "node build.js",
-    "start": "node server.js"
+    "start": "node tests/server.js"
   },
   "author": "ianfun",
   "license": "MIT",
