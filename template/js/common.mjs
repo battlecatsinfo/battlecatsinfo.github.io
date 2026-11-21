@@ -402,14 +402,14 @@ class ConfigHandler {
 			localStorage.setItem('layout', value);
 	}
 	// zh.mjs 直接读同一个 key，避免额外引入模块。
-	get crossSearch() {
-		return localStorage.getItem('crossSearch') === '1';
+	get hansCrossSearch() {
+		return localStorage.getItem('hansCrossSearch') === '1';
 	}
-	set crossSearch(value) {
+	set hansCrossSearch(value) {
 		if (value === '1' || value === true)
-			localStorage.setItem('crossSearch', '1');
+			localStorage.setItem('hansCrossSearch', '1');
 		else
-			localStorage.removeItem('crossSearch');
+			localStorage.removeItem('hansCrossSearch');
 	}
 	get colorTheme() {
 		return localStorage.getItem('theme') ||

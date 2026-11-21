@@ -1,7 +1,7 @@
 import {toCn} from './tw2cn.mjs';
 
-// 与 common.mjs 的 config.crossSearch 共用同一个键。
-const CROSS_SEARCH_KEY = 'crossSearch';
+// 与 common.mjs 的 config.hansCrossSearch 共用同一个键。
+const CROSS_SEARCH_KEY = 'hansCrossSearch';
 
 /** 「交叉搜尋簡繁字」是否开启（默认关闭）。 */
 export function isCrossSearch() {
@@ -12,7 +12,7 @@ export function isCrossSearch() {
 	}
 }
 
-/** 设置开关；设置页实际走 common.mjs 的 config.crossSearch。 */
+/** 设置开关；设置页实际走 common.mjs 的 config.hansCrossSearch。 */
 export function setCrossSearch(on) {
 	try {
 		localStorage.setItem(CROSS_SEARCH_KEY, on ? '1' : '0');

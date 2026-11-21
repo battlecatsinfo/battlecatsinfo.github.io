@@ -1,32 +1,28 @@
 /**
- * 生成 template/js/tw2cn.mjs。
+ * 生成 data/tw2cn.json（繁 -> 简的单字映射表）。
  *
  * 数据源固定为 OpenCC 的一个 commit，避免“表来自哪个版本”说不清：
  *   - TSCharacters.txt   繁体 -> 简体
  *   - TWVariants.txt     异体 -> 台湾正体
+ * commit 与补充表放在 data/zh_tables.json，由本脚本读取。
+ *
+ * 生成物在构建时被 template/js/tw2cn.mjs 通过 Handlebars 注入，浏览器拿到的仍是静态 JS，
+ * 所以 node build.js 不需要联网。
  *
  * 用法：
  *   node js/gen_zh_tables.js            # 生成/更新
- *   node js/gen_zh_tables.js --check    # 只校验已提交的表是否最新
+ *   node js/gen_zh_tables.js --check    # 只校验 data/tw2cn.json 是否最新
  *   OPENCC_TS=... OPENCC_TW=... node js/gen_zh_tables.js   # 离线时指定本地文件
  */
 const fs = require('node:fs');
 const {resolve} = require('node:path');
+const {DATA_DIR, SiteGenerator} = require('./base.js');
 
-const OPENCC_REV = 'fae2a0a911c30764e669a7d8b0591cd8e852934a';
-const OPENCC_BASE = `https://raw.githubusercontent.com/BYVoid/OpenCC/${OPENCC_REV}/data/dictionary`;
-const TEMPLATE_DIR = resolve(__dirname, '..', 'template', 'js');
-
-// 不在 OpenCC 字表里、但两岸写法差异明确的两组。
-const TW2CN_EXTRA = {
-	'妳': '你',
-	'姊': '姐',
-};
-
-async function readSource(name, envVar) {
+async function readSource(rev, name, envVar) {
 	if (process.env[envVar])
 		return fs.readFileSync(process.env[envVar], 'utf8');
-	const response = await fetch(`${OPENCC_BASE}/${name}`);
+	const url = `https://raw.githubusercontent.com/BYVoid/OpenCC/${rev}/data/dictionary/${name}`;
+	const response = await fetch(url);
 	if (!response.ok)
 		throw new Error(`fetch ${name} failed: ${response.status}`);
 	return response.text();
@@ -88,92 +84,66 @@ function buildSimplifier(ts) {
 	return ch => alias.get(ch) ?? primary.get(ch) ?? ch;
 }
 
-function renderTable(file, header, map) {
-	const entries = [...map].sort(([a], [b]) => a.codePointAt(0) - b.codePointAt(0));
-	const lines = [];
-	for (let i = 0; i < entries.length; i += 8) {
-		lines.push('\t' + entries.slice(i, i + 8)
-			.map(([k, v]) => `'${k}': '${v}'`)
-			.join(', ') + ',');
-	}
-	return `/**
-${header}
- */
-const MAP = {
-${lines.join('\n')}
-};
+class ZhTableGenerator extends SiteGenerator {
+	async run({check = false} = {}) {
+		const {opencc_rev: rev, tw2cn_extra: extra} = JSON.parse(this.load('zh_tables.json'));
+		const tsText = await readSource(rev, 'TSCharacters.txt', 'OPENCC_TS');
+		const twText = await readSource(rev, 'TWVariants.txt', 'OPENCC_TW');
+		const ts = parse(tsText);
+		const tw = parse(twText);
+		const revMap = reverse(tw, twText);
+		const simplified = buildSimplifier(ts);
 
-/**
- * 逐字归一；表外的字符原样保留。
- * @param {string} text - 待归一化文本。
- * @returns {string} 归一化后的文本。
- */
-export function toCn(text) {
-	if (!text) return text;
-	let out = '';
-	for (const ch of text)
-		out += MAP[ch] || ch;
-	return out;
-}
-`;
-}
+		// 繁 -> 简：TWVariantsRev 之后再过 TSCharacters。
+		// 同时把所有 TS 候选字也作为 key，保证 叮𪠽 / 叮噹 能归到同一个形式。
+		const chars = new Set([...ts.keys(), ...revMap.keys(), ...Object.keys(extra)]);
+		for (const values of ts.values()) {
+			for (const value of values)
+				chars.add(value);
+		}
+		const table = {};
+		for (const ch of chars) {
+			const twForm = revMap.get(ch) ?? ch;
+			const cnForm = extra[ch] ?? extra[simplified(twForm)] ?? simplified(twForm);
+			if (ch === cnForm)
+				continue;
+			// 高亮按 code point 偏移回原文，依赖严格的一对一（单字 -> 单字）。
+			if ([...ch].length !== 1 || [...cnForm].length !== 1)
+				throw new Error(`tw2cn: ${ch} -> ${cnForm} is not one-to-one`);
+			table[ch] = cnForm;
+		}
 
-function writeOrCheck(file, header, map, check) {
-	const body = renderTable(file, header, map);
-	const path = resolve(TEMPLATE_DIR, file);
-	if (check) {
-		const current = fs.existsSync(path) ?
-			fs.readFileSync(path, 'utf8').replace(/\r\n/g, '\n') :
-			null;
-		if (current !== body) {
-			console.error(`${file}: OUT OF DATE (${map.size} entries). Run: npm run gen:zh`);
-			process.exitCode = 1;
+		// 按 code point 排序，保证重新生成时 diff 只落在真正变化的条目上。
+		const sorted = {};
+		for (const [k, v] of Object.entries(table).sort(([a], [b]) => a.codePointAt(0) - b.codePointAt(0)))
+			sorted[k] = v;
+
+		const body = `${JSON.stringify(sorted, null, '\t')}\n`;
+		const path = resolve(DATA_DIR, 'tw2cn.json');
+		if (check) {
+			const current = fs.existsSync(path) ?
+				fs.readFileSync(path, 'utf8').replace(/\r\n/g, '\n') :
+				null;
+			if (current !== body) {
+				console.error(`tw2cn.json: OUT OF DATE (${chars.size} source chars). Run: npm run gen:zh`);
+				process.exitCode = 1;
+				return;
+			}
+			console.log(`tw2cn.json: up to date (${Object.keys(sorted).length} entries)`);
 			return;
 		}
-		console.log(`${file}: up to date (${map.size} entries)`);
-		return;
+		fs.writeFileSync(path, body);
+		console.log(`tw2cn.json: ${Object.keys(sorted).length} entries, ${(Buffer.byteLength(body) / 1024).toFixed(1)} KB`);
 	}
-	fs.writeFileSync(path, body);
-	console.log(`${file}: ${map.size} entries, ${(Buffer.byteLength(body) / 1024).toFixed(1)} KB`);
 }
 
-(async () => {
-	const check = process.argv.includes('--check');
-	const tsText = await readSource('TSCharacters.txt', 'OPENCC_TS');
-	const twText = await readSource('TWVariants.txt', 'OPENCC_TW');
-	const ts = parse(tsText);
-	const tw = parse(twText);
-	const rev = reverse(tw, twText);
-	const simplified = buildSimplifier(ts);
+if (require.main === module) {
+	new ZhTableGenerator()
+		.run({check: process.argv.includes('--check')})
+		.catch(ex => {
+			console.error(ex);
+			process.exitCode = 2;
+		});
+}
 
-	// 繁 -> 简：TWVariantsRev 之后再过 TSCharacters。
-	// 同时把所有 TS 候选字也作为 key，保证 叮𪠽 / 叮噹 能归到同一个形式。
-	const chars = new Set([...ts.keys(), ...rev.keys(), ...Object.keys(TW2CN_EXTRA)]);
-	for (const values of ts.values()) {
-		for (const value of values)
-			chars.add(value);
-	}
-	const tw2cn = new Map();
-	for (const ch of chars) {
-		const twForm = rev.get(ch) ?? ch;
-		const cnForm = TW2CN_EXTRA[ch] ?? TW2CN_EXTRA[simplified(twForm)] ?? simplified(twForm);
-		if (ch !== cnForm)
-			tw2cn.set(ch, cnForm);
-	}
-
-	// 高亮按 code point 偏移回原文，依赖严格的一对一（单字 -> 单字）。
-	for (const [k, v] of tw2cn) {
-		if ([...k].length !== 1 || [...v].length !== 1)
-			throw new Error(`tw2cn: ${k} -> ${v} is not one-to-one`);
-	}
-
-	writeOrCheck('tw2cn.mjs', ` * 繁体（台湾正体）-> 简体 的单字映射，供「交叉搜尋簡繁字」开启时双侧归一。
- *
- * 由 js/gen_zh_tables.js 生成，请勿手改。
- * 来源：OpenCC @ ${OPENCC_REV}（TSCharacters.txt + TWVariants.txt，Apache-2.0）
- * 组成：TWVariantsRev（裡->裏、著->着 等）+ TSCharacters；
- * 同一行的多个简体候选归到同一个代表（如 噹/𪠽 -> 当），另加 妳->你、姊->姐。
- *
- * 为什么不做「简 -> 繁」：那是一对多、不确定的（干 到底是 乾、幹 还是 榦？），
- * 只能靠枚举猜；繁 -> 简是多对一、确定的，两边都停在简体上再比即可。`, tw2cn, check);
-})();
+module.exports = ZhTableGenerator;
