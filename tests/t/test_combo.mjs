@@ -10,7 +10,7 @@ describe('combo.mjs', function () {
 		it('basic', async function () {
 			async function test() {
 				var combo = await Combo.loadCombo(0);
-				assert.deepEqual(combo, ["貓咪軍團",4,0,[[0,0],[1,0],[2,0],[3,0],[4,0]],1]);
+				assert.deepEqual(combo, ["貓咪軍團", 4, 0, [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], 1]);
 			}
 
 			// IDB not exist
@@ -33,9 +33,9 @@ describe('combo.mjs', function () {
 			async function test() {
 				var combos = await Combo.loadAllCombos();
 				assert.deepEqual(combos.slice(0, 3), [
-					["貓咪軍團",4,0,[[0,0],[1,0],[2,0],[3,0],[4,0]],1],
-					["下班後的樂趣",6,0,[[13,0],[12,0]],1],
-					["大鯨捕獲祭",10,0,[[51,1],[6,1]],1],
+					["貓咪軍團", 4, 0, [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], 1],
+					["下班後的樂趣", 6, 0, [[13, 0], [12, 0]], 1],
+					["大鯨捕獲祭", 10, 0, [[51, 1], [6, 1]], 1],
 				]);
 			}
 
@@ -55,8 +55,8 @@ describe('combo.mjs', function () {
 			async function test() {
 				var combos = await Combo.loadAllCombos(IDBKeyRange.bound(2, 10), 2);
 				assert.deepEqual(combos, [
-					["大鯨捕獲祭",10,0,[[51,1],[6,1]],1],
-					["DeathRock",3,0,[[19,0],[148,0]],1],
+					["大鯨捕獲祭", 10, 0, [[51, 1], [6, 1]], 1],
+					["DeathRock", 3, 0, [[19, 0], [148, 0]], 1],
 				]);
 			}
 
@@ -85,9 +85,9 @@ describe('combo.mjs', function () {
 				}
 				assert.strictEqual(combos.length, 10);
 				assert.deepEqual(combos.slice(1, 4), [
-					["下班後的樂趣",6,0,[[13,0],[12,0]],1],
-					["大鯨捕獲祭",10,0,[[51,1],[6,1]],1],
-					["DeathRock",3,0,[[19,0],[148,0]],1],
+					["下班後的樂趣", 6, 0, [[13, 0], [12, 0]], 1],
+					["大鯨捕獲祭", 10, 0, [[51, 1], [6, 1]], 1],
+					["DeathRock", 3, 0, [[19, 0], [148, 0]], 1],
 				]);
 			}
 
@@ -110,8 +110,8 @@ describe('combo.mjs', function () {
 					combos.push(combo);
 				}
 				assert.deepEqual(combos, [
-					["DeathRock",3,0,[[19,0],[148,0]],1],
-					["大鯨捕獲祭",10,0,[[51,1],[6,1]],1],
+					["DeathRock", 3, 0, [[19, 0], [148, 0]], 1],
+					["大鯨捕獲祭", 10, 0, [[51, 1], [6, 1]], 1],
 				]);
 			}
 

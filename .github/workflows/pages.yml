@@ -44,11 +44,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install .
+          npm ci
 
       - name: Build static site contents
         run: |
-          node build.js -f -m
+          npm run build -- -f -m
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

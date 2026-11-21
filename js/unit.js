@@ -312,7 +312,7 @@ module.exports = class extends SiteGenerator {
 	}
 
 	parseAbilities(abilities) {
-		const rv  = {};
+		const rv = {};
 		if (abilities) {
 			for (const x of abilities.split('|')) {
 				let idx = x.indexOf('@');

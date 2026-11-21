@@ -11,9 +11,9 @@ function main(chalk) {
 		if (pathname.startsWith('./img/'))
 			pathname = '../' + pathname.slice(2);
 		if (pathname.startsWith('./tests/'))
-			pathname = '../' + pathname.slice(2);
+			pathname = '../tests/t/' + pathname.slice(8);
 		fs.stat(pathname, (err, stat) => {
-			if (err) {
+			if (err || !stat.isFile()) {
 				res.statusCode = 404;
 				res.setHeader('content-type', 'text/html');
 				res.end(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>404 Not Found</title></head><body><center><h1>404 Not Found</h1><hr><h2>The requested URL <code>${req.url}</code> was not found on this server.</h2></center></body></html>`);
@@ -38,7 +38,14 @@ function main(chalk) {
 
 process.argv.slice(2).forEach(arg => {
 	if (arg == '-h' || arg == '-?' || arg == '--help') {
-		console.error('Usage: npm run server [options]\n\nUse "-v" or "--verbose" to log requests\n'), process.exit(0);
+		const usage = `\
+Usage: npm run start [-- [options ...]]
+
+Options:
+    -v | --verbose    Log requests.
+`;
+		process.stderr.write(usage);
+		process.exit(0);
 	} else if (arg == '-v' || arg == '--verbose')
 		verbose = true;
 	else

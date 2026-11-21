@@ -7,7 +7,7 @@ import * as Unit from '../unit.mjs';
 
 describe('unit.mjs', function () {
 
-	beforeEach(function() {
+	beforeEach(function () {
 		Unit.catEnv.reset();
 	});
 
@@ -4288,7 +4288,7 @@ describe('unit.mjs', function () {
 			});
 
 			it('revive should be considered', async function () {
-				// revive with 50% HP * 1 
+				// revive with 50% HP * 1
 				var enemy = await Unit.loadEnemy(284);
 				assert.strictEqual(enemy.thp, 22500);
 
@@ -4296,7 +4296,7 @@ describe('unit.mjs', function () {
 				enemy.stageM = 2;
 				assert.strictEqual(enemy.thp, 225000);
 
-				// revive with 100% HP * 1 
+				// revive with 100% HP * 1
 				var enemy = await Unit.loadEnemy(468);
 				assert.strictEqual(enemy.thp, 35000);
 

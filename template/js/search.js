@@ -327,11 +327,11 @@ loadAllCats().then(_cats => {
 
 for (const elem of document.querySelectorAll("button")) {
 	elem.state = "0";
-	elem.addEventListener("click", function(event) {
+	elem.addEventListener("click", function (event) {
 		const elem = event.currentTarget;
 		if ("0" == elem.state) {
 			elem.parentNode.classList.add("o-selected");
-			elem.state = "1"
+			elem.state = "1";
 		} else {
 			elem.parentNode.classList.remove("o-selected");
 			elem.state = "0";
@@ -340,16 +340,16 @@ for (const elem of document.querySelectorAll("button")) {
 	});
 }
 for (const e of document.querySelectorAll(".or-and")) {
-	e.onclick = function(event) {
+	e.onclick = function (event) {
 		const elem = event.currentTarget;
 		elem.textContent = ("OR" == elem.textContent) ? "AND" : "OR";
 		calculate();
 	};
 }
-document.getElementById("filter-go").onclick = function() {
+document.getElementById("filter-go").onclick = function () {
 	calculate(simplify(filterExpr.value));
 };
-document.getElementById("filter-clear").onclick = function() {
+document.getElementById("filter-clear").onclick = function () {
 	function fn(x) {
 		x.classList.remove("o-selected");
 	}
@@ -362,7 +362,7 @@ document.getElementById("filter-clear").onclick = function() {
 	sortExpr.value = "";
 	calculate();
 };
-onlyMyGav.onchange = function() {
+onlyMyGav.onchange = function () {
 	let favs;
 	if (onlyMyGav.checked) {
 		favs = config.starCats;
@@ -373,7 +373,7 @@ onlyMyGav.onchange = function() {
 	cats = onlyMyGav.checked ? favs : catsOld;
 	calculate(simplify(oriExpr.value));
 };
-toggleResultsEl.onclick = function() {
+toggleResultsEl.onclick = function () {
 	if (hideSearch) {
 		searchResultsEl.style.left = "390px";
 		searchResultsEl.style.width = "calc(100% - 400px)";
@@ -387,10 +387,10 @@ toggleResultsEl.onclick = function() {
 	}
 	hideSearch = !hideSearch;
 };
-nameSearchEl.oninput = function() {
+nameSearchEl.oninput = function () {
 	renderTable(lastForms);
 };
-document.getElementById('form-s').onchange = function() {
+document.getElementById('form-s').onchange = function () {
 	formSelect = this.selectedIndex;
 	calculate(simplify(oriExpr.value));
 };
@@ -399,7 +399,7 @@ for (let n of th.children) {
 	if (n.title) {
 		n._s = 0;
 		n._t = n.textContent;
-		n.onclick = function(event) {
+		n.onclick = function (event) {
 			if (n._s == 0) {
 				n._s = 1;
 				sortExpr.value = event.currentTarget.title;
@@ -417,6 +417,6 @@ for (let n of th.children) {
 			n._s = y;
 			n.textContent = n._t + (n._s ? '↑' : '↓');
 			calculate(simplify(oriExpr.value));
-		}
+		};
 	}
 }

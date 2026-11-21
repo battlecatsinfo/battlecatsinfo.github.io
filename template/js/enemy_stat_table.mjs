@@ -256,7 +256,7 @@ class EnemyStatsTable {
 		this.multEl.addEventListener('focus', EnemyStatsTable.handleFocus);
 		this.multEl.addEventListener('keydown', EnemyStatsTable.handleKeyDown);
 		const self = this;
-		this.multEl.addEventListener('blur', function() {
+		this.multEl.addEventListener('blur', function () {
 			let num = self.multEl.textContent.match(/\d+/);
 			if (num) {
 				self.stageAtkMult = self.mult = parseInt(num[0]);
@@ -268,7 +268,7 @@ class EnemyStatsTable {
 		});
 		this.stageAtkMultEl.addEventListener('focus', EnemyStatsTable.handleFocus);
 		this.stageAtkMultEl.addEventListener('keydown', EnemyStatsTable.handleKeyDown);
-		this.stageAtkMultEl.addEventListener('blur', function() {
+		this.stageAtkMultEl.addEventListener('blur', function () {
 			let num = self.stageAtkMultEl.textContent.match(/\d+/);
 			if (num) {
 				self.stageAtkMult = parseInt(num[0]);
@@ -278,7 +278,7 @@ class EnemyStatsTable {
 		});
 		this.stageCrownMultiEl.addEventListener('focus', EnemyStatsTable.handleFocus);
 		this.stageCrownMultiEl.addEventListener('keydown', EnemyStatsTable.handleKeyDown);
-		this.stageCrownMultiEl.addEventListener('blur', function() {
+		this.stageCrownMultiEl.addEventListener('blur', function () {
 			let num = self.stageCrownMultiEl.textContent.match(/\d+/);
 			if (num) {
 				self.stageCrownMult = parseInt(num[0]);

@@ -7,7 +7,7 @@ import {
 	round,
 	floor,
 	formatTemplate,
-	displayRange
+	displayRange,
 } from './common.mjs';
 const units_scheme = await loadScheme('units');
 
@@ -184,43 +184,43 @@ function combineChances(count, chance) {
 
 // https://gist.github.com/battlecatsinfo/7d043065effd6c2397d7d9272c6aba83
 function getCoverComplex(freq, pres, chance, duration) {
-		const segments = [];
-		const steps = new Set();
+	const segments = [];
+	const steps = new Set();
 
-		outer: for (let now = 0;;now -= freq) {
-			for (let i = pres.length - 1;i >= 0;--i) {
-				let start = now + pres[i];
-				let end = start + duration;
+	outer: for (let now = 0; ;now -= freq) {
+		for (let i = pres.length - 1; i >= 0; --i) {
+			let start = now + pres[i];
+			let end = start + duration;
 
-				if (end < 0)
-					break outer;
+			if (end < 0)
+				break outer;
 
-				start = Math.max(start, 0);
-				end = Math.min(end, freq);
+			start = Math.max(start, 0);
+			end = Math.min(end, freq);
 
-				if (start != end) {
-					segments.push([start, end]);
-					steps.add(start);
-					steps.add(end);
-				}
+			if (start != end) {
+				segments.push([start, end]);
+				steps.add(start);
+				steps.add(end);
 			}
 		}
-		let cover = 0;
-		let count = 0;
-		let last_f = 0;
-		for (const f of Array.from(steps).sort((a, b) => a - b)) {
-			if (f != last_f) {
-				cover += combineChances(count, chance) * (f - last_f);
-				last_f = f;
-			}
-			for (const [start, end] of segments) {
-				if (start == f)
-					++count;
-				else if (end == f)
-					--count;
-			}
+	}
+	let cover = 0;
+	let count = 0;
+	let last_f = 0;
+	for (const f of Array.from(steps).sort((a, b) => a - b)) {
+		if (f != last_f) {
+			cover += combineChances(count, chance) * (f - last_f);
+			last_f = f;
 		}
-		return 100 * cover / freq;
+		for (const [start, end] of segments) {
+			if (start == f)
+				++count;
+			else if (end == f)
+				--count;
+		}
+	}
+	return 100 * cover / freq;
 }
 
 function getCoverSimple(p, durationF, attackF) {
@@ -351,48 +351,63 @@ class CatEnv {
 	get atk_t() {
 		return 1 + 0.005 * this._treasures[0];
 	}
+
 	get hp_t() {
 		return 1 + 0.005 * this._treasures[1];
 	}
+
 	get earn_r() {
 		return 0.05 * (this._treasures[18] - 1);
 	}
+
 	get earn_t() {
 		return 0.005 * this._treasures[3];
 	}
+
 	get cd_r() {
 		return 6 * (this._treasures[17] - 1);
 	}
+
 	get cd_t() {
 		return 0.3 * this._treasures[2];
 	}
+
 	get good_atk_t() {
 		return this._treasures[23] / 1000;
 	}
+
 	get good_hp_t() {
 		return this._treasures[23] / 3000;
 	}
+
 	get massive_t() {
 		return this._treasures[23] / 300;
 	}
+
 	get resist_t() {
 		return this._treasures[23] / 300;
 	}
+
 	get dur_t() {
 		return 1 + this._treasures[23] / 1500;
 	}
+
 	get alien_t() {
 		return 7 - this._treasures[21] / 100;
 	}
+
 	get alien_star_t() {
 		return 16 - this._treasures[22] / 100;
 	}
+
 	get god1_t() {
 		return 11 - (this._treasures[20] / 10);
 	}
+
 	get god2_t() {
 		return 11 - (this._treasures[24] / 10);
 	}
+
 	get god3_t() {
 		return 11 - (this._treasures[30] / 10);
 	}
@@ -400,18 +415,23 @@ class CatEnv {
 	get orb_atk() {
 		return this._orbs.atk.reduce((rv, x) => rv + x, 0);
 	}
+
 	get orb_hp() {
 		return 1 - this._orbs.hp.reduce((rv, x) => rv + (x << 2), 0) / 100;
 	}
+
 	get orb_good_hp() {
 		return this._orbs.good.reduce((rv, x) => rv - 0.02 * x, 1);
 	}
+
 	get orb_good_atk() {
 		return this._orbs.good.reduce((rv, x) => rv + 0.06 * x, 0);
 	}
+
 	get orb_massive() {
 		return this._orbs.massive.reduce((rv, x) => rv + x / 10, 0);
 	}
+
 	get orb_resist() {
 		return 1 - this._orbs.resist.reduce((rv, x) => rv + (x << 2) + x, 0) / 100;
 	}
@@ -424,42 +444,55 @@ class CatEnv {
 	get combo_atk() {
 		return (this._others[2] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_hp() {
 		return (this._others[3] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_speed() {
 		return (this._others[4] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_cd() {
 		return (this._others[5] ?? []).reduce((rv, x) => rv + x, 0);
 	}
+
 	get combo_crit() {
 		return (this._others[6] ?? []).reduce((rv, x) => rv + x, 0);
 	}
+
 	get combo_good() {
 		return (this._others[7] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_massive() {
 		return (this._others[8] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_resist() {
 		return (this._others[9] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_slow() {
 		return (this._others[10] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_stop() {
 		return (this._others[11] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_weak() {
 		return (this._others[12] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_strengthen() {
 		return (this._others[13] ?? []).reduce((rv, x) => rv + x, 0);
 	}
+
 	get combo_witch() {
 		return (this._others[14] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
+
 	get combo_eva() {
 		return (this._others[15] ?? []).reduce((rv, x) => rv + x / 100, 0);
 	}
@@ -470,97 +503,128 @@ class Unit {
 		if (new.target === Unit)
 			throw new Error('Abstract Class cannot be instantiated');
 	}
+
 	get id() {
 		return this.info.i;
 	}
+
 	get name() {
 		return this.info.name;
 	}
+
 	get jpName() {
 		return this.info.jpName;
 	}
+
 	get desc() {
 		return this.info.desc;
 	}
+
 	get hp() {
 		return ~~(round(this.info.hp * (this.alienMag ?? 1) * this.hpM) * this.stageM);
 	}
+
 	get thp() {
 		return this.getthp();
 	}
+
 	get kb() {
 		return this.info.kb;
 	}
+
 	get speed() {
 		return this.info.speed;
 	}
+
 	get range() {
 		return this.info.range;
 	}
+
 	get pre() {
 		return this.info.pre;
 	}
+
 	get pre1() {
 		return this.info.pre1;
 	}
+
 	get pre2() {
 		return this.info.pre2;
 	}
+
 	get atkm() {
 		return this.getatks().reduce((rv, x) => rv + x);
 	}
+
 	get atks() {
 		return this.getatks();
 	}
+
 	get atk() {
 		return this.getatks(0);
 	}
+
 	get atk1() {
 		return this.getatks(1);
 	}
+
 	get atk2() {
 		return this.getatks(2);
 	}
+
 	get tatks() {
 		return this.gettatks({mode: 'max'});
 	}
+
 	get tba() {
 		return this.info.tba;
 	}
+
 	get backswing() {
 		return this.info.backswing;
 	}
+
 	get attackF() {
 		return this.info.attackF;
 	}
+
 	get atkType() {
 		return this.info.atkType;
 	}
+
 	get dps() {
 		return 30 * this.atkm / this.attackF;
 	}
+
 	get tdps() {
 		const atkm = this.gettatks({mode: 'expected'}).reduce((rv, x) => rv + x);
 		return 30 * atkm / this.attackF;
 	}
+
 	get trait() {
 		return this.info.trait;
 	}
+
 	get abi() {
 		return this.info.abi;
 	}
+
 	get lds() {
 		return this.info.lds;
 	}
+
 	get ldr() {
 		return this.info.ldr;
 	}
+
 	get imu() {
 		return this.info.imu;
 	}
+
 	get ab() {
 		return this.info.ab;
 	}
+
 	get res() {
 		return this.info.res;
 	}
@@ -569,7 +633,7 @@ class Unit {
 		const abi = this.info.abi;
 		let strs;
 		return abi ? (strs = [], 4 & abi && strs.push('一'), 2 & abi && strs.push('二'),
-			1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
+		1 & abi && strs.push('三'), "，第" + strs.join(' / ') + "擊附加特性") : "";
 	}
 
 	getTraitShortNames(filter) {
@@ -611,7 +675,7 @@ class Unit {
 		return `（${this.getTraitShortNames(filter)}）敵人`;
 	}
 
-	*abilityDescriptions(layout) {
+	* abilityDescriptions(layout) {
 		const extra = {
 			'star': this.info.pre1 ? '*' : '',
 			'target': this.getTraitNames(),
@@ -694,17 +758,19 @@ class Unit {
 					}
 					break;
 				case AB_KB:
-					let du;
-					if (this.info.trait & TRAIT_TREASURE) {
-						if (this.info.trait & TRAIT_NO_TREASURE) {
-							du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
+					{
+						let du;
+						if (this.info.trait & TRAIT_TREASURE) {
+							if (this.info.trait & TRAIT_NO_TREASURE) {
+								du = `${numStr(165)}（${numStr(165 * 1.3)}）`;
+							} else {
+								du = numStr(165 * 1.3);
+							}
 						} else {
-							du = numStr(165 * 1.3);
+							du = numStr(165);
 						}
-					} else {
-						du = numStr(165);
+						params = [v[0], du, numStrT(12)];
 					}
-					params = [v[0], du, numStrT(12)];
 					break;
 
 				case AB_SUMMON:
@@ -756,7 +822,7 @@ class Unit {
 		for (let x = 1, i = 0; x <= 2048; x <<= 1, ++i) {
 			if (!(this.imu & x))
 				continue;
-			
+
 			div.appendChild(new Image(40, 40)).src = `/img/i/m/${i}.png`;
 			names.push(units_scheme.immunes[i]);
 		}
@@ -767,11 +833,13 @@ class Unit {
 	abEnabled(atkIdx) {
 		return this.abi & (1 << (2 - atkIdx));
 	}
+
 	get _atks() {
 		const value = [this.info.atk, this.info.atk1, this.info.atk2];
 		Object.defineProperty(this, '_atks', {value});
 		return value;
 	}
+
 	getatks(i) {
 		const m = this.atkM;
 
@@ -1002,9 +1070,11 @@ class Unit {
 	hasAb(ab) {
 		return Object.hasOwn(this.ab, ab);
 	}
+
 	hasRes(r) {
 		return Object.hasOwn(this.res ?? {}, r);
 	}
+
 	getCover(chance, duration) {
 		if (!(chance && duration)) { return 0; }
 		return getCoverUnit(this, chance, duration);
@@ -1013,87 +1083,115 @@ class Unit {
 	get waveLv() {
 		return this.ab[AB_WAVE]?.[1] ?? 0;
 	}
+
 	get miniWaveLv() {
 		return this.ab[AB_MINIWAVE]?.[1] ?? 0;
 	}
+
 	get surgeLv() {
 		return this.ab[AB_SURGE]?.[3] ?? 0;
 	}
+
 	get miniSurgeLv() {
 		return this.ab[AB_MINISURGE]?.[3] ?? 0;
 	}
+
 	get waveProb() {
 		return this.ab[AB_WAVE]?.[0] ?? 0;
 	}
+
 	get miniWaveProb() {
 		return this.ab[AB_MINIWAVE]?.[0] ?? 0;
 	}
+
 	get surgeProb() {
 		return this.ab[AB_SURGE]?.[0] ?? 0;
 	}
+
 	get miniSurgeProb() {
 		return this.ab[AB_MINISURGE]?.[0] ?? 0;
 	}
+
 	get dodgeTime() {
 		return this.ab[AB_IMUATK]?.[1] ?? 0;
 	}
+
 	get dodgeProb() {
 		return this.ab[AB_IMUATK]?.[0] ?? 0;
 	}
+
 	get critProb() {
 		return this.ab[AB_CRIT] ?? 0;
 	}
+
 	get slowTime() {
 		return this.ab[AB_SLOW]?.[1] ?? 0;
 	}
+
 	get slowProb() {
 		return this.ab[AB_SLOW]?.[0] ?? 0;
 	}
+
 	get stopTime() {
 		return this.ab[AB_STOP]?.[1] ?? 0;
 	}
+
 	get stopProb() {
 		return this.ab[AB_STOP]?.[0] ?? 0;
 	}
+
 	get knockbackProb() {
 		return this.ab[AB_KB]?.[0] ?? 0;
 	}
+
 	get weakTime() {
 		return this.ab[AB_WEAK]?.[2] ?? 0;
 	}
+
 	get weakProb() {
 		return this.ab[AB_WEAK]?.[0] ?? 0;
 	}
+
 	get weakExtent() {
 		return this.ab[AB_WEAK]?.[1] ?? 0;
 	}
+
 	get curseTime() {
 		return this.ab[AB_CURSE]?.[1] ?? 0;
 	}
+
 	get curseProb() {
 		return this.ab[AB_CURSE]?.[0] ?? 0;
 	}
+
 	get slowCover() {
 		return this.getCover(this.slowProb, this.slowTime);
 	}
+
 	get stopCover() {
 		return this.getCover(this.stopProb, this.stopTime);
 	}
+
 	get weakCover() {
 		return this.getCover(this.weakProb, this.weakTime);
 	}
+
 	get curseCover() {
 		return this.getCover(this.curseProb, this.curseTime);
 	}
+
 	get strengthenExtent() {
 		return this.ab[AB_STRENGTHEN]?.[1] ?? 0;
 	}
+
 	get lethalProb() {
 		return this.ab[AB_SURVIVE] ?? 0;
 	}
+
 	get savageExtent() {
 		return this.ab[AB_SAVAGE]?.[1] ?? 0;
 	}
+
 	get savageProb() {
 		return this.ab[AB_SAVAGE]?.[0] ?? 0;
 	}
@@ -1140,9 +1238,11 @@ class Unit {
 	__hasab(ab) {
 		return this.hasAb(ab);
 	}
+
 	__hasres(r) {
 		return this.hasRes(r);
 	}
+
 	__imu() {
 		return this.imu;
 	}
@@ -1150,21 +1250,27 @@ class Unit {
 	__id() {
 		return this.id;
 	}
+
 	__hp() {
 		return this.hp;
 	}
+
 	__thp() {
 		return this.thp;
 	}
+
 	__atk() {
 		return this.atkm;
 	}
+
 	__attack() {
 		return this.atkm;
 	}
+
 	__tatk() {
 		return this.tatks.reduce((rv, x) => rv + x);
 	}
+
 	__atkcount() {
 		let c = 1;
 		if (this.pre1) {
@@ -1174,6 +1280,7 @@ class Unit {
 		}
 		return c;
 	}
+
 	__range_min() {
 		if (this.atkType & ATK_LD) {
 			return Math.min.apply(null, this.lds);
@@ -1183,6 +1290,7 @@ class Unit {
 		}
 		return this.range;
 	}
+
 	__range_max() {
 		if (this.atkType & ATK_LD) {
 			return Math.max.apply(null, this.lds.map((x, i) => x + this.ldr[i]));
@@ -1192,61 +1300,79 @@ class Unit {
 		}
 		return this.range;
 	}
+
 	__reach_base() {
 		if (!this.lds) return this.range;
 		return this.lds[0] > 0 ? this.lds[0] : this.range;
 	}
+
 	__range_interval() {
 		return this.lds ? Math.abs(this.ldr[0]) : 0;
 	}
+
 	__range_interval_max() {
 		if (this.atkType & (ATK_LD | ATK_OMNI)) {
 			return Math.max.apply(null, this.ldr.map(Math.abs));
 		}
 		return 0;
 	}
+
 	__dps() {
 		return this.dps;
 	}
+
 	__tdps() {
 		return this.tdps;
 	}
+
 	__tba() {
 		return this.tba;
 	}
+
 	__pre() {
 		return this.pre;
 	}
+
 	__pre1() {
 		return this.pre1;
 	}
+
 	__pre2() {
 		return this.pre2;
 	}
+
 	__kb() {
 		return this.kb;
 	}
+
 	__trait() {
 		return this.trait;
 	}
+
 	__range() {
 		return this.range;
 	}
+
 	__attackf() {
 		return this.attackF;
 	}
+
 	__attacks() {
 		return this.attackF / 30;
 	}
+
 	__revenge() {
 		return 0 != (this.atkType & ATK_KB_REVENGE);
 	}
+
 	__backswing() {
 		return this.backswing;
 	}
+
 	__speed() {
 		return this.speed;
 	}
+
 	__atktype() {
 		return this.atkType;
 	}
@@ -1254,87 +1380,115 @@ class Unit {
 	__wavelv() {
 		return this.waveLv;
 	}
+
 	__miniwavelv() {
 		return this.miniWaveLv;
 	}
+
 	__surgelv() {
 		return this.surgeLv;
 	}
+
 	__minisurgelv() {
 		return this.miniSurgeLv;
 	}
+
 	__wave_prob() {
 		return this.waveProb;
 	}
+
 	__mini_wave_prob() {
 		return this.miniWaveProb;
 	}
+
 	__surge_prob() {
 		return this.surgeProb;
 	}
+
 	__mini_surge_prob() {
 		return this.miniSurgeProb;
 	}
+
 	__dodge_time() {
 		return this.dodgeTime;
 	}
+
 	__dodge_prob() {
 		return this.dodgeProb;
 	}
+
 	__crit() {
 		return this.critProb;
 	}
+
 	__slow_time() {
 		return this.slowTime;
 	}
+
 	__slow_prob() {
 		return this.slowProb;
 	}
+
 	__stop_time() {
 		return this.stopTime;
 	}
+
 	__stop_prob() {
 		return this.stopProb;
 	}
+
 	__knockback_prob() {
 		return this.knockbackProb;
 	}
+
 	__weak_time() {
 		return this.weakTime;
 	}
+
 	__weak_prob() {
 		return this.weakProb;
 	}
+
 	__weak_extent() {
 		return this.weakExtent;
 	}
+
 	__curse_time() {
 		return this.curseTime;
 	}
+
 	__curse_prob() {
 		return this.curseProb;
 	}
+
 	__slow_cover() {
 		return this.slowCover;
 	}
+
 	__stop_cover() {
 		return this.stopCover;
 	}
+
 	__weak_cover() {
 		return this.weakCover;
 	}
+
 	__curse_cover() {
 		return this.curseCover;
 	}
+
 	__strengthen_extent() {
 		return this.strengthenExtent;
 	}
+
 	__lethal_prob() {
 		return this.lethalProb;
 	}
+
 	__savage_extent() {
 		return this.savageExtent;
 	}
+
 	__savage_prob() {
 		return this.savageProb;
 	}
@@ -1356,24 +1510,30 @@ class CatForm extends Unit {
 			_plusLv: {value: props._plusLv ?? 0, writable: true, configurable: true, enumerable: true},
 		});
 	}
+
 	clone() {
 		return new this.constructor(Object.assign({
 			base: this.base,
 			env: this.env,
 		}, structuredClone(this)));
 	}
+
 	get id() {
 		return this.base.id;
 	}
+
 	get lvc() {
 		return this.info.lvc;
 	}
+
 	get price() {
 		return 1.5 * this.info.price;
 	}
+
 	set price(value) {
 		this.info.price = value;
 	}
+
 	get hp() {
 		let ret = round(this.info.hp * this.getLevelMulti());
 		ret = ~~(ret * this.env.hp_t);
@@ -1392,76 +1552,98 @@ class CatForm extends Unit {
 	get speed() {
 		return ~~(super.speed * (1 + this.env.combo_speed));
 	}
+
 	set speed(value) {
 		this.info.speed = value;
 	}
+
 	get tba() {
 		return super.tba;
 	}
+
 	set tba(value) {
 		this.info.tba = value;
 
 		if (value <= 12)
 			this.info.atkType |= ATK_KB_REVENGE;
 	}
+
 	get attackF() {
 		return super.attackF;
 	}
+
 	set attackF(value) {
 		this.info.attackF = value;
 	}
+
 	get trait() {
 		return super.trait;
 	}
+
 	set trait(value) {
 		this.info.trait = value;
 	}
+
 	get imu() {
 		return super.imu;
 	}
+
 	set imu(value) {
 		this.info.imu = value;
 	}
+
 	get res() {
 		return super.res;
 	}
+
 	get ab() {
 		return super.ab;
 	}
+
 	set ab(value) {
 		this.info.ab = value;
 	}
+
 	get cd() {
 		return Math.max(60, this.info.cd - this.env.cd_r - this.env.cd_t - ~~(this.env.combo_cd / 10));
 	}
+
 	set cd(value) {
 		this.info.cd = value;
 	}
+
 	get icon() {
 		const eggId = this.base.eid?.[this.lvc];
 		return (typeof eggId !== 'undefined') ?
 			`/img/s/${eggId}/${this.lvc}.png` :
 			`/img/u/${this.id}/${this.lvc}.png`;
 	}
+
 	get baseLv() {
 		return this._baseLv;
 	}
+
 	set baseLv(value) {
 		this._baseLv = Math.max(Math.min(value, this.base.maxBaseLv), 1);
 	}
+
 	get plusLv() {
 		return this._plusLv;
 	}
+
 	set plusLv(value) {
 		this._plusLv = Math.max(Math.min(value, this.base.maxPlusLv), 0);
 	}
+
 	get level() {
 		return this._baseLv + this._plusLv;
 	}
+
 	set level(value) {
 		this.baseLv = value;
 		this.plusLv = value - this.baseLv;
 	}
+
 	getLevelMulti(level = this.level) {
 		return this.base.getLevelMulti(level);
 	}
@@ -1649,7 +1831,7 @@ class CatForm extends Unit {
 			}
 
 			if (isBase && Object.hasOwn(ab, AB_ATKBASE))
-				return atk *= 4;
+				return atk * 4;
 
 			if ((traits & TB_BEAST) && Object.hasOwn(ab, AB_BSTHUNT)) {
 				atk *= 2.5;
@@ -1676,7 +1858,7 @@ class CatForm extends Unit {
 				} else if (Object.hasOwn(ab, AB_MASSIVES)) {
 					atk *= 5 + (buff_t ? this.env.massive_t : 0);
 				} else if (Object.hasOwn(ab, AB_GOOD)) {
-					atk *= (1 + this.env.combo_good) * (1.5  + (buff_t ? this.env.good_atk_t : 0)) + (buff_o ? this.env.orb_good_atk : 0);
+					atk *= (1 + this.env.combo_good) * (1.5 + (buff_t ? this.env.good_atk_t : 0)) + (buff_o ? this.env.orb_good_atk : 0);
 				}
 			}
 
@@ -1732,7 +1914,7 @@ class CatForm extends Unit {
 						if (mode === 'max')
 							atk += buff;
 						else
-							atk +=  buff * v[0] / 100;
+							atk += buff * v[0] / 100;
 					}
 				}
 			}
@@ -1776,7 +1958,7 @@ class CatForm extends Unit {
 		return rv;
 	}
 
-	*forEachTalent(isSuper = false) {
+	* forEachTalent(isSuper = false) {
 		const talents = this.talents;
 
 		if (!talents)
@@ -2167,35 +2349,44 @@ class CatForm extends Unit {
 		const p = super.critProb;
 		return p ? p + this.env.combo_crit : 0;
 	}
+
 	get slowTime() {
 		const t = super.slowTime;
 		return ((this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_slow);
 	}
+
 	get stopTime() {
 		const t = super.stopTime;
 		return ((this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_stop);
 	}
+
 	get weakTime() {
 		const t = super.weakTime;
 		return ((this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t) * (1 + this.env.combo_weak);
 	}
+
 	get curseTime() {
 		const t = super.curseTime;
 		return (this.trait & TRAIT_TREASURE) ? ~~(t * this.env.dur_t) : t;
 	}
+
 	get strengthenExtent() {
 		const t = super.strengthenExtent;
 		return t ? t + this.env.combo_strengthen : 0;
 	}
+
 	get barrierBreakProb() {
 		return this.ab[AB_BREAK]?.[0] ?? 0;
 	}
+
 	get shieldBreakProb() {
 		return this.ab[AB_SHIELDBREAK]?.[0] ?? 0;
 	}
+
 	get beastDodgeProb() {
 		return this.ab[AB_BSTHUNT]?.[0] ?? 0;
 	}
+
 	get beastDodgeTime() {
 		return this.ab[AB_BSTHUNT]?.[1] ?? 0;
 	}
@@ -2203,27 +2394,35 @@ class CatForm extends Unit {
 	__max_base_lv() {
 		return this.base.maxBaseLv;
 	}
+
 	__max_plus_lv() {
 		return this.base.maxPlusLv;
 	}
+
 	__formc() {
 		return this.lvc + 1;
 	}
+
 	__maxformc() {
 		return this.base.forms.length;
 	}
+
 	__rarity() {
 		return this.base.rarity;
 	}
+
 	__orb_count() {
 		return this.base.orbs ?? 0;
 	}
+
 	__hpagainst(traits) {
 		return this.hpAgainst(traits);
 	}
+
 	__dpsagainst(traits) {
 		return this.dpsAgainst(traits);
 	}
+
 	__evol4_require(x) {
 		if (!this.base.evol4Req) return 0;
 		x = x.toString();
@@ -2234,6 +2433,7 @@ class CatForm extends Unit {
 		}
 		return 0;
 	}
+
 	__evol_require(x) {
 		if (!this.base.evolReq) return 0;
 		x = x.toString();
@@ -2244,27 +2444,35 @@ class CatForm extends Unit {
 		}
 		return 0;
 	}
+
 	__price() {
 		return this.price;
 	}
+
 	__cost() {
 		return this.price;
 	}
+
 	__cdf() {
 		return this.cd;
 	}
+
 	__cd() {
 		return this.cd / 30;
 	}
+
 	__break_prob() {
 		return this.barrierBreakProb;
 	}
+
 	__shield_break_prob() {
 		return this.shieldBreakProb;
 	}
+
 	__beast_prob() {
 		return this.beastDodgeProb;
 	}
+
 	__beast_time() {
 		return this.beastDodgeTime;
 	}
@@ -2282,33 +2490,41 @@ class Enemy extends Unit {
 			stageM: {value: props.stageM ?? 1, writable: true, configurable: true, enumerable: true},
 		});
 	}
+
 	get fandom() {
 		return this.info.fandom;
 	}
+
 	get earn() {
 		return round(this.info.earn * (1 + this.env.earn_r + this.env.earn_t), 2);
 	}
+
 	get star() {
 		return this.info.star;
 	}
+
 	get icon() {
 		return `/img/e/${this.id}/0.png`;
 	}
+
 	get animUrl() {
 		const value = `/anim.html?id=${-(this.id + 1)}`;
 		Object.defineProperty(this, 'animUrl', {value});
 		return value;
 	}
+
 	get bcdbUrl() {
 		const value = `https://battlecats-db.com/enemy/${(this.id + 2).toString().padStart(3, '0')}.html`;
 		Object.defineProperty(this, 'bcdbUrl', {value});
 		return value;
 	}
+
 	get fandomUrl() {
 		const value = `https://battlecats.miraheze.org/wiki/${this.fandom}`;
 		Object.defineProperty(this, 'fandomUrl', {value});
 		return value;
 	}
+
 	get alienMag() {
 		if (this.trait & TB_ALIEN)
 			return (this.star === 1) ? this.env.alien_star_t : this.env.alien_t;
@@ -2321,16 +2537,19 @@ class Enemy extends Unit {
 
 		if (this.star === 4)
 			return this.env.god3_t;
+
+		return undefined;
 	}
 
 	__cost() {
 		return this.earn;
 	}
+
 	__price() {
 		return this.earn;
 	}
 
-	*abilityDescriptions(layout) {
+	* abilityDescriptions(layout) {
 		const extra = {
 			'star': this.info.pre1 ? '*' : '',
 			'target': '',
@@ -2339,7 +2558,6 @@ class Enemy extends Unit {
 		for (const [k, v] of Object.entries(this.info.ab)) {
 			const abNo = parseInt(k, 10);
 			let params = v;
-			let link;
 
 			switch (abNo) {
 				case AB_SURVIVE:
@@ -2377,7 +2595,7 @@ class Enemy extends Unit {
 					if (abNo !== AB_IMUATK)
 						params.push(getCoverUnitStr(this, v[0], v[1]));
 					break;
-				
+
 				case AB_WEAK:
 					params = [v[0], numStrT(v[2]), getCoverUnitStr(this, v[0], v[2]), v[1]];
 					break;
@@ -2385,7 +2603,7 @@ class Enemy extends Unit {
 				case AB_EXPLOSION:
 					params = [v[0], v[1], v[1] === v[2] ? '' : `~${v[2]}`];
 					break;
-				
+
 				case AB_BURROW:
 					params = [displayRange(v[1]), v[0] === -1 ? '無限' : `${numStr(v[0])} `];
 					break;
@@ -2393,11 +2611,11 @@ class Enemy extends Unit {
 				case AB_REVIVE:
 					params = [numStrT(v[1]), v[2], v[0] === -1 ? '無限' : `${numStr(v[0])} `];
 					break;
-				
+
 				case AB_WARP:
 					params = [v[0], v[2] < 0 ? '前' : '後', displayRange(v[2]), numStrT(v[1])];
 					break;
-				
+
 				case AB_BARRIER:
 					params = [numStr(v[0])];
 					break;
@@ -2416,7 +2634,6 @@ class Enemy extends Unit {
 			yield {
 				abNo,
 				text: formatTemplate(template, params, extra),
-				link, // empty
 			};
 		}
 	}
@@ -2490,12 +2707,15 @@ class Cat {
 	get maxBaseLv() {
 		return this.info.maxBaseLv;
 	}
+
 	get maxPlusLv() {
 		return this.info.maxPlusLv;
 	}
+
 	get collab() {
 		return this.info.collab;
 	}
+
 	get maxLevel() {
 		return this.maxBaseLv + this.maxPlusLv;
 	}
@@ -2505,8 +2725,9 @@ class Cat {
 		Object.defineProperty(this, 'lvCurve', {value});
 		return value;
 	}
+
 	getLevelMulti(level) {
-		let c, multi = .8;
+		let c, multi = 0.8;
 		let n = 0;
 		for (c of this.lvCurve) {
 			if (level <= n) break;
@@ -2521,6 +2742,7 @@ class Cat {
 		Object.defineProperty(this, 'xpCurve', {value});
 		return value;
 	}
+
 	getXpCost(level) {
 		if (level === 0) { return 0; }
 		const curve = this.xpCurve;
@@ -2537,16 +2759,19 @@ class Cat {
 		Object.defineProperty(this, 'animUrl', {value});
 		return value;
 	}
+
 	get bcdbUrl() {
 		const value = `https://battlecats-db.com/unit/${(this.id + 1).toString().padStart(3, '0')}.html`;
 		Object.defineProperty(this, 'bcdbUrl', {value});
 		return value;
 	}
+
 	get udpUrl() {
 		const value = `https://thanksfeanor.pythonanywhere.com/UDP/${this.id.toString().padStart(3, '0')}`;
 		Object.defineProperty(this, 'udpUrl', {value});
 		return value;
 	}
+
 	get fandomUrl() {
 		const value = `https://battlecats.miraheze.org/wiki/${this.info.fandom}`;
 		Object.defineProperty(this, 'fandomUrl', {value});
@@ -2631,7 +2856,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 	parent.textContent = '';
 	const firstLine = plus_s + fmt(
 		catEnv._orbs.atk ? form.gettatks({traits: TRAIT_ALL, filter: [], mode, metal: false}) : form.getatks(),
-		attackF
+		attackF,
 	);
 	parent.append(firstLine);
 	let maxLen = firstLine.length;
@@ -2645,7 +2870,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 		const filter = new Set(line);
 		// exclude impossible combinations
 		if (
-			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
+			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) &&
 			(filter.has(AB_GOOD) || filter.has(AB_MASSIVE) || filter.has(AB_MASSIVES)
 			|| filter.has(AB_BSTHUNT) || filter.has(AB_BAIL) || filter.has(AB_SAGE))
 		)
@@ -2673,7 +2898,7 @@ function updateAtkBaha({form, Cs, parent, dpsMode = false, plus = false, showTra
 			}), attackF);
 
 			if (atks !== atksNoTrea)
-				s += showTrait ? 
+				s += showTrait ?
 					`（${form.getTraitShortNames(TRAIT_TREASURE)}）/${plus_s}${atksNoTrea}（${form.getTraitShortNames(TRAIT_NO_TREASURE)}）` :
 					`（${atksNoTrea}）`;
 		}
@@ -2702,7 +2927,7 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 		const filter = new Set(line);
 		// exclude impossible combinations
 		if (
-			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) && 
+			(filter.has(AB_EKILL) || filter.has(AB_WKILL)) &&
 			(filter.has(AB_GOOD) || filter.has(AB_RESIST) || filter.has(AB_RESISTS)
 			|| filter.has(AB_BSTHUNT) || filter.has(AB_BAIL) || filter.has(AB_SAGE))
 		)
@@ -2728,7 +2953,7 @@ function updateHpBaha({form, Cs, parent, KB = 1, plus = false, showTrait = true}
 			let hpNoTrea = numStr(floor(form.getthp({filter, traits: TRAIT_NO_TREASURE})) / KB);
 
 			if (hp !== hpNoTrea)
-				s += showTrait ? 
+				s += showTrait ?
 					`（${form.getTraitShortNames(TRAIT_TREASURE)}）/${plus_s}${hpNoTrea}（${form.getTraitShortNames(TRAIT_NO_TREASURE)}）` :
 					`（${hpNoTrea}）`;
 		}
@@ -2744,7 +2969,7 @@ function updateHp(form, filter, W) {
 	let old_hp;
 	let traits = TRAIT_ALL;
 
-	for (let first = true;;first = false) {
+	for (let first = true; ;first = false) {
 		const hp = numStr(floor(form.getthp({
 			traits,
 			filter,
@@ -2776,7 +3001,7 @@ function updateAtk(form, filter, W1, W2) {
 
 	W1.textContent = W2.textContent = '';
 
-	for (let first = true;;first = false) {
+	for (let first = true; ;first = false) {
 		const atks = formatAtk(form.gettatks({
 			traits,
 			filter,

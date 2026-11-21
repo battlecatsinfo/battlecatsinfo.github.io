@@ -1,7 +1,7 @@
 (function (global, factory) {
 	global = typeof globalThis !== "undefined" ? globalThis : global || self;
-	factory();
-}(this, function () {
+	factory(global);
+}(this, function (global) {
 	'use strict';
 
 	// apply color theme to the page

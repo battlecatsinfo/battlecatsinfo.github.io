@@ -1,7 +1,7 @@
 (function (global, factory) {
 	global = typeof globalThis !== "undefined" ? globalThis : global || self;
-	factory();
-}(this, function () {
+	factory(global);
+}(this, function (global) {
 	'use strict';
 
 	const siteSearchForm = document.getElementById('site-search');
@@ -21,7 +21,7 @@
 	}
 
 	function onInputBlur(event) {
-		setTimeout(function() {
+		setTimeout(function () {
 			siteSearchResult.hidden = true;
 		}, 500);
 	}

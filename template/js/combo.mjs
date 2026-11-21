@@ -25,7 +25,7 @@ async function loadAllCombos(query, count) {
 	try {
 		return (db._data && query == null && count == null) ?
 			db._data :
-			await ComboIdb.getAll(db, query, count);
+				await ComboIdb.getAll(db, query, count);
 	} finally {
 		db.close();
 	}
@@ -36,7 +36,7 @@ async function* forEachCombo(query, direction) {
 	try {
 		const combos = (db._data && query == null && direction == null) ?
 			db._data :
-			ComboIdb.forEachValue(db, query, direction);
+				ComboIdb.forEachValue(db, query, direction);
 		yield* combos;
 	} finally {
 		db.close();

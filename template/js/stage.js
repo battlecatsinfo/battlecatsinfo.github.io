@@ -381,7 +381,7 @@ async function search_reward(r) {
 }
 
 function initUI() {
-	document.getElementById('fs').onclick = function(event) {
+	document.getElementById('fs').onclick = function (event) {
 		event.preventDefault();
 		event.stopPropagation();
 		search_result.hidden = true;
@@ -390,11 +390,11 @@ function initUI() {
 		if (!filter_page) {
 			filter_page = document.getElementById('filter').firstElementChild;
 			const items = [
-				[0, 1, 2, 3, 4, 5, /* 戰鬥道具 */ 55, 56, 57 /*貓力達*/ ],
+				[0, 1, 2, 3, 4, 5, /* 戰鬥道具 */ 55, 56, 57 /* 貓力達 */ ],
 				[22, 6, 105, 155, 156, 20, 21, 157, 29, 145], // 罐頭、金券
 				[50, 51, 52, 53, 54, 58], // 貓眼石
-				[30, 31, 32, 33, 34, /* 5種子 */ 43 /* 虹種 */ , 41 /* 古種 */ , 160 /* 惡種 */ , 164 /* 金種 */ ],
-				[35, 36, 37, 38, 39, /* 5果實 */ 40 /* 虹果 */ , 42 /* 古實 */ , 161 /* 惡果 */ , 44 /* 金果 */ ],
+				[30, 31, 32, 33, 34, /* 5種子 */ 43 /* 虹種 */, 41 /* 古種 */, 160 /* 惡種 */, 164 /* 金種 */ ],
+				[35, 36, 37, 38, 39, /* 5果實 */ 40 /* 虹果 */, 42 /* 古實 */, 161 /* 惡果 */, 44 /* 金果 */ ],
 				[167, 168, 169, 170, 171, 184], // 獸石
 				[179, 180, 181, 182, 183], // 獸石結晶
 				[
@@ -414,9 +414,9 @@ function initUI() {
 					227, /* 傳說的靈魂 */
 					267, /* PAC-MAN */
 				], // 活動券
-				[163, 178, 198, 231, /*248, */], // 週年活動券
+				[163, 178, 198, 231 /* 248, */], // 週年活動券
 				[85, 86, 87, 88, 89, 90, 91, 140], // 城堡素材
-				//[187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
+				// [187, 188, 189, 190, 191, 192, 193, 194], // 城堡素材Z
 			];
 			const specials = [
 				[106, 106, '開放深淵關卡', 'sm10', search_mapflag, 4],
@@ -429,7 +429,7 @@ function initUI() {
 				[64, 64, '損毀的波動塔', 'sc01', search_enemy, '8o'],
 				[64, 64, '波動塔', 'sc02', search_enemy, '8r'],
 				[64, 64, '詛咒塔', 'sc03', search_enemy, 'ei'],
-				[64, 64, '烈波塔', 'sc04', search_enemy, 'ek']
+				[64, 64, '烈波塔', 'sc04', search_enemy, 'ek'],
 			];
 			const div = filter_page.appendChild(document.createElement('div'));
 			div.classList.add('V');
@@ -467,12 +467,12 @@ function initUI() {
 		}
 		filter_page.parentNode.hidden = false;
 	};
-	document.onclick = function() {
+	document.onclick = function () {
 		if (filter_page)
 			filter_page.parentNode.hidden = true;
 	};
 	const prev = document.getElementById('prev');
-	prev.onclick = function() {
+	prev.onclick = function () {
 		if (M3.selectedIndex) {
 			M3.selectedIndex -= 1;
 			refresh_3();
@@ -483,7 +483,7 @@ function initUI() {
 			alert('沒有上一關了！');
 		}
 	};
-	prev.nextElementSibling.onclick = function() {
+	prev.nextElementSibling.onclick = function () {
 		if (M3.selectedIndex < M3.options.length - 1) {
 			M3.selectedIndex += 1;
 			refresh_3();
@@ -496,7 +496,7 @@ function initUI() {
 	};
 	handle_url();
 	for (const elem of document.getElementsByClassName('dialog-btn')) {
-		elem.addEventListener('click', function() {
+		elem.addEventListener('click', function () {
 			this.parentNode.parentNode.hidden = true;
 		});
 	}
@@ -516,7 +516,7 @@ function handle_url() {
 		loader.hidden = true;
 		loader.previousElementSibling.hidden = true;
 		doSearch({
-			'value': Q
+			'value': Q,
 		});
 		search_form.q.value = Q;
 		return;
@@ -652,6 +652,7 @@ class Limit {
 			this.max = 0;
 		}
 	}
+
 	combine(other) {
 		if (this.rare == 0) this.rare = other.rare;
 		else if (other.rare != 0) this.rare &= other.rare;
@@ -668,9 +669,10 @@ class Limit {
 			}
 		}
 	}
+
 	static merge(g1, g2) {
 		const group = [g1[0],
-			[...g1[1]]
+			[...g1[1]],
 		];
 		if (g1[0] == 0 && g2[0] == 0) {
 			group[1] = [];
@@ -680,7 +682,7 @@ class Limit {
 					group[1].push(x);
 			}
 		} else if (g1[0] == 0 && g2[0] == 2) {
-			group[1] = group[1].filter(function(x) {
+			group[1] = group[1].filter(function (x) {
 				return g2[1].includes(x);
 			});
 		} else if (g1[0] == 2 && g2[0] == 0) {
@@ -690,7 +692,7 @@ class Limit {
 				if (!group[1].includes(x))
 					group[1].push(x);
 			}
-			group[1] = group[1].filter(function(x) {
+			group[1] = group[1].filter(function (x) {
 				return g1[1].includes(x);
 			});
 		} else if (g1[0] == 2 && g2[0] == 2) {
@@ -702,6 +704,7 @@ class Limit {
 		}
 		return group;
 	}
+
 	merge(...args) {
 		return this.constructor.merge.apply(this, args);
 	}
@@ -746,14 +749,14 @@ async function refresh_1(sts) {
 		} else {
 			name = map.name || map.nameJp || QQ;
 		}
-		
+
 		// auto map indices
 		if ([0, 9, 16].includes(M1.selectedIndex)) {
 			name = `${c + 1}. ${name}`; // SoL, UL, ZL
 		} else if (![3, 5, 8, 14, 15, 17, 18].includes(M1.selectedIndex)) {
 			name = `${c}. ${name}`; // NOT: main chapters, regular dojo, challenge, labyrinth, culling, colosseum, championships
 		}
-		
+
 		o.textContent = name;
 		c += 1;
 	}
@@ -803,7 +806,7 @@ async function refresh_2(sts, map) {
 	}
 
 	const mapIdx = info1.dataset.maps ?
-		parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) :
+			parseInt(info1.dataset.maps.split(',')[M2.selectedIndex]) :
 		M1.selectedIndex * 1000 + M2.selectedIndex;
 	info2 = await Stage.getMap(mapIdx);
 	await process_2(stageIdx);
@@ -1015,7 +1018,7 @@ async function render_stage() {
 			div.textContent = '查看固定編成';
 			div.style.cursor = 'pointer';
 			div.classList.add('I');
-			div.onclick = function() {
+			div.onclick = function () {
 				const ctn = document.createElement('div');
 				const leftCtn = ctn.appendChild(document.createElement('div'));
 				const rigjtCtn = ctn.appendChild(document.createElement('div'));
@@ -1062,7 +1065,7 @@ async function render_stage() {
 								tr.appendChild(document.createElement('td')).appendChild(a2);
 								tr.appendChild(document.createElement('td')).textContent = F.hp;
 								tr.appendChild(document.createElement('td')).textContent = F.atk;
-							}
+							},
 						));
 					}
 				}
@@ -1088,7 +1091,7 @@ async function render_stage() {
 					rigjtCtn.appendChild(document.createElement('h3')).textContent = '科技';
 					const tbody = create_table(rigjtCtn, ['圖示', '名稱', '等級'], ['w3-table', 'w3-centered', 'noPad']);
 
-					for (let i = 0;i < tech.length;++i) {
+					for (let i = 0; i < tech.length; ++i) {
 						const tr = tbody.appendChild(document.createElement('tr'));
 						const img = new Image(128, 128);
 						img.src = `/img/i/o/tech${i}.png`;
@@ -1100,14 +1103,14 @@ async function render_stage() {
 				}
 
 				Promise.all(promises).then(() => dialog('fixedln-modal', ctn));
-			}
+			};
 		}
 		if (flags3 & 16) {
 			const div = th.appendChild(document.createElement('div'));
 			div.textContent = '查看提示';
 			div.style.cursor = 'pointer';
 			div.classList.add('W');
-			div.onclick = function() {
+			div.onclick = function () {
 				const ctn = document.createElement('div');
 				ctn.style.textAlign = 'center';
 				for (const part of stage_extra.stageTips[cur_stage_code]) {
@@ -1123,7 +1126,7 @@ async function render_stage() {
 					}
 				}
 				dialog("tips-modal", ctn);
-			}
+			};
 		}
 		if (info2.specialCond) {
 			const div1 = th.appendChild(document.createElement("div"));
@@ -1296,7 +1299,7 @@ async function render_stage() {
 				td.textContent = (exChance == '100' ? "必定出現以下EX關卡：" : 'EX關卡：' + "（出現機率：" + exChance + "%）");
 			const start = 4000000 + parseInt(exMapID, 10) * 1000;
 			for await (const stage of Stage.forEachStage(
-				IDBKeyRange.bound(start + parseInt(exStageIDMin, 10), start + parseInt(exStageIDMax, 10))
+				IDBKeyRange.bound(start + parseInt(exStageIDMin, 10), start + parseInt(exStageIDMax, 10)),
 			)) {
 				const td = ex_stages.appendChild(document.createElement("div"));
 				const a = td.appendChild(document.createElement("a"));
@@ -1398,7 +1401,7 @@ async function render_stage() {
 		} else {
 			makeTd(tr, '-');
 		}
-		makeTd(tr, strs[8] || '')
+		makeTd(tr, strs[8] || '');
 		if (strs[6].length == 2) {
 			const span = tr.firstElementChild.appendChild(document.createElement("span"));
 			span.textContent = "（敵塔）";
@@ -1414,8 +1417,8 @@ async function render_stage() {
 			span.classList.add("boss");
 		}
 	}
-};
-search_form.onsubmit = function(event) {
+}
+search_form.onsubmit = function (event) {
 	event.preventDefault();
 	setTimeout(doSearch, 0, event.currentTarget.q);
 	return false;

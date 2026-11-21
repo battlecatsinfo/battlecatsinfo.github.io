@@ -1,4 +1,4 @@
-import { fetch } from "./common.mjs";
+import {fetch} from "./common.mjs";
 
 const canvas = document.getElementById("imgcut");
 const ctx = canvas.getContext('2d');
@@ -87,7 +87,7 @@ function createLine(c, i) {
 	tr.appendChild(tdw);
 	tr.appendChild(tdh);
 	tr.appendChild(tdn);
-	tdx.onblur = function(event) {
+	tdx.onblur = function (event) {
 		let n = parseInt(event.currentTarget.innerText);
 		const i = Array.from(edit.children).indexOf(event.currentTarget.parentNode);
 		if (!isFinite(n))
@@ -95,8 +95,8 @@ function createLine(c, i) {
 		cut.cuts[i][0] = n;
 		event.currentTarget.innerText = n;
 		draw();
-	}
-	tdy.onblur = function(event) {
+	};
+	tdy.onblur = function (event) {
 		let n = parseInt(event.currentTarget.innerText);
 		const i = Array.from(edit.children).indexOf(event.currentTarget.parentNode);
 		if (!isFinite(n))
@@ -104,8 +104,8 @@ function createLine(c, i) {
 		cut.cuts[i][1] = n;
 		event.currentTarget.innerText = n;
 		draw();
-	}
-	tdw.onblur = function(event) {
+	};
+	tdw.onblur = function (event) {
 		let n = parseInt(event.currentTarget.innerText);
 		const i = Array.from(edit.children).indexOf(event.currentTarget.parentNode);
 		if (!isFinite(n))
@@ -113,8 +113,8 @@ function createLine(c, i) {
 		cut.cuts[i][2] = n;
 		event.currentTarget.innerText = n;
 		draw();
-	}
-	tdh.onblur = function(event) {
+	};
+	tdh.onblur = function (event) {
 		let n = parseInt(event.currentTarget.innerText);
 		const i = Array.from(edit.children).indexOf(event.currentTarget.parentNode);
 		if (!isFinite(n))
@@ -122,16 +122,16 @@ function createLine(c, i) {
 		cut.cuts[i][3] = n;
 		event.currentTarget.innerText = n;
 		draw();
-	}
-	tr.onclick = function(event) {
+	};
+	tr.onclick = function (event) {
 		event.stopPropagation();
 		if (lastT) lastT.classList.remove('ihover');
 		lastT = event.currentTarget;
 		lastT.classList.add('ihover');
 		draw();
-	}
+	};
 	tdx.f = tdy.f = tdw.f = tdh.f = tdn.f = true;
-	tdx.onkeydown = tdy.onkeydown = tdw.onkeydown = tdh.onkeydown = tdn.onkeydown = function(event) {
+	tdx.onkeydown = tdy.onkeydown = tdw.onkeydown = tdh.onkeydown = tdn.onkeydown = function (event) {
 		const t = event.currentTarget;
 		switch (event.keyCode) {
 			case 37: {
@@ -140,9 +140,9 @@ function createLine(c, i) {
 				if (x) {
 					x.focus();
 					x.f = true;
-				};
+				}
 			}
-			break;
+				break;
 			case 38: {
 				event.preventDefault();
 				let x = t.parentNode;
@@ -156,16 +156,16 @@ function createLine(c, i) {
 					}
 				}
 			}
-			break;
+				break;
 			case 39: {
 				event.preventDefault();
 				const x = t.nextElementSibling;
 				if (x) {
 					x.focus();
 					x.f = true;
-				};
+				}
 			}
-			break;
+				break;
 			case 40: {
 				event.preventDefault();
 				let x = t.parentNode;
@@ -179,7 +179,7 @@ function createLine(c, i) {
 					}
 				}
 			}
-			break;
+				break;
 			case 13: {
 				event.preventDefault();
 				t.blur();
@@ -195,7 +195,7 @@ function createLine(c, i) {
 					t.f = false;
 				}
 		}
-	}
+	};
 	return tr;
 }
 
@@ -225,7 +225,7 @@ function exportimga() {
 		pctx.clearRect(0, 0, preview.width, preview.height);
 		pctx.drawImage(img, c[0], c[1], c[2], c[3], 0, 0, c[2], c[3]);
 		let a = document.createElement('a');
-		a.download = `${i}.png`
+		a.download = `${i}.png`;
 		a.href = preview.toDataURL();
 		a.click();
 		setTimeout(download, 500, i + 1);
@@ -291,24 +291,24 @@ function removeline() {
 		n.children[0].innerText = i++;
 	edit.removeChild(e);
 }
-document.onclick = function() {
+document.onclick = function () {
 	lastT = null;
 	for (let c of edit.getElementsByClassName('ihover'))
 		c.classList.remove('ihover');
-}
+};
 const file = document.getElementById('file');
 
 function importImg() {
 	file.accept = "image/*";
-	file.onchange = function() {
+	file.onchange = function () {
 		if (!this.files[0]) return;
 		const f = new FileReader();
-		f.onload = function(e) {
+		f.onload = function (e) {
 			img.src = e.target.result;
-		}
+		};
 		f.readAsDataURL(this.files[0]);
 		imgfile = this.files[0].name;
-	}
+	};
 	file.click();
 }
 
@@ -325,18 +325,18 @@ function importImgU() {
 
 function importCut() {
 	file.accept = '.imgcut';
-	file.onchange = function() {
+	file.onchange = function () {
 		if (!this.files[0]) return;
 		const f = new FileReader();
-		f.onload = function(e) {
+		f.onload = function (e) {
 			cut = new ImgCut(e.target.result);
 			edit.textContent = '';
 			for (let i = 0; i < cut.cuts.length; ++i)
 				edit.appendChild(createLine(cut.cuts[i], i));
-		}
+		};
 		f.readAsText(this.files[0]);
 		cutfile = this.files[0].name;
-	}
+	};
 	file.click();
 }
 
@@ -357,14 +357,14 @@ function importCutU() {
 			});
 	}
 }
-document.onpaste = function(event) {
+document.onpaste = function (event) {
 	const items = (event.clipboardData || event.originalEvent.clipboardData).items;
 	for (let index in items) {
 		const item = items[index];
 		if (item.kind === 'file') {
 			let blob = item.getAsFile();
 			let reader = new FileReader();
-			reader.onload = function(event) {
+			reader.onload = function (event) {
 				img.src = event.target.result;
 				imgfile = 'clipboard';
 			};
@@ -380,7 +380,7 @@ async function pasteImg() {
 		for (const t of imageTypes) {
 			const blob = await c.getType(t);
 			let reader = new FileReader();
-			reader.onload = function(event) {
+			reader.onload = function (event) {
 				img.src = event.target.result;
 				imgfile = 'clipboard';
 			};
@@ -392,17 +392,17 @@ async function pasteImg() {
 
 (async function () {
 	img.crossOrigin = "anonymous";
-	img.onload = function() {
+	img.onload = function () {
 		canvas.width = this.naturalWidth;
 		canvas.height = this.naturalHeight;
 		ctx.drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight);
 		imgloaded = true;
 	};
-	img.onerror = function() {
+	img.onerror = function () {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		ctx.fillText("導入圖片失敗", canvas.width / 2, canvas.height / 2);
 		imgloaded = false;
-	}
+	};
 
 	const params = new URLSearchParams(location.search);
 	let id = params.get('unit');
@@ -425,7 +425,7 @@ async function pasteImg() {
 			img.src = `/img/u/${id}/c${form}.png`;
 		}
 	} else {
-		imgfile = params.get('imgfile')
+		imgfile = params.get('imgfile');
 		if (imgfile) {
 			img.src = imgfile;
 		} else {

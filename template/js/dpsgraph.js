@@ -150,60 +150,61 @@ class DPSBlock {
 		container.appendChild(plotEl);
 		container.appendChild(this.controlsEl);
 		container.dataset.units = '';
-		parent.appendChild(container);;
+		parent.appendChild(container);
 	}
+
 	createButtons() {
 		const self = this;
 		const p = document.createElement('p');
 		let btn = document.createElement('button');
 		btn.textContent = '下載';
 		btn.classList.add('w3-button', 'w3-teal', 'w3-round');
-		btn.onclick = function() {
+		btn.onclick = function () {
 			self.render.D();
-		}
+		};
 		btn.style.marginRight = '0.5em';
 		p.appendChild(btn);
 
 		btn = document.createElement('button');
 		btn.textContent = '複製';
 		btn.classList.add('w3-button', 'w3-green', 'w3-round');
-		btn.onclick = function() {
+		btn.onclick = function () {
 			navigator.clipboard.writeText(self.render.text());
 			this.textContent = '成功';
 			const u = this;
-			setTimeout(function() {
+			setTimeout(function () {
 				u.textContent = '複製';
 			}, 500);
-		}
+		};
 		btn.style.marginRight = '0.5em';
 		p.appendChild(btn);
 
 		btn = document.createElement('button');
 		btn.textContent = '刪除';
 		btn.classList.add('w3-button', 'w3-red', 'w3-round');
-		btn.onclick = function() {
+		btn.onclick = function () {
 			const container = self.controlsEl.parentNode;
 			self.render.destroy(); // destroy the render
 			container.parentNode.removeChild(container); // remove the container
 			setURL(); // update url state
-		}
+		};
 		btn.style.marginRight = '0.5em';
 		p.appendChild(btn);
 
 		btn = document.createElement('button');
 		btn.textContent = '+';
 		btn.classList.add('w3-button', 'w3-circle', 'w3-deep-purple', 'w3-ripple', 'w3-large');
-		btn.onclick = async function() {
+		btn.onclick = async function () {
 			popModalEl.style.display = 'block';
 			catName2El.focus();
-			addBtnEl.onclick = async function() {
+			addBtnEl.onclick = async function () {
 				if (await handleInput(catName2El, self)) {
 					const p = btn.parentNode;
 					p.parentNode.removeChild(p);
 					popModalEl.style.display = 'none';
 				}
-			}
-		}
+			};
+		};
 		p.appendChild(btn);
 		this.controlsEl.appendChild(p);
 	}
@@ -222,6 +223,7 @@ class UnitDPSHelper {
 		this.title = this.F.name || this.F.jpName || '<未命名>';
 		this.talentTypes = new Set();
 	}
+
 	createAttackTypeUI() {
 		{
 			const h2 = document.createElement('h2');
@@ -268,12 +270,15 @@ class UnitDPSHelper {
 			this.B.controlsEl.appendChild(div);
 		}
 	}
+
 	createUI(graph) {
 		this.graph = graph;
 	}
+
 	applyLevels() {
 
 	}
+
 	getAtks() {
 
 	}
@@ -285,6 +290,7 @@ class CatDPSHelper extends UnitDPSHelper {
 		B.controlsEl.parentNode.dataset.units += `${F.id}-${F.lvc},`;
 		setURL();
 	}
+
 	createUI(graph) {
 		this.talentLevels = [];
 		this.superTalentLevels = [];
@@ -294,6 +300,7 @@ class CatDPSHelper extends UnitDPSHelper {
 		this.createLevelInput();
 		this.createTalentInput();
 	}
+
 	createLevelInput() {
 		const self = this;
 
@@ -307,7 +314,7 @@ class CatDPSHelper extends UnitDPSHelper {
 		this.levelInput.inputMode = 'numeric';
 		p.appendChild(this.levelInput);
 		this.B.controlsEl.appendChild(p);
-		this.levelInput.onblur = function() {
+		this.levelInput.onblur = function () {
 			let num = this.value.match(/\d+/);
 			if (!num) {
 				this.value = '請輸入數字！';
@@ -315,11 +322,12 @@ class CatDPSHelper extends UnitDPSHelper {
 			}
 			self.curLevel = num[0];
 			self.graph.render();
-		}
+		};
 
 		// set initial level
 		this.curLevel = (this.superTalentLevels.length || this.F.lvc == 3) ? 60 : 50;
 	}
+
 	createTalentInput() {
 		const self = this;
 
@@ -350,10 +358,10 @@ class CatDPSHelper extends UnitDPSHelper {
 				p.min = 0;
 				p.value = p.max = (this.F.talents[i + 1] || 1).toString();
 				p.step = 1;
-				p.oninput = function() {
+				p.oninput = function () {
 					let talentsCounter = 0;
 					let superTalentsCounter = 0;
-					for (let j = 1;j < 155;j += 14) {
+					for (let j = 1; j < 155; j += 14) {
 						if (j == i) {
 							if (self.F.talents[j + 13] == 1) {
 								self.superTalentLevels[superTalentsCounter] = parseInt(this.value);
@@ -367,13 +375,14 @@ class CatDPSHelper extends UnitDPSHelper {
 							++superTalentsCounter;
 						else
 
-						++talentsCounter;
+							++talentsCounter;
 					}
-				}
+				};
 				this.B.controlsEl.appendChild(div);
 			}
 		}
 	}
+
 	applyLevels() {
 		const F = this.F.clone();
 		F.level = this.curLevel;
@@ -384,6 +393,7 @@ class CatDPSHelper extends UnitDPSHelper {
 		}
 		return F;
 	}
+
 	getAtks(F) {
 		return F.getatks();
 	}
@@ -395,11 +405,13 @@ class EnemyDPSHelper extends UnitDPSHelper {
 		B.controlsEl.parentNode.dataset.units += `${F.id},`;
 		setURL();
 	}
+
 	createUI(graph) {
 		super.createUI(graph);
 		super.createAttackTypeUI();
 		this.createMultiInput();
 	}
+
 	createMultiInput() {
 		const self = this;
 
@@ -413,7 +425,7 @@ class EnemyDPSHelper extends UnitDPSHelper {
 		this.multiInputEl.inputMode = 'numeric';
 		p.appendChild(this.multiInputEl);
 		this.B.controlsEl.appendChild(p);
-		this.multiInputEl.onblur = function() {
+		this.multiInputEl.onblur = function () {
 			let num = this.value.match(/\d+/);
 			if (!num) {
 				this.value = '請輸入數字！';
@@ -421,15 +433,17 @@ class EnemyDPSHelper extends UnitDPSHelper {
 			}
 			self.curMulti = num[0];
 			self.graph.render();
-		}
+		};
 
 		// set initial multiplier
 		this.curMulti = 100;
 		this.multiInputEl.value = '100';
 	}
+
 	applyLevels() {
 		return this.F;
 	}
+
 	getAtks(F) {
 		const atks = [F.atk];
 
@@ -438,7 +452,7 @@ class EnemyDPSHelper extends UnitDPSHelper {
 
 		if (this.curMulti !== 100) {
 			const mul = this.curMulti / 100;
-			for (let i = 0;i < atks.length;++i) {
+			for (let i = 0; i < atks.length; ++i) {
 				atks[i] = floor(atks[i] * mul);
 			}
 		}
@@ -475,7 +489,7 @@ class DPSGraph {
 			select = this.createSelect('超大傷害', ['ON（本能解放)', 'OFF（無本能）']);
 		}
 		if (select) {
-			select.oninput = function() {
+			select.oninput = function () {
 				self.options.massive = !this.selectedIndex;
 				self.render();
 			};
@@ -484,7 +498,7 @@ class DPSGraph {
 
 		if (Object.hasOwn(F.ab, AB_MASSIVES)) {
 			this.options.massives = true;
-			this.createSelect('極度傷害', ['ON', 'OFF']).oninput = function() {
+			this.createSelect('極度傷害', ['ON', 'OFF']).oninput = function () {
 				self.options.massives = !this.selectedIndex;
 				self.render();
 			};
@@ -498,7 +512,7 @@ class DPSGraph {
 			select = this.createSelect('善於攻擊', ['ON（本能解放)', 'OFF（無本能）']);
 		}
 		if (select) {
-			select.oninput = function() {
+			select.oninput = function () {
 				self.options.good = !this.selectedIndex;
 				self.render();
 			};
@@ -513,7 +527,7 @@ class DPSGraph {
 			select = this.createSelect('終結魔女', ['ON（本能解放)', 'OFF（無本能）']);
 		}
 		if (select) {
-			select.oninput = function() {
+			select.oninput = function () {
 				self.options.wkill = !this.selectedIndex;
 				self.render();
 			};
@@ -529,7 +543,7 @@ class DPSGraph {
 			select = this.createSelect('終結使徒', ['ON（本能解放)', 'OFF（無本能）']);
 		}
 		if (select) {
-			select.oninput = function() {
+			select.oninput = function () {
 				self.options.ekill = !this.selectedIndex;
 				self.render();
 			};
@@ -545,7 +559,7 @@ class DPSGraph {
 			select = this.createSelect('超獸特效', ['ON（本能解放)', 'OFF（無本能）']);
 		}
 		if (select) {
-			select.oninput = function() {
+			select.oninput = function () {
 				self.options.beast = !this.selectedIndex;
 				self.render();
 			};
@@ -560,7 +574,7 @@ class DPSGraph {
 			select = this.createSelect('超生命體特效', ['ON（本能解放)', 'OFF（無本能）']);
 		}
 		if (select) {
-			select.oninput = function() {
+			select.oninput = function () {
 				self.options.bail = !this.selectedIndex;
 				self.render();
 			};
@@ -575,7 +589,7 @@ class DPSGraph {
 			select = this.createSelect('超賢者特效', ['ON（本能解放)', 'OFF（無本能）']);
 		}
 		if (select) {
-			select.oninput = function() {
+			select.oninput = function () {
 				self.options.sage = !this.selectedIndex;
 				self.render();
 			};
@@ -590,7 +604,7 @@ class DPSGraph {
 			select = this.createSelect('攻擊力上升', ['ON（本能解放)', 'OFF（無本能）']);
 		}
 		if (select) {
-			select.oninput = function() {
+			select.oninput = function () {
 				self.options.strong = !this.selectedIndex;
 				self.render();
 			};
@@ -605,7 +619,7 @@ class DPSGraph {
 			select = this.createSelect('善於攻城', ['ON（本能解放)', 'OFF（無本能）']);
 		}
 		if (select) {
-			select.oninput = function() {
+			select.oninput = function () {
 				self.options.base = !this.selectedIndex;
 				self.render();
 			};
@@ -614,7 +628,7 @@ class DPSGraph {
 		if (Object.hasOwn(F.ab, AB_CRIT) || helper.talentTypes.has(13)) {
 			this.options.crit = 0;
 			this.createSelect('會心一擊', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
+				.oninput = function () {
 					self.options.crit = this.selectedIndex;
 					self.render();
 				};
@@ -623,7 +637,7 @@ class DPSGraph {
 		if (Object.hasOwn(F.ab, AB_SAVAGE) || helper.talentTypes.has(50)) {
 			this.options.s = 0;
 			this.createSelect('渾身一擊', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
+				.oninput = function () {
 					self.options.s = this.selectedIndex;
 					self.render();
 				};
@@ -632,7 +646,7 @@ class DPSGraph {
 		if (Object.hasOwn(F.ab, AB_WAVE) || helper.talentTypes.has(17)) {
 			this.options.wave = 0;
 			this.createSelect('波動', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
+				.oninput = function () {
 					self.options.wave = this.selectedIndex;
 					self.render();
 				};
@@ -641,7 +655,7 @@ class DPSGraph {
 		if (Object.hasOwn(F.ab, AB_MINIWAVE) || helper.talentTypes.has(62)) {
 			this.options.wave = 0;
 			this.createSelect('小波動', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
+				.oninput = function () {
 					self.options.wave = this.selectedIndex;
 					self.render();
 				};
@@ -650,7 +664,7 @@ class DPSGraph {
 		if (Object.hasOwn(F.ab, AB_SURGE) || helper.talentTypes.has(56)) {
 			this.options.surge = 0;
 			this.createSelect('烈波', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
+				.oninput = function () {
 					self.options.surge = this.selectedIndex;
 					self.render();
 				};
@@ -659,7 +673,7 @@ class DPSGraph {
 		if (Object.hasOwn(F.ab, AB_EXPLOSION) || helper.talentTypes.has(67)) {
 			this.options.explosion = 0;
 			this.createSelect('爆波', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
+				.oninput = function () {
 					self.options.explosion = this.selectedIndex;
 					self.render();
 				};
@@ -668,7 +682,7 @@ class DPSGraph {
 		if (Object.hasOwn(F.ab, AB_MINISURGE) || helper.talentTypes.has(65)) {
 			this.options.surge = 0;
 			this.createSelect('小烈波', [`期望值`, '最大值（100%）', '無'])
-				.oninput = function() {
+				.oninput = function () {
 					self.options.surge = this.selectedIndex;
 					self.render();
 				};
@@ -676,6 +690,7 @@ class DPSGraph {
 
 		this.render();
 	}
+
 	createSelect(title, texts) {
 		let o;
 		const D = document.createElement('div');
@@ -693,6 +708,7 @@ class DPSGraph {
 		this.helper.B.controlsEl.appendChild(D);
 		return select;
 	}
+
 	dpsAt(x, buf) {
 		let RAW = this.atks.slice();
 		let sum = 0;
@@ -792,6 +808,7 @@ class DPSGraph {
 		for (let i of RAW) sum += i;
 		return floor(sum * 30 / this.E.attackF);
 	}
+
 	render() {
 		const F = this.E = this.helper.applyLevels();
 		this.atks = this.helper.getAtks(F);
@@ -870,7 +887,7 @@ class DPSGraph {
 			Xs = [
 				[-320, true],
 				[F.range, false],
-				[F.range + 1, false]
+				[F.range + 1, false],
 			];
 		} else {
 			Xs = [];
@@ -898,8 +915,8 @@ class DPSGraph {
 		if (x && this.options.surge != 2) {
 			this.surgeData = surgeModel(x[1], x[2], Xs);
 			this.surgeMul = this.options.surge ?
-				(x[3] / (x[2] - x[1])) :
-				(x[0] * x[3]) / (100 * (x[2] - x[1]));
+					(x[3] / (x[2] - x[1])) :
+					(x[0] * x[3]) / (100 * (x[2] - x[1]));
 			if (F.ab[AB_MINISURGE]) this.surgeMul /= 5;
 		} else {
 			this.surgeData = null;
@@ -931,7 +948,7 @@ class DPSGraph {
 		for (const X of Xs) {
 			x = X[0];
 			if (lastX == x) continue;
-			
+
 			if (this.surgeData || this.explosionData) surgeRaw = new Array(this.atks.length).fill(0);
 
 			const y = this.dpsAt(x, surgeRaw);
@@ -1072,7 +1089,7 @@ async function main(render) {
 		}
 	}
 
-	document.getElementById('switch_mode').addEventListener('click', function() {
+	document.getElementById('switch_mode').addEventListener('click', function () {
 		let path = location.pathname;
 		if (path.includes('png'))
 			path = '/dpsgraph_svg.html';
@@ -1080,10 +1097,10 @@ async function main(render) {
 			path = '/dpsgraph_png.html';
 		location.assign(path + location.search);
 	});
-	document.getElementById('ok').addEventListener('click', async function() {
+	document.getElementById('ok').addEventListener('click', async function () {
 		await handleInput(catNameEl, render);
 	});
-	catNameEl.addEventListener('focus', function() {
+	catNameEl.addEventListener('focus', function () {
 		this.select();
 	});
 	document.getElementById('popup-modal-close').addEventListener('click', function () {
@@ -1092,5 +1109,5 @@ async function main(render) {
 }
 
 export {
-	main
+	main,
 };

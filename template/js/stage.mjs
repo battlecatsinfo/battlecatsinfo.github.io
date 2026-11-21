@@ -32,12 +32,12 @@ async function* forEachMap(query, direction) {
 	const db = await MapIdb.open();
 	try {
 		const gen = (db._data && query == null && direction == null) ?
-			(function* (data) {
-				for (const k in data) {
-					yield data[k];
-				}
-			})(db._data) :
-			MapIdb.forEachValue(db, query, direction);
+				(function* (data) {
+					for (const k in data) {
+						yield data[k];
+					}
+				})(db._data) :
+				MapIdb.forEachValue(db, query, direction);
 		yield* gen;
 	} finally {
 		db.close();
@@ -48,12 +48,12 @@ async function* forEachStage(query, direction) {
 	const db = await StageIdb.open();
 	try {
 		const gen = (db._data && query == null && direction == null) ?
-			(function* (data) {
-				for (const k in data) {
-					yield data[k];
-				}
-			})(db._data) :
-			StageIdb.forEachValue(db, query, direction);
+				(function* (data) {
+					for (const k in data) {
+						yield data[k];
+					}
+				})(db._data) :
+				StageIdb.forEachValue(db, query, direction);
 		yield* gen;
 	} finally {
 		db.close();

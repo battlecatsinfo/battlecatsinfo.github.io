@@ -6,26 +6,31 @@ class ColorGen {
 		this.i = 0;
 		this.L = [ColorGen.Paired, ColorGen.Dark, ColorGen.Cat10, ColorGen.Tableau];
 	}
+
 	getColorFunc() {
 		if ((++this.i) >= 4) {
 			this.i = 0;
 		}
 		return this.L[this.i];
 	}
+
 	static Paired(x, i) {
 		i = i % 6;
 		i += i;
 		x.fc = d3.schemePaired[i];
 		x.dc = d3.schemePaired[i + 1];
 	}
+
 	static Tableau(x, i) {
 		x.fc = d3.schemeTableau10[i % 10];
 		x.dc = d3.color(x.fc).darker(1).formatHex8();
 	}
+
 	static Cat10(x, i) {
 		x.fc = d3.schemeCategory10[i % 10];
 		x.dc = d3.color(x.fc).darker(1).formatHex8();
 	}
+
 	static Dark(x, i) {
 		x.fc = d3.schemeDark2[i % 10];
 		x.dc = d3.color(x.fc).darker(1).formatHex8();
@@ -43,7 +48,7 @@ class DPSRender {
 		this.CF = GEN.getColorFunc();
 		this.tooltip = {
 			'style': () => null,
-			'remove': () => null
+			'remove': () => null,
 		};
 
 		this.svg = d3.create("svg")
@@ -92,7 +97,7 @@ class DPSRender {
 			x,
 			y,
 			width: w,
-			height: h
+			height: h,
 		} = text.node().getBBox();
 		text.attr("transform", `translate(${-w / 2},${15 - y})`);
 		path.attr("d", `M${-w / 2 - 10},5H-5l5,-5l5,5H${w / 2 + 10}v${h + 20}h-${w + 20}z`);
@@ -101,6 +106,7 @@ class DPSRender {
 	destroy() {
 		this.objs.length = 0;
 	}
+
 	D() {
 		if (self.tooltip) {
 			this.tooltip.remove();
@@ -110,9 +116,9 @@ class DPSRender {
 		const url = URL.createObjectURL(
 			new Blob(
 				['<?xml version="1.0" standalone="no"?>\r\n' + new XMLSerializer().serializeToString(this.svg.node())], {
-					'type': 'image/svg+xml;charset=utf-8'
-				}
-			)
+					'type': 'image/svg+xml;charset=utf-8',
+				},
+			),
 		);
 
 		const a = document.createElement('a');
@@ -121,12 +127,14 @@ class DPSRender {
 		a.click();
 		URL.revokeObjectURL(url);
 	}
+
 	C() {
 		return this.objs.length;
 	}
+
 	register(title) {
 		const x = {
-			'title': title
+			'title': title,
 		};
 		this.CF(x, this.objs.length);
 		this.objs.push(x);
@@ -134,6 +142,7 @@ class DPSRender {
 
 		return x;
 	}
+
 	text() {
 		const M = {};
 		let i, k, c, t, o;
@@ -221,6 +230,7 @@ class DPSRender {
 
 		return R;
 	}
+
 	plot(obj) {
 		const width = 1300;
 		const height = 650;
@@ -253,9 +263,9 @@ class DPSRender {
 					.duration(750)
 					.attr("d",
 						d3.area()
-						.x0((d, i) => this.x(O.Xs[i]))
-						.y0(this.y(0))
-						.y1((d, i) => this.y(O.Ys[i]))
+							.x0((d, i) => this.x(O.Xs[i]))
+							.y0(this.y(0))
+							.y1((d, i) => this.y(O.Ys[i])),
 					);
 			} else {
 				O.line = this.svg.append("path")
@@ -267,7 +277,7 @@ class DPSRender {
 					.attr("d", d3.area()
 						.x0((d, i) => this.x(O.Xs[i]))
 						.y0(this.y(0))
-						.y1((d, i) => this.y(O.Ys[i]))
+						.y1((d, i) => this.y(O.Ys[i])),
 					);
 			}
 			if (O.Y2s) {
@@ -278,9 +288,9 @@ class DPSRender {
 						.duration(750)
 						.attr("d",
 							d3.area()
-							.x0((d, i) => this.x(O.X2s[i]))
-							.y0(this.y(0))
-							.y1((d, i) => this.y(O.Y2s[i]))
+								.x0((d, i) => this.x(O.X2s[i]))
+								.y0(this.y(0))
+								.y1((d, i) => this.y(O.Y2s[i])),
 						);
 				} else {
 					O.l2 = this.svg.append("path")
@@ -292,7 +302,7 @@ class DPSRender {
 						.attr("d", d3.area()
 							.x0((d, i) => this.x(O.X2s[i]))
 							.y0(this.y(0))
-							.y1((d, i) => this.y(O.Y2s[i]))
+							.y1((d, i) => this.y(O.Y2s[i])),
 						);
 				}
 			} else if (O.l2) {
@@ -335,5 +345,5 @@ class DPSRender {
 }
 
 export {
-	DPSRender
+	DPSRender,
 };

@@ -27,7 +27,7 @@ module.exports = class extends SiteGenerator {
 			const id = parseInt(entry.id, 36);
 
 			// auto number map names
-			if (id >= 17000 && id < 18000) {// Colosseum
+			if (id >= 17000 && id < 18000) { // Colosseum
 				if (name || nameJp) {
 					name = (name || nameJp) + ' ' + ((id % 1000) + 1).toString();
 					nameJp = (nameJp || name) + ' ' + ((id % 1000) + 1).toString();
@@ -49,7 +49,7 @@ module.exports = class extends SiteGenerator {
 				specialCond: entry.specialcond || undefined,
 				invalidCombos: entry.invalid_combo || undefined,
 				limit: entry.limit ? entry.limit.split('|').map(x => x.split(',').map(Number)) : undefined,
-				costmulti: entry.costmulti || undefined
+				costmulti: entry.costmulti || undefined,
 			};
 			return rv;
 		}, {});
@@ -327,7 +327,7 @@ module.exports = class extends SiteGenerator {
 				entry.name_tw,
 				entry.name_jp,
 				entry.difficulty,
-			])
+			]),
 		});
 	}
 };

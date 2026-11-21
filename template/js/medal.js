@@ -23,7 +23,7 @@
 			currentModal = null;
 		}
 	});
-	
+
 	// hide modal
 	document.addEventListener('touchstart', event => {
 		if (currentModal) {
