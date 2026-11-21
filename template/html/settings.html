@@ -20,6 +20,26 @@
 	.form * {
 		background-color: #93939300 !important;
 	}
+	.beta-badge {
+		display: inline-block;
+		margin-left: .25em;
+		padding: .1em .45em;
+		border: 1px solid #b33a00;
+		border-radius: .3em;
+		background-color: #e64a19 !important;
+		color: #fff !important;
+		font-size: .78em;
+		font-weight: 700;
+		line-height: 1.5;
+		letter-spacing: .02em;
+		vertical-align: .08em;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+	}
+	:root.dark .beta-badge {
+		border-color: #ffab91;
+		background-color: #ff7043 !important;
+		color: #1b1b1b !important;
+	}
 	.w3-section {
 		margin: 2em 1em !important;
 		margin-right: 0 !important;
@@ -252,6 +272,21 @@
 				</p>
 				<p>巴哈風格會顯示 5 種等級的數值，並在全部能的能力效果加成下的數值<br>
 				<p>麻糬風格類似超絕，只會顯示一種數值，但可以點選要加成的項目。</p>
+			</div>
+		</div>
+
+		<div class="w3-row w3-section odds">
+			<h3>搜尋</h3>
+			<div class="form w3-card">
+				<p>
+					<label><input type="radio" name="hansCrossSearch" value="1">交叉搜尋簡繁字
+						<span class="beta-badge">Beta</span>
+					</label>
+				</p>
+				<p>
+					<label><input type="radio" name="hansCrossSearch" value="" checked>關閉（預設，輸入什麼搜什麼）</label>
+				</p>
+				<p>關閉時維持原本的精確比對；開啟後查詢和資料都會做繁 -> 簡歸一，簡體輸入也能命中繁體條目，但可能出現同簡異義的結果（例如搜尋「幹」也會出現「乾」）。</p>
 			</div>
 		</div>
 

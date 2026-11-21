@@ -1,5 +1,5 @@
 import {IdbBase, AutoIdb, translatorStores} from './common.mjs';
-import {searchVariants} from './cn2tw.mjs';
+import {isCrossSearch, zh} from './zh.mjs';
 
 let db;
 
@@ -49,14 +49,14 @@ async function doSearch() {
 		else
 			storeNames = [target];
 
-		// 简体输入也要能命中繁体条目：只对中文栏位（tw）做简繁归一化
-		const needles = lang === 'tw' ? searchVariants(v) : [v];
+		// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
+		const vN = lang === 'tw' && isCrossSearch() ? zh(v, true) : null;
 
 		for (const storeName of storeNames) {
 			let first = true;
 
 			for await (const value of IdbBase.forEachValue(db, storeName)) {
-				if (!needles.some(needle => value[lang].includes(needle)))
+				if (!value[lang].includes(v) && (vN === null || !zh(value[lang], true).includes(vN)))
 					continue;
 
 				const tr = document.createElement('tr');

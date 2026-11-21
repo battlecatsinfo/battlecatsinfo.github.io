@@ -401,6 +401,16 @@ class ConfigHandler {
 		else
 			localStorage.setItem('layout', value);
 	}
+	// zh.mjs reads the same key directly, so no extra module import is needed.
+	get hansCrossSearch() {
+		return localStorage.getItem('hansCrossSearch') === '1';
+	}
+	set hansCrossSearch(value) {
+		if (value === '1' || value === true)
+			localStorage.setItem('hansCrossSearch', '1');
+		else
+			localStorage.removeItem('hansCrossSearch');
+	}
 	get colorTheme() {
 		return localStorage.getItem('theme') ||
 			(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
