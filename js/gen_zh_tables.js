@@ -125,7 +125,7 @@ class ZhTableGenerator extends SiteGenerator {
 				fs.readFileSync(path, 'utf8').replace(/\r\n/g, '\n') :
 				null;
 			if (current !== body) {
-				console.error(`tw2cn.json: OUT OF DATE (${chars.size} source chars). Run: npm run gen:zh`);
+				console.error(`tw2cn.json: OUT OF DATE (${Object.keys(sorted).length} entries). Run: npm run gen:zh`);
 				process.exitCode = 1;
 				return;
 			}
