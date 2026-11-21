@@ -1,5 +1,5 @@
 /**
- * Build the Traditional -> Simplified single-character table used by
+ * Build module: generate _out/tw2cn.mjs from data/OpenCC and
  * template/js/tw2cn.mjs.
  *
  * Source data lives in data/OpenCC (copied from opencc-data, Apache-2.0):
@@ -7,8 +7,9 @@
  *   - TSCharacters.txt     Traditional -> Simplified
  *   - TSCharactersExt.txt  alternate Simplified candidates
  *
- * The table is injected by js/assets.js while rendering tw2cn.mjs; no
- * intermediate data/tw2cn.json is produced.
+ * This is registered as the `zh_table` part in build.js, alongside other
+ * data-generation modules such as stage.js; js/assets.js only handles
+ * static/quasi-static files.
  */
 const {SiteGenerator} = require('./base.js');
 
@@ -98,4 +99,24 @@ function buildTable(loader = SiteGenerator) {
 	return sorted;
 }
 
-module.exports = {buildTable};
+class ZhTableGenerator extends SiteGenerator {
+	run({minify = false} = {}) {
+		const table = buildTable(this);
+		let contents = this.template(this.loadTemplate('js/tw2cn.mjs'), {tw2cn: table});
+
+		if (minify) {
+			const UglifyJS = require('uglify-js');
+			const result = UglifyJS.minify(contents, {'mangle': {}});
+			if (result.error)
+				throw result.error;
+			if (result.warnings)
+				console.warn('Warning on minifying JS:', 'tw2cn.mjs', result.warnings);
+			contents = result.code;
+		}
+
+		this.writeString('tw2cn.mjs', contents);
+		console.log(`tw2cn.mjs: ${Object.keys(table).length} entries`);
+	}
+}
+
+module.exports = ZhTableGenerator;
