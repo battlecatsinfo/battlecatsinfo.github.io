@@ -1,32 +1,16 @@
 /**
- * Generate data/tw2cn.json, the Traditional -> Simplified single-character map.
+ * Build the Traditional -> Simplified single-character table used by
+ * template/js/tw2cn.mjs.
  *
- * The sources are pinned to one OpenCC commit so the table can always be traced:
- *   - TSCharacters.txt   Traditional -> Simplified
- *   - TWVariants.txt     variants -> Taiwan standard forms
- * The commit and the extra mappings live in data/zh_tables.json.
+ * Source data lives in data/OpenCC (copied from opencc-data, Apache-2.0):
+ *   - TWVariantsRev.txt    variants -> Taiwan standard forms
+ *   - TSCharacters.txt     Traditional -> Simplified
+ *   - TSCharactersExt.txt  alternate Simplified candidates
  *
- * The output is inlined by template/js/tw2cn.mjs at build time, so the browser
- * still receives plain static JS and node build.js needs no network access.
- *
- * Usage:
- *   node js/gen_zh_tables.js            # generate/update
- *   node js/gen_zh_tables.js --check    # verify data/tw2cn.json is up to date
- *   OPENCC_TS=... OPENCC_TW=... node js/gen_zh_tables.js   # use local files offline
+ * The table is injected by js/assets.js while rendering tw2cn.mjs; no
+ * intermediate data/tw2cn.json is produced.
  */
-const fs = require('node:fs');
-const {resolve} = require('node:path');
-const {DATA_DIR, SiteGenerator} = require('./base.js');
-
-async function readSource(rev, name, envVar) {
-	if (process.env[envVar])
-		return fs.readFileSync(process.env[envVar], 'utf8');
-	const url = `https://raw.githubusercontent.com/BYVoid/OpenCC/${rev}/data/dictionary/${name}`;
-	const response = await fetch(url);
-	if (!response.ok)
-		throw new Error(`fetch ${name} failed: ${response.status}`);
-	return response.text();
-}
+const {SiteGenerator} = require('./base.js');
 
 /** Parse OpenCC's `key<TAB>value [value...]` format. */
 function parse(text) {
@@ -40,25 +24,6 @@ function parse(text) {
 			map.set(key, values);
 	}
 	return map;
-}
-
-/** Simplified version of OpenCC's reverse.py: value -> key; @reverse-prefer keeps itself. */
-function reverse(map, text) {
-	const rev = new Map();
-	for (const [key, values] of map) {
-		for (const value of values) {
-			if (value !== key && [...value].length === 1 && !rev.has(value))
-				rev.set(value, key);
-		}
-	}
-	for (const line of text.split(/\r?\n/)) {
-		const m = line.match(/^#\s*@reverse-prefer:\s*(.+)$/);
-		if (m) {
-			for (const ch of m[1].split(' ').filter(Boolean))
-				rev.set(ch, ch);
-		}
-	}
-	return rev;
 }
 
 /**
@@ -86,67 +51,51 @@ function buildSimplifier(ts) {
 	return ch => alias.get(ch) ?? primary.get(ch) ?? ch;
 }
 
-class ZhTableGenerator extends SiteGenerator {
-	async run({check = false} = {}) {
-		const {opencc_rev: rev, tw2cn_extra: extra} = JSON.parse(this.load('zh_tables.json'));
-		const tsText = await readSource(rev, 'TSCharacters.txt', 'OPENCC_TS');
-		const twText = await readSource(rev, 'TWVariants.txt', 'OPENCC_TW');
-		const ts = parse(tsText);
-		const tw = parse(twText);
-		const revMap = reverse(tw, twText);
-		const simplified = buildSimplifier(ts);
+/**
+ * @param {SiteGenerator} [loader] - Provides load() for data files.
+ * @returns {Object<string, string>} Sorted Traditional -> Simplified map.
+ */
+function buildTable(loader = SiteGenerator) {
+	const {tw2cn_extra: extra} = JSON.parse(loader.load('zh_tables.json'));
+	const ts = parse(loader.load('OpenCC/TSCharacters.txt'));
+	const ext = parse(loader.load('OpenCC/TSCharactersExt.txt'));
+	const tw = parse(loader.load('OpenCC/TWVariantsRev.txt'));
 
-		// Traditional -> Simplified: TWVariantsRev first, then TSCharacters.
-		// Also key the TS candidates themselves so 叮𪠽 / 叮噹 share one form.
-		const chars = new Set([...ts.keys(), ...revMap.keys(), ...Object.keys(extra)]);
-		for (const values of ts.values()) {
-			for (const value of values)
-				chars.add(value);
+	// TSCharactersExt only adds alternate candidates; TSCharacters keeps the
+	// common Simplified form as the canonical one.
+	for (const [key, values] of ext) {
+		const candidates = ts.get(key) ?? [];
+		for (const value of values) {
+			if (!candidates.includes(value))
+				candidates.push(value);
 		}
-		const table = {};
-		for (const ch of chars) {
-			const twForm = revMap.get(ch) ?? ch;
-			const cnForm = extra[ch] ?? extra[simplified(twForm)] ?? simplified(twForm);
-			if (ch === cnForm)
-				continue;
-			// Highlighting maps code point offsets back to the original text, so the
-			// map must stay strictly one-to-one (one char -> one char).
-			if ([...ch].length !== 1 || [...cnForm].length !== 1)
-				throw new Error(`tw2cn: ${ch} -> ${cnForm} is not one-to-one`);
-			table[ch] = cnForm;
-		}
-
-		// Sort by code point so regenerating only diffs the entries that changed.
-		const sorted = {};
-		for (const [k, v] of Object.entries(table).sort(([a], [b]) => a.codePointAt(0) - b.codePointAt(0)))
-			sorted[k] = v;
-
-		const body = `${JSON.stringify(sorted, null, '\t')}\n`;
-		const path = resolve(DATA_DIR, 'tw2cn.json');
-		if (check) {
-			const current = fs.existsSync(path) ?
-				fs.readFileSync(path, 'utf8').replace(/\r\n/g, '\n') :
-				null;
-			if (current !== body) {
-				console.error(`tw2cn.json: OUT OF DATE (${Object.keys(sorted).length} entries). Run: npm run gen:zh`);
-				process.exitCode = 1;
-				return;
-			}
-			console.log(`tw2cn.json: up to date (${Object.keys(sorted).length} entries)`);
-			return;
-		}
-		fs.writeFileSync(path, body);
-		console.log(`tw2cn.json: ${Object.keys(sorted).length} entries, ${(Buffer.byteLength(body) / 1024).toFixed(1)} KB`);
+		ts.set(key, candidates);
 	}
+
+	const simplified = buildSimplifier(ts);
+	const chars = new Set([...ts.keys(), ...tw.keys(), ...Object.keys(extra)]);
+	for (const values of ts.values()) {
+		for (const value of values)
+			chars.add(value);
+	}
+
+	const table = {};
+	for (const ch of chars) {
+		const twForm = tw.get(ch)?.[0] ?? ch;
+		const cnForm = extra[ch] ?? extra[simplified(twForm)] ?? simplified(twForm);
+		if (ch === cnForm)
+			continue;
+		// Highlighting maps code point offsets back to the original text, so the
+		// map must stay strictly one-to-one (one char -> one char).
+		if ([...ch].length !== 1 || [...cnForm].length !== 1)
+			throw new Error(`tw2cn: ${ch} -> ${cnForm} is not one-to-one`);
+		table[ch] = cnForm;
+	}
+
+	const sorted = {};
+	for (const [k, v] of Object.entries(table).sort(([a], [b]) => a.codePointAt(0) - b.codePointAt(0)))
+		sorted[k] = v;
+	return sorted;
 }
 
-if (require.main === module) {
-	new ZhTableGenerator()
-		.run({check: process.argv.includes('--check')})
-		.catch(ex => {
-			console.error(ex);
-			process.exitCode = 2;
-		});
-}
-
-module.exports = ZhTableGenerator;
+module.exports = {buildTable};

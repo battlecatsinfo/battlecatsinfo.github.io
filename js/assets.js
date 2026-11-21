@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const {resolve} = require('node:path');
 const {TEMPLATE_DIR, OUTPUT_DIR, SiteGenerator} = require('./base.js');
+const {buildTable} = require('./gen_zh_tables.js');
 
 const sources = [
 	'unit.css',
@@ -113,8 +114,11 @@ module.exports = class extends SiteGenerator {
 
 			const fsrc = resolve(TEMPLATE_DIR, base, file);
 			const fdst = resolve(OUTPUT_DIR, file);
+			const isZhTable = file === 'tw2cn.mjs';
 
-			if (fs.existsSync(fdst) && fs.statSync(fdst).mtimeMs >= fs.statSync(fsrc).mtimeMs) {
+			// tw2cn.mjs depends on data/OpenCC and data/zh_tables.json, not just
+			// its template, so always rebuild it.
+			if (!isZhTable && fs.existsSync(fdst) && fs.statSync(fdst).mtimeMs >= fs.statSync(fsrc).mtimeMs) {
 				continue;
 			}
 
@@ -154,7 +158,7 @@ module.exports = class extends SiteGenerator {
 			} else if (file.endsWith('.min.js')) {
 				// nothing todo
 			} else if (file.endsWith('.js') || file.endsWith('.mjs')) {
-				contents = this.template(contents, {});
+				contents = this.template(contents, isZhTable ? {tw2cn: buildTable(this)} : {});
 				if (UglifyJS) {
 					const r = UglifyJS.minify(contents, {'mangle': {}});
 					if (r.error) {
