@@ -7,7 +7,7 @@
  *   - TSCharacters.txt     Traditional -> Simplified
  *   - TSCharactersExt.txt  alternate Simplified candidates
  *
- * This is registered as the `zh_table` part in build.js, alongside other
+ * This is registered as the `zh_conv` part in build.js, alongside other
  * data-generation modules such as stage.js; js/assets.js only handles
  * static/quasi-static files.
  */

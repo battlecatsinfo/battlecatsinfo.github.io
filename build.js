@@ -5,7 +5,7 @@ const {SCRIPTS_DIR, OUTPUT_DIR} = require('./js/base.js');
 
 const modules = new Set([
 	'assets',
-	'zh_table',
+	'zh_conv',
 	'unit',
 	'combos',
 	'stage',
