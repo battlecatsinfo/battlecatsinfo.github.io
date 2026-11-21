@@ -401,7 +401,7 @@ class ConfigHandler {
 		else
 			localStorage.setItem('layout', value);
 	}
-	// zh.mjs 直接读同一个 key，避免额外引入模块。
+	// zh.mjs reads the same key directly, so no extra module import is needed.
 	get hansCrossSearch() {
 		return localStorage.getItem('hansCrossSearch') === '1';
 	}

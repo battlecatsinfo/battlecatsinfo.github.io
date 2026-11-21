@@ -49,7 +49,7 @@ async function doSearch() {
 		else
 			storeNames = [target];
 
-		// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+		// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
 		const vN = lang === 'tw' && isCrossSearch() ? zh(v, true) : null;
 
 		for (const storeName of storeNames) {

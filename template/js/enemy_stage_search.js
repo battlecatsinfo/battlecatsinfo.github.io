@@ -176,7 +176,7 @@ function makeSlot(index) {
 
 	function suggestInput() {
 		const q = input.value.trim().toLowerCase();
-		// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+		// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
 		const cross = isCrossSearch();
 		const qN = zhQuery(q, cross);
 		dropdown.textContent = '';

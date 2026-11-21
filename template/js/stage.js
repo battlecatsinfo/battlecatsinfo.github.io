@@ -1450,18 +1450,20 @@ function add_result_map(id, name, search_for) {
 }
 
 /**
- * 在原文里找出归一化命中的子串，供高亮使用。
- * 两张归一化表都是严格逐字一对一，所以 code point 偏移可以直接映射回原文。
- * @param {string} name - 显示用原文。
- * @param {string} normalized - 归一化后的名称（小写）。
- * @param {string} query - 归一化后的查询词（小写）。
- * @returns {string|null} 实际命中的原文子串；未命中返回 null。
+ * Find the substring that matched in the normalized text and map it back to the
+ * original text for highlighting.
+ * Both normalization tables are strictly one-to-one per character, so code point
+ * offsets map straight back to the original.
+ * @param {string} name - the original text shown to the user.
+ * @param {string} normalized - the normalized name (lowercase).
+ * @param {string} query - the normalized query (lowercase).
+ * @returns {string|null} the matched substring in the original text, or null.
  */
 function matchHit(name, normalized, query) {
 	const i = normalized.indexOf(query);
 	if (i < 0)
 		return null;
-	// indexOf 给的是 UTF-16 下标；转成 code point 下标再切原文。
+	// indexOf returns UTF-16 offsets; convert to code point offsets before slicing.
 	const start = [...normalized.slice(0, i)].length;
 	return [...name].slice(start, start + [...query].length).join('');
 }
@@ -1476,7 +1478,7 @@ async function doSearch(t) {
 	main_div.hidden = true;
 	search_result.hidden = false;
 	search_result.textContent = '';
-	// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+	// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
 	const cross = isCrossSearch();
 	const vN = zhQuery(v, cross);
 	for await (const stage of Stage.forEachStage()) {

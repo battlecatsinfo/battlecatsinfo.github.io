@@ -1,18 +1,18 @@
 /**
- * 生成 data/tw2cn.json（繁 -> 简的单字映射表）。
+ * Generate data/tw2cn.json, the Traditional -> Simplified single-character map.
  *
- * 数据源固定为 OpenCC 的一个 commit，避免“表来自哪个版本”说不清：
- *   - TSCharacters.txt   繁体 -> 简体
- *   - TWVariants.txt     异体 -> 台湾正体
- * commit 与补充表放在 data/zh_tables.json，由本脚本读取。
+ * The sources are pinned to one OpenCC commit so the table can always be traced:
+ *   - TSCharacters.txt   Traditional -> Simplified
+ *   - TWVariants.txt     variants -> Taiwan standard forms
+ * The commit and the extra mappings live in data/zh_tables.json.
  *
- * 生成物在构建时被 template/js/tw2cn.mjs 通过 Handlebars 注入，浏览器拿到的仍是静态 JS，
- * 所以 node build.js 不需要联网。
+ * The output is inlined by template/js/tw2cn.mjs at build time, so the browser
+ * still receives plain static JS and node build.js needs no network access.
  *
- * 用法：
- *   node js/gen_zh_tables.js            # 生成/更新
- *   node js/gen_zh_tables.js --check    # 只校验 data/tw2cn.json 是否最新
- *   OPENCC_TS=... OPENCC_TW=... node js/gen_zh_tables.js   # 离线时指定本地文件
+ * Usage:
+ *   node js/gen_zh_tables.js            # generate/update
+ *   node js/gen_zh_tables.js --check    # verify data/tw2cn.json is up to date
+ *   OPENCC_TS=... OPENCC_TW=... node js/gen_zh_tables.js   # use local files offline
  */
 const fs = require('node:fs');
 const {resolve} = require('node:path');
@@ -28,7 +28,7 @@ async function readSource(rev, name, envVar) {
 	return response.text();
 }
 
-/** 解析 OpenCC 的 `key<TAB>value [value...]` 格式。 */
+/** Parse OpenCC's `key<TAB>value [value...]` format. */
 function parse(text) {
 	const map = new Map();
 	for (const line of text.split(/\r?\n/)) {
@@ -42,7 +42,7 @@ function parse(text) {
 	return map;
 }
 
-/** OpenCC 的 reverse.py 简化版：value -> key；@reverse-prefer 保持自身。 */
+/** Simplified version of OpenCC's reverse.py: value -> key; @reverse-prefer keeps itself. */
 function reverse(map, text) {
 	const rev = new Map();
 	for (const [key, values] of map) {
@@ -62,12 +62,14 @@ function reverse(map, text) {
 }
 
 /**
- * 同一行的多个简体候选（如 噹 -> 当、𪠽）要先归到同一个代表，
- * 否则资料里的 叮噹 会变成 叮当，而用户输入 叮𪠽 不会命中。
+ * Multiple Simplified candidates on the same line (e.g. 噹 -> 当, 𪠽) must be
+ * folded into one representative first, otherwise 叮噹 becomes 叮当 and typing
+ * 叮𪠽 finds nothing.
  *
- * 注意不能把所有候选一律合并：像 哩 -> 哩、里，其中 里 也是 裡/裏 的
- * 首选简体，直接合并会把 裡 变成 哩。这里只给“既是候补、又不是别的
- * 字首选、也不是独立繁体字”的生僻候选加别名。
+ * Not all candidates can be merged: 哩 -> 哩, 里, where 里 is also the primary
+ * form of 裡/裏, so merging would turn 裡 into 哩. Only rare candidates that are
+ * neither another character's primary form nor a standalone Traditional
+ * character get an alias.
  */
 function buildSimplifier(ts) {
 	const primary = new Map([...ts].map(([key, values]) => [key, values[0]]));
@@ -94,8 +96,8 @@ class ZhTableGenerator extends SiteGenerator {
 		const revMap = reverse(tw, twText);
 		const simplified = buildSimplifier(ts);
 
-		// 繁 -> 简：TWVariantsRev 之后再过 TSCharacters。
-		// 同时把所有 TS 候选字也作为 key，保证 叮𪠽 / 叮噹 能归到同一个形式。
+		// Traditional -> Simplified: TWVariantsRev first, then TSCharacters.
+		// Also key the TS candidates themselves so 叮𪠽 / 叮噹 share one form.
 		const chars = new Set([...ts.keys(), ...revMap.keys(), ...Object.keys(extra)]);
 		for (const values of ts.values()) {
 			for (const value of values)
@@ -107,13 +109,14 @@ class ZhTableGenerator extends SiteGenerator {
 			const cnForm = extra[ch] ?? extra[simplified(twForm)] ?? simplified(twForm);
 			if (ch === cnForm)
 				continue;
-			// 高亮按 code point 偏移回原文，依赖严格的一对一（单字 -> 单字）。
+			// Highlighting maps code point offsets back to the original text, so the
+			// map must stay strictly one-to-one (one char -> one char).
 			if ([...ch].length !== 1 || [...cnForm].length !== 1)
 				throw new Error(`tw2cn: ${ch} -> ${cnForm} is not one-to-one`);
 			table[ch] = cnForm;
 		}
 
-		// 按 code point 排序，保证重新生成时 diff 只落在真正变化的条目上。
+		// Sort by code point so regenerating only diffs the entries that changed.
 		const sorted = {};
 		for (const [k, v] of Object.entries(table).sort(([a], [b]) => a.codePointAt(0) - b.codePointAt(0)))
 			sorted[k] = v;

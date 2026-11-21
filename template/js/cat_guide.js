@@ -497,7 +497,7 @@ function favorite(e) {
 		catsEl.textContent = '';
 		lastRarity = null;
 		if (!q) return;
-		// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+		// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
 		const key = q.toLowerCase();
 		const cross = isCrossSearch();
 		const qN = zhQuery(key, cross);

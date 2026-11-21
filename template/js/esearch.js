@@ -43,7 +43,7 @@ function filterByNameOrId(results) {
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
-	// 默认原始匹配；开启「交叉搜尋簡繁字」后两侧都走繁 -> 简
+	// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
 	const cross = isCrossSearch();
 	const keyN = zhQuery(key, cross);
 	return results.filter(result => {

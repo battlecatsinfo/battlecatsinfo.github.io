@@ -2,7 +2,7 @@ import {assert} from './lib/chai.js';
 import {toCn} from '../tw2cn.mjs';
 import {isCrossSearch, setCrossSearch, zh, zhName, zhQuery} from '../zh.mjs';
 
-// Node 下没有 localStorage，给 zh.mjs 一个最小实现；浏览器里用真的。
+// Node has no localStorage; provide a minimal shim for zh.mjs (browsers use the real one).
 if (typeof localStorage === 'undefined') {
 	const store = new Map();
 	globalThis.localStorage = {
@@ -43,7 +43,7 @@ describe('zh', function () {
 			assert.strictEqual(toCn('叮噹'), toCn('叮𪠽'));
 			assert.strictEqual(toCn('閒'), '闲');
 			assert.strictEqual(toCn('𫔮'), '闲');
-			// 哩 是独立字，不能被 裡/裏 的归一拖走
+			// 哩 is its own character and must not be dragged along by the 裡/裏 normalization.
 			assert.strictEqual(toCn('哩'), '哩');
 		});
 
