@@ -28,6 +28,7 @@ export default [
 			"template/js/materials.js",
 			"template/js/ototo.js",
 			"template/js/parser.js",
+			"template/js/zh_conv_table.mjs",
 			"template/js/stage_difficulty.js",
 			"tests/t/lib/",
 		],
