@@ -1,5 +1,6 @@
 import * as Stage from './stage.mjs';
 import {loadAllEnemies} from './unit.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
 
 const chapterSel = document.getElementById('chapter');
 const slotsDiv = document.getElementById('enemy-slots');
@@ -175,13 +176,16 @@ function makeSlot(index) {
 
 	function suggestInput() {
 		const q = input.value.trim().toLowerCase();
+		// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
+		const cross = isCrossSearch();
+		const qN = zhQuery(q, cross);
 		dropdown.textContent = '';
 		const usedIds = new Set(
 			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null),
 		);
 		const hits = (q ? candidates.filter(e =>
 			!usedIds.has(e.id) && (
-				(e.name || '').toLowerCase().includes(q) ||
+				zhName(e, cross).includes(qN) ||
 				(e.jpName || '').toLowerCase().includes(q) ||
 				(e.fandom || '').toLowerCase().includes(q)
 			),

@@ -49,6 +49,7 @@ const sources = [
 	'anim.min.js.map',
 
 	'common.mjs',
+	'zh_conv.mjs',
 	'unit.mjs',
 	'cat_stat_table.mjs',
 	'combo.mjs',

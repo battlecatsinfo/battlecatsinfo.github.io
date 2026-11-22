@@ -1,4 +1,5 @@
 import {IdbBase, AutoIdb, translatorStores} from './common.mjs';
+import {isCrossSearch, zh} from './zh_conv.mjs';
 
 let db;
 
@@ -48,11 +49,14 @@ async function doSearch() {
 		else
 			storeNames = [target];
 
+		// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
+		const vN = lang === 'tw' && isCrossSearch() ? zh(v, true) : null;
+
 		for (const storeName of storeNames) {
 			let first = true;
 
 			for await (const value of IdbBase.forEachValue(db, storeName)) {
-				if (!value[lang].includes(v))
+				if (!value[lang].includes(v) && (vN === null || !zh(value[lang], true).includes(vN)))
 					continue;
 
 				const tr = document.createElement('tr');
