@@ -3,7 +3,7 @@ import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
 import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
 import {EnemyStatsTable} from "./enemy_stat_table.mjs";
-import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
+import {TextSearcher} from './search.mjs';
 
 const loader = document.getElementById('loader');
 
@@ -1452,25 +1452,6 @@ function add_result_map(id, name, search_for) {
 	a.innerHTML = M1.children[mc].textContent + ' - ' + name;
 }
 
-/**
- * Find the substring that matched in the normalized text and map it back to the
- * original text for highlighting.
- * Both normalization tables are strictly one-to-one per character, so code point
- * offsets map straight back to the original.
- * @param {string} name - the original text shown to the user.
- * @param {string} normalized - the normalized name (lowercase).
- * @param {string} query - the normalized query (lowercase).
- * @returns {string|null} the matched substring in the original text, or null.
- */
-function matchHit(name, normalized, query) {
-	const i = normalized.indexOf(query);
-	if (i < 0)
-		return null;
-	// indexOf returns UTF-16 offsets; convert to code point offsets before slicing.
-	const start = [...normalized.slice(0, i)].length;
-	return [...name].slice(start, start + [...query].length).join('');
-}
-
 async function doSearch(t) {
 	const v = t.value.trim();
 	if (!v) {
@@ -1481,29 +1462,24 @@ async function doSearch(t) {
 	main_div.hidden = true;
 	search_result.hidden = false;
 	search_result.textContent = '';
-	// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
-	const cross = isCrossSearch();
-	const vN = zhQuery(v, cross);
+	const searcher = new TextSearcher(v, {
+		withDetails: true,
+		matchCase: true,
+		fields: [
+			['name', 'zh-tw'],
+			['nameJp', 'ja'],
+		],
+	});
 	for await (const stage of Stage.forEachStage()) {
-		const name = stage.name;
-		const hit = name ? matchHit(name, zhName(stage, cross), vN) : null;
-		if (hit !== null)
-			add_result_stage(stage.id, name, hit);
-		else {
-			const nameJp = stage.nameJp;
-			if (nameJp?.includes(v))
-				add_result_stage(stage.id, nameJp, v);
+		const hit = searcher.search(stage);
+		if (hit) {
+			add_result_stage(stage.id, hit.value, hit.key);
 		}
 	}
 	for await (const map of Stage.forEachMap()) {
-		const name = map.name;
-		const hit = name ? matchHit(name, zhName(map, cross), vN) : null;
-		if (hit !== null)
-			add_result_map(map.id, name, hit);
-		else {
-			const nameJp = map.nameJp;
-			if (nameJp?.includes(v))
-				add_result_map(map.id, nameJp, v);
+		const hit = searcher.search(map);
+		if (hit) {
+			add_result_map(map.id, hit.value, hit.key);
 		}
 	}
 	if (!search_result.textContent)

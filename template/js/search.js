@@ -1,6 +1,6 @@
 import {config, numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
-import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
+import {TextSearcher} from './search.mjs';
 
 const oriExpr = document.getElementById('ori-expr');
 const filterExpr = document.getElementById("filter-expr");
@@ -62,14 +62,12 @@ function filterByNameOrId(results) {
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
-	// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
-	const cross = isCrossSearch();
-	const keyN = zhQuery(key, cross);
+	const searcher = new TextSearcher(key);
 
 	if (formSelect === 0) {
 		return results.filter(result => {
 			const f = result[1];
-			return (f.id === qid) || zhName(f, cross).includes(keyN) || (f.jpName || '').toLowerCase().includes(key);
+			return (f.id === qid) || searcher.search(f);
 		});
 	}
 
@@ -77,7 +75,7 @@ function filterByNameOrId(results) {
 	for (const cat of cats) {
 		if (!(
 			cat.id === qid ||
-			cat.forms.some(f => zhName(f, cross).includes(keyN) || (f.jpName || '').toLowerCase().includes(key))
+			cat.forms.some(f => searcher.search(f))
 		)) {
 			cats.delete(cat);
 		}

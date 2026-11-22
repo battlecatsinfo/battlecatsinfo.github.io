@@ -1,6 +1,6 @@
 import * as Stage from './stage.mjs';
 import {loadAllEnemies} from './unit.mjs';
-import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
+import {TextSearcher} from './search.mjs';
 
 const chapterSel = document.getElementById('chapter');
 const slotsDiv = document.getElementById('enemy-slots');
@@ -176,19 +176,17 @@ function makeSlot(index) {
 
 	function suggestInput() {
 		const q = input.value.trim().toLowerCase();
-		// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
-		const cross = isCrossSearch();
-		const qN = zhQuery(q, cross);
 		dropdown.textContent = '';
 		const usedIds = new Set(
 			Array.from(slotsDiv.children).map(s => s.getEnemyId()).filter(id => id !== null),
 		);
+		const searcher = new TextSearcher(q, {fields: [
+			['name', 'zh-tw'],
+			['jpName', 'ja'],
+			['fandom', 'en'],
+		]});
 		const hits = (q ? candidates.filter(e =>
-			!usedIds.has(e.id) && (
-				zhName(e, cross).includes(qN) ||
-				(e.jpName || '').toLowerCase().includes(q) ||
-				(e.fandom || '').toLowerCase().includes(q)
-			),
+			!usedIds.has(e.id) && searcher.search(e),
 		) : candidates.filter(e => !usedIds.has(e.id)));
 		if (!hits.length) { dropdown.hidden = true; return; }
 		for (const e of hits) {

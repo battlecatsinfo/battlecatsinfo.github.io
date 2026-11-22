@@ -1,6 +1,6 @@
 import {loadScheme, config} from './common.mjs';
 import {loadAllCats, units_scheme} from './unit.mjs';
-import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
+import {TextSearcher} from './search.mjs';
 const {limited_cats, cat_guide_ids} = await loadScheme('units', ['limited_cats', 'cat_guide_ids']);
 
 const favList = new Set(config.starCats.map(x => x.id));
@@ -497,12 +497,8 @@ function favorite(e) {
 		catsEl.textContent = '';
 		lastRarity = null;
 		if (!q) return;
-		// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
-		const key = q.toLowerCase();
-		const cross = isCrossSearch();
-		const qN = zhQuery(key, cross);
-		let digit = key.length >= 1;
-		for (const c of key) {
+		let digit = q.length >= 1;
+		for (const c of q) {
 			let x = c.codePointAt(0);
 			(x < 48 || 57 < x) && (digit = false);
 		}
@@ -510,10 +506,11 @@ function favorite(e) {
 			const x = cats[parseInt(q)];
 			x && (found = true, addUnit(x, false));
 		}
+		const searcher = new TextSearcher(q);
 		for (let i = 0; i < cats.length; ++i) {
 			const c = cats[i];
 			for (let f of c.forms) {
-				if (zhName(f, cross).includes(qN) || (f.jpName || '').toLowerCase().includes(key)) {
+				if (searcher.search(f)) {
 					addUnit(c, false);
 					found = true;
 					break;
