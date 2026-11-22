@@ -807,7 +807,7 @@ describe('unit.mjs', function () {
 				assert.isUndefined(cat.talents);
 
 				var cat = await Unit.loadCat(13);
-				assert.deepEqual(cat.talents, new Int16Array([0, 17, 10, 5, 15, 6, 6, 0, 0, 0, 0, 17, 4, -1, 0, 44, 1, 0, 0, 0, 0, 0, 0, 0, 0, 53, 6, -1, 0, 25, 10, 20, 200, 0, 0, 0, 0, 0, 0, 31, 5, -1, 0, 32, 10, 8, 80, 0, 0, 0, 0, 0, 0, 27, 5, -1, 0, 31, 10, 8, 80, 0, 0, 0, 0, 0, 0, 28, 5, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0]));
+				assert.deepEqual(cat.talents, new Int16Array([0, 17, 10, 5, 15, 6, 6, 0, 0, 0, 0, 17, 4, -1, 0, 44, 1, 0, 0, 0, 0, 0, 0, 0, 0, 53, 6, -1, 0, 25, 10, 20, 200, 0, 0, 0, 0, 0, 0, 31, 5, -1, 0, 32, 10, 8, 80, 0, 0, 0, 0, 0, 0, 27, 5, -1, 0, 31, 10, 8, 80, 0, 0, 0, 0, 0, 0, 28, 5, -1, 0]));
 
 				var cat = await Unit.loadCat(34);
 				assert.deepEqual(cat.talents, new Int16Array([0, 2, 10, 0, 0, 12, 30, 0, 0, 0, 0, 43, 8, -1, 0, 22, 10, 5, 50, 0, 0, 0, 0, 0, 0, 22, 8, -1, 0, 32, 10, 2, 20, 0, 0, 0, 0, 0, 0, 27, 8, -1, 0, 31, 10, 2, 20, 0, 0, 0, 0, 0, 0, 28, 8, -1, 0, 25, 10, 40, 400, 0, 0, 0, 0, 0, 0, 31, 8, -1, 0, 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 67, 10, -1, 1, 11, 10, 28, 100, 0, 0, 0, 0, 0, 0, 11, 12, -1, 1, 51, 10, 5, 50, 30, 30, 0, 0, 0, 0, 88, 12, -1, 1]));
@@ -1420,9 +1420,9 @@ describe('unit.mjs', function () {
 			});
 
 			it('sage slayer should be counted', async function () {
-				var cf = (await Unit.loadCat(212)).forms[3];
-				cf.level = 60;
-				assert.strictEqual(cf.thp, 640000);
+				var cf = (await Unit.loadCat(824)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.thp, 2430000);
 			});
 
 		});
@@ -1529,52 +1529,53 @@ describe('unit.mjs', function () {
 			});
 
 			it('strong-against should be counted', async function () {
+				const filter = [Unit.AB_GOOD];
 				var cf = (await Unit.loadCat(105)).forms[2];
 				cf.level = 50;
 				cf.applyAllTalents();
-				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 139320);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 348300);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_RELIC), 278640);
+				assert.strictEqual(cf.getthp({traits: Unit.TB_WHITE, filter}), 139320);
+				assert.strictEqual(cf.getthp({traits: Unit.TB_RED, filter}), 348300);
+				assert.strictEqual(cf.getthp({traits: Unit.TB_RELIC, filter}), 278640);
 
 				// treasure effect up
 				Unit.catEnv.setTreasure(23, 0);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 139320);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 278640);
+				assert.strictEqual(cf.getthp({traits: Unit.TB_WHITE, filter}), 139320);
+				assert.strictEqual(cf.getthp({traits: Unit.TB_RED, filter}), 278640);
 
 				Unit.catEnv.resetTreasures();
 
 				// combo strong up
 				Unit.catEnv.setOthers(7, [10]);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 139320);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 387000);
+				assert.strictEqual(cf.getthp({traits: Unit.TB_WHITE, filter}), 139320);
+				assert.strictEqual(round(cf.getthp({traits: Unit.TB_RED, filter})), 387000);
 
 				Unit.catEnv.setOthers(7, [20]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 435375);
+				assert.strictEqual(round(cf.getthp({traits: Unit.TB_RED, filter})), 435375);
 
 				Unit.catEnv.setOthers(7, [10, 20]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 497571);
+				assert.strictEqual(round(cf.getthp({traits: Unit.TB_RED, filter})), 497571);
 
 				Unit.catEnv.resetOthers();
 
 				// orb strong up
 				Unit.catEnv.setOrbs('good', [2]);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 139320);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 362813);
+				assert.strictEqual(cf.getthp({traits: Unit.TB_WHITE, filter}), 139320);
+				assert.strictEqual(round(cf.getthp({traits: Unit.TB_RED, filter})), 362813);
 
 				Unit.catEnv.setOrbs('good', [5]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 387000);
+				assert.strictEqual(round(cf.getthp({traits: Unit.TB_RED, filter})), 387000);
 
 				Unit.catEnv.setOrbs('good', [2, 3]);
-				assert.strictEqual(round(cf.hpAgainst(Unit.TB_RED)), 387000);
+				assert.strictEqual(round(cf.getthp({traits: Unit.TB_RED, filter})), 387000);
 
 				// orb strong up shouldn't work for white
 				var stub = sinon.stub(cf.info, 'trait');
 				stub.get(() => Unit.TB_WHITE);
 				Unit.catEnv.setOrbs('good', []);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 278640);
+				assert.strictEqual(cf.getthp({traits: Unit.TB_WHITE, filter}), 278640);
 
 				Unit.catEnv.setOrbs('good', [5]);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 278640);
+				assert.strictEqual(cf.getthp({traits: Unit.TB_WHITE, filter}), 278640);
 			});
 
 			it('behemoth slayer should be counted', async function () {
@@ -1596,12 +1597,11 @@ describe('unit.mjs', function () {
 			});
 
 			it('sage slayer should be counted', async function () {
-				var cf = (await Unit.loadCat(212)).forms[3];
-				cf.level = 60;
-				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 128000);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 320000);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_SAGE), 256000);
-				assert.strictEqual(cf.hpAgainst(Unit.TB_RED | Unit.TB_SAGE), 640000);
+				var cf = (await Unit.loadCat(819)).forms[1];
+				cf.level = 50;
+				assert.strictEqual(cf.hpAgainst(Unit.TB_WHITE), 22950);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RED), 114750);
+				assert.strictEqual(cf.hpAgainst(Unit.TB_RED | Unit.TB_SAGE), 229500);
 			});
 
 			it('orb defense up should be counted', async function () {
@@ -2406,9 +2406,9 @@ describe('unit.mjs', function () {
 
 				// minisurge should multiply
 				var cf = (await Unit.loadCat(107)).forms[2];
-				cf.level = 50;
+				cf.level = 60;
 				cf.applyAllTalents();
-				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 25707);
+				assert.strictEqual(round(cf.dpsAgainst(Unit.TB_FLOAT)), 46730);
 			});
 
 		});
