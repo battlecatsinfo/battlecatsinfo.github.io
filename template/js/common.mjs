@@ -401,7 +401,7 @@ class ConfigHandler {
 		else
 			localStorage.setItem('layout', value);
 	}
-	// zh.mjs reads the same key directly, so no extra module import is needed.
+	// zh_conv.mjs uses this getter/setter directly.
 	get hansCrossSearch() {
 		return localStorage.getItem('hansCrossSearch') === '1';
 	}

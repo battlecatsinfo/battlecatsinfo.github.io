@@ -3,7 +3,7 @@ import * as Stage from './stage.mjs';
 import {loadAllRewards} from './reward.mjs';
 import {EnemyIdb, loadCat, loadAllCats, catEnv, loadEnemy} from './unit.mjs';
 import {EnemyStatsTable} from "./enemy_stat_table.mjs";
-import {isCrossSearch, zhName, zhQuery} from './zh.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
 
 const loader = document.getElementById('loader');
 

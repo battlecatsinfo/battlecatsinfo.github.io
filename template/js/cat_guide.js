@@ -1,6 +1,6 @@
 import {loadScheme, config} from './common.mjs';
 import {loadAllCats, units_scheme} from './unit.mjs';
-import {isCrossSearch, zhName, zhQuery} from './zh.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
 const {limited_cats, cat_guide_ids} = await loadScheme('units', ['limited_cats', 'cat_guide_ids']);
 
 const favList = new Set(config.starCats.map(x => x.id));

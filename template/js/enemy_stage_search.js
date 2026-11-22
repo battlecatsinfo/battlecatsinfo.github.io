@@ -1,6 +1,6 @@
 import * as Stage from './stage.mjs';
 import {loadAllEnemies} from './unit.mjs';
-import {isCrossSearch, zhName, zhQuery} from './zh.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
 
 const chapterSel = document.getElementById('chapter');
 const slotsDiv = document.getElementById('enemy-slots');

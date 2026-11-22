@@ -130,6 +130,6 @@ await import('./test_unit.mjs');
 await import('./test_combo.mjs');
 await import('./test_stage.mjs');
 await import('./test_reward.mjs');
-await import('./test_zh.mjs');
+await import('./test_zh_conv.mjs');
 
 mocha.run();	

@@ -3,8 +3,8 @@
  * normalize both sides when "cross search" is enabled.
  *
  * Built at build time from data/OpenCC/*.txt; do not write the table here.
- * Source: OpenCC @ {{lookup (loadJSON "zh_tables.json") "opencc_rev"}}
- * via opencc-data {{lookup (loadJSON "zh_tables.json") "opencc_data"}}
+ * Source: OpenCC @ {{lookup (loadJSON "zh_conv.json") "opencc_rev"}}
+ * via opencc-data {{lookup (loadJSON "zh_conv.json") "opencc_data"}}
  * (TWVariantsRev.txt + TSCharacters.txt + TSCharactersExt.txt, Apache-2.0)
  * Composition: TWVariantsRev (裡->裏, 著->着, ...) + TSCharacters;
  * multiple Simplified candidates on one line are folded into one representative

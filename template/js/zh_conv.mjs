@@ -1,24 +1,14 @@
-import {toCn} from './tw2cn.mjs';
-
-// Shared with config.hansCrossSearch in common.mjs.
-const CROSS_SEARCH_KEY = 'hansCrossSearch';
+import {toCn} from './zh_conv_table.mjs';
+import {config} from './common.mjs';
 
 /** Whether "cross search" is enabled (default off). */
 export function isCrossSearch() {
-	try {
-		return localStorage.getItem(CROSS_SEARCH_KEY) === '1';
-	} catch {
-		return false;
-	}
+	return config.hansCrossSearch;
 }
 
 /** Set the flag; the settings page goes through config.hansCrossSearch. */
 export function setCrossSearch(on) {
-	try {
-		localStorage.setItem(CROSS_SEARCH_KEY, on ? '1' : '0');
-	} catch {
-		// Ignore when localStorage is unavailable (e.g. private mode).
-	}
+	config.hansCrossSearch = on;
 }
 
 /**
@@ -48,6 +38,6 @@ export function zhQuery(query, cross) {
  * @returns {string} the lowercase normalized name.
  */
 export function zhName(obj, cross, field = 'name') {
-	const key = cross ? '_cn' : '_raw';
+	const key = `${field}_${cross ? 'cn' : 'raw'}`;
 	return obj[key] ?? (obj[key] = zh(obj[field] || '', cross));
 }

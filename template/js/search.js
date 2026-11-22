@@ -1,6 +1,6 @@
 import {config, numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllCats} from './unit.mjs';
-import {isCrossSearch, zhName, zhQuery} from './zh.mjs';
+import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
 
 const oriExpr = document.getElementById('ori-expr');
 const filterExpr = document.getElementById("filter-expr");

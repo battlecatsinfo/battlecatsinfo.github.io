@@ -1,8 +1,8 @@
 import {assert} from './lib/chai.js';
-import {toCn} from '../tw2cn.mjs';
-import {isCrossSearch, setCrossSearch, zh, zhName, zhQuery} from '../zh.mjs';
+import {toCn} from '../zh_conv_table.mjs';
+import {isCrossSearch, setCrossSearch, zh, zhName, zhQuery} from '../zh_conv.mjs';
 
-// Node has no localStorage; provide a minimal shim for zh.mjs (browsers use the real one).
+// Node has no localStorage; provide a minimal shim for zh_conv.mjs (browsers use the real one).
 if (typeof localStorage === 'undefined') {
 	const store = new Map();
 	globalThis.localStorage = {
@@ -82,9 +82,17 @@ describe('zh', function () {
 		it('caches normalized names per mode', function () {
 			const form = {name: '裡'};
 			assert.strictEqual(zhName(form, false), '裡');
-			assert.strictEqual(form._raw, '裡');
+			assert.strictEqual(form.name_raw, '裡');
 			assert.strictEqual(zhName(form, true), '里');
-			assert.strictEqual(form._cn, '里');
+			assert.strictEqual(form.name_cn, '里');
+		});
+
+		it('keeps caches separate for different fields', function () {
+			const form = {name: '裡', alias: '臺'};
+			assert.strictEqual(zhName(form, false, 'alias'), '臺');
+			assert.strictEqual(zhName(form, false), '裡');
+			assert.strictEqual(form.alias_raw, '臺');
+			assert.strictEqual(form.name_raw, '裡');
 		});
 	});
 

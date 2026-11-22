@@ -1,6 +1,6 @@
 /**
- * Build module: generate _out/tw2cn.mjs from data/OpenCC and
- * template/js/tw2cn.mjs.
+ * Build module: generate _out/zh_conv_table.mjs from data/OpenCC and
+ * template/js/zh_conv_table.mjs.
  *
  * Source data lives in data/OpenCC (copied from opencc-data, Apache-2.0):
  *   - TWVariantsRev.txt    variants -> Taiwan standard forms
@@ -57,7 +57,7 @@ function buildSimplifier(ts) {
  * @returns {Object<string, string>} Sorted Traditional -> Simplified map.
  */
 function buildTable(loader = SiteGenerator) {
-	const {tw2cn_extra: extra} = JSON.parse(loader.load('zh_tables.json'));
+	const {tw2cn_extra: extra} = JSON.parse(loader.load('zh_conv.json'));
 	const ts = parse(loader.load('OpenCC/TSCharacters.txt'));
 	const ext = parse(loader.load('OpenCC/TSCharactersExt.txt'));
 	const tw = parse(loader.load('OpenCC/TWVariantsRev.txt'));
@@ -89,7 +89,7 @@ function buildTable(loader = SiteGenerator) {
 		// Highlighting maps code point offsets back to the original text, so the
 		// map must stay strictly one-to-one (one char -> one char).
 		if ([...ch].length !== 1 || [...cnForm].length !== 1)
-			throw new Error(`tw2cn: ${ch} -> ${cnForm} is not one-to-one`);
+			throw new Error(`zh_conv: ${ch} -> ${cnForm} is not one-to-one`);
 		table[ch] = cnForm;
 	}
 
@@ -102,7 +102,7 @@ function buildTable(loader = SiteGenerator) {
 class ZhTableGenerator extends SiteGenerator {
 	run({minify = false} = {}) {
 		const table = buildTable(this);
-		let contents = this.template(this.loadTemplate('js/tw2cn.mjs'), {tw2cn: table});
+		let contents = this.template(this.loadTemplate('js/zh_conv_table.mjs'), {tw2cn: table});
 
 		if (minify) {
 			const UglifyJS = require('uglify-js');
@@ -110,12 +110,12 @@ class ZhTableGenerator extends SiteGenerator {
 			if (result.error)
 				throw result.error;
 			if (result.warnings)
-				console.warn('Warning on minifying JS:', 'tw2cn.mjs', result.warnings);
+				console.warn('Warning on minifying JS:', 'zh_conv_table.mjs', result.warnings);
 			contents = result.code;
 		}
 
-		this.writeString('tw2cn.mjs', contents);
-		console.log(`tw2cn.mjs: ${Object.keys(table).length} entries`);
+		this.writeString('zh_conv_table.mjs', contents);
+		console.log(`zh_conv_table.mjs: ${Object.keys(table).length} entries`);
 	}
 }
 

@@ -5,14 +5,14 @@ const {SCRIPTS_DIR, OUTPUT_DIR} = require('./js/base.js');
 
 const modules = new Set([
 	'assets',
-	'zh_conv',
 	'unit',
 	'combos',
 	'stage',
 	'reward',
 	'collab',
 	'gacha',
-	'translator'
+	'translator',
+	'zh_conv'
 ]);
 
 const args = parseArgs({

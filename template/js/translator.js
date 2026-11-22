@@ -1,5 +1,5 @@
 import {IdbBase, AutoIdb, translatorStores} from './common.mjs';
-import {isCrossSearch, zh} from './zh.mjs';
+import {isCrossSearch, zh} from './zh_conv.mjs';
 
 let db;
 
