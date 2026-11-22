@@ -12,22 +12,22 @@ const modules = new Set([
 	'collab',
 	'gacha',
 	'translator',
-	'zh_conv'
+	'zh_conv',
 ]);
 
 const args = parseArgs({
 	options: {
 		minify: {
 			type: 'boolean',
-			short: 'm'
+			short: 'm',
 		},
 		force: {
 			type: 'boolean',
-			short: 'f'
+			short: 'f',
 		},
 		help: {
 			type: 'boolean',
-			short: 'h'
+			short: 'h',
 		},
 	},
 	allowPositionals: true,

@@ -29,6 +29,7 @@ export default [
 			"template/js/ototo.js",
 			"template/js/parser.js",
 			"template/js/stage_difficulty.js",
+			"template/js/zh_conv_table.mjs",
 			"tests/t/lib/",
 		],
 	},
