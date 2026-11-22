@@ -61,7 +61,6 @@ export default [
 			"@stylistic/no-multi-spaces": ["error", {ignoreEOLComments: true}],
 			"@stylistic/no-multiple-empty-lines": ["error", {max: 2, maxBOF: 0, maxEOF: 0}],
 			"@stylistic/no-tabs": "off",
-			"@stylistic/object-curly-spacing": ["error", "never"],
 			"@stylistic/operator-linebreak": "off",
 			"@stylistic/padded-blocks": "off",
 			"@stylistic/quotes": "off",
