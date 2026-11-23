@@ -1424,8 +1424,7 @@ search_form.onsubmit = function (event) {
 	return false;
 };
 
-function add_result_stage(id, name, search_for) {
-	name = name.replaceAll(search_for, x => '<span>' + x + '</span>');
+function add_result_stage(id, name) {
 	const a = search_result.appendChild(document.createElement('a'));
 	a.classList.add("res");
 	const mc = ~~(id / 1000000);
@@ -1440,8 +1439,7 @@ function add_result_stage(id, name, search_for) {
 	});
 }
 
-function add_result_map(id, name, search_for) {
-	name = name.replaceAll(search_for, x => '<span>' + x + '</span>');
+function add_result_map(id, name) {
 	const a = search_result.appendChild(document.createElement('a'));
 	a.classList.add("res");
 	const sm = id % 1000;
@@ -1473,13 +1471,13 @@ async function doSearch(t) {
 	for await (const stage of Stage.forEachStage()) {
 		const hit = searcher.search(stage);
 		if (hit) {
-			add_result_stage(stage.id, hit.value, hit.key);
+			add_result_stage(stage.id, searcher.highlight(hit.value));
 		}
 	}
 	for await (const map of Stage.forEachMap()) {
 		const hit = searcher.search(map);
 		if (hit) {
-			add_result_map(map.id, hit.value, hit.key);
+			add_result_map(map.id, searcher.highlight(hit.value));
 		}
 	}
 	if (!search_result.textContent)
