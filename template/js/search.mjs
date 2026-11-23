@@ -1,5 +1,5 @@
 import {config} from './common.mjs';
-import {toCn} from './zh_conv_table.mjs';
+import {s2tw} from './zh_conv_table.mjs';
 
 class TextSearcher {
 	constructor(query, {
@@ -28,22 +28,32 @@ class TextSearcher {
 
 	search(obj) {
 		for (const [field, lang] of this.fields) {
-			const q = this._getQuery(lang);
 			const s = this._getObjectField(obj, field, lang);
-			const index = s?.indexOf(q);
-			if (index >= 0) {
-				if (!this.withDetails) {
-					return true;
-				}
+			if (s === undefined) { continue; }
 
-				// [...text] converts UTF-16 string to code points, to prevent issues on surrogate pairs
-				const value = obj[field];
-				const start = [...s.slice(0, index)].length;
-				return {
-					value,
-					key: [...value].slice(start, start + [...q].length).join(''),
-				};
+			const q = this._getQuery(lang);
+			let index;
+			let len;
+			if (q instanceof RegExp) {
+				const m = s.match(q);
+				if (!m) { continue; }
+				index = m.index;
+				len = m[0].length;
+			} else {
+				index = s.indexOf(q);
+				if (index < 0) { continue; }
+				len = q.length;
 			}
+
+			if (!this.withDetails) {
+				return true;
+			}
+
+			const value = obj[field];
+			return {
+				value,
+				key: value.slice(index, index + len),
+			};
 		}
 
 		if (!this.withDetails) {
@@ -55,7 +65,7 @@ class TextSearcher {
 
 	_getQuery(lang) {
 		let q = this._query;
-		if (this.hansCrossSearch && lang === 'zh-tw') { q = this.toCn(q); }
+		if (this.hansCrossSearch && lang === 'zh-tw') { q = this.s2tw(q); }
 		return q;
 	}
 
@@ -63,18 +73,17 @@ class TextSearcher {
 		let s = obj[field];
 		if (s === undefined) { return s; }
 		if (!this.matchCase) { s = s.toLowerCase(); }
-		if (this.hansCrossSearch && lang === 'zh-tw') { s = this.toCn(s); }
 		return s;
 	}
 
-	toCn(text) {
+	s2tw(text) {
 		if (this.hansCrossSearchCache) {
-			const result = this._toCnCache?.get(text);
+			const result = this._s2twCache?.get(text);
 			if (result !== undefined) { return result; }
 		}
-		const result = toCn(text);
+		const result = s2tw(text);
 		if (this.hansCrossSearchCache) {
-			(this._toCnCache ??= new Map()).set(text, result);
+			(this._s2twCache ??= new Map()).set(text, result);
 		}
 		return result;
 	}

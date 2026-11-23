@@ -134,7 +134,7 @@ describe('search.mjs', function () {
 					jpName: '乾姜猫',
 				};
 
-				it('should not hit hans variant on zh-tw related field when hansCrossSearch is falsy', function () {
+				it('should not hit tw variants on zh-tw related field when hansCrossSearch is falsy', function () {
 					const options = {withDetails: true, hansCrossSearch: false};
 
 					var searcher = new TextSearcher('薑母貓', options);
@@ -150,7 +150,7 @@ describe('search.mjs', function () {
 					assert.isNull(searcher.search(object));
 				});
 
-				it('should hit hans variant on zh-tw related field when hansCrossSearch is truthy', function () {
+				it('should hit tw variants on zh-tw related field when hansCrossSearch is truthy', function () {
 					const options = {withDetails: true, hansCrossSearch: true};
 
 					var searcher = new TextSearcher('薑母貓', options);
@@ -166,7 +166,7 @@ describe('search.mjs', function () {
 					assert.deepEqual(searcher.search(object), {value: '薑母貓', key: '薑母貓'});
 				});
 
-				it('should never hit hans variant on non-zh-tw related fields when hansCrossSearch is truthy', function () {
+				it('should never hit tw variants on non-zh-tw related fields when hansCrossSearch is truthy', function () {
 					const options = {withDetails: true, hansCrossSearch: true};
 
 					var searcher = new TextSearcher('乾姜猫', options);
@@ -176,18 +176,29 @@ describe('search.mjs', function () {
 					assert.isNull(searcher.search(object));
 				});
 
+				it('should not hit unrelated variants', function () {
+					const options = {withDetails: true, hansCrossSearch: true};
+
+					var searcher = new TextSearcher('乾', options);
+					assert.deepEqual(searcher.search({name: '乾'}), {value: '乾', key: '乾'});
+					assert.isNull(searcher.search({name: '干'}));
+					assert.isNull(searcher.search({name: '幹'}));
+				});
+
 				it('should hit correctly for a text with Unicode surrogates', function () {
 					const options = {withDetails: true, hansCrossSearch: true};
 
-					const object = {
-						name: 'A㠣BC',
-					};
+					var searcher = new TextSearcher('𫵷', options);
+					assert.deepEqual(searcher.search({name: 'AB㠣CD'}), {value: 'AB㠣CD', key: '㠣'});
 
-					var searcher = new TextSearcher('𫵷B', options);
-					assert.deepEqual(searcher.search(object), {value: 'A㠣BC', key: '㠣B'});
+					var searcher = new TextSearcher('C', options);
+					assert.deepEqual(searcher.search({name: 'AB㠣CD'}), {value: 'AB㠣CD', key: 'C'});
 
-					var searcher = new TextSearcher('B', options);
-					assert.deepEqual(searcher.search(object), {value: 'A㠣BC', key: 'B'});
+					var searcher = new TextSearcher('𫵷', options);
+					assert.deepEqual(searcher.search({name: 'AB𫵷CD'}), {value: 'AB𫵷CD', key: '𫵷'});
+
+					var searcher = new TextSearcher('C', options);
+					assert.deepEqual(searcher.search({name: 'AB𫵷CD'}), {value: 'AB𫵷CD', key: 'C'});
 				});
 
 			});
@@ -200,47 +211,31 @@ describe('search.mjs', function () {
 						jpName: '乾姜猫',
 					};
 
-					it('should cache query and field value for zh-tw related field', function () {
+					it('should cache query value for zh-tw related field', function () {
 						const options = {withDetails: true, hansCrossSearch: true, fields: [['name', 'zh-tw']]};
 						var searcher = new TextSearcher('姜', options);
 						assert.deepEqual(searcher.search(object), {value: '薑母貓', key: '薑'});
-						assert.strictEqual(searcher._toCnCache?.get('薑母貓'), '姜母猫');
-						assert.strictEqual(searcher._toCnCache?.get('姜'), '姜');
+						assert.deepEqual(searcher._s2twCache?.get('姜'), /[姜薑]/u);
 					});
 
 					it('should take cached query value for zh-tw related field', function () {
 						const options = {withDetails: true, hansCrossSearch: true, fields: [['name', 'zh-tw']]};
 						var searcher = new TextSearcher('姜', options);
-						(searcher._toCnCache ??= new Map()).set('姜', '母');
+						(searcher._s2twCache ??= new Map()).set('姜', /母/u);
 						assert.deepEqual(searcher.search(object), {value: '薑母貓', key: '母'});
 					});
 
-					it('should take cached field value for zh-tw related field', function () {
-						const options = {withDetails: true, hansCrossSearch: true, fields: [['name', 'zh-tw']]};
-						var searcher = new TextSearcher('快取', options);
-						(searcher._toCnCache ??= new Map()).set('薑母貓', '快取值');
-						assert.deepEqual(searcher.search(object), {value: '薑母貓', key: '薑母'});
-					});
-
-					it('should not cache query or field value for non-zh-tw related field', function () {
+					it('should not cache query value for non-zh-tw related field', function () {
 						const options = {withDetails: true, hansCrossSearch: true, fields: [['jpName', 'ja']]};
 						var searcher = new TextSearcher('姜', options);
 						assert.deepEqual(searcher.search(object), {value: '乾姜猫', key: '姜'});
-						assert.strictEqual(searcher._toCnCache?.get('乾姜猫'), undefined);
-						assert.strictEqual(searcher._toCnCache?.get('姜'), undefined);
+						assert.strictEqual(searcher._s2twCache?.get('姜'), undefined);
 					});
 
 					it('should not take cached query value for non-zh-tw related field', function () {
 						const options = {withDetails: true, hansCrossSearch: true, fields: [['jpName', 'ja']]};
 						var searcher = new TextSearcher('干', options);
-						(searcher._toCnCache ??= new Map()).set('干', '乾');
-						assert.isNull(searcher.search(object));
-					});
-
-					it('should not take cached field value for non-zh-tw related field', function () {
-						const options = {withDetails: true, hansCrossSearch: true, fields: [['jpName', 'ja']]};
-						var searcher = new TextSearcher('快取', options);
-						(searcher._toCnCache ??= new Map()).set('乾姜猫', '快取值');
+						(searcher._s2twCache ??= new Map()).set('干', /乾/u);
 						assert.isNull(searcher.search(object));
 					});
 
@@ -252,26 +247,18 @@ describe('search.mjs', function () {
 						jpName: '乾姜猫',
 					};
 
-					it('should not cache query and field value for zh-tw related field', function () {
+					it('should not cache query value for zh-tw related field', function () {
 						const options = {withDetails: true, hansCrossSearch: true, hansCrossSearchCache: false, fields: [['name', 'zh-tw']]};
 						var searcher = new TextSearcher('姜', options);
 						assert.deepEqual(searcher.search(object), {value: '薑母貓', key: '薑'});
-						assert.strictEqual(searcher._toCnCache?.get('薑母貓'), undefined);
-						assert.strictEqual(searcher._toCnCache?.get('姜'), undefined);
+						assert.strictEqual(searcher._s2twCache?.get('姜'), undefined);
 					});
 
 					it('should not take cached query value for zh-tw related field', function () {
 						const options = {withDetails: true, hansCrossSearch: true, hansCrossSearchCache: false, fields: [['name', 'zh-tw']]};
 						var searcher = new TextSearcher('姜', options);
-						(searcher._toCnCache ??= new Map()).set('姜', '母');
+						(searcher._s2twCache ??= new Map()).set('姜', /母/u);
 						assert.deepEqual(searcher.search(object), {value: '薑母貓', key: '薑'});
-					});
-
-					it('should not take cached field value for zh-tw related field', function () {
-						const options = {withDetails: true, hansCrossSearch: true, hansCrossSearchCache: false, fields: [['name', 'zh-tw']]};
-						var searcher = new TextSearcher('快取', options);
-						(searcher._toCnCache ??= new Map()).set('薑母貓', '快取值');
-						assert.isNull(searcher.search(object));
 					});
 
 				});
