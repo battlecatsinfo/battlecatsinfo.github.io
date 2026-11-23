@@ -70,6 +70,43 @@
 		padding: 2vh 1vw !important;
 		padding-right: 0 !important;
 	}
+	.cache-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75em;
+	}
+	.cache-actions button {
+		margin: 0;
+		border-radius: 0.35em;
+		font-weight: 700;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+	}
+	.form .cache-actions .cache-refresh {
+		color: #fff !important;
+		background-color: #1565c0 !important;
+	}
+	.form .cache-actions .cache-refresh:hover {
+		color: #fff !important;
+		background-color: #0d47a1 !important;
+	}
+	.form .cache-actions .cache-clear {
+		color: #fff !important;
+		background-color: #c62828 !important;
+	}
+	.form .cache-actions .cache-clear:hover {
+		color: #fff !important;
+		background-color: #8e0000 !important;
+	}
+	.cache-actions button:focus-visible {
+		outline: 3px solid #ffb86c;
+		outline-offset: 2px;
+	}
+	.cache-status {
+		overflow-wrap: anywhere;
+	}
+	.cache-names {
+		font-family: monospace;
+	}
 	.focus {
 		background-color: #ababab4f !important;
 	}
@@ -158,6 +195,7 @@
 			</svg>
 		</p>
 		<a href="#general" class="w3-bar-item w3-button w3-border-bottom focus">一般</a>
+		<a href="#cache" class="w3-bar-item w3-button w3-border-bottom">快取設定</a>
 		<a href="#favorite" class="w3-bar-item w3-button w3-border-bottom">我的最愛</a>
 		<a href="#treasure" class="w3-bar-item w3-button w3-border-bottom">寶物設定</a>
 	</div>
@@ -285,6 +323,19 @@
 					<label><input type="radio" name="hansCrossSearch" value="" checked>關閉</label>
 				</p>
 				<p>開啟時輸入簡化字也能命中對應的繁體中文，但多對一時可能發生歧義（例如搜尋「乾」會命中「乾」、「幹」、「干」）。</p>
+			</div>
+		</div>
+
+		<h2 id="cache" style="text-align: center;">快取設定</h2>
+		<div class="w3-row w3-section odds">
+			<h3>網站快取</h3>
+			<div class="form w3-card">
+				<p class="cache-status" id="cache-status">正在讀取快取資訊……</p>
+				<p class="cache-status" id="cache-list"></p>
+				<div class="cache-actions">
+					<button id="cache-refresh" class="w3-button w3-round cache-refresh" type="button">重新整理資訊</button>
+					<button id="cache-clear" class="w3-button w3-round cache-clear" type="button">清除網站快取</button>
+				</div>
 			</div>
 		</div>
 

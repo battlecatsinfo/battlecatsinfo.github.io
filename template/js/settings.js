@@ -114,3 +114,81 @@ if (!myFavCats.length) {
 		a3.onclick = onStarCatDeleteClick;
 	}
 }
+
+const cacheStatusEl = document.getElementById('cache-status');
+const cacheListEl = document.getElementById('cache-list');
+const cacheRefreshButton = document.getElementById('cache-refresh');
+const cacheClearButton = document.getElementById('cache-clear');
+
+function formatBytes(bytes) {
+	if (!Number.isFinite(bytes) || bytes < 1024)
+		return `${bytes || 0} B`;
+	if (bytes < 1024 * 1024)
+		return `${(bytes / 1024).toFixed(1)} KB`;
+	return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+async function refreshCacheInfo() {
+	cacheStatusEl.textContent = '正在讀取快取資訊……';
+	cacheListEl.textContent = '';
+
+	if (!('caches' in window)) {
+		cacheStatusEl.textContent = '此瀏覽器不支援 Cache Storage。';
+		return;
+	}
+
+	const names = (await caches.keys()).filter((name) =>
+		name.startsWith('battlecatsinfo-'));
+	if (!names.length) {
+		cacheStatusEl.textContent = '目前沒有網站快取。';
+		return;
+	}
+
+	let entryCount = 0;
+	let byteCount = 0;
+	for (const name of names) {
+		const cache = await caches.open(name);
+		const entries = await cache.keys();
+		entryCount += entries.length;
+		for (const request of entries) {
+			const response = await cache.match(request);
+			if (response) {
+				try {
+					byteCount += (await response.clone().blob()).size;
+				} catch {
+					// Cache entries should normally remain readable.
+				}
+			}
+		}
+	}
+
+	cacheStatusEl.textContent =
+		`網站快取：${names.length} 個快取，共 ${entryCount} 個項目，約 ${formatBytes(byteCount)}。`;
+	cacheListEl.append('快取名稱：');
+	const cacheNames = document.createElement('code');
+	cacheNames.className = 'cache-names';
+	cacheNames.textContent = names.join('、');
+	cacheListEl.append(cacheNames);
+}
+
+async function clearSiteCache() {
+	if (!('caches' in window))
+		return;
+	if (!window.confirm('確定要清除網站快取嗎？清除後頁面會重新載入。'))
+		return;
+
+	cacheClearButton.disabled = true;
+	cacheClearButton.textContent = '清除中……';
+
+	const names = await caches.keys();
+	await Promise.all(names
+		.filter((name) => name.startsWith('battlecatsinfo-'))
+		.map((name) => caches.delete(name)));
+
+	cacheStatusEl.textContent = '網站快取已清除，正在重新載入……';
+	window.location.reload();
+}
+
+cacheRefreshButton.addEventListener('click', refreshCacheInfo);
+cacheClearButton.addEventListener('click', clearSiteCache);
+refreshCacheInfo();
