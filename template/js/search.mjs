@@ -21,7 +21,7 @@ class TextSearcher {
 
 		let q = String(query ?? '');
 		q = hansCrossSearch ? s2tw(q).source : escapeRegExp(q);
-		const flags = matchCase ? 'u' : 'ui';
+		const flags = matchCase ? 'gu' : 'gui';
 		this._query = new RegExp(q, flags);
 	}
 
@@ -30,7 +30,8 @@ class TextSearcher {
 			const value = obj[field];
 			if (value === undefined) { continue; }
 
-			const m = value.match(this._query);
+			this._query.lastIndex = 0;
+			const m = this._query.exec(value);
 			if (!m) { continue; }
 
 			if (!this.withDetails) {
@@ -50,6 +51,10 @@ class TextSearcher {
 		}
 
 		return null;
+	}
+
+	highlight(text, tag = 'span') {
+		return text.replace(this._query, m => `<${tag}>${m[0]}</${tag}>`);
 	}
 }
 
