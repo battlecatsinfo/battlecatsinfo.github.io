@@ -86,6 +86,8 @@ const sources = [
 	'enemy_stage_search.js',
 	'anim.min.js',
 	'imgcut.js',
+
+	'sw.js',
 ];
 
 module.exports = class extends SiteGenerator {
