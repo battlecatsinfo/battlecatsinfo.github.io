@@ -45,6 +45,7 @@ const sources = [
 	'or.png',
 	'and.png',
 	'fav.png',
+	'manifest.json',
 	'mp4.wasm',
 	'anim.min.js.map',
 
