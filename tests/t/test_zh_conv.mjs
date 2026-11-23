@@ -1,20 +1,9 @@
 import {assert} from './lib/chai.js';
 import {toCn} from '../zh_conv_table.mjs';
-import {isCrossSearch, setCrossSearch, zh, zhName, zhQuery} from '../zh_conv.mjs';
 
-// Node has no localStorage; provide a minimal shim for zh_conv.mjs (browsers use the real one).
-if (typeof localStorage === 'undefined') {
-	const store = new Map();
-	globalThis.localStorage = {
-		getItem: key => store.has(key) ? store.get(key) : null,
-		setItem: (key, value) => store.set(key, String(value)),
-		removeItem: key => store.delete(key),
-	};
-}
+describe('zh_conv_table.mjs', function () {
 
-describe('zh', function () {
-
-	describe('toCn', function () {
+	describe('toCn()', function () {
 
 		it('maps one Simplified form to every Traditional variant', function () {
 			assert.strictEqual(toCn('並'), '并');
@@ -57,60 +46,7 @@ describe('zh', function () {
 			for (const s of ['天搖地動', '風乾庭院', '並併復複', '叮噹', 'ネコ'])
 				assert.strictEqual(toCn(toCn(s)), toCn(s));
 		});
+
 	});
 
-	describe('zh', function () {
-
-		it('keeps raw text when cross search is off', function () {
-			assert.strictEqual(zh('天搖地動', false), '天搖地動');
-			assert.strictEqual(zh('噁', false), '噁');
-			assert.strictEqual(zh('幹', false), '幹');
-		});
-
-		it('normalizes both sides when cross search is on', function () {
-			assert.strictEqual(zh('天搖地動', true), '天摇地动');
-			assert.strictEqual(zh('噁', true), '恶');
-			assert.strictEqual(zh('幹', true), '干');
-		});
-
-		it('lowercases for case-insensitive matching', function () {
-			assert.strictEqual(zh('UFO貓', false), 'ufo貓');
-			assert.strictEqual(zh('UFO貓', true), 'ufo猫');
-			assert.strictEqual(zhQuery('UFO猫', true), 'ufo猫');
-		});
-
-		it('caches normalized names per mode', function () {
-			const form = {name: '裡'};
-			assert.strictEqual(zhName(form, false), '裡');
-			assert.strictEqual(form.name_raw, '裡');
-			assert.strictEqual(zhName(form, true), '里');
-			assert.strictEqual(form.name_cn, '里');
-		});
-
-		it('keeps caches separate for different fields', function () {
-			const form = {name: '裡', alias: '臺'};
-			assert.strictEqual(zhName(form, false, 'alias'), '臺');
-			assert.strictEqual(zhName(form, false), '裡');
-			assert.strictEqual(form.alias_raw, '臺');
-			assert.strictEqual(form.name_raw, '裡');
-		});
-	});
-
-	describe('cross search toggle', function () {
-
-		it('is off by default and toggles the mode', function () {
-			const prev = isCrossSearch();
-			try {
-				setCrossSearch(false);
-				assert.isFalse(isCrossSearch());
-				assert.strictEqual(zh('幹', isCrossSearch()), '幹');
-
-				setCrossSearch(true);
-				assert.isTrue(isCrossSearch());
-				assert.strictEqual(zh('幹', isCrossSearch()), '干');
-			} finally {
-				setCrossSearch(prev);
-			}
-		});
-	});
 });

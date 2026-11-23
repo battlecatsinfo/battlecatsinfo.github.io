@@ -56,7 +56,7 @@ const sources = [
 	'reward.mjs',
 	'datatables.mjs',
 	'enemy_stat_table.mjs',
-	'zh_conv.mjs',
+	'search.mjs',
 
 	'common.js',
 	'navbar.js',

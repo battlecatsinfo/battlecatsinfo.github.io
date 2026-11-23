@@ -1,6 +1,6 @@
 import {numStr, numStrT, round, pagination} from './common.mjs';
 import {loadAllEnemies} from './unit.mjs';
-import {isCrossSearch, zhName, zhQuery} from './zh_conv.mjs';
+import {TextSearcher} from './search.mjs';
 
 const filterExprEl = document.getElementById('filter-expr');
 const sortExprEl = document.getElementById('sort-expr');
@@ -43,12 +43,10 @@ function filterByNameOrId(results) {
 	if (!key)
 		return results;
 	const qid = /^\d+$/.test(key) ? parseInt(key, 10) : null;
-	// Raw matching by default; with "cross search" enabled both sides are normalized Traditional -> Simplified.
-	const cross = isCrossSearch();
-	const keyN = zhQuery(key, cross);
+	const searcher = new TextSearcher(key);
 	return results.filter(result => {
 		const f = result[1];
-		return (f.id === qid) || zhName(f, cross).includes(keyN) || (f.jpName || '').toLowerCase().includes(key);
+		return (f.id === qid) || searcher.search(f);
 	});
 }
 
