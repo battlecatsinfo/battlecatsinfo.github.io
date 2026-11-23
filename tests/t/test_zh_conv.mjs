@@ -1,50 +1,36 @@
 import {assert} from './lib/chai.js';
-import {toCn} from '../zh_conv_table.mjs';
+import {s2tw} from '../zh_conv_table.mjs';
 
 describe('zh_conv_table.mjs', function () {
 
-	describe('toCn()', function () {
+	describe('s2tw()', function () {
 
-		it('maps one Simplified form to every Traditional variant', function () {
-			assert.strictEqual(toCn('並'), '并');
-			assert.strictEqual(toCn('併'), '并');
-			assert.strictEqual(toCn('復'), '复');
-			assert.strictEqual(toCn('複'), '复');
-			assert.strictEqual(toCn('乾'), '干');
-			assert.strictEqual(toCn('幹'), '干');
+		it('should map simplified chars to every Taiwan variant', function () {
+			assert.deepEqual(s2tw('并'), /[並併幷并]/u);
+			assert.deepEqual(s2tw('复'), /[復複覆复]/u);
+			assert.deepEqual(s2tw('干'), /[幹乾干榦]/u);
+			assert.deepEqual(s2tw('并复干'), /[並併幷并][復複覆复][幹乾干榦]/u);
 		});
 
-		it('covers Taiwan variants through TWVariantsRev', function () {
-			assert.strictEqual(toCn('裡'), '里');
-			assert.strictEqual(toCn('裏'), '里');
-			assert.strictEqual(toCn('著'), '着');
-			assert.strictEqual(toCn('臺'), '台');
-			assert.strictEqual(toCn('麼'), '么');
-			assert.strictEqual(toCn('妳'), '你');
-			assert.strictEqual(toCn('姊'), '姐');
-			assert.strictEqual(toCn('檐'), '檐');
-			assert.strictEqual(toCn('簷'), '檐');
+		it('should cover Taiwan variants through TWVariants', function () {
+			assert.deepEqual(s2tw('为'), /[為爲为]/u);
+			assert.deepEqual(s2tw('群'), /[群羣]/u);
 		});
 
-		it('maps alternate Simplified candidates to the same form', function () {
-			assert.strictEqual(toCn('噹'), '当');
-			assert.strictEqual(toCn('𪠽'), '当');
-			assert.strictEqual(toCn('叮噹'), toCn('叮𪠽'));
-			assert.strictEqual(toCn('閒'), '闲');
-			assert.strictEqual(toCn('𫔮'), '闲');
-			// 哩 is its own character and must not be dragged along by the 裡/裏 normalization.
-			assert.strictEqual(toCn('哩'), '哩');
+		it('should cover extra table', function () {
+			assert.deepEqual(s2tw('你'), /[妳你]/u);
+			assert.deepEqual(s2tw('姐'), /[姊姐]/u);
+			assert.deepEqual(s2tw('湿'), /[溼濕湿]/u);
 		});
 
-		it('normalizes whole names', function () {
-			assert.strictEqual(toCn('天搖地動'), '天摇地动');
-			assert.strictEqual(toCn('風乾庭院'), '风干庭院');
-			assert.strictEqual(toCn('ネコ'), 'ネコ');
+		it('should map all chars', function () {
+			assert.deepEqual(s2tw('天摇地动'), /天[搖摇]地[動动]/u);
+			assert.deepEqual(s2tw('风干庭院'), /[風风][幹乾干榦]庭院/u);
+			assert.deepEqual(s2tw('ネコ'), /ネコ/u);
 		});
 
-		it('is idempotent', function () {
-			for (const s of ['天搖地動', '風乾庭院', '並併復複', '叮噹', 'ネコ'])
-				assert.strictEqual(toCn(toCn(s)), toCn(s));
+		it('should escape special chars', function () {
+			assert.deepEqual(s2tw('\\^$*+?.|()[]{}-'), /\\\^\$\*\+\?\.\|\(\)\[\]\{\}-/u);
 		});
 
 	});
