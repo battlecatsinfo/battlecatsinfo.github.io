@@ -116,7 +116,9 @@ module.exports = class extends SiteGenerator {
 			const fsrc = resolve(TEMPLATE_DIR, base, file);
 			const fdst = resolve(OUTPUT_DIR, file);
 
-			if (fs.existsSync(fdst) && fs.statSync(fdst).mtimeMs >= fs.statSync(fsrc).mtimeMs) {
+			if (file !== 'sw.js' &&
+				fs.existsSync(fdst) &&
+				fs.statSync(fdst).mtimeMs >= fs.statSync(fsrc).mtimeMs) {
 				continue;
 			}
 

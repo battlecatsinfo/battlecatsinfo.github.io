@@ -1,8 +1,9 @@
 // Service Worker for battlecatsinfo.github.io
-// Generated at build time with version and file list baked in.
+// Generated at build time with the deployment and database versions baked in.
 
 const APP_VERSION = '{{{lookup (loadJSON "config.json") "db_ver"}}}';
-const CACHE_NAME = `battlecatsinfo-v${APP_VERSION}`;
+const DEPLOYMENT_ID = '{{{buildVersion}}}';
+const CACHE_NAME = `battlecatsinfo-v${DEPLOYMENT_ID}-${APP_VERSION}`;
 
 // App shell: static assets that rarely change between deployments.
 // These are precached on install for offline support.
