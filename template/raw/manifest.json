@@ -1,0 +1,60 @@
+{
+	"name": "貓咪大戰爭 中文資訊網站",
+	"short_name": "中文網",
+	"description": "貓咪大戰爭 (The Battle Cats) 繁體中文資料網站：提供貓咪、敵人、關卡、轉蛋、日程等資訊。",
+	"lang": "zh-Hant",
+	"id": "/",
+	"dir": "ltr",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"orientation": "any",
+	"background_color": "#ffffff",
+	"theme_color": "#333333",
+	"categories": ["reference", "games"],
+	"icons": [
+		{
+			"src": "/favicon-16x16.png",
+			"sizes": "16x16",
+			"type": "image/png"
+		},
+		{
+			"src": "/android-chrome-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/android-chrome-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/android-chrome-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "貓咪搜尋",
+			"short_name": "貓咪",
+			"url": "/search.html",
+			"icons": [{"src": "/favicon-32x32.png", "sizes": "32x32"}]
+		},
+		{
+			"name": "關卡資訊",
+			"short_name": "關卡",
+			"url": "/stage.html",
+			"icons": [{"src": "/favicon-32x32.png", "sizes": "32x32"}]
+		},
+		{
+			"name": "轉蛋一覽",
+			"short_name": "轉蛋",
+			"url": "/gacha.html",
+			"icons": [{"src": "/favicon-32x32.png", "sizes": "32x32"}]
+		}
+	]
+}

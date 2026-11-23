@@ -45,6 +45,7 @@ const sources = [
 	'or.png',
 	'and.png',
 	'fav.png',
+	'manifest.json',
 	'mp4.wasm',
 	'anim.min.js.map',
 
@@ -85,6 +86,8 @@ const sources = [
 	'enemy_stage_search.js',
 	'anim.min.js',
 	'imgcut.js',
+
+	'sw.js',
 ];
 
 module.exports = class extends SiteGenerator {
@@ -113,7 +116,9 @@ module.exports = class extends SiteGenerator {
 			const fsrc = resolve(TEMPLATE_DIR, base, file);
 			const fdst = resolve(OUTPUT_DIR, file);
 
-			if (fs.existsSync(fdst) && fs.statSync(fdst).mtimeMs >= fs.statSync(fsrc).mtimeMs) {
+			if (file !== 'sw.js' &&
+				fs.existsSync(fdst) &&
+				fs.statSync(fdst).mtimeMs >= fs.statSync(fsrc).mtimeMs) {
 				continue;
 			}
 

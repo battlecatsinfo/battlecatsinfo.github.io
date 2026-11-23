@@ -10,4 +10,5 @@
 		toggleTheme(config.colorTheme);
 	})();
 
+	navigator.serviceWorker.register('/sw.js');
 }));

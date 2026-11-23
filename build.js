@@ -1,7 +1,34 @@
 const {parseArgs} = require('node:util');
 const fs = require('node:fs');
+const {execFileSync} = require('node:child_process');
 const {resolve} = require('node:path');
 const {SCRIPTS_DIR, OUTPUT_DIR} = require('./js/base.js');
+
+function createBuildVersion() {
+	const runId = process.env.GITHUB_RUN_ID;
+	const runAttempt = process.env.GITHUB_RUN_ATTEMPT;
+	let commit = process.env.GITHUB_SHA;
+
+	if (!commit) {
+		try {
+			commit = execFileSync('git', ['rev-parse', 'HEAD'], {
+				encoding: 'utf8',
+				stdio: ['ignore', 'pipe', 'ignore'],
+			}).trim();
+		} catch {
+			commit = 'local';
+		}
+	}
+
+	const shortCommit = commit.slice(0, 12);
+	if (runId) {
+		return `${runId}.${runAttempt || '1'}-${shortCommit}`;
+	}
+
+	return `${shortCommit}-b${Date.now().toString(36)}`;
+}
+
+process.env.BUILD_VERSION = createBuildVersion();
 
 const modules = new Set([
 	'assets',

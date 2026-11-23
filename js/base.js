@@ -239,6 +239,10 @@ Handlebars.registerHelper('loadCSS', function (filename, options) {
 	);
 });
 
+Handlebars.registerHelper('buildVersion', function () {
+	return process.env.BUILD_VERSION || 'development';
+});
+
 class SiteGenerator {
 	/**
 	 * A compiled template function generated with Handlebars.compile().
