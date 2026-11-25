@@ -7,14 +7,18 @@
 	const siteSearchForm = document.getElementById('site-search');
 	const siteSearchInput = siteSearchForm.querySelector('input');
 	const siteSearchResult = document.getElementById('site-s-result');
+	const siteSearchClear = document.getElementById('search-clear');
 	const siteThemeAnchor = siteSearchForm.parentNode.previousElementSibling;
 
 	siteSearchForm.addEventListener('submit', onFormSubmit);
 	siteSearchInput.addEventListener('focus', onInputFocus);
 	siteSearchInput.addEventListener('blur', onInputBlur);
+	siteSearchInput.addEventListener('input', syncClearButton);
+	siteSearchClear.addEventListener('click', onClearClick);
 	for (const elem of siteSearchResult.querySelectorAll('[data-search]')) {
 		elem.addEventListener('click', onResultClick);
 	}
+	syncClearButton();
 
 	function onInputFocus(event) {
 		siteSearchResult.hidden = false;
@@ -24,6 +28,16 @@
 		setTimeout(function () {
 			siteSearchResult.hidden = true;
 		}, 500);
+	}
+
+	function syncClearButton() {
+		siteSearchClear.hidden = !siteSearchInput.value;
+	}
+
+	function onClearClick(event) {
+		siteSearchInput.value = '';
+		syncClearButton();
+		siteSearchInput.focus();
 	}
 
 	function onResultClick(event) {
