@@ -61,6 +61,12 @@ export default [
 			"@stylistic/no-multi-spaces": ["error", {ignoreEOLComments: true}],
 			"@stylistic/no-multiple-empty-lines": ["error", {max: 2, maxBOF: 0, maxEOF: 0}],
 			"@stylistic/no-tabs": "off",
+
+			// Keep this deprecated rule for now as there's no alternative.
+			// "@stylistic/list-style": ["error", {overrides: {"{}": {singleLine: {spacing: "never"}}}}]
+			// works similarly but wraps object literal items too aggressively.
+			"@stylistic/object-curly-spacing": ["error", "never"],
+
 			"@stylistic/operator-linebreak": "off",
 			"@stylistic/padded-blocks": "off",
 			"@stylistic/quotes": "off",
