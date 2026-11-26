@@ -7,11 +7,11 @@ const modal = M.parentNode.parentNode;
 
 function get_format_function(fmt) {
 	switch (fmt) {
-	case 'number': return numStr;
-	case 'hp': return x => ~~(x * 0.05).toString();
-	case 'frame': return x => `${x}F/${numStr(x / 30)}秒`;
-	case '%': return x => numStr(x) + '%';
-	case '%2': return x => numStr(x / 10) + '%';
+		case 'number': return numStr;
+		case 'hp': return x => ~~(x * 0.05).toString();
+		case 'frame': return x => `${x}F/${numStr(x / 30)}秒`;
+		case '%': return x => numStr(x) + '%';
+		case '%2': return x => numStr(x / 10) + '%';
 	}
 	throw "Unsupported format: " + fmt;
 }

@@ -110,7 +110,7 @@ class IdbBase {
 	 * @param {string} [direction] - the query for the cursor to be opened.
 	 * @yield {[*~key, *~value]} The key-value pair of each hit database entry.
 	 */
-	static async *forEachEntry(db, store, query, direction) {
+	static async* forEachEntry(db, store, query, direction) {
 		let _resolve, _reject;
 		const req = db.transaction(store).objectStore(store).openCursor(query, direction);
 		req.onsuccess = (event) => _resolve(event.target.result);
@@ -147,7 +147,7 @@ class IdbBase {
 	 * @param {string} [direction] - the query for the cursor to be opened.
 	 * @yield {*} The value of each hit database entry.
 	 */
-	static async *forEachValue(db, store, query, direction) {
+	static async* forEachValue(db, store, query, direction) {
 		const req = db.transaction(store).objectStore(store).openCursor(query, direction);
 		let _resolve, _reject;
 		req.onsuccess = (event) => _resolve(event.target.result);
@@ -182,11 +182,11 @@ class Idb extends IdbBase {
 		return await super.getAllKeys(db, this.storeName, query, count);
 	}
 
-	static async *forEachEntry(db, query, direction) {
+	static async* forEachEntry(db, query, direction) {
 		yield* super.forEachEntry(db, this.storeName, query, direction);
 	}
 
-	static async *forEachValue(db, query, direction) {
+	static async* forEachValue(db, query, direction) {
 		yield* super.forEachValue(db, this.storeName, query, direction);
 	}
 
@@ -327,11 +327,11 @@ async function loadScheme(domain, fields) {
 						req.onerror = (event) => reject(event.target.error);
 					}),
 				])
-				.then(([fields, values]) => {
-					fields.forEach(([, field], i) => {
-						rv[field] = values[i];
+					.then(([fields, values]) => {
+						fields.forEach(([, field], i) => {
+							rv[field] = values[i];
+						});
 					});
-				});
 			}
 		});
 		return rv;
@@ -347,84 +347,101 @@ class ConfigHandler {
 	get unit() {
 		return localStorage.getItem('unit') ?? 'S';
 	}
+
 	set unit(value) {
 		if (value === null)
 			localStorage.removeItem('unit');
 		else
 			localStorage.setItem('unit', value);
 	}
+
 	get range() {
 		return localStorage.getItem('range') ?? 'n';
 	}
+
 	set range(value) {
 		if (value === null)
 			localStorage.removeItem('range');
 		else
 			localStorage.setItem('range', value);
 	}
+
 	get prec() {
 		let value = localStorage.getItem('prec');
 		return (value !== null) ? parseInt(value, 10) : 2;
 	}
+
 	set prec(value) {
 		if (value === null)
 			localStorage.removeItem('prec');
 		else
 			localStorage.setItem('prec', value);
 	}
+
 	get stagel() {
 		let value = localStorage.getItem('stagel');
 		return (value !== null) ? parseInt(value, 10) : 0;
 	}
+
 	set stagel(value) {
 		if (value === null)
 			localStorage.removeItem('stagel');
 		else
 			localStorage.setItem('stagel', value);
 	}
+
 	get stagef() {
 		return localStorage.getItem('stagef') ?? 'f';
 	}
+
 	set stagef(value) {
 		if (value === null)
 			localStorage.removeItem('stagef');
 		else
 			localStorage.setItem('stagef', value);
 	}
+
 	get layout() {
 		let value = localStorage.getItem('layout');
 		return (value !== null) ? parseInt(value, 10) : 1;
 	}
+
 	set layout(value) {
 		if (value === null)
 			localStorage.removeItem('layout');
 		else
 			localStorage.setItem('layout', value);
 	}
+
 	// zh_conv.mjs uses this getter/setter directly.
 	get hansCrossSearch() {
 		return localStorage.getItem('hansCrossSearch') === '1';
 	}
+
 	set hansCrossSearch(value) {
 		if (value === '1' || value === true)
 			localStorage.setItem('hansCrossSearch', '1');
 		else
 			localStorage.removeItem('hansCrossSearch');
 	}
+
 	get colorTheme() {
 		return localStorage.getItem('theme') ||
 			(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 	}
+
 	set colorTheme(value) {
 		if (value === null)
 			localStorage.removeItem('theme');
 		else
 			localStorage.setItem('theme', value);
 	}
+
 	get starCats() {
 		let value = localStorage.getItem('star-cats');
 		return (value !== null) ? JSON.parse(value) : [];
 	}
+
 	set starCats(list) {
 		if (Array.isArray(list)) {
 			const value = JSON.stringify(list);
@@ -435,26 +452,31 @@ class ConfigHandler {
 			throw new Error(`Unexpected value of cats: ${JSON.stringify(list)}`);
 		}
 	}
+
 	getTreasure(i) {
 		let value = localStorage.getItem("t$" + i);
 		return (value !== null) ? parseInt(value, 10) : treasures[i];
 	}
+
 	setTreasure(i, value) {
 		if (value === null)
 			localStorage.removeItem('t$' + i);
 		else
 			localStorage.setItem('t$' + i, value);
 	}
+
 	getTreasures() {
 		return treasures.map((_, i) => {
 			return this.getTreasure(i);
 		});
 	}
+
 	setTreasures(values) {
 		values.map((value, i) => {
 			this.setTreasure(i, value);
 		});
 	}
+
 	getDefaultTreasures() {
 		return structuredClone(treasures);
 	}
@@ -561,8 +583,8 @@ async function copyPng(elem, options) {
 	const blob = await domtoimage.toBlob(elem, options);
 	await navigator.clipboard.write([
 		new ClipboardItem({
-			'image/png': blob
-		})
+			'image/png': blob,
+		}),
 	]);
 }
 

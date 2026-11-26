@@ -1,12 +1,13 @@
 import {language} from "./datatables.mjs";
 
+/* global SOL, UL, ZL, MONTHY, STAR, COLLAB */
 {{#each crown as |value key|}}
 const {{{key}}} = {{{toJSON value}}};
 {{/each}}
 
 function format(num) {
 	if (num)
-		return num.toString(); //return F.format(num);
+		return num.toString(); // return F.format(num);
 	return '';
 }
 $('#SOL').DataTable({
@@ -15,8 +16,8 @@ $('#SOL').DataTable({
 	language,
 	columnDefs: [{
 		targets: [3, 4, 5, 6],
-		render: format
-	}]
+		render: format,
+	}],
 });
 $('#UL').DataTable({
 	data: UL,
@@ -24,8 +25,8 @@ $('#UL').DataTable({
 	language,
 	columnDefs: [{
 		targets: [3, 4, 5, 6],
-		render: format
-	}]
+		render: format,
+	}],
 });
 $('#ZL').DataTable({
 	data: ZL,
@@ -33,8 +34,8 @@ $('#ZL').DataTable({
 	language,
 	columnDefs: [{
 		targets: [3, 4, 5, 6],
-		render: format
-	}]
+		render: format,
+	}],
 });
 $('#MONTHY').DataTable({
 	data: MONTHY,
@@ -42,8 +43,8 @@ $('#MONTHY').DataTable({
 	language,
 	columnDefs: [{
 		targets: [3, 4, 5, 6],
-		render: format
-	}]
+		render: format,
+	}],
 });
 $('#STAR').DataTable({
 	data: STAR,
@@ -51,8 +52,8 @@ $('#STAR').DataTable({
 	language,
 	columnDefs: [{
 		targets: [2, 3, 4, 5],
-		render: format
-	}]
+		render: format,
+	}],
 });
 $('#COLLAB').DataTable({
 	data: COLLAB,
@@ -60,10 +61,9 @@ $('#COLLAB').DataTable({
 	language,
 	columnDefs: [{
 		targets: [3, 4, 5, 6],
-		render: format
+		render: format,
 	}],
 	rowGroup: {
-		dataSrc: 0
-	}
+		dataSrc: 0,
+	},
 });
-
