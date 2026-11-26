@@ -17,19 +17,139 @@ const stylisticCustomized = stylistic.configs.customize({
 	jsx: false,
 });
 
+const fileStateMap = new Map();
+
+const handlebarsJsProcessor = {
+	supportsAutofix: true,
+	preprocess(text, filename) {
+		const replacements = [];
+		let delta = 0;
+
+		const regex = new RegExp([
+			`/\\*([\\s\\S]*?)\\*/`,
+			`{{{([\\s\\S]*?)}}}`,
+			`{{([\\s\\S]*?)}}`,
+		].join('|'), 'g');
+		const transformedText = text.replace(regex, (match, comment, statement, block, originalStart) => {
+			const originalEnd = originalStart + match.length;
+			const replacement = comment ?
+				match :
+				statement ?
+					`__hbs_${replacements.length + 1}__` :
+					`/* hbs_${replacements.length + 1} */`;
+
+			const transformedStart = originalStart + delta;
+			const transformedEnd = transformedStart + replacement.length;
+
+			replacements.push({
+				originalStart,
+				originalEnd,
+				transformedStart,
+				transformedEnd,
+				deltaBefore: delta,
+			});
+
+			delta += replacement.length - match.length;
+			return replacement;
+		});
+
+		fileStateMap.set(filename, {
+			transformedText,
+			originalText: text,
+			replacements,
+		});
+
+		return [{text: transformedText, filename}];
+	},
+	postprocess(messages, filename) {
+		const state = fileStateMap.get(filename);
+		if (!state) { return messages.flat(); }
+		fileStateMap.delete(filename);
+
+		const {transformedText, originalText, replacements} = state;
+
+		const mapOffsetToOriginal = (transformedOffset) => {
+			for (const rep of replacements) {
+				if (transformedOffset <= rep.transformedStart) {
+					return transformedOffset - rep.deltaBefore;
+				}
+				if (transformedOffset < rep.transformedEnd) {
+					return null;
+				}
+			}
+			const lastRep = replacements[replacements.length - 1];
+			const totalDelta = lastRep ? lastRep.transformedEnd - lastRep.originalEnd : 0;
+			return transformedOffset - totalDelta;
+		};
+
+		const lineColToOffset = (line, column, source = transformedText) => {
+			const lines = source.split("\n");
+			let offset = 0;
+			for (let i = 0; i < line - 1; i++) {
+				offset += lines[i].length + 1;
+			}
+			offset += column - 1;
+			return offset;
+		};
+
+		const offsetToLineCol = (offset, source = originalText) => {
+			const lines = source.split("\n");
+			let lineNo = 1;
+			for (const line of lines) {
+				const lineLen = line.length;
+				if (offset <= lineLen) {
+					return [lineNo, offset + 1];
+				}
+				offset -= lineLen + 1;
+				lineNo++;
+			}
+		};
+
+		const result = [];
+		for (const msg of messages.flat()) {
+			const updatedMsg = {...msg};
+
+			if ([msg.line, msg.column].every(e => Number.isInteger(e))) {
+				const start = lineColToOffset(msg.line, msg.column);
+				const origStart = mapOffsetToOriginal(start);
+				if (origStart === null) { continue; }
+				[updatedMsg.line, updatedMsg.column] = offsetToLineCol(origStart);
+
+				if ([msg.endLine, msg.endColumn].every(e => Number.isInteger(e))) {
+					const end = lineColToOffset(msg.endLine, msg.endColumn);
+					const origEnd = mapOffsetToOriginal(end);
+					if (origEnd === null) { continue; }
+					[updatedMsg.endLine, updatedMsg.endColumn] = offsetToLineCol(origEnd);
+				}
+			} else {
+				continue;
+			}
+
+			if (msg.fix) {
+				const [start, end] = msg.fix.range;
+				const origStart = mapOffsetToOriginal(start);
+				const origEnd = mapOffsetToOriginal(end);
+				if (origStart === null || origEnd === null) {
+					delete updatedMsg.fix;
+				} else {
+					updatedMsg.fix = {...updatedMsg.fix, range: [origStart, origEnd]};
+				}
+			}
+
+			result.push(updatedMsg);
+		}
+
+		return result;
+	},
+};
+
 export default [
 	includeIgnoreFile(gitignorePath),
 	// put ignores in a standalone object to completely ignore specified files
 	{
 		ignores: [
 			"template/js/*.min.{js,mjs}",
-			"template/js/common.mjs",
-			"template/js/crown.js",
-			"template/js/materials.js",
-			"template/js/ototo.js",
 			"template/js/parser.js",
-			"template/js/zh_conv_table.mjs",
-			"template/js/stage_difficulty.js",
 			"tests/t/lib/",
 		],
 	},
@@ -89,11 +209,22 @@ export default [
 		files: [
 			"template/js/**",
 		],
+		processor: handlebarsJsProcessor,
 		languageOptions: {
 			globals: {
 				...globals.browser,
+				$: "readonly",
 				CanvasJS: "readonly",
 				pegjs: "readonly",
+				__hbs_1__: "writable",
+				__hbs_2__: "writable",
+				__hbs_3__: "writable",
+				__hbs_4__: "writable",
+				__hbs_5__: "writable",
+				__hbs_6__: "writable",
+				__hbs_7__: "writable",
+				__hbs_8__: "writable",
+				__hbs_9__: "writable",
 			},
 		},
 	},

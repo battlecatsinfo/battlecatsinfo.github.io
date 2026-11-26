@@ -5,23 +5,19 @@ const numFormatter = getNumFormatter(2);
 const layout = {
 	topStart: {
 		pageLength: {
-			menu: [10, 20, 30, 40, 50]
-		}
+			menu: [10, 20, 30, 40, 50],
+		},
 	},
 	bottomStart: {
-		buttons: [{
-				extend: 'copyHtml5'
-			},
-			{
-				extend: 'csvHtml5'
-			},
-			{
-				extend: 'excelHtml5'
-			},
-		]
-	}
+		buttons: [
+			{extend: 'copyHtml5'},
+			{extend: 'csvHtml5'},
+			{extend: 'excelHtml5'},
+		],
+	},
 };
 
+/* global DROP_SOL, DROP_UL, DROP_ZL */
 {{#each materials as |value key|}}
 const {{{key}}} = {{{toJSON value}}};
 {{/each}}
@@ -39,8 +35,8 @@ $('#SOL').DataTable({
 	language,
 	columnDefs: [{
 		targets: [4, 5, 6, 7, 8, 9, 10],
-		render: format
-	}]
+		render: format,
+	}],
 });
 $('#UL').DataTable({
 	data: DROP_UL,
@@ -49,8 +45,8 @@ $('#UL').DataTable({
 	language,
 	columnDefs: [{
 		targets: [4, 5, 6, 7, 8, 9, 10, 11],
-		render: format
-	}]
+		render: format,
+	}],
 });
 $('#ZL').DataTable({
 	data: DROP_ZL,
@@ -59,6 +55,6 @@ $('#ZL').DataTable({
 	language,
 	columnDefs: [{
 		targets: [4, 5, 6, 7, 8, 9, 10, 11],
-		render: format
-	}]
+		render: format,
+	}],
 });
