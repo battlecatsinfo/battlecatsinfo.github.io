@@ -81,12 +81,22 @@ function renderTable(forms, page = 1) {
 	for (let i = 0; i < displayForms.length; ++i) {
 		const tr = document.createElement('tr');
 		const F = displayForms[i][1];
-		const texts = [F.id, '', F.name || F.jpName || '?', F.hp, F.atkm,
+		const texts = [F.id, '', '', F.hp, F.atkm,
 			round(F.dps), F.kb, F.range, numStrT(F.attackF).replace('秒', '秒/下'), F.speed, F.earn, numStr(displayForms[i][0]),
 		];
 		for (let j = 0; j < texts.length; ++j) {
 			const e = document.createElement('td');
-			e.textContent = texts[j].toString();
+			if (j === 2) {
+				e.textContent = F.name || F.jpName || '?';
+				if (F.name && F.jpName) {
+					const jpName = document.createElement('span');
+					jpName.className = 'ss-sub-large';
+					jpName.textContent = F.jpName;
+					e.appendChild(jpName);
+				}
+			} else {
+				e.textContent = texts[j].toString();
+			}
 			tr.appendChild(e);
 		}
 		const a = document.createElement('a');

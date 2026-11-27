@@ -170,7 +170,7 @@
 			a.textContent = main;
 			if (sub) {
 				const subSpan = document.createElement('span');
-				subSpan.className = 'ss-sub';
+				subSpan.className = 'ss-sub-large';
 				subSpan.textContent = sub;
 				a.appendChild(subSpan);
 			}

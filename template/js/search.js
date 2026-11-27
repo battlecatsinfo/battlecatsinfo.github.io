@@ -121,8 +121,14 @@ function renderTable(forms, page = 1) {
 				if (F.name)
 					e.appendChild(document.createTextNode(F.name));
 				if (F.jpName) {
-					e.appendChild(document.createElement("br"));
-					e.appendChild(document.createTextNode(F.jpName));
+					if (F.name) {
+						const jpName = document.createElement('span');
+						jpName.className = 'ss-sub-large';
+						jpName.textContent = F.jpName;
+						e.appendChild(jpName);
+					} else {
+						e.appendChild(document.createTextNode(F.jpName));
+					}
 				}
 			} else {
 				e.textContent = texts[j].toString();
