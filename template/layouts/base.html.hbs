@@ -54,10 +54,7 @@
 		align-items: center;
 		width: 100%;
 		text-align: center;
-		font-size: clamp(11px, 1.15vw, 18px) !important;
-		position: sticky;
-		top: 0;
-		z-index: 2;
+		font-size: clamp(10px, 1.5vw, 32px) !important;
 	}
 	.topnav-links {
 		flex: 1 1 auto;
@@ -78,8 +75,7 @@
 		display: inline-flex;
 		align-items: center;
 		color: #f2f2f2 !important;
-		padding: 0.7em 0.65em;
-		line-height: 1;
+		padding: 1vh 2vw;
 		text-decoration: none;
 		cursor: pointer;
 		vertical-align: middle;
@@ -95,8 +91,7 @@
 	}
 	.topnav svg {
 		background-color: inherit !important;
-		width: 1.35em;
-		height: 1.35em;
+		height: 1.3em;
 	}
 	{{#> nav-bar-styles-search}}
 	a.topnav-search {
@@ -111,7 +106,7 @@
 	#site-search input {
 		border: 1px solid rgba(0, 0, 0, 0.25) !important;
 		border-radius: 25px;
-		padding: 0.1em 2em 0.1em 2.1em;
+		padding: 0.1em 2em 0.1em 2.8em;
 		width: 175px;
 		font-size: 17px;
 		font-style: italic;
@@ -161,11 +156,11 @@
 		}
 		#site-search input {
 			display: inline-block;
-			width: clamp(140px, 18vw, 260px);
+			width: max(140px, 20vw);
 		}
 		#search-btn svg {
-			height: 18px;
-			width: 18px;
+			height: 22px;
+			width: 22px;
 			fill: black;
 		}
 		#search-clear svg {
@@ -179,14 +174,21 @@
 		z-index: 10;
 		left: 0;
 		top: 100%;
+		width: 100%;
+		box-sizing: border-box;
+		border-radius: 0 0 10px 10px;
+		overflow: hidden;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 	}
 	#site-s-result > * {
 		width: 100%;
+		box-sizing: border-box;
 		padding: 0.7em 2em;
 		color: black !important;
 		background-color: transparent !important;
 	}
-	#site-s-result > *:hover {
+	#site-s-result > *:hover,
+	#site-s-result > *.active {
 		background-color: #e7e7e7 !important;
 		color: black !important;
 	}
@@ -233,12 +235,12 @@
 						<path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
 					</svg>
 				</button>
+				<div id="site-s-result" hidden>
+					<div data-search="/search.html">搜尋貓咪</div>
+					<div data-search="/esearch.html">搜尋敵人</div>
+					<div data-search="/stage.html">搜尋關卡</div>
+				</div>
 			</form>
-			<div id="site-s-result" hidden>
-				<div data-search="/search.html">搜尋貓咪</div>
-				<div data-search="/esearch.html">搜尋敵人</div>
-				<div data-search="/stage.html">搜尋關卡</div>
-			</div>
 		</a>
 		{{/nav-bar-content-search}}
 		</div>
