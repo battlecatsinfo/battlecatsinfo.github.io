@@ -72,6 +72,23 @@
 	}
 
 	function onKeyDown(event) {
+		const key = event.key.toLowerCase();
+		const hasModifier = event.ctrlKey || event.metaKey || event.altKey;
+		const isSearchShortcut = !event.altKey && (
+			((event.ctrlKey || event.metaKey) && key === 'p') ||
+			(!hasModifier && key === '/')
+		);
+		const active = document.activeElement;
+		const isEditing = active.isContentEditable ||
+			(active.matches('input, textarea, select') && active !== siteSearchInput);
+		if (isSearchShortcut && !isEditing) {
+			event.preventDefault();
+			siteSearchInput.focus();
+			siteSearchInput.select();
+			openDialog();
+			return;
+		}
+
 		if (event.key === 'Escape' && !siteSearchDialog.hidden) {
 			closeDialog();
 			siteSearchInput.blur();
