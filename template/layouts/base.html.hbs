@@ -52,7 +52,7 @@
 		display: inline-block;
 		width: 100%;
 		text-align: center;
-		font-size: max(1.5vw, 10px) !important;
+		font-size: clamp(10px, 1vw + 2px, 24px) !important;
 	}
 	.topnav > a {
 		display: inline-block;
@@ -109,7 +109,7 @@
 		}
 		#site-search input {
 			display: inline-block;
-			width: 20vw;
+			width: clamp(175px, 20vw, 360px);
 		}
 		#search-btn {
 			position: relative;

@@ -388,9 +388,9 @@ class DetailedFormStatsTable extends FormStatsTable {
 		chs[6].children[3].textContent = numStrT(form.backswing);
 		chs[5].children[1].textContent = numStrT(form.attackF).replace('秒', '秒/下');
 		if (maxLen > 38)
-			this.table.style.fontSize = 'max(16px, 0.9vw)';
+			this.table.style.fontSize = 'clamp(14px, 0.65vw + 4px, 22px)';
 		else if (maxLen > 26)
-			this.table.style.fontSize = 'max(17px, 1vw)';
+			this.table.style.fontSize = 'clamp(15px, 0.7vw + 4px, 23px)';
 		let preStr = numStrT(form.pre);
 		if (form.pre1)
 			preStr += '/' + numStrT(form.pre1);
