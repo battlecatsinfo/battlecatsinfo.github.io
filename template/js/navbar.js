@@ -46,13 +46,25 @@
 					}
 				};
 
-				const [cats, enemies, maps, stages] = await Promise.all([
+				const [cats, enemies, maps, stages, catTranslations, enemyTranslations, stageTranslations] = await Promise.all([
 					loadStore('cats', '/cat.json'),
 					loadStore('enemy', '/enemy.json'),
 					loadStore('map', '/map.json'),
 					loadStore('stage', '/stage.json'),
+					loadStore('tcat', '/tcat.json'),
+					loadStore('tenemy', '/tenemy.json'),
+					loadStore('tstage', '/tstage.json'),
 				]);
-				return {TextSearcher: searchMod.TextSearcher, cats, enemies, maps, stages};
+				return {
+					TextSearcher: searchMod.TextSearcher,
+					cats,
+					enemies,
+					maps,
+					stages,
+					catTranslations: new Map(catTranslations.map(item => [item.i, item])),
+					enemyTranslations,
+					stageTranslations,
+				};
 			}).catch(error => {
 				searchDataPromise = null;
 				throw error;
@@ -172,20 +184,48 @@
 	async function runLiveSearch(q) {
 		ssStatus.textContent = '搜尋中...';
 		try {
-			const {TextSearcher, cats, enemies, maps, stages} = await loadSearchData();
+			const {
+				TextSearcher,
+				cats,
+				enemies,
+				maps,
+				stages,
+				catTranslations,
+				enemyTranslations,
+				stageTranslations,
+			} = await loadSearchData();
 			if (siteSearchInput.value.trim() !== q || siteSearchDialog.hidden) {
 				return;
 			}
 
 			const searcher = new TextSearcher(q, {
-				fields: [['name', 'zh-tw'], ['nameJp', 'ja']],
+				fields: [['name', 'zh-tw'], ['nameJp', 'ja'], ['en', 'en'], ['kr', 'ko']],
 			});
-			const catsFound = cats.filter(cat => cat.forms.some(form =>
-				searcher.search({name: form.name, nameJp: form.jpName}),
-			));
-			const enemiesFound = enemies.filter(enemy => searcher.search(enemy));
-			const mapsFound = maps.filter(map => searcher.search(map));
-			const stagesFound = stages.filter(stage => searcher.search(stage));
+			const translationSearcher = new TextSearcher(q, {
+				fields: [['tw', 'zh-tw'], ['jp', 'ja'], ['en', 'en'], ['kr', 'ko']],
+			});
+			const catsFound = cats.filter(cat =>
+				(catTranslations.has(cat.i) && translationSearcher.search(catTranslations.get(cat.i))) || cat.forms.some(form =>
+					searcher.search({name: form.name, nameJp: form.jpName}),
+				),
+			);
+			const matchedEnemyNames = new Set(enemyTranslations
+				.filter(item => translationSearcher.search(item))
+				.flatMap(item => [item.tw, item.jp])
+				.filter(Boolean));
+			const enemiesFound = enemies.filter(enemy =>
+				searcher.search(enemy) || matchedEnemyNames.has(enemy.name) || matchedEnemyNames.has(enemy.jpName),
+			);
+			const matchedStageNames = new Set(stageTranslations
+				.filter(item => translationSearcher.search(item))
+				.flatMap(item => [item.tw, item.jp])
+				.filter(Boolean));
+			const mapsFound = maps.filter(map =>
+				searcher.search(map) || matchedStageNames.has(map.name) || matchedStageNames.has(map.nameJp),
+			);
+			const stagesFound = stages.filter(stage =>
+				searcher.search(stage) || matchedStageNames.has(stage.name) || matchedStageNames.has(stage.nameJp),
+			);
 
 			const encoded = encodeURIComponent(q);
 			ssBody.textContent = '';
