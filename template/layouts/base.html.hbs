@@ -43,8 +43,14 @@
 	<!--nav-bar-->
 	{{#> nav-bar-styles}}
 	<style>
+	html {
+		scrollbar-gutter: stable;
+	}
 	body {
 		font-family: 'Noto Sans TC', sans-serif;
+	}
+	.topnav, .topnav * {
+		box-sizing: border-box;
 	}
 	.topnav {
 		background-color: #333 !important;
@@ -52,6 +58,7 @@
 		display: inline-block;
 		width: 100%;
 		text-align: center;
+		line-height: 1.5;
 		font-size: clamp(10px, 1vw + 2px, 24px) !important;
 	}
 	.topnav > a {
