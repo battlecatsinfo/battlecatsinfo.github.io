@@ -21,8 +21,8 @@ const PRECACHE_URLS = [
 	'/apple-touch-icon.png',
 ];
 
-// One-shot data files: fetched only to build the IndexedDB, never needed
-// again.  Keep them out of the cache entirely (network-only pass-through).
+// Data files and generated search indexes are fetched directly when needed.
+// Keep them out of the cache so stale data is not retained between deployments.
 const DATA_FILE_NAMES = new Set([
 	'cat.json',
 	'combos.json',

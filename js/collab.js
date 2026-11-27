@@ -65,6 +65,7 @@ module.exports = class extends RewardSiteGenerator {
 		const collabs = data.collabs;
 		const navMenu = [];
 		const collabStages = [];
+		const collabSearchIndex = new Map();
 
 		function rewardSortKey(r) {
 			if (r.cat_id == 0)
@@ -81,6 +82,12 @@ module.exports = class extends RewardSiteGenerator {
 		for (let i = 0; i < collabs.length; i++) {
 			const collab = collabs[i];
 			const fn = 'collab/' + normalizePath(collab.en_name) + '.html';
+			collabSearchIndex.set(fn, {
+				path: fn,
+				tw_name: collab.tw_name,
+				jp_name: collab.jp_name,
+				en_name: collab.en_name,
+			});
 			navMenu.push({
 				path: fn,
 				name: collab.tw_name,
@@ -155,6 +162,9 @@ module.exports = class extends RewardSiteGenerator {
 				stages,
 			}));
 		}
+		this.writeJson('collab_search_scheme.json', {
+			collabs: [...collabSearchIndex.values()],
+		});
 		this.writeTemplate('html/collabs.html', 'collabs.html', {
 			nav_menu: navMenu,
 			japan_collab_history: Object.entries(data.jp_history).sort(),

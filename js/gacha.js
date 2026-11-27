@@ -76,6 +76,7 @@ module.exports = class extends RewardSiteGenerator {
 
 		const gachaTemplate = this.loadTemplate('html/gacha.html');
 		const gachas = [];
+		const gachaSearchIndex = new Map();
 
 		this.categroyPools = [];
 		this.residentPools = [];
@@ -130,6 +131,12 @@ module.exports = class extends RewardSiteGenerator {
 			}
 
 			const path = 'gacha/' + normalizePath(pool.en_name) + '.html';
+			gachaSearchIndex.set(path, {
+				path,
+				tw_name: pool.tw_name,
+				jp_name: pool.jp_name,
+				en_name: pool.en_name,
+			});
 
 			this.writeString(path, this.template(
 				gachaTemplate,
@@ -148,6 +155,9 @@ module.exports = class extends RewardSiteGenerator {
 				height,
 			});
 		}
+		this.writeJson('gacha_search_scheme.json', {
+			gachas: [...gachaSearchIndex.values()],
+		});
 
 		this.writeTemplate('html/gachas.html', 'gachas.html', {
 			gachas,

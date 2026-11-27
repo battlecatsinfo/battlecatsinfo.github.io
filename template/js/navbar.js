@@ -46,7 +46,7 @@
 					}
 				};
 
-				const [cats, enemies, maps, stages, catTranslations, enemyTranslations, stageTranslations] = await Promise.all([
+				const [cats, enemies, maps, stages, catTranslations, enemyTranslations, stageTranslations, gachaData, collabData] = await Promise.all([
 					loadStore('cats', '/cat.json'),
 					loadStore('enemy', '/enemy.json'),
 					loadStore('map', '/map.json'),
@@ -54,6 +54,8 @@
 					loadStore('tcat', '/tcat.json'),
 					loadStore('tenemy', '/tenemy.json'),
 					loadStore('tstage', '/tstage.json'),
+					common.loadScheme('gacha_search', ['gachas']),
+					common.loadScheme('collab_search', ['collabs']),
 				]);
 				return {
 					TextSearcher: searchMod.TextSearcher,
@@ -64,6 +66,8 @@
 					catTranslations: new Map(catTranslations.map(item => [item.i, item])),
 					enemyTranslations,
 					stageTranslations,
+					gachas: gachaData.gachas,
+					collabs: collabData.collabs,
 				};
 			}).catch(error => {
 				searchDataPromise = null;
@@ -136,6 +140,10 @@
 	}
 
 	function createSection(title, moreHref, items, formatItem) {
+		if (!items.length) {
+			return null;
+		}
+
 		const section = document.createElement('div');
 		section.className = 'ss-section';
 
@@ -151,14 +159,6 @@
 			h4.appendChild(more);
 		}
 		section.appendChild(h4);
-
-		if (!items.length) {
-			const empty = document.createElement('div');
-			empty.className = 'ss-empty';
-			empty.textContent = '無符合結果';
-			section.appendChild(empty);
-			return section;
-		}
 
 		const ul = document.createElement('ul');
 		ul.className = 'ss-list';
@@ -181,6 +181,13 @@
 		return section;
 	}
 
+	function appendSection(...args) {
+		const section = createSection(...args);
+		if (section) {
+			ssBody.appendChild(section);
+		}
+	}
+
 	async function runLiveSearch(q) {
 		ssStatus.textContent = '搜尋中...';
 		try {
@@ -193,6 +200,8 @@
 				catTranslations,
 				enemyTranslations,
 				stageTranslations,
+				gachas,
+				collabs,
 			} = await loadSearchData();
 			if (siteSearchInput.value.trim() !== q || siteSearchDialog.hidden) {
 				return;
@@ -226,20 +235,25 @@
 			const stagesFound = stages.filter(stage =>
 				searcher.search(stage) || matchedStageNames.has(stage.name) || matchedStageNames.has(stage.nameJp),
 			);
+			const gachaSearcher = new TextSearcher(q, {
+				fields: [['tw_name', 'zh-tw'], ['jp_name', 'ja'], ['en_name', 'en']],
+			});
+			const gachasFound = gachas.filter(item => gachaSearcher.search(item));
+			const collabsFound = collabs.filter(item => gachaSearcher.search(item));
 
 			const encoded = encodeURIComponent(q);
 			ssBody.textContent = '';
-			ssBody.appendChild(createSection('貓咪', `/search.html?q=${encoded}`, catsFound, item => ({
+			appendSection('貓咪', `/search.html?q=${encoded}`, catsFound, item => ({
 				href: `/unit.html?id=${item.i}`,
 				main: item.forms[0]?.name || item.forms[0]?.jpName || `#${item.i}`,
 				sub: item.forms[0]?.jpName || '',
-			})));
-			ssBody.appendChild(createSection('敵人', `/esearch.html?q=${encoded}`, enemiesFound, item => ({
+			}));
+			appendSection('敵人', `/esearch.html?q=${encoded}`, enemiesFound, item => ({
 				href: `/enemy.html?id=${item.i}`,
 				main: item.name || item.jpName || `#${item.i}`,
 				sub: item.jpName || '',
-			})));
-			ssBody.appendChild(createSection('關卡', `/stage.html?q=${encoded}`, [...stagesFound, ...mapsFound], item => {
+			}));
+			appendSection('關卡', `/stage.html?q=${encoded}`, [...stagesFound, ...mapsFound], item => {
 				const isMap = Object.prototype.hasOwnProperty.call(item, 'stars');
 				const categoryId = Math.floor(item.id / 1000000);
 				const mapId = isMap ? item.id % 1000 : Math.floor((item.id % 1000000) / 1000);
@@ -249,10 +263,28 @@
 					main: item.name || item.nameJp || `#${item.id}`,
 					sub: item.nameJp || '',
 				};
+			});
+			appendSection('轉蛋', '/gachas.html', gachasFound, item => ({
+				href: `/${item.path}`,
+				main: item.tw_name || item.jp_name || item.en_name,
+				sub: item.en_name || item.jp_name || '',
+			}));
+			appendSection('合作', '/collabs.html', collabsFound, item => ({
+				href: `/${item.path}`,
+				main: item.tw_name || item.jp_name || item.en_name,
+				sub: item.en_name || item.jp_name || '',
 			}));
 
-			const total = catsFound.length + enemiesFound.length + stagesFound.length + mapsFound.length;
-			ssStatus.textContent = `「${q}」共找到 ${total} 筆結果（按 Esc 或點擊空白處關閉）`;
+			const total = catsFound.length + enemiesFound.length + stagesFound.length + mapsFound.length + gachasFound.length + collabsFound.length;
+			if (total) {
+				ssStatus.textContent = `「${q}」共找到 ${total} 筆結果（按 Esc 或點擊空白處關閉）`;
+			} else {
+				const empty = document.createElement('div');
+				empty.className = 'ss-empty';
+				empty.textContent = 'ฅ(｡•ㅅ•｡)ฅ';
+				ssBody.appendChild(empty);
+				ssStatus.textContent = `「${q}」沒有找到符合的結果`;
+			}
 		} catch (e) {
 			ssStatus.textContent = '載入搜尋資料失敗';
 			console.error(e);
@@ -261,16 +293,15 @@
 
 	function onFormSubmit(event) {
 		event.preventDefault();
-		let value = siteSearchInput.value;
-		if (!value)
+		const q = siteSearchInput.value.trim();
+		if (!q) {
+			siteSearchInput.focus();
 			return false;
-		if (location.pathname.startsWith('/enemy') || location.pathname.startsWith('/esearch'))
-			value = '/esearch.html?q=' + encodeURIComponent(value);
-		else if (location.pathname.startsWith('/stage'))
-			value = '/stage.html?q=' + encodeURIComponent(value);
-		else
-			value = '/search.html?q=' + encodeURIComponent(value);
-		location.assign(value);
+		}
+		clearTimeout(debounceTimer);
+		siteSearchClear.hidden = false;
+		openDialog();
+		runLiveSearch(q);
 	}
 
 	(async () => {
