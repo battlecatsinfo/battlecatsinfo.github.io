@@ -78,6 +78,8 @@
 	{{#> nav-bar-styles-search}}
 	#site-search {
 		display: none;
+		position: relative;
+		float: right;
 		background-color: transparent;
 	}
 	#site-search input {
@@ -164,8 +166,8 @@
 		</a>
 		{{/nav-bar-content-theme}}
 		{{#> nav-bar-content-search}}
-		<a style="position:relative;float:right;">
-			<form id="site-search">
+		<a id="site-search">
+			<form>
 				<input autocomplete="off" type="text" placeholder="Search..." aria-label="search">
 				<button type="submit" id="search-btn">
 					<svg viewBox="0 0 50 50" width="50px" height="50px">
