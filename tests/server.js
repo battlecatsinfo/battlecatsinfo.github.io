@@ -28,11 +28,13 @@ function main(chalk) {
 		});
 	});
 	server.listen(8080, () => console.log('Server ready at http://localhost:8080/'));
-	process.on('SIGINT', () => {
+	process.once('SIGINT', () => {
 		console.log('\nGoodbye!');
 		server.close(() => {
 			process.exit(0);
 		});
+		// Stop waiting for browser keep-alive connections to close on their own.
+		server.closeAllConnections();
 	});
 }
 

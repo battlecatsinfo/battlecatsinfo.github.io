@@ -43,21 +43,30 @@
 	<!--nav-bar-->
 	{{#> nav-bar-styles}}
 	<style>
+	html {
+		scrollbar-gutter: stable;
+	}
 	body {
 		font-family: 'Noto Sans TC', sans-serif;
+	}
+	.topnav, .topnav * {
+		box-sizing: border-box;
 	}
 	.topnav {
 		background-color: #333 !important;
 		margin-block: 0;
-		display: inline-block;
+		display: block;
 		width: 100%;
 		text-align: center;
-		font-size: max(1.5vw, 10px) !important;
+		line-height: 1.5;
+		font-size: clamp(10px, 1.1vw + 5px, 24px) !important;
+		position: relative;
+		z-index: 1001;
 	}
 	.topnav > a {
 		display: inline-block;
 		color: #f2f2f2 !important;
-		padding: 1vh 2vw;
+		padding: 1.1vh 2vw;
 		text-decoration: none;
 		cursor: pointer;
 		vertical-align: middle;
@@ -78,28 +87,58 @@
 	{{#> nav-bar-styles-search}}
 	#site-search {
 		display: none;
+		position: relative;
+		float: right;
 		background-color: transparent;
+	}
+	#site-search form {
+		position: relative;
+		display: inline-block;
 	}
 	#site-search input {
 		border: 1px solid rgba(0, 0, 0, 0.25) !important;
 		border-radius: 25px;
-		padding: 0.1em 0.2em;
+		padding: 0.1em 32px;
 		width: 175px;
 		font-size: 17px;
 		font-style: italic;
 		color: black !important;
 		background-color: white !important;
 	}
-	#search-btn {
+	#search-btn, #search-clear {
 		all: unset;
-		vertical-align: middle;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
 		cursor: pointer;
 		background-color: transparent !important;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	#search-btn {
+		left: 10px;
+	}
+	#search-clear {
+		right: 10px;
+	}
+	#search-clear[hidden] {
+		display: none;
 	}
 	#search-btn svg {
 		width: 12px;
 		height: 12px;
 		fill: white;
+		display: block;
+	}
+	#search-clear svg {
+		width: 16px;
+		height: 16px;
+		fill: #666;
+		display: block;
+	}
+	#search-clear:hover svg {
+		fill: black;
 	}
 	@media (min-width: 800px) {
 		#site-search {
@@ -107,35 +146,113 @@
 		}
 		#site-search input {
 			display: inline-block;
-			width: 20vw;
-		}
-		#search-btn {
-			position: relative;
-			top: 3px;
-			right: 30px;
+			width: clamp(175px, 20vw, 360px);
 		}
 		#search-btn svg {
-			height: 22px;
-			width: 22px;
+			height: 18px;
+			width: 18px;
 			fill: black;
 		}
 	}
-	#site-s-result {
-		background-color: white !important;
-		position: absolute;
-		z-index: 10;
-		left: 0;
-		top: 0;
+	#site-search-backdrop {
+		position: fixed;
+		inset: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 1000;
 	}
-	#site-s-result > * {
-		width: 100%;
-		padding: 0.7em 2em;
-		color: black !important;
-		background-color: transparent !important;
+	#site-search-dialog {
+		position: fixed;
+		top: 3.6em;
+		left: 50%;
+		transform: translateX(-50%);
+		width: min(92vw, 960px);
+		max-height: 75vh;
+		overflow-y: auto;
+		background-color: var(--bg, #fff);
+		color: var(--color, #000);
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+		padding: 16px;
+		z-index: 1001;
+		text-align: left;
+		font-size: 16px;
 	}
-	#site-s-result > *:hover {
-		background-color: #e7e7e7 !important;
-		color: black !important;
+	:root.dark #site-search-dialog {
+		border-color: #555;
+	}
+	.ss-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+		padding-bottom: 8px;
+		border-bottom: 1px solid #ccc;
+		font-size: 0.9em;
+		opacity: 0.85;
+	}
+	:root.dark .ss-header {
+		border-bottom-color: #555;
+	}
+	.ss-close {
+		all: unset;
+		cursor: pointer;
+		padding: 2px 8px;
+		border-radius: 4px;
+		font-size: 1.2em;
+		line-height: 1;
+	}
+	.ss-close:hover {
+		background-color: rgba(128, 128, 128, 0.25);
+	}
+	.ss-sections {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 16px;
+	}
+	.ss-section h4 {
+		margin: 0 0 8px 0;
+		padding-bottom: 4px;
+		border-bottom: 2px solid #4caf50;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 1.05em;
+	}
+	.ss-section h4 a {
+		font-size: 0.8em;
+		font-weight: normal;
+		text-decoration: none;
+	}
+	.ss-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.ss-list li a {
+		display: block;
+		padding: 6px 8px;
+		border-radius: 4px;
+		text-decoration: none;
+		color: inherit !important;
+	}
+	.ss-list li a:hover {
+		background-color: rgba(128, 128, 128, 0.18);
+	}
+	.ss-sub {
+		display: block;
+		font-size: 0.82em;
+		opacity: 0.7;
+	}
+	.ss-sub-large {
+		display: block;
+		font-size: 0.9em;
+		opacity: 0.7;
+	}
+	.ss-empty {
+		padding: 8px;
+		opacity: 0.65;
+		font-size: 0.9em;
 	}
 	{{/nav-bar-styles-search}}
 	</style>
@@ -157,31 +274,37 @@
 		</a>
 		{{/nav-bar-content-settings}}
 		{{#> nav-bar-content-theme}}
-		<a title="佈景主題" style="float:right;">
+		<a id="theme-toggle" title="佈景主題" style="float:right;">
 			<svg viewBox="0 0 24 24">
 				<path fill="white" d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20 L12,4 C16.418278,4 20,7.581722 20,12 C20,16.418278 16.418278,20 12,20 Z" />
 			</svg>
 		</a>
 		{{/nav-bar-content-theme}}
 		{{#> nav-bar-content-search}}
-		<a style="position:relative;float:right;">
-			<form id="site-search">
-				<input autocomplete="off" type="text" placeholder="Search..." aria-label="search">
-				<button type="submit" id="search-btn">
+		<a id="site-search">
+			<form>
+				<button type="submit" id="search-btn" aria-label="搜尋">
 					<svg viewBox="0 0 50 50" width="50px" height="50px">
 						<path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" />
 					</svg>
 				</button>
+				<input autocomplete="off" type="text" placeholder="Search..." aria-label="search" aria-keyshortcuts="/ Control+P Meta+P" title="快速搜尋 (/、Ctrl+P / ⌘P)">
+				<button type="button" id="search-clear" aria-label="清除" hidden>
+					<svg viewBox="0 0 24 24">
+						<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+					</svg>
+				</button>
 			</form>
-			<div style="position: relative;" class="w3-card">
-				<div id="site-s-result" hidden>
-					<div data-search="/search.html">搜尋貓咪</div>
-					<div data-search="/esearch.html">搜尋敵人</div>
-					<div data-search="/stage.html">搜尋關卡</div>
-				</div>
-			</div>
 		</a>
 		{{/nav-bar-content-search}}
+	</div>
+	<div id="site-search-backdrop" hidden></div>
+	<div id="site-search-dialog" role="dialog" aria-label="即時搜尋結果" hidden>
+		<div class="ss-header">
+			<span id="ss-status">輸入關鍵字即時搜尋貓咪、敵人、關卡</span>
+			<button type="button" id="ss-close" class="ss-close" aria-label="關閉搜尋 (Esc)">✕</button>
+		</div>
+		<div id="ss-body" class="ss-sections"></div>
 	</div>
 	{{/nav-bar-content}}
 	{{#> nav-bar-scripts}}

@@ -24,7 +24,7 @@
 		width: 100%;
 		margin: 0;
 		padding: 0;
-		font-size: max(1.1vw, 8px);
+		font-size: clamp(8px, 0.75vw + 6px, 24px);
 		vertical-align:middle;
 		line-height: initial;
 	}
@@ -236,7 +236,7 @@
 {{/inline}}
 
 {{#*inline "content"}}
-	<div>
+	<div style="max-width: 2200px; margin: 0 auto;">
 		<div style="display:flex;width:100%;">
 			<select id="M1">
 			{{#> options}}
